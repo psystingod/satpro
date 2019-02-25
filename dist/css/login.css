@@ -1,0 +1,14 @@
+body{
+    background-color: #FAFAFA;
+}
+img{
+    margin: 0;
+    margin-top: 10%;
+    margin-bottom: 3%;
+    padding: 0;
+}
+.row .login-panel{
+    margin: 0;
+    padding: 0;
+    border: 1px solid #BDBDBD;
+}
