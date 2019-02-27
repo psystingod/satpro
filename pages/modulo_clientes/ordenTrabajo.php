@@ -156,9 +156,9 @@
                           <div class="panel-body">
                               <div class="col-md-12">
                                   <button class="btn btn-default btn-sm" id="nuevaOrdenId" onclick="nuevaOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Nueva orden"><i class="far fa-file"></i></button>
-                                  <button class="btn btn-default btn-sm" onclick="editarOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Editar orden"><i class="far fa-edit"></i></button>
+                                  <button class="btn btn-default btn-sm" id="editar" onclick="editarOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Editar orden"><i class="far fa-edit"></i></button>
                                   <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Ver cliente"><i class="far fa-eye"></i></button>
-                                  <button class="btn btn-default btn-sm" onclick="enviar()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Guardar orden" disabled><i class="far fa-save"></i></button>
+                                  <button class="btn btn-default btn-sm" id="guardar" type="submit" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Guardar orden" disabled><i class="far fa-save"></i></button>
                                   <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Buscar orden"><i class="fas fa-search"></i></button>
                                   <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Imprimir orden"><i class="fas fa-print"></i></button>
                                   <div class="pull-right">
@@ -223,7 +223,7 @@
                                       <div class="row">
                                           <div class="col-md-8">
                                               <label for="tipoActividadCable">Tipo de actividad</label>
-                                              <select class="form-control input-sm" name="tipoActividadCable" disabled>
+                                              <select class="form-control input-sm cable" name="tipoActividadCable" disabled>
                                                   <option value=""></option>
                                               </select>
                                           </div>
@@ -245,7 +245,7 @@
                                       <div class="row">
                                           <div class="col-md-8">
                                               <label for="tipoActividadInternet">Tipo de actividad</label>
-                                              <select class="form-control input-sm" name="tipoActividadInternet" disabled>
+                                              <select class="form-control input-sm internet" name="tipoActividadInternet" disabled>
                                                   <option value=""></option>
                                               </select>
                                           </div>

@@ -39,16 +39,26 @@ function nuevaOrden(){
     var clearInputs = document.getElementsByClassName("input-sm");
     for (var i = 0; i < clearInputs.length; i++) {
         clearInputs[i].value = "";
-        clearInputs[i].readOnly = false;
-        clearInputs[i].disabled = false;
+        if (clearInputs[i].readOnly == true) {
+            clearInputs[i].readOnly = false;
+        }
+        else if (clearInputs[i].disabled == true) {
+            clearInputs[i].disabled = false;
+        }
     }
+    document.getElementById("guardar").disabled = false;
+    document.getElementById("editar").disabled = true;
     changeAction("nueva");
 }
 function editarOrden(){
     var editInputs = document.getElementsByClassName("input-sm");
     for (var i = 0; i < editInputs.length; i++) {
-        editInputs[i].readOnly = false;
-        editInputs[i].disabled = false;
+        if (editInputs[i].readOnly == true) {
+            editInputs[i].readOnly = false;
+        }
+        else if (editInputs[i].disabled == true){
+            editInputs[i].disabled = false;
+        }
     }
     changeAction("editar");
 }
