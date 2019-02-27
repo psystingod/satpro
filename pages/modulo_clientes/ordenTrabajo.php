@@ -152,7 +152,7 @@
                         <br>
                         <div class="panel panel-primary">
                           <div class="panel-heading">Orden de trabajo</div>
-                          <form id="ordenesTrabajo" action="#" method="POST">
+                          <form id="ordenTrabajo" action="#" method="POST">
                           <div class="panel-body">
                               <div class="col-md-12">
                                   <button class="btn btn-default btn-sm" id="nuevaOrdenId" onclick="nuevaOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Nueva orden"><i class="far fa-file"></i></button>

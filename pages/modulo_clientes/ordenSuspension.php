@@ -151,8 +151,8 @@
                     <div class="col-lg-12">
                         <br>
                         <div class="panel panel-primary">
-                          <div class="panel-heading">Orden de suspención</div>
-                          <form id="ordenesTrabajo" action="#" method="POST">
+                          <div class="panel-heading">Orden de suspensión</div>
+                          <form id="ordenSuspension" action="#" method="POST">
                           <div class="panel-body">
                               <div class="col-md-12">
                                   <button class="btn btn-default btn-sm" id="nuevaOrdenId" onclick="nuevaOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Nueva orden"><i class="far fa-file"></i></button>
@@ -169,59 +169,38 @@
                                   </div>
                               </div>
                               <div class="form-row">
-                                  <div class="col-md-3">
+                                  <div class="col-md-2">
                                       <br>
-                                      <label for="numeroOrden">Número de orden</label>
-                                      <input class="form-control input-sm" type="text" name="numeroOrden" readonly>
+                                      <label for="numeroSuspencion">N° de suspención</label>
+                                      <input class="form-control input-sm" type="text" name="numeroSuspencion" readonly>
                                   </div>
-                                  <div class="col-md-3">
+                                  <div class="col-md-2">
                                       <br>
-                                      <label for="codigoCliente">Código de cliente</label>
+                                      <label for="fechaElaborada">Fecha de elaborada</label>
+                                      <input class="form-control input-sm" type="text" name="fechaElaborada" readonly>
+                                  </div>
+                                  <div class="col-md-2">
+                                      <br>
+                                      <label for="codigoCliente">Código del cliente</label>
                                       <input class="form-control input-sm" type="text" name="codigoCliente" readonly>
                                   </div>
-                                  <div class="col-md-3">
-                                      <br>
-                                      <label for="fechaOrden">Fecha de orden</label>
-                                      <input class="form-control input-sm" type="text" name="fechaOrden" readonly>
-                                  </div>
-                                  <div class="col-md-3">
-                                      <br>
-                                      <label for="tipoOrden">Tipo de orden</label>
-                                      <select class="form-control input-sm" name="tipoOrden" disabled>
-                                          <option value=""></option>
-                                      </select>
-                                  </div>
-                              </div>
-                              <div class="form-row">
-                                  <div class="col-md-5">
-                                      <br>
-                                      <label for="nombreCliente">Nombre del cliente</label>
-                                      <input class="form-control input-sm input-sm" type="text" name="nombreCliente" readonly>
-                                  </div>
-                                  <div class="col-md-3">
-                                      <br>
-                                      <label for="telefonos">Teléfonos</label>
-                                      <input class="form-control input-sm input-sm" type="text" name="telefonos" readonly>
-                                  </div>
-                                  <div class="col-md-2">
-                                      <br>
-                                      <label for="municipio">Municipio</label>
-                                      <input class="form-control input-sm input-sm" type="text" name="municipio" readonly>
-                                  </div>
-                                  <div class="col-md-2">
-                                      <br>
-                                      <label for="claseOrden">Clase de orden</label>
-                                      <select class="form-control input-sm input-sm" name="claseOrden" disabled>
-                                          <option value=""></option>
-                                      </select>
-                                  </div>
-                              </div>
-                              <div class="form-row">
                                   <div class="col-md-6">
                                       <br>
+                                      <label for="nombreCliente">Nombre del cliente</label>
+                                      <input class="form-control input-sm" type="text" name="nombreCliente" readonly>
+                                  </div>
+                              </div>
+                              <div class="form-row">
+                                  <div class="col-md-12">
+                                      <label for="direccionCliente">Dirección</label>
+                                      <textarea class="form-control input-sm cable" name="direccionCliente" rows="2" cols="40" readonly></textarea>
+                                  </div>
+                              </div>
+                              <div class="form-row">
+                                  <div class="col-md-12">
                                       <h4 class="alert alert-info cable"><strong>Cable</strong></h4>
                                       <div class="row">
-                                          <div class="col-md-8">
+                                          <div class="col-md-4">
                                               <label for="tipoActividadCable">Tipo de actividad</label>
                                               <select class="form-control input-sm cable" name="tipoActividadCable" disabled>
                                                   <option value=""></option>
@@ -231,19 +210,18 @@
                                               <label for="saldoCable">Saldo</label>
                                               <input class="form-control input-sm cable" type="text" name="saldoCable" readonly>
                                           </div>
-                                      </div>
-                                      <div class="row">
-                                          <div class="col-md-12">
-                                              <label for="direccionCable">Dirección</label>
-                                              <textarea class="form-control input-sm cable" name="direccionCable" rows="2" cols="40" readonly></textarea>
+                                          <div class="col-md-4">
+                                              <label for="ordenaSuspencionCable">Ordena la suspención</label>
+                                              <select class="form-control input-sm cable" name="ordenaSuspencionCable" disabled>
+                                                  <option value=""></option>
+                                              </select>
                                           </div>
                                       </div>
                                   </div>
-                                  <div class="col-md-6">
-                                      <br>
+                                  <div class="col-md-12">
                                       <h4 class="alert alert-info"><strong>Internet</strong></h4>
                                       <div class="row">
-                                          <div class="col-md-8">
+                                          <div class="col-md-4">
                                               <label for="tipoActividadInternet">Tipo de actividad</label>
                                               <select class="form-control input-sm internet" name="tipoActividadInternet" disabled>
                                                   <option value=""></option>
@@ -253,98 +231,55 @@
                                               <label for="saldoInternet">Saldo</label>
                                               <input class="form-control input-sm internet" type="text" name="saldoInternet" readonly>
                                           </div>
-                                      </div>
-                                      <div class="row">
-                                          <div class="col-md-12">
-                                              <label for="direccionInternet">Dirección</label>
-                                              <textarea class="form-control input-sm internet" name="direccionInternet" rows="2" cols="40" readonly></textarea>
+                                          <div class="col-md-4">
+                                              <label for="ordenaSuspencionInternet">Ordena suspención</label>
+                                              <select class="form-control input-sm internet" name="ordenaSuspencionInternet" disabled>
+                                                  <option value=""></option>
+                                              </select>
                                           </div>
                                       </div>
                                   </div>
                               </div>
                               <div class="form-row">
-                                  <div class="col-md-3">
-                                      <br>
+                                  <div class="col-md-4">
                                       <label for="macModem">MAC del modem</label>
                                       <input class="form-control input-sm internet" type="text" name="macModem" readonly>
                                   </div>
-                                  <div class="col-md-2">
-                                      <br>
+                                  <div class="col-md-4">
                                       <label for="serieModem">Serie del modem</label>
                                       <input class="form-control input-sm internet" type="text" name="serieModem" readonly>
                                   </div>
-                                  <div class="col-md-2">
-                                      <br>
+                                  <div class="col-md-4">
                                       <label for="velocidad">Velocidad</label>
                                       <input id="velocidad" class="form-control input-sm internet" type="text" name="velocidad" readonly>
                                   </div>
-                                  <div class="col-md-1">
-                                      <br>
-                                      <label for="recep">Recep</label>
-                                      <input class="form-control input-sm internet" type="text" name="recep" readonly>
-                                  </div>
-                                  <div class="col-md-1">
-                                      <br>
-                                      <label for="trans">Trans</label>
-                                      <input class="form-control input-sm internet" type="text" name="trans" readonly>
-                                  </div>
-                                  <div class="col-md-1">
-                                      <br>
-                                      <label for="ruido">Ruido</label>
-                                      <input class="form-control input-sm internet" type="text" name="ruido" readonly>
-                                  </div>
-                                  <div class="col-md-2">
-                                      <br>
-                                      <label for="colilla">Colilla</label>
-                                      <input class="form-control input-sm internet" type="text" name="colilla" readonly>
-                                  </div>
                               </div>
                               <div class="form-row">
                                   <div class="col-md-2">
-                                      <br>
-                                      <label for="fechaTrabajo">Fecha de trabajo</label>
-                                      <input class="form-control input-sm" type="text" name="fechaTrabajo" readonly>
-                                  </div>
-                                  <div class="col-md-2">
-                                      <br>
-                                      <label for="hora">Hora</label>
-                                      <input class="form-control input-sm" type="text" name="hora" readonly>
-                                  </div>
-                                  <div class="col-md-3">
-                                      <br>
-                                      <label for="fechaProgramacion">Fecha de programación</label>
-                                      <input class="form-control input-sm" type="text" name="fechaProgramacion" readonly>
+                                      <label for="fechaSuspencionInternet">Fecha suspención</label>
+                                      <input class="form-control input-sm" type="text" name="fechaSuspencionInternet" readonly>
                                   </div>
                                   <div class="col-md-5">
-                                      <br>
-                                      <label for="responsable">Responsable</label>
-                                      <select class="form-control input-sm" name="responsable" disabled>
+                                      <label for="tecnico">Técnico</label>
+                                      <select class="form-control input-sm" name="tecnico" disabled>
                                           <option value=""></option>
                                       </select>
                                   </div>
-                              </div>
-                              <div class="form-row">
-                                  <div class="col-md-12">
-                                      <br>
-                                      <label for="observaciones">Observaciones</label>
-                                      <textarea class="form-control input-sm" name="observaciones" rows="2" cols="40" readonly></textarea>
+                                  <div class="col-md-5">
+                                      <label for="motivo">Motivo</label>
+                                      <input class="form-control input-sm" type="text" name="motivo" readonly>
                                   </div>
                               </div>
                               <div class="form-row">
-                                  <div class="col-md-4">
-                                      <br>
-                                      <label for="nodo">Nodo</label>
-                                      <input class="form-control input-sm" type="text" name="nodo" readonly>
+                                  <div class="col-md-3">
                                   </div>
-                                  <div class="col-md-4">
-                                      <br>
-                                      <label for="vendedor">Vendedor</label>
-                                      <input class="form-control input-sm" type="text" name="vendedor" readonly>
+                                  <div class="col-md-3">
                                   </div>
-                                  <div class="col-md-4">
-                                      <br>
-                                      <label for="recepcionTv">Recepción TV</label>
-                                      <input class="form-control input-sm cable" type="text" name="recepcionTv" readonly>
+                                  <div class="col-md-3">
+                                  </div>
+                                  <div class="col-md-3">
+                                      <label for="colilla">Colilla</label>
+                                      <input class="form-control input-sm" type="text" name="colilla" readonly>
                                   </div>
                               </div>
                           </div>
@@ -374,7 +309,7 @@
     <!-- Custom Theme JavaScript -->
     <script src="../../dist/js/sb-admin-2.js"></script>
     <script src="../../dist/js/jquery-validation-1.19.0/dist/jquery.validate.js"></script>
-    <script src="js/ordenSuspencion.js"></script>
+    <script src="js/ordenSuspension.js"></script>
 
 
 </body>

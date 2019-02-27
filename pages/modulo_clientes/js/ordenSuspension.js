@@ -66,10 +66,10 @@ function editarOrden(){
 function changeAction(action){
     switch (action) {
         case "nueva":
-            document.getElementById("ordenTrabajo").action = "php/nuevaOrdenTrabajo.php";
+            document.getElementById("ordenSuspension").action = "php/nuevaOrdenSuspension.php";
             break;
         case "editar":
-            document.getElementById("ordenTrabajo").action = "php/editarOrdenTrabajo.php";
+            document.getElementById("ordenSuspension").action = "php/editarOrdenSuspension.php";
             break;
         default:
 
