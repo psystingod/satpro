@@ -151,14 +151,14 @@
                     <div class="col-lg-12">
                         <br>
                         <div class="panel panel-primary">
-                          <div class="panel-heading">Orden de trabajo</div>
+                          <div class="panel-heading">Orden de suspención</div>
                           <form id="ordenesTrabajo" action="#" method="POST">
                           <div class="panel-body">
                               <div class="col-md-12">
-                                  <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Nueva orden"><i class="far fa-file"></i></button>
-                                  <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Editar orden"><i class="far fa-edit"></i></button>
+                                  <button class="btn btn-default btn-sm" id="nuevaOrdenId" onclick="nuevaOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Nueva orden"><i class="far fa-file"></i></button>
+                                  <button class="btn btn-default btn-sm" id="editar" onclick="editarOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Editar orden"><i class="far fa-edit"></i></button>
                                   <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Ver cliente"><i class="far fa-eye"></i></button>
-                                  <button class="btn btn-default btn-sm" onclick="enviar()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Guardar orden"><i class="far fa-save"></i></button>
+                                  <button class="btn btn-default btn-sm" id="guardar" type="submit" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Guardar orden" disabled><i class="far fa-save"></i></button>
                                   <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Buscar orden"><i class="fas fa-search"></i></button>
                                   <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Imprimir orden"><i class="fas fa-print"></i></button>
                                   <div class="pull-right">
@@ -172,22 +172,22 @@
                                   <div class="col-md-3">
                                       <br>
                                       <label for="numeroOrden">Número de orden</label>
-                                      <input class="form-control input-sm" type="text" name="numeroOrden">
+                                      <input class="form-control input-sm" type="text" name="numeroOrden" readonly>
                                   </div>
                                   <div class="col-md-3">
                                       <br>
                                       <label for="codigoCliente">Código de cliente</label>
-                                      <input class="form-control input-sm" type="text" name="codigoCliente">
+                                      <input class="form-control input-sm" type="text" name="codigoCliente" readonly>
                                   </div>
                                   <div class="col-md-3">
                                       <br>
                                       <label for="fechaOrden">Fecha de orden</label>
-                                      <input class="form-control input-sm" type="text" name="fechaOrden">
+                                      <input class="form-control input-sm" type="text" name="fechaOrden" readonly>
                                   </div>
                                   <div class="col-md-3">
                                       <br>
                                       <label for="tipoOrden">Tipo de orden</label>
-                                      <select class="form-control input-sm" name="tipoOrden">
+                                      <select class="form-control input-sm" name="tipoOrden" disabled>
                                           <option value=""></option>
                                       </select>
                                   </div>
@@ -196,22 +196,22 @@
                                   <div class="col-md-5">
                                       <br>
                                       <label for="nombreCliente">Nombre del cliente</label>
-                                      <input class="form-control input-sm input-sm" type="text" name="nombreCliente">
+                                      <input class="form-control input-sm input-sm" type="text" name="nombreCliente" readonly>
                                   </div>
                                   <div class="col-md-3">
                                       <br>
                                       <label for="telefonos">Teléfonos</label>
-                                      <input class="form-control input-sm input-sm" type="text" name="telefonos">
+                                      <input class="form-control input-sm input-sm" type="text" name="telefonos" readonly>
                                   </div>
                                   <div class="col-md-2">
                                       <br>
                                       <label for="municipio">Municipio</label>
-                                      <input class="form-control input-sm input-sm" type="text" name="municipio">
+                                      <input class="form-control input-sm input-sm" type="text" name="municipio" readonly>
                                   </div>
                                   <div class="col-md-2">
                                       <br>
                                       <label for="claseOrden">Clase de orden</label>
-                                      <select class="form-control input-sm input-sm" name="claseOrden">
+                                      <select class="form-control input-sm input-sm" name="claseOrden" disabled>
                                           <option value=""></option>
                                       </select>
                                   </div>
@@ -223,19 +223,19 @@
                                       <div class="row">
                                           <div class="col-md-8">
                                               <label for="tipoActividadCable">Tipo de actividad</label>
-                                              <select class="form-control input-sm input-sm" name="tipoActividadCable">
+                                              <select class="form-control input-sm cable" name="tipoActividadCable" disabled>
                                                   <option value=""></option>
                                               </select>
                                           </div>
                                           <div class="col-md-4">
                                               <label for="saldoCable">Saldo</label>
-                                              <input class="form-control input-sm cable" type="text" name="saldoCable">
+                                              <input class="form-control input-sm cable" type="text" name="saldoCable" readonly>
                                           </div>
                                       </div>
                                       <div class="row">
                                           <div class="col-md-12">
                                               <label for="direccionCable">Dirección</label>
-                                              <textarea class="form-control input-sm cable" name="direccionCable" rows="2" cols="40"></textarea>
+                                              <textarea class="form-control input-sm cable" name="direccionCable" rows="2" cols="40" readonly></textarea>
                                           </div>
                                       </div>
                                   </div>
@@ -245,19 +245,19 @@
                                       <div class="row">
                                           <div class="col-md-8">
                                               <label for="tipoActividadInternet">Tipo de actividad</label>
-                                              <select class="form-control input-sm input-sm" name="tipoActividadInternet">
+                                              <select class="form-control input-sm internet" name="tipoActividadInternet" disabled>
                                                   <option value=""></option>
                                               </select>
                                           </div>
                                           <div class="col-md-4">
                                               <label for="saldoInternet">Saldo</label>
-                                              <input class="form-control input-sm internet" type="text" name="saldoInternet">
+                                              <input class="form-control input-sm internet" type="text" name="saldoInternet" readonly>
                                           </div>
                                       </div>
                                       <div class="row">
                                           <div class="col-md-12">
                                               <label for="direccionInternet">Dirección</label>
-                                              <textarea class="form-control input-sm internet" name="direccionInternet" rows="2" cols="40"></textarea>
+                                              <textarea class="form-control input-sm internet" name="direccionInternet" rows="2" cols="40" readonly></textarea>
                                           </div>
                                       </div>
                                   </div>
@@ -266,59 +266,59 @@
                                   <div class="col-md-3">
                                       <br>
                                       <label for="macModem">MAC del modem</label>
-                                      <input class="form-control input-sm internet" type="text" name="macModem">
+                                      <input class="form-control input-sm internet" type="text" name="macModem" readonly>
                                   </div>
                                   <div class="col-md-2">
                                       <br>
                                       <label for="serieModem">Serie del modem</label>
-                                      <input class="form-control input-sm internet" type="text" name="serieModem">
+                                      <input class="form-control input-sm internet" type="text" name="serieModem" readonly>
                                   </div>
                                   <div class="col-md-2">
                                       <br>
                                       <label for="velocidad">Velocidad</label>
-                                      <input id="velocidad" class="form-control input-sm internet" type="text" name="velocidad" required>
+                                      <input id="velocidad" class="form-control input-sm internet" type="text" name="velocidad" readonly>
                                   </div>
                                   <div class="col-md-1">
                                       <br>
                                       <label for="recep">Recep</label>
-                                      <input class="form-control input-sm internet" type="text" name="recep">
+                                      <input class="form-control input-sm internet" type="text" name="recep" readonly>
                                   </div>
                                   <div class="col-md-1">
                                       <br>
                                       <label for="trans">Trans</label>
-                                      <input class="form-control input-sm internet" type="text" name="trans">
+                                      <input class="form-control input-sm internet" type="text" name="trans" readonly>
                                   </div>
                                   <div class="col-md-1">
                                       <br>
                                       <label for="ruido">Ruido</label>
-                                      <input class="form-control input-sm internet" type="text" name="ruido">
+                                      <input class="form-control input-sm internet" type="text" name="ruido" readonly>
                                   </div>
                                   <div class="col-md-2">
                                       <br>
                                       <label for="colilla">Colilla</label>
-                                      <input class="form-control input-sm internet" type="text" name="colilla">
+                                      <input class="form-control input-sm internet" type="text" name="colilla" readonly>
                                   </div>
                               </div>
                               <div class="form-row">
                                   <div class="col-md-2">
                                       <br>
                                       <label for="fechaTrabajo">Fecha de trabajo</label>
-                                      <input class="form-control input-sm" type="text" name="fechaTrabajo">
+                                      <input class="form-control input-sm" type="text" name="fechaTrabajo" readonly>
                                   </div>
                                   <div class="col-md-2">
                                       <br>
                                       <label for="hora">Hora</label>
-                                      <input class="form-control input-sm" type="text" name="hora">
+                                      <input class="form-control input-sm" type="text" name="hora" readonly>
                                   </div>
                                   <div class="col-md-3">
                                       <br>
                                       <label for="fechaProgramacion">Fecha de programación</label>
-                                      <input class="form-control input-sm" type="text" name="fechaProgramacion">
+                                      <input class="form-control input-sm" type="text" name="fechaProgramacion" readonly>
                                   </div>
                                   <div class="col-md-5">
                                       <br>
                                       <label for="responsable">Responsable</label>
-                                      <select class="form-control input-sm" name="responsable">
+                                      <select class="form-control input-sm" name="responsable" disabled>
                                           <option value=""></option>
                                       </select>
                                   </div>
@@ -327,24 +327,24 @@
                                   <div class="col-md-12">
                                       <br>
                                       <label for="observaciones">Observaciones</label>
-                                      <textarea class="form-control input-sm" name="observaciones" rows="2" cols="40"></textarea>
+                                      <textarea class="form-control input-sm" name="observaciones" rows="2" cols="40" readonly></textarea>
                                   </div>
                               </div>
                               <div class="form-row">
                                   <div class="col-md-4">
                                       <br>
                                       <label for="nodo">Nodo</label>
-                                      <input class="form-control input-sm" type="text" name="nodo">
+                                      <input class="form-control input-sm" type="text" name="nodo" readonly>
                                   </div>
                                   <div class="col-md-4">
                                       <br>
                                       <label for="vendedor">Vendedor</label>
-                                      <input class="form-control input-sm" type="text" name="vendedor">
+                                      <input class="form-control input-sm" type="text" name="vendedor" readonly>
                                   </div>
                                   <div class="col-md-4">
                                       <br>
                                       <label for="recepcionTv">Recepción TV</label>
-                                      <input class="form-control input-sm cable" type="text" name="recepcionTv">
+                                      <input class="form-control input-sm cable" type="text" name="recepcionTv" readonly>
                                   </div>
                               </div>
                           </div>
@@ -374,59 +374,9 @@
     <!-- Custom Theme JavaScript -->
     <script src="../../dist/js/sb-admin-2.js"></script>
     <script src="../../dist/js/jquery-validation-1.19.0/dist/jquery.validate.js"></script>
+    <script src="js/ordenSuspencion.js"></script>
 
-    <script type="text/javascript">
-        function ordenInternet(){
-            var inputsCable = document.getElementsByClassName("cable");
-            if (inputsCable[0].disabled == true) {
-                document.getElementById("btn-internet").style.color="#333333";
-                for (var i = 0; i < inputsCable.length; i++) {
-                    inputsCable[i].disabled = false;
-                }
-            }
-            else {
-                document.getElementById("btn-internet").style.color="#039BE5";
-                for (var i = 0; i < inputsCable.length; i++) {
-                    inputsCable[i].disabled = true;
-                }
-            }
 
-        }
-
-        function ordenCable(){
-            var inputsInternet = document.getElementsByClassName("internet");
-            if (inputsInternet[0].disabled == true) {
-                document.getElementById("btn-cable").style.color="#333333";
-                for (var i = 0; i < inputsInternet.length; i++) {
-                    inputsInternet[i].disabled = false;
-                }
-            }
-            else {
-                document.getElementById("btn-cable").style.color="#4CAF50";
-                for (var i = 0; i < inputsInternet.length; i++) {
-                    inputsInternet[i].disabled = true;
-                }
-            }
-
-        }
-    </script>
-    <!-- JQUERY POST PARA ENVIAR DATOS DE LAS ORDENES TÉCNICASS-->
-    <script type="text/javascript">
-        function enviar(){
-            alert("HOLA" + document.getElementById("velocidad").value);
-            $.ajax({
-            data: 'velocidad=' + document.getElementById("velocidad").value,
-            url: '../php/prueba.php',
-            method: 'POST', // or GET
-            success: function(msg) {
-                alert(msg);
-            }
-            });
-        }
-    </script>
-    <script>
-        $("#ordenesTrabajo").validate();
-    </script>
 </body>
 
 </html>
