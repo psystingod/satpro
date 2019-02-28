@@ -294,7 +294,7 @@
     <!-- Add modal -->
 
     <div class="modal fade" id="agregar" tabindex="-1" role="dialog" aria-labelledby="agregar">
-          <div class="modal-dialog" role="document">
+          <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                       <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -303,17 +303,15 @@
                       <form action="../php/enterProduct.php" method="POST">
                       <div class="modal-body">
                                   <div class="form-row">
-                                      <div class="form-group col-md-6 col-xs-6">
-                                          <label for="codigo">Código</label>
-                                          <input type="text" class="form-control" name="codigo" id="codigo" placeholder="Código del producto" required>
-                                      </div>
-                                      <div class="form-group col-md-6 col-xs-6">
+                                      <div class="form-group col-md-2 col-xs-2">
                                           <label for="fecha">Fecha</label>
                                           <input type="text" class="form-control" name="fecha" id="fecha" placeholder="" readonly>
                                       </div>
-                                  </div>
-                                  <div class="form-row">
-                                      <div class="form-group col-md-12 col-xs-12">
+                                      <div class="form-group col-md-2 col-xs-2">
+                                          <label for="codigo">Código</label>
+                                          <input type="text" class="form-control" name="codigo" id="codigo" placeholder="Código" required>
+                                      </div>
+                                      <div class="form-group col-md-8 col-xs-8">
                                           <label for="codigo">Nombre</label>
                                           <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre del producto" title="Escribe solamente letras y números" required>
                                       </div>
@@ -333,7 +331,7 @@
                                       </div>
                                   </div>
                                   <div class="form-row">
-                                      <div class="form-group col-md-6 col-xs-6">
+                                      <div class="form-group col-md-4 col-xs-4">
                                         <label for="proveedor">Proveedor</label>
                                            <select class="form-control form-control-lg" name="proveedor" title="Escribe solamente letras y números" required>
                                               <option value="" selected="selected">Seleccionar...</option>
@@ -344,13 +342,11 @@
                                               ?>
                                           </select>
                                       </div>
-                                      <div class="form-group col-md-6 col-xs-6">
+                                      <div class="form-group col-md-4 col-xs-4">
                                           <label for="cantidad">Cantidad</label>
                                           <input type="number" min="0" class="form-control" name="cantidad" id="cantidad" placeholder="Cantidad" pattern="[0-9]+(\.[0-9][0-9]?)?" title="Escribe solamente números" required>
                                       </div>
-                                  </div>
-                                  <div class="form-row">
-                                      <div class="form-group col-md-6 col-xs-6">
+                                      <div class="form-group col-md-4 col-xs-4">
                                           <label for="Tipo de producto">Tipo de producto</label>
                                           <select class="form-control form-control-lg" name="tProducto" required>
                                               <option value="" selected="selected">Seleccionar...</option>
@@ -361,7 +357,9 @@
                                               ?>
                                           </select>
                                       </div>
-                                      <div class="form-group col-md-6 col-xs-6">
+                                  </div>
+                                  <div class="form-row">
+                                      <div class="form-group col-md-4 col-xs-4">
                                           <label for="categoria">Categoria</label>
                                           <select class="form-control form-control-lg" name="categoria" required>
                                               <option value="" selected="selected">Seleccionar...</option>
@@ -372,10 +370,7 @@
                                               ?>
                                           </select>
                                       </div>
-
-                                  </div>
-                                  <div class="form-row">
-                                      <div class="form-group col-md-6 col-xs-6">
+                                      <div class="form-group col-md-4 col-xs-4">
                                           <label for="bodega">Bodega</label>
                                           <select class="form-control form-control-lg" name="bodega" required>
                                               <option value="" selected="selected">Seleccionar...</option>
@@ -386,7 +381,7 @@
                                               ?>
                                           </select>
                                       </div>
-                                      <div class="form-group col-md-6 col-xs-6">
+                                      <div class="form-group col-md-4 col-xs-4">
                                         <label for="um">Unidad de medida</label>
                                         <select class="form-control form-control-lg" name="um" required>
                                             <option value="" selected="selected">Seleccionar...</option>
