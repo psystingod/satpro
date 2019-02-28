@@ -327,7 +327,12 @@
                                       </div>
                                       <div class="form-group col-md-3 col-xs-3">
                                           <label for="estado">Estado</label>
-                                          <input type="text" class="form-control" name="estado" id="estado" placeholder="Estado" title="Escribe solamente letras y números" required>
+                                          <select class="form-control" name="estado" id="estado" title="Escribe solamente letras y números" required>
+                                              <option value="Bueno">Bueno</option>
+                                              <option value="Regular">Regular</option>
+                                              <option value="Quemado">Quemado</option>
+                                              <option value="Defectuoso">Defectuoso</option>
+                                          </select>
                                       </div>
                                   </div>
                                   <div class="form-row">
