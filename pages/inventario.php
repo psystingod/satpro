@@ -163,7 +163,7 @@
 
    <div class="row">
        <div class="col-lg-12">
-           <h1 class="page-header">INVENTARIO</h1>
+           <h1 class="page-header"><b>INVENTARIO</b></h1>
            <div class="row">
                <div class="row">
                    <div class="col-lg-12">
@@ -173,20 +173,20 @@
                </div>
                <a class="" href="" data-toggle="modal" data-target="#SeleccioneBodega"><div class="col-lg-6 btn btn-default">
                    <div class="stat-icon">
-                       <i class="far fa-check-square fa-3x"></i>
+                       <i class="fas fa-building fa-3x"></i>
                    </div>
                    <div class="stat-values">
                        <br>
                        <div class="name">Inventario <b>Bodegas</b></div>
                    </div>
                </div></a>
-               <a href="inventarioDepartamento.php"><div class="col-lg-6 btn btn-default">
+               <a class="" href="inventarioInternet.php"><div class="col-lg-6 btn btn-default">
                    <div class="stat-icon">
-                       <i class="far fa-calendar-alt fa-3x"></i>
+                       <i class="fas fa-box-open fa-3x"></i>
                    </div>
                    <div class="stat-values">
                        <br>
-                       <div class="name" >Inventario <b>Departamentos</b></div>
+                       <div class="name">Inventario <b>Internet</b></div>
                    </div>
                </div></a>
            </div>
@@ -194,14 +194,22 @@
 
              <a class="" href="inventarioEmpleado.php"><div class="col-lg-6 btn btn-default">
                  <div class="stat-icon">
-                     <i class="far fa-check-square fa-3x"></i>
+                     <i class="fas fa-address-book fa-3x"></i>
                  </div>
                  <div class="stat-values">
                      <br>
-                     <div class="name">Inventario <b>Empleados</b></div>
+                     <div class="name">Artículos asignados a <b>empleados</b></div>
                  </div>
              </div></a>
-
+             <a href="inventarioDepartamento.php"><div class="col-lg-6 btn btn-default">
+                 <div class="stat-icon">
+                     <i class="fas fa-book fa-3x"></i>
+                 </div>
+                 <div class="stat-values">
+                     <br>
+                     <div class="name" >Artículos asignados a <b>departamentos</b></div>
+                 </div>
+             </div></a>
            </div>
 
        </div>
