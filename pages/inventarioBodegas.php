@@ -238,7 +238,6 @@
                     <table width="100%" class="table table-striped table-hover" id="inventario">
                         <thead>
                             <tr>
-
                                 <th> </th>
                                 <th>Id artículo</th>
                                 <th>Código</th>

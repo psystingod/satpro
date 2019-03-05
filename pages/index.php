@@ -2,7 +2,6 @@
     require('../php/contenido.php');
     require('../php/modulePermissions.php');
     session_start();
-
  ?>
 <!DOCTYPE html>
 <html lang="en">
