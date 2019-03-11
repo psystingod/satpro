@@ -4,18 +4,11 @@
     require("../php/productsInfo.php");
 
     $Bodega=$_GET["bodega"];
-    $getInventory = new GetInventoryPDF();
-    $recordsInfo = $getInventory->showInventoryRecords($Bodega);
+  $getInventoryI = new GetInventoryPDF();
+  $recordsInfoI = $getInventoryI->showInventoryInternet($Bodega);
+  $productsInfo = new ProductsInfo();
+  $warehouses = $productsInfo->getWarehouses();
 
-    //Métodos para traer la información de los productos
-    $productsInfo = new ProductsInfo();
-    $type = $productsInfo->getTipo();
-    $provider = $productsInfo->getProveedor();
-    $categories = $productsInfo->getCategories();
-    $subCategories = $productsInfo->getCategories();
-    $um = $productsInfo->getMeasurements();
-    $warehouses = $productsInfo->getWarehouses();
-    $departments = $productsInfo->getDepartments();
 ?>
 
 <!DOCTYPE html>
@@ -165,7 +158,7 @@
 
         <div id="page-wrapper">
             <div class="row">
-                    <h1 class="page-header"><b>INVENTARIO INTERNET</b></h1>
+                      <h1 class="page-header alert alert-info">Inventario Internet: <?php echo htmlspecialchars($Bodega, ENT_QUOTES);  ?> </h1>
                     <?php
                     if (isset($_GET['status'])) {
                        if ($_GET['status'] == 'success') {
@@ -183,7 +176,7 @@
                         else if ($_GET['status'] == 'FalloRegistro'){
                            echo "<div id='temporal' class='alert alert-danger alert-dismissible'>
                                      <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                                     Su registro <strong>falló al Guardarse. El codigo ya existe en bodega</strong>
+                                     Su registro <strong>Fallò el ingreso. Mac o Serie ya Existente</strong>
                                  </div>";
                        }
                          else if ($_GET['status'] == 'fai'){
@@ -192,12 +185,6 @@
                                      No se puede <strong> Eliminar</strong>. Otro Modulo esta referenciando su codigo
                                  </div>";
                        }
-                       else if ($_GET['status'] == 'ErrorStock'){
-                         echo "<div id='temporal' class='alert alert-danger alert-dismissible'>
-                                   <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                                   No se completo el <b>Traslado</b>. La cantidad de traslado de uno de los articulos, Estaria dejando sin la existencia <b>Minima</b> Permitida en Bodega (5)
-                               </div>";
-                     }
                      else if ($_GET['status'] == 'Eliminado'){
 
                              echo "<div id='temporal' class='alert alert-warning alert-dismissible'>
@@ -227,15 +214,17 @@
 
             <div class="row">
                 <form class="" action="resumenTraslado.php" method="POST">
+                  <button id="btn_agregar0" class="btn btn-primary center-block" type="button" name="button" data-toggle="modal" data-target="#SeleccioneBodegaI" accesskey="b">Seleccionar Otra Bodega</button>
+
                 <button id="btn_agregar0" class="btn btn-primary pull-right" type="button" name="button" data-toggle="modal" data-target="#agregar" accesskey="a"><i class="fas fa-plus-circle"></i> Agregar Nuevo Producto</button>
                 <br><br>
 
                     <table width="100%" class="table table-striped table-hover" id="inventario">
                         <thead>
                             <tr>
-                                <th>Id artículo</th>
-                                <th>Código</th>
-                                <th>Nombre</th>
+                                <th>Codigo</th>
+                                <th>Marca</th>
+                                <th>Modelo</th>
                                 <th>MAC</th>
                                 <th>Serie</th>
                                 <th>Estado</th>
@@ -246,15 +235,31 @@
                         <tbody>
                             <?php
 
-                                foreach ($recordsInfo as $key) {
+                                foreach ($recordsInfoI as $key) {
                                     echo "<tr><td>";
-                                    echo $key["idArticulo"] . "</td><td>";
-                                    echo $key["codigo"] . "</td><td>";
-                                    echo $key["nombreArticulo"] . "</td><td>";
-                                    echo $key["macArticulo"] . "</td><td>";
-                                    echo $key["serieArticulo"] . "</td><td>";
-                                    echo $key["estado"] . "</td><td>";
-                                    echo $key["FechaEntrada"] . "</td><td>";
+                                    echo $key["Codigo"] . "</td><td>";
+                                    echo $key["Marca"] . "</td><td>";
+                                    echo $key["Modelo"] . "</td><td>";
+                                    echo $key["Mac"] . "</td><td>";
+                                    echo $key["Serie"] . "</td><td>";
+                                    if($key["Estado"] == 0)
+                                    {
+                                      echo "Bueno"."</td><td>";
+                                    }
+                                    else if($key["Estado"] == 1)
+                                    {
+                                      echo "Regular"."</td><td>";
+                                    }
+                                    else if($key["Estado"] == 2)
+                                    {
+                                      echo "Quemado"."</td><td>";
+                                    }
+                                    else if($key["Estado"] == 3)
+                                    {
+                                      echo "Defectuoso"."</td><td>";
+                                    }
+                                    // echo $key["Estado"] . "</td><td>";
+                                    echo $key["fecha"] . "</td><td>";
                                     echo "<div class='btn-group pull-right'>
                                                 <button type='button' class='btn btn-default'>Opciones</button>
                                                 <button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
@@ -262,11 +267,11 @@
                                                   <span class='sr-only'>Toggle Dropdown</span>
                                                 </button>
                                                 <ul class='dropdown-menu'>
-                                                    <li><a href='verArticulo.php?id={$key['idArticulo']}&Bdg={$Bodega}'><i class='fas fa-eye'></i> Ver</a>
+                                                    <li><a href='verArticuloInternet.php?id={$key['IdArticulo']}&Bdg={$Bodega}'><i class='fas fa-eye'></i> Ver</a>
                                                     </li>
-                                                    <li class='editar'><a href='actualizarArticulo.php?id={$key['idArticulo']}&Bdg={$Bodega}'><i class='fas fa-edit'></i> Editar</a>
+                                                    <li class='editar'><a href='actualizarArticuloI.php?id={$key['IdArticulo']}&Bdg={$Bodega}'><i class='fas fa-edit'></i> Editar</a>
                                                     </li>
-                                                    <li class='eliminar'><a href='#' onclick='deleteArticle( {$key['idArticulo']} ); '><i class='fas fa-trash-alt'></i> Eliminar</a>
+                                                    <li class='eliminar'><a href='#' onclick='deleteArticle( {$key['IdArticulo']} ); '><i class='fas fa-trash-alt'></i> Eliminar</a>
                                                     </li>
                                                     <li class='divider'></li>
                                                 </ul>
@@ -280,7 +285,6 @@
                     <!-- /.table-responsive -->
                     <div class="well">
                         <h4>Inventario Cablesat</h4>
-                        <p>El presente inventario está conformado por todos y cada uno de los artículos que se encuentran almacenados en las bodegas de Cablesat u objetos que se encuentran en uso en las diferentes unidades de la empresa. Ver información en: <a target="_blank" href="https://cablesat.net/">https://cablesat.net/</a></p>
                         <button class="btn btn-default btn-lg btn-block" type="button" name="button" data-toggle="modal" data-target="#GenerarReporte" accesskey="a"><i class="fas fa-plus-circle"></i> Generar reporte PDF</button>
 
                     </div>
@@ -298,25 +302,31 @@
                 <div class="modal-content">
                       <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="nuevoProducto">Nuevo producto</h4>
+                            <h4 class="modal-title" id="Agregar">Nuevo producto</h4>
                       </div>
-                      <form action="../php/enterProduct.php" method="POST">
+                      <form action="../php/enterProductInternet.php" method="POST">
                       <div class="modal-body">
                                   <div class="form-row">
-                                      <div class="form-group col-md-2 col-xs-2">
+                                      <div class="form-group col-md-4 col-xs-4">
                                           <label for="fecha">Fecha</label>
                                           <input type="text" class="form-control" name="fecha" id="fecha" placeholder="" readonly>
                                       </div>
-                                      <div class="form-group col-md-2 col-xs-2">
+                                      <div class="form-group col-md-4 col-xs-4">
                                           <label for="codigo">Código</label>
                                           <input type="text" class="form-control" name="codigo" id="codigo" placeholder="Código" required>
                                       </div>
-                                      <div class="form-group col-md-8 col-xs-8">
-                                          <label for="codigo">Nombre</label>
-                                          <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre del producto" title="Escribe solamente letras y números" required>
+                                      <div class="form-group col-md-4 col-xs-4">
+                                          <label for="Marca del articulo">Marca:</label>
+                                          <input type="text" class="form-control" name="marca" id="marca" placeholder="Marca del Producto"  required>
                                       </div>
+
+
                                   </div>
                                   <div class="form-row">
+                                    <div class="form-group col-md-3 col-xs-3">
+                                        <label for="Modelo del articulo">Modelo</label>
+                                        <input type="text" class="form-control" name="modelo" id="modelo" placeholder="Modelo del Producto" >
+                                    </div>
                                       <div class="form-group col-md-4 col-xs-4">
                                           <label for="mac">MAC</label>
                                           <input type="text" class="form-control" name="mac" id="mac" placeholder="MAC del producto" title="Escribe solamente letras y números" required>
@@ -325,89 +335,33 @@
                                           <label for="serie">Serie</label>
                                           <input type="text" class="form-control" name="serie" id="serie" placeholder="Serie del producto" title="Escribe solamente letras y números" required>
                                       </div>
-                                      <div class="form-group col-md-3 col-xs-3">
-                                          <label for="estado">Estado</label>
-                                          <select class="form-control" name="estado" id="estado" title="Escribe solamente letras y números" required>
-                                              <option value="Bueno">Bueno</option>
-                                              <option value="Regular">Regular</option>
-                                              <option value="Quemado">Quemado</option>
-                                              <option value="Defectuoso">Defectuoso</option>
-                                          </select>
-                                      </div>
+
                                   </div>
+
                                   <div class="form-row">
-                                      <div class="form-group col-md-4 col-xs-4">
-                                        <label for="proveedor">Proveedor</label>
-                                           <select class="form-control form-control-lg" name="proveedor" title="Escribe solamente letras y números" required>
-                                              <option value="" selected="selected">Seleccionar...</option>
-                                              <?php
-                                                foreach ($provider as $key) {
-                                                    echo "<option value='".strtolower($key['Nombre'])." '>".$key['Nombre']."</option>";
-                                                }
-                                              ?>
-                                          </select>
-                                      </div>
-                                      <div class="form-group col-md-4 col-xs-4">
-                                          <label for="cantidad">Cantidad</label>
-                                          <input type="number" min="0" class="form-control" name="cantidad" id="cantidad" placeholder="Cantidad" pattern="[0-9]+(\.[0-9][0-9]?)?" title="Escribe solamente números" required>
-                                      </div>
-                                      <div class="form-group col-md-4 col-xs-4">
-                                          <label for="Tipo de producto">Tipo de producto</label>
-                                          <select class="form-control form-control-lg" name="tProducto" required>
-                                              <option value="" selected="selected">Seleccionar...</option>
-                                              <?php
-                                                foreach ($type as $key) {
-                                                    echo "<option value='".strtolower($key['NombreTipoProducto'])."' >".$key['NombreTipoProducto']."</option>";
-                                                }
-                                              ?>
-                                          </select>
-                                      </div>
-                                  </div>
-                                  <div class="form-row">
-                                      <div class="form-group col-md-4 col-xs-4">
-                                          <label for="categoria">Categoria</label>
-                                          <select class="form-control form-control-lg" name="categoria" required>
-                                              <option value="" selected="selected">Seleccionar...</option>
-                                              <?php
-                                                foreach ($categories as $key) {
-                                                    echo "<option value='".strtolower($key['NombreCategoria'])."' >".$key['NombreCategoria']."</option>";
-                                                }
-                                              ?>
-                                          </select>
-                                      </div>
-                                      <div class="form-group col-md-4 col-xs-4">
-                                          <label for="bodega">Bodega</label>
-                                          <select class="form-control form-control-lg" name="bodega" required>
-                                              <option value="" selected="selected">Seleccionar...</option>
-                                              <?php
-                                                foreach ($warehouses as $key) {
-                                                    echo "<option value='".strtolower($key['NombreBodega'])."'>".$key['NombreBodega']."</option>";
-                                                }
-                                              ?>
-                                          </select>
-                                      </div>
-                                      <div class="form-group col-md-4 col-xs-4">
-                                        <label for="um">Unidad de medida</label>
-                                        <select class="form-control form-control-lg" name="um" required>
+                                    <div class="form-group col-md-6 col-xs-6">
+                                        <label for="bodega">Bodega</label>
+                                        <select class="form-control form-control-lg" name="bodega" required>
                                             <option value="" selected="selected">Seleccionar...</option>
                                             <?php
-                                            foreach ($um as $key) {
-                                                echo "<option value=".strtolower($key['NombreUnidadMedida'])." >".$key['NombreUnidadMedida']."</option>";
-                                            }
+                                              foreach ($warehouses as $key) {
+                                                  echo "<option value='".strtolower($key['NombreBodega'])."'>".$key['NombreBodega']."</option>";
+                                              }
                                             ?>
                                         </select>
-                                      </div>
+                                    </div>
+                                    <div class="form-group col-md-6 col-xs-6">
+                                        <label for="estado">Estado</label>
+                                        <select class="form-control" name="estado" id="estado" title="Escribe solamente letras y números" required>
+                                            <option value="0">Bueno</option>
+                                            <option value="1">Regular</option>
+                                            <option value="2">Quemado</option>
+                                            <option value="3">Defectuoso</option>
+                                        </select>
+                                    </div>
+
                                   </div>
-                                  <div class="form-row">
-                                      <div class="form-group col-md-6 col-xs-6">
-                                          <label for="precio de compra">Precio de compra (U)</label>
-                                          <input type="text" class="form-control" name="pCompra" id="pCompra" placeholder="$ Precio de compra" pattern="[0-9]+(\.[0-9][0-9]?)?" title="Escribe solamente números" required>
-                                      </div>
-                                      <div class="form-group col-md-6 col-xs-6">
-                                          <label for="precio de venta">Precio de venta (U)</label>
-                                          <input type="text" class="form-control" name="pVenta" id="pVenta" placeholder="$ Precio de venta" pattern="[0-9]+(\.[0-9][0-9]?)?" title="Escribe solamente números" >
-                                      </div>
-                                  </div>
+
                                   <div class="form-row">
                                       <div class="form-group col-md-12 col-xs-12">
                                             <label for="message-text" class="control-label">Descripción:</label>
@@ -416,8 +370,8 @@
                                   </div>
                       </div>
                       <div class="modal-footer">
-                        <input type="hidden" name="NOMBRE" value='<?php echo $_SESSION['nombres']; ?>'>
-                  <input type="hidden" name="APELLIDO" value='<?php echo $_SESSION['apellidos']; ?>'>
+                        <!-- <input type="hidden" name="NOMBRE" value='<?php echo $_SESSION['nombres']; ?>'>
+                        <input type="hidden" name="APELLIDO" value='<?php echo $_SESSION['apellidos']; ?>'> -->
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                             <input type="submit" class="btn btn-primary" value="Registrar">
                       </div>
@@ -433,7 +387,7 @@
                           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                           <h4 class="modal-title" id="nuevoProducto">Seleccione Filtro de Inventario</h4>
                     </div>
-                  <form action="inventarioPDF.php" method="POST" target="_blank">
+                  <form action="inventarioPDFI.php" method="POST" target="_blank">
                     <div class="modal-body">
                                 <div class="form-row">
                                 </div>
@@ -450,27 +404,12 @@
                                         </select>
                                     </div>
                                     <div class="form-group col-md-6 col-xs-6">
-                                        <label for="cantidad">Proovedor</label>
-                                        <select class="form-control form-control-lg" name="proveedor11">
-                                           <option value="" selected="selected">Seleccionar...</option>
-                                           <?php
-                                             foreach ($provider as $key) {
-                                                 echo "<option value='".strtolower($key['Nombre'])." '>".$key['Nombre']."</option>";
-                                             }
-                                           ?>
-                                       </select>
+                                      <br>
+                                      <br>
+                                        <input type="checkbox" name="todo">Todas las Bodegas<br>
                                     </div>
                                 </div>
-                                <div class="form-row">
-                                    <div class="form-group col-md-12 col-xs-12">
-                                        <label for="proveedor">Seleccione Columnas que desea ver:</label>
-                                        <br>
-                                        <input type="checkbox" name="PrecioVenta">Precio Venta<br>
-                                        <input type="checkbox" name="PrecioCompra" >Precio Compra<br>
-                                        <input type="checkbox" name="Proveedor" >Proveedor<br>
-                                    </div>
 
-                                </div>
                     </div>
                     <div class="modal-footer">
                       <input type="hidden" name="NOMBRE" value='<?php echo $_SESSION['nombres']; ?>'>
@@ -482,6 +421,35 @@
               </div>
         </div>
   </div><!-- /Add modal -->
+  <div class="modal fade" id="SeleccioneBodegaI" tabindex="-1" role="dialog" aria-labelledby="SeleccioneBodegaI">
+        <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                    <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <h4 class="modal-title" id="Seleccion">Selección</h4>
+                  </div>
+                  <form action="inventarioInternet.php" method="GET">
+                    <div class="modal-body">
+                                <div class="form-row">
+                                        <label for="bodega">Seleccion Bodega</label>
+                                        <select class="form-control form-control-lg" name="bodega" required>
+                                            <option value="" selected="selected">Seleccionar...</option>";
+                                            <?php
+                                              foreach ($warehouses as $key) {
+                                                  echo "<option value='".strtolower($key['NombreBodega'])."'>".$key['NombreBodega']."</option>";
+                                              }
+                                            ?>
+                                  </select>
+                                </div>
+                    </div>
+                    <div class="modal-footer">
+                          <button type='button' class='btn btn-default' data-dismiss='modal'>Cancelar</button>
+                           <input type='submit' class='btn btn-primary' value='Ver Inventario'>
+                    </div>
+                        </form>
+              </div>
+        </div>
+  </div>
     <!-- jQuery -->
     <script src="../vendor/jquery/jquery.min.js"></script>
 
@@ -533,7 +501,7 @@
 
             var answer = confirm('¿Está seguro de borrar este registro?');
             if (answer){
-                window.location = 'borrarArticulo.php?id=' + id;
+                window.location = 'borrarArticuloI.php?id=' + id;
             }
         }
     </script>

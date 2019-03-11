@@ -49,6 +49,35 @@
         }
 
 
+        public function getInventoryTranslateReportI($Bodega,$Todo)
+        {
+            try {
+                 if(isset($Bodega) and isset($Todo) )
+                {
+                  $query = "SELECT ai.Codigo,ai.Mac,ai.serie,ai.Estado,b.NombreBodega, ai.Marca, ai.Modelo, ai.Descripcion, ai.fecha
+                    FROM tbl_articuloInternet as ai inner JOIN tbl_bodega as b on ai.IdBodega=b.IdBodega";
+                          $statement = $this->dbConnect->prepare($query);
+                          $statement->execute();
+                          $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+                          return $result;
+                }
+              else if(isset($Bodega))
+                {
+                  $query = "SELECT ai.Codigo,ai.Mac,ai.serie,ai.Estado,b.NombreBodega, ai.Marca, ai.Modelo, ai.Descripcion, ai.fecha
+                  FROM tbl_articuloInternet as ai inner JOIN tbl_bodega as b on ai.IdBodega=b.IdBodega where ai.IdBodega=(SELECT IdBodega
+                     FROM tbl_bodega  where NombreBodega='".$Bodega."')";
+                          $statement = $this->dbConnect->prepare($query);
+                          $statement->execute();
+                          $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+                          return $result;
+                }
+            } catch (Exception $e) {
+                print "!Error¡: " . $e->getMessage() . "</br>";
+                die();
+            }
+        }
+
+
         public function showInventoryRecords($Bodega)
         {
             try {
@@ -71,5 +100,24 @@
                 die();
             }
         }
+        public function showInventoryInternet($Bodega)
+        {
+            try {
+                // SQL query para traer los datos de los productos
+                $query = "SELECT * FROM tbl_articuloInternet where IdBodega=(SELECT IdBodega FROM tbl_bodega where NombreBodega='".$Bodega."')";
+                // Preparación de sentencia
+                $statement = $this->dbConnect->prepare($query);
+                $statement->execute();
+                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+                return $result;
+
+            } catch (Exception $e) {
+                print "!Error¡: " . $e->getMessage() . "</br>";
+                die();
+            }
+        }
+
+
     }
 ?>
