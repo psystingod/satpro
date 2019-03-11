@@ -162,12 +162,12 @@
                             <table width="100%" class="table table-striped table-hover" id="clientes5">
                                 <thead class="bg-primary">
                                     <tr>
-                                        <th>Cód</th>
-                                        <th>Nombre</th>
-                                        <th>DUI</th>
-                                        <th>Teléfonos</th>
+                                        <th width="6">Cód</th>
+                                        <th width="280">Nombre</th>
+                                        <th width="120">DUI</th>
+                                        <th width="180">Teléfonos</th>
                                         <th>Dirección</th>
-                                        <th></th>
+                                        <th width="10"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -176,14 +176,13 @@
                                         foreach ($allClientsArray as $key) {
                                             echo "<tr><td>";
                                             echo $key["cod_cliente"] . "</td><td>";
-                                            echo trim($key["nombre"]) . "</td><td>";
+                                            echo trim(ucwords(strtolower($key["nombre"]))) . "</td><td>";
                                             echo $key["numero_dui"] . "</td><td>";
-                                            echo $key["telefonos"] . "</td><td>";
-                                            echo trim(substr($key["direccion"],0,45)) . "</td><td>";
+                                            echo trim($key["telefonos"]) . "</td><td>";
+                                            echo trim(substr(ucwords(strtolower($key["direccion"])),0,45)) . "</td><td>";
                                             echo "<div class='btn-group pull-right'>
-                                                        <button type='button' class='btn btn-default'>Opciones</button>
                                                         <button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-                                                          <span class='caret'></span>
+                                                          <i class='fas fa-ellipsis-v'></i>
                                                           <span class='sr-only'>Toggle Dropdown</span>
                                                         </button>
                                                         <ul class='dropdown-menu'>
