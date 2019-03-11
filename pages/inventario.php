@@ -180,7 +180,7 @@
                        <div class="name">Inventario <b>Bodegas</b></div>
                    </div>
                </div></a>
-               <a class="" href="inventarioInternet.php"><div class="col-lg-6 btn btn-default">
+               <a class="" href="" data-toggle="modal" data-target="#SeleccioneBodegaI"><div class="col-lg-6 btn btn-default">
                    <div class="stat-icon">
                        <i class="fas fa-box-open fa-3x"></i>
                    </div>
@@ -229,6 +229,34 @@
                                     <h4 class='modal-title' id='nuevoProducto'>Selección</h4>
                             </div>
                             <form action='inventarioBodegas.php' method='GET'>
+                              <div class='modal-body'>
+                                          <div class='form-row'>
+                                                  <label for='bodega'>Seleccion Bodega</label>
+                                                  <select class='form-control form-control-lg' name='bodega' required>
+                                                      <option value='' selected='selected'>Seleccionar...</option>";
+                                                      foreach ($warehouses as $key)
+                                                      {
+                                                          echo "<option value='".strtolower($key['NombreBodega'])."'>".$key['NombreBodega']."</option>";
+                                                     }
+                                            echo "</select>
+                                          </div>
+                              </div>
+                              <div class='modal-footer'>
+                                    <button type='button' class='btn btn-default' data-dismiss='modal'>Cancelar</button>
+                                     <input type='submit' class='btn btn-primary' value='Ver Inventario'>
+                              </div>
+                                  </form>
+                        </div>
+                  </div>
+            </div>
+            <div class='modal fade' id='SeleccioneBodegaI' tabindex='-1' role='dialog' aria-labelledby='SeleccioneBodegaI'>
+                  <div class='modal-dialog' role='document'>
+                        <div class='modal-content'>
+                              <div class='modal-header'>
+                                    <button type='button' class='close' data-dismiss='modal' aria-label='Close'><span aria-hidden='true'>&times;</span></button>
+                                    <h4 class='modal-title' id='nuevoProducto'>Selección</h4>
+                            </div>
+                            <form action='inventarioInternet.php' method='GET'>
                               <div class='modal-body'>
                                           <div class='form-row'>
                                                   <label for='bodega'>Seleccion Bodega</label>
