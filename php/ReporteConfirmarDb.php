@@ -74,7 +74,7 @@
 
                                 //Validar si existe un Articulo con Codigo 'x' en 'x' departamento, Si lo esta actualiza la cantidad, Si no
                                 //esta agrega como nuevo
-                                $query = "SELECT count(*) FROM tbl_articulo where Codigo = '".$array[$i]."' and IdBodega=(select IdBodega from tbl_Bodega where NombreBodega='".$Bodega."')";
+                                $query = "SELECT count(*) FROM tbl_articulo where Codigo = '".$array[$i]."' and IdBodega=(select IdBodega from tbl_bodega where NombreBodega='".$Bodega."')";
 
                                 $statement = $this->dbConnect->query($query);
 
@@ -98,6 +98,7 @@
                                         (SELECT IdBodega from tbl_bodega where NombreBodega='".$Bodega."') from tbl_articulo as a where Codigo='".$IdArticulo."' limit 1";
                                         $statement = $this->dbConnect->prepare($query);
                                         $statement->execute();
+                                        
                                         header('Location: ../pages/DetalleDeAsignacionesDB.php?status=success');
 
                                     }

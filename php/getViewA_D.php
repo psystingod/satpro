@@ -97,7 +97,7 @@
        {
            try {
                // SQL query para traer los datos de los productos
-               $query = "SELECT AD.IdArticuloDepartamento, AD.Codigo, AD.NombreArticulo, AD.Cantidad, D.NombreDepartamento FROM satpro.tbl_articulodepartamento as AD inner join tbl_departamento as D on AD.IdDepartamento=D.IdDepartamento";
+               $query = "SELECT AD.IdArticuloDepartamento, AD.Codigo, AD.NombreArticulo, AD.Cantidad, D.NombreDepartamento FROM satpro.tbl_articulodepartamento as AD inner join tbl_departamento as D on AD.IdDepartamento=D.IdDepartamento where AD.Cantidad > 0";
                // Preparación de sentencia
                $statement = $this->dbConnect->prepare($query);
                $statement->execute();
@@ -145,9 +145,9 @@
     {
         try {
             // SQL query para traer los datos de los productos
-            $query = "SELECT h.IdHistoIngreso, h.FechaIngreso, a.NombreArticulo, h.Cantidad, b.NombreBodega, e.Nombres, h.Tipo
-                       from tbl_histoingreso as h inner join tbl_articulo as a on h.IdArticulo=a.IdArticulo inner join
-                      tbl_bodega as b on h.IdBodega=b.IdBodega inner join tbl_empleado as e on e.IdEmpleado=h.IdEmpleado";
+            $query = "SELECT h.FechaHora as FechaHora, h.Tipo_Movimiento as Tipo_Movimiento, h.Descripcion as
+            descr, e.Nombres, e.Apellidos, d.NombreDepartamento as NombreDepartamento FROM tbl_historialRegistros as h inner join
+             tbl_empleado as e on h.IdEmpleado=e.IdEmpleado inner join tbl_departamento as d on d.IdDepartamento=e.IdDepartamento";
             // Preparación de sentencia
             $statement = $this->dbConnect->prepare($query);
             $statement->execute();
