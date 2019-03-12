@@ -210,6 +210,7 @@ if($_POST){
         // prepare query for excecution
         $stmt = $con->prepare($query);
 
+
         // posted values
         $idArticulo=htmlspecialchars(strip_tags($_POST['IdArticulo']));
         $codigo=htmlspecialchars(strip_tags($_POST['codigo']));
@@ -221,7 +222,16 @@ if($_POST){
         $descripcion=htmlspecialchars(strip_tags($_POST['descripcion']));
         $fechaEntrada=htmlspecialchars(strip_tags($_POST['fechaEntrada']));
         date_default_timezone_set('America/El_Salvador');
-         $Fecha = date('Y/m/d g:ia');
+        $Fecha = date('Y/m/d g:ia');
+        $Nombre = htmlspecialchars(strip_tags($_POST["NOMBRE"]));
+        $Apellido = htmlspecialchars(strip_tags($_POST["APELLIDO"]));
+
+        $query = "insert into tbl_historialRegistros (IdEmpleado,FechaHora,Tipo_Movimiento,Descripcion)
+        VALUES((SELECT IdEmpleado from tbl_empleado where Nombres='".$Nombre."' and Apellidos='".$Apellido."'),'". $Fecha."',3
+        ,concat( 'Modelo del Producto/Articulo: ',  (SELECT a.Modelo FROM tbl_articuloInternet as a WHERE  a.IdArticulo= '".$idArticulo."')  , ' MAC: ".$mac." ' ) )";
+         $statement = $con->prepare($query);
+         $statement->execute();
+
         // bind the parameters
         $stmt->bindParam(':IdArticulo', $idArticulo);
         $stmt->bindParam(':codigo', $codigo);
@@ -265,6 +275,8 @@ if($_POST){
     <form action="<?php //echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$idArticulo}");?>" method="POST">
         <input type="hidden" name="IdArticulo" value="<?php echo htmlspecialchars($IdArticulo, ENT_QUOTES);  ?>" >
         <input type="hidden" name="IdBodega" value="<?php echo htmlspecialchars($IdBodega, ENT_QUOTES);  ?>" >
+        <input type="hidden" name="NOMBRE" value="<?php echo htmlspecialchars($_SESSION['nombres'], ENT_QUOTES);  ?>">
+        <input type="hidden" name="APELLIDO" value="<?php echo htmlspecialchars($_SESSION['apellidos'], ENT_QUOTES); ?>">
         <table class='table table-hover table-responsive table-bordered'>
             <tr>
                 <td>Código</td>

@@ -24,7 +24,7 @@
                     $statement = $this->dbConnect->query($query);
                     if($statement->fetchColumn() > 0)
                     {
-                           header('Location: ../pages/AsignarArticuloDepartamento.php?status=ConfirmacionExistente&bodega='.$Bodega);
+                           header('Location: ../pages/asignarArticuloDepartamento.php?status=ConfirmacionExistente&bodega='.$Bodega);
                     }
                     else
                     {
@@ -63,7 +63,6 @@
                              }
                                     for($i=0;$i < count($array); $i++)
                                         {
-
                                           $IdReporte = $IdFactura;
                                           $IdArticulo = $array[$i];
                                           $Cantidad =  $V1[$i];
@@ -84,16 +83,23 @@
                                                ':Cantidad' => $Cantidad,
                                                ':Bodega' => $Bodega
                                                 ));
+
+                                                $query = "insert into tbl_historialRegistros (IdEmpleado,FechaHora,Tipo_Movimiento,Descripcion)
+                                                VALUES((SELECT IdEmpleado from tbl_empleado where Nombres='".$Nombre."' and Apellidos='".$Apellido."'),
+                                                '".$Fecha."',5, concat( (SELECT a.NombreBodega FROM tbl_bodega as a WHERE  NombreBodega='".$Bodega."'),
+                                                ' >> ', (Select NombreDepartamento from tbl_departamento where NombreDepartamento='".$Departamento."') ) )";
+                                                 $statement = $this->dbConnect->prepare($query);
+                                                 $statement->execute();
                                    }
                             $this->dbConnect = NULL;
-                            header('Location: ../pages/AsignarArticuloDepartamento.php?status=success&bodega='.$Bodega);
+                            header('Location: ../pages/asignarArticuloDepartamento.php?status=success&bodega='.$Bodega);
                     }
                     }
                     catch (Exception $e)
                     {
                         print "!Error¡: " . $e->getMessage() . "</br>";
                         die();
-                        header('Location: ../pages/AsignarArticuloDepartamento.php?status=failed');
+                        header('Location: ../pages/asignarArticuloDepartamento.php?status=failed');
                    }
         }
     }

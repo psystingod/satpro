@@ -228,13 +228,15 @@
 
             <div class="row">
                 <form class="" action="resumenTraslado.php" method="POST">
+                  <button id="btn_agregar0" class="btn btn-primary center-block" type="button" name="button" data-toggle="modal" data-target="#SeleccioneBodegaI" accesskey="b">Seleccionar Otra Bodega</button>
 
+                  <br>
                 <button id="traslados" type="submit" class="btn btn-default pull-left" disabled = "disabled" accesskey="t"><i class='fas fa-truck'></i> Trasladar producto a otra Bodega</button>
 
                 <button id="btn_agregar0" class="btn btn-primary pull-right" type="button" name="button" data-toggle="modal" data-target="#agregar" accesskey="a"><i class="fas fa-plus-circle"></i> Agregar Nuevo Producto a bodega</button>&nbsp
                 <button id="btn_agregar0" class="btn btn-success pull-right" type="button" name="button" data-toggle="modal" data-target="#regresar"><i class="fas fa-undo"></i> Devolver Producto a bodega</button>
                 <br><br>
-
+<br>
                     <table width="100%" class="table table-striped table-hover" id="inventario">
                         <thead>
                             <tr>
@@ -243,7 +245,7 @@
                                 <th>Código</th>
                                 <th>Nombre</th>
                                 <th>Cant</th>
-                                <th>Fecha Ingreso</th>
+                                <th>Fecha</th>
                                 <th>Proovedor</th>
                                 <th>Tipo</th>
                                 <th>Categoria</th>
@@ -408,7 +410,7 @@
                                   <div class="form-row">
                                       <div class="form-group col-md-12 col-xs-12">
                                             <label for="message-text" class="control-label">Descripción:</label>
-                                            <textarea class="form-control" name="descripcion" id="descripcion" placeholder="Agregue una breve descripcion del producto" required></textarea>
+                                            <textarea class="form-control" name="descripcion" id="descripcion" placeholder="Agregue una breve descripcion del producto"></textarea>
                                       </div>
                                   </div>
                       </div>
@@ -479,6 +481,35 @@
               </div>
         </div>
   </div><!-- /Add modal -->
+  <div class="modal fade" id="SeleccioneBodegaI" tabindex="-1" role="dialog" aria-labelledby="SeleccioneBodegaI">
+        <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                    <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <h4 class="modal-title" id="Seleccion">Selección</h4>
+                  </div>
+                  <form action="inventarioBodegas.php" method="GET">
+                    <div class="modal-body">
+                                <div class="form-row">
+                                        <label for="bodega">Seleccion Bodega</label>
+                                        <select class="form-control form-control-lg" name="bodega" required>
+                                            <option value="" selected="selected">Seleccionar...</option>";
+                                            <?php
+                                              foreach ($warehouses as $key) {
+                                                  echo "<option value='".strtolower($key['NombreBodega'])."'>".$key['NombreBodega']."</option>";
+                                              }
+                                            ?>
+                                  </select>
+                                </div>
+                    </div>
+                    <div class="modal-footer">
+                          <button type='button' class='btn btn-default' data-dismiss='modal'>Cancelar</button>
+                           <input type='submit' class='btn btn-primary' value='Ver Inventario'>
+                    </div>
+                        </form>
+              </div>
+        </div>
+  </div>
     <!-- jQuery -->
     <script src="../vendor/jquery/jquery.min.js"></script>
 

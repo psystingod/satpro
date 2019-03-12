@@ -149,7 +149,7 @@
 
         <div id="page-wrapper">
             <div class="row">
-                    <h1 class="page-header alert alert-info">Historial de Ingreso de Articulos</h1>
+                    <h1 class="page-header alert alert-info">Historial de Registros</h1>
             </div>
             <!-- /.row -->
             <div class="row">
@@ -164,33 +164,48 @@
                     <table width="100%" class="table table-striped table-hover" id="inventario">
                         <thead>
                             <tr>
-                                <th>Fecha Ingreso</th>
-                                <th>Nombre de Articulo</th>
-                                <th>Cantidad</th>
-                                <th>Bodega</th>
-                                <th>Empleado</th>
-                                <th>Tipo</th>
-
+                                <th>Nombre Empleado</th>
+                                <th>Departamento</th>
+                                <th>Hora/Fecha</th>
+                                <th>Tipo Movimiento</th>
+                                <th>Descripcion</th>
                             </tr>
                         </thead>
                   <tbody>
                             <?php
                                 foreach ($histo as $key) {
                                     echo "<tr><td>";
-                                    echo $key["FechaIngreso"] . "</td><td>";
-                                    echo $key["NombreArticulo"] . "</td><td>";
-                                    echo $key["Cantidad"] . "</td><td>";
-                                    echo $key["NombreBodega"] . "</td><td>";
-                                    echo $key["Nombres"] . "</td><td>";
-
-                                    if($key["Tipo"] == 0)
+                                    echo $key["Nombres"] ." ". $key["Apellidos"] . "</td><td>";
+                                      echo $key["NombreDepartamento"] . "</td><td>";
+                                    echo $key["FechaHora"] . "</td><td>";
+                                    if($key["Tipo_Movimiento"] == 2)
                                     {
-                                      echo "Nuevo Ingreso". "</td></tr>";
+                                      echo "Alta Producto (+)". "</td><td>";
                                     }
-                                    else if($key["Tipo"] == 1)
+                                    else if ($key["Tipo_Movimiento"] == 3) {
+                                      echo "Actualizacion Producto (+)". "</td><td>";
+                                    }
+                                    else if ($key["Tipo_Movimiento"] == 4)
                                     {
-                                      echo "Actualización". "</td></tr>";
+                                      echo "Baja Producto (-)". "</td><td>";
                                     }
+                                    else if ($key["Tipo_Movimiento"] == 5)
+                                    {
+                                      echo "Traslado Producto (->)". "</td><td>";
+                                    }
+                                    echo $key["descr"] . "</td></tr>";
+                                    // echo "<div class='btn-group pull-right'>
+                                    //             <button type='button' class='btn btn-default'>Opciones</button>
+                                    //             <button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                                    //               <span class='caret'></span>
+                                    //               <span class='sr-only'>Toggle Dropdown</span>
+                                    //             </button>
+                                    //             <ul class='dropdown-menu'>
+                                    //                 <li><a href='.php?id=><i class='fas fa-eye'></i> Ver Mas información</a>
+                                    //                 </li>
+                                    //                 <li class='divider'></li>
+                                    //             </ul>
+                                    //         </div>" . "</td></tr>";
                                         }
                                     ?>
                         </tbody>

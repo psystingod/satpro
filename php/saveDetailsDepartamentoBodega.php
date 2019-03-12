@@ -60,7 +60,7 @@
                                 $statement = $this->dbConnect->query($query);
                                if($statement->fetchColumn() > 0)
                                {
-                                      header('Location: ../pages/AsignarArticuloInventario.php?status=ConfirmacionExistente');
+                                      header('Location: ../pages/asignarArticuloInventario.php?status=ConfirmacionExistente');
                                }
                                else
                                {
@@ -95,7 +95,13 @@
                                           ':Cantidad' => $V1[$i]
                                        ));
                                     }
-                                 header('Location: ../pages/AsignarArticuloInventario.php?status=success');
+                                    $query = "insert into tbl_historialRegistros (IdEmpleado,FechaHora,Tipo_Movimiento,Descripcion)
+                                    VALUES((SELECT IdEmpleado from tbl_empleado where Nombres='".$Nombre."' and Apellidos='".$Apellido."'),
+                                    '".$Fecha."',5, concat( (Select NombreDepartamento from tbl_departamento where NombreDepartamento='".$Departamento."'),
+                                    ' >> ', (SELECT a.NombreBodega FROM tbl_bodega as a WHERE  NombreBodega='".$Bodega."') ) )";
+                                     $statement = $this->dbConnect->prepare($query);
+                                     $statement->execute();
+                                 header('Location: ../pages/asignarArticuloInventario.php?status=success');
                                }
 
                             $this->dbConnect = NULL;
@@ -105,7 +111,7 @@
                     {
                       print "!Error¡: " . $e->getMessage() . "</br>";
                         die();
-                        header('Location: ../pages/AsignarArticuloInventario.php?status=failed');
+                        header('Location: ../pages/asignarArticuloInventario.php?status=failed');
                    }
         }
     }

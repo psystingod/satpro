@@ -222,7 +222,6 @@
                     <table width="100%" class="table table-striped table-hover" id="inventario">
                         <thead>
                             <tr>
-                                <th>Codigo</th>
                                 <th>Marca</th>
                                 <th>Modelo</th>
                                 <th>MAC</th>
@@ -237,7 +236,6 @@
 
                                 foreach ($recordsInfoI as $key) {
                                     echo "<tr><td>";
-                                    echo $key["Codigo"] . "</td><td>";
                                     echo $key["Marca"] . "</td><td>";
                                     echo $key["Modelo"] . "</td><td>";
                                     echo $key["Mac"] . "</td><td>";
@@ -307,31 +305,24 @@
                       <form action="../php/enterProductInternet.php" method="POST">
                       <div class="modal-body">
                                   <div class="form-row">
-                                      <div class="form-group col-md-4 col-xs-4">
-                                          <label for="fecha">Fecha</label>
-                                          <input type="text" class="form-control" name="fecha" id="fecha" placeholder="" readonly>
-                                      </div>
-                                      <div class="form-group col-md-4 col-xs-4">
-                                          <label for="codigo">Código</label>
-                                          <input type="text" class="form-control" name="codigo" id="codigo" placeholder="Código" required>
-                                      </div>
-                                      <div class="form-group col-md-4 col-xs-4">
+
+
+                                      <div class="form-group col-md-6 col-xs-6">
                                           <label for="Marca del articulo">Marca:</label>
                                           <input type="text" class="form-control" name="marca" id="marca" placeholder="Marca del Producto"  required>
                                       </div>
-
+                                      <div class="form-group col-md-6 col-xs-6">
+                                          <label for="Modelo del articulo">Modelo</label>
+                                          <input type="text" class="form-control" name="modelo" id="modelo" placeholder="Modelo del Producto" required>
+                                      </div>
 
                                   </div>
                                   <div class="form-row">
-                                    <div class="form-group col-md-3 col-xs-3">
-                                        <label for="Modelo del articulo">Modelo</label>
-                                        <input type="text" class="form-control" name="modelo" id="modelo" placeholder="Modelo del Producto" >
-                                    </div>
-                                      <div class="form-group col-md-4 col-xs-4">
+                                      <div class="form-group col-md-6 col-xs-6">
                                           <label for="mac">MAC</label>
                                           <input type="text" class="form-control" name="mac" id="mac" placeholder="MAC del producto" title="Escribe solamente letras y números" required>
                                       </div>
-                                      <div class="form-group col-md-5 col-xs-5">
+                                      <div class="form-group col-md- col-xs-6">
                                           <label for="serie">Serie</label>
                                           <input type="text" class="form-control" name="serie" id="serie" placeholder="Serie del producto" title="Escribe solamente letras y números" required>
                                       </div>
@@ -365,13 +356,13 @@
                                   <div class="form-row">
                                       <div class="form-group col-md-12 col-xs-12">
                                             <label for="message-text" class="control-label">Descripción:</label>
-                                            <textarea class="form-control" name="descripcion" id="descripcion" placeholder="Agregue una breve descripcion del producto" required></textarea>
+                                            <textarea class="form-control" name="descripcion" id="descripcion" placeholder="Agregue una breve descripcion del producto" ></textarea>
                                       </div>
                                   </div>
                       </div>
                       <div class="modal-footer">
-                        <!-- <input type="hidden" name="NOMBRE" value='<?php echo $_SESSION['nombres']; ?>'>
-                        <input type="hidden" name="APELLIDO" value='<?php echo $_SESSION['apellidos']; ?>'> -->
+                        <input type="hidden" name="NOMBRE" value='<?php echo $_SESSION['nombres']; ?>'>
+                        <input type="hidden" name="APELLIDO" value='<?php echo $_SESSION['apellidos']; ?>'>
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                             <input type="submit" class="btn btn-primary" value="Registrar">
                       </div>
