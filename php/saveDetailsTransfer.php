@@ -45,35 +45,12 @@
                      {
                          array_push($V1, $K1);
                       }
-
-                    //Validar que la cantidad minima en STOCK sea 5
-                      // $ErrorCM = 0;
-                      // for($i=0;$i < count($array); $i++)
-                      //   {
-                      //       $query = "SELECT (Cantidad - '".$V1[$i]."')  as Cantidad from tbl_articulo where IdArticulo='".$array[$i]."'";
-                      //       $statement = $this->dbConnect->query($query);
-                      //
-                      //       if($statement->fetchColumn() <= 5)
-                      //       {
-                      //         $ErrorCM = 1;
-                      //       }
-                      //   }
-
-
-
-                        //Si esta realizando un traslado y este deje con menos del STOCK minimo, No realiza el traslado y muestra error. De lo contrario lo realiza
-                        // if($ErrorCM == 1)
-                        // {
-                        //    header("Location: ../pages/inventarioBodegas.php?status=ErrorStock&bodega=".$IdBodegaOrigen);
-                        // }
-                        //Valida si la bodega de destino es la misma bodega de origen
                          if($IdBodegaOrigen == $IdBodegaDestino)
                         {
                            header("Location: ../pages/inventarioBodegas.php?status=MismaBodega&bodega=".$IdBodegaOrigen);
                         }
                         else
                         {
-
                               //Valida si existe una Solicitud pendiente de aprobacion en dicha bodega
                                 $query = "SELECT count(*) FROM tbl_reporte where IdBodegaEntrante=(select IdBodega from tbl_bodega where NombreBodega='".$IdBodegaDestino."') and State = 1";
                                 $statement = $this->dbConnect->query($query);
@@ -83,8 +60,6 @@
                                 }
                                 else
                                  {
-
-
                                    //Ingresa los datos del Traslado
                                     $query = " INSERT INTO tbl_reporte(IdEmpleadoOrigen, FechaOrigen, IdBodegaSaliente,IdBodegaEntrante,Razon,State) VALUES((SELECT IdEmpleado from tbl_empleado where Nombres=:Nombres and Apellidos=:Apellidos),:Fecha,(select b.idBodega from tbl_bodega as b where NombreBodega =:IdBodegaOrigen), (select b.idBodega from tbl_bodega as b where NombreBodega =:IdBodegaDestino),:Razon, :State)";
                                    $statement = $this->dbConnect->prepare($query);
@@ -123,6 +98,10 @@
                                              ':Cantidad' => $Cantidad,
                                              ':BodegaOrigen' => $IdBodegaOrigen
                                           ));
+                                          $query = "insert into tbl_historialRegistros (IdEmpleado,FechaHora,Tipo_Movimiento,Descripcion)
+VALUES((SELECT IdEmpleado from tbl_empleado where Nombres='".$Nombre."' and Apellidos='".$Apellido."'),'".$Fecha."',5, concat( (SELECT a.NombreBodega FROM tbl_bodega as a WHERE  NombreBodega='".$IdBodegaOrigen."'),' >> ', (SELECT a.NombreBodega FROM tbl_bodega as a WHERE  NombreBodega='".$IdBodegaDestino."') ) )";
+                                           $statement = $this->dbConnect->prepare($query);
+                                           $statement->execute();
                                            header("Location: ../pages/inventarioBodegas.php?status=success&bodega=".$IdBodegaOrigen);
                                          }
                                 }

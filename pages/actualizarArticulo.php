@@ -216,6 +216,7 @@ if($_POST){
         $stmt = $con->prepare($query);
 
 
+
         // posted values
         $idArticulo=htmlspecialchars(strip_tags($_POST['idArticulo']));
         $codigo=htmlspecialchars(strip_tags($_POST['codigo']));
@@ -241,15 +242,20 @@ if($_POST){
         $stmt->bindParam(':id', $idArticulo);
 
 
+
         // Execute the query
         if($stmt->execute())
         {
 
+          $query = "insert into tbl_historialRegistros (IdEmpleado,FechaHora,Tipo_Movimiento,Descripcion)
+          VALUES((SELECT IdEmpleado from tbl_empleado where Nombres='".$Nombre."' and Apellidos='".$Apellido."'),'". $Fecha."',3
+          ,concat( 'Nombre del Producto/Articulo: ',  (SELECT a.NombreArticulo FROM tbl_articulo as a WHERE  IdArticulo= '".$idArticulo."')  , ' Cantidad: ".$cantidad." ' ) )";
+           $statement = $con->prepare($query);
+           $statement->execute();
+
             $query1 = "INSERT into tbl_histoingreso(FechaIngreso, IdArticulo, Cantidad, IdBodega, IdEmpleado,Tipo)
                             VALUES(:Fecha,:IdArticulo,:Cantidad,:IdBodega,(SELECT IdEmpleado from tbl_empleado where Nombres=:Nombres and Apellidos=:Apellidos),1) ";
                $stmt1 = $con->prepare($query1);
-
-
             if($stmt1->execute(array(
               ':Fecha'=>$Fecha,
               ':IdArticulo'=>$idArticulo,

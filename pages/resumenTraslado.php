@@ -216,7 +216,7 @@
                    <button type="submit" name="Action2" class="btn btn-primary">Realizar traslado</button>
                    <form name="form" method="get">
 
-                      <a href="InventarioBodegas.php?bodega=<?php echo $Bodega; ?>"><button class="btn btn-default" type="button" name="regresar"><i class="fas fa-arrow-circle-left"></i> Volver a inventario</button></a>
+                      <a href="inventarioBodegas.php?bodega=<?php echo $Bodega; ?>"><button class="btn btn-default" type="button" name="regresar"><i class="fas fa-arrow-circle-left"></i> Volver a inventario</button></a>
 
                    </form>
                </div>

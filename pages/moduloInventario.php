@@ -190,13 +190,13 @@
                         <div class="name">Reportes Inventario</div>
                     </div>
                 </div></a>
-                <a href="HistorialArticulo.php"><div class="col-lg-6 btn btn-default">
+                <a href="HistorialRegistros.php"><div class="col-lg-6 btn btn-default">
                     <div class="stat-icon">
                         <i class="fas fa-scroll fa-3x"></i>
                     </div>
                       <div class="stat-values">
                         <br>
-                        <div class="name">Detalle de Ingresos de Articulos</div>
+                        <div class="name">Detalle de Registros</div>
                     </div>
                 </div></a>
             </div>

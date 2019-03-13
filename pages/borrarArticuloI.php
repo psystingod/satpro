@@ -25,6 +25,10 @@ try {
     // get record ID
     // isset() is a PHP function used to verify if a value is there or not
     $id=isset($_GET['id']) ? $_GET['id'] : die('ERROR: Record ID not found.');
+    $Nombre = $_SESSION['nombres'];
+    $Apellido = $_SESSION['apellidos'];
+    date_default_timezone_set('America/El_Salvador');
+     $Fecha = date('Y/m/d g:ia');
     // $query = "SELECT NombreBodega from tbl_articulo as a inner join tbl_bodega as b on a.IdBodega=b.IdBodega where IdArticulo = ? ";
     $query = "SELECT b.NombreBodega FROM tbl_articuloInternet as II inner join tbl_bodega as b on II.IdBodega=b.IdBodega where II.IdArticulo= ?";
      $stmt = $con->prepare($query);
@@ -38,6 +42,12 @@ try {
        $Bodega = $key['NombreBodega'];
 
      }
+     $query = "insert into tbl_historialRegistros (IdEmpleado,FechaHora,Tipo_Movimiento,Descripcion)
+     VALUES((SELECT IdEmpleado from tbl_empleado where Nombres='".$Nombre."' and Apellidos='".$Apellido."'),'". $Fecha."',4
+     ,concat( 'MAC del Producto/Articulo: ',  (SELECT a.Mac FROM tbl_articuloInternet as a WHERE  IdArticulo= '".$id."') ) )";
+      $statement = $con->prepare($query);
+      $statement->execute();
+
     $query = "DELETE FROM tbl_articuloInternet WHERE IdArticulo = ?";
      $stmt = $con->prepare($query);
      $stmt->bindParam(1, $id);

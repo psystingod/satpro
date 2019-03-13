@@ -68,21 +68,14 @@
 
 
 
-                    $IdArticulo=$this->dbConnect->lastInsertId();
+                 $IdArticulo=$this->dbConnect->lastInsertId();
                  $Nombre = $_POST["NOMBRE"];
                  $Apellido = $_POST["APELLIDO"];
-                $query = "INSERT into tbl_histoingreso(FechaIngreso, IdArticulo, Cantidad, IdBodega, IdEmpleado,Tipo)
-                                 VALUES(:Fecha,:IdArticulo,:Cantidad,(SELECT tbl_bodega.IdBodega FROM tbl_bodega WHERE tbl_bodega.NombreBodega = :IdBodega),
-                                 (SELECT IdEmpleado from tbl_empleado where Nombres=:Nombres and Apellidos=:Apellidos),0) ";
-                 $statement = $this->dbConnect->prepare($query);
-                 $statement->execute(array(
-                 ':Fecha' => $Fecha,
-                 ':IdArticulo'=> $IdArticulo,
-                 ':Cantidad' => $cantidad,
-                 ':IdBodega' => $bodega,
-                 ':Nombres' => $Nombre,
-                 ':Apellidos' => $Apellido
-                 ));
+                 $query = "insert into tbl_historialRegistros (IdEmpleado,FechaHora,Tipo_Movimiento,Descripcion)
+                 VALUES((SELECT IdEmpleado from tbl_empleado where Nombres='".$Nombre."' and Apellidos='".$Apellido."'),'". $Fecha."',2
+                 ,concat( 'Nombre del Producto/Articulo: ',  (SELECT a.NombreArticulo FROM tbl_articulo as a WHERE  IdArticulo= '".$IdArticulo."')  , ' Cantidad: ".$cantidad." ' ) )";
+                  $statement = $this->dbConnect->prepare($query);
+                  $statement->execute();
 
                     $this->dbConnect = NULL;
                     header('Location: ../pages/inventarioBodegas.php?status=success&bodega='.$bodega);
