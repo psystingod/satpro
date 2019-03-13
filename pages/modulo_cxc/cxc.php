@@ -72,7 +72,7 @@
                         <li><a href="config.php"><i class="fas fa-cog"></i> Configuración</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="../php/logout.php"><i class="fas fa-sign-out-alt"></i></i> Salir</a>
+                        <li><a href="../php/logout.php"><i class="fas fa-sign-out-alt"></i> Salir</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -85,7 +85,7 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href='index.php'><i class='fas fa-home'></i> Principal</a>
+                            <a href='../index.php'><i class='fas fa-home'></i> Principal</a>
                         </li>
                         <?php
                         require('../../php/contenido.php');
