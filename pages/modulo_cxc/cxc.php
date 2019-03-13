@@ -72,7 +72,7 @@
                         <li><a href="config.php"><i class="fas fa-cog"></i> Configuración</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="../php/logout.php"><i class="fas fa-sign-out-alt"></i></i> Salir</a>
+                        <li><a href="../php/logout.php"><i class="fas fa-sign-out-alt"></i> Salir</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->

@@ -8,34 +8,49 @@ function getAccess(permisosActuales, permisoRequerido){
 
 //Si el usuario tiene permiso de AGREGAR, podrá agregar datos, sino se deshabilitan las opciones
 if (getAccess(permisos, AGREGAR)) {
-    document.getElementById('btn_agregar').disabled = true;
+    var agregElements = document.getElementsByClassName('agregar');
+    for (var i = 0; i < agregElements.length; i++) {
+        agregElements[i].disabled = false;
+    }
 }
 else {
-    document.getElementById('btn_agregar').disabled = true;
+    var agregElements = document.getElementsByClassName('agregar');
+    for (var i = 0; i < agregElements.length; i++) {
+        if(agregElements[i].tagName = 'li'){
+            agregElements[i].style.display = 'none';
+        }
+        agregElements[i].disabled = true;
+    }    
 }
 //Si el usuario tiene permiso de EDITAR, podrá modificar datos, sino se deshabilitan las opciones
 if (getAccess(permisos, EDITAR)) {
     var editElements = document.getElementsByClassName('editar');
     for (var i = 0; i < editElements.length; i++) {
-        editElements[i].style.display = "run-in";
+        editElements[i].disabled = false;
     }
 }
 else {
     var editElements = document.getElementsByClassName('editar');
     for (var i = 0; i < editElements.length; i++) {
-        editElements[i].style.display = "none";
+        if(editElements[i].tagName = 'li'){
+            editElements[i].style.display = 'none';
+        }
+        editElements[i].disabled = true;
     }
 }
 //Si el usuario tiene permiso de ELIMINAR, podrá modificar datos, sino se deshabilitan las opciones
 if (getAccess(permisos, ELIMINAR)) {
     var deleteElements = document.getElementsByClassName('eliminar');
     for (var i = 0; i < deleteElements.length; i++) {
-        deleteElements[i].style.display = "run-in";
+        deleteElements[i].disabled = false;
     }
 }
 else {
     var deleteElements = document.getElementsByClassName('eliminar');
     for (var i = 0; i < deleteElements.length; i++) {
-        deleteElements[i].style.display = "none";
+        if(deleteElements[i].tagName = 'li'){
+            deleteElements[i].style.display = 'none';
+        }
+        deleteElements[i].disabled = true;
     }
 }
