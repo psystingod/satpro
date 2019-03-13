@@ -241,7 +241,7 @@
                         <thead>
                             <tr>
                                 <th> </th>
-                                <th>Id artículo</th>
+
                                 <th>Código</th>
                                 <th>Nombre</th>
                                 <th>Cant</th>
@@ -254,13 +254,11 @@
                         </thead>
                         <tbody>
                             <?php
-
                                 foreach ($recordsInfo as $key) {
                                     echo "<tr><td>";
                                     echo "<input type='checkbox' class='form-control checkbox' name='checkTraslado[]' value='".$key['IdArticulo']."'>" . "</td><td>";
                                     //echo $key["IdArticulo"] . "</td><td>";
-
-                                    echo $key["IdArticulo"] . "</td><td>";
+                                
                                     echo $key["Codigo"] . "</td><td>";
                                     echo $key["NombreArticulo"] . "</td><td>";
                                     echo $key["Cantidad"] ." " . $key["Abreviatura"] ."</td><td>";
@@ -521,11 +519,14 @@
 
     <!-- DataTables JavaScript -->
     <script src="../vendor/datatables/js/dataTables.bootstrap.js"></script>
+
     <script src="../vendor/datatables/js/jquery.dataTables.min.js"></script>
     <script src="../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
     <script src="../vendor/datatables-responsive/dataTables.responsive.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
+
+
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
     <script>
     $(document).ready(function() {
@@ -544,15 +545,10 @@
             "paginate": {
              "previous": "Anterior",
              "next": "Siguiente",
-
             }
         }
-
         });
-
     });
-
-
     </script>
 
     <script type='text/javascript'>

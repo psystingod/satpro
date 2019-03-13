@@ -19,6 +19,7 @@
                              $Nombre = $_POST["NOMBRE"];
                              $Apellido = $_POST["APELLIDO"];
                              $Departamento = $_POST["Departamento"];
+                             $Bodega = $_POST["BodegaRecibe"];
                              date_default_timezone_set('America/El_Salvador');
                              $FechaDestino = date('Y/m/d g:ia'); ;
                              $Comentario= $_POST["Comentario"];
@@ -83,6 +84,10 @@
                                             header('Location: ../pages/DetalleDeAsignaciones.php?status=success');
                                     }
                             }
+                            $query = "insert into tbl_historialRegistros (IdEmpleado,FechaHora,Tipo_Movimiento,Descripcion)
+VALUES((SELECT IdEmpleado from tbl_empleado where Nombres='".$Nombre."' and Apellidos='".$Apellido."'),'".$FechaDestino."',7, concat( (SELECT a.NombreBodega FROM tbl_bodega as a WHERE  NombreBodega='".$Bodega."'),' >> ', (SELECT a.NombreDepartamento FROM tbl_departamento as a WHERE  NombreDepartamento='".$Departamento."') ) )";
+                             $statement = $this->dbConnect->prepare($query);
+                             $statement->execute();
                             $this->dbConnect = NULL;
                             header('Location: ../pages/DetalleDeAsignaciones.php?status=success');
                         }

@@ -1,5 +1,6 @@
 <?php
     session_start();
+
  ?>
 <?php
     // require("../php/translateProcess.php");
@@ -32,7 +33,7 @@
 
           for($i=0; $i < count($values); $i++)
           {
-            $query = "SELECT IdArticuloDepartamento, Codigo, NombreArticulo, Cantidad, NombreDepartamento as Departamento FROM tbl_articuloDepartamento, tbl_departamento where IdArticuloDepartamento = $values[$i] and tbl_articuloDepartamento.IdDepartamento=tbl_departamento.IdDepartamento";
+            $query = "SELECT IdArticuloDepartamento, Codigo, NombreArticulo, Cantidad, NombreDepartamento as Departamento FROM tbl_articulodepartamento, tbl_departamento where IdArticuloDepartamento = $values[$i] and tbl_articulodepartamento.IdDepartamento=tbl_departamento.IdDepartamento";
             $statement = $con->prepare($query);
 
             $statement->execute();
@@ -99,6 +100,9 @@
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 </head>
 <body>
+  <!-- <script language="JavaScript" type="text/javascript">
+    alert("ESTE APARTADO ES EXCLUSIVAMENTE PARA MANTENER UN REGISTRO DE LOS ARTICULOS ASIGNADOS A LOS EMPLEADOS POR DEPARTAMENTO. EL EMPLEADO NO TENDRA QUE ACEPTAR NINGUNA CONFIRMACION DE RECIBIDO EN EL SISTEMA.");
+  </script> -->
     <?php
          // session_start();
          if(!isset($_SESSION["user"])) {
@@ -221,9 +225,9 @@
                                 </tr>
                                 <tr>
                                   <td colspan="3"><b>Codigo:</b></td>
-                                  <td colspan="3"><input type="text" name="Codigo" size="50" value="<?php echo htmlspecialchars($Codigo, ENT_QUOTES); ?>" placeholder="Codido Empleado" required/></td>
+                                  <td colspan="3"><input type="text" name="Codigo" size="50" value="<?php echo htmlspecialchars($Codigo, ENT_QUOTES); ?>" placeholder="Codido Empleado"   required/></td>
                                   <td colspan="3"><b>Nombre:</b></td>
-                                  <td colspan="3"><input type="text" name="Nombre" size="50" value="<?php echo htmlspecialchars($Nombre, ENT_QUOTES); ?>" placeholder="Nombre Empleado" required/></td>
+                                  <td colspan="3"><input type="text" name="Nombre" size="50" value="<?php echo htmlspecialchars($Nombre, ENT_QUOTES); ?>" placeholder="Nombre Empleado"  required/></td>
                                 </tr>
                                 <tr>
                                   <td colspan="12" align="center" width="50" Height="50"><b><button id="btn_agregar0" class="btn btn-primary" type="button" name="button" data-toggle="modal" data-target="#BuscarEmpleado" accesskey="a"><i class="fas fa-search"></i> Buscar Empleado</button></b></td>
@@ -262,7 +266,7 @@
                     <div class="row">
                         <input type="hidden" name="array" value='<?php echo serialize($Id);?>'>
                         <input type="hidden" name="Departamento" value='<?php echo serialize($Departamento);?>'>
-                        <a href="AsignarArticuloEmpleado.php"><button class="btn btn-default" type="button" name="regresar"><i class="fas fa-arrow-circle-left"></i> Volver a inventario</button></a>
+                        <a href="asignarArticuloEmpleado.php"><button class="btn btn-default" type="button" name="regresar"><i class="fas fa-arrow-circle-left"></i> Volver a inventario</button></a>
                         <button type="submit" name="Action2" class="btn btn-primary">Realizar Asignación</button>
                         <br>
                         <br>
@@ -324,11 +328,56 @@
     </div><!-- /Add modal -->
     <!-- jQuery -->
     <script src="../vendor/jquery/jquery.min.js"></script>
+
     <!-- Bootstrap Core JavaScript -->
     <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../vendor/metisMenu/metisMenu.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="../vendor/datatables/js/dataTables.bootstrap.js"></script>
+
+    <script src="../vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="../vendor/datatables-responsive/dataTables.responsive.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
+
+
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+    $(document).ready(function() {
+        $('#inventario').DataTable({
+            responsive: true,
+            "paging": false,
+            "order": [[ 1, "desc" ]],
+            "language": {
+            "lengthMenu": "Mostrar _MENU_ registros por página",
+            "zeroRecords": "No se encontró ningún registro",
+            "info": "Mostrando _TOTAL_ de _MAX_ Artículos",
+            "infoEmpty": "No se encontró ningún registro",
+            "search": "Buscar: ",
+            "searchPlaceholder": "",
+            "infoFiltered": "(de un total de _MAX_ registros)",
+            "paginate": {
+             "previous": "Anterior",
+             "next": "Siguiente",
+            }
+        }
+        });
+    });
+    </script>
+
+    <script type='text/javascript'>
+        // confirm record deletion
+        function deleteArticle(id){
+
+            var answer = confirm('¿Está seguro de borrar este registro?');
+            if (answer){
+                window.location = 'borrarArticulo.php?id=' + id;
+            }
+        }
+    </script>
 </body>
 </html>
