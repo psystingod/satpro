@@ -3,7 +3,6 @@
     require("../php/getInventoryPDF.php");
     require("../php/productsInfo.php");
 
-
     $Bodega=$_GET["bodega"];
     $getInventory = new GetInventoryPDF();
     $recordsInfo = $getInventory->showInventoryRecords($Bodega);
@@ -228,20 +227,21 @@
 
             <div class="row">
                 <form class="" action="resumenTraslado.php" method="POST">
-                  <button id="btn_agregar0" class="btn btn-primary center-block" type="button" name="button" data-toggle="modal" data-target="#SeleccioneBodegaI" accesskey="b">Seleccionar Otra Bodega</button>
+                  <button class="btn btn-default center-block" type="button" name="button" data-toggle="modal" data-target="#SeleccioneBodegaI" accesskey="b">Seleccionar Otra Bodega</button>
 
-                  <br>
-                <button id="traslados" type="submit" class="btn btn-default pull-left" disabled = "disabled" accesskey="t"><i class='fas fa-truck'></i> Trasladar producto a otra Bodega</button>
+                <br>
 
-                <button id="btn_agregar0" class="btn btn-primary pull-right" type="button" name="button" data-toggle="modal" data-target="#agregar" accesskey="a"><i class="fas fa-plus-circle"></i> Agregar Nuevo Producto a bodega</button>&nbsp
-                <button id="btn_agregar0" class="btn btn-success pull-right" type="button" name="button" data-toggle="modal" data-target="#regresar"><i class="fas fa-undo"></i> Devolver Producto a bodega</button>
-                <br><br>
-<br>
+                <a href="inventario.php"><button class="btn btn-success pull-left" type="button" name="regresar"><i class="fas fa-arrow-circle-left"></i> Atrás</button></a>
+                <button id="traslados" type="submit" class="btn btn-default pull-left" disabled="disabled" accesskey="t"><i class='fas fa-truck'></i> Trasladar producto a otra Bodega</button>
+
+                <button class="btn btn-primary pull-right agregar" type="button" name="button" data-toggle="modal" data-target="#agregar" accesskey="a"><i class="fas fa-plus-circle"></i> Agregar Nuevo Producto a bodega</button>
+                <button class="btn btn-success pull-right agregar" type="button" name="button" data-toggle="modal" data-target="#regresar"><i class="fas fa-undo"></i> Devolver Producto a bodega</button>
+                <br><br><br>
                     <table width="100%" class="table table-striped table-hover" id="inventario">
                         <thead>
                             <tr>
-                                <th> </th>
-
+                                <th></th>
+                                <th>Id artículo</th>
                                 <th>Código</th>
                                 <th>Nombre</th>
                                 <th>Cant</th>
@@ -256,7 +256,7 @@
                             <?php
                                 foreach ($recordsInfo as $key) {
                                     echo "<tr><td>";
-                                    echo "<input type='checkbox' class='form-control checkbox' name='checkTraslado[]' value='".$key['IdArticulo']."'>" . "</td><td>";
+                                    echo "<input type='checkbox' class='form-control checkbox agregar' name='checkTraslado[]' value='".$key['IdArticulo']."'>" . "</td><td>";
                                     //echo $key["IdArticulo"] . "</td><td>";
                                 
                                     echo $key["Codigo"] . "</td><td>";
@@ -287,7 +287,7 @@
                                     ?>
                         </tbody>
                     </table>
-                    </form>
+                </form>
                     <!-- /.table-responsive -->
                     <div class="well">
                         <h4>Inventario Cablesat</h4>
@@ -574,7 +574,7 @@
             });
         });
     </script>
-
+    
     <script type="text/javascript">
 
     </script>
@@ -585,8 +585,8 @@
       document.getElementById("fecha").value = d.getFullYear()+"/"+month+"/"+d.getDate();
   </script>
 
-    <script type="text/javascript">var permisos = <?php echo $_SESSION["permisosTotales"]; ?>;</script>
-    <script src="../js/permisos.js"></script>
+  <script type="text/javascript">var permisos = <?php echo $_SESSION["permisosTotales"]; ?>;</script>
+  <script src="../js/permisos.js"></script>
 </body>
 
 </html>

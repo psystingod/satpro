@@ -1,10 +1,13 @@
 <?php
-
+    require_once 'php/getAllClients.php';
+    $allClients = new GetAllClients();
+    $allClientsArray = $allClients->getClients();
     session_start();
+    
 
  ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
 
@@ -15,7 +18,7 @@
     <meta name="author" content="">
 
     <title>Cablesat</title>
-<link rel="shortcut icon" href="../images/cablesat.png" />
+    <link rel="shortcut icon" href="../images/cablesat.png" />
     <!-- Bootstrap Core CSS -->
     <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -85,7 +88,7 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href='index.php'><i class='fas fa-home'></i> Principal</a>
+                            <a href='../index.php'><i class='fas fa-home'></i> Principal</a>
                         </li>
                         <?php
                         require('../../php/contenido.php');
@@ -156,54 +159,45 @@
                         <a href="cxc.php"><button class="btn btn-success pull-left" type="button" name="button"><i class="fas fa-arrow-left"></i> Atrás</button></a>
                         <button id="btn_agregar" class="btn btn-success pull-right" type="button" name="button" data-toggle="modal" data-target="#agregarCliente"><i class="fas fa-plus-circle"></i> Nuevo cliente</button>
                         <br><br><br>
-                            <table width="100%" class="table table-striped table-hover" id="clientes">
+                            <table width="100%" class="table table-striped table-hover" id="clientes5">
                                 <thead class="bg-primary">
                                     <tr>
-                                        <th>Código</th>
-                                        <th>Nombres</th>
-                                        <th>Apellidos</th>
-                                        <th>DUI</th>
-                                        <th>Teléfonos</th>
+                                        <th width="6">Cód</th>
+                                        <th width="280">Nombre</th>
+                                        <th width="120">DUI</th>
+                                        <th width="180">Teléfonos</th>
                                         <th>Dirección</th>
-                                        <th></th>
+                                        <th width="10"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
 
-                                        /*foreach ($recordsInfo as $key) {
+                                        foreach ($allClientsArray as $key) {
                                             echo "<tr><td>";
-                                            echo $key["codigoCliente"] . "</td><td>";
-                                            echo $key["Codigo"] . "</td><td>";
-                                            echo $key["NombreArticulo"] . "</td><td>";
-                                            echo $key["Cantidad"] ." " . $key["Abreviatura"] ."</td><td>";
-                                            echo $key["FechaEntrada"] . "</td><td>";
-                                            echo $key["Proveedor"] . "</td><td>";
-                                            echo $key["NombreTipo"] . "</td><td>";
-                                            echo $key["Categoria"] . "</td><td>";
+                                            echo $key["cod_cliente"] . "</td><td>";
+                                            echo trim(ucwords(strtolower($key["nombre"]))) . "</td><td>";
+                                            echo $key["numero_dui"] . "</td><td>";
+                                            echo trim($key["telefonos"]) . "</td><td>";
+                                            echo trim(substr(ucwords(strtolower($key["direccion"])),0,45)) . "</td><td>";
                                             echo "<div class='btn-group pull-right'>
-                                                        <button type='button' class='btn btn-default'>Opciones</button>
                                                         <button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-                                                          <span class='caret'></span>
+                                                          <i class='fas fa-ellipsis-v'></i>
                                                           <span class='sr-only'>Toggle Dropdown</span>
                                                         </button>
                                                         <ul class='dropdown-menu'>
-                                                            <li><a href='verArticulo.php?id={$key['IdArticulo']}&Bdg={$Bodega}'><i class='fas fa-eye'></i> Ver</a>
+                                                            <li><a href='verArticulo.php?id=''><i class='fas fa-eye'></i> Ver</a>
                                                             </li>
-                                                            <li class='editar'><a href='actualizarArticulo.php?id={$key['IdArticulo']}&Bdg={$Bodega}'><i class='fas fa-edit'></i> Editar</a>
+                                                            <li class='editar'><a href='actualizarArticulo.php?id=''><i class='fas fa-edit'></i> Editar</a>
                                                             </li>
-                                                            <li class='eliminar'><a href='#' onclick='deleteArticle( {$key['IdArticulo']} ); '><i class='fas fa-trash-alt'></i> Eliminar</a>
+                                                            <li class='eliminar'><a href='#' onclick='deleteArticle();'><i class='fas fa-trash-alt'></i> Eliminar</a>
                                                             </li>
-                                                            <li class='divider'></li>
                                                         </ul>
                                                     </div>" . "</td></tr>";
-
-                                                }
-                                                */
+                                                }              
                                             ?>
                                 </tbody>
                             </table>
-                            </form>
                             <!-- /.table-responsive -->
                     </div>
                 </div>
@@ -251,77 +245,77 @@
                                   <div class="row">
                                       <div class="col-md-4">
                                           <label for="codigo">Código del cliente</label>
-                                          <input class="form-control" type="text" name="codigo">
+                                          <input class="form-control input-sm" type="text" name="codigo">
                                       </div>
                                       <div class="col-md-4">
                                           <label for="contrato">Número de contrato</label>
-                                          <input class="form-control" type="text" name="contrato">
+                                          <input class="form-control input-sm" type="text" name="contrato">
                                       </div>
                                       <div class="col-md-4">
                                           <label for="factura">Número de factura</label>
-                                          <input class="form-control" type="text" name="factura">
+                                          <input class="form-control input-sm" type="text" name="factura">
                                       </div>
                                   </div>
                                   <div class="row">
                                       <div class="col-md-6">
                                           <label for="nombres">Nombres</label>
-                                          <input class="form-control" type="text" name="nombres">
+                                          <input class="form-control input-sm" type="text" name="nombres">
                                       </div>
                                       <div class="col-md-6">
                                           <label for="apellidos">Apellidos</label>
-                                          <input class="form-control" type="text" name="apellidos">
+                                          <input class="form-control input-sm" type="text" name="apellidos">
                                       </div>
                                   </div>
                                   <div class="row">
                                       <div class="col-md-6">
                                           <label for="empresa">Empresa</label>
-                                          <input class="form-control" type="text" name="empresa">
+                                          <input class="form-control input-sm" type="text" name="empresa">
                                       </div>
                                       <div class="col-md-6">
                                           <label for="ncr">Número de registro</label>
-                                          <input class="form-control" type="text" name="ncr">
+                                          <input class="form-control input-sm" type="text" name="ncr">
                                       </div>
                                   </div>
                                   <div class="row">
                                       <div class="col-md-2">
                                           <label for="dui">DUI</label>
-                                          <input class="form-control" type="text" name="dui">
+                                          <input class="form-control input-sm" type="text" name="dui">
                                       </div>
                                       <div class="col-md-4">
                                           <label for="expedicion">Lugar y fecha de expedición</label>
-                                          <input class="form-control" type="text" name="expedicion">
+                                          <input class="form-control input-sm" type="text" name="expedicion">
                                       </div>
                                       <div class="col-md-3">
                                           <label for="nit">NIT</label>
-                                          <input class="form-control" type="text" name="nit">
+                                          <input class="form-control input-sm" type="text" name="nit">
                                       </div>
                                       <div class="col-md-3">
                                           <label for="fechaNacimiento">Fecha de nacimiento</label>
-                                          <input class="form-control" type="date" name="fechaNacimiento">
+                                          <input class="form-control input-sm" type="date" name="fechaNacimiento">
                                       </div>
                                   </div>
                                   <div class="row">
                                       <div class="col-md-12">
                                           <label for="direccion">Dirección</label>
-                                          <textarea class="form-control" name="direccion" rows="2" cols="40"></textarea>
+                                          <textarea class="form-control input-sm" name="direccion" rows="2" cols="40"></textarea>
                                       </div>
                                   </div>
                                   <div class="row">
                                       <div class="col-md-4">
                                           <label for="departamento">Departamento</label>
-                                          <select class="form-control" name="departamento">
+                                          <select class="form-control input-sm" name="departamento">
 
                                           </select>
                                       </div>
                                       <div class="col-md-4">
                                           <label for="municipio">Municipio</label>
-                                          <select class="form-control" name="municipio">
+                                          <select class="form-control input-sm" name="municipio">
 
                                           </select>
                                       </div>
                                       <div class="col-md-4">
                                           <label for="colonia">Barrio o colonia</label>
-                                          <select class="form-control" name="colonia">
+                                          <select class="form-control input-sm" name="colonia">
 
                                           </select>
                                       </div>
@@ -329,59 +323,59 @@
                                   <div class="row">
                                       <div class="col-md-12">
                                           <label for="direccionCobro">Dirección de cobro</label>
-                                          <textarea class="form-control" name="direccionCobro" rows="2" cols="40"></textarea>
+                                          <textarea class="form-control input-sm" name="direccionCobro" rows="2" cols="40"></textarea>
                                       </div>
                                   </div>
                                   <div class="row">
                                       <div class="col-md-4">
                                           <label for="telefono">Teléfono</label>
-                                          <input class="form-control" type="text" name="telefono">
+                                          <input class="form-control input-sm" type="text" name="telefono">
                                       </div>
                                       <div class="col-md-4">
                                           <label for="telefonoTrabajo">Teléfono de trabajo</label>
-                                          <input class="form-control" type="text" name="telefonoTrabajo">
+                                          <input class="form-control input-sm" type="text" name="telefonoTrabajo">
                                       </div>
                                       <div class="col-md-4">
                                           <label for="ocupacion">Ocupación</label>
-                                          <input class="form-control" type="text" name="ocupacion">
+                                          <input class="form-control input-sm" type="text" name="ocupacion">
                                       </div>
                                   </div>
                                   <div class="row">
                                       <div class="col-md-3">
                                           <label for="cuentaContable">Cuenta contable</label>
-                                          <select class="form-control" name="cuentaContable">
+                                          <select class="form-control input-sm" name="cuentaContable">
 
                                           </select>
                                       </div>
                                       <div class="col-md-2">
                                           <label for="formaFactura">Forma al facturar</label>
-                                          <select class="form-control" name="formaFactura">
+                                          <select class="form-control input-sm" name="formaFactura">
 
                                           </select>
                                       </div>
                                       <div class="col-md-2">
                                           <label for="saldoActual">Saldo actual</label>
-                                          <input class="form-control" type="text" name="saldoActual">
+                                          <input class="form-control input-sm" type="text" name="saldoActual">
                                       </div>
                                       <div class="col-md-2">
                                           <label for="limiteCredito">Días de crédito</label>
-                                          <input class="form-control" type="text" name="diasCredito">
+                                          <input class="form-control input-sm" type="text" name="diasCredito">
                                       </div>
                                       <div class="col-md-3">
                                           <label for="limiteCredito">Límite de crédito</label>
-                                          <input class="form-control" type="text" name="limiteCredito">
+                                          <input class="form-control input-sm" type="text" name="limiteCredito">
                                       </div>
                                   </div>
                                   <div class="row">
                                       <div class="col-md-3">
                                           <label for="tipoFacturacion">Tipo de facturación</label>
-                                          <select class="form-control" name="tipoFacturacion">
+                                          <select class="form-control input-sm" name="tipoFacturacion">
 
                                           </select>
                                       </div>
                                       <div class="col-md-9">
                                           <label for="facebook">Cuenta de Facebook</label>
-                                          <input class="form-control" type="text" name="facebook">
+                                          <input class="form-control input-sm" type="text" name="facebook">
                                       </div>
                                   </div>
 
@@ -391,62 +385,62 @@
                                   <div class="row">
                                       <div class="col-md-12">
                                           <label for="cobrador">Cobrador que lo atiende</label>
-                                          <input class="form-control" type="text" name="cobrador">
+                                          <input class="form-control input-sm" type="text" name="cobrador">
                                       </div>
                                   </div>
                                   <br><br>
                                   <div class="row">
                                       <div class="col-md-4">
                                           <label for="rp1_nombre">Referencia personal #1</label>
-                                          <input class="form-control" type="text" name="rf1_nombre">
+                                          <input class="form-control input-sm" type="text" name="rf1_nombre">
                                       </div>
                                       <div class="col-md-2">
                                           <label for="rp1_telefono">Teléfono</label>
-                                          <input class="form-control" type="text" name="rp1_telefono">
+                                          <input class="form-control input-sm" type="text" name="rp1_telefono">
                                       </div>
                                       <div class="col-md-4">
                                           <label for="rp1_direccion">Dirección</label>
-                                          <input class="form-control" type="text" name="rp1_direccion">
+                                          <input class="form-control input-sm" type="text" name="rp1_direccion">
                                       </div>
                                       <div class="col-md-2">
                                           <label for="rp1_parentezco">Parentezco</label>
-                                          <input class="form-control" type="text" name="rp1_parentezco">
+                                          <input class="form-control input-sm" type="text" name="rp1_parentezco">
                                       </div>
                                   </div>
                                   <div class="row">
                                       <div class="col-md-4">
                                           <label for="rp2_nombre">Referencia personal #2</label>
-                                          <input class="form-control" type="text" name="rf2_nombre">
+                                          <input class="form-control input-sm" type="text" name="rf2_nombre">
                                       </div>
                                       <div class="col-md-2">
                                           <label for="rp2_telefono">Teléfono</label>
-                                          <input class="form-control" type="text" name="rp2_telefono">
+                                          <input class="form-control input-sm" type="text" name="rp2_telefono">
                                       </div>
                                       <div class="col-md-4">
                                           <label for="rp2_direccion">Dirección</label>
-                                          <input class="form-control" type="text" name="rp2_direccion">
+                                          <input class="form-control input-sm" type="text" name="rp2_direccion">
                                       </div>
                                       <div class="col-md-2">
                                           <label for="rp2_parentezco">Parentezco</label>
-                                          <input class="form-control" type="text" name="rp2_parentezco">
+                                          <input class="form-control input-sm" type="text" name="rp2_parentezco">
                                       </div>
                                   </div>
                                   <div class="row">
                                       <div class="col-md-4">
                                           <label for="rp3_nombre">Referencia personal #3</label>
-                                          <input class="form-control" type="text" name="rf3_nombre">
+                                          <input class="form-control input-sm" type="text" name="rf3_nombre">
                                       </div>
                                       <div class="col-md-2">
                                           <label for="rp3_telefono">Teléfono</label>
-                                          <input class="form-control" type="text" name="rp3_telefono">
+                                          <input class="form-control input-sm" type="text" name="rp3_telefono">
                                       </div>
                                       <div class="col-md-4">
                                           <label for="rp3_direccion">Dirección</label>
-                                          <input class="form-control" type="text" name="rp3_direccion">
+                                          <input class="form-control input-sm" type="text" name="rp3_direccion">
                                       </div>
                                       <div class="col-md-2">
                                           <label for="rp3_parentezco">Parentezco</label>
-                                          <input class="form-control" type="text" name="rp3_parentezco">
+                                          <input class="form-control input-sm" type="text" name="rp3_parentezco">
                                       </div>
                                   </div>
                               </div>
@@ -473,68 +467,68 @@
                                             <div class="row">
                                                 <div class="col-md-2">
                                                     <label for="fechaInstalacionCable">Fecha de instalación</label>
-                                                    <input class="form-control" type="text" name="fechaInstalacionCable">
+                                                    <input class="form-control input-sm" type="text" name="fechaInstalacionCable">
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label for="fechaPrimerFacturaCable">Fecha de primer factura</label>
-                                                    <input class="form-control" type="text" name="fechaPrimerFacturaCable">
+                                                    <input class="form-control input-sm" type="text" name="fechaPrimerFacturaCable">
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label for="exento">Exento</label>
-                                                    <input class="form-control" type="checkbox" name="exento">
+                                                    <input class="form-control input-sm" type="checkbox" name="exento">
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label for="diaGenerarFacturaCable">Día para generar factura</label>
-                                                    <input class="form-control" type="text" name="diaGenerarFacturaCable">
+                                                    <input class="form-control input-sm" type="text" name="diaGenerarFacturaCable">
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label for="cortesia">Cortesía</label>
-                                                    <input class="form-control" type="checkbox" name="cortesia">
+                                                    <input class="form-control input-sm" type="checkbox" name="cortesia">
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-2">
                                                     <label for="cuotaMensualCable">Cuota mensual</label>
-                                                    <input class="form-control" type="text" name="cuotaMensualCable">
+                                                    <input class="form-control input-sm" type="text" name="cuotaMensualCable">
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label for="prepago">Prepago</label>
-                                                    <input class="form-control" type="text" name="prepago">
+                                                    <input class="form-control input-sm" type="text" name="prepago">
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label for="tipoComprobante">Tipo de comprobante a generar</label>
-                                                    <select class="form-control" name="tipoComprobante">
+                                                    <select class="form-control input-sm" name="tipoComprobante">
                                                         <option value=""></option>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label for="tipoServicio">Tipo de servicio</label>
-                                                    <select class="form-control" name="tipoServicio">
+                                                    <select class="form-control input-sm" name="tipoServicio">
                                                         <option value="basico">Básico</option>
                                                         <option value="premium">Premium</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label for="mesesContratoCable">Período de contrato en meses</label>
-                                                    <input class="form-control" type="text" name="mesesContratoCable">
+                                                    <input class="form-control input-sm" type="text" name="mesesContratoCable">
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-3">
                                                     <label for="vencimientoContratoCable">Fecha de vencimiento de contrato</label>
-                                                    <input class="form-control" type="text" name="vencimientoContratoCable">
+                                                    <input class="form-control input-sm" type="text" name="vencimientoContratoCable">
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label for="inicioContratoCable">Fecha de inicio de contrato</label>
-                                                    <input class="form-control" type="text" name="inicioContratoCable">
+                                                    <input class="form-control input-sm" type="text" name="inicioContratoCable">
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label for="fechaReconexionCable">Fecha de reconexión</label>
-                                                    <input class="form-control" type="text" name="fechaReconexionCable">
+                                                    <input class="form-control input-sm" type="text" name="fechaReconexionCable">
                                                 </div>
                                                 <div class="col-md-4">
                                                     <label for="encargadoInstalacionCable"> Técnico que realizó la instalación</label>
-                                                    <select class="form-control" name="encargadoInstalacionCable">
+                                                    <select class="form-control input-sm" name="encargadoInstalacionCable">
                                                         <option value=""></option>
                                                     </select>
                                                 </div>
@@ -542,11 +536,11 @@
                                             <div class="row">
                                                 <div class="col-md-10">
                                                     <label for="direccionCable">Dirección</label>
-                                                    <input class="form-control" type="text" name="direccionCable">
+                                                    <input class="form-control input-sm" type="text" name="direccionCable">
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label for="derivaciones">N° de derivaciones</label>
-                                                    <input class="form-control" type="text" name="derivaciones">
+                                                    <input class="form-control input-sm" type="text" name="derivaciones">
                                                 </div>
                                             </div>
                                         </div>
@@ -574,48 +568,48 @@
                                             <div class="row">
                                                 <div class="col-md-2">
                                                     <label for="fechaInstalacionInternet">Fecha de instalación</label>
-                                                    <input class="form-control" type="text" name="fechaInstalacionInternet">
+                                                    <input class="form-control input-sm" type="text" name="fechaInstalacionInternet">
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label for="fechaPrimerFacturaInternet">Fecha de primer factura</label>
-                                                    <input class="form-control" type="text" name="fechaPrimerFacturaInternet">
+                                                    <input class="form-control input-sm" type="text" name="fechaPrimerFacturaInternet">
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label for="tipoServicioInternet">Tipo de servicio</label>
-                                                    <select class="form-control" name="tipoServicioInternet">
+                                                    <select class="form-control input-sm" name="tipoServicioInternet">
                                                         <option value="prepago">Prepago</option>
                                                         <option value="pospago">Pospago</option>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label for="mesesContratoInternet">Período de contrato en meses</label>
-                                                    <input class="form-control" type="text" name="mesesContratoInternet">
+                                                    <input class="form-control input-sm" type="text" name="mesesContratoInternet">
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label for="diaGenerarFacturaInternet">Día para generar factura</label>
-                                                    <input class="form-control" type="text" name="diaGenerarFacturaInternet">
+                                                    <input class="form-control input-sm" type="text" name="diaGenerarFacturaInternet">
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-3">
                                                     <label for="velocidadInternet">Velocidad</label>
-                                                    <select class="form-control" name="velocidadInternet">
+                                                    <select class="form-control input-sm" name="velocidadInternet">
                                                         <option value=""></option>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label for="cuotaMensualInternet">Cuota mensual</label>
-                                                    <input class="form-control" type="text" name="cuotaMensualInternet">
+                                                    <input class="form-control input-sm" type="text" name="cuotaMensualInternet">
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label for="tipoCliente">Tipo de cliente</label>
-                                                    <select class="form-control" name="tipoCliente">
+                                                    <select class="form-control input-sm" name="tipoCliente">
                                                         <option value=""></option>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label for="tecnologia">Tecnología</label>
-                                                    <select class="form-control" name="tecnologia">
+                                                    <select class="form-control input-sm" name="tecnologia">
                                                         <option value=""></option>
                                                     </select>
                                                 </div>
@@ -623,49 +617,49 @@
                                             <div class="row">
                                                 <div class="col-md-3">
                                                     <label for="nContratoVigente">N° de contrato vigente</label>
-                                                    <input class="form-control" type="text" name="nContratoVigente">
+                                                    <input class="form-control input-sm" type="text" name="nContratoVigente">
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label for="vencimientoContratoInternet">Vencimiento de contrato</label>
-                                                    <input class="form-control" type="text" name="vencimientoContratoInternet">
+                                                    <input class="form-control input-sm" type="text" name="vencimientoContratoInternet">
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label for="ultimaRenovacionInternet">Última renovación</label>
-                                                    <input class="form-control" type="text" name="ultimaRenovacionInternet">
+                                                    <input class="form-control input-sm" type="text" name="ultimaRenovacionInternet">
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label for="fechaSuspencionInternet">Fecha de suspención</label>
-                                                    <input class="form-control" type="text" name="fechaSuspencionInternet">
+                                                    <input class="form-control input-sm" type="text" name="fechaSuspencionInternet">
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label for="fechaReconexionInternet">Fecha de reconexión</label>
-                                                    <input class="form-control" type="text" name="fechaReconexionInternet">
+                                                    <input class="form-control input-sm" type="text" name="fechaReconexionInternet">
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-5">
                                                     <label for="promocion">Promoción</label>
-                                                    <select class="form-control" name="promocion">
+                                                    <select class="form-control input-sm" name="promocion">
                                                         <option value=""></option>
                                                     </select>
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label for="promocionDesde">Desde</label>
-                                                    <input class="form-control" type="text" name="promocionDesde">
+                                                    <input class="form-control input-sm" type="text" name="promocionDesde">
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label for="promocionHasta">Hasta</label>
-                                                    <input class="form-control" type="text" name="promocionHasta">
+                                                    <input class="form-control input-sm" type="text" name="promocionHasta">
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label for="cuotaPromocion">Cuota de la promoción</label>
-                                                    <input class="form-control" type="text" name="cuotaPromocion">
+                                                    <input class="form-control input-sm" type="text" name="cuotaPromocion">
                                                 </div>
                                             </div>
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <label for="direccionInternet">Dirección</label>
-                                                    <input class="form-control" type="text" name="direccionInternet">
+                                                    <input class="form-control input-sm" type="text" name="direccionInternet">
                                                 </div>
                                             </div>
                                             <hr style="border-top: 1px solid red;">
@@ -674,19 +668,19 @@
                                                     <div class="row">
                                                         <div class="col-md-12">
                                                             <label for="colilla">Colilla</label>
-                                                            <input class="form-control" type="text" name="colilla">
+                                                            <input class="form-control input-sm" type="text" name="colilla">
                                                         </div>
                                                         <div class="col-md-12">
                                                             <label for="wanip">WAN IP</label>
-                                                            <input class="form-control" type="text" name="wanip">
+                                                            <input class="form-control input-sm" type="text" name="wanip">
                                                         </div>
                                                         <div class="col-md-12">
                                                             <label for="coordenadas">Coordenadas</label>
-                                                            <input class="form-control" type="text" name="coordenadas">
+                                                            <input class="form-control input-sm" type="text" name="coordenadas">
                                                         </div>
                                                         <div class="col-md-12">
                                                             <label for="nodo">Nodo/Ap/Path</label>
-                                                            <input class="form-control" type="text" name="nodo">
+                                                            <input class="form-control input-sm" type="text" name="nodo">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -694,31 +688,31 @@
                                                     <div class="row">
                                                         <div class="col-md-8">
                                                             <label for="modelo">Modelo</label>
-                                                            <input class="form-control" type="text" name="modelo">
+                                                            <input class="form-control input-sm" type="text" name="modelo">
                                                         </div>
                                                         <div class="col-md-4">
                                                             <label for="recepcion">Recepción</label>
-                                                            <input class="form-control" type="text" name="recepcion">
+                                                            <input class="form-control input-sm" type="text" name="recepcion">
                                                         </div>
                                                         <div class="col-md-8">
                                                             <label for="mac">MAC</label>
-                                                            <input class="form-control" type="text" name="mac">
+                                                            <input class="form-control input-sm" type="text" name="mac">
                                                         </div>
                                                         <div class="col-md-4">
                                                             <label for="transmicion">Transmición</label>
-                                                            <input class="form-control" type="text" name="transmicion">
+                                                            <input class="form-control input-sm" type="text" name="transmicion">
                                                         </div>
                                                         <div class="col-md-8">
                                                             <label for="serie">Serie</label>
-                                                            <input class="form-control" type="text" name="serie">
+                                                            <input class="form-control input-sm" type="text" name="serie">
                                                         </div>
                                                         <div class="col-md-4">
                                                             <label for="ruido">Ruido</label>
-                                                            <input class="form-control" type="text" name="ruido">
+                                                            <input class="form-control input-sm" type="text" name="ruido">
                                                         </div>
                                                         <div class="col-md-12">
                                                             <label for="claveWifi">Clave WIFI</label>
-                                                            <input class="form-control" type="text" name="claveWifi">
+                                                            <input class="form-control input-sm" type="text" name="claveWifi">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -746,10 +740,6 @@
                   </div>
                   <!-- /.panel -->
               </div>
-
-
-
-
       </div><!-- /.row -->
       </div>
       <div class="modal-footer">
@@ -771,31 +761,36 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="../../dist/js/sb-admin-2.js"></script>
+    <!-- DataTables JavaScript -->
+    <script src="../../vendor/datatables/js/dataTables.bootstrap.js"></script>
+    <script src="../../vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="../../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="../../vendor/datatables-responsive/dataTables.responsive.js"></script>
 
     <script>
-    $(document).ready(function() {
-        $('#clientes').DataTable({
-            responsive: true,
-            "paging": true,
-            "order": [[ 1, "desc" ]],
-            "language": {
-            "lengthMenu": "Mostrar _MENU_ registros por página",
-            "zeroRecords": "No se encontró ningún registro",
-            "info": "Mostrando _TOTAL_ de _MAX_ clientes",
-            "infoEmpty": "No se encontró ningún registro",
-            "search": "Buscar: ",
-            "searchPlaceholder": "",
-            "infoFiltered": "(de un total de _MAX_ registros)",
-            "paginate": {
-             "previous": "Anterior",
-             "next": "Siguiente",
+        $(document).ready(function() {
+            $('#clientes5').DataTable({
+                responsive: true,
+                "paging": true,
+                "order": [[ 1, "desc" ]],
+                "language": {
+                "lengthMenu": "Mostrar _MENU_ registros por página",
+                "zeroRecords": "No se encontró ningún registro",
+                "info": "Mostrando _TOTAL_ de _MAX_ clientes",
+                "infoEmpty": "No se encontró ningún registro",
+                "search": "Buscar: ",
+                "searchPlaceholder": "",
+                "infoFiltered": "(de un total de _MAX_ registros)",
+                "paginate": {
+                 "previous": "Anterior",
+                 "next": "Siguiente",
 
+                }
             }
-        }
+
+            });
 
         });
-
-    });
     </script>
 
 </body>
