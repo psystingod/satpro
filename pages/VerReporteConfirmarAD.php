@@ -164,7 +164,7 @@
           {
             ?>
                 <tr>
-                  <td colspan="12" HEIGHT="35" align="center" font ><Strong>Productos Enviados desde <?php echo $res["NombreBodega"]?></Strong></td>
+                  <td colspan="12" HEIGHT="35" align="center" font >REPORTE DE TRASLADO DE PRODUCTOS</td>
               </tr>
              <tr>
                  <td COLSPAN="2" width="150" HEIGHT="20" >Nombre de Empleado:</td>
@@ -186,6 +186,12 @@
                   <td COLSPAN="2" width="100"></td>
                   <td colspan="4" width="100"></td>
               </tr>
+              <tr>
+                <td colspan="12" HEIGHT="20"  align="center">Comentario:</td>
+           </tr>
+           <tr>
+                <td colspan="12" HEIGHT="20"   ><?php echo $res["ComentarioEnvio"] ?></td>
+           </tr>
              <?php
            $salir = true;
             if($salir==true){  break; }
@@ -193,7 +199,6 @@
 
             ?>
             </table>
-            <br>
             <table class="table table-striped">
               <tr>
                   <td colspan="12" HEIGHT="15" align="center" font >DESCRIPCION</td>
@@ -227,12 +232,12 @@
             foreach( $detalleAsigna as $res)
             {
             ?>
-                    <tr>
+                    <!-- <tr>
                       <td COLSPAN="12" width="630" HEIGHT="15" align="center">Comentario:</td>
                  </tr>
                  <tr>
                       <td COLSPAN="12" width="630" HEIGHT="100" ><?php echo $res["ComentarioEnvio"] ?></td>
-                 </tr>
+                 </tr> -->
             <?php
                 break;
             }

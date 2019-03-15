@@ -187,7 +187,14 @@
                   <td colspan="4" width="250"> </td>
                   <td COLSPAN="2" width="100"></td>
                   <td colspan="4" width="100"></td>
+
               </tr>
+              <tr>
+                <td COLSPAN="12" width="630" HEIGHT="15" align="center">Comentario:</td>
+           </tr>
+           <tr>
+                <td COLSPAN="12" width="630" HEIGHT="50" ><?php echo $res["Razon"] ?></td>
+           </tr>
                   <tr>
                   <td colspan="12" HEIGHT="35" align="center" font >Informacion de quien Recibió el Traslado</td>
               </tr>
@@ -203,7 +210,6 @@
                   <td COLSPAN="2" width="100"><b>Fecha y Hora de Recibido:</b></td>
                   <td colspan="4" width="100"><?php echo $res["FechaDestino"]?></td>
               </tr>
-
              <?php
            $salir = true;
             if($salir==true){  break; }
@@ -245,12 +251,12 @@
             foreach( $showInventoryTranslateReport as $res)
             {
             ?>
-                    <tr>
+                    <!-- <tr>
                       <td COLSPAN="12" width="630" HEIGHT="15" align="center">Comentario:</td>
                  </tr>
                  <tr>
                       <td COLSPAN="12" width="630" HEIGHT="100" ><?php echo $res["Razon"] ?></td>
-                 </tr>
+                 </tr> -->
             <?php
                 break;
             }

@@ -11,32 +11,20 @@
         public function enter()
         {
                 try {
-                    //  $query = "SELECT count(*) FROM tbl_REPORTEAD where IdDepartamento= (select IdDepartamento from tbl_departamento
-                    //         where NombreDepartamento='Informatica') and State = 0";
-                    //             $statement = $this->dbConnect->query($query);
-                    // if($statement->fetchColumn() > 0)
-                    // {
-                    //        header('Location: ../pages/AsignarArticuloDepartamento.php?status=ConfirmacionExistente');
-                    // }
-                    // else
-                    // {
                             date_default_timezone_set('America/El_Salvador');
                             $Codigo = $_POST["Codigo"];
                             $Nombre = $_POST["Nombre"];
                             $Fecha = date('Y/m/d g:ia');
                             $State = 0;
                             $Comentario = $_POST["Comentario"];
+                            $Nombre = $_SESSION['nombres'];
+                            $Apellido = $_SESSION['apellidos'];
                             $V2 = array();
                             foreach ($Comentario as $K1)
                             {
                                 array_push($V2, $K1);
                              }
-                            // $CantArticulos = $_POST["articleToBeTraslated"];
-                            // $V1 = array();
-                            // foreach ($CantArticulos as $K1)
-                            // {
-                            //     array_push($V1, $K1);
-                            //  }
+
                              function RecibeArray($url_array)
                                 {
                                     $tmp = stripslashes($url_array);
@@ -70,19 +58,27 @@
                                           ':IdDepartamento' => $arrayI[$i],
                                           ':State' => $State
                                       ));
+                                      $Id=$this->dbConnect->lastInsertId();
                                       $query = "UPDATE tbl_articulodepartamento set Cantidad = Cantidad - 1 where IdArticuloDepartamento='".$array[$i]."'";
                                          $statement = $this->dbConnect->prepare($query);
                                          $statement->execute();
+
+                                         $query = "insert into tbl_historialRegistros (IdEmpleado,FechaHora,Tipo_Movimiento,Descripcion)
+                                         VALUES((SELECT IdEmpleado from tbl_empleado where Nombres='".$Nombre."' and Apellidos='".$Apellido."'),
+                                         '".$Fecha."',6, concat('Articulo/Producto: ', (Select NombreArticulo from tbl_articulodepartamento where IdArticuloDepartamento='".$array[$i]."'),
+                                         '. Descripcion: ', (select Comentario from tbl_articuloempleado where IdArticuloEmpleado='".$Id."' ),
+                                         '. Empleado: ', (SELECT a.Nombres FROM tbl_empleado as a WHERE  a.Codigo='".$Codigo."') ) )";
+                                          $statement = $this->dbConnect->prepare($query);
+                                          $statement->execute();
                                    }
                             $this->dbConnect = NULL;
-                            header('Location: ../pages/AsignarArticuloEmpleado.php?status=success');
-                  //  }
+                            header('Location: ../pages/asignarArticuloEmpleado.php?status=success');
                     }
                     catch (Exception $e)
                     {
                         print "!Error¡: " . $e->getMessage() . "</br>";
                         die();
-                        header('Location: ../pages/inventario.php?status=failed');
+                        header('Location: ../pages/asignarArticuloEmpleado.php?status=failed');
                    }
         }
     }

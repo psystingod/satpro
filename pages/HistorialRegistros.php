@@ -193,6 +193,14 @@
                                     {
                                       echo "Traslado Producto (->)". "</td><td>";
                                     }
+                                    else if ($key["Tipo_Movimiento"] == 6)
+                                    {
+                                      echo "Asignacion (<->)". "</td><td>";
+                                    }
+                                    else if ($key["Tipo_Movimiento"] == 7)
+                                    {
+                                      echo "Confirmacion Traslado (*)". "</td><td>";
+                                    }
                                     echo $key["descr"] . "</td></tr>";
                                     // echo "<div class='btn-group pull-right'>
                                     //             <button type='button' class='btn btn-default'>Opciones</button>

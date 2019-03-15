@@ -218,9 +218,9 @@
                                                                            <th></th>
                                                                            <th>Cód Reporte</th>
                                                                              <th>Encargado de Envio</th>
-                                                                           <th>Fecha y Hora</th>
+                                                                           <th>F/H Envio</th>
                                                                            <th>Encargado de Recibir</th>
-                                                                           <th>Fecha y Hora</th>
+                                                                           <th>F/H Recibido</th>
 
                                                                            <th></th>
                                                                        </tr>
@@ -241,9 +241,9 @@
                                                                      <span class='sr-only'>Toggle Dropdown</span>
                                                                    </button>
                                                                    <ul class='dropdown-menu'>
-                                                                       <li><a href='VerReporteConfirmado.php?v=".$key["IdReporte"] ."'><i class='fas fa-eye'></i> Ver Normal</a>
+                                                                       <li><a href='VerReporteConfirmado.php?v=".$key["IdReporte"] ."'><i class='fas fa-eye'></i> Ver Detalle</a>
                                                                        </li>
-                                                                       <li><a href='../php/GenerarPDF.php?v=".$key["IdReporte"] ."' target='_blank'><i class='fas fa-eye'></i> Ver Formato PDF</a>
+                                                                       <li><a href='../php/GenerarPDF.php?v=".$key["IdReporte"] ."' target='_blank'><i class='fas fa-eye'></i> Ver Detalle (PDF)</a>
                                                                        </li>
                                                                        <li class='divider'></li>
                                                                        </li>
@@ -271,7 +271,7 @@
                                                                <th></th>
                                                            <th>Cód Reporte</th>
                                                          <th>Encargado de Envio</th>
-                                                           <th>Fecha y Hora</th>
+                                                           <th>F/H Envio</th>
                                                            <th>De Bodega</th>
                                                           <th>Razon</th>
 
@@ -293,11 +293,7 @@
                                                                      <span class='sr-only'>Toggle Dropdown</span>
                                                                    </button>
                                                                    <ul class='dropdown-menu'>
-                                                                       <li><a href='VerReporteConfirmar.php?v=".$key["IdReporte"]."'><i class='fas fa-eye'></i> Ver Detalle</a>
-                                                                       </li>
-                                                                       <li><a href='#'><i class='fas fa-edit'></i> Editar</a>
-                                                                       </li>
-                                                                       <li><a href='login.html'><i class='fas fa-trash-alt'></i> Eliminar</a>
+                                                                       <li><a href='VerReporteConfirmar.php?v=".$key["IdReporte"]."'><i class='fas fa-eye'></i> Ver Detalle Para Confirmar</a>
                                                                        </li>
                                                                        <li class='divider'></li>
                                                                        </li>

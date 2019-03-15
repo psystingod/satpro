@@ -172,7 +172,7 @@
                           <td colspan="4" width="100"> <?php echo $res["CodigoEmpleado"] ?></td>
                         </tr>
                         <tr>
-                          <td COLSPAN="2" width="150" HEIGHT="20">Departamento Envia:</td>
+                          <td COLSPAN="2" width="150" HEIGHT="15">Departamento Envia:</td>
                           <td colspan="4" width="250"><?php echo $res["NombreDepartamento"]?></td>
                           <input type="hidden" name="Departamento" value='<?php echo $res["NombreDepartamento"] ;?>'>
                           <td COLSPAN="2" width="100">Fecha y Hora De Envìo:</td>
@@ -185,6 +185,12 @@
                           <td COLSPAN="2" width="100"></td>
                           <td colspan="4" width="100"></td>
                         </tr>
+                        <tr>
+                          <td colspan="12" HEIGHT="20" align="center">Comentario:</td>
+                        </tr>
+                        <tr>
+                          <td colspan="12" HEIGHT="20" ><?php echo $res["ComentarioEnvio"] ?></td>
+                        </tr>
                         <?php
                             $salir = true;
                             if($salir==true)
@@ -195,8 +201,6 @@
 
                           ?>
                 </table>
-
-                <br>
                 <table class="table table-striped">
                       <tr>
                         <td colspan="12" HEIGHT="15" align="center" font >DESCRIPCION</td>
@@ -224,23 +228,7 @@
                               ?>
                 </table>
                 <br/>
-                <table class="table table-striped">
-                  <?php
 
-                        foreach( $detalleAsigna as $res)
-                        {
-                          ?>
-                          <tr>
-                            <td COLSPAN="12" width="630" HEIGHT="15" align="center">Comentario:</td>
-                          </tr>
-                          <tr>
-                            <td COLSPAN="12" width="630" HEIGHT="100" ><?php echo $res["ComentarioEnvio"] ?></td>
-                          </tr>
-                          <?php
-                          break;
-                        }
-                        ?>
-              </table>
 
                     <input type="hidden" name="CodigoArticulo" value='<?php echo serialize($CodigoArticulo);?>'>
                     <input type="hidden" name="CantidadArticulo" value='<?php echo serialize($CantidadArticulo);?>'>

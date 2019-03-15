@@ -21,10 +21,10 @@
                   <td colspan="12" align="center"><img src="../images/Cablesat.png" HEIGHT="100" /></td>
               </tr>
               <tr>
-                  <td colspan="12" HEIGHT="35" align="center" font >DETALLE DE TRASLADO DE ARTICULOS</td>
+                  <td colspan="12" HEIGHT="30" align="center" font >DETALLE DE TRASLADO DE ARTICULOS</td>
               </tr>
               <tr>
-               <td colspan="12" HEIGHT="35" align="center" font >Informacion de quien Realizo el Traslado</td>
+               <td colspan="12" HEIGHT="25" align="center" font><b>Informacion de quien Realizo el Traslado</b></td>
            </tr>
               ';
         $salir = false;
@@ -44,9 +44,14 @@
               <td COLSPAN="2" width="100"><b>Fecha y Hora De Envìo:</b></td>
               <td colspan="4" width="100">'. $res["FechaEnvio"] .'</td>
           </tr>
-
+          <tr>
+               <td colspan="12" HEIGHT="20" align="center">Comentario:</td>
+          </tr>
+          <tr>
+               <td colspan="12" HEIGHT="20" >'. $res["ComentarioEnvio"].'</td>
+          </tr>
               <tr>
-              <td colspan="12" HEIGHT="35" align="center" font >Informacion de quien Recibió el Traslado</td>
+              <td colspan="12" HEIGHT="25" align="center" font><b>Informacion de quien Recibió el Traslado</b></td>
           </tr>
             <tr>
              <td COLSPAN="2" width="150" HEIGHT="20" ><b>Nombre del Empleado:</b></td>
@@ -59,6 +64,12 @@
             <td colspan="4" width="250">'. $res["BodegaRecibe"] .'</td>
               <td COLSPAN="2" width="100"><b>Fecha y Hora de Recibido:</b></td>
               <td colspan="4" width="100">'. $res["FechaRecibe"]. '</td>
+          </tr>
+          <tr>
+               <td colspan="12" HEIGHT="20" align="center">Comentario:</td>
+          </tr>
+          <tr>
+               <td colspan="12" HEIGHT="20" >'. $res["ComentarioRecibe"].'</td>
           </tr>
             ';
            $salir = true;
@@ -92,20 +103,7 @@
         $content .= '
               </table>
              <br/>
-             <table border="1" WIDTH="100" HEIGHT="100">
-             <tr>
-                  <td COLSPAN="12" width="630" HEIGHT="15" align="center">Comentario:</td>
-             </tr>
-             <tr>
-                  <td COLSPAN="12" width="630" HEIGHT="100" >'. $res["ComentarioEnvio"].'</td>
-             </tr>
-             <tr>
-                  <td COLSPAN="12" width="630" HEIGHT="15" align="center">Comentario:</td>
-             </tr>
-             <tr>
-                  <td COLSPAN="12" width="630" HEIGHT="100" >'. $res["ComentarioRecibe"].'</td>
-             </tr>
-            </table>
+
             <br/>
             ';
         //Escribir tablas sobre PDF

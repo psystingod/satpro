@@ -21,7 +21,7 @@
                     $query = "UPDATE tbl_articulodepartamento set Cantidad = Cantidad + 1 where IdArticuloDepartamento='".$Id1."'";
                        $statement = $this->dbConnect->prepare($query);
                        $statement->execute();
-                    header('Location: ../pages/InventarioEmpleado.php?status=success');
+                    header('Location: ../pages/inventarioEmpleado.php?status=success');
             } catch (Exception $e) {
                 print "!Error¡: " . $e->getMessage() . "</br>";
                 die();

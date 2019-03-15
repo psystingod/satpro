@@ -264,8 +264,8 @@
             "searchPlaceholder": "",
             "infoFiltered": "(de un total de _MAX_ total registros)",
             "paginate": {
-             "previous": "Anterior",
-             "next": "Siguiente"
+            "previous": "Anterior",
+            "next": "Siguiente"
             }
         }
         });

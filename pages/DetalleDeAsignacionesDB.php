@@ -21,6 +21,7 @@ $ReportesPendientes = $reportsInfo->ReportesPendientesDB();
     <meta name="author" content="">
 
     <title>Cablesat</title>
+
     <link rel="shortcut icon" href="../images/Cablesat.png" />
     <!-- Bootstrap Core CSS -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -275,7 +276,7 @@ $ReportesPendientes = $reportsInfo->ReportesPendientesDB();
                                                   <span class='sr-only'>Toggle Dropdown</span>
                                                 </button>
                                                 <ul class='dropdown-menu'>
-                                                    <li><a href='VerReporteConfirmarDB.php?v=".$key["Idreportead"]."'><i class='fas fa-eye'></i> Ver Detalle</a>
+                                                    <li><a href='VerReporteConfirmarDB.php?v=".$key["Idreportead"]."'><i class='fas fa-eye'></i>Ver Detalle Para Confirmar</a>
                                                     </li>
                                                     <li class='divider'></li>
                                                 </ul>

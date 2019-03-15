@@ -18,6 +18,7 @@
     <meta name="author" content="">
 
     <title>Cablesat</title>
+        <link rel="shortcut icon" href="../images/Cablesat.png" />
     <link rel="shortcut icon" href="../images/cablesat.png" />
     <!-- Bootstrap Core CSS -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -164,7 +165,7 @@
                   <td colspan="12" HEIGHT="35" align="center" font ><Strong>DETALLE DE TRASLADO DE ARTICULOS</Strong></td>
               </tr>
                  <tr>
-                  <td colspan="12" HEIGHT="35" align="center" font >Informacion de quien Realizo el Traslado</td>
+                  <td colspan="12" HEIGHT="35" align="center" font><b>Informacion de quien Realizo el Traslado</b></td>
               </tr>
              <tr>
                  <td COLSPAN="2" width="150" HEIGHT="20" > <b>Nombre del Empleado:</b></td>
@@ -180,9 +181,16 @@
                   <td COLSPAN="2" width="100"><b>Fecha y Hora De Envìo:</b></td>
                   <td colspan="4" width="100"><?php echo $res["FechaEnvio"]?></td>
               </tr>
+              <tr>
+                <td colspan="12" HEIGHT="35" align="center"><b>Comentario:</b></td>
+           </tr>
+           <tr>
+                <td colspan="12" HEIGHT="20" ><?php echo $res["ComentarioEnvio"] ?></td>
+           </tr>
+
               <hr>
                   <tr>
-                  <td colspan="12" HEIGHT="35" align="center" font >Informacion de quien Recibió el Traslado</td>
+                  <td colspan="12" HEIGHT="35" align="center" font><b>Informacion de quien Recibió el Traslado</b></td>
               </tr>
                 <tr>
                  <td COLSPAN="2" width="150" HEIGHT="20" ><b>Nombre del Empleado:</b></td>
@@ -196,7 +204,12 @@
                   <td COLSPAN="2" width="100"><b>Fecha y Hora de Recibido:</b></td>
                   <td colspan="4" width="100"><?php echo $res["FechaRecibe"]?></td>
               </tr>
-
+              <tr>
+                <td colspan="12" HEIGHT="35" align="center"><b>Comentario:</td>
+           </tr>
+           <tr>
+                <td colspan="12" HEIGHT="20" ><?php echo $res["ComentarioRecibe"] ?></td>
+           </tr>
              <?php
            $salir = true;
             if($salir==true){  break; }
@@ -204,7 +217,7 @@
 
             ?>
             </table>
-            <br>
+            
             <table class="table table-striped">
               <tr>
                   <td colspan="12" HEIGHT="15" align="center" font >DESCRIPCION</td>
@@ -238,7 +251,7 @@
             foreach( $detalleAsigna as $res)
             {
             ?>
-                    <tr>
+                    <!-- <tr>
                       <td COLSPAN="12" width="630" HEIGHT="15" align="center"><b>Comentario Realizado por la persona que Envio:</b> (<?php echo $res["EmpleadoEnvia"] ?>)</td>
                  </tr>
                  <tr>
@@ -249,7 +262,7 @@
               </tr>
               <tr>
                    <td COLSPAN="12" width="630" HEIGHT="100" ><?php echo $res["ComentarioRecibe"] ?></td>
-              </tr>
+              </tr> -->
             <?php
                 break;
             }
