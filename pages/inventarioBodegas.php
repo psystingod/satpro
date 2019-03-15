@@ -227,9 +227,11 @@
 
             <div class="row">
                 <form class="" action="resumenTraslado.php" method="POST">
-                  <button id="btn_agregar0" class="btn btn-primary center-block" type="button" name="button" data-toggle="modal" data-target="#SeleccioneBodegaI" accesskey="b">Seleccionar Otra Bodega</button>
+                  <button id="btn_agregar0" class="btn btn-default center-block" type="button" name="button" data-toggle="modal" data-target="#SeleccioneBodegaI" accesskey="b">Seleccionar Otra Bodega</button>
 
-                  <br>
+                <br>
+                
+                <a href="inventario.php"><button class="btn btn-success pull-left" type="button" name="regresar"><i class="fas fa-arrow-circle-left"></i> Atrás</button></a>
                 <button id="traslados" type="submit" class="btn btn-default pull-left" disabled = "disabled" accesskey="t"><i class='fas fa-truck'></i> Trasladar producto a otra Bodega</button>
 
                 <button class="btn btn-primary pull-right agregar" type="button" name="button" data-toggle="modal" data-target="#agregar" accesskey="a"><i class="fas fa-plus-circle"></i> Agregar Nuevo Producto a bodega</button>
