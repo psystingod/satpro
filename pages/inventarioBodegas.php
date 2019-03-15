@@ -30,7 +30,7 @@
     <meta name="author" content="">
 
     <title>Cablesat</title>
-<link rel="shortcut icon" href="../images/Cablesat.png" />
+    <link rel="shortcut icon" href="../images/Cablesat.png" />
     <!-- Bootstrap Core CSS -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -162,7 +162,6 @@
             </div>
             <!-- /.navbar-static-side -->
         </nav>
-
         <div id="page-wrapper">
             <div class="row">
                     <h1 class="page-header alert alert-info">Inventario <?php ?> </h1>
@@ -296,7 +295,6 @@
                                                     <li class='divider'></li>
                                                 </ul>
                                             </div>" . "</td></tr>";
-
                                         }
                                     ?>
                         </tbody>
