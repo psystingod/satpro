@@ -581,12 +581,8 @@
     </script>
 
     <script type="text/javascript">
-
-    </script>
-
-    <script type="text/javascript">
       var d = new Date();
-      var month = String((parseInt(d.getMonth()+1)))
+      var month = String((parseInt(d.getMonth()+1)));
       document.getElementById("fecha").value = d.getFullYear()+"/"+month+"/"+d.getDate();
   </script>
 
