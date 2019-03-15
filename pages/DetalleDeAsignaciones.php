@@ -274,7 +274,7 @@ $ReportesPendientes = $reportsInfo->ReportesPendientes();
                                                   <span class='sr-only'>Toggle Dropdown</span>
                                                 </button>
                                                 <ul class='dropdown-menu'>
-                                                    <li><a href='VerReporteConfirmarAD.php?v=".$key["Idreportead"]."'><i class='fas fa-eye'></i> Ver Detalle</a>
+                                                    <li><a href='VerReporteConfirmarAD.php?v=".$key["Idreportead"]."'><i class='fas fa-eye'></i> Ver Detalle  Para Confirmar</a>
                                                     </li>
                                                     <li class='divider'></li>
                                                 </ul>

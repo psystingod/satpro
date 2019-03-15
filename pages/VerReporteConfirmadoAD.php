@@ -163,7 +163,7 @@
                   <td colspan="12" HEIGHT="35" align="center" font ><Strong>DETALLE DE ASIGNACION DE ARTICULOS</Strong></td>
               </tr>
                  <tr>
-                  <td colspan="12" HEIGHT="35" align="center" font >Informacion de quien Realizo el Traslado</td>
+                  <td colspan="12" HEIGHT="35" align="center" font><b>Informacion de quien Realizo el Traslado</b></td>
               </tr>
              <tr>
                  <td COLSPAN="2" width="150" HEIGHT="20" > <b>Nombre del Empleado:</b></td>
@@ -184,8 +184,14 @@
                       <td COLSPAN="2" width="100"></td>
                   <td colspan="4" width="100"></td>
               </tr>
+              <tr>
+                <td COLSPAN="12" width="630" HEIGHT="15" align="center">Comentario:</td>
+           </tr>
+           <tr>
+                <td COLSPAN="12" width="630" HEIGHT="50" ><?php echo $res["ComentarioEnvio"] ?></td>
+           </tr>
                   <tr>
-                  <td colspan="12" HEIGHT="35" align="center" font >Informacion de quien Recibió el Traslado</td>
+                  <td colspan="12" HEIGHT="35" align="center" font><b>Informacion de quien Recibió el Traslado</b></td>
               </tr>
                 <tr>
                  <td COLSPAN="2" width="150" HEIGHT="20" ><b>Nombre del Empleado:</b></td>
@@ -200,7 +206,12 @@
                   <td COLSPAN="2" width="100"><b>Fecha y Hora de Recibido:</b></td>
                   <td colspan="4" width="100"><?php echo $res["FechaRecibe"]?></td>
               </tr>
-
+              <tr>
+                <td COLSPAN="12" width="630" HEIGHT="15" align="center">Comentario:</td>
+           </tr>
+           <tr>
+                <td COLSPAN="12" width="630" HEIGHT="50" ><?php echo $res["ComentarioRecibe"] ?></td>
+           </tr>
              <?php
            $salir = true;
             if($salir==true){  break; }
@@ -242,25 +253,25 @@
             foreach( $detalleAsigna as $res)
             {
             ?>
-                    <tr>
+                    <!-- <tr>
                       <td COLSPAN="12" width="630" HEIGHT="15" align="center"><b>Comentario Realizado por la persona que Envio:</b></td>
                  </tr>
                  <tr>
                       <td COLSPAN="12" width="630" HEIGHT="100" ><?php echo $res["ComentarioEnvio"] ?></td>
-                 </tr>
-                 <tr>
+                 </tr> -->
+                 <!-- <tr>
                    <td COLSPAN="12" width="630" HEIGHT="15" align="center"><b>Comentario Realizado por la persona que recibio:</b></td>
               </tr>
               <tr>
                    <td COLSPAN="12" width="630" HEIGHT="100" ><?php echo $res["ComentarioRecibe"] ?></td>
-              </tr>
+              </tr> -->
             <?php
                 break;
             }
             ?>
             </table>
                   <input type="hidden" name="Id" value='<?php echo $a; ?>'>
-              <input  title="Presione: Alt+G" class="btn btn-primary pull-right" type="submit" accesskey="g" name="Ver PDF"></input>
+              <input  title="Presione: Alt+G" class="btn btn-primary pull-right" type="submit" accesskey="g" name="Ver PDF" value="Generar Archivo PDF"></input>
               <a href="DetalleDeAsignaciones.php"><button class="btn btn-default pull-right" type="button" name="regresar"><i class="fas fa-arrow-circle-left"></i> Volver</button></a>
             </form>
         </div><!-- /.row -->

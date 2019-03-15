@@ -1,21 +1,15 @@
 <?php
-
     session_start();
-
  ?>
 <?php
-
-   require("../php/reportsPDF.php");
-        $reports = new Reports();
-        $a=$_GET['v'];
-        $showInventoryTranslateReport = $reports->getB($a);
-
+    require("../php/reportsPDF.php");
+    $reports = new Reports();
+    $a=$_GET['v'];
+    $showInventoryTranslateReport = $reports->getB($a);
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -189,13 +183,19 @@
                   <td COLSPAN="2" width="100"></td>
                   <td colspan="4" width="100"></td>
               </tr>
+              <tr>
+                <td COLSPAN="12" width="630" HEIGHT="15" align="center">Comentario:</td>
+           </tr>
+           <tr>
+                <td COLSPAN="12" width="600" HEIGHT="50" ><?php echo $res["Razon"] ?></td>
+           </tr>
              <?php
            $salir = true;
             if($salir==true){  break; }
             }
             ?>
             </table>
-            <br>
+            
              <table class="table table-striped">
               <tr>
                   <td colspan="12" HEIGHT="15" align="center" font >DESCRIPCION</td>
@@ -231,12 +231,12 @@
             foreach( $showInventoryTranslateReport as $res)
             {
             ?>
-                    <tr>
+                    <!-- <tr>
                       <td COLSPAN="12" width="630" HEIGHT="15" align="center">Comentario:</td>
                  </tr>
                  <tr>
                       <td COLSPAN="12" width="630" HEIGHT="100" ><?php echo $res["Razon"] ?></td>
-                 </tr>
+                 </tr> -->
             <?php
             break;
             }

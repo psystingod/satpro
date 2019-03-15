@@ -10,8 +10,7 @@
         $a= $_GET['v'];
         $showInventoryTranslateReport = $reports->getInventoryTranslateReport($a);
 	try {
-
-		ob_start();
+		  ob_start();
         $pdf = new HTML2PDF('P', 'A4', 'en', true, 'UTF-8', array(20, 15, 10, 10));
        //Izquierda, Arriba, abajo
        //Llenar tablas
@@ -23,6 +22,9 @@
               <tr>
                   <td colspan="12" HEIGHT="35" align="center" font >REPORTE DE TRASLADO DE PRODUCTOS</td>
               </tr>
+              <tr>
+               <td colspan="12" HEIGHT="30" align="center" font><b>Informacion de quien Realizo el Traslado</b></td>
+           </tr>
               ';
         $salir = false;
         foreach($showInventoryTranslateReport as $res)
@@ -40,7 +42,15 @@
                   <td COLSPAN="2" width="100">Fecha y Hora De Envìo:</td>
                   <td colspan="4" width="100">' .$res["FechaOrigen"].'</td>
               </tr>
-
+              <tr>
+                   <td COLSPAN="12" HEIGHT="15" align="center">Comentario:</td>
+              </tr>
+              <tr>
+                   <td COLSPAN="12" HEIGHT="25" >'. $res["Razon"].'</td>
+              </tr>
+              <tr>
+              <td colspan="12" HEIGHT="30" align="center" font><b>Informacion de quien Recibió el Traslado</b></td>
+          </tr>
                <tr>
                   <td COLSPAN="2" width="150" HEIGHT="20" >Nombre del Empleado:</td>
                  <td colspan="4" width="250">'. $res["NombreEmpleadoDestino"]. '</td>
@@ -79,23 +89,11 @@
                     <td colspan="4" width="410" align="center" >'.$res["NombreArticulo"].'</td>
                     <td COLSPAN="6" width="100" align="center">'. $res["cantidad"].'</td>
                 </tr>
+                </table>
             ';
             }
 
-        $content .= '
-              </table>
-             <br/>
-             <table border="1" WIDTH="100" HEIGHT="100">
-             <tr>
-                  <td COLSPAN="12" width="630" HEIGHT="15" align="center">Comentario:</td>
-             </tr>
-             <tr>
-                  <td COLSPAN="12" width="630" HEIGHT="100" >'. $res["Razon"].'</td>
-             </tr>
-            </table>
-            <br/>
 
-            ';
         //Escribir tablas sobre PDF
 	   $pdf->writeHTML($content, true, 0, true, 0);
 		$pdf -> Output('Generar_PDF.pdf');

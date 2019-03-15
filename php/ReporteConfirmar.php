@@ -80,6 +80,10 @@
                                          header('Location: ../pages/ReportesTraslados.php?status=success');
                                     }
                             }
+                            $query = "insert into tbl_historialRegistros (IdEmpleado,FechaHora,Tipo_Movimiento,Descripcion)
+VALUES((SELECT IdEmpleado from tbl_empleado where Nombres='".$Nombre."' and Apellidos='".$Apellido."'),'".$FechaDestino."',7, concat( (SELECT a.NombreBodega FROM tbl_bodega as a WHERE  NombreBodega='".$BodegaOrigen."'),' >> ', (SELECT a.NombreBodega FROM tbl_bodega as a WHERE  NombreBodega='".$BodegaDestino."') ) )";
+                             $statement = $this->dbConnect->prepare($query);
+                             $statement->execute();
                             $this->dbConnect = NULL;
                         }
                         catch (Exception $e)

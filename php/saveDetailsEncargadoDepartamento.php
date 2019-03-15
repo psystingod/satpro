@@ -29,7 +29,7 @@
 
                                     if($statement->fetchColumn() == 0)
                                     {
-                                      header('Location: ../pages/AsignarEncargadoDepartamento.php?status=CodigoEmpleado');
+                                      header('Location: ../pages/asignarEncargadoDepartamento.php?status=CodigoEmpleado');
                                     }
                                     else
                                      {
@@ -38,14 +38,14 @@
 
                                        if($statement->fetchColumn() == 1)
                                        {
-                                         header('Location: ../pages/AsignarEncargadoDepartamento.php?status=failed');
+                                         header('Location: ../pages/asignarEncargadoDepartamento.php?status=failed');
                                        }
                                        else {
                                             $query = "UPDATE tbl_departamento set IdEmpleado =(SELECT IdEmpleado FROM tbl_empleado where Codigo='".$CodigoEmpleado."') where NombreDepartamento='".$Departamento."'";
                                             $statement = $this->dbConnect->prepare($query);
                                             $statement->execute();
 
-                                         header('Location: ../pages/AsignarEncargadoDepartamento.php?status=success');
+                                         header('Location: ../pages/asignarEncargadoDepartamento.php?status=success');
                                        }
                                     }
                             $this->dbConnect = NULL;
@@ -54,7 +54,7 @@
                     {
                         print "!Error¡: " . $e->getMessage() . "</br>";
                         die();
-                        header('Location: ../pages/AsignarEncargadoDepartamento.php?status=failed');
+                        header('Location: ../pages/asignarEncargadoDepartamento.php?status=failed');
                    }
             }
         }

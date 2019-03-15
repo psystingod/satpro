@@ -98,12 +98,13 @@
                                              ':Cantidad' => $Cantidad,
                                              ':BodegaOrigen' => $IdBodegaOrigen
                                           ));
-                                          $query = "insert into tbl_historialRegistros (IdEmpleado,FechaHora,Tipo_Movimiento,Descripcion)
-VALUES((SELECT IdEmpleado from tbl_empleado where Nombres='".$Nombre."' and Apellidos='".$Apellido."'),'".$Fecha."',5, concat( (SELECT a.NombreBodega FROM tbl_bodega as a WHERE  NombreBodega='".$IdBodegaOrigen."'),' >> ', (SELECT a.NombreBodega FROM tbl_bodega as a WHERE  NombreBodega='".$IdBodegaDestino."') ) )";
-                                           $statement = $this->dbConnect->prepare($query);
-                                           $statement->execute();
+
                                            header("Location: ../pages/inventarioBodegas.php?status=success&bodega=".$IdBodegaOrigen);
                                          }
+                                         $query = "insert into tbl_historialRegistros (IdEmpleado,FechaHora,Tipo_Movimiento,Descripcion)
+VALUES((SELECT IdEmpleado from tbl_empleado where Nombres='".$Nombre."' and Apellidos='".$Apellido."'),'".$Fecha."',5, concat( (SELECT a.NombreBodega FROM tbl_bodega as a WHERE  NombreBodega='".$IdBodegaOrigen."'),' >> ', (SELECT a.NombreBodega FROM tbl_bodega as a WHERE  NombreBodega='".$IdBodegaDestino."') ) )";
+                                          $statement = $this->dbConnect->prepare($query);
+                                          $statement->execute();
                                 }
                         }
                     }

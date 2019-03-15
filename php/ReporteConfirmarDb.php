@@ -98,11 +98,18 @@
                                         (SELECT IdBodega from tbl_bodega where NombreBodega='".$Bodega."') from tbl_articulo as a where Codigo='".$IdArticulo."' limit 1";
                                         $statement = $this->dbConnect->prepare($query);
                                         $statement->execute();
-                                        
+
                                         header('Location: ../pages/DetalleDeAsignacionesDB.php?status=success');
 
                                     }
                              }
+
+                             $query = "insert into tbl_historialRegistros (IdEmpleado,FechaHora,Tipo_Movimiento,Descripcion)
+                             VALUES((SELECT IdEmpleado from tbl_empleado where Nombres='".$Nombre."' and Apellidos='".$Apellido."'),'".$Fecha."',7,
+                              concat( (SELECT a.NombreDepartamento FROM tbl_departamento as a WHERE  NombreDepartamento='".$Departamento."'),' >> ',
+                               (SELECT a.NombreBodega FROM tbl_bodega as a WHERE  NombreBodega='".$Bodega."') ) )";
+                              $statement = $this->dbConnect->prepare($query);
+                              $statement->execute();
                             $this->dbConnect = NULL;
                         }
                         catch (Exception $e)

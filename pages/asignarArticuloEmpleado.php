@@ -213,12 +213,7 @@
                                                   <span class='caret'></span>
                                                   <span class='sr-only'>Toggle Dropdown</span>
                                                 </button>
-                                                <ul class='dropdown-menu'>
-                                                    <li><a href=''><i class='fas fa-eye'></i> Ver</a>
-                                                    </li>
-
-                                                    <li class='divider'></li>
-                                                </ul>
+                                                
                                             </div>" . "</td></tr>";
                                         }
                                     ?>

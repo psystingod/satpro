@@ -197,7 +197,7 @@ require("../php/contenido.php");
                                     echo $key["CodigoEmpleado"] . "</td><td>";
                                     echo $key["NombreEmpleado"] . "</td><td width='100' >";
                                     echo $key["NombreArticulo"] . "</td><td width='90' >";
-                                    echo $key["Cantidad"] . "</td><td width='300'  >";
+                                    echo $key["Cantidad"] . "</td><td width='200'  >";
                                     echo $key["Comentario"] . "</td><td width='120' >";
                                     echo $key["FechaEntregado"] . "</td><td>";
                                     echo "<div class='btn-group pull-right'>
@@ -209,8 +209,7 @@ require("../php/contenido.php");
                                                 <ul class='dropdown-menu'>
                                                     <li><a href='../php/DeleteAsignacionE.php?Id=".$key["IdArticuloEmpleado"]."&Id1=".$key["IdArticuloDepartamento"]."' title='El Articulo sera devuelto al Inventario Departamento'><i class='fas fa-trash-alt'></i> Eliminar Asignacion</a>
                                                     </li>
-                                                    <li><a href='#' title='El Articulo sera dado de baja'><i class='fas fa-trash-alt'></i> Dar de baja Articulo</a>
-                                                    </li>
+
                                                     <li class='divider'></li>
                                                 </ul>
                                             </div>" . "</td></tr>";
