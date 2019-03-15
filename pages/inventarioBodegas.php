@@ -245,12 +245,17 @@
                         <thead>
                             <tr>
 <<<<<<< HEAD
+<<<<<<< HEAD
                                 <th> </th>
 
 =======
                                 <th></th>
                                 <th>Id artículo</th>
 >>>>>>> 49f84aa92d813913d646377b44ef100b644f4fea
+=======
+                                <th></th>
+                                <th>Id artículo</th>
+>>>>>>> 8d0e0e334583ff2de15a3e13f4c4882930123a3e
                                 <th>Código</th>
                                 <th>Nombre</th>
                                 <th>Cant</th>
