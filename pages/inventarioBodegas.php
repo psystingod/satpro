@@ -231,38 +231,24 @@
                 <br>
 
                 <a href="inventario.php"><button class="btn btn-success pull-left" type="button" name="regresar"><i class="fas fa-arrow-circle-left"></i> Atrás</button></a>
-<<<<<<< HEAD
                 <button  name="traslados" type="submit" class="btn btn-default pull-left" disabled="disabled" accesskey="t"><i class='fas fa-truck'></i> Trasladar producto a otra Bodega</button>
-=======
-                <button id="traslados" type="submit" class="btn btn-default pull-left" disabled="disabled" accesskey="t"><i class='fas fa-truck'></i> Trasladar producto a otra Bodega</button>
->>>>>>> 49f84aa92d813913d646377b44ef100b644f4fea
 
                 <button class="btn btn-primary pull-right agregar" type="button" name="button" data-toggle="modal" data-target="#agregar" accesskey="a"><i class="fas fa-plus-circle"></i> Agregar Nuevo Producto a bodega</button>
                 <button class="btn btn-success pull-right agregar" type="button" name="button" data-toggle="modal" data-target="#regresar"><i class="fas fa-undo"></i> Devolver Producto a bodega</button>
                 <br><br><br>
                     <table width="100%" class="table table-striped table-hover" id="inventario">
                         <thead>
-                            <tr>
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                <th> </th>
-
-=======
-                                <th></th>
-                                <th>Id artículo</th>
->>>>>>> 49f84aa92d813913d646377b44ef100b644f4fea
-=======
-                                <th></th>
-                                <th>Id artículo</th>
->>>>>>> 8d0e0e334583ff2de15a3e13f4c4882930123a3e
-                                <th>Código</th>
-                                <th>Nombre</th>
-                                <th>Cant</th>
-                                <th>Fecha</th>
-                                <th>Proovedor</th>
-                                <th>Tipo</th>
-                                <th>Categoria</th>
-                                <th></th>
+                            <tr
+<th></th>
+          <th>Id artículo</th>
+          <th>Código</th>
+          <th>Nombre</th>
+          <th>Cant</th>
+          <th>Fecha</th>
+          <th>Proovedor</th>
+          <th>Tipo</th>
+          <th>Categoria</th>
+          <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -271,7 +257,6 @@
                                     echo "<tr><td>";
                                     echo "<input type='checkbox' class='form-control checkbox agregar' name='checkTraslado[]' value='".$key['IdArticulo']."'>" . "</td><td>";
                                     //echo $key["IdArticulo"] . "</td><td>";
-
                                     echo $key["Codigo"] . "</td><td>";
                                     echo $key["NombreArticulo"] . "</td><td>";
                                     echo $key["Cantidad"] ." " . $key["Abreviatura"] ."</td><td>";
@@ -586,7 +571,7 @@
             });
         });
     </script>
-    
+
     <script type="text/javascript">
 
     </script>
