@@ -176,27 +176,21 @@
                        else if ($_GET['status'] == 'failed'){
                            echo "<div id='temporal' class='alert alert-danger alert-dismissible'>
                                      <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                                     Su registro <strong>falló.</strong>
+                                     El Articulo ya  <strong>existe</strong> en esta bodega, Si desea ingresar mas cantidad buscar el articulo y Ver 'Opciones'
                                  </div>";
                        }
-                        else if ($_GET['status'] == 'FalloRegistro'){
+                        else if ($_GET['status'] == 'FalloEliminarFR'){
                            echo "<div id='temporal' class='alert alert-danger alert-dismissible'>
                                      <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                                     Su registro <strong>falló al Guardarse. El codigo ya existe en bodega</strong>
+                                     El <strong>ID</strong> del articulo esta en uso en otro modulo, No se puede Eliminar.
                                  </div>";
                        }
-                         else if ($_GET['status'] == 'fai'){
+                         else if ($_GET['status'] == 'ErrorGrave'){
                            echo "<div id='temporal' class='alert alert-danger alert-dismissible'>
                                      <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                                     No se puede <strong> Eliminar</strong>. Otro Modulo esta referenciando su codigo
+                                     Ha ocurrido un error, Consultar al administrador del sistema
                                  </div>";
                        }
-                       else if ($_GET['status'] == 'ErrorStock'){
-                         echo "<div id='temporal' class='alert alert-danger alert-dismissible'>
-                                   <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                                   No se completo el <b>Traslado</b>. La cantidad de traslado de uno de los articulos, Estaria dejando sin la existencia <b>Minima</b> Permitida en Bodega (5)
-                               </div>";
-                     }
                      else if ($_GET['status'] == 'Eliminado'){
 
                              echo "<div id='temporal' class='alert alert-warning alert-dismissible'>
@@ -231,28 +225,29 @@
                 <br>
 
                 <a href="inventario.php"><button class="btn btn-success pull-left" type="button" name="regresar"><i class="fas fa-arrow-circle-left"></i> Atrás</button></a>
-                <button  name="traslados" type="submit" class="btn btn-default pull-left" disabled="disabled" accesskey="t"><i class='fas fa-truck'></i> Trasladar producto a otra Bodega</button>
+                <button id="traslados" type="submit" class="btn btn-default pull-left" disabled="disabled" accesskey="t"><i class='fas fa-truck'></i> Trasladar producto a otra Bodega</button>
 
                 <button class="btn btn-primary pull-right agregar" type="button" name="button" data-toggle="modal" data-target="#agregar" accesskey="a"><i class="fas fa-plus-circle"></i> Agregar Nuevo Producto a bodega</button>
-                <button class="btn btn-success pull-right agregar" type="button" name="button" data-toggle="modal" data-target="#regresar"><i class="fas fa-undo"></i> Devolver Producto a bodega</button>
+                <!-- <button class="btn btn-success pull-right agregar" type="button" name="button" data-toggle="modal" data-target="#regresar"><i class="fas fa-undo"></i> Devolver Producto a bodega</button> -->
                 <br><br><br>
                     <table width="100%" class="table table-striped table-hover" id="inventario">
                         <thead>
-                            <tr
-<th></th>
-          <th>Id artículo</th>
-          <th>Código</th>
-          <th>Nombre</th>
-          <th>Cant</th>
-          <th>Fecha</th>
-          <th>Proovedor</th>
-          <th>Tipo</th>
-          <th>Categoria</th>
-          <th></th>
+                            <tr>
+                                <th></th>
+                                <!-- <th>Id artículo</th> -->
+                                <th>Código</th>
+                                <th>Nombre</th>
+                                <th>Cant</th>
+                                <th>Fecha</th>
+                                <th>Proovedor</th>
+                                <th>Tipo</th>
+                                <th>Categoria</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
+                            $A= '3325s';
                                 foreach ($recordsInfo as $key) {
                                     echo "<tr><td>";
                                     echo "<input type='checkbox' class='form-control checkbox agregar' name='checkTraslado[]' value='".$key['IdArticulo']."'>" . "</td><td>";
@@ -271,6 +266,9 @@
                                                   <span class='sr-only'>Toggle Dropdown</span>
                                                 </button>
                                                 <ul class='dropdown-menu'>
+                                                <li>
+                                                <a href='#' onclick='Actualizacion(\" {$key["NombreArticulo"]}\" , \"{$key["Cantidad"]} \" , \"{$key["NombreBodega"]} \", \"{$key["IdArticulo"]} \")'><i class='fas fa-undo'></i> Devolver Producto a Bodega </a>
+                                                </li>
                                                     <li><a href='verArticulo.php?id={$key['IdArticulo']}&Bdg={$Bodega}'><i class='fas fa-eye'></i> Ver</a>
                                                     </li>
                                                     <li class='editar'><a href='actualizarArticulo.php?id={$key['IdArticulo']}&Bdg={$Bodega}'><i class='fas fa-edit'></i> Editar</a>
@@ -311,21 +309,16 @@
                       <form action="../php/enterProduct.php" method="POST">
                       <div class="modal-body">
                                   <div class="form-row">
-                                      <div class="form-group col-md-6 col-xs-6">
-                                          <label for="codigo">Código</label>
-                                          <input type="text" class="form-control" name="codigo" id="codigo" placeholder="Código del producto" required>
+                                      <div class="form-group col-md-8 col-xs-8">
+                                          <label for="codigo">Nombre</label>
+                                          <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre del producto" title="Escribe solamente letras y números" required>
                                       </div>
-                                      <div class="form-group col-md-6 col-xs-6">
+                                      <div class="form-group col-md-4 col-xs-4">
                                           <label for="fecha">Fecha</label>
                                           <input type="text" class="form-control" name="fecha" id="fecha" placeholder="" readonly>
                                       </div>
                                   </div>
-                                  <div class="form-row">
-                                      <div class="form-group col-md-12 col-xs-12">
-                                          <label for="codigo">Nombre</label>
-                                          <input type="text" class="form-control" name="nombre" id="nombre" placeholder="Nombre del producto" title="Escribe solamente letras y números" required>
-                                      </div>
-                                  </div>
+
                                   <div class="form-row">
                                       <div class="form-group col-md-6 col-xs-6">
                                         <label for="proveedor">Proveedor</label>
@@ -361,7 +354,7 @@
                                               <option value="" selected="selected">Seleccionar...</option>
                                               <?php
                                                 foreach ($categories as $key) {
-                                                    echo "<option value='".strtolower($key['NombreCategoria'])."' >".$key['NombreCategoria']."</option>";
+                                                    echo "<option value='".$key['NombreCategoria']."' >".$key['NombreCategoria']."</option>";
                                                 }
                                               ?>
                                           </select>
@@ -395,7 +388,7 @@
                                   <div class="form-row">
                                       <div class="form-group col-md-6 col-xs-6">
                                           <label for="precio de compra">Precio de compra (U)</label>
-                                          <input type="text" class="form-control" name="pCompra" id="pCompra" placeholder="$ Precio de compra" pattern="[0-9]+(\.[0-9][0-9]?)?" title="Escribe solamente números" required>
+                                          <input type="text" class="form-control" name="pCompra" id="pCompra" placeholder="$ Precio de compra" pattern="[0-9]+(\.[0-9][0-9]?)?" title="Escribe solamente números">
                                       </div>
                                       <div class="form-group col-md-6 col-xs-6">
                                           <label for="precio de venta">Precio de venta (U)</label>
@@ -505,24 +498,66 @@
               </div>
         </div>
   </div>
+
+
+
+
+      <div class="modal fade" id="UpdateCantidad" tabindex="-1" role="dialog" aria-labelledby="UpdateCantidad">
+            <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                        <div class="modal-header">
+                              <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                              <h4 class="modal-title" id="nuevoProducto">Actualizacion de Producto </h4>
+                        </div>
+
+                        <form action="../php/ActArticulo.php" method="POST">
+                        <div class="modal-body">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-7 col-xs-7">
+                                            <label for="na">Nombre Articulo</label>
+                                            <input type="text" class="form-control" name="Nmb" id="Nmb" readonly>
+                                        </div>
+                                        <div class="form-group col-md-5 col-xs-5">
+                                            <label for="ca">Cantidad Actual</label>
+                                            <input type="text" class="form-control" name="Ctd" id="Ctd" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group col-md-6 col-xs-6">
+                                            <label for="bodega">Bodega</label>
+                                            <input type="text" class="form-control" name="Bdg" id="Bdg" readonly>
+                                        </div>
+                                        <div class="form-group col-md-6 col-xs-6">
+                                            <label for="cant">Ingrese Cantidad</label>
+                                            <input type="text" class="form-control" name="NCant" id="NCant" placeholder="Ingrese Cantidad">
+                                        </div>
+                                    </div>
+                        </div>
+                        <div class="modal-footer">
+                          <input type="hidden" name="Id" id="Id">
+                          <input type="hidden" name="NOMBRE" value='<?php echo $_SESSION['nombres']; ?>'>
+                          <input type="hidden" name="APELLIDO" value='<?php echo $_SESSION['apellidos']; ?>'>
+                              <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                              <input type="submit" class="btn btn-primary" value="INGRESAR PRODUCTO">
+                        </div>
+                             </form>
+                  </div>
+            </div>
+      </div><!-- /Add modal -->
+
     <!-- jQuery -->
     <script src="../vendor/jquery/jquery.min.js"></script>
-
     <!-- Bootstrap Core JavaScript -->
     <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
-
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../vendor/metisMenu/metisMenu.min.js"></script>
-
     <!-- DataTables JavaScript -->
     <script src="../vendor/datatables/js/dataTables.bootstrap.js"></script>
-
     <script src="../vendor/datatables/js/jquery.dataTables.min.js"></script>
     <script src="../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
     <script src="../vendor/datatables-responsive/dataTables.responsive.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
-
 
     <!-- Page-Level Demo Scripts - Tables - Use for reference -->
     <script>
@@ -573,17 +608,30 @@
     </script>
 
     <script type="text/javascript">
-
-    </script>
-
-    <script type="text/javascript">
       var d = new Date();
       var month = String((parseInt(d.getMonth()+1)))
       document.getElementById("fecha").value = d.getFullYear()+"/"+month+"/"+d.getDate();
   </script>
 
-  <script type="text/javascript">var permisos = <?php echo $_SESSION["permisosTotales"]; ?>;</script>
+  <script type="text/javascript">
+  var permisos = <?php echo $_SESSION["permisosTotales"]; ?>;</script>
   <script src="../js/permisos.js"></script>
+
+  <script type="text/javascript">
+    function Actualizacion(Nombre,Cantidad,Bodega,Id)
+     {
+    //var Valor = id
+    //var Nombre = Nombre;
+    $('#UpdateCantidad').modal('show');
+
+    document.getElementById("Nmb").value = String(Nombre);
+    document.getElementById("Ctd").value = String(Cantidad);
+    document.getElementById("Bdg").value = String(Bodega);
+    document.getElementById("Id").value = String(Id);
+    //document.getElementById("nombre").value = Nombre;
+    }
+  </script>
+
 </body>
 
 </html>

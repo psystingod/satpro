@@ -83,10 +83,10 @@
             try {
                 // SQL query para traer los datos de los productos
                 $query = "SELECT A.IdArticulo as IdArticulo, A.Codigo as Codigo, A.NombreArticulo, A.Descripcion, A.Cantidad, A.FechaEntrada, A.PrecioCompra, A.PrecioVenta as PrecioVenta,
-                 TP.NombreTipoProducto as NombreTipo, P.Nombre as Proveedor, C.NombreCategoria as Categoria, um.Abreviatura FROM tbl_articulo as A inner join tbl_tipoproducto as TP on
+                 TP.NombreTipoProducto as NombreTipo, P.Nombre as Proveedor, C.NombreCategoria as Categoria, um.Abreviatura, b.NombreBodega FROM tbl_articulo as A inner join tbl_tipoproducto as TP on
                  A.IdTipoProducto=TP.IdTipoProducto inner join tbl_proveedor as P on P.IdProveedor=A.IdProveedor inner join tbl_categoria as C on C.IdCategoria=A.IdCategoria
-                inner join tbl_unidadmedida as um on um.IdUnidadMedida=A.IdUnidadMedida
-                where IdBodega=(Select IdBodega from tbl_bodega where NombreBodega= '".$Bodega."')";
+                inner join tbl_unidadmedida as um on um.IdUnidadMedida=A.IdUnidadMedida inner join tbl_bodega as b on b.IdBodega=A.IdBodega
+                where b.IdBodega=(Select IdBodega from tbl_bodega where NombreBodega= '".$Bodega."')";
                 // Preparación de sentencia
                 $statement = $this->dbConnect->prepare($query);
                 $statement->execute();
