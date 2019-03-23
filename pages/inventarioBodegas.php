@@ -287,9 +287,8 @@
                     </table>
                 </form>
                     <!-- /.table-responsive -->
+                    <br/>
                     <div class="well">
-                        <h4>Inventario Cablesat</h4>
-                        <p>El presente inventario está conformado por todos y cada uno de los artículos que se encuentran almacenados en las bodegas de Cablesat u objetos que se encuentran en uso en las diferentes unidades de la empresa. Ver información en: <a target="_blank" href="https://cablesat.net/">https://cablesat.net/</a></p>
                         <button class="btn btn-default btn-lg btn-block" type="button" name="button" data-toggle="modal" data-target="#GenerarReporte" accesskey="a"><i class="fas fa-plus-circle"></i> Generar reporte PDF</button>
 
                     </div>
@@ -542,7 +541,7 @@
             "infoFiltered": "(de un total de _MAX_ registros)",
             "paginate": {
              "previous": "Anterior",
-             "next": "Siguiente",
+             "next": "Siguiente"
             }
         }
         });

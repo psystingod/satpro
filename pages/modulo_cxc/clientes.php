@@ -186,7 +186,7 @@
                                                           <span class='sr-only'>Toggle Dropdown</span>
                                                         </button>
                                                         <ul class='dropdown-menu'>
-                                                            <li><a href='verArticulo.php?id=''><i class='fas fa-eye'></i> Ver</a>
+                                                            <li><a href='infoCliente.php?id={$key["cod_cliente"]}'><i class='fas fa-eye'></i> Ver</a>
                                                             </li>
                                                             <li class='editar'><a href='actualizarArticulo.php?id=''><i class='fas fa-edit'></i> Editar</a>
                                                             </li>
