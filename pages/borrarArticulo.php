@@ -9,15 +9,15 @@ $obj = new ConectionDB();
 $con = $obj->dbConnect;
 $Bodega="";
 
-try{
-
-    $con = new PDO($dsn, $username, $password);
-    $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-} catch (Exception $ex) {
-
-    echo 'No se pudo conectar a la base de datos '.$ex->getMessage();
-}
+// try{
+//
+//     $con = new PDO($dsn, $username, $password);
+//     $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+//
+// } catch (Exception $ex) {
+//
+//     echo 'No se pudo conectar a la base de datos '.$ex->getMessage();
+// }
 
 try {
 
@@ -57,11 +57,12 @@ try {
 
     }else{
         header('Location: inventarioBodegas.php?status=failed&bodega='.$Bodega);
+        // header('Location: inventarioBodegas.php?status=failed&bodega='.$Bodega);
     }
 }
 
 // show error
 catch(PDOException $exception){
-    header('Location: inventarioBodegas.php?status=failed&bodega='.$Bodega);
+    header('Location: inventarioBodegas.php?status=FalloEliminarFR&bodega='.$Bodega);
 }
 ?>
