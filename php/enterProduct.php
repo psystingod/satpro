@@ -39,7 +39,7 @@
                  $query = "SELECT count(*) FROM tbl_articulo where IdCategoria=(SELECT IdCategoria FROM tbl_categoria where NombreCategoria='".$categoria."')";
                  $statement = $this->dbConnect->query($query);
                  $Cd = $statement->fetchColumn() + 1;
-                 $codigo = substr($nombre,0,1) . substr($categoria,0,1) ."0". $Cd;
+                 $codigo = substr($categoria,0,1) ."0". $Cd;
 
                  //CONSULTAMOS SI EXISTE EL ARTICULO EN LA TABLA TBL_ARTICULO, SI EXISTE ENTRA A UNA VALIDACION, SI NO EXISTE LO AGREGA
                  $query = "SELECT count(*) FROM tbl_articulo where NombreArticulo= '".$nombre."'";
