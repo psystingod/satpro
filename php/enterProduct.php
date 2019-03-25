@@ -123,16 +123,18 @@
                     //GUARDAMOS EL HISTORIAL DE LA ENTRADA
                     date_default_timezone_set('America/El_Salvador');
                     $idHistorial = $this->dbConnect->lastInsertId();
+                    $nombreArticuloHistorial = $nombre;
                     $nombreEmpleadoHistorial = $_POST['nombreEmpleadoHistorial'];
-                    $nombreBodegaHistorial = $_POST['nombreBodegaHistorial'];
+                    $nombreBodegaHistorial = ucwords($_POST['bodega']);
                     $cantidadHistorial = $cantidad;
                     $tipoMovimientoHistorial = "Nuevo ingreso de producto";
 
-                    $query = "INSERT into tbl_historialEntradas (nombreEmpleado, fechaHora, tipoMovimiento, cantidad, bodega)
-                              VALUES(:nombreEmpleadoHistorial, CURRENT_TIMESTAMP(), :tipoMovimientoHistorial, :cantidadHistorial, :nombreBodegaHistorial)";
+                    $query = "INSERT into tbl_historialEntradas (nombreArticulo, nombreEmpleado, fechaHora, tipoMovimiento, cantidad, bodega)
+                              VALUES(:nombreArticuloHistorial, :nombreEmpleadoHistorial, CURRENT_TIMESTAMP(), :tipoMovimientoHistorial, :cantidadHistorial, :nombreBodegaHistorial)";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
+                    ':nombreArticuloHistorial' => $nombreArticuloHistorial,
                     ':nombreEmpleadoHistorial' => $nombreEmpleadoHistorial,
                     ':tipoMovimientoHistorial' => $tipoMovimientoHistorial,
                     ':cantidadHistorial' => $cantidadHistorial,

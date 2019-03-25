@@ -516,6 +516,7 @@
 
                         <form action="../php/ActArticulo.php" method="POST">
                         <div class="modal-body">
+                            <input type="hidden" name="nombreEmpleadoHistorial" value="<?php echo $_SESSION['nombres'].' '.$_SESSION['apellidos'] ?>">
                                     <div class="form-row">
                                         <div class="form-group col-md-7 col-xs-7">
                                             <label for="na">Nombre Articulo</label>

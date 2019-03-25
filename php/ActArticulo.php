@@ -33,7 +33,28 @@
                 ,concat('Nombre del Producto/Articulo: ',(SELECT a.NombreArticulo FROM tbl_articulo as a WHERE  IdArticulo= '".$IdArticulo."'),' Cantidad: ".$cantidad."'))";
                  $statement = $this->dbConnect->prepare($query);
                  $statement->execute();
-                 //$this->dbConnect = NULL;
+
+                 //GUARDAMOS EL HISTORIAL DE LA ENTRADA
+                 date_default_timezone_set('America/El_Salvador');
+                 $idHistorial = $this->dbConnect->lastInsertId();
+                 $nombreArticuloHistorial = $_POST['Nmb'];
+                 $nombreEmpleadoHistorial = $_POST['nombreEmpleadoHistorial'];
+                 $nombreBodegaHistorial = $_POST['Bdg'];
+                 $cantidadHistorial = $cantidad;
+                 $tipoMovimientoHistorial = "Devolución de producto a bodega";
+
+                 $query = "INSERT into tbl_historialEntradas (nombreArticulo, nombreEmpleado, fechaHora, tipoMovimiento, cantidad, bodega)
+                           VALUES(:nombreArticuloHistorial, :nombreEmpleadoHistorial, CURRENT_TIMESTAMP(), :tipoMovimientoHistorial, :cantidadHistorial, :nombreBodegaHistorial)";
+
+                 $statement = $this->dbConnect->prepare($query);
+                 $statement->execute(array(
+                 ':nombreArticuloHistorial' => $nombreArticuloHistorial,
+                 ':nombreEmpleadoHistorial' => $nombreEmpleadoHistorial,
+                 ':tipoMovimientoHistorial' => $tipoMovimientoHistorial,
+                 ':cantidadHistorial' => $cantidadHistorial,
+                 ':nombreBodegaHistorial' => $nombreBodegaHistorial
+                 ));
+                 $this->dbConnect = NULL;
                 header('Location: ../pages/inventarioBodegas.php?status=success&bodega='.$bodega);
 
             } catch (Exception $e) {
