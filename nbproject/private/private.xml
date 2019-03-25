@@ -5,6 +5,9 @@
         <group>
             <file>file:/C:/xampp/htdocs/satpro/js/permisos.js</file>
             <file>file:/C:/xampp/htdocs/satpro/pages/asignarArticuloInventarioII.php</file>
+            <file>file:/C:/xampp/htdocs/satpro/pages/modulo_cxc/infoCliente.php</file>
+            <file>file:/C:/xampp/htdocs/satpro/pages/modulo_cxc/cxc.php</file>
+            <file>file:/C:/xampp/htdocs/satpro/pages/modulo_cxc/clientes.php</file>
             <file>file:/C:/xampp/htdocs/satpro/pages/inventarioBodegas.php</file>
         </group>
     </open-files>
