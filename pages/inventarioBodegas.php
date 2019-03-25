@@ -266,9 +266,6 @@
                                                   <span class='sr-only'>Toggle Dropdown</span>
                                                 </button>
                                                 <ul class='dropdown-menu'>
-                                                <li>
-                                                <a href='#' onclick='Actualizacion(\" {$key["NombreArticulo"]}\" , \"{$key["Cantidad"]} \" , \"{$key["NombreBodega"]} \", \"{$key["IdArticulo"]} \")'><i class='fas fa-undo'></i> Devolver Producto a Bodega </a>
-                                                </li>
                                                     <li><a href='verArticulo.php?id={$key['IdArticulo']}&Bdg={$Bodega}'><i class='fas fa-eye'></i> Ver</a>
                                                     </li>
                                                     <li class='editar'><a href='actualizarArticulo.php?id={$key['IdArticulo']}&Bdg={$Bodega}'><i class='fas fa-edit'></i> Editar</a>
@@ -276,12 +273,16 @@
                                                     <li class='eliminar'><a href='#' onclick='deleteArticle( {$key['IdArticulo']} ); '><i class='fas fa-trash-alt'></i> Eliminar</a>
                                                     </li>
                                                     <li class='divider'></li>
+                                                    <li>
+                                                    <a href='#' onclick='Actualizacion(\" {$key["NombreArticulo"]}\" , \"{$key["Cantidad"]} \" , \"{$key["NombreBodega"]} \", \"{$key["IdArticulo"]} \")'><i class='fas fa-undo'></i> Devolver Producto a Bodega </a>
+                                                    </li>
                                                 </ul>
                                             </div>" . "</td></tr>";
                                         }
                                     ?>
                         </tbody>
                     </table>
+
                 </form>
                     <!-- /.table-responsive -->
                     <div class="well">
@@ -307,6 +308,9 @@
                             <h4 class="modal-title" id="nuevoProducto">Nuevo producto</h4>
                       </div>
                       <form action="../php/enterProduct.php" method="POST">
+                          <!-- DATOS QUE SE USARÁN PARA INGRESARSE AL HISTORIAL DE ENTRADAS -->
+                          <input type="hidden" name="nombreEmpleadoHistorial" value="<?php echo $_SESSION['nombres'].' '.$_SESSION['apellidos'] ?>">
+                          <input type="hidden" name="nombreBodegaHistorial" value="<?php echo ucwords($_GET['bodega']) ?>">
                       <div class="modal-body">
                                   <div class="form-row">
                                       <div class="form-group col-md-8 col-xs-8">

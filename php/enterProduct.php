@@ -119,6 +119,26 @@
                     ':idProv' => $proveedor,
                     ':idBodega' => $bodega
                     ));
+
+                    //GUARDAMOS EL HISTORIAL DE LA ENTRADA
+                    date_default_timezone_set('America/El_Salvador');
+                    $idHistorial = $this->dbConnect->lastInsertId();
+                    $nombreEmpleadoHistorial = $_POST['nombreEmpleadoHistorial'];
+                    $nombreBodegaHistorial = $_POST['nombreBodegaHistorial'];
+                    $cantidadHistorial = $cantidad;
+                    $tipoMovimientoHistorial = "Nuevo ingreso de producto";
+
+                    $query = "INSERT into tbl_historialEntradas (nombreEmpleado, fechaHora, tipoMovimiento, cantidad, bodega)
+                              VALUES(:nombreEmpleadoHistorial, CURRENT_TIMESTAMP(), :tipoMovimientoHistorial, :cantidadHistorial, :nombreBodegaHistorial)";
+
+                    $statement = $this->dbConnect->prepare($query);
+                    $statement->execute(array(
+                    ':nombreEmpleadoHistorial' => $nombreEmpleadoHistorial,
+                    ':tipoMovimientoHistorial' => $tipoMovimientoHistorial,
+                    ':cantidadHistorial' => $cantidadHistorial,
+                    ':nombreBodegaHistorial' => $nombreBodegaHistorial
+                    ));
+
                     header('Location: ../pages/inventarioBodegas.php?status=success&bodega='.$bodega);
                  }
                  //GUARDAMOS EL TIPO DE MOVIMIENTO REALIZADO
@@ -130,11 +150,14 @@
                  ,concat( 'Nombre del Producto/Articulo: ',  (SELECT a.NombreArticulo FROM tbl_articulo as a WHERE  IdArticulo= '".$IdArticulo."')  , ' Cantidad: ".$cantidad." ' ) )";
                   $statement = $this->dbConnect->prepare($query);
                   $statement->execute();
+
                   $this->dbConnect = NULL;
+
+
             }
             catch (Exception $e)
             {
-                print "!Error¡: " . $e->getMessage() . "</br>";
+                print "Error!: " . $e->getMessage() . "</br>";
                 die();
                 header('Location: ../pages/inventarioBodegas.php?status=failed&bodega='.$bodega);
             }
