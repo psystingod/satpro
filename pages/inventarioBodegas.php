@@ -310,7 +310,6 @@
                       <form action="../php/enterProduct.php" method="POST">
                           <!-- DATOS QUE SE USARÁN PARA INGRESARSE AL HISTORIAL DE ENTRADAS -->
                           <input type="hidden" name="nombreEmpleadoHistorial" value="<?php echo $_SESSION['nombres'].' '.$_SESSION['apellidos'] ?>">
-                          <input type="hidden" name="nombreBodegaHistorial" value="<?php echo ucwords($_GET['bodega']) ?>">
                       <div class="modal-body">
                                   <div class="form-row">
                                       <div class="form-group col-md-8 col-xs-8">
