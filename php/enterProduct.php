@@ -39,6 +39,8 @@
                  $query = "SELECT count(*) FROM tbl_articulo where IdCategoria=(SELECT IdCategoria FROM tbl_categoria where NombreCategoria='".$categoria."')";
                  $statement = $this->dbConnect->query($query);
                  $Cd = $statement->fetchColumn() + 1;
+
+                 //VERIFICAMOS EL TAMAÑO DEL CORRELATIVO DEL CÓDIGO. EN CASO DE SER MENOR A 10, SE ANTEPONDRÁ UN 0 A LA IZQUIERDA.
                  if (strlen($Cd) === 1) {
                      $codigo = substr($categoria,0,1) ."0". $Cd;
                  }
@@ -62,7 +64,7 @@
                    else
                    {
                      //CONSULTAMOS EL CODIGO DE ESE PRODUCTO EN LA BODEGA QUE EXISTE ACTUALMENTE
-                     $query = "SELECT Codigo from tbl_articulo where NombreArticulo='".$nombre."' ";
+                    $query = "SELECT Codigo from tbl_articulo where NombreArticulo='".$nombre."' ";
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute();
                     $result = $statement->fetchAll(PDO::FETCH_ASSOC);

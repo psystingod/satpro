@@ -80,7 +80,7 @@
     <?php
          // session_start();
          if(!isset($_SESSION["user"])) {
-             header('Location: login.php');
+             header('Location: ../login.php');
          }
      ?>
     <div id="wrapper">
@@ -110,7 +110,7 @@
                         <li><a href="config.php"><i class="fas fa-cog"></i> Configuración</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="../php/logout.php"><i class="fas fa-sign-out-alt"></i> Salir</a>
+                        <li><a href="../../php/logout.php"><i class="fas fa-sign-out-alt"></i> Salir</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -123,54 +123,54 @@
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li>
-                            <a href='index.php'><i class='fas fa-home'></i> Principal</a>
+                            <a href='../index.php'><i class='fas fa-home'></i> Principal</a>
                         </li>
                         <?php
                         require('../../php/contenido.php');
                         require('../../php/modulePermissions.php');
 
                         if (setMenu($_SESSION['permisosTotalesModulos'], ADMINISTRADOR)) {
-                            echo "<li><a href='modulo_administrar/administrar.php'><i class='fas fa-key'></i> Administrar</a></li>";
+                            echo "<li><a href='../modulo_administrar/administrar.php'><i class='fas fa-key'></i> Administrar</a></li>";
                         }else {
                             echo "";
                         }
                         if (setMenu($_SESSION['permisosTotalesModulos'], CONTABILIDAD)) {
-                            echo "<li><a href='modulo_contabilidad/contabilidad.php'><i class='fas fa-money-check-alt'></i> Contabilidad</a></li>";
+                            echo "<li><a href='../modulo_contabilidad/contabilidad.php'><i class='fas fa-money-check-alt'></i> Contabilidad</a></li>";
                         }else {
                             echo "";
                         }
                         if (setMenu($_SESSION['permisosTotalesModulos'], PLANILLA)) {
-                            echo "<li><a href='modulo_planillas/planillas.php'><i class='fas fa-file-signature'></i> Planillas</a></li>";
+                            echo "<li><a href='../modulo_planillas/planillas.php'><i class='fas fa-file-signature'></i> Planillas</a></li>";
                         }else {
                             echo "";
                         }
                         if (setMenu($_SESSION['permisosTotalesModulos'], ACTIVOFIJO)) {
-                            echo "<li><a href='modulo_activoFijo/activoFijo.php'><i class='fas fa-building'></i> Activo fijo</a></li>";
+                            echo "<li><a href='../modulo_activoFijo/activoFijo.php'><i class='fas fa-building'></i> Activo fijo</a></li>";
                         }else {
                             echo "";
                         }
                         if (setMenu($_SESSION['permisosTotalesModulos'], INVENTARIO)) {
-                            echo "<li><a href='moduloInventario.php'><i class='fas fa-scroll'></i> Inventario</a></li>";
+                            echo "<li><a href='../moduloInventario.php'><i class='fas fa-scroll'></i> Inventario</a></li>";
                         }else {
                             echo "";
                         }
                         if (setMenu($_SESSION['permisosTotalesModulos'], IVA)) {
-                            echo "<li><a href='modulo_iva/iva.php'><i class='fas fa-file-invoice-dollar'></i> IVA</a></li>";
+                            echo "<li><a href='../modulo_iva/iva.php'><i class='fas fa-file-invoice-dollar'></i> IVA</a></li>";
                         }else {
                             echo "";
                         }
                         if (setMenu($_SESSION['permisosTotalesModulos'], BANCOS)) {
-                            echo "<li><a href='modulo_bancos/bancos.php'><i class='fas fa-university'></i> Bancos</a></li>";
+                            echo "<li><a href='../modulo_bancos/bancos.php'><i class='fas fa-university'></i> Bancos</a></li>";
                         }else {
                             echo "";
                         }
                         if (setMenu($_SESSION['permisosTotalesModulos'], CXC)) {
-                            echo "<li><a href='modulo_cxc/cxc.php'><i class='fas fa-hand-holding-usd'></i> Cuentas por cobrar</a></li>";
+                            echo "<li><a href='../modulo_cxc/cxc.php'><i class='fas fa-hand-holding-usd'></i> Cuentas por cobrar</a></li>";
                         }else {
                             echo "";
                         }
                         if (setMenu($_SESSION['permisosTotalesModulos'], CXP)) {
-                            echo "<li><a href='modulo_cxp/cxp.php'><i class='fas fa-money-bill-wave'></i> Cuentas por pagar</a></li>";
+                            echo "<li><a href='../modulo_cxp/cxp.php'><i class='fas fa-money-bill-wave'></i> Cuentas por pagar</a></li>";
                         }else {
                             echo "";
                         }
