@@ -1,14 +1,14 @@
 <?php
-    const ACCESO = 1;
-    const AGREGAR = 2;
-    const EDITAR = 4;
-    const ELIMINAR = 8;
+    const AGREGAR = 1;
+    const EDITAR = 2;
+    const ELIMINAR = 4;
 
     function getAccess($permisosActuales, $permisoRequerido){
         return ((intval($permisosActuales) & intval($permisoRequerido)) == 0) ? false : true;
     }
     session_start();
     require("../../php/connection.php");
+    require('../../php/permissions.php');
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,7 +22,7 @@
     <meta name="author" content="">
 
     <title>Cablesat</title>
-<link rel="shortcut icon" href="../../images/Cablesat.png" />
+    <link rel="shortcut icon" href="../../images/Cablesat.png" />
     <!-- Bootstrap Core CSS -->
     <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -181,74 +181,15 @@
                 $clave = $row['Clave'];
                 $rol = $row['Rol'];
 
-                // prepare select query
-                $query = "SELECT IdModulo FROM tbl_permisosusuariomodulo WHERE IdUsuario = $id";
-                $stmt = $con->prepare( $query );
+                // VERIFICANDO LOS PERMISOS DE ACCESO A MODULOS
+                $modulesAccess = new ModulePermissions();
+                $totalPermissionsModules = $modulesAccess->getPermissions($id);
 
-                // execute our query
-                $stmt->execute();
+                // VERIFICANDO LOS PERMISOS GLOBALES DE AGREGAR, EDITAR Y ELIMINAR
+                $globalPermissions = new Permissions();
+                $totalPermissions = $globalPermissions->getPermissions($id);
 
-                // store retrieved row to a variable
-                $arrayIdModules = array();
-                $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-                foreach ($row as $key) {
-                    array_push($arrayIdModules, $key["IdModulo"]);
-                }
-
-                $arrayModules = array();
-                foreach ($arrayIdModules as $idModule) {
-                    $i = 0;
-                    $query = "SELECT valor FROM tbl_modulos WHERE IdModulo = $idModule[$i]";
-                    $stmt = $con->prepare( $query );
-                    $stmt->execute();
-                    $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    foreach ($row as $key) {
-                        array_push($arrayModules, $key["valor"]);
-                    }
-                    $i++;
-                }
-
-                $totalPermissionsModules = 0;
-                foreach ($arrayModules as $permission) {
-                    $totalPermissionsModules = $totalPermissionsModules + intval($permission);
-                }
-
-                // prepare select query
-                $query = "SELECT IdPermisos FROM tbl_permisosusuario WHERE IdUsuario = $id";
-                $stmt = $con->prepare( $query );
-
-                // execute our query
-                $stmt->execute();
-
-                // store retrieved row to a variable
-                $arrayIdPermissions = array();
-                $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-                foreach ($row as $key) {
-
-                    array_push($arrayIdPermissions, $key["IdPermisos"]);
-                }
-
-                $arrayPermissions = array();
-                foreach ($arrayIdPermissions as $idPermission) {
-                    $i = 0;
-                    $query = "SELECT valor FROM tbl_permisos WHERE IdPermisos = $idPermission[$i]";
-                    $stmt = $con->prepare( $query );
-                    $stmt->execute();
-                    $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                    foreach ($row as $key) {
-                        array_push($arrayPermissions, $key["valor"]);
-                    }
-                    $i++;
-                }
-
-                $totalPermissions = 0;
-                foreach ($arrayPermissions as $permission) {
-                    $totalPermissions = $totalPermissions + intval($permission);
-                }
-
-                $con = NULL;
+                //$con = NULL;
 
 
             }
@@ -269,7 +210,7 @@
                 </div>
                 <!-- /.row -->
                 <div class="row">
-                    <table class='table table-hover table-responsive table-bordered'>
+                    <table class='table table-hover table-responsive'>
                         <tr>
                             <th width="200px">Nombres</th>
                             <?php echo "<td><input class='form-control' type='text' id='nombres' name='nombres' value='".htmlspecialchars($nombres, ENT_QUOTES)."'></td>";?>
@@ -304,44 +245,162 @@
                         // write update query
                         // in this case, it seemed like we have so many fields to pass and
                         // it is better to label them and not use question marks
-                        $query1 = "SELECT * FROM tbl_permisosusuariomodulo WHERE IdModulo = 1";
+                        //$query1 = "SELECT * FROM tbl_permisosusuariomodulo WHERE IdModulo = 1";
 
-                        $query1 = "UPDATE products
-                                    SET name=:name, description=:description, price=:price
-                                    WHERE id = :id";
+                        $query1 = "UPDATE tbl_permisosglobal
+                                    SET Madmin=:Madmin, Mcont=:Mcont, Mplan=:Mplan, Macti=:Macti, Minve=:Minve, Miva=:Miva, Mbanc=:Mbanc, Mcxc=:Mcxc, Mcxp=:Mcxp, Ag=:agregar, Ed=:editar, El=:eliminar, IdUsuario=$id
+                                    WHERE IdUsuario = $id";
 
                         // prepare query for excecution
                         $stmt = $con->prepare($query);
+                        $zero = 0;
+                        $dump = "";
 
+                        if (isset($_POST['administrador'])) {
+                            $administrador=htmlspecialchars(strip_tags($_POST['administrador']));
+                            $stmt->bindParam(':Madmin', $administrador);
+                            $dump .= "1";
+                        }else {
+                            $stmt->bindParam(':Madmin', $zero);
+                        }
+
+                        if (isset($_POST['contabilidad'])) {
+                            $contabilidad=htmlspecialchars(strip_tags($_POST['contabilidad']));
+                            $stmt->bindParam(':Mcont', $contabilidad);
+                            $dump .= "2";
+                        }else {
+                            $stmt->bindParam(':Mcont', $zero);
+                        }
+
+                        if (isset($_POST['planilla'])) {
+                            $planilla=htmlspecialchars(strip_tags($_POST['planilla']));
+                            $stmt->bindParam(':Mplan', $planilla);
+                            $dump .= "3";
+                        }else {
+                            $stmt->bindParam(':Mplan', $zero);
+                        }
+
+                        if (isset($_POST['activoFijo'])) {
+                            $activoFijo=htmlspecialchars(strip_tags($_POST['activoFijo']));
+                            $stmt->bindParam(':Macti', $activoFijo);
+                            $dump .= "4";
+                        }else {
+                            $stmt->bindParam(':Macti', $zero);
+                        }
+
+                        if (isset($_POST['inventario'])) {
+                            $inventario=htmlspecialchars(strip_tags($_POST['inventario']));
+                            $stmt->bindParam(':Minve', $inventario);
+                            $dump .= "5";
+                        }else {
+                            $stmt->bindParam(':Minve', $zero);
+                        }
+
+                        if (isset($_POST['iva'])) {
+                            $iva=htmlspecialchars(strip_tags($_POST['iva']));
+                            $stmt->bindParam(':Miva', $iva);
+                            $dump .= "6";
+                        }else {
+                            $stmt->bindParam(':Miva', $zero);
+                        }
+
+                        if (isset($_POST['bancos'])) {
+                            $bancos=htmlspecialchars(strip_tags($_POST['bancos']));
+                            $stmt->bindParam(':Mbanc', $bancos);
+                            $dump .= "7";
+                        }else {
+                            $stmt->bindParam(':Mbanc', $zero);
+                        }
+
+                        if (isset($_POST['cxc'])) {
+                            $cxc=htmlspecialchars(strip_tags($_POST['cxc']));
+                            $stmt->bindParam(':Mcxc', $cxc);
+                            $dump .= "8";
+                        }else {
+                            $stmt->bindParam(':Mcxc', $zero);
+                        }
+
+                        if (isset($_POST['cxp'])) {
+                            $cxp=htmlspecialchars(strip_tags($_POST['cxp']));
+                            $stmt->bindParam(':Mcxp', $cxp);
+                            $dump .= "9";
+                        }else {
+                            $stmt->bindParam(':Mcxp', $zero);
+                        }
+
+                        if (isset($_POST['agregar'])) {
+                            $agregar=htmlspecialchars(strip_tags($_POST['agregar']));
+                            $stmt->bindParam(':agregar', $agregar);
+                            $dump .= "10";
+                        }else {
+                            $stmt->bindParam(':agregar', $zero);
+                        }
+
+                        if (isset($_POST['editar'])) {
+                            $editar=htmlspecialchars(strip_tags($_POST['editar']));
+                            $stmt->bindParam(':editar', $editar);
+                            $dump .= "11";
+                        }else {
+                            $stmt->bindParam(':editar', $zero);
+                        }
+
+                        if (isset($_POST['eliminar'])) {
+                            $eliminar=htmlspecialchars(strip_tags($_POST['eliminar']));
+                            $stmt->bindParam(':eliminar', $eliminar);
+                            $dump .= "12";
+                        }else {
+                            $stmt->bindParam(':eliminar', $zero);
+                        }
                         // posted values
-                        $name=htmlspecialchars(strip_tags($_POST['name']));
-                        $description=htmlspecialchars(strip_tags($_POST['description']));
-                        $price=htmlspecialchars(strip_tags($_POST['price']));
+                        //$administrador=htmlspecialchars(strip_tags($_POST['administrador']));
+                        //$contabilidad=htmlspecialchars(strip_tags($_POST['contabilidad']));
+                        //$planilla=htmlspecialchars(strip_tags($_POST['planilla']));
+                        //$activoFijo=htmlspecialchars(strip_tags($_POST['activoFijo']));
+                        //$inventario=htmlspecialchars(strip_tags($_POST['inventario']));
+                        //$iva=htmlspecialchars(strip_tags($_POST['iva']));
+                        //$bancos=htmlspecialchars(strip_tags($_POST['bancos']));
+                        //$cxc=htmlspecialchars(strip_tags($_POST['cxc']));
+                        //$cxp=htmlspecialchars(strip_tags($_POST['cxp']));
+                        //$agregar=htmlspecialchars(strip_tags($_POST['agregar']));
+                        //$editar=htmlspecialchars(strip_tags($_POST['editar']));
+                        //$eliminar=htmlspecialchars(strip_tags($_POST['eliminar']));
 
                         // bind the parameters
-                        $stmt->bindParam(':name', $name);
-                        $stmt->bindParam(':description', $description);
-                        $stmt->bindParam(':price', $price);
-                        $stmt->bindParam(':id', $id);
+                        //$stmt->bindParam(':administrador', $administrador);
+                        //$stmt->bindParam(':contabilidad', $contabilidad);
+                        //$stmt->bindParam(':planilla', $planilla);
+                        //$stmt->bindParam(':activoFijo', $activoFijo);
+                        //$stmt->bindParam(':inventario', $inventario);
+                        //$stmt->bindParam(':iva', $iva);
+                        //$stmt->bindParam(':bancos', $bancos);
+                        //$stmt->bindParam(':cxc', $cxc);
+                        //$stmt->bindParam(':cxp', $cxp);
+                        //$stmt->bindParam(':agregar', $agregar);
+                        //$stmt->bindParam(':editar', $editar);
+                        //$stmt->bindParam(':eliminar', $eliminar);
+
+                        //$stmt->bindParam(':idUsuario', $id);
 
                         // Execute the query
                         if($stmt->execute()){
-                            echo "<div class='alert alert-success'>Record was updated.</div>";
+                            echo "<div class='alert alert-success'>Regsitro actualizado con exito!.</div>";
                         }else{
-                            echo "<div class='alert alert-danger'>Unable to update record. Please try again.</div>";
+                            echo "<div class='alert alert-danger'>No se pudo actualizar. Por favor intente nuevamente.</div>";
                         }
+
+                        $con = NULL;
 
                     }
 
                     // show errors
                     catch(PDOException $exception){
-                        die('ERROR: ' . $exception->getMessage());
+                        die('ERROR: ' . $exception->getMessage() . var_dump($dump));
                     }
                 }
                 ?>
 
                 <!-- Form to update user -->
-                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}");?>" method="post">
+                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}");?>" method="POST">
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="row">
@@ -366,39 +425,39 @@
                                 echo "<tr><td>CONTABILIDAD</td><td><input type='checkbox' name='contabilidad' value='2'></td></tr>";
                             }
                             if (setMenu($totalPermissionsModules, PLANILLA)) {
-                                echo "<tr><td>PLANILLA</td><td><input type='checkbox' name='planilla' value='3' checked></td></tr>";
+                                echo "<tr><td>PLANILLA</td><td><input type='checkbox' name='planilla' value='4' checked></td></tr>";
                             }else {
-                                echo "<tr><td>PLANILLA</td><td><input type='checkbox' name='planilla' value='3'></td></tr>";
+                                echo "<tr><td>PLANILLA</td><td><input type='checkbox' name='planilla' value='4'></td></tr>";
                             }
                             if (setMenu($totalPermissionsModules, ACTIVOFIJO)) {
-                                echo "<tr><td>ACTIVO FIJO</td><td><input type='checkbox' name='activoFijo' value='4' checked></td></tr>";
+                                echo "<tr><td>ACTIVO FIJO</td><td><input type='checkbox' name='activoFijo' value='8' checked></td></tr>";
                             }else {
-                                echo "<tr><td>ACTIVO FIJO</td><td><input type='checkbox' name='activoFijo' value='4'></td></tr>";
+                                echo "<tr><td>ACTIVO FIJO</td><td><input type='checkbox' name='activoFijo' value='8'></td></tr>";
                             }
                             if (setMenu($totalPermissionsModules, INVENTARIO)) {
-                                echo "<tr><td>INVENTARIO</td><td><input type='checkbox' name='inventario' value='5' checked></td></tr>";
+                                echo "<tr><td>INVENTARIO</td><td><input type='checkbox' name='inventario' value='16' checked></td></tr>";
                             }else {
-                                echo "<tr><td>INVENTARIO</td><td><input type='checkbox' name='inventario' value='5'></td></tr>";
+                                echo "<tr><td>INVENTARIO</td><td><input type='checkbox' name='inventario' value='16'></td></tr>";
                             }
                             if (setMenu($totalPermissionsModules, IVA)) {
-                                echo "<tr><td>IVA</td><td><input type='checkbox' name='iva' value='6' checked></td></tr>";
+                                echo "<tr><td>IVA</td><td><input type='checkbox' name='iva' value='32' checked></td></tr>";
                             }else {
-                                echo "<tr><td>IVA</td><td><input type='checkbox' name='iva' value='6'></td></tr>";
+                                echo "<tr><td>IVA</td><td><input type='checkbox' name='iva' value='32'></td></tr>";
                             }
                             if (setMenu($totalPermissionsModules, BANCOS)) {
-                                echo "<tr><td>BANCOS</td><td><input type='checkbox' name='bancos' value='7' checked></td></tr>";
+                                echo "<tr><td>BANCOS</td><td><input type='checkbox' name='bancos' value='64' checked></td></tr>";
                             }else {
-                                echo "<tr><td>BANCOS</td><td><input type='checkbox' name='bancos' value='7'></td></tr>";
+                                echo "<tr><td>BANCOS</td><td><input type='checkbox' name='bancos' value='64'></td></tr>";
                             }
                             if (setMenu($totalPermissionsModules, CXC)) {
-                                echo "<tr><td>CUENTAS POR COBRAR</td><td><input type='checkbox' name='cxc' value='8' checked></td></tr>";
+                                echo "<tr><td>CUENTAS POR COBRAR</td><td><input type='checkbox' name='cxc' value='128' checked></td></tr>";
                             }else {
-                                echo "<tr><td>CUENTAS POR COBRAR</td><td><input type='checkbox' name='cxc' value='8'></td></tr>";
+                                echo "<tr><td>CUENTAS POR COBRAR</td><td><input type='checkbox' name='cxc' value='128'></td></tr>";
                             }
                             if (setMenu($totalPermissionsModules, CXP)) {
-                                echo "<tr><td>CUENTAS POR PAGAR</td><td><input type='checkbox' name='cxp' value='9' checked></td></tr>";
+                                echo "<tr><td>CUENTAS POR PAGAR</td><td><input type='checkbox' name='cxp' value='256' checked></td></tr>";
                             }else {
-                                echo "<tr><td>CUENTAS POR PAGAR</td><td><input type='checkbox' name='cxp' value='9'></td></tr>";
+                                echo "<tr><td>CUENTAS POR PAGAR</td><td><input type='checkbox' name='cxp' value='256'></td></tr>";
                             }
                             ?>
                         </table>
@@ -417,14 +476,14 @@
                             <th>ELIMINAR</th>
                             <?php
                             if (setMenu($totalPermissions, AGREGAR)) {
-                                echo "<tr><td><input type='checkbox' name='agregar' value='2' checked></td>";
+                                echo "<tr><td><input type='checkbox' name='agregar' value='1' checked></td>";
                             }else {
-                                echo "<tr><td><input type='checkbox' name='agregar' value='2'></td>";
+                                echo "<tr><td><input type='checkbox' name='agregar' value='1'></td>";
                             }
                             if (setMenu($totalPermissions, EDITAR)) {
-                                echo "<td><input type='checkbox' name='editar' value='3' checked></td>";
+                                echo "<td><input type='checkbox' name='editar' value='2' checked></td>";
                             }else {
-                                echo "<td><input type='checkbox' name='editar' value='3'></td>";
+                                echo "<td><input type='checkbox' name='editar' value='2'></td>";
                             }
                             if (setMenu($totalPermissions, ELIMINAR)) {
                                 echo "<td><input type='checkbox' name='eliminar' value='4' checked></td></tr>";
