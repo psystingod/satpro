@@ -208,33 +208,6 @@
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
-                <!-- /.row -->
-                <div class="row">
-                    <table class='table table-hover table-responsive'>
-                        <tr>
-                            <th width="200px">Nombres</th>
-                            <?php echo "<td><input class='form-control' type='text' id='nombres' name='nombres' value='".htmlspecialchars($nombres, ENT_QUOTES)."'></td>";?>
-                        </tr>
-                        <tr>
-                            <th width="200px">Apellidos</th>
-                            <?php echo "<td><input class='form-control' type='text' id='nombres' name='apellidos' value='".htmlspecialchars($apellidos, ENT_QUOTES)."'></td>";?>
-                        </tr>
-                        <tr>
-                            <th width="200px">Usuario</th>
-                            <?php echo "<td><input class='form-control' type='text' id='nombres' name='usuario' value='".htmlspecialchars($usuario, ENT_QUOTES)."'></td>";?>
-                        </tr>
-                        <tr>
-                            <th width="200px">Contraseña</th>
-                            <?php echo "<td><input class='form-control' type='text' id='nombres' name='clave' value='".htmlspecialchars($clave, ENT_QUOTES)."'></td>";?>
-                        </tr>
-                        <tr>
-                            <th width="200px">Rol que desempeña</th>
-                            <?php echo "<td><input class='form-control' type='text' id='nombres' name='rol' value='".htmlspecialchars($rol, ENT_QUOTES)."'></td>";?>
-                        </tr>
-                    </table>
-                </div>
-                <!-- Code to update user -->
-
                 <?php
 
                 // check if form was submitted
@@ -246,13 +219,36 @@
                         // in this case, it seemed like we have so many fields to pass and
                         // it is better to label them and not use question marks
                         //$query1 = "SELECT * FROM tbl_permisosusuariomodulo WHERE IdModulo = 1";
+                        //$nombres0 = $_POST['nombres'];
+                        //$apellidos0 = $_POST['apellidos'];
+                        $usuario0 = $_POST['usuario'];
 
-                        $query1 = "UPDATE tbl_permisosglobal
-                                    SET Madmin=:Madmin, Mcont=:Mcont, Mplan=:Mplan, Macti=:Macti, Minve=:Minve, Miva=:Miva, Mbanc=:Mbanc, Mcxc=:Mcxc, Mcxp=:Mcxp, Ag=:agregar, Ed=:editar, El=:eliminar, IdUsuario=$id
+                        if (strlen($_POST['clave']) > 15) {
+                            $clave0 = $_POST['clave'];
+                        }else {
+                            $clave0 = password_hash($_POST['clave'], PASSWORD_DEFAULT);
+                        }
+
+                        $rol0 = $_POST['rol'];
+
+                        $query0 = "UPDATE tbl_usuario
+                                    SET Usuario=:usuario, Clave=:clave, Rol=:rol
                                     WHERE IdUsuario = $id";
 
+                        $stmt0 = $con->prepare($query0);
+
+                        $stmt0->bindParam(':usuario', $usuario0);
+                        $stmt0->bindParam(':clave', $clave0);
+                        $stmt0->bindParam(':rol', $rol0);
+
+                        $stmt0->execute();
+
+                        $query1 = "UPDATE tbl_permisosglobal
+                                    SET Madmin=:Madmin, Mcont=:Mcont, Mplan=:Mplan, Macti=:Macti, Minve=:Minve, Miva=:Miva, Mbanc=:Mbanc, Mcxc=:Mcxc, Mcxp=:Mcxp, Ag=:agregar, Ed=:editar, El=:eliminar, IdUsuario=:id
+                                    WHERE IdUsuario = :id";
+
                         // prepare query for excecution
-                        $stmt = $con->prepare($query);
+                        $stmt = $con->prepare($query1);
                         $zero = 0;
                         $dump = "";
 
@@ -379,10 +375,11 @@
                         //$stmt->bindParam(':editar', $editar);
                         //$stmt->bindParam(':eliminar', $eliminar);
 
-                        //$stmt->bindParam(':idUsuario', $id);
+                        $stmt->bindParam(':id', $id);
 
                         // Execute the query
                         if($stmt->execute()){
+                            session_destroy();
                             echo "<div class='alert alert-success'>Regsitro actualizado con exito!.</div>";
                         }else{
                             echo "<div class='alert alert-danger'>No se pudo actualizar. Por favor intente nuevamente.</div>";
@@ -394,13 +391,40 @@
 
                     // show errors
                     catch(PDOException $exception){
-                        die('ERROR: ' . $exception->getMessage() . var_dump($dump));
+                        die('ERROR: ' . $exception->getMessage() . var_dump($_POST));
                     }
                 }
                 ?>
+                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}");?>" method="POST">
+                <!-- /.row -->
+                <div class="row">
+                    <table class='table table-hover table-responsive'>
+                        <tr>
+                            <th width="200px">Nombres</th>
+                            <?php echo "<td><input class='form-control' type='text' id='nombres' name='nombres' value='".htmlspecialchars($nombres, ENT_QUOTES)."' readonly></td>";?>
+                        </tr>
+                        <tr>
+                            <th width="200px">Apellidos</th>
+                            <?php echo "<td><input class='form-control' type='text' id='nombres' name='apellidos' value='".htmlspecialchars($apellidos, ENT_QUOTES)."' readonly></td>";?>
+                        </tr>
+                        <tr>
+                            <th width="200px">Usuario</th>
+                            <?php echo "<td><input class='form-control' type='text' id='nombres' name='usuario' value='".htmlspecialchars($usuario, ENT_QUOTES)."'></td>";?>
+                        </tr>
+                        <tr>
+                            <th width="200px">Contraseña</th>
+                            <?php echo "<td><input class='form-control' type='text' id='nombres' name='clave' value='".htmlspecialchars($clave, ENT_QUOTES)."'></td>";?>
+                        </tr>
+                        <tr>
+                            <th width="200px">Rol que desempeña</th>
+                            <?php echo "<td><input class='form-control' type='text' id='nombres' name='rol' value='".htmlspecialchars($rol, ENT_QUOTES)."'></td>";?>
+                        </tr>
+                    </table>
+                </div>
+                <!-- Code to update user -->
 
                 <!-- Form to update user -->
-                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}");?>" method="POST">
+
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="row">
@@ -414,6 +438,7 @@
                             <th>MODULO</th>
                             <th>ACCESO</th>
                             <?php
+
                             if (setMenu($totalPermissionsModules, ADMINISTRADOR)) {
                                 echo "<tr><td>ADMINISTRADOR</td><td><input type='checkbox' name='administrador' value='1' checked></td></tr>";
                             }else {
@@ -500,7 +525,7 @@
                     </div>
                     <div class="col-lg-4">
                         <button class="btn btn-default" type="button" name="regresar">Cancelar</button>
-                        <button class="btn btn-primary" type="submit" name="submit">Guardar cambios</button>
+                        <button class="btn btn-primary" type="submit">Guardar cambios</button>
                     </div>
                     <div class="col-lg-4">
 
