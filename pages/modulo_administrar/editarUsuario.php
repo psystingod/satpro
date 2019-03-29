@@ -45,7 +45,6 @@
 </head>
 
 <body>
-
     <?php
          if(!isset($_SESSION["user"])) {
             header('Location: ../../php/logout.php');
@@ -209,7 +208,6 @@
                     <!-- /.col-lg-12 -->
                 </div>
                 <?php
-
                 // check if form was submitted
                 if($_POST){
 
@@ -240,8 +238,6 @@
                         $stmt0->bindParam(':usuario', $usuario0);
                         $stmt0->bindParam(':clave', $clave0);
                         $stmt0->bindParam(':rol', $rol0);
-
-                        $stmt0->execute();
 
                         $query1 = "UPDATE tbl_permisosglobal
                                     SET Madmin=:Madmin, Mcont=:Mcont, Mplan=:Mplan, Macti=:Macti, Minve=:Minve, Miva=:Miva, Mbanc=:Mbanc, Mcxc=:Mcxc, Mcxp=:Mcxp, Ag=:agregar, Ed=:editar, El=:eliminar, IdUsuario=:id
@@ -347,40 +343,15 @@
                         }else {
                             $stmt->bindParam(':eliminar', $zero);
                         }
-                        // posted values
-                        //$administrador=htmlspecialchars(strip_tags($_POST['administrador']));
-                        //$contabilidad=htmlspecialchars(strip_tags($_POST['contabilidad']));
-                        //$planilla=htmlspecialchars(strip_tags($_POST['planilla']));
-                        //$activoFijo=htmlspecialchars(strip_tags($_POST['activoFijo']));
-                        //$inventario=htmlspecialchars(strip_tags($_POST['inventario']));
-                        //$iva=htmlspecialchars(strip_tags($_POST['iva']));
-                        //$bancos=htmlspecialchars(strip_tags($_POST['bancos']));
-                        //$cxc=htmlspecialchars(strip_tags($_POST['cxc']));
-                        //$cxp=htmlspecialchars(strip_tags($_POST['cxp']));
-                        //$agregar=htmlspecialchars(strip_tags($_POST['agregar']));
-                        //$editar=htmlspecialchars(strip_tags($_POST['editar']));
-                        //$eliminar=htmlspecialchars(strip_tags($_POST['eliminar']));
-
-                        // bind the parameters
-                        //$stmt->bindParam(':administrador', $administrador);
-                        //$stmt->bindParam(':contabilidad', $contabilidad);
-                        //$stmt->bindParam(':planilla', $planilla);
-                        //$stmt->bindParam(':activoFijo', $activoFijo);
-                        //$stmt->bindParam(':inventario', $inventario);
-                        //$stmt->bindParam(':iva', $iva);
-                        //$stmt->bindParam(':bancos', $bancos);
-                        //$stmt->bindParam(':cxc', $cxc);
-                        //$stmt->bindParam(':cxp', $cxp);
-                        //$stmt->bindParam(':agregar', $agregar);
-                        //$stmt->bindParam(':editar', $editar);
-                        //$stmt->bindParam(':eliminar', $eliminar);
 
                         $stmt->bindParam(':id', $id);
 
                         // Execute the query
-                        if($stmt->execute()){
-                            session_destroy();
-                            echo "<div class='alert alert-success'>Regsitro actualizado con exito!.</div>";
+                        if($stmt->execute() && $stmt0->execute()){
+                            //echo "<div class='alert alert-success'>Regsitro actualizado con exito!.</div>";
+                            //unset($_SESSION["id_usuario"]);
+                            echo "<script type='text/javascript'>alert('Registro actualizado con exito!');</script>";
+                            echo "<script type='text/javascript'>window.location.href = 'editarUsuario.php?id={$id}';</script>";
                         }else{
                             echo "<div class='alert alert-danger'>No se pudo actualizar. Por favor intente nuevamente.</div>";
                         }
@@ -424,7 +395,6 @@
                 <!-- Code to update user -->
 
                 <!-- Form to update user -->
-
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="row">
@@ -438,7 +408,6 @@
                             <th>MODULO</th>
                             <th>ACCESO</th>
                             <?php
-
                             if (setMenu($totalPermissionsModules, ADMINISTRADOR)) {
                                 echo "<tr><td>ADMINISTRADOR</td><td><input type='checkbox' name='administrador' value='1' checked></td></tr>";
                             }else {
@@ -524,7 +493,7 @@
 
                     </div>
                     <div class="col-lg-4">
-                        <button class="btn btn-default" type="button" name="regresar">Cancelar</button>
+                        <a href="empleados.php"><button class="btn btn-default" type="button" name="regresar">Cancelar</button></a>
                         <button class="btn btn-primary" type="submit">Guardar cambios</button>
                     </div>
                     <div class="col-lg-4">
