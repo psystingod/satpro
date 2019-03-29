@@ -27,6 +27,8 @@
 
         // values to fill up our form
         $codigo = $row['cod_cliente'];
+        $estado_cable = $row['servicio_suspendido']; // 0 o 1
+        $estado_internet = $row['estado_cliente_in']; // 1, 2, 3
         $nombre = trim(ucwords(strtolower($row['nombre'])));
         $dui = trim(ucwords(strtolower($row['numero_dui'])));
         $telefonos = $row['telefonos'];
@@ -208,24 +210,62 @@
                         <th>Activo</th>
                         <th>Suspendido</th>
                         <th>Sin servicio</th>
-                        <tr class="info">
-                            <th>TV</th>
-                            <td><label class="switch"><input type="radio" name ="cable" checked disabled><span class="slider round"></span></label></td>
-                            <td><label class="switch"><input type="radio" name ="cable"  disabled><span class="slider round"></span></label></td>
-                            <td><label class="switch"><input type="radio" name ="cable"  disabled><span class="slider round"></span></label></td>
-                        </tr>
-                        <tr class="success">
-                            <th>Internet</th>
-                            <td><label class="switch"><input type="radio" name="internet" checked disabled><span class="slider round"></span></label></td>
-                            <td><label class="switch"><input type="radio" name="internet" disabled><span class="slider round"></span></label></td>
-                            <td><label class="switch"><input type="radio" name="internet" disabled><span class="slider round"></span></label></td>
-                        </tr>
-                        <tr class="warning">
+                        <?php
+                        if ($estado_cable == 0) {
+                            echo "<tr class='info'>
+                                <th>TV</th>
+                                <td><label class='switch'><input type='radio' name ='cable' checked disabled><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input type='radio' name ='cable'  disabled><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input type='radio' name ='cable'  disabled><span class='slider round'></span></label></td>
+                            </tr>";
+                        }
+                        elseif ($estado_cable == 1) {
+                            echo "<tr class='info'>
+                                <th>TV</th>
+                                <td><label class='switch'><input type='radio' name ='cable'  disabled><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input type='radio' name ='cable' checked disabled><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input type='radio' name ='cable'  disabled><span class='slider round'></span></label></td>
+                            </tr>";
+                        }
+                        else {
+                            echo "<tr class='info'>
+                                <th>TV</th>
+                                <td><label class='switch'><input type='radio' name ='cable'  disabled><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input type='radio' name ='cable'  disabled><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input type='radio' name ='cable' checked disabled><span class='slider round'></span></label></td>
+                            </tr>";
+                        }
+                        if ($estado_internet == 1) {
+                            echo "<tr class='success'>
+                                <th>Internet</th>
+                                <td><label class='switch'><input type='radio' name='internet' checked disabled><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input type='radio' name='internet' disabled><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input type='radio' name='internet' disabled><span class='slider round'></span></label></td>
+                            </tr>";
+                        }
+                        elseif ($estado_internet == 2) {
+                            echo "<tr class='success'>
+                                <th>Internet</th>
+                                <td><label class='switch'><input type='radio' name='internet' disabled><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input type='radio' name='internet' checked disabled><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input type='radio' name='internet' disabled><span class='slider round'></span></label></td>
+                            </tr>";
+                        }
+                        else {
+                            echo "<tr class='success'>
+                                <th>Internet</th>
+                                <td><label class='switch'><input type='radio' name='internet' disabled><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input type='radio' name='internet' disabled><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input type='radio' name='internet' checked disabled><span class='slider round'></span></label></td>
+                            </tr>";
+                        }
+                        echo "<tr class='warning'>
                             <th>Teléfono</th>
-                            <td><label class="switch"><input type="radio" name="telefono" disabled><span class="slider round"></span></label></td>
-                            <td><label class="switch"><input type="radio" name="telefono" disabled><span class="slider round"></span></label></td>
-                            <td><label class="switch"><input type="radio" name="telefono" checked disabled><span class="slider round"></span></label></td>
-                        </tr>
+                            <td><label class='switch'><input type='radio' name='telefono' disabled><span class='slider round'></span></label></td>
+                            <td><label class='switch'><input type='radio' name='telefono' disabled><span class='slider round'></span></label></td>
+                            <td><label class='switch'><input type='radio' name='telefono' checked disabled><span class='slider round'></span></label></td>
+                        </tr>";
+                        ?>
                     </table>
                 </div>
             </div>
