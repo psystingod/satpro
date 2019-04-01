@@ -404,7 +404,7 @@
                             <!-- /.col-lg-12 -->
                         </div>
                         <!-- /.row -->
-                        <table class='table table-hover table-responsive table-bordered'>
+                        <table class='table table-hover table-responsive table-bordered' style="background-color:#ffffff;">
                             <th>MODULO</th>
                             <th>ACCESO</th>
                             <?php
@@ -464,7 +464,7 @@
                             <!-- /.col-lg-12 -->
                         </div>
                         <!-- /.row -->
-                        <table class='table table-hover table-responsive table-bordered'>
+                        <table class='table table-hover table-responsive table-bordered' style="background-color:#ffffff;">
                             <th>AGREGAR</th>
                             <th>EDITAR</th>
                             <th>ELIMINAR</th>
