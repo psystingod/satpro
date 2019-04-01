@@ -2,32 +2,16 @@
 
     session_start();
     require("../php/connection.php");
- ?>
-<?php
 // include database connection
 $obj = new ConectionDB();
 $con = $obj->dbConnect;
 $Bodega="";
-
-// try{
-//
-//     $con = new PDO($dsn, $username, $password);
-//     $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-//
-// } catch (Exception $ex) {
-//
-//     echo 'No se pudo conectar a la base de datos '.$ex->getMessage();
-// }
-
 try {
 
     // get record ID
     // isset() is a PHP function used to verify if a value is there or not
     $id=isset($_GET['id']) ? $_GET['id'] : die('ERROR: Record ID not found.');
-    $Nombre = $_SESSION['nombres'];
-    $Apellido = $_SESSION['apellidos'];
     date_default_timezone_set('America/El_Salvador');
-     $Fecha = date('Y/m/d g:ia');
 
     $query = "SELECT NombreBodega from tbl_articulo as a inner join tbl_bodega as b on a.IdBodega=b.IdBodega where IdArticulo = ? ";
      $stmt = $con->prepare($query);
@@ -39,14 +23,21 @@ try {
      foreach ($result as $key)
      {
        $Bodega = $key['NombreBodega'];
-
      }
+     //GUARDAMOS EL HISTORIAL DE LA ENTRADA
+     $nombreEmpleadoHistorial = $_SESSION['nombres'].' '.$_SESSION['apellidos'];
+     $tipoMovimientoHistorial = "Eliminación de producto";
 
-     $query = "insert into tbl_historialRegistros (IdEmpleado,FechaHora,Tipo_Movimiento,Descripcion)
-     VALUES((SELECT IdEmpleado from tbl_empleado where Nombres='".$Nombre."' and Apellidos='".$Apellido."'),'". $Fecha."',4
-     ,concat( 'Nombre del Producto/Articulo: ',  (SELECT a.NombreArticulo FROM tbl_articulo as a WHERE  IdArticulo= '".$id."') ) )";
-      $statement = $con->prepare($query);
-      $statement->execute();
+     $query = "INSERT into tbl_historialentradas (nombreArticulo, nombreEmpleado, fechaHora, tipoMovimiento, cantidad, bodega)
+               VALUES((Select NombreArticulo from tbl_articulo where IdArticulo=:id), :nombreEmpleadoHistorial, CURRENT_TIMESTAMP(), :tipoMovimientoHistorial, (Select cantidad from tbl_articulo where IdArticulo=:id), :nombreBodegaHistorial)";
+
+     $statement = $con->prepare($query);
+     $statement->execute(array(
+       ':id' => $id,
+       ':nombreEmpleadoHistorial' =>  $nombreEmpleadoHistorial,
+     ':tipoMovimientoHistorial' => $tipoMovimientoHistorial,
+     ':nombreBodegaHistorial' => $Bodega
+     ));
 
     $query = "DELETE FROM tbl_articulo WHERE IdArticulo = ?";
      $stmt = $con->prepare($query);
@@ -57,7 +48,6 @@ try {
 
     }else{
         header('Location: inventarioBodegas.php?status=failed&bodega='.$Bodega);
-        // header('Location: inventarioBodegas.php?status=failed&bodega='.$Bodega);
     }
 }
 
