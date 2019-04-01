@@ -26,13 +26,6 @@
                 $Nombre = $_POST["NOMBRE"];
                 $Apellido = $_POST["APELLIDO"];
                 date_default_timezone_set('America/El_Salvador');
-                $Fecha = date('Y/m/d g:ia');
-
-                $query = "INSERT into tbl_historialRegistros (IdEmpleado,FechaHora,Tipo_Movimiento,Descripcion)
-                VALUES((SELECT IdEmpleado from tbl_empleado where Nombres='".$Nombre."' and Apellidos='".$Apellido."'),'". $Fecha."',3
-                ,concat('Nombre del Producto/Articulo: ',(SELECT a.NombreArticulo FROM tbl_articulo as a WHERE  IdArticulo= '".$IdArticulo."'),' Cantidad: ".$cantidad."'))";
-                 $statement = $this->dbConnect->prepare($query);
-                 $statement->execute();
 
                  //GUARDAMOS EL HISTORIAL DE LA ENTRADA
                  date_default_timezone_set('America/El_Salvador');
@@ -43,7 +36,7 @@
                  $cantidadHistorial = $cantidad;
                  $tipoMovimientoHistorial = "Devolución de producto a bodega";
 
-                 $query = "INSERT into tbl_historialEntradas (nombreArticulo, nombreEmpleado, fechaHora, tipoMovimiento, cantidad, bodega)
+                 $query = "INSERT into tbl_historialentradas (nombreArticulo, nombreEmpleado, fechaHora, tipoMovimiento, cantidad, bodega)
                            VALUES(:nombreArticuloHistorial, :nombreEmpleadoHistorial, CURRENT_TIMESTAMP(), :tipoMovimientoHistorial, :cantidadHistorial, :nombreBodegaHistorial)";
 
                  $statement = $this->dbConnect->prepare($query);
