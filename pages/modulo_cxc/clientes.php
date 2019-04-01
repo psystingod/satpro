@@ -3,8 +3,6 @@
     $allClients = new GetAllClients();
     $allClientsArray = $allClients->getClients();
     session_start();
-    
-
  ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -186,15 +184,15 @@
                                                           <span class='sr-only'>Toggle Dropdown</span>
                                                         </button>
                                                         <ul class='dropdown-menu'>
-                                                            <li><a href='infoCliente.php?id={$key["cod_cliente"]}'><i class='fas fa-eye'></i> Ver</a>
+                                                            <li><a href='infoCliente.php?id={$key["cod_cliente"]}' target='_blank'><i class='fas fa-eye'></i> Ver</a>
                                                             </li>
-                                                            <li class='editar'><a href='actualizarArticulo.php?id=''><i class='fas fa-edit'></i> Editar</a>
+                                                            <li class='editar'><a href='actualizarCliente.php?id='{$key["cod_cliente"]}' target='_blank'><i class='fas fa-edit'></i> Editar</a>
                                                             </li>
-                                                            <li class='eliminar'><a href='#' onclick='deleteArticle();'><i class='fas fa-trash-alt'></i> Eliminar</a>
+                                                            <li class='eliminar'><a href='#' onclick='deleteCliente();'><i class='fas fa-trash-alt'></i> Eliminar</a>
                                                             </li>
                                                         </ul>
                                                     </div>" . "</td></tr>";
-                                                }              
+                                                }
                                             ?>
                                 </tbody>
                             </table>
