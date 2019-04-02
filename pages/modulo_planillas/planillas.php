@@ -15,7 +15,7 @@
     <meta name="author" content="">
 
     <title>Cablesat</title>
-<link rel="shortcut icon" href="../../images/Cablesat.png" />
+    <link rel="shortcut icon" href="../../images/Cablesat.png" />
     <!-- Bootstrap Core CSS -->
     <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -87,7 +87,6 @@
                 <!-- /.dropdown -->
             </ul>
             <!-- /.navbar-top-links -->
-
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
@@ -150,74 +149,104 @@
             </div>
             <!-- /.navbar-static-side -->
         </nav>
-
-
         <div id="page-wrapper">
-
            <!-- /.row -->
            <div class="row">
                <div class="col-lg-12">
-                   <h1 class="page-header">Impuestos y porcentajes</h1>
+                   <h1 class="page-header"><strong>Planillas</strong></h1>
+                   <div class="row">
                        <div class="row">
                            <div class="col-lg-6">
                                <a href="administrar.php"><button class="btn btn-success" type="button" name="regresar"><i class="fas fa-arrow-circle-left"></i> Atrás</button></a>
                            </div>
                            <br><br><br>
                        </div>
+                       <a class="" href="empleados.php" ><div class="col-lg-6 btn btn-default">
+                           <div class="stat-icon">
+                               <i class="fas fa-users fa-3x"></i>
+                           </div>
+                           <div class="stat-values">
+                               <br>
+                               <div class="name">Empleados</b></div>
+                           </div>
+                       </div></a>
+                       <a href="afps.php"><div class="col-lg-6 btn btn-default">
+                           <div class="stat-icon">
+                               <i class="far fa-address-card fa-3x"></i>
+                           </div>
+                           <div class="stat-values">
+                               <br>
+                               <div class="name">AFPS</b></div>
+                           </div>
+                       </div></a>
+                   </div>
+                   <div class="row">
+                     <a class="" href="categorias.php"><div class="col-lg-6 btn btn-default">
+                         <div class="stat-icon">
+                             <i class="far fa-check-square fa-3x"></i>
+                         </div>
+                         <div class="stat-values">
+                             <br>
+                             <div class="name">Categorias</b></div>
+                         </div>
+                     </div></a>
+                     <a href="tipoProductos.php"><div class="col-lg-6 btn btn-default">
+                         <div class="stat-icon">
+                            <i class="fas fa-align-left fa-3x"></i>
+                         </div>
+                         <div class="stat-values">
+                           <br>
+                             <div class="name">Tipo de Productos</div>
+                         </div>
+                     </div></a>
+                   </div>
+                   <div class="row">
+                     <a class="" href="unidadMedidas.php"><div class="col-lg-6 btn btn-default">
+                         <div class="stat-icon">
+                             <i class="fas fa-ruler-combined fa-3x"></i>
+                         </div>
+                         <div class="stat-values">
+                             <br>
+                             <div class="name">Unidades de Medida</b></div>
+                         </div>
+                     </div></a>
+                     <a class="" href="departamentos.php"><div class="col-lg-6 btn btn-default">
+                         <div class="stat-icon">
+                             <i class="fas fa-grip-vertical fa-3x"></i>
+                         </div>
+                         <div class="stat-values">
+                             <br>
+                             <div class="name">Departamentos de la Empresa</b></div>
+                         </div>
+                     </div></a>
+                   </div>
+                   <div class="row">
+                     <a class="" href="impuestos.php"><div class="col-lg-6 btn btn-default">
+                         <div class="stat-icon">
+                             <i class="fas fa-percent fa-3x"></i>
+                         </div>
+                         <div class="stat-values">
+                             <br>
+                             <div class="name">Impuestos y porcentajes</b></div>
+                         </div>
+                     </div></a>
+                     <!--<a class="" href="departamentos.php"><div class="col-lg-6 btn btn-default">
+                         <div class="stat-icon">
+                             <i class="fas fa-grip-vertical fa-3x"></i>
+                         </div>
+                         <div class="stat-values">
+                             <br>
+                             <div class="name">Departamentos de la Empresa</b></div>
+                         </div>
+                     </div></a>-->
+                   </div>
+
                </div>
            </div>
            <!-- /.row -->
-           <div class="row">
-               <table class="table">
-                   <tr>
-                       <div class="col-md-2">
-                           <label for="">IVA</label>
-                           <input class="form-control" type="text" name="" value="">
-                       </div>
-                       <div class="col-md-2">
-                           <label for="">CES</label>
-                           <input class="form-control" type="text" name="" value="">
-                       </div>
-                       <div class="col-md-2">
-                           <label for="">IMP</label>
-                           <input class="form-control" type="text" name="" value="">
-                       </div>
-                       <div class="col-md-2">
-                           <label for="">IMP</label>
-                           <input class="form-control" type="text" name="" value="">
-                       </div>
-                       <div class="col-md-2">
-                           <label for="">IMP</label>
-                           <input class="form-control" type="text" name="" value="">
-                       </div>
-                       <div class="col-md-2">
-                           <label for="">IMP</label>
-                           <input class="form-control" type="text" name="" value="">
-                       </div>
-                   </tr>
-               </table>
-           </div>
-           <div class="row">
-               <div class="col-md-2">
-
-               </div>
-               <div class="col-md-2">
-
-               </div>
-               <div class="col-md-2">
-                   <button class="btn btn-primary btn-block" type="button" name="button">Guardar</button>
-               </div>
-               <div class="col-md-2">
-                   <a href="administrar.php" style="text-decoration:none;"><button class="btn btn-default btn-block" type="button" name="button">Cancelar</button></a>
-               </div>
-               <div class="col-md-2">
-
-               </div>
-               <div class="col-md-2">
-
-               </div>
-           </div>
         </div>
+
+
     </div>
     <!-- /#wrapper -->
 
