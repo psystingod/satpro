@@ -284,6 +284,16 @@
                                         <input class="form-control input-sm" type="text" name="tipoSangre">
                                     </div>
                                 </div>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <label for="profesionOficio">Profesión u oficio</label>
+                                        <input class="form-control input-sm" type="text" name="profesionOficio">
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="clase">Estado civil</label>
+                                        <input class="form-control input-sm" type="text" name="clase">
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -294,7 +304,6 @@
             <!-- /.container-fluid -->
         </div>
         <!-- /#page-wrapper -->
-
     </div>
     <!-- /#wrapper -->
 
