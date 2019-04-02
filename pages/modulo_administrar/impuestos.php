@@ -157,97 +157,66 @@
            <!-- /.row -->
            <div class="row">
                <div class="col-lg-12">
-                   <h1 class="page-header">Administrar</h1>
-                   <div class="row">
+                   <h1 class="page-header">Impuestos y porcentajes</h1>
                        <div class="row">
                            <div class="col-lg-6">
                                <a href="administrar.php"><button class="btn btn-success" type="button" name="regresar"><i class="fas fa-arrow-circle-left"></i> Atrás</button></a>
                            </div>
                            <br><br><br>
                        </div>
-                       <a class="" href="bodegas.php" ><div class="col-lg-6 btn btn-default">
-                           <div class="stat-icon">
-                               <i class="fas fa-project-diagram fa-3x"></i>
-                           </div>
-                           <div class="stat-values">
-                               <br>
-                               <div class="name">Bodegas</b></div>
-                           </div>
-                       </div></a>
-                       <a href="proveedores.php"><div class="col-lg-6 btn btn-default">
-                           <div class="stat-icon">
-                               <i class="fas fa-dolly fa-3x"></i>
-                           </div>
-                           <div class="stat-values">
-                               <br>
-                               <div class="name" >Proveedores</b></div>
-                           </div>
-                       </div></a>
-                   </div>
-                   <div class="row">
-                     <a class="" href="categorias.php"><div class="col-lg-6 btn btn-default">
-                         <div class="stat-icon">
-                             <i class="far fa-check-square fa-3x"></i>
-                         </div>
-                         <div class="stat-values">
-                             <br>
-                             <div class="name">Categorias</b></div>
-                         </div>
-                     </div></a>
-                     <a href="tipoProductos.php"><div class="col-lg-6 btn btn-default">
-                         <div class="stat-icon">
-                            <i class="fas fa-align-left fa-3x"></i>
-                         </div>
-                         <div class="stat-values">
-                           <br>
-                             <div class="name">Tipo de Productos</div>
-                         </div>
-                     </div></a>
-                   </div>
-                   <div class="row">
-                     <a class="" href="unidadMedidas.php"><div class="col-lg-6 btn btn-default">
-                         <div class="stat-icon">
-                             <i class="fas fa-ruler-combined fa-3x"></i>
-                         </div>
-                         <div class="stat-values">
-                             <br>
-                             <div class="name">Unidades de Medida</b></div>
-                         </div>
-                     </div></a>
-                     <a class="" href="departamentos.php"><div class="col-lg-6 btn btn-default">
-                         <div class="stat-icon">
-                             <i class="fas fa-grip-vertical fa-3x"></i>
-                         </div>
-                         <div class="stat-values">
-                             <br>
-                             <div class="name">Departamentos de la Empresa</b></div>
-                         </div>
-                     </div></a>
-                   </div>
-                   <div class="row">
-                     <a class="" href="impuestos.php"><div class="col-lg-6 btn btn-default">
-                         <div class="stat-icon">
-                             <i class="fas fa-percent fa-3x"></i>
-                         </div>
-                         <div class="stat-values">
-                             <br>
-                             <div class="name">Impuestos y porcentajes</b></div>
-                         </div>
-                     </div></a>
-                     <!--<a class="" href="departamentos.php"><div class="col-lg-6 btn btn-default">
-                         <div class="stat-icon">
-                             <i class="fas fa-grip-vertical fa-3x"></i>
-                         </div>
-                         <div class="stat-values">
-                             <br>
-                             <div class="name">Departamentos de la Empresa</b></div>
-                         </div>
-                     </div></a>-->
-                   </div>
-
                </div>
            </div>
            <!-- /.row -->
+           <div class="row">
+               <table class="table">
+                   <tr>
+                       <div class="col-md-2">
+                           <label for="">IVA</label>
+                           <input class="form-control" type="text" name="" value="">
+                       </div>
+                       <div class="col-md-2">
+                           <label for="">CES</label>
+                           <input class="form-control" type="text" name="" value="">
+                       </div>
+                       <div class="col-md-2">
+                           <label for="">IMP</label>
+                           <input class="form-control" type="text" name="" value="">
+                       </div>
+                       <div class="col-md-2">
+                           <label for="">IMP</label>
+                           <input class="form-control" type="text" name="" value="">
+                       </div>
+                       <div class="col-md-2">
+                           <label for="">IMP</label>
+                           <input class="form-control" type="text" name="" value="">
+                       </div>
+                       <div class="col-md-2">
+                           <label for="">IMP</label>
+                           <input class="form-control" type="text" name="" value="">
+                       </div>
+                   </tr>
+               </table>
+           </div>
+           <div class="row">
+               <div class="col-md-2">
+
+               </div>
+               <div class="col-md-2">
+
+               </div>
+               <div class="col-md-2">
+                   <button class="btn btn-primary btn-block" type="button" name="button">Guardar</button>
+               </div>
+               <div class="col-md-2">
+                   <button class="btn btn-default btn-block" type="button" name="button">Cancelar</button>
+               </div>
+               <div class="col-md-2">
+
+               </div>
+               <div class="col-md-2">
+
+               </div>
+           </div>
         </div>
 
 
