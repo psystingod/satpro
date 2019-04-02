@@ -152,7 +152,7 @@
                     <div class="col-lg-12">
                         <h1 class="page-header"><b>Módulo de cuentas por cobrar</b></h1>
                         <div class="row">
-                            <a class="" href="clientes.php" ><div class="col-lg-6 btn btn-default">
+                            <a class="" href="clientes.php"><div class="col-lg-6 btn btn-default">
                                 <div class="stat-icon">
                                     <i class="fas fa-users fa-3x"></i>
                                 </div>
@@ -162,7 +162,7 @@
                                 </div>
                             </div></a>
 
-                            <a class="" href="abonos.php"><div class="col-lg-6 btn btn-default">
+                            <a class="" href="abonos.php" target="_blank"><div class="col-lg-6 btn btn-default">
                                 <div class="stat-icon">
                                     <i class="fas fa-money-bill-alt fa-3x"></i>
                                 </div>

@@ -157,7 +157,7 @@
                    <div class="row">
                        <div class="row">
                            <div class="col-lg-6">
-                               <a href="administrar.php"><button class="btn btn-success" type="button" name="regresar"><i class="fas fa-arrow-circle-left"></i> Atrás</button></a>
+                               <a href="../index.php"><button class="btn btn-success" type="button" name="regresar"><i class="fas fa-arrow-circle-left"></i> Atrás</button></a>
                            </div>
                            <br><br><br>
                        </div>

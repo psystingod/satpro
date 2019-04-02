@@ -290,7 +290,6 @@
                                 <li><a href="#notificaciones-traslados" data-toggle="tab">Traslados</a>
                                 </li>
                             </ul>
-
                             <!-- Tab panes -->
                             <div class="tab-content">
                                 <div class="tab-pane fade in active" id="datos-generales">

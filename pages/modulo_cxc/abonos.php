@@ -5,9 +5,7 @@
  ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -15,6 +13,7 @@
     <meta name="author" content="">
 
     <title>Cablesat</title>
+
     <link rel="shortcut icon" href="../../images/cablesat.png" />
     <!-- Bootstrap Core CSS -->
     <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -185,8 +184,8 @@
                                   </div>
                                   <div class="col-md-2">
                                       <br>
-                                      <label for="n">*</label>
-                                      <input class="form-control input-sm" type="text" name="n" value="" readonly>
+                                      <label for="codCobrador">Cód cobrador</label>
+                                      <input class="form-control input-sm" type="text" name="codCobrador" value="" readonly>
                                   </div>
                               </div>
                               <div class="form-row">
@@ -264,7 +263,7 @@
                                   <div class="col-md-3">
                                       <br>
                                       <label for="totalAbonoImpSeg">Con Impuesto de seguridad</label>
-                                      <input type="text" class="form-control input-sm alert-danger" name="totalAbonoImpSeg" value="0.00" style="color:red;">
+                                      <input type="text" class="form-control input-sm alert-danger" name="totalAbonoImpSeg" value="0.00" style="color:red; font-weight:bold;">
                                   </div>
                               </div>
                               <div class="form-row">
@@ -284,6 +283,22 @@
                                       <select class="form-control input-sm" type="text" name="cuotaImpuesto" readonly>
                                           <option value="">Solo impuesto</option>
                                       </select>
+                                  </div>
+                              </div>
+                              <div class="form-row">
+                                  <div class="col-md-9">
+                                      <br>
+                                      <input class="" type="radio" name="aplicarIS" value="5">
+                                      <label for="5">5%</label>
+                                      <input class="" type="radio" name="aplicarIS" value="10">
+                                      <label for="5">10%</label>
+                                      <input class="" type="radio" name="aplicarIS" value="excento">
+                                      <label for="5">Excento</label>
+                                  </div>
+                                  <div class="col-md-3">
+                                      <br>
+                                      <input class="" type="checkbox" name="anularComp">
+                                      <label for="5">Anular comprobante</label>
                                   </div>
                               </div>
                               <div class="form-row">
@@ -334,10 +349,10 @@
                                       <label for="meses">TOTALES</label>
                                   </div>
                                   <div class="col-md-2">
-                                      <input class="form-control input-sm alert-danger" type="text" name="total1" style="color:red;">
+                                      <input class="form-control input-sm alert-danger" type="text" name="total1" value="0.00" style="color:red; font-weight:bold;">
                                   </div>
                                   <div class="col-md-2">
-                                      <input class="form-control input-sm alert-danger" type="text" name="total2" style="color:red;">
+                                      <input class="form-control input-sm alert-danger" type="text" name="total2" value="0.00" style="color:red; font-weight:bold;">
                                   </div>
                               </div>
                               <div class="form-row">
@@ -353,7 +368,7 @@
                                   <div class="col-md-2">
                                   </div>
                                   <div class="col-md-2">
-                                      <input class="form-control input-sm alert-danger" type="text" name="pendiente" value="" style="color:red;">
+                                      <input class="form-control input-sm alert-danger" type="text" name="pendiente" value="0.00" style="color:red; font-weight:bold;">
                                   </div>
                               </div>
                               <div class="form-row">
