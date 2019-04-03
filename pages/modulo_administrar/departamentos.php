@@ -157,7 +157,7 @@
                         else if ($_GET['status'] == 'failed'){
                             echo "<div id='temporal' class='alert alert-danger alert-dismissible'>
                                       <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                                      El Nombre ó Codigo del Departamento ya <b>Existe</b>
+                                      El Nombre del Departamento ya <b>Existe</b>
                                   </div>";
                         }
                         else if ($_GET['status'] == 'Actualizar'){
@@ -266,11 +266,8 @@
                       <form action="php/saveDepartamento.php" method="POST">
                       <div class="modal-body">
                                   <div class="form-row">
-                                      <div class="form-group col-md-6 col-xs-6">
-                                          <label for="codigo">Codigo:</label>
-                                          <input type="text" class="form-control" name="CodigoDepartamento" placeholder="Codigo Departamento " required>
-                                      </div>
-                                      <div class="form-group col-md-6 col-xs-6">
+
+                                      <div class="form-group col-md-12 col-xs-12s">
                                           <label for="codigo">Nombre:</label>
                                           <input type="text" class="form-control" name="NombreDepartamento"  placeholder="Nombre Departamento" pattern="[a-zA-Záéíóú]+\s?[a-zA-Záéíóú]+?\s?[a-zA-Záéíóú]+\s?[a-zA-Záéíóú]+?" title="Escribir solamente letras" required>
                                       </div>
