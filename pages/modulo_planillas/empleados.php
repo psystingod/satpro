@@ -151,151 +151,328 @@
                         <h1 class="page-header"><strong>Empleados</strong></h1>
                         <div class="panel panel-primary">
                             <div class="panel-heading">
-                                Todos los empleados
+                                <span style="font-size: 17px;">Ficha de empleado</span>
                             </div>
                             <div class="panel-body">
+                                <!-- Nav tabs -->
+                                <ul class="nav nav-pills nav-justified">
+                                    <li class="active"><a href="#datos-generales" data-toggle="tab">Datos generales</a>
+                                    </li>
+                                    <li><a href="#otros-datos" data-toggle="tab">Otros datos</a>
+                                    </li>
+                                    <li><a href="#educacion" data-toggle="tab">Educación</a>
+                                    </li>
+                                    <li><a href="#ordenes-tecnicas" data-toggle="tab">Ordenes técnicas</a>
+                                    </li>
+                                    <li><a href="#notificaciones-traslados" data-toggle="tab">Traslados</a>
+                                    </li>
+                                </ul>
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div class="tab-pane fade in active" id="datos-generales">
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label for="idEmpleado">Id empleado</label>
+                                                <input class="form-control input-sm" type="text" name="idEmpleado">
+                                            </div>
+                                            <div class="col-md-5">
+                                                <label for="nombres">Nombres</label>
+                                                <input class="form-control input-sm" type="text" name="nombres">
+                                            </div>
+                                            <div class="col-md-5">
+                                                <label for="apellidos">Apellidos</label>
+                                                <input class="form-control input-sm" type="text" name="apellidos">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label for="idEmpleado">Nombre según ISSS</label>
+                                                <input class="form-control input-sm" type="text" name="idEmpleado">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label for="direccionParticular">Dirección particular</label>
+                                                <textarea class="form-control input-sm" type="text" name="direccionParticular" rows="4" cols="40"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label for="telefono">Teléfonos</label>
+                                                <input class="form-control input-sm" type="text" name="telefono">
+                                            </div>
+                                            <div class="col-md-5">
+                                                <label for="municipio">Municipio</label>
+                                                <input class="form-control input-sm" type="text" name="municipio">
+                                            </div>
+                                            <div class="col-md-5">
+                                                <label for="departamento">Departamento</label>
+                                                <input class="form-control input-sm" type="text" name="departamento">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-2">
+                                                <label for="dui">DUI</label>
+                                                <input class="form-control input-sm" type="text" name="dui">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="extendidoEn">Extendido en</label>
+                                                <input class="form-control input-sm" type="text" name="extendidoEn">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="fechaExpedicion">Fecha de expedición</label>
+                                                <input class="form-control input-sm" type="text" name="fechaExpedicion">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="fechaNacimiento">Fecha de nacimiento</label>
+                                                <input class="form-control input-sm" type="text" name="fechaNacimiento">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-1">
+                                                <label for="edad">Edad</label>
+                                                <input class="form-control input-sm" type="text" name="edad">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="nacionalidad">Nacionalidad</label>
+                                                <input class="form-control input-sm" type="text" name="nacionalidad">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="nivelEstudios">Nivel de estudios</label>
+                                                <input class="form-control input-sm" type="text" name="nivelEstudios">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="nit">NIT</label>
+                                                <input class="form-control input-sm" type="text" name="nit">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="licencia">N° de licencia de conducir</label>
+                                                <input class="form-control input-sm" type="text" name="licencia">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="numIsss">N° ISSS</label>
+                                                <input class="form-control input-sm" type="text" name="numIsss">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label for="nup">NUP</label>
+                                                <input class="form-control input-sm" type="text" name="nup">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="clase">Clase</label>
+                                                <input class="form-control input-sm" type="text" name="clase">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="estatura">Estatura(mts)</label>
+                                                <input class="form-control input-sm" type="text" name="estatura">
+                                            </div>
+                                            <div class="col-md-1">
+                                                <label for="peso">Peso(lbs)</label>
+                                                <input class="form-control input-sm" type="text" name="peso">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="sexo">Sexo</label>
+                                                <input class="form-control input-sm" type="text" name="sexo">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="tipoSangre">Tipo de sangre</label>
+                                                <input class="form-control input-sm" type="text" name="tipoSangre">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <label for="profesionOficio">Profesión u oficio</label>
+                                                <input class="form-control input-sm" type="text" name="profesionOficio">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="clase">Estado civil</label>
+                                                <input class="form-control input-sm" type="text" name="clase">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- TAB -->
+                                    <div class="tab-pane fade" id="otros-datos">
+                                        <br>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label for="senalesEspeciales">Señales especiales</label>
+                                                <input class="form-control input-sm" type="text" name="senalesEspeciales">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="nombreConyugue">Nombre del conyugue</label>
+                                                <input class="form-control input-sm" type="text" name="nombreConyugue">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="lugarTrabajoConyugue">Lugar de trabajo del conyugue</label>
+                                                <input class="form-control input-sm" type="text" name="lugarTrabajoConyugue">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label for="nombrePadre">Nombre del padre</label>
+                                                <input class="form-control input-sm" type="text" name="nombrePadre">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="nombreMadre">Nombre de la madre</label>
+                                                <input class="form-control input-sm" type="text" name="nombreMadre">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label for="contactos">Contáctos</label>
+                                                <input class="form-control input-sm" type="text" name="contactos">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-3">
+                                                <label for="fechaIngreso">Fecha de ingreso</label>
+                                                <input class="form-control input-sm" type="text" name="fechaIngreso">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="fechaContratacion">Fecha de contratación</label>
+                                                <input class="form-control input-sm" type="text" name="fechaContratacion">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="salarioOrdinario">Salario ordinario(Mensual)</label>
+                                                <input class="form-control input-sm" type="text" name="salarioOrdinario">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="fechaCambioSalario">Fecha de cambio de salario</label>
+                                                <input class="form-control input-sm" type="text" name="fechaCambioSalario">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <label for="centroTrabajoEmpleado">Centro de trabajo del empleado</label>
+                                                <input class="form-control input-sm" type="text" name="centroTrabajoEmpleado">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="cuentaBanco">Banco en el que posee la cuenta</label>
+                                                <input class="form-control input-sm" type="text" name="cuentaBanco">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="afpPertenece">AFP a la que pertecene</label>
+                                                <input class="form-control input-sm" type="text" name="afpPertenece">
+                                            </div>
+                                            <div class="col-md-2">
+                                                <label for="afpPorcent">Porcentaje AFP</label>
+                                                <input class="form-control input-sm" type="text" name="afpPorcent">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-8">
+                                                <label for="personaAutorizada">Persona autorizada para recibir salario</label>
+                                                <input class="form-control input-sm" type="text" name="personaAutorizada">
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="nCuenta">N° de cuenta</label>
+                                                <input class="form-control input-sm" type="text" name="nCuenta">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-5">
+                                                <label for="cargoPlaza">Cargo o plaza asignada</label>
+                                                <select class="form-control input-sm" type="text" name="cargoPlaza">
+                                                    <?php
+                                                    echo '<option value="">Ingeniero de sistemas</option>'
+                                                    ?>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="depto">Departamento</label>
+                                                <select class="form-control input-sm" type="text" name="depto">
+                                                    <?php
+                                                    echo '<option value="">Informática</option>'
+                                                    ?>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="tipoContratacion">Tipo de contratación</label>
+                                                <select class="form-control input-sm" type="text" name="tipoContratacion">
+                                                    <?php
+                                                    echo '<option value="">Permanente</option>'
+                                                    ?>
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <br>
+                                            <div class="col-md-4">
+                                                <label for="cca">Cuenta contable de anticipo</label>
+                                                <div class="input-group">
+                                                  <input type="text" class="form-control input-sm" name="cca">
+                                                  <span class="input-group-btn">
+                                                      <button type="submit" class="btn btn-search btn-sm" data-toggle="modal" data-target="#catalogoCuentas"><i class="fas fa-search"></i></button>
+                                                  </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="ccpi">Cuenta contable de permisos internos</label>
+                                                <div class="input-group">
+                                                  <input type="text" class="form-control input-sm" name="ccpi">
+                                                  <span class="input-group-btn">
+                                                      <button type="submit" class="btn btn-search btn-sm" data-toggle="modal" data-target="#catalogoCuentas"><i class="fas fa-search"></i></button>
+                                                  </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label for="ccr">Cuenta contable para renta</label>
+                                                <div class="input-group">
+                                                  <input type="text" class="form-control input-sm" name="ccr">
+                                                  <span class="input-group-btn">
+                                                      <button type="submit" class="btn btn-search btn-sm" data-toggle="modal" data-target="#catalogoCuentas"><i class="fas fa-search"></i></button>
+                                                  </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- Modal catalogo de cuentas -->
+                                        <div id="catalogoCuentas" class="modal fade" role="dialog">
+                                          <div class="modal-dialog modal-sm">
 
+                                            <!-- Modal content-->
+                                            <div class="modal-content">
+                                              <div class="modal-header">
+                                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                <h4 class="modal-title">Buscar orden de trabajo</h4>
+                                              </div>
+                                              <div class="modal-body">
+                                                <form class="" action="#" method="POST">
+                                                    <input class="form-control" type="text" name="buscarOrdenTrabajo" placeholder="Número de orden">
+                                              </div>
+                                              <div class="modal-footer">
+                                                  <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                                  <button type="button" class="btn btn-primary" data-dismiss="modal">Buscar</button>
+                                                </form>
+                                              </div>
+                                            </div>
+
+                                          </div>
+                                        </div>
+                                        <!-- Modal catalogo de cuentas -->
+                                    </div>
+                                    <!-- TAB -->
+                                    <div class="tab-pane fade" id="educacion">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <br>
+                                                <table class="table table-hover table-striped">
+                                                    <tr>
+                                                        <th class="bg-info">Nivel de estudios</th>
+                                                        <th class="bg-info">Título obtenido</th>
+                                                        <th class="bg-info">Institución</th>
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div><!--TAB-CONTENT-->
                             </div>
                         </div>
-                        <!-- Nav tabs -->
-                        <ul class="nav nav-pills nav-justified">
-                            <li class="active"><a href="#datos-generales" data-toggle="tab">Datos generales</a>
-                            </li>
-                            <li><a href="#otros-datos" data-toggle="tab">Otros datos</a>
-                            </li>
-                            <li><a href="#servicios" data-toggle="tab">Servicios</a>
-                            </li>
-                            <li><a href="#ordenes-tecnicas" data-toggle="tab">Ordenes técnicas</a>
-                            </li>
-                            <li><a href="#notificaciones-traslados" data-toggle="tab">Traslados</a>
-                            </li>
-                        </ul>
-                        <!-- Tab panes -->
-                        <div class="tab-content">
-                            <div class="tab-pane fade in active" id="datos-generales">
-                                <br>
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <label for="idEmpleado">Id empleado</label>
-                                        <input class="form-control input-sm" type="text" name="idEmpleado">
-                                    </div>
-                                    <div class="col-md-5">
-                                        <label for="nombres">Nombres</label>
-                                        <input class="form-control input-sm" type="text" name="nombres">
-                                    </div>
-                                    <div class="col-md-5">
-                                        <label for="apellidos">Apellidos</label>
-                                        <input class="form-control input-sm" type="text" name="apellidos">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <label for="idEmpleado">Nombre según ISSS</label>
-                                        <input class="form-control input-sm" type="text" name="idEmpleado">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-12">
-                                        <label for="direccionParticular">Dirección particular</label>
-                                        <textarea class="form-control input-sm" type="text" name="direccionParticular" rows="4" cols="40"></textarea>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <label for="telefono">Teléfonos</label>
-                                        <input class="form-control input-sm" type="text" name="telefono">
-                                    </div>
-                                    <div class="col-md-5">
-                                        <label for="municipio">Municipio</label>
-                                        <input class="form-control input-sm" type="text" name="municipio">
-                                    </div>
-                                    <div class="col-md-5">
-                                        <label for="departamento">Departamento</label>
-                                        <input class="form-control input-sm" type="text" name="departamento">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <label for="dui">DUI</label>
-                                        <input class="form-control input-sm" type="text" name="dui">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="extendidoEn">Extendido en</label>
-                                        <input class="form-control input-sm" type="text" name="extendidoEn">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="fechaExpedicion">Fecha de expedición</label>
-                                        <input class="form-control input-sm" type="text" name="fechaExpedicion">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="fechaNacimiento">Fecha de nacimiento</label>
-                                        <input class="form-control input-sm" type="text" name="fechaNacimiento">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-1">
-                                        <label for="edad">Edad</label>
-                                        <input class="form-control input-sm" type="text" name="edad">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label for="nacionalidad">Nacionalidad</label>
-                                        <input class="form-control input-sm" type="text" name="nacionalidad">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label for="nivelEstudios">Nivel de estudios</label>
-                                        <input class="form-control input-sm" type="text" name="nivelEstudios">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label for="nit">NIT</label>
-                                        <input class="form-control input-sm" type="text" name="nit">
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="licencia">N° de licencia de conducir</label>
-                                        <input class="form-control input-sm" type="text" name="licencia">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label for="numIsss">N° ISSS</label>
-                                        <input class="form-control input-sm" type="text" name="numIsss">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <label for="nup">NUP</label>
-                                        <input class="form-control input-sm" type="text" name="nup">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label for="clase">Clase</label>
-                                        <input class="form-control input-sm" type="text" name="clase">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label for="estatura">Estatura(mts)</label>
-                                        <input class="form-control input-sm" type="text" name="estatura">
-                                    </div>
-                                    <div class="col-md-1">
-                                        <label for="peso">Peso(lbs)</label>
-                                        <input class="form-control input-sm" type="text" name="peso">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label for="sexo">Sexo</label>
-                                        <input class="form-control input-sm" type="text" name="sexo">
-                                    </div>
-                                    <div class="col-md-2">
-                                        <label for="tipoSangre">Tipo de sangre</label>
-                                        <input class="form-control input-sm" type="text" name="tipoSangre">
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <label for="profesionOficio">Profesión u oficio</label>
-                                        <input class="form-control input-sm" type="text" name="profesionOficio">
-                                    </div>
-                                    <div class="col-md-4">
-                                        <label for="clase">Estado civil</label>
-                                        <input class="form-control input-sm" type="text" name="clase">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
                     </div>
                     <!-- /.col-lg-12 -->
                 </div>
@@ -320,7 +497,6 @@
     <script src="../../dist/js/sb-admin-2.js"></script>
     <script src="../../dist/js/jquery-validation-1.19.0/dist/jquery.validate.js"></script>
     <script src="js/ordenTrabajo.js"></script>
-
 
 </body>
 </html>
