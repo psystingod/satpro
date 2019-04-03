@@ -1,6 +1,6 @@
 <?php
  session_start();
-    require('../../php/connection.php');
+    require('../../../php/connection.php');
 
     class updateProveedor extends ConectionDB
     {

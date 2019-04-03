@@ -208,7 +208,7 @@ if($_POST)
         // write update query
         // in this case, it seemed like we have so many fields to pass and
         // it is better to label them and not use question marks
-        $query = "UPDATE tbl_departamento set CodigoDepartamento= :CodigoDepartamento, NombreDepartamento=:NombreDepartamento,Descripcion=:Descripcion
+        $query = "UPDATE tbl_departamento set NombreDepartamento=:NombreDepartamento,Descripcion=:Descripcion
          where IdDepartamento=:IdDepartamento";
 
         // prepare query for excecution
@@ -216,14 +216,14 @@ if($_POST)
 
         // POSTed values
         $IdDepartamento=htmlspecialchars(strip_tags($_POST['IdDepartamentoo']));
-        $CodigoDepartamento=htmlspecialchars(strip_tags($_POST['CodigoDepartamento']));
+        //$CodigoDepartamento=htmlspecialchars(strip_tags($_POST['CodigoDepartamento']));
         $NombreDepartamento=htmlspecialchars(strip_tags($_POST['NombreDepartamento']));
         $Descripcion=htmlspecialchars(strip_tags($_POST['Descripcion']));
       //  $Encargado=htmlspecialchars(strip_tags($_POST['Encargado']));
 
         // bind the parameters
         $stmt->bindParam(':IdDepartamento', $IdDepartamento);
-        $stmt->bindParam(':CodigoDepartamento', $CodigoDepartamento);
+        //$stmt->bindParam(':CodigoDepartamento', $CodigoDepartamento);
         $stmt->bindParam(':NombreDepartamento', $NombreDepartamento);
         $stmt->bindParam(':Descripcion', $Descripcion);
         //$stmt->bindParam(':Encargado', $Encargado);
@@ -276,7 +276,7 @@ if($_POST)
 
             <tr>
                 <td>Codigo Departamento: </td>
-                <td colspan="3"><input type="text" name="CodigoDepartamento" value="<?php echo htmlspecialchars($CodigoDepartamento, ENT_QUOTES);  ?>" class='form-control'></td>
+                <td colspan="3"><input type="text" name="CodigoDepartamento" value="<?php echo htmlspecialchars($CodigoDepartamento, ENT_QUOTES);  ?>" class='form-control' disabled></td>
             </tr>
             <tr>
                 <td>Nombre Departamento: </td>

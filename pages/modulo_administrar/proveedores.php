@@ -206,7 +206,7 @@
                                   echo $key["Nombre"] . "</td><td>";
                                   echo $key["Representante"] . "</td><td>";
                                   echo $key["Telefono"] . "</td><td>";
-                                  echo $key["Correo"] . "</td><td width='300'>";
+                                  echo $key["Correo"] . "</td><td width='250'>";
                                   if( $key["state"] == 0)
                                   {
                                     echo "<a style='font-size:2em; color:#00FF00;' >■</a> Activado en el Sistema</td><td>";
