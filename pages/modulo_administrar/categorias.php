@@ -160,7 +160,7 @@
                         else if ($_GET['status'] == 'failed'){
                             echo "<div id='temporal' class='alert alert-danger alert-dismissible'>
                                       <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                                      El Nombre de Bodega ya <b>Existe</b>
+                                      El Nombre de Categoria ya <b>Existe</b>
                                   </div>";
                         }
                         else if ($_GET['status'] == 'Actualizar'){

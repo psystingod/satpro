@@ -6,6 +6,7 @@
 
     $Inv = new GetViewA_D();
     $Empleados = $Inv->getEncargado();
+    $Emple = $Inv->MostrarEmpleados();
 
     require("../php/productsInfo.php");
     $productsInfo = new ProductsInfo();
@@ -226,22 +227,41 @@
                                       </div>
                                       <div class="form-group col-md-6 col-xs-6">
                                           <label for="departamento">Departamento</label>
-                                          <select class="form-control form-control-lg" name="Departamento">
-                                              <option value="" selected="selected">Seleccionar...</option>
-                                              <?php
-                                                foreach ($depar as $key) {
-                                                    echo "<option value=".strtolower($key['NombreDepartamento'])." >".$key['NombreDepartamento']."</option>";
-                                                }
-                                              ?>
-                                          </select>
+                                          <input type="text" class="form-control" name="DepartamentoEmpleado"  placeholder="Departamento Empleado">
                                       </div>
 
-                                      *Si no conoce el codigo del Empleado <a href="modulo_administrar/seguridad.php">Ver Nomina</a> o solicitar Nomina a un superior
+                                      <br>
+                                      <table width="100%" class="table table-striped table-hover" id="tbl1">
+                                          <thead>
+                                              <tr>
+                                                  <th></th>
+                                                  <!-- <th>Id artículo</th> -->
+                                                  <th>Código</th>
+                                                  <th>Nombre</th>
+                                                  <th>Dui</th>
+
+                                              </tr>
+                                          </thead>
+                                          <tbody>
+                                              <?php
+
+                                                  foreach ($Emple as $key) {
+                                                      echo "<tr><td>";
+                                                      //Tiene error esta linea//
+                                                      echo "<input type='checkbox' class='form-control checkbox agregar' id='V1' name='checkTraslado[]' value='".$key['IdEmpleado']."' >" . "</td><td>";
+                                                      echo $key["Codigo"] . "</td><td>";
+                                                      echo $key["Nombres"] ." " . $key["Apellidos"] ."</td><td>";
+                                                      echo $key["Dui"] . "</td></tr>";
+
+                                                          }
+                                                      ?>
+                                          </tbody>
+                                      </table>
                                   </div>
                       </div>
                       <div class="modal-footer">
                             <button type="button" class="btn btn-default" name="Action1" data-dismiss="modal">Cancelar</button>
-                            <input type="submit" class="btn btn-primary" name="Action2" value="Asignar">
+                            <input type="submit" class="btn btn-primary" name="Action2" value="Realizar Asignación">
                       </div>
                            </form>
                 </div>
@@ -284,7 +304,26 @@
         });
     });
     </script>
-
+    <script>
+    $(document).ready(function() {
+        $('#tbl1').DataTable({
+            responsive: true,
+            "language": {
+            "lengthMenu": "Mostrar _MENU_ registros por página",
+            "zeroRecords": "No se encontró ningún registro",
+            "info": "Mostrando página _PAGE_ de _PAGES_",
+            "infoEmpty": "No se encontró ningún registro",
+            "search": "Buscar: ",
+            "searchPlaceholder": "",
+            "infoFiltered": "(de un total de _MAX_ total registros)",
+            "paginate": {
+             "previous": "Anterior",
+             "next": "Siguiente"
+            }
+        }
+        });
+    });
+    </script>
     <script type='text/javascript'>
         // confirm record deletion
         function deleteArticle( id ){
@@ -309,12 +348,10 @@
         });
     </script>
 
-    <script type="text/javascript">
-        $(function() {
-            $(".checkbox").click(function(){
-                $('#traslados1').prop('disabled',$('input.checkbox:checked').length == 0);
-            });
-        });
+    <script>
+      $("#V1").on("click", function() {
+        $(".form-control").attr("checked", this.checked);
+      });
     </script>
 
     <script type="text/javascript">

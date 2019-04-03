@@ -12,7 +12,7 @@
         public function enter()
         {
             try {
-                $bodega = $_POST["bodega"];
+
                 $IdArticulo;
                 $nombre = $_POST["nombre"];
                 $proveedor = $_POST['proveedor'];
@@ -26,16 +26,10 @@
                 $fechaEntrada = $_POST["fecha"];
                 $um = $_POST["um"];
                 date_default_timezone_set('America/El_Salvador');
-                $Fecha = date('Y/m/d g:ia');
+                $Fecha = date('Y/m/d g:i');
 
-                  //GENERA CODIGO
-                  // $Clave = '';
-                  // $pattern = '1234567890';
-                  // $max = strlen($pattern)-1;
-                  // for($i=0;$i < 4;$i++) $Clave .= $pattern{mt_rand(0,$max)};
-                  //$codigo = substr($nombre,0,1) . "-" . substr($categoria,0,1) . $Clave;
 
-                //  CONSULTAMOS SI EXISTE EL ARTICULO EN LA TABLA TBL_ARTICULO, SI EXISTE ENTRA A UNA VALIDACION, SI NO EXISTE LO AGREGA
+                //CONSULTAMOS LA CANTIDAD DE ARTICULOS EN LA CATEGORIA SELECCIONADA, PARA GENERAR UN NUEVO CODIGO CORRELATIVO
                  $query = "SELECT count(*) FROM tbl_articulo where IdCategoria=(SELECT IdCategoria FROM tbl_categoria where NombreCategoria='".$categoria."')";
                  $statement = $this->dbConnect->query($query);
                  $Cd = $statement->fetchColumn() + 1;
@@ -48,13 +42,13 @@
                      $codigo = substr($categoria,0,1) . $Cd;
                  }
 
-                 //CONSULTAMOS SI EXISTE EL ARTICULO EN LA TABLA TBL_ARTICULO, SI EXISTE ENTRA A UNA VALIDACION, SI NO EXISTE LO AGREGA
+                 //CONSULTAMOS SI EXISTE EL 'NOMBRE' DEL ARTICULO EN LA TABLA TBL_ARTICULO, SI EXISTE ENTRA A UNA VALIDACION, SI NO EXISTE LO AGREGA DIRECTAMENTE
                  $query = "SELECT count(*) FROM tbl_articulo where NombreArticulo= '".$nombre."'";
                  $statement = $this->dbConnect->query($query);
                  if($statement->fetchColumn() == 1)
                  {
-                   //CONSULTAMOS SI EXISTE ESE NOMBRE EN ESA BODEGA, SI EXISTE MOSTRAMOS MENSAJE, SI NO EXISTE LO AGREGAMOS, CON EL CODIGO DE ESE MismaBodega
-                   //PRODUCTO ENCONTRADO EN OTRA BODEGA
+                   //CONSULTAMOS SI EXISTE ESE NOMBRE EN ESA BODEGA SELECCIONADA, SI EXISTE MOSTRAMOS MENSAJE DE ARTICULO EXISTENTE.
+                  //SI NO EXISTE EN LA BODEGA SELECCIONADA, PERO EN OTRA SI, HACEMOS LA CONSULTA DEL CODIGO Y LE ASIGANMOS ESE AL ARTICULO
                    $query = "SELECT count(*) from tbl_articulo where NombreArticulo='".$nombre."' and IdBodega=(SELECT tbl_bodega.IdBodega FROM tbl_bodega WHERE tbl_bodega.NombreBodega = '".$bodega."')";
                    $statement = $this->dbConnect->query($query);
                    if($statement->fetchColumn() == 1)
@@ -63,22 +57,24 @@
                    }
                    else
                    {
-                     //CONSULTAMOS EL CODIGO DE ESE PRODUCTO EN LA BODEGA QUE EXISTE ACTUALMENTE
-                    $query = "SELECT Codigo from tbl_articulo where NombreArticulo='".$nombre."' ";
+                     //CONSULTAMOS EL CODIGO DEL ARTICULO EN LA BODEGA QUE ESTE EXISTENTE
+                    $query = "SELECT Codigo, IdCategoria from tbl_articulo where NombreArticulo='".$nombre."' ";
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute();
                     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
                     $NCodigo = "";
+                    $NCate = "";
                     foreach ($result as $key)
                     {
                        $NCodigo = $key['Codigo'];
+                       $NCate = $key['IdCategoria'];
                     }
                     //AGREGAMOS EL NUEVO ARTICULO CON EL CODIGO EXISTENTE
                     $query = "INSERT INTO tbl_articulo(Codigo, NombreArticulo, Descripcion, Cantidad, PrecioCompra, PrecioVenta, FechaEntrada, IdUnidadMedida, IdTipoProducto, IdCategoria, IdProveedor, IdBodega)
                     VALUES(:codigo, :nombre, :descripcion, :cantidad, :precioCompra, :precioVenta, :fechaEntrada,
                     (SELECT IdUnidadMedida FROM tbl_unidadmedida WHERE NombreUnidadMedida = :idUm),
                     (SELECT tbl_tipoproducto.IdTipoProducto FROM tbl_tipoproducto WHERE tbl_tipoproducto.NombreTipoProducto = :idTip),
-                    (SELECT tbl_categoria.IdCategoria FROM tbl_categoria WHERE tbl_categoria.NombreCategoria = :idSubCat),
+                    :idSubCat,
                     (SELECT tbl_proveedor.IdProveedor FROM tbl_proveedor WHERE tbl_proveedor.Nombre = :idProv),
                     (SELECT tbl_bodega.IdBodega FROM tbl_bodega WHERE tbl_bodega.NombreBodega = :idBodega))";
                     // Preparación de sentencia
@@ -93,9 +89,29 @@
                     ':fechaEntrada' => $fechaEntrada,
                     ':idUm' => $um,
                     ':idTip' => $tipoProducto,
-                    ':idSubCat' => $categoria,
+                    ':idSubCat' => $NCate,
                     ':idProv' => $proveedor,
                     ':idBodega' => $bodega
+                    ));
+
+                    //GUARDAMOS EL HISTORIAL DE LA ENTRADA
+                    $idHistorial = $this->dbConnect->lastInsertId();
+                    $nombreArticuloHistorial = $nombre;
+                    $nombreEmpleadoHistorial = $_POST['nombreEmpleadoHistorial'];
+                    $nombreBodegaHistorial = ucwords($_POST['bodega']);
+                    $cantidadHistorial = $cantidad;
+                    $tipoMovimientoHistorial = "Nuevo ingreso de producto";
+
+                    $query = "INSERT into tbl_historialentradas (nombreArticulo, nombreEmpleado, fechaHora, tipoMovimiento, cantidad, bodega)
+                              VALUES(:nombreArticuloHistorial, :nombreEmpleadoHistorial, CURRENT_TIMESTAMP(), :tipoMovimientoHistorial, :cantidadHistorial, :nombreBodegaHistorial)";
+
+                    $statement = $this->dbConnect->prepare($query);
+                    $statement->execute(array(
+                    ':nombreArticuloHistorial' => $nombreArticuloHistorial,
+                    ':nombreEmpleadoHistorial' => $nombreEmpleadoHistorial,
+                    ':tipoMovimientoHistorial' => $tipoMovimientoHistorial,
+                    ':cantidadHistorial' => $cantidadHistorial,
+                    ':nombreBodegaHistorial' => $nombreBodegaHistorial
                     ));
                     header('Location: ../pages/inventarioBodegas.php?status=success&bodega='.$bodega);
                    }
@@ -128,7 +144,6 @@
                     ));
 
                     //GUARDAMOS EL HISTORIAL DE LA ENTRADA
-                    date_default_timezone_set('America/El_Salvador');
                     $idHistorial = $this->dbConnect->lastInsertId();
                     $nombreArticuloHistorial = $nombre;
                     $nombreEmpleadoHistorial = $_POST['nombreEmpleadoHistorial'];
@@ -136,7 +151,7 @@
                     $cantidadHistorial = $cantidad;
                     $tipoMovimientoHistorial = "Nuevo ingreso de producto";
 
-                    $query = "INSERT into tbl_historialEntradas (nombreArticulo, nombreEmpleado, fechaHora, tipoMovimiento, cantidad, bodega)
+                    $query = "INSERT into tbl_historialentradas (nombreArticulo, nombreEmpleado, fechaHora, tipoMovimiento, cantidad, bodega)
                               VALUES(:nombreArticuloHistorial, :nombreEmpleadoHistorial, CURRENT_TIMESTAMP(), :tipoMovimientoHistorial, :cantidadHistorial, :nombreBodegaHistorial)";
 
                     $statement = $this->dbConnect->prepare($query);
@@ -147,28 +162,14 @@
                     ':cantidadHistorial' => $cantidadHistorial,
                     ':nombreBodegaHistorial' => $nombreBodegaHistorial
                     ));
-
                     header('Location: ../pages/inventarioBodegas.php?status=success&bodega='.$bodega);
                  }
-                 //GUARDAMOS EL TIPO DE MOVIMIENTO REALIZADO
-                 $IdArticulo=$this->dbConnect->lastInsertId();
-                 $Nombre = $_POST["NOMBRE"];
-                 $Apellido = $_POST["APELLIDO"];
-                 $query = "INSERT into tbl_historialRegistros (IdEmpleado,FechaHora,Tipo_Movimiento,Descripcion)
-                 VALUES((SELECT IdEmpleado from tbl_empleado where Nombres='".$Nombre."' and Apellidos='".$Apellido."'),'". $Fecha."',2
-                 ,concat( 'Nombre del Producto/Articulo: ',  (SELECT a.NombreArticulo FROM tbl_articulo as a WHERE  IdArticulo= '".$IdArticulo."')  , ' Cantidad: ".$cantidad." ' ) )";
-                  $statement = $this->dbConnect->prepare($query);
-                  $statement->execute();
-
-                  $this->dbConnect = NULL;
-
-
             }
             catch (Exception $e)
             {
                 print "Error!: " . $e->getMessage() . "</br>";
                 die();
-                header('Location: ../pages/inventarioBodegas.php?status=failed&bodega='.$bodega);
+                header('Location: ../pages/inventarioBodegas.php?status=ErrorGrave&bodega='.$bodega);
             }
         }
     }

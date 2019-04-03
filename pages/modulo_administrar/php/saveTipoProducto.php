@@ -1,6 +1,6 @@
 <?php
  session_start();
-    require('../../php/connection.php');
+    require('../../../php/connection.php');
 
     class saveTipoProducto extends ConectionDB
     {
@@ -31,7 +31,7 @@
                     }
                     else
                     {
-                            $query = " INSERT INTO tbl_tipoproducto(NombreTipoProducto,State) VALUES(:NombreTipoProducto, :State)";
+                            $query = "INSERT INTO tbl_tipoproducto(NombreTipoProducto,State) VALUES(:NombreTipoProducto, :State)";
                                $statement = $this->dbConnect->prepare($query);
                                $statement->execute(array(
                                 ':NombreTipoProducto' => $NombreTipoProducto,

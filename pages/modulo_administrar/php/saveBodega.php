@@ -1,6 +1,6 @@
 <?php
  session_start();
-    require('../../php/connection.php');
+    require('../../../php/connection.php');
 
     class saveInfo extends ConectionDB
     {
@@ -33,7 +33,7 @@
                     }
                     else
                     {
-                            $query = " INSERT INTO tbl_bodega(NombreBodega,Direccion,State) VALUES(:NombreBodega, :Direccion, :State)";
+                            $query = "INSERT INTO tbl_bodega(NombreBodega,Direccion,State) VALUES(:NombreBodega, :Direccion, :State)";
                                $statement = $this->dbConnect->prepare($query);
                                $statement->execute(array(
                                 ':NombreBodega' => $Nombre,
@@ -41,7 +41,7 @@
                                 ':State' => $State
                             ));
                             $this->dbConnect = NULL;
-                          header('Location: ../bodegas.php?status=success');
+                            header('Location: ../bodegas.php?status=success');
                     }
                     }
                     catch (Exception $e)

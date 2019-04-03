@@ -1,6 +1,6 @@
 <?php
  session_start();
-    require('../../php/connection.php');
+    require('../../../php/connection.php');
 
     class updateCategoria extends ConectionDB
     {

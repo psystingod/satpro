@@ -208,25 +208,39 @@
        }
    }
 
-   public function detalleAsignacionesRealizadasDB($a)
-  {
-      try {
-          $query = "SELECT e.Nombres as EmpleadoEnvia, e.Codigo as CodigoEnvia, d.NombreDepartamento as DepartamentoEnvia, FechaEnvio,
-          e1.Nombres as EmpleadoRecibe, e1.Codigo as CodigoRecibe, b.NombreBodega as BodegaRecibe, FechaRecibe, ad.Codigo as CodigoArticulo,
-          ad.NombreArticulo as NombreArticulo, de.Cantidad as Cantidad, r.ComentarioEnvio, r.ComentarioRecibe
-            from tbl_reportedb as r inner join tbl_departamento as d on r.IdDepartamento=d.IdDepartamento inner join
-          tbl_bodega as b on r.IdBodega=b.IdBodega inner join tbl_empleado as e on r.IdEmpleadoEnvio=e.IdEmpleado inner join tbl_empleado as e1
-          on r.IdEmpleadoRecibe=e1.IdEmpleado inner join tbl_detalledb as de on r.IdReporteDB=de.IdReporteDB inner join tbl_articulodepartamento as ad
-          on ad.IdArticuloDepartamento=de.IdArticulo where r.IdReporteDB='".$a."' ";
-          // Preparación de sentencia
-          $statement = $this->dbConnect->prepare($query);
-          $statement->execute();
-          $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-          return $result;
-      } catch (Exception $e) {
-          print "!Error¡: " . $e->getMessage() . "</br>";
-          die();
-      }
-  }
+       public function detalleAsignacionesRealizadasDB($a)
+        {
+            try {
+                $query = "SELECT e.Nombres as EmpleadoEnvia, e.Codigo as CodigoEnvia, d.NombreDepartamento as DepartamentoEnvia, FechaEnvio,
+                e1.Nombres as EmpleadoRecibe, e1.Codigo as CodigoRecibe, b.NombreBodega as BodegaRecibe, FechaRecibe, ad.Codigo as CodigoArticulo,
+                ad.NombreArticulo as NombreArticulo, de.Cantidad as Cantidad, r.ComentarioEnvio, r.ComentarioRecibe
+                  from tbl_reportedb as r inner join tbl_departamento as d on r.IdDepartamento=d.IdDepartamento inner join
+                tbl_bodega as b on r.IdBodega=b.IdBodega inner join tbl_empleado as e on r.IdEmpleadoEnvio=e.IdEmpleado inner join tbl_empleado as e1
+                on r.IdEmpleadoRecibe=e1.IdEmpleado inner join tbl_detalledb as de on r.IdReporteDB=de.IdReporteDB inner join tbl_articulodepartamento as ad
+                on ad.IdArticuloDepartamento=de.IdArticulo where r.IdReporteDB='".$a."' ";
+                // Preparación de sentencia
+                $statement = $this->dbConnect->prepare($query);
+                $statement->execute();
+                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+                return $result;
+            } catch (Exception $e) {
+                print "!Error¡: " . $e->getMessage() . "</br>";
+                die();
+            }
+        }
+      public function MostrarEmpleados()
+     {
+         try {
+             $query = "SELECT * FROM tbl_empleado";
+             // Preparación de sentencia
+             $statement = $this->dbConnect->prepare($query);
+             $statement->execute();
+             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+             return $result;
+         } catch (Exception $e) {
+             print "!Error¡: " . $e->getMessage() . "</br>";
+             die();
+         }
+     }
     }
 ?>
