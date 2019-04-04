@@ -1,20 +1,17 @@
 <?php
     session_start();
-
  ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
     <title>Cablesat</title>
-<link rel="shortcut icon" href="../../images/Cablesat.png" />
+    <link rel="shortcut icon" href="../../images/Cablesat.png" />
     <!-- Bootstrap Core CSS -->
     <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -96,7 +93,6 @@
                         <?php
                         require('../../php/contenido.php');
                         require('../../php/modulePermissions.php');
-
                         if (setMenu($_SESSION['permisosTotalesModulos'], ADMINISTRADOR)) {
                             echo "<li><a href='../modulo_administrar/administrar.php'><i class='fas fa-key'></i> Administrar</a></li>";
                         }else {
