@@ -6,7 +6,6 @@
 <html lang="en">
 
 <head>
-
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -40,7 +39,6 @@
     <!--<link rel="stylesheet" href="../vendor/datatables/css/jquery.dataTables.min.css"> -->
 
 </head>
-
 <body>
 
     <?php
@@ -151,9 +149,6 @@
             <div class="row">
                 <br>
                 <div class="col-md-12">
-
-
-
 <?php
     // get passed parameter value, in this case, the record ID
     // isset() is a PHP function used to verify if a value is there or not
@@ -194,9 +189,7 @@
     catch(PDOException $exception){
         die('ERROR: ' . $exception->getMessage());
     }
-?>
 
-<?php
 
 // check if form was submitted
 if($_POST){
@@ -215,8 +208,6 @@ if($_POST){
         // prepare query for excecution
         $stmt = $con->prepare($query);
 
-
-
         // posted values
         $idArticulo=htmlspecialchars(strip_tags($_POST['idArticulo']));
         $codigo=htmlspecialchars(strip_tags($_POST['codigo']));
@@ -228,7 +219,6 @@ if($_POST){
         $fechaEntrada=htmlspecialchars(strip_tags($_POST['fechaEntrada']));
         $IdBodega = htmlspecialchars(strip_tags($_POST['IdBodega']));
         date_default_timezone_set('America/El_Salvador');
-         $Fecha = date('Y/m/d g:ia');
 
         // bind the parameters
         $stmt->bindParam(':idArticulo', $idArticulo);
@@ -241,37 +231,30 @@ if($_POST){
         $stmt->bindParam(':fechaEntrada', $fechaEntrada);
         $stmt->bindParam(':id', $idArticulo);
 
-
-
-        // Execute the query
         if($stmt->execute())
         {
+          //GUARDAMOS EL HISTORIAL DE LA ENTRADA
+          $idHistorial = $idArticulo;
+          $nombreArticuloHistorial = $_POST['nombreArticulo'];
+          $nombreEmpleadoHistorial = $_POST['nombreEmpleadoHistorial'];
+          $nombreBodegaHistorial = ucwords($_POST['IdBodega']);
+          $cantidadHistorial = $cantidad;
+          $tipoMovimientoHistorial = "Actualizacion de producto";
 
-          $query = "insert into tbl_historialRegistros (IdEmpleado,FechaHora,Tipo_Movimiento,Descripcion)
-          VALUES((SELECT IdEmpleado from tbl_empleado where Nombres='".$Nombre."' and Apellidos='".$Apellido."'),'". $Fecha."',3
-          ,concat( 'Nombre del Producto/Articulo: ',  (SELECT a.NombreArticulo FROM tbl_articulo as a WHERE  IdArticulo= '".$idArticulo."')  , ' Cantidad: ".$cantidad." ' ) )";
-           $statement = $con->prepare($query);
-           $statement->execute();
+          $query = "INSERT into tbl_historialentradas (nombreArticulo, nombreEmpleado, fechaHora, tipoMovimiento, cantidad, bodega)
+                    VALUES(:nombreArticuloHistorial, :nombreEmpleadoHistorial, CURRENT_TIMESTAMP(), :tipoMovimientoHistorial, :cantidadHistorial, (select NombreBodega from tbl_bodega where IdBodega=:nombreBodegaHistorial))";
 
-            $query1 = "INSERT into tbl_histoingreso(FechaIngreso, IdArticulo, Cantidad, IdBodega, IdEmpleado,Tipo)
-                            VALUES(:Fecha,:IdArticulo,:Cantidad,:IdBodega,(SELECT IdEmpleado from tbl_empleado where Nombres=:Nombres and Apellidos=:Apellidos),1) ";
-               $stmt1 = $con->prepare($query1);
-            if($stmt1->execute(array(
-              ':Fecha'=>$Fecha,
-              ':IdArticulo'=>$idArticulo,
-              ':Cantidad'=>$cantidad,
-              ':IdBodega'=>$IdBodega,
-              ':Nombres'=>$Nombre,
-              ':Apellidos'=>$Apellido
-            )))
-            {
-                  echo "<div class='alert alert-success'>Registro actualizado!</div>";
-            }
+          $statement = $con->prepare($query);
+          $statement->execute(array(
+          ':nombreArticuloHistorial' => $nombreArticuloHistorial,
+          ':nombreEmpleadoHistorial' => $nombreEmpleadoHistorial,
+          ':tipoMovimientoHistorial' => $tipoMovimientoHistorial,
+          ':cantidadHistorial' => $cantidadHistorial,
+          ':nombreBodegaHistorial' => $nombreBodegaHistorial
+          ));
 
-        }else{
-            echo "<div class='alert alert-danger'>No se pudo actualizar el registro. Por favor intente de nuevo.</div>";
+          echo "<div class='alert alert-warning alert-dismissible'>Su registro <strong>ingresó</strong> con exito.</div>";
         }
-
     }
 
     // show errors
@@ -305,8 +288,8 @@ if($_POST){
         <input type="hidden" name="idArticulo" value="<?php echo htmlspecialchars($idArticulo, ENT_QUOTES);  ?>" >
         <input type="hidden" name="IdBodega" value="<?php echo htmlspecialchars($IdBodega, ENT_QUOTES);  ?>" >
 
-        <input type="hidden" name="NOMBRE" value="<?php echo htmlspecialchars($_SESSION['nombres'], ENT_QUOTES);  ?>">
-        <input type="hidden" name="APELLIDO" value="<?php echo htmlspecialchars($_SESSION['apellidos'], ENT_QUOTES); ?>">
+        <!-- DATOS QUE SE USARÁN PARA INGRESARSE AL HISTORIAL DE ENTRADAS -->
+        <input type="hidden" name="nombreEmpleadoHistorial" value="<?php echo $_SESSION['nombres'].' '.$_SESSION['apellidos'] ?>">
 
         <table class='table table-hover table-responsive table-bordered'>
             <tr>
@@ -323,7 +306,7 @@ if($_POST){
             </tr>
             <tr>
                 <td>Cantidad a Ingresar:</td>
-                <td><input type="text" name="cantidad" id="cantidad" value="" class='form-control'></td>
+                <td><input type="number"  min="0" name="cantidad" id="cantidad" value="" class='form-control' placeholder="Ingrese Cantidad" required></td>
 
                 <td align="right">Cantidad Actual:</td>
                 <td><input type="text" name="cant" id="cant"  disabled value="<?php echo htmlspecialchars($cantidad1 = $cantidad1 + $cantidad, ENT_QUOTES);  ?>" class='form-control'></td>

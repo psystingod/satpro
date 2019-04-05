@@ -104,7 +104,7 @@
         {
             try {
                 // SQL query para traer los datos de los productos
-                $query = "SELECT * FROM tbl_articuloInternet where IdBodega=(SELECT IdBodega FROM tbl_bodega where NombreBodega='".$Bodega."')";
+                $query = "SELECT * FROM tbl_articulointernet where IdBodega=(SELECT IdBodega FROM tbl_bodega where NombreBodega='".$Bodega."')";
                 // Preparación de sentencia
                 $statement = $this->dbConnect->prepare($query);
                 $statement->execute();
