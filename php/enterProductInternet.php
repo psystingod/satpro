@@ -20,8 +20,8 @@
                 $modelo = $_POST["modelo"];
                 $descripcion = $_POST["descripcion"];
                 date_default_timezone_set('America/El_Salvador');
-                $Fecha = date('Y/m/d g:ia');
-                $query = "SELECT count(*) FROM tbl_articuloInternet where Mac='".$mac."' or  serie='".$serie."'";
+                $Fecha = date('Y/m/d g:i');
+                $query = "SELECT count(*) FROM tbl_articulointernet where Mac='".$mac."' or  serie='".$serie."'";
                 $statement = $this->dbConnect->query($query);
 
                 if($statement->fetchColumn() == 1)
@@ -31,7 +31,7 @@
                 else
                 {
 
-                    $query = "INSERT into tbl_articuloInternet(Mac,Serie,Estado,IdBodega,Marca,Modelo,Descripcion,fecha)
+                    $query = "INSERT into tbl_articulointernet(Mac,Serie,Estado,IdBodega,Marca,Modelo,Descripcion,fecha)
                     values (:mac,:serie,:estado,(SELECT idBodega FROM tbl_bodega where NombreBodega=:idBodega),:marca,:modelo,:descripcion,:fecha)";
                     // Preparación de sentencia
                     $statement = $this->dbConnect->prepare($query);
@@ -47,15 +47,15 @@
                     ));
 
 
-                    $IdArticulo=$this->dbConnect->lastInsertId();
-                    $Nombre = $_POST["NOMBRE"];
-                    $Apellido = $_POST["APELLIDO"];
-                    $query = "insert into tbl_historialRegistros (IdEmpleado,FechaHora,Tipo_Movimiento,Descripcion)
-                    VALUES((SELECT IdEmpleado from tbl_empleado where Nombres='".$Nombre."' and Apellidos='".$Apellido."'),'". $Fecha."',2
-                    ,concat( 'Modelo del Producto/Articulo: ',  (SELECT a.Modelo FROM tbl_articuloInternet as a WHERE  a.IdArticulo= '".$IdArticulo."')  , ' MAC: ".$mac." ' ) )";
-                     $statement = $this->dbConnect->prepare($query);
-                     $statement->execute();
-                    $this->dbConnect = NULL;
+                    // $IdArticulo=$this->dbConnect->lastInsertId();
+                    // $Nombre = $_POST["NOMBRE"];
+                    // $Apellido = $_POST["APELLIDO"];
+                    // $query = "insert into tbl_historialRegistros (IdEmpleado,FechaHora,Tipo_Movimiento,Descripcion)
+                    // VALUES((SELECT IdEmpleado from tbl_empleado where Nombres='".$Nombre."' and Apellidos='".$Apellido."'),'". $Fecha."',2
+                    // ,concat( 'Modelo del Producto/Articulo: ',  (SELECT a.Modelo FROM tbl_articuloInternet as a WHERE  a.IdArticulo= '".$IdArticulo."')  , ' MAC: ".$mac." ' ) )";
+                    //  $statement = $this->dbConnect->prepare($query);
+                    //  $statement->execute();
+                    // $this->dbConnect = NULL;
                     header('Location: ../pages/inventarioInternet.php?status=success&bodega='.$bodega);
                    }
 

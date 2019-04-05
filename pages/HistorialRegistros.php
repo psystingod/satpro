@@ -1,17 +1,12 @@
 <?php
     session_start();
- ?>
-<?php
     require("../php/getViewA_D.php");
-
     $In = new GetViewA_D();
     $histo = $In->getHistorial();
 ?>
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -67,7 +62,7 @@
                 <!-- /.dropdown -->
                 <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <?php echo "<i class='far fa-user'></i>"." ".$_SESSION['nombres']." ".$_SESSION['apellidos'] ?> <i class="fas fa-caret-down"></i>
+                       <?php echo "<i class='far fa-user'></i>"." ".$_SESSION['nombres']." ".$_SESSION['apellidos'] ?> <i class="fas fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="perfil.php"><i class="fas fa-user-circle"></i> Perfil</a>
@@ -165,55 +160,23 @@
                         <thead>
                             <tr>
                                 <th>Nombre Empleado</th>
-                                <th>Departamento</th>
+                                <th>Articulo</th>
+                                <th>Cantidad</th>
                                 <th>Hora/Fecha</th>
                                 <th>Tipo Movimiento</th>
-                                <th>Descripcion</th>
+                                <th>Bodega</th>
                             </tr>
                         </thead>
                   <tbody>
                             <?php
                                 foreach ($histo as $key) {
                                     echo "<tr><td>";
-                                    echo $key["Nombres"] ." ". $key["Apellidos"] . "</td><td>";
-                                      echo $key["NombreDepartamento"] . "</td><td>";
-                                    echo $key["FechaHora"] . "</td><td>";
-                                    if($key["Tipo_Movimiento"] == 2)
-                                    {
-                                      echo "Alta Producto (+)". "</td><td>";
-                                    }
-                                    else if ($key["Tipo_Movimiento"] == 3) {
-                                      echo "Actualizacion Producto (+)". "</td><td>";
-                                    }
-                                    else if ($key["Tipo_Movimiento"] == 4)
-                                    {
-                                      echo "Baja Producto (-)". "</td><td>";
-                                    }
-                                    else if ($key["Tipo_Movimiento"] == 5)
-                                    {
-                                      echo "Traslado Producto (->)". "</td><td>";
-                                    }
-                                    else if ($key["Tipo_Movimiento"] == 6)
-                                    {
-                                      echo "Asignacion (<->)". "</td><td>";
-                                    }
-                                    else if ($key["Tipo_Movimiento"] == 7)
-                                    {
-                                      echo "Confirmacion Traslado (*)". "</td><td>";
-                                    }
-                                    echo $key["descr"] . "</td></tr>";
-                                    // echo "<div class='btn-group pull-right'>
-                                    //             <button type='button' class='btn btn-default'>Opciones</button>
-                                    //             <button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-                                    //               <span class='caret'></span>
-                                    //               <span class='sr-only'>Toggle Dropdown</span>
-                                    //             </button>
-                                    //             <ul class='dropdown-menu'>
-                                    //                 <li><a href='.php?id=><i class='fas fa-eye'></i> Ver Mas información</a>
-                                    //                 </li>
-                                    //                 <li class='divider'></li>
-                                    //             </ul>
-                                    //         </div>" . "</td></tr>";
+                                    echo $key["nombreEmpleado"] ." ". $key["Apellidos"] . "</td><td>";
+                                    echo $key["nombreArticulo"] . "</td><td>";
+                                    echo $key["cantidad"] . "</td><td>";
+                                    echo $key["fechaHora"] . "</td><td>";
+                                    echo $key["tipoMovimiento"] . "</td><td>";
+                                    echo $key["bodega"] . "</td></tr>";
                                         }
                                     ?>
                         </tbody>
@@ -225,16 +188,12 @@
         <!-- /#page-wrapper -->
     </div>
     <!-- /#wrapper -->
-
     <!-- jQuery -->
     <script src="../vendor/jquery/jquery.min.js"></script>
-
     <!-- Bootstrap Core JavaScript -->
     <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
-
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../vendor/metisMenu/metisMenu.min.js"></script>
-
     <!-- DataTables JavaScript -->
     <script src="../vendor/datatables/js/dataTables.bootstrap.js"></script>
     <script src="../vendor/datatables/js/jquery.dataTables.min.js"></script>
@@ -262,17 +221,6 @@
         }
         });
     });
-    </script>
-
-    <script type='text/javascript'>
-        // confirm record deletion
-        function deleteArticle( id ){
-
-            var answer = confirm('¿Está seguro de borrar este registro?');
-            if (answer){
-                window.location = 'borrarArticulo.php?id=' + id;
-            }
-        }
     </script>
 </body>
 
