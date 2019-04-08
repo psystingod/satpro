@@ -222,42 +222,45 @@
                       <div class="modal-body">
                                   <div class="form-row">
                                       <div class="form-group col-md-6 col-xs-6">
-                                          <label for="codigo">Código Empleado</label>
+                                          <label for="codigo">Código:</label>
                                           <input type="text" class="form-control" name="CodigoEmpleado"  placeholder="Código del Empleado">
+                                          
+                                          <hr>
                                       </div>
                                       <div class="form-group col-md-6 col-xs-6">
-                                          <label for="departamento">Departamento</label>
-                                          <input type="text" class="form-control" name="DepartamentoEmpleado"  placeholder="Departamento Empleado">
+                                          <label for="departamento">Nombre:</label>
+                                          <input type="text" class="form-control" name="DepartamentoEmpleado"  placeholder="Nombre del Empleado">
+
+                                          <hr>
                                       </div>
 
-                                      <br>
-                                      <table width="100%" class="table table-striped table-hover" id="tbl1">
-                                          <thead>
-                                              <tr>
-                                                  <th></th>
-                                                  <!-- <th>Id artículo</th> -->
-                                                  <th>Código</th>
-                                                  <th>Nombre</th>
-                                                  <th>Dui</th>
-
-                                              </tr>
-                                          </thead>
-                                          <tbody>
-                                              <?php
-
-                                                  foreach ($Emple as $key) {
-                                                      echo "<tr><td>";
-                                                      //Tiene error esta linea//
-                                                      echo "<input type='checkbox' class='form-control checkbox agregar' id='V1' name='checkTraslado[]' value='".$key['IdEmpleado']."' >" . "</td><td>";
-                                                      echo $key["Codigo"] . "</td><td>";
-                                                      echo $key["Nombres"] ." " . $key["Apellidos"] ."</td><td>";
-                                                      echo $key["Dui"] . "</td></tr>";
-
-                                                          }
-                                                      ?>
-                                          </tbody>
-                                      </table>
                                   </div>
+                                  <table width="100%" class="table table-striped table-hover" id="tbl1">
+                                      <thead>
+                                          <tr>
+
+                                              <!-- <th>Id artículo</th> -->
+                                              <th>Código</th>
+                                              <th>Nombre</th>
+                                              <th>Dui</th>
+                                              <th></th>
+                                          </tr>
+                                      </thead>
+                                      <tbody>
+                                          <?php
+
+                                              foreach ($Emple as $key) {
+                                                  echo "<tr><td>";
+                                                  //Tiene error esta linea//
+                                                //  echo "<input type='radio' class='form-control checkbox agregar' name='checkTraslado[]' value='".$key['IdArticulo']."'>" . "</td><td>";
+                                                  echo $key["Codigo"] . "</td><td>";
+                                                  echo $key["Nombres"] ." " . $key["Apellidos"] ."</td><td>";
+                                                  echo $key["Dui"] . "</td><td>";
+                                                  echo "<input type='button' class='btn btn-success' name='Seleccion' value='Seleccionar'>" . "</td></tr>";
+                                                      }
+                                                  ?>
+                                      </tbody>
+                                  </table>
                       </div>
                       <div class="modal-footer">
                             <button type="button" class="btn btn-default" name="Action1" data-dismiss="modal">Cancelar</button>
@@ -341,18 +344,20 @@
     </script>
 
     <script type="text/javascript">
-        $(function() {
-            $(".checkbox").click(function(){
+        $(
+          function()
+         {
+            $(".checkbox").click(function()
+            {
                 $('#traslados').prop('disabled',$('input.checkbox:checked').length == 0);
-            });
-        });
+            }
+          );
+        }
+      );
     </script>
 
-    <script>
-      $("#V1").on("click", function() {
-        $(".form-control").attr("checked", this.checked);
-      });
-    </script>
+
+
 
     <script type="text/javascript">
         var d = new Date();

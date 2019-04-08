@@ -28,9 +28,9 @@ try {
     $Nombre = $_SESSION['nombres'];
     $Apellido = $_SESSION['apellidos'];
     date_default_timezone_set('America/El_Salvador');
-     $Fecha = date('Y/m/d g:ia');
-    // $query = "SELECT NombreBodega from tbl_articulo as a inner join tbl_bodega as b on a.IdBodega=b.IdBodega where IdArticulo = ? ";
-    $query = "SELECT b.NombreBodega FROM tbl_articuloInternet as II inner join tbl_bodega as b on II.IdBodega=b.IdBodega where II.IdArticulo= ?";
+     $Fecha = date('Y/m/d g:i');
+    //SE CONSULTA LA BODEGA ALA QUE PERTENECE, Y SE MANDO EL NOMBRE POR GET
+    $query = "SELECT b.NombreBodega FROM tbl_articulointernet as II inner join tbl_bodega as b on II.IdBodega=b.IdBodega where II.IdArticulo= ?";
      $stmt = $con->prepare($query);
      $stmt->bindParam(1, $id);
      $stmt->execute();
@@ -40,15 +40,15 @@ try {
      foreach ($result as $key)
      {
        $Bodega = $key['NombreBodega'];
-
      }
-     $query = "insert into tbl_historialRegistros (IdEmpleado,FechaHora,Tipo_Movimiento,Descripcion)
-     VALUES((SELECT IdEmpleado from tbl_empleado where Nombres='".$Nombre."' and Apellidos='".$Apellido."'),'". $Fecha."',4
-     ,concat( 'MAC del Producto/Articulo: ',  (SELECT a.Mac FROM tbl_articuloInternet as a WHERE  IdArticulo= '".$id."') ) )";
-      $statement = $con->prepare($query);
-      $statement->execute();
 
-    $query = "DELETE FROM tbl_articuloInternet WHERE IdArticulo = ?";
+     // $query = "insert into tbl_historialRegistros (IdEmpleado,FechaHora,Tipo_Movimiento,Descripcion)
+     // VALUES((SELECT IdEmpleado from tbl_empleado where Nombres='".$Nombre."' and Apellidos='".$Apellido."'),'". $Fecha."',4
+     // ,concat( 'MAC del Producto/Articulo: ',  (SELECT a.Mac FROM tbl_articuloInternet as a WHERE  IdArticulo= '".$id."') ) )";
+     //  $statement = $con->prepare($query);
+     //  $statement->execute();
+
+    $query = "DELETE FROM tbl_articulointernet WHERE IdArticulo = ?";
      $stmt = $con->prepare($query);
      $stmt->bindParam(1, $id);
     if($stmt->execute())

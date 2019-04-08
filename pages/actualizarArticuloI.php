@@ -166,7 +166,7 @@
     // read current record's data
     try {
         // prepare select query
-        $query = "SELECT * FROM tbl_articuloInternet WHERE IdArticulo = ? LIMIT 0,1";
+        $query = "SELECT * FROM tbl_articulointernet WHERE IdArticulo = ? LIMIT 0,1";
         $stmt = $con->prepare( $query );
 
         // this is the first question mark
@@ -180,7 +180,7 @@
 
         // values to fill up our form
         $IdArticulo = $row['IdArticulo'];
-        $codigo = $row['Codigo'];
+      //  $codigo = $row['Codigo'];
         $mac = $row['Mac'];
         $serie = $row['Serie'];
         $estado = $row['Estado'];
@@ -205,7 +205,7 @@ if($_POST){
 
     try{
 
-        $query = "UPDATE tbl_articuloInternet set Codigo=:codigo,Mac=:mac,serie=:serie,Estado=:estado,Marca=:marca,Modelo=:modelo,
+        $query = "UPDATE tbl_articulointernet set Codigo=:codigo,Mac=:mac,serie=:serie,Estado=:estado,Marca=:marca,Modelo=:modelo,
         Descripcion=:descripcion,fecha=:fechaEntrada where IdArticulo=:IdArticulo;";
         // prepare query for excecution
         $stmt = $con->prepare($query);
@@ -213,7 +213,7 @@ if($_POST){
 
         // posted values
         $idArticulo=htmlspecialchars(strip_tags($_POST['IdArticulo']));
-        $codigo=htmlspecialchars(strip_tags($_POST['codigo']));
+      //  $codigo=htmlspecialchars(strip_tags($_POST['codigo']));
         $mac=htmlspecialchars(strip_tags($_POST['mac']));
         $serie=htmlspecialchars(strip_tags($_POST['serie']));
         $estado=htmlspecialchars(strip_tags($_POST['estado']));
@@ -222,27 +222,27 @@ if($_POST){
         $descripcion=htmlspecialchars(strip_tags($_POST['descripcion']));
         $fechaEntrada=htmlspecialchars(strip_tags($_POST['fechaEntrada']));
         date_default_timezone_set('America/El_Salvador');
-        $Fecha = date('Y/m/d g:ia');
+        $Fecha = date('Y/m/d g:i');
         $Nombre = htmlspecialchars(strip_tags($_POST["NOMBRE"]));
         $Apellido = htmlspecialchars(strip_tags($_POST["APELLIDO"]));
 
-        $query = "insert into tbl_historialRegistros (IdEmpleado,FechaHora,Tipo_Movimiento,Descripcion)
-        VALUES((SELECT IdEmpleado from tbl_empleado where Nombres='".$Nombre."' and Apellidos='".$Apellido."'),'". $Fecha."',3
-        ,concat( 'Modelo del Producto/Articulo: ',  (SELECT a.Modelo FROM tbl_articuloInternet as a WHERE  a.IdArticulo= '".$idArticulo."')  , ' MAC: ".$mac." ' ) )";
-         $statement = $con->prepare($query);
-         $statement->execute();
-
-        // bind the parameters
-        $stmt->bindParam(':IdArticulo', $idArticulo);
-        $stmt->bindParam(':codigo', $codigo);
-        $stmt->bindParam(':mac', $mac);
-        $stmt->bindParam(':serie', $serie);
-        $stmt->bindParam(':estado', $estado);
-        $stmt->bindParam(':marca', $marca);
-        $stmt->bindParam(':modelo', $modelo);
-        $stmt->bindParam(':descripcion', $descripcion);
-        $stmt->bindParam(':fechaEntrada', $fechaEntrada);
-        $stmt->execute();
+        // $query = "insert into tbl_historialRegistros (IdEmpleado,FechaHora,Tipo_Movimiento,Descripcion)
+        // VALUES((SELECT IdEmpleado from tbl_empleado where Nombres='".$Nombre."' and Apellidos='".$Apellido."'),'". $Fecha."',3
+        // ,concat( 'Modelo del Producto/Articulo: ',  (SELECT a.Modelo FROM tbl_articuloInternet as a WHERE  a.IdArticulo= '".$idArticulo."')  , ' MAC: ".$mac." ' ) )";
+        //  $statement = $con->prepare($query);
+        //  $statement->execute();
+        //
+        // // bind the parameters
+        // $stmt->bindParam(':IdArticulo', $idArticulo);
+        // $stmt->bindParam(':codigo', $codigo);
+        // $stmt->bindParam(':mac', $mac);
+        // $stmt->bindParam(':serie', $serie);
+        // $stmt->bindParam(':estado', $estado);
+        // $stmt->bindParam(':marca', $marca);
+        // $stmt->bindParam(':modelo', $modelo);
+        // $stmt->bindParam(':descripcion', $descripcion);
+        // $stmt->bindParam(':fechaEntrada', $fechaEntrada);
+        // $stmt->execute();
           echo "<div class='alert alert-success'>Registro actualizado!</div>";
     }
     // show errors
@@ -278,10 +278,6 @@ if($_POST){
         <input type="hidden" name="NOMBRE" value="<?php echo htmlspecialchars($_SESSION['nombres'], ENT_QUOTES);  ?>">
         <input type="hidden" name="APELLIDO" value="<?php echo htmlspecialchars($_SESSION['apellidos'], ENT_QUOTES); ?>">
         <table class='table table-hover table-responsive table-bordered'>
-            <tr>
-                <td>Código</td>
-                <td colspan="3"><input type="text" name="codigo" value="<?php echo htmlspecialchars($codigo, ENT_QUOTES);  ?>" class='form-control'></td>
-            </tr>
             <tr>
                 <td>Marca</td>
                 <td colspan="3"><input type="text" name="marca" value="<?php echo htmlspecialchars($marca, ENT_QUOTES);  ?>" class='form-control'></td>

@@ -162,7 +162,7 @@
     // read current record's data
     try {
         // prepare select query
-        $query = "SELECT * FROM tbl_articuloInternet WHERE IdArticulo = ? LIMIT 0,1";
+        $query = "SELECT * FROM tbl_articulointernet WHERE IdArticulo = ? LIMIT 0,1";
         $stmt = $con->prepare( $query );
 
         // this is the first question mark
@@ -175,7 +175,6 @@
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         // values to fill up our form
-        $codigo = $row['Codigo'];
         $mac = $row['Mac'];
         $serie = $row['Serie'];
         $estado = $row['Estado'];
@@ -216,10 +215,6 @@
     </div>
     <!--we have our html table here where the record will be displayed-->
     <table class='table table-hover table-responsive table-bordered'>
-        <tr>
-            <td>Código</td>
-            <td><?php echo htmlspecialchars($codigo, ENT_QUOTES);  ?></td>
-        </tr>
         <tr>
             <td>Marca</td>
             <td><?php echo htmlspecialchars($marca, ENT_QUOTES);  ?></td>
