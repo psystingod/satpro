@@ -172,7 +172,7 @@
                                     <?php
 
                                         foreach ($allClientsArray as $key) {
-                                            echo "<tr><td>";
+                                            echo "<tr><td class='badge'>";
                                             echo $key["cod_cliente"] . "</td><td>";
                                             echo trim(ucwords(strtolower($key["nombre"]))) . "</td><td>";
                                             echo $key["numero_dui"] . "</td><td>";
