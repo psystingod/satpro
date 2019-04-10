@@ -153,7 +153,7 @@
         <div id="page-wrapper">
             <div class="row">
 
-                    <h1 class="page-header alert alert-info">Inventario Departamento</Strong></h1>
+                    <h1 class="page-header alert alert-info">Asignación de Articulos a Empleados</Strong></h1>
                     <div class="col-lg-12">
                         <a href="asignaciones.php"><button class="btn btn-success" type="button" name="regresar"><i class="fas fa-arrow-circle-left"></i> Atrás</button></a>
                     </div>
@@ -213,7 +213,7 @@
                                                   <span class='caret'></span>
                                                   <span class='sr-only'>Toggle Dropdown</span>
                                                 </button>
-                                                
+
                                             </div>" . "</td></tr>";
                                         }
                                     ?>

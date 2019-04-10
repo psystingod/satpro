@@ -19,36 +19,29 @@
             {
                 try {
 
-                              $Departamento = $_POST["Departamento"];
-                              $CodigoEmpleado = $_POST["CodigoEmpleado"];
+                        $Departamento = $_POST["Departamento"];
+                        $CodigoEmpleado = $_POST["CodEmpleado"];
+                        $NombreEmpleado = $_POST["NomEmpleado"];
+                       /////////////////////////////////
 
-                                    /////////////////////////////////
 
-                                    $query = "SELECT count(*) from tbl_empleado where Codigo='".$CodigoEmpleado."'";
-                                    $statement = $this->dbConnect->query($query);
+                       //Consulta en BD, si existe un empleado en donde coincida el codigo con sus nombre, en caso contrario generar Error
 
-                                    if($statement->fetchColumn() == 0)
-                                    {
-                                      header('Location: ../pages/asignarEncargadoDepartamento.php?status=CodigoEmpleado');
-                                    }
-                                    else
-                                     {
-                                       $query = "SELECT count(*) from tbl_departamento where NombreDepartamento = '".$Departamento."' and  IdEmpleado =(SELECT IdEmpleado FROM tbl_empleado where Codigo='".$CodigoEmpleado."')";
-                                       $statement = $this->dbConnect->query($query);
+                       $query = "SELECT count(*) FROM tbl_empleado where Codigo='".$CodigoEmpleado."' and Nombres like '%".$NombreEmpleado."%' ";
+                       $statement = $this->dbConnect->query($query);
 
-                                       if($statement->fetchColumn() == 1)
-                                       {
-                                         header('Location: ../pages/asignarEncargadoDepartamento.php?status=failed');
-                                       }
-                                       else {
-                                            $query = "UPDATE tbl_departamento set IdEmpleado =(SELECT IdEmpleado FROM tbl_empleado where Codigo='".$CodigoEmpleado."') where NombreDepartamento='".$Departamento."'";
-                                            $statement = $this->dbConnect->prepare($query);
-                                            $statement->execute();
+                       if($statement->fetchColumn() == 1)
+                       {
+                         $query = "UPDATE tbl_departamento set IdEmpleado=(select IdEmpleado from tbl_empleado where Codigo='".$CodigoEmpleado."') where IdDepartamento=(select IdDepartamento from tbl_departamento where NombreDepartamento='".$Departamento."')";
+                         $statement = $this->dbConnect->prepare($query);
+                         $statement->execute();
+                         header('Location: ../pages/asignarEncargadoDepartamento.php?status=success');
 
-                                         header('Location: ../pages/asignarEncargadoDepartamento.php?status=success');
-                                       }
-                                    }
-                            $this->dbConnect = NULL;
+                       }
+                       else {
+                             header('Location: ../pages/asignarEncargadoDepartamento.php?status=UserNoExiste');
+                       }
+                        $this->dbConnect = NULL;
                     }
                     catch (Exception $e)
                     {

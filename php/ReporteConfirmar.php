@@ -15,7 +15,7 @@
                              $State = 0;
                              $IdReporte = $_POST['IdReporte'];
                              date_default_timezone_set('America/El_Salvador');
-                             $FechaDestino = date('Y/m/d g:ia');
+                             $FechaDestino = date('Y/m/d g:i');
                              $Nombre = $_POST["NOMBRE"];
                              $Apellido = $_POST["APELLIDO"];
                              $query = "UPDATE tbl_reporte set State=:State, IdEmpleadoDestino=(SELECT IdEmpleado from tbl_empleado where

@@ -176,7 +176,7 @@
                     </div>
                     <div class="stat-values">
                         <br>
-                        <div class="name">Asignaciones y Traslados</div>
+                        <div class="name">Traslados y Asignaciones</div>
                     </div>
                 </div></a>
             </div>

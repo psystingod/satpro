@@ -14,7 +14,7 @@
                             date_default_timezone_set('America/El_Salvador');
                             $Codigo = $_POST["Codigo"];
                             $Nombre = $_POST["Nombre"];
-                            $Fecha = date('Y/m/d g:ia');
+                            $Fecha = date('Y/m/d g:i');
                             $State = 0;
                             $Comentario = $_POST["Comentario"];
                             $Nombre = $_SESSION['nombres'];
@@ -63,13 +63,7 @@
                                          $statement = $this->dbConnect->prepare($query);
                                          $statement->execute();
 
-                                         $query = "insert into tbl_historialRegistros (IdEmpleado,FechaHora,Tipo_Movimiento,Descripcion)
-                                         VALUES((SELECT IdEmpleado from tbl_empleado where Nombres='".$Nombre."' and Apellidos='".$Apellido."'),
-                                         '".$Fecha."',6, concat('Articulo/Producto: ', (Select NombreArticulo from tbl_articulodepartamento where IdArticuloDepartamento='".$array[$i]."'),
-                                         '. Descripcion: ', (select Comentario from tbl_articuloempleado where IdArticuloEmpleado='".$Id."' ),
-                                         '. Empleado: ', (SELECT a.Nombres FROM tbl_empleado as a WHERE  a.Codigo='".$Codigo."') ) )";
-                                          $statement = $this->dbConnect->prepare($query);
-                                          $statement->execute();
+                                        
                                    }
                             $this->dbConnect = NULL;
                             header('Location: ../pages/asignarArticuloEmpleado.php?status=success');

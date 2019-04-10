@@ -130,6 +130,24 @@
                die();
            }
        }
+       public function getDepartments2()
+       {
+           try {
+               // SQL query para traer nombre de las categorías
+               $query = "SELECT NombreDepartamento FROM tbl_departamento where state = 0 and IdEmpleado=-1";
+               // Preparación de sentencia
+               $statement = $this->dbConnect->prepare($query);
+               $statement->execute();
+               $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+               $this->dbConnect = NULL;
+               return $result;
+
+           } catch (Exception $e) {
+               print "!Error¡: " . $e->getMessage() . "</br>";
+               die();
+           }
+       }
        public function getEmpleados()
        {
            try {

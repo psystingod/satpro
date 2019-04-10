@@ -1,23 +1,8 @@
 <?php
     session_start();
- ?>
-<?php
     require("../php/getInventoryPDF.php");
     require("../php/productsInfo.php");
-
-
     $Bodega=$_GET["bodega"];
-    // $Bodega = "";
-    // if(isset( $_COOKIE['bdgSelec']))
-    // {
-    //    $Bodega=json_decode($_COOKIE['bdgSelec'], true);
-    // }
-    // else
-    // {
-    //    $Bodega = $_POST['bodega'];
-    //     setcookie('bdgSelec', json_encode($Bodega), 0);
-    // }
-    // Trae el inventario completo de la base de datos
     $getInventory = new GetInventoryPDF();
     $recordsInfo = $getInventory->showInventoryRecords($Bodega);
 

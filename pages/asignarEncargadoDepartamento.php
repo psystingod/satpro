@@ -10,7 +10,7 @@
 
     require("../php/productsInfo.php");
     $productsInfo = new ProductsInfo();
-    $depar = $productsInfo->getDepartments();
+    $depar = $productsInfo->getDepartments2();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -129,10 +129,8 @@
 
         <div id="page-wrapper">
             <div class="row">
-                    <h1 class="page-header alert alert-info">Encargados de Departamentos</Strong></h1>
-                    <div class="col-lg-12">
-                        <a href="Asignaciones.php"><button class="btn btn-success" type="button" name="regresar"><i class="fas fa-arrow-circle-left"></i> Atrás</button></a>
-                    </div>
+                    <h1 class="page-header alert alert-info">Asignar Encargados a Departamentos</Strong></h1>
+
                     <?php
                     if (isset($_GET['status'])) {
                         if ($_GET['status'] == 'success') {
@@ -147,30 +145,33 @@
                                       Ya Existe esa Asignacion
                                   </div>";
                         }
-                        else if ($_GET['status'] == 'CodigoEmpleado'){
+                        else if ($_GET['status'] == 'UserNoExiste'){
                             echo "<div id='temporal' class='alert alert-danger alert-dismissible'>
                                       <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                                      Codigo de Empleado no Existe, Verificar Codigo en la <a>Nomina de Empleados</a>
-
+                                      No existe empleado
                                   </div>";
                         }
+
                     }
                     else {
                         echo "<div id='temporal'> </div>";
                     }
                     ?>
             </div>
+            <div class="col-lg-12">
+
+            </div>
             <!-- /.row -->
             <div class="row">
-                <form class="" action="" method="POST">
-                <button id="btn_agregarr" class="btn btn-primary pull-right" type="button" name="button" data-toggle="modal" data-target="#agregar" accesskey="a"><i class="fas fa-plus-circle"></i> Asignar Nuevo Encargado</button>
-                <br>
-                <br>
 
+                <form class="" action="" method="POST">
+                  <a href="asignaciones.php"><button class="btn btn-success" type="button" name="regresar"><i class="fas fa-arrow-circle-left"></i> Atrás</button></a>
+                <button id="btn_agregarr" class="btn btn-primary pull-right" type="button" name="button" data-toggle="modal" data-target="#AsignarEmpleado" accesskey="a"><i class="fas fa-plus-circle"></i> Asignar Nuevo Encargado</button>
+                <br>
+                <br>
                     <table width="100%" class="table table-striped table-hover" id="inventario">
                         <thead>
                             <tr>
-
                                 <th>Codigo Departamento</th>
                                 <th>Nombre Departamento</th>
                                 <th>Codigo Encargado</th>
@@ -186,17 +187,25 @@
                                     echo $key["CodigoDepartamento"] . "</td><td>";
                                     echo $key["NombreDepartamento"] . "</td><td>";
                                     echo $key["Codigo"] . "</td><td>";
-                                    echo $key["Encargado"] . "</td><td>";
+                                    echo $key["Nombre"] ." ".  $key["Apellido"] . "</td><td>";
+
                                     echo "<div class='btn-group pull-right'>
                                                 <button type='button' class='btn btn-default'>Opciones</button>
                                                 <button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
                                                   <span class='caret'></span>
                                                   <span class='sr-only'>Toggle Dropdown</span>
                                                 </button>
-                                                <ul class='dropdown-menu'>
-                                                    <li class='eliminar'><a href='../php/DeleteAsignacionEncargado.php?Id={$key["IdDepartamento"]} '><i class='fas fa-trash-alt'></i> Quitar Asignacion [Proximamente]</a>
-                                                    </li>
-                                                    <li class='divider'></li>
+                                                <ul class='dropdown-menu'>";
+                                                if($key["Emple"] == -1)
+                                                {
+                                                echo   "<li class='eliminar'><a href='#' onclick='return false'> No Hay Asignacion </a>
+                                                  </li>";
+                                                }
+                                                else {
+                                                  echo "<li class='eliminar'><a href='../php/DeleteAsignacionEncargado.php?Id={$key["IdDepartamento"]} '><i class='fas fa-trash-alt'></i> Quitar Asignacion</a>
+                                                  </li>";
+                                                }
+                                                  "<li class='divider'></li>
                                                 </ul>
                                             </div>" . "</td></tr>";
                                         }
@@ -211,7 +220,7 @@
     </div>
     <!-- /#wrapper -->
 
-    <div class="modal fade" id="agregar" tabindex="-1" role="dialog" aria-labelledby="agregar">
+    <div class="modal fade" id="AsignarEmpleado" tabindex="-1" role="dialog" aria-labelledby="AsignarEmpleado">
           <div class="modal-dialog" role="document">
                 <div class="modal-content">
                       <div class="modal-header">
@@ -223,18 +232,28 @@
                                   <div class="form-row">
                                       <div class="form-group col-md-6 col-xs-6">
                                           <label for="codigo">Código:</label>
-                                          <input type="text" class="form-control" name="CodigoEmpleado"  placeholder="Código del Empleado">
-                                          
-                                          <hr>
+                              <input type="text" class="form-control" name="CodEmpleado" id="CodEmpleado" placeholder="Código del Empleado" required />
                                       </div>
                                       <div class="form-group col-md-6 col-xs-6">
                                           <label for="departamento">Nombre:</label>
-                                          <input type="text" class="form-control" name="DepartamentoEmpleado"  placeholder="Nombre del Empleado">
-
+                                          <input type="text" class="form-control" name="NomEmpleado" id="NomEmpleado" placeholder="Nombre del Empleado" required"/>
+                                      </div>
+                                  </div>
+                                  <div class="form-row">
+                                      <div class="form-group col-md-12 col-xs-12">
+                                          <label for="codigo">Departamento:</label>
+                                          <select class="form-control form-control-lg" name="Departamento" required>
+                                              <option value="" selected="selected">Seleccionar...</option>";
+                                              <?php
+                                                foreach ($depar as $key) {
+                                                    echo "<option value='".strtolower($key['NombreDepartamento'])."'>".$key['NombreDepartamento']."</option>";
+                                                }
+                                              ?>
+                                    </select>
                                           <hr>
                                       </div>
-
                                   </div>
+
                                   <table width="100%" class="table table-striped table-hover" id="tbl1">
                                       <thead>
                                           <tr>
@@ -248,15 +267,12 @@
                                       </thead>
                                       <tbody>
                                           <?php
-
                                               foreach ($Emple as $key) {
                                                   echo "<tr><td>";
-                                                  //Tiene error esta linea//
-                                                //  echo "<input type='radio' class='form-control checkbox agregar' name='checkTraslado[]' value='".$key['IdArticulo']."'>" . "</td><td>";
                                                   echo $key["Codigo"] . "</td><td>";
                                                   echo $key["Nombres"] ." " . $key["Apellidos"] ."</td><td>";
                                                   echo $key["Dui"] . "</td><td>";
-                                                  echo "<input type='button' class='btn btn-success' name='Seleccion' value='Seleccionar'>" . "</td></tr>";
+                                                  echo "<input type='button' class='btn btn-success' onclick='Cargar(\"{$key["Codigo"]}\",\"{$key["Nombres"]} \")' name='Seleccion' value='Seleccionar'>" . "</td></tr>";
                                                       }
                                                   ?>
                                       </tbody>
@@ -327,37 +343,19 @@
         });
     });
     </script>
-    <script type='text/javascript'>
-        // confirm record deletion
-        function deleteArticle( id ){
-
-            var answer = confirm('¿Está seguro de borrar este registro?');
-            if (answer){
-                window.location = 'borrarArticulo.php?id=' + id;
-            }
-        }
-    </script>
     <script type="text/javascript">
-        function transferProduct(id) {
-            window.location = "index.html?id="+id;
-        }
+      function Cargar(Codigo,Nombre)
+       {
+      //var Valor = id
+      //var Nombre = Nombre;
+      $('#AsignarEmpleado').modal('show');
+
+      document.getElementById("CodEmpleado").value = String(Codigo);
+      document.getElementById("NomEmpleado").value = String(Nombre);
+
+      //document.getElementById("nombre").value = Nombre;
+      }
     </script>
-
-    <script type="text/javascript">
-        $(
-          function()
-         {
-            $(".checkbox").click(function()
-            {
-                $('#traslados').prop('disabled',$('input.checkbox:checked').length == 0);
-            }
-          );
-        }
-      );
-    </script>
-
-
-
 
     <script type="text/javascript">
         var d = new Date();

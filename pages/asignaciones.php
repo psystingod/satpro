@@ -161,7 +161,7 @@
             </nav>
 
             <div id="page-wrapper">
-              <h1 class="page-header" >Asignaciones y Traslados</Strong></h1>
+              <h1 class="page-header" >Traslados y Asignaciones</Strong></h1>
               <div class="col-lg-12">
                   <a href="moduloInventario.php"><button class="btn btn-success" type="button" name="regresar"><i class="fas fa-arrow-circle-left"></i> Atrás</button></a>
               </div>
@@ -211,24 +211,25 @@
                    <div class="col-lg-12">
                        <h1>Asignaciones</h1>
                        <div class="row">
-                           <a href="asignarArticuloEmpleado.php"><div class="col-lg-6 btn btn-default">
-                               <div class="stat-icon">
-                                   <i class="fas fa-edit fa-3x"></i>
-                               </div>
-                               <div class="stat-values">
-                                   <br>
-                                   <div class="name" >Asignar Articulos a <b>Empleados</b></div>
-                               </div>
-                           </div></a>
-                           <a class="" href="asignarEncargadoDepartamento.php"><div class="col-lg-6 btn btn-default">
-                               <div class="stat-icon">
-                                   <i class="fas fa-user fa-3x"></i>&nbsp&nbsp<i class="fas fa-arrow-right fa-2x"></i>&nbsp&nbsp<i class="fas fa-boxes fa-3x"></i>
-                               </div>
-                               <div class="stat-values">
-                                   <br>
-                                   <div class="name">Asignar Encargado a <b>Departamentos</b></div>
-                               </div>
-                           </div></a>
+
+                         <a href="#" data-toggle="modal" data-target="#agregar"><div class="col-lg-6 btn btn-default">
+                                <div class="stat-icon">
+                                    <i class="fas fa-edit fa-3x"></i>
+                                </div>
+                                <div class="stat-values">
+                                    <br>
+                                    <div class="name" >Asignar Articulos a <b>Empleados</b></div>
+                                </div>
+                            </div></a>
+                            <a class="" href="asignarEncargadoDepartamento.php"><div class="col-lg-6 btn btn-default">
+                                <div class="stat-icon">
+                                    <i class="fas fa-user fa-3x"></i>&nbsp&nbsp<i class="fas fa-arrow-right fa-2x"></i>&nbsp&nbsp<i class="fas fa-boxes fa-3x"></i>
+                                </div>
+                                <div class="stat-values">
+                                    <br>
+                                    <div class="name">Asignar Encargado a <b>Departamentos</b></div>
+                                </div>
+                            </div></a>
                        </div>
                    </div>
 
@@ -300,6 +301,31 @@
                   </div>
             </div>"
         ?>
+
+
+        <div class="modal fade" id="agregar" tabindex="-1" role="dialog" aria-labelledby="agregar">
+              <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                          <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                <h4 class="modal-title" id="nuevoProducto">Información</h4>
+                          </div>
+
+                          <form action="asignarArticuloEmpleado.php" method="POST">
+                            <div class="modal-body">
+                                  <div class="form-row">
+                                <P ALIGN="CENTER">    AL SELECCIONAR EL ARTICULO QUE SE ASIGNARA A UN EMPLEADO SOLO SE CONTARA UNA UNIDAD, SI SE DESEA ASIGNAR DOS Ó MAS ARTICULOS
+                                    SE TENDRA QUE REPETIR EL PROCESO DE SELECCION <P>
+                                  </div>
+                            </div>
+                          <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                                <input type="submit" class="btn btn-primary" value="Continuar">
+                          </div>
+                               </form>
+                    </div>
+              </div>
+        </div><!-- /Add modal -->
 
     <!-- jQuery -->
     <script src="../vendor/jquery/jquery.min.js"></script>
