@@ -776,6 +776,7 @@
       </div><!-- /.row -->
       </div>
       <div class="modal-footer">
+        <button type="button" class="btn btn-primary" type="submit" data-dismiss="modal">Guardar cliente</button>
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
       </div>
     </div>

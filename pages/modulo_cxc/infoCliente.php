@@ -26,7 +26,7 @@
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         // values to fill up our form
-        $codigo = $row['cod_cliente'];
+        $codigo = str_pad($row["cod_cliente"],6,"0",STR_PAD_LEFT);
         $estado_cable = $row['servicio_suspendido']; // 0 o 1
         $estado_internet = $row['estado_cliente_in']; // 1, 2, 3
         $nombre = trim(ucwords(strtolower($row['nombre'])));
@@ -426,7 +426,12 @@
                                             <input class="form-control" type="text" name="facebook">
                                         </div>
                                     </div>
-
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label for="correo">Correo electrónico</label>
+                                            <input class="form-control" type="text" name="correo">
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="tab-pane fade" id="otros-datos">
                                     <br>
