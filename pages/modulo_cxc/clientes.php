@@ -173,7 +173,7 @@
 
                                         foreach ($allClientsArray as $key) {
                                             echo "<tr><td class='badge'>";
-                                            echo $key["cod_cliente"] . "</td><td>";
+                                            echo str_pad($key["cod_cliente"],6,"0",STR_PAD_LEFT) . "</td><td>";
                                             echo trim(ucwords(strtolower($key["nombre"]))) . "</td><td>";
                                             echo $key["numero_dui"] . "</td><td>";
                                             echo trim($key["telefonos"]) . "</td><td>";
@@ -214,6 +214,7 @@
 
     <!-- Modal content-->
     <div class="modal-content">
+    <form class="" action="php/SaveClient.php" method="POST">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
       </div>
@@ -243,15 +244,15 @@
                                   <div class="row">
                                       <div class="col-md-4">
                                           <label for="codigo">Código del cliente</label>
-                                          <input class="form-control input-sm" type="text" name="codigo">
+                                          <input class="form-control input-sm" type="text" name="codigo" value="<?php echo $clientLastId; ?>" style="color: red;">
                                       </div>
                                       <div class="col-md-4">
                                           <label for="contrato">Número de contrato</label>
-                                          <input class="form-control input-sm" type="text" name="contrato">
+                                          <input class="form-control input-sm" type="text" name="nContrato">
                                       </div>
                                       <div class="col-md-4">
                                           <label for="factura">Número de factura</label>
-                                          <input class="form-control input-sm" type="text" name="factura">
+                                          <input class="form-control input-sm" type="text" name="nFactura">
                                       </div>
                                   </div>
                                   <div class="row">
@@ -347,7 +348,7 @@
                                       </div>
                                       <div class="col-md-2">
                                           <label for="formaFactura">Forma al facturar</label>
-                                          <select class="form-control input-sm" name="formaFactura">
+                                          <select class="form-control input-sm" name="formaFacturar">
 
                                           </select>
                                       </div>
@@ -462,6 +463,23 @@
                                       <!-- Card body -->
                                       <div id="collapseTwo1" class="collapse" role="tabpanel" aria-labelledby="headingTwo1" data-parent="#accordionEx1">
                                         <div class="card-body">
+                                            <div class="row alert-warning">
+                                                <div class="col-md-3">
+                                                    <label for="activarCable">Activar en sistema</label>
+                                                    <input class="input-sm" type="radio" name="activarCable" value="1">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label for="activarCable">Desactivar en sistema</label>
+                                                    <input class="input-sm" type="radio" name="activarCable" value="0">
+                                                </div>
+                                                <div class="col-md-3">
+
+                                                </div>
+                                                <div class="col-md-3">
+
+                                                </div>
+                                                <br>
+                                            </div>
                                             <div class="row">
                                                 <div class="col-md-2">
                                                     <label for="fechaInstalacionCable">Fecha de instalación</label>
@@ -473,7 +491,7 @@
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label for="exento">Exento</label>
-                                                    <input class="form-control input-sm" type="checkbox" name="exento">
+                                                    <input class="form-control input-sm" type="checkbox" name="exento" value="exento">
                                                 </div>
                                                 <div class="col-md-3">
                                                     <label for="diaGenerarFacturaCable">Día para generar factura</label>
@@ -481,7 +499,7 @@
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label for="cortesia">Cortesía</label>
-                                                    <input class="form-control input-sm" type="checkbox" name="cortesia">
+                                                    <input class="form-control input-sm" type="checkbox" name="cortesia" value="cortesia">
                                                 </div>
                                             </div>
                                             <div class="row">
@@ -563,6 +581,23 @@
                                       <!-- Card body -->
                                       <div id="collapseTwo21" class="collapse" role="tabpanel" aria-labelledby="headingTwo21" data-parent="#accordionEx1">
                                         <div class="card-body">
+                                            <div class="row alert-warning">
+                                                <div class="col-md-3">
+                                                    <label for="activarInternet">Activar en sistema</label>
+                                                    <input class="input-sm" type="radio" name="activarInternet" value="1">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <label for="activarinternet">Desactivar en sistema</label>
+                                                    <input class="input-sm" type="radio" name="activarInternet" value="0">
+                                                </div>
+                                                <div class="col-md-3">
+
+                                                </div>
+                                                <div class="col-md-3">
+
+                                                </div>
+                                                <br>
+                                            </div>
                                             <div class="row">
                                                 <div class="col-md-2">
                                                     <label for="fechaInstalacionInternet">Fecha de instalación</label>
@@ -744,7 +779,7 @@
         <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
       </div>
     </div>
-
+    </form>
   </div>
 </div>
 
