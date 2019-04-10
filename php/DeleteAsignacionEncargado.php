@@ -14,14 +14,14 @@
             try {
                   $Id = $_GET['Id'];
 
-                    $query = "UPDATE tbl_departamento set IdEmpleado = 0 where IdDepartamento='".$Id."'";
+                    $query = "UPDATE tbl_departamento set IdEmpleado = -1 where IdDepartamento='".$Id."'";
                        $statement = $this->dbConnect->prepare($query);
                        $statement->execute();
-                    header('Location: ../pages/AsignarEncargadoDepartamento.php?status=success');
+                    header('Location: ../pages/asignarEncargadoDepartamento.php?status=success');
             } catch (Exception $e) {
                 print "!Error¡: " . $e->getMessage() . "</br>";
                 die();
-                header('Location: ../pages/AsignarEncargadoDepartamento.php?status=failed');
+                header('Location: ../pages/asignarEncargadoDepartamento.php?status=failed');
             }
         }
     }

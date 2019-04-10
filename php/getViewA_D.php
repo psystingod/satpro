@@ -129,7 +129,7 @@
      {
          try {
              // SQL query para traer los datos de los productos
-             $query = "SELECT d.IdDepartamento, d.CodigoDepartamento, d.NombreDepartamento, e.Codigo, e.Nombres as Encargado
+             $query = "SELECT d.IdDepartamento, d.CodigoDepartamento, d.NombreDepartamento, e.Codigo, e.Nombres as Nombre, e.Apellidos as Apellido, d.IdEmpleado as Emple
              FROM tbl_departamento as d left join tbl_empleado as e on d.IdEmpleado=e.IdEmpleado where d.State=0";
              // Preparación de sentencia
              $statement = $this->dbConnect->prepare($query);
@@ -186,7 +186,20 @@
            die();
        }
    }
-
+   public function MostrarEmpleados()
+   {
+       try {
+           $query = "SELECT * FROM tbl_empleado";
+           // Preparación de sentencia
+           $statement = $this->dbConnect->prepare($query);
+           $statement->execute();
+           $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+           return $result;
+       } catch (Exception $e) {
+           print "!Error¡: " . $e->getMessage() . "</br>";
+           die();
+       }
+   }
    public function detalleAsignacionesPendientesDB($a)
    {
        try {
