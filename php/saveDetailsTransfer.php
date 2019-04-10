@@ -15,7 +15,7 @@
                    $IdFactura;
                    //Hora y Fecha Actual
                    date_default_timezone_set('America/El_Salvador');
-                   $Fecha = date('Y/m/d g:ia');
+                   $Fecha = date('Y/m/d g:i');
                    //Nombre del que realizo el traslado
                    $Nombre = $_POST["NOMBRE"];
                    $Apellido = $_POST["APELLIDO"];
