@@ -273,7 +273,7 @@
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <span><?php echo $codigo; ?> <?php echo $nombre; ?></span>
+                            <span class="badge"><?php echo $codigo; ?></span> <span><?php echo $nombre; ?></span>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
