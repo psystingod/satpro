@@ -232,11 +232,11 @@
                                   <div class="form-row">
                                       <div class="form-group col-md-6 col-xs-6">
                                           <label for="codigo">Código:</label>
-                              <input type="text" class="form-control" name="CodEmpleado" id="CodEmpleado" placeholder="Código del Empleado" required />
+                              <input type="text" class="form-control" name="CodEmpleado" id="CodEmpleado" placeholder="Código del Empleado" pattern="[0-9]{2}-[0-9]{2}-[0-9]{3}" title="DEBE AGREGAR SOLAMENTE NÚMEROS" required />
                                       </div>
                                       <div class="form-group col-md-6 col-xs-6">
                                           <label for="departamento">Nombre:</label>
-                                          <input type="text" class="form-control" name="NomEmpleado" id="NomEmpleado" placeholder="Nombre del Empleado" required"/>
+                                          <input type="text" class="form-control" name="NomEmpleado" id="NomEmpleado" placeholder="Nombre del Empleado" />
                                       </div>
                                   </div>
                                   <div class="form-row">
@@ -272,7 +272,7 @@
                                                   echo $key["Codigo"] . "</td><td>";
                                                   echo $key["Nombres"] ." " . $key["Apellidos"] ."</td><td>";
                                                   echo $key["Dui"] . "</td><td>";
-                                                  echo "<input type='button' class='btn btn-success' onclick='Cargar(\"{$key["Codigo"]}\",\"{$key["Nombres"]} \")' name='Seleccion' value='Seleccionar'>" . "</td></tr>";
+                                                  echo "<input type='button' class='btn btn-success' onclick='Cargar(\"{$key["Codigo"]}\",\"{$key["Nombres"]}\",\"{$key["Apellidos"]}\")' name='Seleccion' value='Seleccionar'>" . "</td></tr>";
                                                       }
                                                   ?>
                                       </tbody>
@@ -344,14 +344,14 @@
     });
     </script>
     <script type="text/javascript">
-      function Cargar(Codigo,Nombre)
+      function Cargar(Codigo,Nombre,Apellido)
        {
       //var Valor = id
       //var Nombre = Nombre;
       $('#AsignarEmpleado').modal('show');
 
       document.getElementById("CodEmpleado").value = String(Codigo);
-      document.getElementById("NomEmpleado").value = String(Nombre);
+      document.getElementById("NomEmpleado").value = String(Nombre + " " + Apellido);
 
       //document.getElementById("nombre").value = Nombre;
       }

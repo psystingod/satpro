@@ -16,7 +16,7 @@
                   $Nombre = $_POST["NOMBRE"];
                   $Apellido = $_POST["APELLIDO"];
                   $Bodega = $_POST["Bodega"];
-                  $Fecha = date('Y/m/d g:ia');
+                  $Fecha = date('Y/m/d g:i');
                   $Comentario = $_POST["Comentario"];
                   $State = 0;
 
@@ -84,12 +84,7 @@
                                                ':Bodega' => $Bodega
                                                 ));
 
-                                                $query = "insert into tbl_historialRegistros (IdEmpleado,FechaHora,Tipo_Movimiento,Descripcion)
-                                                VALUES((SELECT IdEmpleado from tbl_empleado where Nombres='".$Nombre."' and Apellidos='".$Apellido."'),
-                                                '".$Fecha."',5, concat( (SELECT a.NombreBodega FROM tbl_bodega as a WHERE  NombreBodega='".$Bodega."'),
-                                                ' >> ', (Select NombreDepartamento from tbl_departamento where NombreDepartamento='".$Departamento."') ) )";
-                                                 $statement = $this->dbConnect->prepare($query);
-                                                 $statement->execute();
+                                            
                                    }
                             $this->dbConnect = NULL;
                             header('Location: ../pages/asignarArticuloDepartamento.php?status=success&bodega='.$Bodega);

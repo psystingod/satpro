@@ -294,7 +294,7 @@ if($_POST){
         <table class='table table-hover table-responsive table-bordered'>
             <tr>
                 <td>Código</td>
-                <td colspan="3"><input type="text" name="codigo" value="<?php echo htmlspecialchars($codigo, ENT_QUOTES);  ?>" class='form-control'></td>
+                <td colspan="3"><input type="text" name="codigo" value="<?php echo htmlspecialchars($codigo, ENT_QUOTES);  ?>" class='form-control' disabled></td>
             </tr>
             <tr>
                 <td>Nombre</td>
