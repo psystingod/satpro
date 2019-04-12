@@ -18,6 +18,7 @@
                 $nFactura = $_POST['nFactura'];
                 $nombres = $_POST['nombres'];
                 $apellidos = $_POST['apellidos'];
+                $nacionalidad = $_POST['nacionalidad'];
                 $nombreCompleto = $nombres." ".$apellidos;
                 $nit = $_POST["nit"];
                 $dui = $_POST['dui'];
@@ -126,16 +127,16 @@
                      costo_instalacion_in, exento, periodo_contrato_ca, susp_ven_ca, ult_ren_in, marca_modem, clave_modem, recep_modem, trans_modem, ruido_modem, paren1, paren2, paren3, contacto3, telcon3, dir3, wanip, conexion, facebook, jefe, teljefe, observaciones)";*/
 
                  $query = "INSERT INTO clientes5(cod_cliente, numero_contrato, num_factura, nombre, numero_nit, numero_dui, lugar_exp, num_registro, direccion_cobro, direccion, id_departamento, id_municipio, id_colonia, telefonos,
-                     correo_electronico, contactos, telecon1, dir1, paren1, contacto2, telecon2, dir2, paren2, contacto3, telcon3, dir3, paren3, saldo_actual, limite_credito, forma_pago, dias_credito, aplica_retencion, cod_vendedor,
-                     fecha_ult_pago, creado_por, fecha_hora_creacion, tipo_comprobante, servicio_suspendido, fecha_suspencion, fecha_reinstalacion, servicio_cortesia, cortesia_desde, cortesia_hasta, dia_cobro,
-                     valor_cuota, prepago, nacionalidad, profesion, fecha_instalacion, id_tecnico, cod_cobrador, numero_derivaciones, fecha_ult_nota, tipo_servicio, fecha_nacimiento,
+                     correo_electronico, contactos, telecon1, dir1, paren1, contacto2, telecon2, dir2, paren2, contacto3, telcon3, dir3, paren3, saldo_actual, limite_credito, forma_pago, dias_credito, cod_vendedor,
+                     fecha_ult_pago, creado_por, fecha_hora_creacion, dia_cobro, valor_cuota, prepago, nacionalidad, profesion, fecha_instalacion, id_tecnico, cod_cobrador, numero_derivaciones, tipo_servicio, fecha_nacimiento,
                      cta_anticipo, saldo_suspencion, saldo_anticipo, lugar_trabajo, tel_trabajo, direccion_trabajo, fecha_primer_factura, ult_usuario, cod_tap, num_tap, numero_salida, cortesia_desde1, cortesia_hasta1,
                      cod_gral, nombre_gral, id_tipo_cliente, id_velocidad, email, tipo_facturacion, fecha_instalacion_in, fecha_primer_factura_in, vencimiento_in, cuota_in, dia_cobro_in, tipo_servicio_in, id_promocion,
                      desde_promocion_in, hasta_promocion_in, cuota_promocion, fecha_suspencion_in, fecha_reconexion_in, estado_cliente_in, mac_modem, serie_modem, ultima_suspencion_in, sin_servicio, dire_cable, dire_internet,
                      no_contrato_inter, dias_renova_cont_in, periodo_contrato_in, colilla, id_tecnico_in, nombre_conyugue, ocu_conyugue, trabajo_conyugue, direccion_trab_conyugue, tel_trab_conyugue, tecnologia, entrega_calidad,
                      costo_instalacion_in, exento, periodo_contrato_ca, susp_ven_ca, ult_ren_in, marca_modem, clave_modem, recep_modem, trans_modem, ruido_modem, wanip, conexion, facebook, jefe, teljefe, observaciones)
                      VALUES(:codigo, :nContrato, :nFactura, :nombre, :nit, :dui, :expedicion, :ncr, :direccionCobro, :direccion, :departamento, :municipio, :colonia, :telefono, :correo, :rf1_nombre, :rp1_telefono, :rp1_direccion, :rp1_parentezco,
-                     :rf2_nombre, :rp2_telefono, :rp2_direccion, :rp2_parentezco, :rf3_nombre, :rp3_telefono, :rp3_direccion, :rp3_parentezco, :saldoActual, :limiteCredito, :formaPago, :diasCredito)";
+                     :rf2_nombre, :rp2_telefono, :rp2_direccion, :rp2_parentezco, :rf3_nombre, :rp3_telefono, :rp3_direccion, :rp3_parentezco, :saldoActual, :limiteCredito, :formaPago, :diasCredito, :aplica_retencion, :codVendedor,
+                     :creadoPor, :fechaHoraCreado, :tipoComprobante, :diaCobro, :valorCuota, :prepago, :nacionalidad, :profesion, :fechaInstalacionCable, :tecnico, :codCobrador, :nDerivaciones, )";
 
                  $statement = $this->dbConnect->prepare($query);
 

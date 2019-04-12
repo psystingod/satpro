@@ -256,13 +256,17 @@
                                       </div>
                                   </div>
                                   <div class="row">
-                                      <div class="col-md-6">
+                                      <div class="col-md-5">
                                           <label for="nombres">Nombres</label>
                                           <input class="form-control input-sm" type="text" name="nombres">
                                       </div>
-                                      <div class="col-md-6">
+                                      <div class="col-md-5">
                                           <label for="apellidos">Apellidos</label>
                                           <input class="form-control input-sm" type="text" name="apellidos">
+                                      </div>
+                                      <div class="col-md-2">
+                                          <label for="nacionalidad">Nacionalidad</label>
+                                          <input class="form-control input-sm" type="text" name="nacionalidad" value="Salvadoreño">
                                       </div>
                                   </div>
                                   <div class="row">
@@ -367,9 +371,10 @@
                                   </div>
                                   <div class="row">
                                       <div class="col-md-3">
-                                          <label for="tipoFacturacion">Tipo de facturación</label>
+                                          <label for="tipoFacturacion">Tipo de factura</label>
                                           <select class="form-control input-sm" name="tipoFacturacion">
-
+                                              <option value="consumidor final">Consumidor final</option>
+                                              <option value="credito fiscal">Crédito fiscal</option>
                                           </select>
                                       </div>
                                       <div class="col-md-9">
@@ -469,11 +474,12 @@
                                                     <input class="input-sm" type="radio" name="activarCable" value="1">
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <label for="activarCable">Desactivar en sistema</label>
-                                                    <input class="input-sm" type="radio" name="activarCable" value="0">
+                                                    <!--<label for="activarCable">Suspender en sistema</label>
+                                                    <input class="input-sm" type="radio" name="activarCable" value="2">-->
                                                 </div>
                                                 <div class="col-md-3">
-
+                                                    <label for="activarCable">Sin servicio</label>
+                                                    <input class="input-sm" type="radio" name="activarCable" value="0">
                                                 </div>
                                                 <div class="col-md-3">
 
@@ -518,7 +524,7 @@
                                                     </select>
                                                 </div>
                                                 <div class="col-md-2">
-                                                    <label for="tipoServicio">Tipo de servicio</label>
+                                                    <label for="tipoServicio">Plan de TV</label>
                                                     <select class="form-control input-sm" name="tipoServicio">
                                                         <option value="basico">Básico</option>
                                                         <option value="premium">Premium</option>
@@ -587,11 +593,12 @@
                                                     <input class="input-sm" type="radio" name="activarInternet" value="1">
                                                 </div>
                                                 <div class="col-md-3">
-                                                    <label for="activarinternet">Desactivar en sistema</label>
-                                                    <input class="input-sm" type="radio" name="activarInternet" value="0">
+                                                    <!--<label for="activarinternet">Suspender en sistema</label>
+                                                    <input class="input-sm" type="radio" name="activarInternet" value="2">-->
                                                 </div>
                                                 <div class="col-md-3">
-
+                                                    <label for="activarinternet">Sin servicio</label>
+                                                    <input class="input-sm" type="radio" name="activarInternet" value="0">
                                                 </div>
                                                 <div class="col-md-3">
 
