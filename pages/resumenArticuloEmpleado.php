@@ -3,25 +3,6 @@
     require("../php/connection.php");
  ?>
 <?php
-    // require("../php/translateProcess.php");
-    // $tp = new TranslateProcess();
-    // $tpAqrray = $tp->getProductsTranslated2();
-    // $id=isset($_GET['checkTraslado']) ? $_GET['checkTraslado'] : die('ERROR: Registro no encontrado.');
-    // $dsn = 'mysql:host=localhost;dbname=satpro';
-    // $username = 'satprouser';
-    // $password = 'Xhce57K7xgsTZhKX';
-    // $Codigo="";
-    // $Nombre="";
-    //
-    // try{
-    //
-    //     $con = new PDO($dsn, $username, $password);
-    //     $con->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-    //
-    // } catch (Exception $ex) {
-    //
-    //     echo 'No se pudo conectar a la base de datos '.$ex->getMessage();
-    // }
     $obj = new ConectionDB();
     $con = $obj->dbConnect;
       try {

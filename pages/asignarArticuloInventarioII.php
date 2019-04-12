@@ -206,7 +206,9 @@
 
             <div class="row">
                 <form class="" action="resumenTraslado.php" method="POST">
-
+  <a href="asignaciones.php"><button class="btn btn-success" type="button" name="regresar"><i class="fas fa-arrow-circle-left"></i> Atrás</button></a>
+  <br>
+  <br>
                 <button id="traslados" type="submit" class="btn btn-default pull-left" disabled = "disabled" accesskey="t"><i class='fas fa-truck'></i> Trasladar producto a otra Bodega</button>
 
 

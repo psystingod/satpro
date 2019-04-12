@@ -195,7 +195,7 @@
                                 <th>Nombre de Articulo</th>
                                 <th>Cantidad</th>
                                 <th>Departamento</th>
-                                <th></th>
+                                <!-- <th></th> -->
                             </tr>
                         </thead>
                         <tbody>
@@ -206,15 +206,16 @@
                                     echo $key["Codigo"] . "</td><td>";
                                     echo $key["NombreArticulo"] . "</td><td>";
                                     echo $key["Cantidad"] . "</td><td>";
-                                    echo $key["NombreDepartamento"] . "</td><td>";
-                                    echo "<div class='btn-group pull-right'>
-                                                <button type='button' class='btn btn-default'>Opciones</button>
-                                                <button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-                                                  <span class='caret'></span>
-                                                  <span class='sr-only'>Toggle Dropdown</span>
-                                                </button>
-
-                                            </div>" . "</td></tr>";
+                                    echo $key["NombreDepartamento"] . "</td>";
+                                    // echo "<div class='btn-group pull-right'>
+                                    //             <button type='button' class='btn btn-default'>Opciones</button>
+                                    //             <button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
+                                    //               <span class='caret'></span>
+                                    //               <span class='sr-only'>Toggle Dropdown</span>
+                                    //             </button>
+                                    //
+                                    //         </div>"
+                                          echo "</tr>";
                                         }
                                     ?>
                         </tbody>

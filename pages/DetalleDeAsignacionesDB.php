@@ -1,12 +1,9 @@
 <?php
 session_start();
-?>
-<?php
 require("../php/getViewA_D.php");
 $reportsInfo = new getViewA_D();
 $ReportesFinales = $reportsInfo->ReportesFinalesDB();
 $ReportesPendientes = $reportsInfo->ReportesPendientesDB();
-
 ?>
 
 <!DOCTYPE html>
@@ -276,7 +273,7 @@ $ReportesPendientes = $reportsInfo->ReportesPendientesDB();
                                                   <span class='sr-only'>Toggle Dropdown</span>
                                                 </button>
                                                 <ul class='dropdown-menu'>
-                                                    <li><a href='VerReporteConfirmarDB.php?v=".$key["Idreportead"]."'><i class='fas fa-eye'></i>Ver Detalle Para Confirmar</a>
+                                                    <li><a href='VerReporteConfirmarDB.php?v=".$key["Idreportead"]."'><i class='fas fa-eye'></i> Ver Detalle Para Confirmar</a>
                                                     </li>
                                                     <li class='divider'></li>
                                                 </ul>

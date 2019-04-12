@@ -2,23 +2,12 @@
 
     session_start();
 
- ?>
-<?php
     require("../php/contenido.php");
     require("../php/getInventoryPDF.php");
     require("../php/productsInfo.php");
 
     $Bodega = $_GET["bodega"];
-    // $Bodega = "";
-    // if(isset( $_COOKIE['bdgSelec']))
-    // {
-    //    $Bodega=json_decode($_COOKIE['bdgSelec'], true);
-    // }
-    // else
-    // {
-    //    $Bodega = $_POST['bodega'];
-    //     setcookie('bdgSelec', json_encode($Bodega), 0);
-    // }
+
     // Trae el inventario completo de la base de datos
     $getInventory = new GetInventoryPDF();
     $recordsInfo = $getInventory->showInventoryRecords($Bodega);
@@ -203,7 +192,9 @@
                <!-- /.row -->
                <div class="row">
                    <form class="" action="resumenArticuloDepartamento.php" method="POST">
-
+                     <a href="asignaciones.php"><button class="btn btn-success" type="button" name="regresar"><i class="fas fa-arrow-circle-left"></i> Atrás</button></a>
+                     <br>
+                     <br>
                    <button id="traslados" type="submit" class="btn btn-default pull-left" disabled = "disabled" accesskey="t"><i class="fas fa-archway"></i> Asignar Articulo Seleccionado a un Departamento</button>
 
                    <br><br>
@@ -217,8 +208,9 @@
                                    <th>Descripcion</th>
                                    <th>Tipo Producto</th>
                                    <th>Cantidad</th>
-                                   <th>Costo</th>
-                                   <th></th>
+                                   <th>Categoria</th>
+                                   <th>Proveedor</th>
+                                   <!-- <th></th> -->
                                </tr>
                            </thead>
                            <tbody>
@@ -230,20 +222,11 @@
                                        echo $key["Codigo"] . "</td><td>";
                                        echo $key["NombreArticulo"] . "</td><td>";
                                        echo $key["Descripcion"] . "</td><td>";
+                                       echo $key["NombreTipo"] . "</td><td>";
                                        echo $key["Cantidad"] . "</td><td>";
-                                       echo $key["Cantidad"] . "</td><td>$";
-                                       echo $key["PrecioCompra"] . "</td><td>";
-                                       echo "<div class='btn-group pull-right'>
-                                                   <button type='button' class='btn btn-default'>Opciones</button>
-                                                   <button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-                                                     <span class='caret'></span>
-                                                     <span class='sr-only'>Toggle Dropdown</span>
-                                                   </button>
-                                                   <ul class='dropdown-menu'>
-
-                                                       <li class='divider'></li>
-                                                   </ul>
-                                               </div>" . "</td></tr>";
+                                       echo $key["Categoria"] . "</td><td>";
+                                       echo $key["Proveedor"] . "</td>";
+                                       echo "</tr>";
                                            }
                                        ?>
                            </tbody>

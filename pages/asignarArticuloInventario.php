@@ -3,7 +3,6 @@
  ?>
 <?php
     require("../php/getViewA_D.php");
-
     $InvDepartamento = new GetViewA_D();
     $InvDe = $InvDepartamento->InventarioDepartamentoFiltrado();
 ?>
@@ -184,7 +183,9 @@
             <!-- /.row -->
             <div class="row">
                 <form class="" action="" method="POST">
-
+                  <a href="asignaciones.php"><button class="btn btn-success" type="button" name="regresar"><i class="fas fa-arrow-circle-left"></i> Atrás</button></a>
+                  <br>
+                  <br>
                 <button id="traslados1" type="submit" class="btn btn-default pull-left" disabled = "disabled" accesskey="w"  onclick="javascript: form.action='resumenArticuloD_B.php' "><i class="fas fa-users"></i>Regresar Articulos a Bodega</button>
 
                 <br><br>
@@ -197,7 +198,7 @@
                                 <th>Nombre de Articulo</th>
                                 <th>Cantidad</th>
                                 <th>Departamento</th>
-                                <th></th>
+                  
                             </tr>
                         </thead>
                         <tbody>
@@ -208,20 +209,8 @@
                                     echo $key["Codigo"] . "</td><td>";
                                     echo $key["NombreArticulo"] . "</td><td>";
                                     echo $key["Cantidad"] . "</td><td>";
-                                    echo $key["NombreDepartamento"] . "</td><td>";
-                                    echo "<div class='btn-group pull-right'>
-                                                <button type='button' class='btn btn-default'>Opciones</button>
-                                                <button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-                                                  <span class='caret'></span>
-                                                  <span class='sr-only'>Toggle Dropdown</span>
-                                                </button>
-                                                <ul class='dropdown-menu'>
-                                                    <li><a href=''><i class='fas fa-eye'></i> Ver</a>
-                                                    </li>
-
-                                                    <li class='divider'></li>
-                                                </ul>
-                                            </div>" . "</td></tr>";
+                                    echo $key["NombreDepartamento"] . "</td>";
+                                    echo "" . "</tr>";
                                         }
                                     ?>
                         </tbody>

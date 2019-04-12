@@ -26,7 +26,7 @@
                              $Departamento = $_POST["Departamento"];
                              //Fecha
                              date_default_timezone_set('America/El_Salvador');
-                             $Fecha = date('Y/m/d g:ia'); ;
+                             $Fecha = date('Y/m/d g:i'); ;
 
                              //Comentario
                              $Comentario= $_POST["Comentario"];
