@@ -13,7 +13,7 @@
                 try {
                             //Fecha
                             date_default_timezone_set('America/El_Salvador');
-                            $Fecha = date('Y/m/d g:ia');
+                            $Fecha = date('Y/m/d g:i');
 
                             //$IdFactura
                             $IdFactura;
@@ -95,12 +95,7 @@
                                           ':Cantidad' => $V1[$i]
                                        ));
                                     }
-                                    $query = "insert into tbl_historialRegistros (IdEmpleado,FechaHora,Tipo_Movimiento,Descripcion)
-                                    VALUES((SELECT IdEmpleado from tbl_empleado where Nombres='".$Nombre."' and Apellidos='".$Apellido."'),
-                                    '".$Fecha."',5, concat( (Select NombreDepartamento from tbl_departamento where NombreDepartamento='".$Departamento."'),
-                                    ' >> ', (SELECT a.NombreBodega FROM tbl_bodega as a WHERE  NombreBodega='".$Bodega."') ) )";
-                                     $statement = $this->dbConnect->prepare($query);
-                                     $statement->execute();
+
                                  header('Location: ../pages/asignarArticuloInventario.php?status=success');
                                }
 

@@ -1,7 +1,5 @@
 <?php
     session_start();
- ?>
-<?php
     require("../php/getViewA_D.php");
     include 'SelecBodega.php';
     $detalleAsignacion = new GetViewA_D();
