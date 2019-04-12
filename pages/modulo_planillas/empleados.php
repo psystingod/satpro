@@ -154,6 +154,18 @@
                                 <span style="font-size: 17px;">Ficha de empleado</span>
                             </div>
                             <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="pull-right">
+                                            <button class="btn btn-default btn-sm" id="nuevoEmpleado" onclick="nuevoEmpleado()" type="button" name="nuevo" data-toggle="tooltip" data-placement="bottom" title="Nuevo empleado"><i class="far fa-file"></i></button>
+                                            <button class="btn btn-default btn-sm" id="editarEmpleado" onclick="editarEmpleado()" type="button" name="editar" data-toggle="tooltip" data-placement="bottom" title="Editar empleado"><i class="far fa-edit"></i></button>
+                                            <button class="btn btn-default btn-sm" id="guardar" type="submit" data-toggle="tooltip" data-placement="bottom" title="Guardar cambios" disabled><i class="far fa-save"></i></button>
+                                            <button class="btn btn-default btn-sm" type="button" data-toggle="tooltip" data-placement="bottom" title="Buscar empleado"><i class="fas fa-search"></i></button>
+                                            <button class="btn btn-default btn-sm" type="button" data-toggle="tooltip" data-placement="bottom" title="Imprimir ficha"><i class="fas fa-print"></i></button>
+                                        </div>
+                                    </div>
+                                    <br><br>
+                                </div>
                                 <!-- Nav tabs -->
                                 <ul class="nav nav-pills nav-justified">
                                     <li class="active"><a href="#datos-generales" data-toggle="tab">Datos generales</a>
@@ -172,6 +184,7 @@
                                     <div class="tab-pane fade in active" id="datos-generales">
                                         <br>
                                         <div class="row">
+                                            <form id="empleados" action="" method="POST">
                                             <div class="col-md-2">
                                                 <label for="idEmpleado">Id empleado</label>
                                                 <input class="form-control input-sm" type="text" name="idEmpleado">
@@ -496,7 +509,7 @@
     <!-- Custom Theme JavaScript -->
     <script src="../../dist/js/sb-admin-2.js"></script>
     <script src="../../dist/js/jquery-validation-1.19.0/dist/jquery.validate.js"></script>
-    <script src="js/ordenTrabajo.js"></script>
+    <script src="js/empleados.js"></script>
 
 </body>
 </html>

@@ -14,7 +14,7 @@
        {
            try {
                // SQL query para traer nombre de las categorías
-               $query = "SELECT Nombre FROM tbl_proveedor where state = 0";
+               $query = "SELECT IdProveedor, Nombre FROM tbl_proveedor where state = 0";
                // Preparación de sentencia
                $statement = $this->dbConnect->prepare($query);
                $statement->execute();

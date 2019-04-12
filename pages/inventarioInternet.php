@@ -3,11 +3,12 @@
     require("../php/getInventoryPDF.php");
     require("../php/productsInfo.php");
 
-    $Bodega=$_GET["bodega"];
+  $Bodega=$_GET["bodega"];
   $getInventoryI = new GetInventoryPDF();
   $recordsInfoI = $getInventoryI->showInventoryInternet($Bodega);
   $productsInfo = new ProductsInfo();
   $warehouses = $productsInfo->getWarehouses();
+  $providers = $productsInfo->getProveedor();
 
 ?>
 
@@ -226,6 +227,7 @@
                                 <th>Modelo</th>
                                 <th>MAC</th>
                                 <th>Serie</th>
+                                <th>Proveedor</th>
                                 <th>Estado</th>
                                 <th>Fecha de ingreso</th>
                                 <th></th>
@@ -240,6 +242,7 @@
                                     echo $key["Modelo"] . "</td><td>";
                                     echo $key["Mac"] . "</td><td>";
                                     echo $key["Serie"] . "</td><td>";
+                                    echo $key["Proveedor"] . "</td><td>";
                                     if($key["Estado"] == 0)
                                     {
                                       echo "Bueno"."</td><td>";
@@ -302,18 +305,20 @@
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title" id="Agregar">Nuevo producto</h4>
                       </div>
-                      <form action="../php/enterProductInternet.php" method="POST">
+                     <form action="../php/enterProductInternet.php" method="POST">
                       <div class="modal-body">
                                   <div class="form-row">
-
-
-                                      <div class="form-group col-md-6 col-xs-6">
-                                          <label for="Marca del articulo">Marca:</label>
-                                          <input type="text" class="form-control" name="marca" id="marca" placeholder="Marca del Producto"  required>
+                                      <div class="form-group col-md-2 col-xs-2">
+                                          <label for="Fecha">Fecha:</label>
+                                          <input type="text" class="form-control" name="fecha" id="fecha" value="<?php echo date('Y-m-d'); ?>" required>
                                       </div>
-                                      <div class="form-group col-md-6 col-xs-6">
+                                      <div class="form-group col-md-5 col-xs-5">
+                                          <label for="Marca del articulo">Marca:</label>
+                                          <input type="text" class="form-control" name="marca" id="marca" placeholder="Marca del Producto" value="<?php if(isset($_GET['marca'])) echo $_GET['marca'] ?>"  required>
+                                      </div>
+                                      <div class="form-group col-md-5 col-xs-5">
                                           <label for="Modelo del articulo">Modelo</label>
-                                          <input type="text" class="form-control" name="modelo" id="modelo" placeholder="Modelo del Producto" required>
+                                          <input type="text" class="form-control" name="modelo" id="modelo" placeholder="Modelo del Producto" value="<?php if(isset($_GET['modelo'])) echo $_GET['modelo'] ?>" required>
                                       </div>
 
                                   </div>
@@ -330,18 +335,28 @@
                                   </div>
 
                                   <div class="form-row">
-                                    <div class="form-group col-md-6 col-xs-6">
+                                    <div class="form-group col-md-5 col-xs-5">
                                         <label for="bodega">Bodega</label>
                                         <select class="form-control form-control-lg" name="bodega" required>
-                                            <option value="" selected="selected">Seleccionar...</option>
                                             <?php
-                                              foreach ($warehouses as $key) {
-                                                  echo "<option value='".strtolower($key['NombreBodega'])."'>".$key['NombreBodega']."</option>";
-                                              }
+                                                echo "<option value='".ucwords($_GET['bodega'])."' selected='selected'>".ucwords($_GET['bodega'])."</option>";
                                             ?>
                                         </select>
                                     </div>
-                                    <div class="form-group col-md-6 col-xs-6">
+                                    <div class="form-group col-md-5 col-xs-5">
+                                        <label for="proveedor">Proveedor</label>
+                                        <select class="form-control" name="proveedor" id="proveedor" title="Escribe solamente letras y números" required>
+                                            <?php
+                                                if (isset($_GET['proveedor'])) {
+                                                    echo "<option value='".$_GET['proveedor']."' selected='selected'>".ucwords($_GET['proveedor'])."</option>";
+                                                }
+                                                foreach ($providers as $prov) {
+                                                    echo "<option value='".$prov['IdProveedor']."'>".ucwords($prov['Nombre'])."</option>";
+                                                }
+                                            ?>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-2 col-xs-2">
                                         <label for="estado">Estado</label>
                                         <select class="form-control" name="estado" id="estado" title="Escribe solamente letras y números" required>
                                             <option value="0">Bueno</option>
@@ -350,7 +365,6 @@
                                             <option value="3">Defectuoso</option>
                                         </select>
                                     </div>
-
                                   </div>
 
                                   <div class="form-row">
@@ -366,7 +380,7 @@
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                             <input type="submit" class="btn btn-primary" value="Registrar">
                       </div>
-                           </form>
+                    </form>
                 </div>
           </div>
     </div><!-- /Add modal -->

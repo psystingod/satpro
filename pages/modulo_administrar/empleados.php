@@ -257,7 +257,7 @@
                               <div class="form-row">
                                   <div class="form-group col-md-12 col-xs-12">
                                       <label for="codigo">Código de empleado:</label>
-                                      <input type="text" class="form-control" name="codigo"  placeholder="Escriba los nombres del empleado" required>
+                                      <input type="text" class="form-control" name="codigo"  placeholder="Escriba el código del empleado" required>
                                   </div>
                               </div>
                               <div class="form-row">
@@ -310,10 +310,10 @@
                                       <label for="usuario">Grado Académico:</label>
                                       <select class="form-control" name="gradoAcademico">
                                           <option value="" selected>...</option>
-                                          <option value="soltero/a">Universidad</option>
-                                          <option value="casado/a">Bachillerato</option>
-                                          <option value="divorciado/a">Educación básica</option>
-                                          <option value="viudo/a">Ninguno</option>
+                                          <option value="Universidad">Universidad</option>
+                                          <option value="Bachillerato">Bachillerato</option>
+                                          <option value="Básica">Educación básica</option>
+                                          <option value="Ninguno">Ninguno</option>
                                       </select>
                                   </div>
                                   <div class="form-group col-md-4 col-xs-4">
