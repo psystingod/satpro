@@ -17,8 +17,10 @@
                             $Fecha = date('Y/m/d g:i');
                             $State = 0;
                             $Comentario = $_POST["Comentario"];
-                            $Nombre = $_SESSION['nombres'];
-                            $Apellido = $_SESSION['apellidos'];
+
+                            // $Nombre = $_SESSION['nombres'];
+                            // $Apellido = $_SESSION['apellidos'];
+
                             $V2 = array();
                             foreach ($Comentario as $K1)
                             {
@@ -63,7 +65,7 @@
                                          $statement = $this->dbConnect->prepare($query);
                                          $statement->execute();
 
-                                        
+
                                    }
                             $this->dbConnect = NULL;
                             header('Location: ../pages/asignarArticuloEmpleado.php?status=success');
