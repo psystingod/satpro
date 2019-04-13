@@ -21,7 +21,7 @@
                              $Departamento = $_POST["Departamento"];
                              $Bodega = $_POST["BodegaRecibe"];
                              date_default_timezone_set('America/El_Salvador');
-                             $FechaDestino = date('Y/m/d g:ia'); ;
+                             $FechaDestino = date('Y/m/d g:i'); ;
                              $Comentario= $_POST["Comentario"];
                              $query = "UPDATE tbl_reportead set State=:State, IdEmpleadoRecibe=(SELECT IdEmpleado from tbl_empleado where
                              Nombres=:Nombres and Apellidos=:Apellidos), FechaRecibe=:FechaRecibe, ComentarioRecibe=:ComentarioRecibe where IdReportead=:IdReportead";
@@ -84,10 +84,7 @@
                                             header('Location: ../pages/DetalleDeAsignaciones.php?status=success');
                                     }
                             }
-                            $query = "insert into tbl_historialRegistros (IdEmpleado,FechaHora,Tipo_Movimiento,Descripcion)
-VALUES((SELECT IdEmpleado from tbl_empleado where Nombres='".$Nombre."' and Apellidos='".$Apellido."'),'".$FechaDestino."',7, concat( (SELECT a.NombreBodega FROM tbl_bodega as a WHERE  NombreBodega='".$Bodega."'),' >> ', (SELECT a.NombreDepartamento FROM tbl_departamento as a WHERE  NombreDepartamento='".$Departamento."') ) )";
-                             $statement = $this->dbConnect->prepare($query);
-                             $statement->execute();
+
                             $this->dbConnect = NULL;
                             header('Location: ../pages/DetalleDeAsignaciones.php?status=success');
                         }
