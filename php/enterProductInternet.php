@@ -20,8 +20,9 @@
                 $modelo = $_POST["modelo"];
                 $proveedor = $_POST["proveedor"];
                 $descripcion = $_POST["descripcion"];
+                $condicion = "En bodega";
                 date_default_timezone_set('America/El_Salvador');
-                $fechaForm = date_format('Y/m/d', $_POST["fecha"]);
+                $fechaForm = date('Y-m-d');
                 $Fecha = date('Y/m/d g:i');
                 $query = "SELECT count(*) FROM tbl_articulointernet where Mac='".$mac."' or  serie='".$serie."'";
                 $statement = $this->dbConnect->query($query);
@@ -33,8 +34,8 @@
                 else
                 {
 
-                    $query = "INSERT into tbl_articulointernet(Mac,Serie,Estado,IdBodega,Marca,Modelo,Descripcion, Proveedor,fecha)
-                    values (:mac,:serie,:estado,(SELECT idBodega FROM tbl_bodega where NombreBodega=:idBodega),:marca,:modelo,:descripcion,:proveedor,:fecha)";
+                    $query = "INSERT into tbl_articulointernet(Mac,Serie,Estado,IdBodega,Marca,Modelo,Descripcion,Proveedor,fecha,condicion)
+                    values (:mac,:serie,:estado,(SELECT idBodega FROM tbl_bodega where NombreBodega=:idBodega),:marca,:modelo,:descripcion,(SELECT Nombre FROM tbl_proveedor where IdProveedor = :proveedor),:fecha,:condicion)";
                     // Preparación de sentencia
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
@@ -46,9 +47,22 @@
                     ':modelo'=> $modelo,
                     ':proveedor'=> $proveedor,
                     ':idBodega' => $bodega,
-                    ':descripcion' => $descripcion
+                    ':descripcion' => $descripcion,
+                    ':condicion' => $condicion,
                     ));
 
+                    $query2 = "SELECT IdProveedor, Nombre FROM tbl_proveedor WHERE IdProveedor = :idProv";
+                    // Preparación de sentencia
+                    $statement = $this->dbConnect->prepare($query2);
+                    $statement->execute(array(
+                    ':idProv' => $proveedor
+                    ));
+
+                    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+                    foreach ($result as $key) {
+                        $nombreProveedor = $key["Nombre"];
+                        $idProv = $key["IdProveedor"];
+                    }
 
                     // $IdArticulo=$this->dbConnect->lastInsertId();
                     // $Nombre = $_POST["NOMBRE"];
@@ -59,7 +73,7 @@
                     //  $statement = $this->dbConnect->prepare($query);
                     //  $statement->execute();
                     // $this->dbConnect = NULL;
-                    header('Location: ../pages/inventarioInternet.php?status=success&bodega='.$bodega.'&proveedor='.$proveedor.'&marca='.$marca.'&modelo='.$modelo);
+                    header('Location: ../pages/inventarioInternet.php?status=success&bodega='.$bodega.'&proveedor='.$nombreProveedor.'&idProv='.$idProv.'&marca='.$marca.'&modelo='.$modelo);
                    }
 
             } catch (Exception $e) {

@@ -223,6 +223,7 @@
                     <table width="100%" class="table table-striped table-hover" id="inventario">
                         <thead>
                             <tr>
+                                <th>ID</th>
                                 <th>Marca</th>
                                 <th>Modelo</th>
                                 <th>MAC</th>
@@ -230,6 +231,7 @@
                                 <th>Proveedor</th>
                                 <th>Estado</th>
                                 <th>Fecha de ingreso</th>
+                                <th>Condición</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -238,6 +240,7 @@
 
                                 foreach ($recordsInfoI as $key) {
                                     echo "<tr><td>";
+                                    echo $key["IdArticulo"] . "</td><td>";
                                     echo $key["Marca"] . "</td><td>";
                                     echo $key["Modelo"] . "</td><td>";
                                     echo $key["Mac"] . "</td><td>";
@@ -260,7 +263,14 @@
                                       echo "Defectuoso"."</td><td>";
                                     }
                                     // echo $key["Estado"] . "</td><td>";
-                                    echo $key["fecha"] . "</td><td>";
+                                    echo $key["fecha"] . "</td>";
+                                    if ($key["condicion"] == 'Instalado') {
+                                        echo "<td class='success'>". $key["condicion"] . "</td><td>";
+                                    }elseif ($key["condicion"] == 'Recuperado') {
+                                        echo "<td class='danger'>". $key["condicion"] . "</td><td>";
+                                    }else {
+                                        echo "<td class='info'>". $key["condicion"] . "</td><td>";
+                                    }
                                     echo "<div class='btn-group pull-right'>
                                                 <button type='button' class='btn btn-default'>Opciones</button>
                                                 <button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
@@ -275,6 +285,10 @@
                                                     <li class='eliminar'><a href='#' onclick='deleteArticle( {$key['IdArticulo']} ); '><i class='fas fa-trash-alt'></i> Eliminar</a>
                                                     </li>
                                                     <li class='divider'></li>
+                                                    <li><a href='../php/actualizarCondicion.php?id={$key['IdArticulo']}&condicion=Instalado&bodega={$Bodega}'><i class='fas fa-eye'></i> Marcar como instalado</a>
+                                                    </li>
+                                                    <li><a href='../php/actualizarCondicion.php?id={$key['IdArticulo']}&condicion=Recuperado&bodega={$Bodega}'><i class='fas fa-eye'></i> Marcar como recuperado</a>
+                                                    </li>
                                                 </ul>
                                             </div>" . "</td></tr>";
 
@@ -348,7 +362,7 @@
                                         <select class="form-control" name="proveedor" id="proveedor" title="Escribe solamente letras y números" required>
                                             <?php
                                                 if (isset($_GET['proveedor'])) {
-                                                    echo "<option value='".$_GET['proveedor']."' selected='selected'>".ucwords($_GET['proveedor'])."</option>";
+                                                    echo "<option value='".$_GET['idProv']."' selected='selected'>".ucwords($_GET['proveedor'])."</option>";
                                                 }
                                                 foreach ($providers as $prov) {
                                                     echo "<option value='".$prov['IdProveedor']."'>".ucwords($prov['Nombre'])."</option>";
