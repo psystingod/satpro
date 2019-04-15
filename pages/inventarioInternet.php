@@ -159,7 +159,7 @@
 
         <div id="page-wrapper">
             <div class="row">
-                      <h1 class="page-header alert alert-info">Inventario Internet: <?php echo htmlspecialchars($Bodega, ENT_QUOTES);  ?> </h1>
+                      <h1 class="page-header alert alert-info">Inventario Internet: <?php echo "<b>".htmlspecialchars(ucwords($Bodega), ENT_QUOTES)."</b>";  ?> </h1>
                     <?php
                     if (isset($_GET['status'])) {
                        if ($_GET['status'] == 'success') {
@@ -219,7 +219,6 @@
 
                 <button id="btn_agregar0" class="btn btn-primary pull-right" type="button" name="button" data-toggle="modal" data-target="#agregar" accesskey="a"><i class="fas fa-plus-circle"></i> Agregar Nuevo Producto</button>
                 <br><br>
-
                     <table width="100%" class="table table-striped table-hover" id="inventario">
                         <thead>
                             <tr>
@@ -248,28 +247,28 @@
                                     echo $key["Proveedor"] . "</td><td>";
                                     if($key["Estado"] == 0)
                                     {
-                                      echo "Bueno"."</td><td>";
+                                      echo "<span class='alert alert-success' style='padding:5px;'><b>Bueno</b></span>"."</td><td>";
                                     }
                                     else if($key["Estado"] == 1)
                                     {
-                                      echo "Regular"."</td><td>";
+                                      echo "<span class='alert alert-warning' style='padding:5px;'><b>Regular</b></span>"."</td><td>";
                                     }
                                     else if($key["Estado"] == 2)
                                     {
-                                      echo "Quemado"."</td><td>";
+                                      echo "<span class='alert alert-danger' style='padding:5px;'><b>Quemado</b></span>"."</td><td>";
                                     }
                                     else if($key["Estado"] == 3)
                                     {
-                                      echo "Defectuoso"."</td><td>";
+                                      echo "<span class='well' style='padding:5px;'><b>Defectuoso</b></span>"."</td><td>";
                                     }
                                     // echo $key["Estado"] . "</td><td>";
                                     echo $key["fecha"] . "</td>";
                                     if ($key["condicion"] == 'Instalado') {
-                                        echo "<td class='success'>". $key["condicion"] . "</td><td>";
+                                        echo "<td>"."<span class='alert alert-success' style='padding:5px;'><b>".$key["condicion"] ."</b></span>"."</td><td>";
                                     }elseif ($key["condicion"] == 'Recuperado') {
-                                        echo "<td class='danger'>". $key["condicion"] . "</td><td>";
+                                        echo "<td>"."<span class='alert alert-danger' style='padding:5px;'><b>".$key["condicion"] ."</b></span>"."</td><td>";
                                     }else {
-                                        echo "<td class='info'>". $key["condicion"] . "</td><td>";
+                                        echo "<td>"."<span class='alert alert-info' style='padding:5px;'><b>".$key["condicion"] ."</b></span>"."</td><td>";
                                     }
                                     echo "<div class='btn-group pull-right'>
                                                 <button type='button' class='btn btn-default'>Opciones</button>

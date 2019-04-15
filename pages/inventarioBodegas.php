@@ -164,7 +164,7 @@
         </nav>
         <div id="page-wrapper">
             <div class="row">
-                    <h1 class="page-header alert alert-info">Inventario <?php ?> </h1>
+                    <h1 class="page-header alert alert-info">Inventario general: <?php echo "<b>".htmlspecialchars(ucwords($Bodega), ENT_QUOTES)."</b>";  ?> </h1>
                     <?php
                     if (isset($_GET['status'])) {
                        if ($_GET['status'] == 'success') {
