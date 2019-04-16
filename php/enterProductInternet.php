@@ -20,9 +20,11 @@
                 $modelo = $_POST["modelo"];
                 $proveedor = $_POST["proveedor"];
                 $descripcion = $_POST["descripcion"];
+                $docsis = $_POST["docsis"];
+                $nosh = $_POST["nosh"];
                 $condicion = "En bodega";
                 date_default_timezone_set('America/El_Salvador');
-                $fechaForm = date('Y-m-d');
+                $fechaForm = $_POST["fecha"];
                 $Fecha = date('Y/m/d g:i');
                 $query = "SELECT count(*) FROM tbl_articulointernet where Mac='".$mac."' or  serie='".$serie."'";
                 $statement = $this->dbConnect->query($query);
@@ -34,8 +36,8 @@
                 else
                 {
 
-                    $query = "INSERT into tbl_articulointernet(Mac,Serie,Estado,IdBodega,Marca,Modelo,Descripcion,Proveedor,fecha,condicion)
-                    values (:mac,:serie,:estado,(SELECT idBodega FROM tbl_bodega where NombreBodega=:idBodega),:marca,:modelo,:descripcion,(SELECT Nombre FROM tbl_proveedor where IdProveedor = :proveedor),:fecha,:condicion)";
+                    $query = "INSERT into tbl_articulointernet(Mac,Serie,Estado,IdBodega,Marca,Modelo,Descripcion,Proveedor,fecha,docsis,nosh,condicion)
+                    values (:mac,:serie,:estado,(SELECT idBodega FROM tbl_bodega where NombreBodega=:idBodega),:marca,:modelo,:descripcion,(SELECT Nombre FROM tbl_proveedor where IdProveedor = :proveedor),:fecha,:docsis,:nosh,:condicion)";
                     // Preparación de sentencia
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
@@ -47,6 +49,8 @@
                     ':modelo'=> $modelo,
                     ':proveedor'=> $proveedor,
                     ':idBodega' => $bodega,
+                    ':docsis' => $docsis,
+                    ':nosh' => $nosh,
                     ':descripcion' => $descripcion,
                     ':condicion' => $condicion,
                     ));
@@ -73,7 +77,7 @@
                     //  $statement = $this->dbConnect->prepare($query);
                     //  $statement->execute();
                     // $this->dbConnect = NULL;
-                    header('Location: ../pages/inventarioInternet.php?status=success&bodega='.$bodega.'&proveedor='.$nombreProveedor.'&idProv='.$idProv.'&marca='.$marca.'&modelo='.$modelo);
+                    header('Location: ../pages/inventarioInternet.php?status=success&bodega='.$bodega.'&proveedor='.$nombreProveedor.'&idProv='.$idProv.'&marca='.$marca.'&modelo='.$modelo.'&docsis='.$docsis.'&nosh='.$nosh.'&fecha='.$fechaForm);
                    }
 
             } catch (Exception $e) {

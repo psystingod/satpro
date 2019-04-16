@@ -327,7 +327,7 @@
                                   <div class="form-row">
                                       <div class="form-group col-md-2 col-xs-2">
                                           <label for="Fecha">Fecha:</label>
-                                          <input type="text" class="form-control" name="fecha" id="fecha" value="<?php echo date('Y-m-d'); ?>" required>
+                                          <input type="text" class="form-control" name="fecha" id="" placeholder="Ingreso" value="<?php if(isset($_GET['fecha'])) echo $_GET['fecha'] ?>" required>
                                       </div>
                                       <div class="form-group col-md-5 col-xs-5">
                                           <label for="Marca del articulo">Marca:</label>
@@ -350,15 +350,13 @@
                                       </div>
                                       <div class="form-group col-md-2 col-xs-2">
                                           <label for="docsis">Docsis</label>
-                                          <input type="text" class="form-control" name="docsis" id="docsis" placeholder="Docsis" title="Escribe solamente letras y números" required>
+                                          <input type="text" class="form-control" name="docsis" id="docsis" placeholder="Docsis" title="Escribe solamente letras y números" value="<?php if(isset($_GET['docsis'])) echo $_GET['docsis'] ?>" required>
                                       </div>
                                       <div class="form-group col-md-2 col-xs-2">
                                           <label for="nosh">Nosh</label>
-                                          <input type="text" class="form-control" name="nosh" id="nosh" placeholder="Nosh" title="Escribe solamente letras y números" required>
+                                          <input type="text" class="form-control" name="nosh" id="nosh" placeholder="Nosh" title="Escribe solamente letras y números" value="<?php if(isset($_GET['nosh'])) echo $_GET['nosh'] ?>" required>
                                       </div>
-
                                   </div>
-
                                   <div class="form-row">
                                     <div class="form-group col-md-5 col-xs-5">
                                         <label for="bodega">Bodega</label>
@@ -391,7 +389,6 @@
                                         </select>
                                     </div>
                                   </div>
-
                                   <div class="form-row">
                                       <div class="form-group col-md-12 col-xs-12">
                                             <label for="message-text" class="control-label">Descripción:</label>
