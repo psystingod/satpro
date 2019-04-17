@@ -1,5 +1,5 @@
 <?php
-    require('../../php/connection.php');
+    require('../../../php/connection.php');
     /**
      * Clase para ingresar productos al inventario
      */

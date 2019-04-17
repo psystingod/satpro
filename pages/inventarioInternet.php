@@ -547,7 +547,13 @@
     </script>
 
     <script type="text/javascript">
+        $('#agregar').on('shown.bs.modal', function () {
+            $('#mac').focus();
+        });
 
+        $("#mac").change(function(){
+          $('#serie').focus();
+        });
     </script>
 
     <script type="text/javascript">
