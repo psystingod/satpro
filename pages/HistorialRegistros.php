@@ -38,10 +38,8 @@
 <body>
 
     <?php
-         // session_start();
-         if(!isset($_SESSION["user"])) {
-             header('Location: login.php');
-         }
+         require("../php/permisosGerencias.php");
+         setPermisos();
      ?>
     <div id="wrapper">
 
