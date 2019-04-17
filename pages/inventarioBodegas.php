@@ -220,7 +220,7 @@
 
             <div class="row">
                 <form class="" action="resumenTraslado.php" method="POST">
-                  <button class="btn btn-default center-block" type="button" name="button" data-toggle="modal" data-target="#SeleccioneBodegaI" accesskey="b">Seleccionar Otra Bodega</button>
+                  <button class="btn btn-info center-block" type="button" name="button" data-toggle="modal" data-target="#SeleccioneBodegaI" accesskey="b">Seleccionar Otra Bodega</button>
 
                 <br>
 
@@ -282,7 +282,6 @@
                                     ?>
                         </tbody>
                     </table>
-
                 </form>
                     <!-- /.table-responsive -->
                     <div class="well">

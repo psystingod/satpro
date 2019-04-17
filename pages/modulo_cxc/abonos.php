@@ -379,7 +379,7 @@
                                   <div class="col-md-4">
                                       <label for="meses" style="color: brown;"></label>
                                       <button class="btn btn-default btn-lg btn-block" type="button" name="button"><i class="fas fa-check" style="color: green;"></i> Aplicar abonos</button>
-                                      <button class="btn btn-default btn-lg btn-block" type="button" name="button"><i class="fas fa-sign-out-alt" style="color: brown;"></i> Salir</button>
+                                      <a href="cxc.php" style="text-decoration: none;"><button class="btn btn-default btn-lg btn-block" type="button" name="button"><i class="fas fa-sign-out-alt" style="color: brown;"></i> Salir</button></a>
                                   </div>
                               </div>
                           </div>
