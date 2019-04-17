@@ -178,11 +178,13 @@
         $mac = $row['Mac'];
         $serie = $row['Serie'];
         $estado = $row['Estado'];
-        $bodega = $row['Bodega'];
+        $bodega = $_GET['Bdg'];
         $marca = $row['Marca'];
         $modelo = $row['Modelo'];
         $descripcion = $row['Descripcion'];
         $fechaEntrada = $row['fecha'];
+        $fechaSalida = $row['fechaSalida'];
+        $fechaRecuperado = $row['fechaRecuperado'];
     }
 
     // show error
@@ -192,7 +194,7 @@
 ?>
     <div class="page-header">
 
-                    <h1 class="page-header alert alert-info">Producto Codigo: <?php echo htmlspecialchars($codigo, ENT_QUOTES);  ?></h1>
+                    <h1 class="page-header alert alert-info">Producto MAC: <?php echo htmlspecialchars($mac, ENT_QUOTES);  ?></h1>
                     <?php
                     if (isset($_GET['status'])) {
                         if ($_GET['status'] == 'success') {
@@ -259,7 +261,15 @@
         </tr>
         <tr>
             <td>Fecha de ingreso</td>
-            <td><?php echo htmlspecialchars($fechaEntrada, ENT_QUOTES);  ?></td>
+            <td class="info"><?php echo htmlspecialchars($fechaEntrada, ENT_QUOTES);  ?></td>
+        </tr>
+        <tr>
+            <td>Fecha de salida</td>
+            <td class="success"><?php echo htmlspecialchars($fechaSalida, ENT_QUOTES);  ?></td>
+        </tr>
+        <tr>
+            <td>Fecha de recuperación</td>
+            <td class="danger"><?php echo htmlspecialchars($fechaRecuperado, ENT_QUOTES);  ?></td>
         </tr>
         <tr>
             <td></td>
