@@ -12,7 +12,7 @@
         public function saveEmployee()
         {
             try {
-                $idEmpleado = $_POST["codigo"];
+                $idEmpleado = $_POST["idEmpleado"];
                 $nombres = $_POST["nombres"];
                 $apellidos = $_POST["apellidos"];
                 $nombreiss = $_POST["nombreiss"];
@@ -63,11 +63,29 @@
                 $nacimiento = date_create($_POST["nacimiento"]);
                 $departamento = $_POST["departamento"];
                 $direccion = $_POST["direccion"];
+                $empresa1 = $_POST["empresa1"];
+                $cargo1 = $_POST["cargo1"];
+                $jefe1 = $_POST["jefe1"];
+                $tiempoTrabajo1 = $_POST["tiempoTrabajo1"];
+                $motivoRetiro1 = $_POST["motivoRetiro1"];
+                $empresa2 = $_POST["empresa2"];
+                $cargo2 = $_POST["cargo2"];
+                $jefe2 = $_POST["jefe2"];
+                $tiempoTrabajo2 = $_POST["tiempoTrabajo2"];
+                $motivoRetiro2 = $_POST["motivoRetiro2"];
+                $nombreRef1 = $_POST["nombreRef1"];
+                $ref1Num = $_POST["ref1Num"];
+                $nombreRef2 = $_POST["nombreRef2"];
+                $ref2Num = $_POST["ref2Num"];
+                $nombreRef3 = $_POST["nombreRef3"];
+                $ref3Num = $_POST["ref3Num"];
+                $nombreRef4 = $_POST["nombreRef4"];
+                $ref4Num = $_POST["ref4Num"];
                 $state = 1;
 
                 /* DATOS PARA TABLA USUARIOS */
-                $usuario = $codigo;
-                $clave = password_hash($codigo, PASSWORD_DEFAULT);
+                $usuario = $dui;
+                $clave = password_hash($dui, PASSWORD_DEFAULT);
                 $rol = $_POST["rol"];
 
                 $query = "INSERT INTO tbl_empleado(Codigo, Nombres, Apellidos, Direccion, Dui, Nit, Isss, Afp, E_Familiar, G_Academico, FechaNacimiento, Telefono, IdUsuario, IdDepartamento, State)
@@ -204,6 +222,29 @@
                     ':mcxp' => 256,
                     ':ag' => 1,
                     ':ed' => 2,
+                    ':el' => 0,
+                    ':idusuario' => $lastId
+                    ));
+                    /* END INSERT NEW PERMISSIONS */
+                }
+                else if ($rol == "atencion") {
+                    /* INSERT NEW PERMISSIONS BASED ON NEW EMPLOYEE TYPE */
+                    $query = "INSERT INTO tbl_permisosglobal(Madmin, Mcont, Mplan, Macti, Minve, Miva, Mbanc, Mcxc, Mcxp, Ag, Ed, El, IdUsuario) VALUES
+                                                            (:madmin, :mcont, :mplan, :macti, :minve, :miva, :mbanc, :mcxc, :mcxp, :ag, :ed, :el, :idusuario)";
+                    $statement = $this->dbConnect->prepare($query);
+
+                    $statement->execute(array(
+                    ':madmin' => 0,
+                    ':mcont' => 0,
+                    ':mplan' => 0,
+                    ':macti' => 0,
+                    ':minve' => 0,
+                    ':miva' => 0,
+                    ':mbanc' => 0,
+                    ':mcxc' => 128,
+                    ':mcxp' => 0,
+                    ':ag' => 1,
+                    ':ed' => 0,
                     ':el' => 0,
                     ':idusuario' => $lastId
                     ));

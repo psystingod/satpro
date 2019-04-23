@@ -1,5 +1,7 @@
 <?php
-
+    require("php/getAllPlazas.php");
+    $plazas = new GetAllPlazas();
+    $arrayPlazas = $plazas->getPlazas();
     session_start();
 
  ?>
@@ -174,7 +176,7 @@
                                     </li>
                                     <li><a href="#educacion" data-toggle="tab">Educación</a>
                                     </li>
-                                    <li><a href="#ordenes-tecnicas" data-toggle="tab">Ordenes técnicas</a>
+                                    <li><a href="#refex" data-toggle="tab">Expericencia y referencias</a>
                                     </li>
                                     <li><a href="#notificaciones-traslados" data-toggle="tab">Traslados</a>
                                     </li>
@@ -207,7 +209,7 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <label for="direccionParticular">Dirección particular</label>
-                                                <textarea class="form-control input-sm" type="text" name="direccionParticular" rows="4" cols="40"></textarea>
+                                                <textarea class="form-control input-sm" type="text" name="direccionParticular" rows="2" cols="20"></textarea>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -387,23 +389,39 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-5">
+                                            <div class="col-md-4">
                                                 <label for="cargoPlaza">Cargo o plaza asignada</label>
                                                 <select class="form-control input-sm" type="text" name="cargoPlaza">
                                                     <?php
-                                                    echo '<option value="">Ingeniero de sistemas</option>'
-                                                    ?>
-                                                </select>
-                                            </div>
-                                            <div class="col-md-4">
-                                                <label for="depto">Departamento</label>
-                                                <select class="form-control input-sm" type="text" name="depto">
-                                                    <?php
-                                                    echo '<option value="">Informática</option>'
+                                                    foreach ($arrayPlazas as $key) {
+                                                        echo '<option value="'.strtolower($key["nombrePlaza"]).'">'.$key["nombrePlaza"].'</option>';
+                                                    }
                                                     ?>
                                                 </select>
                                             </div>
                                             <div class="col-md-3">
+                                                <label for="cargoPlaza">Rol a desempeñar</label>
+                                                <select class="form-control input-sm" type="text" name="cargoPlaza">
+                                                    <?php
+                                                    echo '<option value="administracion">Administración</option>';
+                                                    echo '<option value="subgerencia">Subgerencia</option>';
+                                                    echo '<option value="jefatura">Jefatura</option>';
+                                                    echo '<option value="contabilidad">Contabilidad</option>';
+                                                    echo '<option value="atencion">Atención al cliente</option>';
+                                                    echo '<option value="mantenimiento">Mantenimiento</option>';
+                                                    echo '<option value="seguridad">Seguridad</option>';
+                                                    ?>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="depto">Departamento</label>
+                                                <select class="form-control input-sm" type="text" name="depto">
+                                                    <?php
+                                                    echo '<option value="">Informática</option>';
+                                                    ?>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-2">
                                                 <label for="tipoContratacion">Tipo de contratación</label>
                                                 <select class="form-control input-sm" type="text" name="tipoContratacion">
                                                     <?php
@@ -472,7 +490,7 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <br>
-                                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#myModal">Agregar</button><br><br>
+                                                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#educacionModal">Agregar</button><br><br>
                                                 <table class="table table-hover table-striped">
                                                     <tr>
                                                         <th class="bg-info">Nivel de estudios</th>
@@ -480,6 +498,58 @@
                                                         <th class="bg-info">Institución</th>
                                                     </tr>
                                                 </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade" id="refex">
+                                        <div class="row">
+                                            <h4>Experiencia y referencias laborales</h4>
+                                            <div class="col-md-6">
+                                                <label for="empresa1">Empresa</label>
+                                                <input class="form-control input-sm" type="text" name="empresa1">
+                                                <label for="cargo1">Cargo</label>
+                                                <input class="form-control input-sm" type="text" name="cargo1">
+                                                <label for="jefe1">Jefe</label>
+                                                <input class="form-control input-sm" type="text" name="jefe1">
+                                                <label for="tiempoTrabajo1">Tiempo de trabajo</label>
+                                                <input class="form-control input-sm" type="text" name="tiempoTrabajo1">
+                                                <label for="motivoRetiro1">Motivo del retiro</label>
+                                                <input class="form-control input-sm" type="text" name="motivoRetiro1">
+                                            </div>
+                                            <div class="col-md-6">
+                                                <label for="empresa2">Empresa</label>
+                                                <input class="form-control input-sm" type="text" name="empresa2">
+                                                <label for="cargo2">Cargo</label>
+                                                <input class="form-control input-sm" type="text" name="cargo2">
+                                                <label for="jefe2">Jefe</label>
+                                                <input class="form-control input-sm" type="text" name="jefe2">
+                                                <label for="tiempoTrabajo2">Tiempo de trabajo</label>
+                                                <input class="form-control input-sm" type="text" name="tiempoTrabajo2">
+                                                <label for="motivoRetiro2">Motivo del retiro</label>
+                                                <input class="form-control input-sm" type="text" name="motivoRetiro2">
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <h4>Referencias familiares</h4>
+                                            <div class="col-md-9">
+                                                <label for="nombreRef1">Nombre</label>
+                                                <input class="form-control input-sm" type="text" name="nombreRef1">
+                                                <label for="nombreRef2">Nombre</label>
+                                                <input class="form-control input-sm" type="text" name="nombreRef2">
+                                                <label for="nombreRef3">Nombre</label>
+                                                <input class="form-control input-sm" type="text" name="nombreRef3">
+                                                <label for="nombreRef4">Nombre</label>
+                                                <input class="form-control input-sm" type="text" name="nombreRef4">
+                                            </div>
+                                            <div class="col-md-3">
+                                                <label for="ref1Num">Número</label>
+                                                <input class="form-control input-sm" type="text" name="ref1Num">
+                                                <label for="ref2Num">Número</label>
+                                                <input class="form-control input-sm" type="text" name="ref2Num">
+                                                <label for="ref3Num">Número</label>
+                                                <input class="form-control input-sm" type="text" name="ref3Num">
+                                                <label for="ref4Num">Número</label>
+                                                <input class="form-control input-sm" type="text" name="ref4Num">
                                             </div>
                                         </div>
                                     </div>
@@ -494,8 +564,8 @@
             </div>
             <!-- /.container-fluid -->
             <!-- Modal -->
-            <div id="educacion" class="modal fade" role="dialog">
-              <div class="modal-dialog modal-md">
+            <div id="educacionModal" class="modal fade" role="dialog">
+              <div class="modal-dialog modal-lg">
 
                 <!-- Modal content-->
                 <div class="modal-content">
@@ -505,11 +575,24 @@
                   </div>
                   <div class="modal-body">
                     <form class="" action="index.html" method="post">
-                        <select class="" name="">
-                            <option value="Universitario">Universitario</option>
-                            <option value="Bachillerato">Bachillerato</option>
-                            <option value="Técnico">Técnico</option>
-                        </select>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="nivelEducativo">Nivel educativo</label>
+                                <select class="form-control" name="nivelEducativo">
+                                    <option value="Universitario">Universitario</option>
+                                    <option value="Bachillerato">Bachillerato</option>
+                                    <option value="Técnico">Técnico</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="institucion">Institución</label>
+                                <input class="form-control" type="text" name="institucion">
+                            </div>
+                            <div class="col-md-4">
+                                <label for="titulo">Título obtenido</label>
+                                <input class="form-control" type="text" name="titulo">
+                            </div>
+                        </div>
                     </form>
                   </div>
                   <div class="modal-footer">
