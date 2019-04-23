@@ -207,7 +207,7 @@
 
                         <h5><strong>Comentario acerca del traslado de Articulos:</strong></h5>
                         <textarea class="" name="Comentario" rows="5" cols="80" ></textarea><br>
-                        <a href="asignarArticuloInventario.php"><button class="btn btn-default" type="button" name="regresar"><i class="fas fa-arrow-circle-left"></i> Volver a inventario</button></a>
+                        <a href="index.php"><button class="btn btn-default" type="button" name="regresar"><i class="fas fa-arrow-circle-left"></i> Volver</button></a>
                         <button type="submit" name="Action2" class="btn btn-primary">Mandar Articulo a Bodega</button>
                     </form>
                 </div>

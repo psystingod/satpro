@@ -186,16 +186,18 @@ $ReportesPendientes = $reportsInfo->ReportesPendientesDB();
                         <div class="panel-body">
                             <!-- Nav tabs -->
                             <ul class="nav nav-pills nav-justified">
-                                <li class="active"><a href="#Aprobadas" data-toggle="tab">Traslados Realizados</a>
+                                <li class="active"><a href="#Pendientes" data-toggle="tab">Traslados Pendientes de Aprobaciòn</a>
                                 </li>
-                                <li><a href="#Pendientes" data-toggle="tab">Traslados Pendientes de Aprobaciòn</a>
+                                <li><a href="#Aprobadas" data-toggle="tab">Traslados Realizados</a>
                                 </li>
 
                             </ul>
 
                             <!-- Tab panes -->
                             <div class="tab-content">
-                         <div class="tab-pane fade in active" id="Aprobadas">
+
+
+                         <div  class="tab-pane fade" id="Aprobadas">
 
                             <div class="row">
                 <form class="" action="resumenTraslado.php" method="post">
@@ -204,7 +206,7 @@ $ReportesPendientes = $reportsInfo->ReportesPendientesDB();
                     <table width="100%" class="table table-striped table-hover" id="inventario">
                         <thead>
                             <tr>
-
+                              <th></th>
                                 <th>Fecha Envio</th>
                                  <th>Empleado Envio</th>
                                 <th>Departamento</th>
@@ -215,7 +217,7 @@ $ReportesPendientes = $reportsInfo->ReportesPendientesDB();
                         <tbody>
                             <?php
                                 foreach ($ReportesFinales as $key) {
-                                    echo "<tr><td>";
+                                    echo "<tr><td><i class='fa fa-check-circle' style='font-size:20px;color:green'></i></td><td>";
                                   //  echo $key["Cod"] . "</td><td>";
                                     echo $key["Fecha"] . "</td><td>";
                                     echo $key["NombreEmpleado"] . "</td><td>";
@@ -241,7 +243,9 @@ $ReportesPendientes = $reportsInfo->ReportesPendientesDB();
                 </div>
 
                                 </div>
-                                    <div class="tab-pane fade" id="Pendientes">
+
+
+                                    <div class="tab-pane fade in active" id="Pendientes">
                 <div class="row">
                 <form class="" action="resumenTraslado.php" method="post">
                 <br><br>
@@ -249,7 +253,7 @@ $ReportesPendientes = $reportsInfo->ReportesPendientesDB();
                     <table width="100%" class="table table-striped table-hover" id="inve">
                         <thead>
                             <tr>
-
+                              <th></th>
                               <th>Fecha Envio</th>
                                <th>Empleado Envio</th>
                               <th>Departamento</th>
@@ -260,7 +264,7 @@ $ReportesPendientes = $reportsInfo->ReportesPendientesDB();
                         <tbody>
                             <?php
                                 foreach ($ReportesPendientes as $key) {
-                                    echo "<tr><td>";
+                                    echo "<tr><td><i class='fa fa-warning' style='font-size:20px;color:yellow'></i></td><td>";
                                   //  echo $key["Cod"] . "</td><td>";
                                     echo $key["Fecha"] . "</td><td>";
                                     echo $key["NombreEmpleado"] . "</td><td>";

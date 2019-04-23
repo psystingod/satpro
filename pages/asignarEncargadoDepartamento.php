@@ -1,7 +1,5 @@
 <?php
     session_start();
- ?>
-<?php
     require("../php/getViewA_D.php");
 
     $Inv = new GetViewA_D();

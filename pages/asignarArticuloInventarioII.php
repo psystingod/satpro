@@ -420,7 +420,7 @@
                                        </select>
                                     </div>
                                 </div>
-                                <div class="form-row">
+                                <!-- <div class="form-row">
                                     <div class="form-group col-md-12 col-xs-12">
                                         <label for="proveedor">Seleccione Columnas que desea ver:</label>
                                         <br>
@@ -429,7 +429,7 @@
                                         <input type="checkbox" name="Proveedor" >Proveedor<br>
                                     </div>
 
-                                </div>
+                                </div> -->
                     </div>
                     <div class="modal-footer">
 

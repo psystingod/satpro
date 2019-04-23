@@ -68,15 +68,27 @@
                         $idProv = $key["IdProveedor"];
                     }
 
-                    // $IdArticulo=$this->dbConnect->lastInsertId();
-                    // $Nombre = $_POST["NOMBRE"];
-                    // $Apellido = $_POST["APELLIDO"];
-                    // $query = "insert into tbl_historialRegistros (IdEmpleado,FechaHora,Tipo_Movimiento,Descripcion)
-                    // VALUES((SELECT IdEmpleado from tbl_empleado where Nombres='".$Nombre."' and Apellidos='".$Apellido."'),'". $Fecha."',2
-                    // ,concat( 'Modelo del Producto/Articulo: ',  (SELECT a.Modelo FROM tbl_articuloInternet as a WHERE  a.IdArticulo= '".$IdArticulo."')  , ' MAC: ".$mac." ' ) )";
-                    //  $statement = $this->dbConnect->prepare($query);
-                    //  $statement->execute();
-                    // $this->dbConnect = NULL;
+
+                    //GUARDAMOS EL HISTORIAL DE LA ENTRADA
+
+                    $nombreArticuloHistorial = $mac;
+                    $nombreEmpleadoHistorial = $_POST['nombreEmpleadoHistorial'];
+                    $nombreBodegaHistorial = $bodega;
+                    $cantidadHistorial = 1;
+                    $tipoMovimientoHistorial = "Nuevo ingreso de producto Internet";
+
+                    $query = "INSERT into tbl_historialentradas (nombreArticulo, nombreEmpleado, fechaHora, tipoMovimiento, cantidad, bodega)
+                              VALUES(:nombreArticuloHistorial, :nombreEmpleadoHistorial, CURRENT_TIMESTAMP(), :tipoMovimientoHistorial, :cantidadHistorial, :nombreBodegaHistorial)";
+
+                    $statement = $this->dbConnect->prepare($query);
+                    $statement->execute(array(
+                    ':nombreArticuloHistorial' => $nombreArticuloHistorial,
+                    ':nombreEmpleadoHistorial' => $nombreEmpleadoHistorial,
+                    ':tipoMovimientoHistorial' => $tipoMovimientoHistorial,
+                    ':cantidadHistorial' => $cantidadHistorial,
+                    ':nombreBodegaHistorial' => $nombreBodegaHistorial
+                    ));
+
                     header('Location: ../pages/inventarioInternet.php?status=success&bodega='.$bodega.'&proveedor='.$nombreProveedor.'&idProv='.$idProv.'&marca='.$marca.'&modelo='.$modelo.'&docsis='.$docsis.'&nosh='.$nosh.'&fecha='.$fechaForm);
                    }
 

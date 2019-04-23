@@ -197,17 +197,17 @@
                        <div class="panel-body">
                            <!-- Nav tabs -->
                            <ul class="nav nav-pills nav-justified">
-                               <li class="active"><a href="#datos-generales" data-toggle="tab">Reportes de Traslados Realizados</a>
+                               <li class="active"><a href="#otros-datos" data-toggle="tab">Traslados Pendientes de Aprobaciòn</a>
                                </li>
-                               <li><a href="#otros-datos" data-toggle="tab">Traslados Pendientes de Aprobaciòn</a>
+                               <li><a href="#datos-generales" data-toggle="tab">Reportes de Traslados Realizados</a>
                                </li>
 
                            </ul>
 
                            <!-- Tab panes -->
                            <div class="tab-content">
-                               <div class="tab-pane fade in active" id="datos-generales">
 
+                               <div class="tab-pane fade" id="datos-generales">
                                <div class="row">
                                    <form class="" action="" method="POST">
                                    <br><br>
@@ -228,7 +228,7 @@
                                            <tbody>
                                                <?php
                                                    foreach ($ReportesFinales as $key) {
-                                                       echo "<tr><td></td><td>";
+                                                       echo "<tr><td><i class='fa fa-check-circle' style='font-size:20px;color:green'></td><td>";
                                                        echo $key["IdReporte"] . "</td><td>";
                                                        echo $key["NombreEmpleadoOrigen"] . "</td><td>";
                                                        echo $key["FechaOrigen"] . "</td><td>";
@@ -241,7 +241,7 @@
                                                                      <span class='sr-only'>Toggle Dropdown</span>
                                                                    </button>
                                                                    <ul class='dropdown-menu'>
-                                                                       <li><a href='VerReporteConfirmado.php?v=".$key["IdReporte"] ."'><i class='fas fa-eye'></i> Ver Detalle</a>
+                                                                       <li><a href='VerReporteConfirmado.php?v=".$key["IdReporte"] ."'><i class='fa fa-exclamation-triangle'></i> Ver Detalle</a>
                                                                        </li>
                                                                        <li><a href='../php/GenerarPDF.php?v=".$key["IdReporte"] ."' target='_blank'><i class='fas fa-eye'></i> Ver Detalle (PDF)</a>
                                                                        </li>
@@ -259,7 +259,9 @@
                                    </div>
 
                                </div>
-                                   <div class="tab-pane fade" id="otros-datos">
+
+
+                                   <div class="tab-pane fade in active"  id="otros-datos">
 
                                      <div class="row">
                                    <form class="" action="" method="POST">
@@ -280,7 +282,7 @@
                                            <tbody>
                                                <?php
                                                    foreach ($ReportesPendientes as $key) {
-                                                       echo "<tr><td></td><td>";
+                                                       echo "<tr><td><i class='fa fa-warning' style='font-size:20px;color:yellow'></i></td><td>";
                                                        echo $key["IdReporte"] . "</td><td>";
                                                        echo $key["NombreEmpleado"] . "</td><td>";
                                                        echo $key["FechaOrigen"] . "</td><td>";
@@ -293,7 +295,7 @@
                                                                      <span class='sr-only'>Toggle Dropdown</span>
                                                                    </button>
                                                                    <ul class='dropdown-menu'>
-                                                                       <li><a href='VerReporteConfirmar.php?v=".$key["IdReporte"]."'><i class='fas fa-eye'></i> Ver Detalle Para Confirmar</a>
+                                                                       <li><a href='VerReporteConfirmar.php?v=".$key["IdReporte"]."'><i class='fa fa-exclamation-triangle'></i> Ver Detalle Para Confirmar</a>
                                                                        </li>
                                                                        <li class='divider'></li>
                                                                        </li>
@@ -308,6 +310,9 @@
                                        <!-- /.table-responsive -->
                                    </div>
                                    </div>
+
+
+
                                </div>
                            </div>
                        </div>

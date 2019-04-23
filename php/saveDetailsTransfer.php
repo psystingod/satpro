@@ -10,7 +10,6 @@
         public function enter()
         {
                 try {
-
                    //Variable del Id de la Factura
                    $IdFactura;
                    //Hora y Fecha Actual
@@ -73,6 +72,7 @@
                                     ':State' => $State
                                     ));
                                     $IdFactura=$this->dbConnect->lastInsertId();
+
                                      //Guardar Detalle de Traslado
                                     for($i=0;$i < count($array); $i++)
                                         {
@@ -99,12 +99,27 @@
                                              ':BodegaOrigen' => $IdBodegaOrigen
                                           ));
 
+                                          //GUARDAMOS EL HISTORIAL DE LA ENTRADA
+
+                                          $nombreArticuloHistorial = $IdArticulo;
+                                          $nombreEmpleadoHistorial = $_POST['nombreEmpleadoHistorial'];
+                                          $nombreBodegaHistorial = $IdBodegaOrigen . ">" . $IdBodegaDestino;
+                                          $cantidadHistorial = $Cantidad;
+                                          $tipoMovimientoHistorial = "Traslado entre Bodegas";
+
+                                          $query = "INSERT into tbl_historialentradas (nombreArticulo, nombreEmpleado, fechaHora, tipoMovimiento, cantidad, bodega)
+                                                    VALUES( (select NombreArticulo from tbl_articulo where IdArticulo=:nombreArticuloHistorial), :nombreEmpleadoHistorial, CURRENT_TIMESTAMP(), :tipoMovimientoHistorial, :cantidadHistorial, :nombreBodegaHistorial)";
+
+                                          $statement = $this->dbConnect->prepare($query);
+                                          $statement->execute(array(
+                                          ':nombreArticuloHistorial' => $nombreArticuloHistorial,
+                                          ':nombreEmpleadoHistorial' => $nombreEmpleadoHistorial,
+                                          ':tipoMovimientoHistorial' => $tipoMovimientoHistorial,
+                                          ':cantidadHistorial' => $cantidadHistorial,
+                                          ':nombreBodegaHistorial' => $nombreBodegaHistorial
+                                          ));
                                            header("Location: ../pages/inventarioBodegas.php?status=success&bodega=".$IdBodegaOrigen);
                                          }
-                                         $query = "insert into tbl_historialRegistros (IdEmpleado,FechaHora,Tipo_Movimiento,Descripcion)
-VALUES((SELECT IdEmpleado from tbl_empleado where Nombres='".$Nombre."' and Apellidos='".$Apellido."'),'".$Fecha."',5, concat( (SELECT a.NombreBodega FROM tbl_bodega as a WHERE  NombreBodega='".$IdBodegaOrigen."'),' >> ', (SELECT a.NombreBodega FROM tbl_bodega as a WHERE  NombreBodega='".$IdBodegaDestino."') ) )";
-                                          $statement = $this->dbConnect->prepare($query);
-                                          $statement->execute();
                                 }
                         }
                     }

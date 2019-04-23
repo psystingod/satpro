@@ -201,6 +201,8 @@
                      <input type="hidden" name="NOMBRE" value='<?php echo $_SESSION['nombres'];  ?>'>
                      <input type="hidden" name="APELLIDO" value='<?php echo $_SESSION['apellidos'];  ?>'>
 
+                     <input type="hidden" name="nombreEmpleadoHistorial" value="<?php echo $_SESSION['nombres'].' '.$_SESSION['apellidos'] ?>">
+
                      <h5><strong>Descripción o Comentario acerca de la Asignación:</strong></h5>
                      <textarea class="" name="Comentario" rows="5" cols="80" required></textarea><br>
                     <!-- <a href="AsignarArticuloDepartamento.php"><button class="btn btn-default" type="button" name="regresar"><i class="fas fa-arrow-circle-left"></i> Volver a inventario</button></a> -->

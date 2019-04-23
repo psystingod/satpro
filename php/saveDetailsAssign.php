@@ -76,15 +76,33 @@
                                            ':Cantidad' => $Cantidad,
                                            ':State' => $State
                                           ));
-                                                $query = "UPDATE tbl_articulo set Cantidad = Cantidad - :Cantidad where IdArticulo=:IdArticulo and IdBodega=(select b.idBodega from tbl_bodega as b where NombreBodega =:Bodega)";
-                                               $statement = $this->dbConnect->prepare($query);
-                                               $statement->execute(array(
-                                                ':IdArticulo' => $IdArticulo,
-                                               ':Cantidad' => $Cantidad,
-                                               ':Bodega' => $Bodega
-                                                ));
+                                            $query = "UPDATE tbl_articulo set Cantidad = Cantidad - :Cantidad where IdArticulo=:IdArticulo and IdBodega=(select b.idBodega from tbl_bodega as b where NombreBodega =:Bodega)";
+                                           $statement = $this->dbConnect->prepare($query);
+                                           $statement->execute(array(
+                                            ':IdArticulo' => $IdArticulo,
+                                           ':Cantidad' => $Cantidad,
+                                           ':Bodega' => $Bodega
+                                            ));
 
-                                            
+                                            //GUARDAMOS EL HISTORIAL DE LA ENTRADA
+
+                                            $nombreArticuloHistorial = $IdArticulo;
+                                            $nombreEmpleadoHistorial = $_POST['nombreEmpleadoHistorial'];
+                                            $nombreBodegaHistorial = $Bodega . ">" . $Departamento;
+                                            $cantidadHistorial = $Cantidad;
+                                            $tipoMovimientoHistorial = "Traslado de Bodega a Departamento";
+
+                                            $query = "INSERT into tbl_historialentradas (nombreArticulo, nombreEmpleado, fechaHora, tipoMovimiento, cantidad, bodega)
+                                                      VALUES( (select NombreArticulo from tbl_articulo where IdArticulo=:nombreArticuloHistorial), :nombreEmpleadoHistorial, CURRENT_TIMESTAMP(), :tipoMovimientoHistorial, :cantidadHistorial, :nombreBodegaHistorial)";
+
+                                            $statement = $this->dbConnect->prepare($query);
+                                            $statement->execute(array(
+                                            ':nombreArticuloHistorial' => $nombreArticuloHistorial,
+                                            ':nombreEmpleadoHistorial' => $nombreEmpleadoHistorial,
+                                            ':tipoMovimientoHistorial' => $tipoMovimientoHistorial,
+                                            ':cantidadHistorial' => $cantidadHistorial,
+                                            ':nombreBodegaHistorial' => $nombreBodegaHistorial
+                                            ));
                                    }
                             $this->dbConnect = NULL;
                             header('Location: ../pages/asignarArticuloDepartamento.php?status=success&bodega='.$Bodega);

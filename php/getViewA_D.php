@@ -82,7 +82,7 @@
         {
             try {
                 // SQL query para traer los datos de los productos
-                $query = "SELECT AD.IdArticuloDepartamento, AD.Codigo, AD.NombreArticulo, AD.Cantidad, D.NombreDepartamento FROM satpro.tbl_articulodepartamento as AD inner join tbl_departamento as D on AD.IdDepartamento=D.IdDepartamento";
+                $query = "SELECT AD.IdArticuloDepartamento, AD.Codigo, AD.NombreArticulo, AD.Cantidad, D.NombreDepartamento FROM satpro.tbl_articulodepartamento as AD inner join tbl_departamento as D on AD.IdDepartamento=D.IdDepartamento where cantidad>0";
                 // Preparación de sentencia
                 $statement = $this->dbConnect->prepare($query);
                 $statement->execute();
