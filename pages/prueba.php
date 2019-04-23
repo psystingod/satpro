@@ -66,9 +66,6 @@ switch (date("l", strtotime($day))) {
         break;
     case 'Friday':
         echo $day."<br>";
-        for ($i=1; $i <= 1; $i++) {
-            echo date("Y-m-d", strtotime( '+'.$i.'day', strtotime($day)))."<br>";
-        }
         break;
     default:
         // code...
