@@ -27,7 +27,7 @@
 
                        //Consulta en BD, si existe un empleado en donde coincida el codigo con sus nombre, en caso contrario generar Error
 
-                       $query = "SELECT count(*) FROM tbl_empleado where tbl_empleado.Codigo='".$CodigoEmpleado."' and tbl_empleado.Nombres='".$NombreEmpleado."'";
+                       $query = "SELECT count(*) FROM tbl_empleado where tbl_empleado.Codigo='".$CodigoEmpleado."' ";
                        $statement = $this->dbConnect->query($query);
 
                        if($statement->fetchColumn() == 1)

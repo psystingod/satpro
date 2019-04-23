@@ -397,8 +397,8 @@
                                   </div>
                       </div>
                       <div class="modal-footer">
-                        <input type="hidden" name="NOMBRE" value='<?php echo $_SESSION['nombres']; ?>'>
-                        <input type="hidden" name="APELLIDO" value='<?php echo $_SESSION['apellidos']; ?>'>
+
+                        <input type="hidden" name="nombreEmpleadoHistorial" value="<?php echo $_SESSION['nombres'].' '.$_SESSION['apellidos'] ?>">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                             <input type="submit" class="btn btn-primary" value="Registrar">
                       </div>

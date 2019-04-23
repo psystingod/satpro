@@ -1,7 +1,5 @@
 <?php
-
     session_start();
-
     require("../php/contenido.php");
     require("../php/getInventoryPDF.php");
     require("../php/productsInfo.php");
@@ -11,7 +9,6 @@
     // Trae el inventario completo de la base de datos
     $getInventory = new GetInventoryPDF();
     $recordsInfo = $getInventory->showInventoryRecords($Bodega);
-
 
 ?>
 

@@ -247,7 +247,7 @@
                         </thead>
                         <tbody>
                             <?php
-                            $A= '3325s';
+                            // $A= '3325s';
                                 foreach ($recordsInfo as $key) {
                                     echo "<tr><td>";
                                     echo "<input type='checkbox' class='form-control checkbox agregar' name='checkTraslado[]' value='".$key['IdArticulo']."'>" . "</td><td>";
@@ -406,7 +406,7 @@
                       </div>
                       <div class="modal-footer">
                         <input type="hidden" name="NOMBRE" value='<?php echo $_SESSION['nombres']; ?>'>
-                  <input type="hidden" name="APELLIDO" value='<?php echo $_SESSION['apellidos']; ?>'>
+                        <input type="hidden" name="APELLIDO" value='<?php echo $_SESSION['apellidos']; ?>'>
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                             <input type="submit" class="btn btn-primary" value="Registrar">
                       </div>
@@ -450,7 +450,7 @@
                                        </select>
                                     </div>
                                 </div>
-                                <div class="form-row">
+                                <!-- <div class="form-row">
                                     <div class="form-group col-md-12 col-xs-12">
                                         <label for="proveedor">Seleccione Columnas que desea ver:</label>
                                         <br>
@@ -459,7 +459,7 @@
                                         <input type="checkbox" name="Proveedor" >Proveedor<br>
                                     </div>
 
-                                </div>
+                                </div> -->
                     </div>
                     <div class="modal-footer">
                       <input type="hidden" name="NOMBRE" value='<?php echo $_SESSION['nombres']; ?>'>

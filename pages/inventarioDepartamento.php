@@ -153,52 +153,40 @@
             </div>
             <!-- /.row -->
             <div class="row">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <a href="inventario.php"><button class="btn btn-success" type="button" name="regresar"><i class="fas fa-arrow-circle-left"></i> Atrás</button></a>
-                    </div>
-                </div>
+
                 <form class="" action="resumenTraslado.php" method="POST">
+                  <a href="inventario.php"><button class="btn btn-success" type="button" name="regresar"><i class="fas fa-arrow-circle-left"></i> Atrás</button></a>
+                  <br>
+                  <br>
+                <button id="traslados1" type="submit" class="btn btn-default pull-left" disabled = "disabled" accesskey="w"  onclick="javascript: form.action='resumenArticuloD_B.php' "><i class="fas fa-users"></i>Regresar Articulos a Bodega</button>
+
                 <br><br>
 
-                    <table width="100%" class="table table-striped table-hover" id="inventario">
-                        <thead>
-                            <tr>
-                                <th>Codigo</th>
-                                <th>Nombre de Articulo</th>
-                                <th>Cantidad</th>
-                                <th>Departamento</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                  <tbody>
-                            <?php
-                                foreach ($InvDe as $key) {
-                                    echo "<tr><td>";
-                                    echo $key["Codigo"] . "</td><td>";
-                                    echo $key["NombreArticulo"] . "</td><td>";
-                                    echo $key["Cantidad"] . "</td><td>";
-                                    echo $key["NombreDepartamento"] . "</td><td>";
-                                    echo "<div class='btn-group pull-right'>
-                                                <button type='button' class='btn btn-default'>Opciones</button>
-                                                <button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-                                                  <span class='caret'></span>
-                                                  <span class='sr-only'>Toggle Dropdown</span>
-                                                </button>
-                                                <ul class='dropdown-menu'>
-                                                    <li><a href=''><i class='fas fa-eye'></i> Ver</a>
-                                                    </li>
-                                                    <li><a href=''><i class='fas fa-edit'></i> Editar</a>
-                                                    </li>
-                                                    <li><a href='#' onclick=''><i class='fas fa-trash-alt'></i> Eliminar</a>
-                                                    </li>
-                                                    <li class='divider'></li>
-                                                </ul>
-                                            </div>" . "</td></tr>";
-                                        }
-                                    ?>
-                        </tbody>
-                    </table>
+                <table width="100%" class="table table-striped table-hover" id="inventario">
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Codigo</th>
+                            <th>Nombre de Articulo</th>
+                            <th>Cantidad</th>
+                            <th>Departamento</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                            foreach ($InvDe as $key) {
+                                echo "<tr><td>";
+                                echo "<input type='checkbox' class='form-control checkbox' name='checkTraslado[]' value='".$key['IdArticuloDepartamento']."'>" . "</td><td>";
+                                echo $key["Codigo"] . "</td><td>";
+                                echo $key["NombreArticulo"] . "</td><td>";
+                                echo $key["Cantidad"] . "</td><td>";
+                                echo $key["NombreDepartamento"] . "</td>";
+                                echo "" . "</tr>";
+                                    }
+                                ?>
+                    </tbody>
+                </table>
                     </form>
                 </div>
                 <!-- /.col-lg-12 -->
@@ -254,6 +242,13 @@
                 window.location = 'borrarArticulo.php?id=' + id;
             }
         }
+    </script>
+    <script type="text/javascript">
+        $(function() {
+            $(".checkbox").click(function(){
+                $('#traslados1').prop('disabled',$('input.checkbox:checked').length == 0);
+            });
+        });
     </script>
 </body>
 
