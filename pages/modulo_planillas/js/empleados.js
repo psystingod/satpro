@@ -11,10 +11,10 @@ function nuevoEmpleado(){
         }
     }
     document.getElementById("guardar").disabled = false;
-    document.getElementById("editar").disabled = true;
+    document.getElementById("editarEmpleado").disabled = true;
     changeAction("nueva");
 }
-function editarOrden(){
+function editarEmpleado(){
     var editInputs = document.getElementsByClassName("input-sm");
     for (var i = 0; i < editInputs.length; i++) {
         if (editInputs[i].readOnly == true) {
@@ -24,16 +24,18 @@ function editarOrden(){
             editInputs[i].disabled = false;
         }
     }
+    document.getElementById("nuevoEmpleado").disabled = true;
+    document.getElementById("guardar").disabled = true;
     changeAction("editar");
 }
 
 function changeAction(action){
     switch (action) {
         case "nueva":
-            document.getElementById("ordenTrabajo").action = "php/nuevaOrdenTrabajo.php";
+            document.getElementById("empleados").action = "php/newEmployee.php";
             break;
         case "editar":
-            document.getElementById("ordenTrabajo").action = "php/editarOrdenTrabajo.php";
+            document.getElementById("empleados").action = "php/editEmployee.php";
             break;
         default:
 

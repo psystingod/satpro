@@ -500,10 +500,6 @@
               </div>
         </div>
   </div>
-
-
-
-
       <div class="modal fade" id="UpdateCantidad" tabindex="-1" role="dialog" aria-labelledby="UpdateCantidad">
             <div class="modal-dialog" role="document">
                   <div class="modal-content">
