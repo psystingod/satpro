@@ -218,7 +218,7 @@ $ReportesPendientes = $reportsInfo->ReportesPendientes();
                         <tbody>
                             <?php
                                 foreach ($ReportesFinales as $key) {
-                                    echo "<tr><td><td><i class='fa fa-check-circle' style='font-size:20px;color:green'></i></td><td>";
+                                    echo "<tr><td><i class='fa fa-check-circle' style='font-size:20px;color:green'></i><td>";
                                   //  echo $key["Cod"] . "</td><td>";
                                     echo $key["Fecha"] . "</td><td>";
                                     echo $key["NombreEmpleado"] . "</td><td>";

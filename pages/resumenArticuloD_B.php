@@ -147,7 +147,6 @@
             <div id="page-wrapper">
                 <div class="container-fluid">
                     <form class="" action="../php/saveDetailsDepartamentoBodega.php" method="POST">
-
                     <div class="row">
                         <div class="col-lg-12">
                             <h1 class="page-header">Asignacion de Articulos a Empleados</h1>
@@ -204,6 +203,8 @@
 
                         <input type="hidden" name="NOMBRE" value='<?php echo $_SESSION['nombres']; ?>'>
                         <input type="hidden" name="APELLIDO" value='<?php echo $_SESSION['apellidos']; ?>'>
+
+                         <input type="hidden" name="nombreEmpleadoHistorial" value="<?php echo $_SESSION['nombres'].' '.$_SESSION['apellidos'] ?>">
 
                         <h5><strong>Comentario acerca del traslado de Articulos:</strong></h5>
                         <textarea class="" name="Comentario" rows="5" cols="80" ></textarea><br>
