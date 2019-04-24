@@ -94,13 +94,34 @@
                                           ':IdArticulo' => $array[$i],
                                           ':Cantidad' => $V1[$i]
                                        ));
+
+
+                                       //GUARDAMOS EL HISTORIAL DE LA ENTRADA
+
+                                       $nombreArticuloHistorial = $array[$i];
+                                       $nombreEmpleadoHistorial = $_POST['nombreEmpleadoHistorial'];
+                                       $nombreBodegaHistorial = $Departamento . ">" . $Bodega;
+                                       $cantidadHistorial = $V1[$i];
+                                       $tipoMovimientoHistorial = "Traslado de Departamento a Bodega";
+
+                                       $query = "INSERT into tbl_historialentradas (nombreArticulo, nombreEmpleado, fechaHora, tipoMovimiento, cantidad, bodega)
+                                                 VALUES( (select NombreArticulo from tbl_articulo where IdArticulo=:nombreArticuloHistorial), :nombreEmpleadoHistorial, CURRENT_TIMESTAMP(), :tipoMovimientoHistorial, :cantidadHistorial, :nombreBodegaHistorial)";
+
+                                       $statement = $this->dbConnect->prepare($query);
+                                       $statement->execute(array(
+                                       ':nombreArticuloHistorial' => $nombreArticuloHistorial,
+                                       ':nombreEmpleadoHistorial' => $nombreEmpleadoHistorial,
+                                       ':tipoMovimientoHistorial' => $tipoMovimientoHistorial,
+                                       ':cantidadHistorial' => $cantidadHistorial,
+                                       ':nombreBodegaHistorial' => $nombreBodegaHistorial
+                                       ));
+
                                     }
 
                                  header('Location: ../pages/asignarArticuloInventario.php?status=success');
                                }
 
                             $this->dbConnect = NULL;
-
                     }
                     catch (Exception $e)
                     {
