@@ -88,9 +88,13 @@
                 $clave = password_hash($dui, PASSWORD_DEFAULT);
                 $rol = $_POST["rol"];
 
-                $query = "INSERT INTO tbl_empleado(Codigo, Nombres, Apellidos, Direccion, Dui, Nit, Isss, Afp, E_Familiar, G_Academico, FechaNacimiento, Telefono, IdUsuario, IdDepartamento, State)
-                          VALUES(:codigo, :nombres, :apellidos, :direccion, :dui, :nit, :isss, :afp, :estadoFamiliar, :gradoAcademico, :nacimiento, :telefono,
-                                :idUsuario, (SELECT IdDepartamento FROM tbl_departamento WHERE NombreDepartamento = :departamento), :state)";
+                $query = "INSERT INTO tbl_empleados(nombres, apellidos, nombre_isss, sexo, municipio, departamento, telefonos, celular, numero_nit, no_licencia, no_documento, fecha_expedicion, no_isss, no_nup, profesion_oficio,
+                        lugar_nacimiento, nacionalidad, estado_civil, fecha_nacimiento, edad, nivel_estudios, clase, estatura, peso, tipo_sangre, doc_lugarext, senales_especiales, nombre_padre, nombre_madre, nombre_conyugue,
+                        trabajo_conyugue, id_centro, persona_autorizada, id_afp, id_banco, id_departamento, tipo_contratacion, id_plaza, cargo, numero_cuenta, por_afp, aplicar_isss, cuota_seguro, fecha_ingreso, fecha_contratacion,
+                        salario_ordinario, fecha_salario, empresa_refer1, cargo_refer1, jefe_refer1, tiempo_refer1, motivo_retiro1, empresa_refer2, cargo_refer2, jefe_refer2, tiempo_refer2, motivo_retiro2, nomb_ref_per1, tel_ref_per1,
+                        nomb_ref_per2, tel_ref_per2, nomb_ref_per3, tel_ref_per3, nombre_ref_fam1, nombre_ref_fam2, estado_empleado, IdUsuario)
+                        VALUES(:codigo, :nombres, :apellidos, :direccion, :dui, :nit, :isss, :afp, :estadoFamiliar, :gradoAcademico, :nacimiento, :telefono,
+                        :idUsuario, (SELECT IdDepartamento FROMs tbl_departamento WHERE NombreDepartamento = :departamento), :state)";
 
                 $statement = $this->dbConnect->prepare($query);
 
