@@ -1,7 +1,5 @@
 <?php
-
     session_start();
-
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -234,15 +232,15 @@
                              <div class="name">Impuestos y porcentajes</b></div>
                          </div>
                      </div></a>
-                     <!--<a class="" href="departamentos.php"><div class="col-lg-6 btn btn-default">
+                     <a class="" href="plazas.php"><div class="col-lg-6 btn btn-default">
                          <div class="stat-icon">
-                             <i class="fas fa-grip-vertical fa-3x"></i>
+                             <i class="fas fa-users fa-3x"></i>
                          </div>
                          <div class="stat-values">
                              <br>
-                             <div class="name">Departamentos de la Empresa</b></div>
+                             <div class="name">Plazas</b></div>
                          </div>
-                     </div></a>-->
+                     </div></a>
                    </div>
 
                </div>
