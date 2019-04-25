@@ -73,7 +73,7 @@
                         <li><a href="config.php"><i class="fas fa-cog"></i> Configuración</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="../php/logout.php"><i class="fas fa-sign-out-alt"></i></i> Salir</a>
+                        <li><a href="../../php/logout.php"><i class="fas fa-sign-out-alt"></i></i> Salir</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -189,121 +189,121 @@
                                             <form id="empleados" action="" method="POST">
                                             <div class="col-md-2">
                                                 <label for="idEmpleado">Id empleado</label>
-                                                <input class="form-control input-sm" type="text" name="idEmpleado">
+                                                <input class="form-control input-sm" type="text" name="idEmpleado" readonly>
                                             </div>
                                             <div class="col-md-5">
-                                                <label for="nombres">Nombres</label>
-                                                <input class="form-control input-sm" type="text" name="nombres">
+                                                <label for="nombres">Nombres</label
+                                                <input class="form-control input-sm" type="text" name="nombres" readonly>
                                             </div>
                                             <div class="col-md-5">
                                                 <label for="apellidos">Apellidos</label>
-                                                <input class="form-control input-sm" type="text" name="apellidos">
+                                                <input class="form-control input-sm" type="text" name="apellidos" readonly>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <label for="idEmpleado">Nombre según ISSS</label>
-                                                <input class="form-control input-sm" type="text" name="nombreiss">
+                                                <input class="form-control input-sm" type="text" name="nombreiss" readonly>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <label for="direccionParticular">Dirección particular</label>
-                                                <textarea class="form-control input-sm" type="text" name="direccionParticular" rows="2" cols="20"></textarea>
+                                                <textarea class="form-control input-sm" type="text" name="direccionParticular" rows="2" cols="20" readonly></textarea>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-2">
                                                 <label for="telefono">Teléfonos</label>
-                                                <input class="form-control input-sm" type="text" name="telefono">
+                                                <input class="form-control input-sm" type="text" name="telefono" readonly>
                                             </div>
                                             <div class="col-md-5">
                                                 <label for="municipio">Municipio</label>
-                                                <input class="form-control input-sm" type="text" name="municipio">
+                                                <input class="form-control input-sm" type="text" name="municipio" readonly>
                                             </div>
                                             <div class="col-md-5">
                                                 <label for="departamento">Departamento</label>
-                                                <input class="form-control input-sm" type="text" name="departamento">
+                                                <input class="form-control input-sm" type="text" name="departamento" readonly>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-2">
                                                 <label for="dui">DUI</label>
-                                                <input class="form-control input-sm" type="text" name="dui">
+                                                <input class="form-control input-sm" type="text" name="dui" readonly>
                                             </div>
                                             <div class="col-md-4">
                                                 <label for="extendidoEn">Extendido en</label>
-                                                <input class="form-control input-sm" type="text" name="extendidoEn">
+                                                <input class="form-control input-sm" type="text" name="extendidoEn" readonly>
                                             </div>
                                             <div class="col-md-3">
                                                 <label for="fechaExpedicion">Fecha de expedición</label>
-                                                <input class="form-control input-sm" type="text" name="fechaExpedicion">
+                                                <input class="form-control input-sm" type="text" name="fechaExpedicion" readonly>
                                             </div>
                                             <div class="col-md-3">
                                                 <label for="fechaNacimiento">Fecha de nacimiento</label>
-                                                <input class="form-control input-sm" type="text" name="fechaNacimiento">
+                                                <input class="form-control input-sm" type="text" name="fechaNacimiento" readonly>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-1">
                                                 <label for="edad">Edad</label>
-                                                <input class="form-control input-sm" type="text" name="edad">
+                                                <input class="form-control input-sm" type="text" name="edad" readonly>
                                             </div>
                                             <div class="col-md-2">
                                                 <label for="nacionalidad">Nacionalidad</label>
-                                                <input class="form-control input-sm" type="text" name="nacionalidad">
+                                                <input class="form-control input-sm" type="text" name="nacionalidad" readonly>
                                             </div>
                                             <div class="col-md-2">
                                                 <label for="nivelEstudios">Nivel de estudios</label>
-                                                <input class="form-control input-sm" type="text" name="nivelEstudios">
+                                                <input class="form-control input-sm" type="text" name="nivelEstudios" readonly>
                                             </div>
                                             <div class="col-md-2">
                                                 <label for="nit">NIT</label>
-                                                <input class="form-control input-sm" type="text" name="nit">
+                                                <input class="form-control input-sm" type="text" name="nit" readonly>
                                             </div>
                                             <div class="col-md-3">
                                                 <label for="licencia">N° de licencia de conducir</label>
-                                                <input class="form-control input-sm" type="text" name="licencia">
+                                                <input class="form-control input-sm" type="text" name="licencia" readonly>
                                             </div>
                                             <div class="col-md-2">
                                                 <label for="numIsss">N° ISSS</label>
-                                                <input class="form-control input-sm" type="text" name="numIsss">
+                                                <input class="form-control input-sm" type="text" name="numIsss" readonly>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <label for="nup">NUP</label>
-                                                <input class="form-control input-sm" type="text" name="nup">
+                                                <input class="form-control input-sm" type="text" name="nup" readonly>
                                             </div>
                                             <div class="col-md-2">
                                                 <label for="clase">Clase</label>
-                                                <input class="form-control input-sm" type="text" name="clase">
+                                                <input class="form-control input-sm" type="text" name="clase" readonly>
                                             </div>
                                             <div class="col-md-2">
                                                 <label for="estatura">Estatura(mts)</label>
-                                                <input class="form-control input-sm" type="text" name="estatura">
+                                                <input class="form-control input-sm" type="text" name="estatura" readonly>
                                             </div>
                                             <div class="col-md-1">
                                                 <label for="peso">Peso(lbs)</label>
-                                                <input class="form-control input-sm" type="text" name="peso">
+                                                <input class="form-control input-sm" type="text" name="peso" readonly>
                                             </div>
                                             <div class="col-md-2">
                                                 <label for="sexo">Sexo</label>
-                                                <input class="form-control input-sm" type="text" name="sexo">
+                                                <input class="form-control input-sm" type="text" name="sexo" readonly>
                                             </div>
                                             <div class="col-md-2">
                                                 <label for="tipoSangre">Tipo de sangre</label>
-                                                <input class="form-control input-sm" type="text" name="tipoSangre">
+                                                <input class="form-control input-sm" type="text" name="tipoSangre" readonly>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-8">
                                                 <label for="profesionOficio">Profesión u oficio</label>
-                                                <input class="form-control input-sm" type="text" name="profesionOficio">
+                                                <input class="form-control input-sm" type="text" name="profesionOficio" readonly>
                                             </div>
                                             <div class="col-md-4">
                                                 <label for="estadoCivil">Estado civil</label>
-                                                <input class="form-control input-sm" type="text" name="estadoCivil">
+                                                <input class="form-control input-sm" type="text" name="estadoCivil" readonly>
                                             </div>
                                         </div>
                                     </div>
@@ -313,85 +313,85 @@
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <label for="senalesEspeciales">Señales especiales</label>
-                                                <input class="form-control input-sm" type="text" name="senalesEspeciales">
+                                                <input class="form-control input-sm" type="text" name="senalesEspeciales" readonly>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label for="nombreConyugue">Nombre del conyugue</label>
-                                                <input class="form-control input-sm" type="text" name="nombreConyugue">
+                                                <input class="form-control input-sm" type="text" name="nombreConyugue" readonly>
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="lugarTrabajoConyugue">Lugar de trabajo del conyugue</label>
-                                                <input class="form-control input-sm" type="text" name="lugarTrabajoConyugue">
+                                                <input class="form-control input-sm" type="text" name="lugarTrabajoConyugue" readonly>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-6">
                                                 <label for="nombrePadre">Nombre del padre</label>
-                                                <input class="form-control input-sm" type="text" name="nombrePadre">
+                                                <input class="form-control input-sm" type="text" name="nombrePadre" readonly>
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="nombreMadre">Nombre de la madre</label>
-                                                <input class="form-control input-sm" type="text" name="nombreMadre">
+                                                <input class="form-control input-sm" type="text" name="nombreMadre" readonly>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-12">
                                                 <label for="contactos">Contáctos</label>
-                                                <input class="form-control input-sm" type="text" name="contactos">
+                                                <input class="form-control input-sm" type="text" name="contactos" readonly>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-3">
                                                 <label for="fechaIngreso">Fecha de ingreso</label>
-                                                <input class="form-control input-sm" type="text" name="fechaIngreso">
+                                                <input class="form-control input-sm" type="date" name="fechaIngreso" readonly>
                                             </div>
                                             <div class="col-md-3">
                                                 <label for="fechaContratacion">Fecha de contratación</label>
-                                                <input class="form-control input-sm" type="text" name="fechaContratacion">
+                                                <input class="form-control input-sm" type="date" name="fechaContratacion" readonly>
                                             </div>
                                             <div class="col-md-3">
                                                 <label for="salarioOrdinario">Salario ordinario(Mensual)</label>
-                                                <input class="form-control input-sm" type="text" name="salarioOrdinario">
+                                                <input class="form-control input-sm" type="text" name="salarioOrdinario" readonly>
                                             </div>
                                             <div class="col-md-3">
                                                 <label for="fechaCambioSalario">Fecha de cambio de salario</label>
-                                                <input class="form-control input-sm" type="text" name="fechaCambioSalario">
+                                                <input class="form-control input-sm" type="date" name="fechaCambioSalario" readonly>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <label for="centroTrabajoEmpleado">Centro de trabajo del empleado</label>
-                                                <input class="form-control input-sm" type="text" name="centroTrabajoEmpleado">
+                                                <input class="form-control input-sm" type="text" name="centroTrabajoEmpleado" readonly>
                                             </div>
                                             <div class="col-md-3">
                                                 <label for="cuentaBanco">Banco en el que posee la cuenta</label>
-                                                <input class="form-control input-sm" type="text" name="cuentaBanco">
+                                                <input class="form-control input-sm" type="text" name="cuentaBanco" readonly>
                                             </div>
                                             <div class="col-md-3">
                                                 <label for="afpPertenece">AFP a la que pertecene</label>
-                                                <input class="form-control input-sm" type="text" name="afpPertenece">
+                                                <input class="form-control input-sm" type="text" name="afpPertenece" readonly>
                                             </div>
                                             <div class="col-md-2">
                                                 <label for="afpPorcent">Porcentaje AFP</label>
-                                                <input class="form-control input-sm" type="text" name="afpPorcent">
+                                                <input class="form-control input-sm" type="text" name="afpPorcent" readonly>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-8">
                                                 <label for="personaAutorizada">Persona autorizada para recibir salario</label>
-                                                <input class="form-control input-sm" type="text" name="personaAutorizada">
+                                                <input class="form-control input-sm" type="text" name="personaAutorizada" readonly>
                                             </div>
                                             <div class="col-md-4">
                                                 <label for="nCuenta">N° de cuenta</label>
-                                                <input class="form-control input-sm" type="text" name="nCuenta">
+                                                <input class="form-control input-sm" type="text" name="nCuenta" readonly>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <label for="cargoPlaza">Cargo o plaza asignada</label>
-                                                <select class="form-control input-sm" type="text" name="cargoPlaza">
+                                                <select class="form-control input-sm" type="text" name="cargoPlaza" readonly>
                                                     <?php
                                                     foreach ($arrayPlazas as $key) {
                                                         echo '<option value="'.strtolower($key["nombrePlaza"]).'">'.$key["nombrePlaza"].'</option>';
@@ -401,7 +401,7 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <label for="cargoPlaza">Rol a desempeñar</label>
-                                                <select class="form-control input-sm" type="text" name="cargoPlaza">
+                                                <select class="form-control input-sm" type="text" name="cargoPlaza" readonly>
                                                     <?php
                                                     echo '<option value="administracion">Administración</option>';
                                                     echo '<option value="subgerencia">Subgerencia</option>';
@@ -415,7 +415,7 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <label for="depto">Departamento</label>
-                                                <select class="form-control input-sm" type="text" name="depto">
+                                                <select class="form-control input-sm" type="text" name="depto" readonly>
                                                     <?php
                                                     echo '<option value="">Informática</option>';
                                                     ?>
@@ -423,7 +423,7 @@
                                             </div>
                                             <div class="col-md-2">
                                                 <label for="tipoContratacion">Tipo de contratación</label>
-                                                <select class="form-control input-sm" type="text" name="tipoContratacion">
+                                                <select class="form-control input-sm" type="text" name="tipoContratacion" readonly>
                                                     <?php
                                                     echo '<option value="">Permanente</option>'
                                                     ?>
@@ -435,7 +435,7 @@
                                             <div class="col-md-4">
                                                 <label for="cca">Cuenta contable de anticipo</label>
                                                 <div class="input-group">
-                                                  <input type="text" class="form-control input-sm" name="cca">
+                                                  <input type="text" class="form-control input-sm" name="cca" readonly>
                                                   <span class="input-group-btn">
                                                       <button type="submit" class="btn btn-search btn-sm" data-toggle="modal" data-target="#catalogoCuentas"><i class="fas fa-search"></i></button>
                                                   </span>
@@ -444,7 +444,7 @@
                                             <div class="col-md-4">
                                                 <label for="ccpi">Cuenta contable de permisos internos</label>
                                                 <div class="input-group">
-                                                  <input type="text" class="form-control input-sm" name="ccpi">
+                                                  <input type="text" class="form-control input-sm" name="ccpi" readonly>
                                                   <span class="input-group-btn">
                                                       <button type="submit" class="btn btn-search btn-sm" data-toggle="modal" data-target="#catalogoCuentas"><i class="fas fa-search"></i></button>
                                                   </span>
@@ -453,7 +453,7 @@
                                             <div class="col-md-4">
                                                 <label for="ccr">Cuenta contable para renta</label>
                                                 <div class="input-group">
-                                                  <input type="text" class="form-control input-sm" name="ccr">
+                                                  <input type="text" class="form-control input-sm" name="ccr" readonly>
                                                   <span class="input-group-btn">
                                                       <button type="submit" class="btn btn-search btn-sm" data-toggle="modal" data-target="#catalogoCuentas"><i class="fas fa-search"></i></button>
                                                   </span>
@@ -506,50 +506,50 @@
                                             <h4>Experiencia y referencias laborales</h4>
                                             <div class="col-md-6">
                                                 <label for="empresa1">Empresa</label>
-                                                <input class="form-control input-sm" type="text" name="empresa1">
+                                                <input class="form-control input-sm" type="text" name="empresa1" readonly>
                                                 <label for="cargo1">Cargo</label>
-                                                <input class="form-control input-sm" type="text" name="cargo1">
+                                                <input class="form-control input-sm" type="text" name="cargo1" readonly>
                                                 <label for="jefe1">Jefe</label>
-                                                <input class="form-control input-sm" type="text" name="jefe1">
+                                                <input class="form-control input-sm" type="text" name="jefe1" readonly>
                                                 <label for="tiempoTrabajo1">Tiempo de trabajo</label>
-                                                <input class="form-control input-sm" type="text" name="tiempoTrabajo1">
+                                                <input class="form-control input-sm" type="text" name="tiempoTrabajo1" readonly>
                                                 <label for="motivoRetiro1">Motivo del retiro</label>
-                                                <input class="form-control input-sm" type="text" name="motivoRetiro1">
+                                                <input class="form-control input-sm" type="text" name="motivoRetiro1" readonly>
                                             </div>
                                             <div class="col-md-6">
                                                 <label for="empresa2">Empresa</label>
-                                                <input class="form-control input-sm" type="text" name="empresa2">
+                                                <input class="form-control input-sm" type="text" name="empresa2" readonly>
                                                 <label for="cargo2">Cargo</label>
-                                                <input class="form-control input-sm" type="text" name="cargo2">
+                                                <input class="form-control input-sm" type="text" name="cargo2" readonly>
                                                 <label for="jefe2">Jefe</label>
-                                                <input class="form-control input-sm" type="text" name="jefe2">
+                                                <input class="form-control input-sm" type="text" name="jefe2" readonly>
                                                 <label for="tiempoTrabajo2">Tiempo de trabajo</label>
-                                                <input class="form-control input-sm" type="text" name="tiempoTrabajo2">
+                                                <input class="form-control input-sm" type="text" name="tiempoTrabajo2" readonly>
                                                 <label for="motivoRetiro2">Motivo del retiro</label>
-                                                <input class="form-control input-sm" type="text" name="motivoRetiro2">
+                                                <input class="form-control input-sm" type="text" name="motivoRetiro2" readonly>
                                             </div>
                                         </div>
                                         <div class="row">
                                             <h4>Referencias familiares</h4>
                                             <div class="col-md-9">
                                                 <label for="nombreRef1">Nombre</label>
-                                                <input class="form-control input-sm" type="text" name="nombreRef1">
+                                                <input class="form-control input-sm" type="text" name="nombreRef1" readonly>
                                                 <label for="nombreRef2">Nombre</label>
-                                                <input class="form-control input-sm" type="text" name="nombreRef2">
+                                                <input class="form-control input-sm" type="text" name="nombreRef2" readonly>
                                                 <label for="nombreRef3">Nombre</label>
-                                                <input class="form-control input-sm" type="text" name="nombreRef3">
+                                                <input class="form-control input-sm" type="text" name="nombreRef3" readonly>
                                                 <label for="nombreRef4">Nombre</label>
-                                                <input class="form-control input-sm" type="text" name="nombreRef4">
+                                                <input class="form-control input-sm" type="text" name="nombreRef4" readonly>
                                             </div>
                                             <div class="col-md-3">
                                                 <label for="ref1Num">Número</label>
-                                                <input class="form-control input-sm" type="text" name="ref1Num">
+                                                <input class="form-control input-sm" type="text" name="ref1Num" readonly>
                                                 <label for="ref2Num">Número</label>
-                                                <input class="form-control input-sm" type="text" name="ref2Num">
+                                                <input class="form-control input-sm" type="text" name="ref2Num" readonly>
                                                 <label for="ref3Num">Número</label>
-                                                <input class="form-control input-sm" type="text" name="ref3Num">
+                                                <input class="form-control input-sm" type="text" name="ref3Num" readonly>
                                                 <label for="ref4Num">Número</label>
-                                                <input class="form-control input-sm" type="text" name="ref4Num">
+                                                <input class="form-control input-sm" type="text" name="ref4Num" readonly>
                                             </div>
                                         </div>
                                     </div>

@@ -158,7 +158,7 @@
     <!-- /.row -->
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header">Módulo de inventario</h1>
+            <h1 class="page-header"><b>Módulo de inventario</b></h1>
             <div class="row">
                 <a class="" href="inventario.php" ><div class="col-lg-6 btn btn-default">
                     <div class="stat-icon">

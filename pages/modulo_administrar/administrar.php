@@ -150,9 +150,8 @@
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Módulo de administración</h1>
+                    <h1 class="page-header"><b>Módulo de administración</b></h1>
                     <div class="row">
-
                         <a href="empleados.php"><div class="col-lg-6 btn btn-default">
                             <div class="stat-icon">
                                 <i class="fas fa-lock fa-3x"></i>
