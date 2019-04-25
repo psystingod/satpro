@@ -96,5 +96,20 @@
                 die();
             }
         }
+
+        public function getPlazas()
+        {
+            try {
+
+                  $query = "SELECT * from tbl_plazas";
+                          $statement = $this->dbConnect->prepare($query);
+                          $statement->execute();
+                          $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+                          return $result;
+            } catch (Exception $e) {
+                print "!Error¡: " . $e->getMessage() . "</br>";
+                die();
+            }
+        }
     }
 ?>

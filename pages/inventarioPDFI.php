@@ -11,7 +11,7 @@
         $showInventoryTranslateReport = $getInventoryPDF->getInventoryTranslateReportI($Bodega,$Todo);
 	try {
             ob_start();
-              $pdf = new HTML2PDF('P', 'A4', 'en', true, 'UTF-8', array(20, 15, 10, 10));
+              $pdf = new HTML2PDF('P', 'A4', 'en', true, 'UTF-8', array(20, 15, 10, 30));
            //Izquierda, Arriba, no se, abajo
             $content = '
             <div >
@@ -59,15 +59,33 @@
                          ';
                foreach( $showInventoryTranslateReport as $res)
                  {
-                   // <td COLSPAN="2" width="40" HEIGHT="5" align="center">'.  $res["Codigo"].'</td>
+            
                    $content .=
                        '<tr>
-
                             <td colspan="6" width="85" HEIGHT="5" align="center" >'.  $res["Marca"] .'</td>
                             <td COLSPAN="2" width="80" HEIGHT="5" align="center">'.  $res["Modelo"].'</td>
                            <td COLSPAN="2" width="115" HEIGHT="5" align="center">'.  $res["Mac"].'</td>
                            <td COLSPAN="2" width="125" HEIGHT="5" align="center">'.  $res["serie"].'</td>
-                               <td COLSPAN="2" width="75" HEIGHT="5" align="center">'.  $res["Estado"].'</td>
+                               <td COLSPAN="2" width="75" HEIGHT="5" align="center">';
+
+                                if( $res["Estado"] == 0)
+                                {
+                                $content .=   'Bueno';
+                                }
+                                else if( $res["Estado"] == 1)
+                                {
+                                $content .=   'Regular';
+                                }
+                                else if( $res["Estado"] == 2)
+                                {
+                                $content .=   'Quemado';
+                                }
+                                else if( $res["Estado"] == 3)
+                                {
+                                $content .=   'Defectuoso';
+                                }
+                                $content .=
+                                '</td>
                                 <td COLSPAN="2" width="90" HEIGHT="5" align="center">'.  $res["Descripcion"].'</td>
 
                         </tr>
