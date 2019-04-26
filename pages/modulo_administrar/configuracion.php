@@ -243,6 +243,28 @@
                      </div></a>
                    </div>
 
+                   <hr style="color: #0056b2;" />
+
+                   <div class="row">
+                     <a class="" href="afp.php"><div class="col-lg-6 btn btn-default">
+                         <div class="stat-icon">
+                             <i class="fas fa-percent fa-3x"></i>
+                         </div>
+                         <div class="stat-values">
+                             <br>
+                             <div class="name">AFP</b></div>
+                         </div>
+                     </div></a>
+                     <a class="" href="bancos.php"><div class="col-lg-6 btn btn-default">
+                         <div class="stat-icon">
+                           <i class="fas fa-university fa-3x"></i>
+                         </div>
+                         <div class="stat-values">
+                             <br>
+                             <div class="name">Bancos</b></div>
+                         </div>
+                     </div></a>
+                   </div>
                </div>
            </div>
            <!-- /.row -->

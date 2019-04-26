@@ -13,7 +13,7 @@
                 try {
                     //Capturar datos
                      $Id = $_GET["Id"];
-                     $query = "select count(*) from tbl_unidadmedida where IdUnidadMedida='".$Id."' and State=1";
+                     $query = "SELECT count(*) from tbl_unidadmedida where IdUnidadMedida='".$Id."' and State=1";
                     $statement = $this->dbConnect->query($query);
                     if($statement->fetchColumn() >= 1)
                     {
@@ -46,7 +46,6 @@
                         die();
                         header('Location: ../unidadMedidas.php?status=failed');
                    }
-
         }
     }
     $enter = new updateUnidadMedida();

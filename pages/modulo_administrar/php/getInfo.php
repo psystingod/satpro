@@ -111,5 +111,36 @@
                 die();
             }
         }
+
+        public function getAfps()
+        {
+            try {
+
+                  $query = "SELECT * FROM satpro.tbl_afps";
+                          $statement = $this->dbConnect->prepare($query);
+                          $statement->execute();
+                          $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+                          return $result;
+            } catch (Exception $e) {
+                print "!Error¡: " . $e->getMessage() . "</br>";
+                die();
+            }
+        }
+
+
+        public function getBancos()
+        {
+            try {
+
+                  $query = "SELECT * FROM satpro.tbl_bancos";
+                          $statement = $this->dbConnect->prepare($query);
+                          $statement->execute();
+                          $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+                          return $result;
+            } catch (Exception $e) {
+                print "!Error¡: " . $e->getMessage() . "</br>";
+                die();
+            }
+        }
     }
 ?>
