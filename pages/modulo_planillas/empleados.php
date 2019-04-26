@@ -222,8 +222,8 @@
                                                 <input class="form-control input-sm" type="text" name="municipio" readonly>
                                             </div>
                                             <div class="col-md-5">
-                                                <label for="departamento">Departamento</label>
-                                                <input class="form-control input-sm" type="text" name="departamento" readonly>
+                                                <label for="deptoPais">Departamento</label>
+                                                <input class="form-control input-sm" type="text" name="deptoPais" readonly>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -365,11 +365,7 @@
                                                 <label for="centroTrabajoEmpleado">Centro de trabajo del empleado</label>
                                                 <input class="form-control input-sm" type="text" name="centroTrabajoEmpleado" readonly>
                                             </div>
-                                            <div class="col-md-3">
-                                                <label for="cuentaBanco">Banco en el que posee la cuenta</label>
-                                                <input class="form-control input-sm" type="text" name="cuentaBanco" readonly>
-                                            </div>
-                                            <div class="col-md-3">
+                                            <div class="col-md-4">
                                                 <label for="afpPertenece">AFP a la que pertecene</label>
                                                 <input class="form-control input-sm" type="text" name="afpPertenece" readonly>
                                             </div>
@@ -377,15 +373,25 @@
                                                 <label for="afpPorcent">Porcentaje AFP</label>
                                                 <input class="form-control input-sm" type="text" name="afpPorcent" readonly>
                                             </div>
+                                            <div class="col-md-2">
+                                                <label for="isssPorcent">Porcentaje ISSS</label>
+                                                <input class="form-control input-sm" type="text" name="isssPorcent" readonly>
+                                            </div>
                                         </div>
                                         <div class="row">
-                                            <div class="col-md-8">
+                                            <div class="col-md-7">
                                                 <label for="personaAutorizada">Persona autorizada para recibir salario</label>
                                                 <input class="form-control input-sm" type="text" name="personaAutorizada" readonly>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-5">
                                                 <label for="nCuenta">N° de cuenta</label>
                                                 <input class="form-control input-sm" type="text" name="nCuenta" readonly>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <label for="banco">Banco donde posee la cuenta</label>
+                                                <input class="form-control input-sm" type="text" name="banco" readonly>
                                             </div>
                                         </div>
                                         <div class="row">
@@ -414,8 +420,8 @@
                                                 </select>
                                             </div>
                                             <div class="col-md-3">
-                                                <label for="depto">Departamento</label>
-                                                <select class="form-control input-sm" type="text" name="depto" readonly>
+                                                <label for="deptoEmpresa">Departamento</label>
+                                                <select class="form-control input-sm" type="text" name="deptoEmpresa" readonly>
                                                     <?php
                                                     echo '<option value="">Informática</option>';
                                                     ?>

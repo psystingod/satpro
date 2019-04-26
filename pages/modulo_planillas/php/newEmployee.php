@@ -19,7 +19,7 @@
                 $direccionParticular = $_POST["direccionParticular"];
                 $telefono = $_POST["telefono"];
                 $id_municipio = $_POST["municipio"];
-                $id_departamento = $_POST["departamento"];
+                $departamentoPais = $_POST["deptoPais"];
                 $dui = $_POST["dui"];
                 $extendidoEn = $_POST["extendidoEn"];
                 $fechaExpedicion = $_POST["fechaExpedicion"];
@@ -30,6 +30,7 @@
                 $nit = $_POST["nit"];
                 $licencia = $_POST["licencia"];
                 $numIsss = $_POST["numIss"];
+                $isssPorcent = $_POST["isssPorcent"];
                 $nup = $_POST["nup"];
                 $clase = $_POST["clase"];
                 $estatura = $_POST["estatura"];
@@ -53,6 +54,7 @@
                 $afpPertenece = $_POST["afpPertenece"];
                 $afpPorcent = $_POST["afpPorcent"];
                 $personaAutorizada = $_POST["personaAutorizada"];
+                $banco = $_POST["banco"];
                 $nCuenta = $_POST["nCuenta"];
                 $cargoPlaza = $_POST["cargoPlaza"];
                 $depto = $_POST["depto"];
@@ -61,7 +63,7 @@
                 $ccpi = $_POST["ccpi"];
                 $ccr = $_POST["ccr"];
                 $nacimiento = date_create($_POST["nacimiento"]);
-                $departamento = $_POST["departamento"];
+                $departamentoEmpresa = $_POST["deptoEmpresa"];
                 $direccion = $_POST["direccion"];
                 $empresa1 = $_POST["empresa1"];
                 $cargo1 = $_POST["cargo1"];
@@ -88,14 +90,14 @@
                 $clave = password_hash($dui, PASSWORD_DEFAULT);
                 $rol = $_POST["rol"];
 
-                $query = "INSERT INTO tbl_empleados(nombres, apellidos, nombre_isss, sexo, municipio, departamento, direccion, telefonos, no_documento, numero_nit, extendido_en, fecha_expedicion, fecha_nacimiento, no_licencia, no_isss, no_nup, profesion_oficio,
-                        lugar_nacimiento, nacionalidad, estado_civil, edad, nivel_estudios, clase, estatura, peso, tipo_sangre, senales_especiales, nombre_padre, nombre_madre, nombre_conyugue,
-                        trabajo_conyugue, persona_autorizada, id_afp, id_banco, id_departamento, tipo_contratacion, id_plaza, rol, numero_cuenta, por_afp, cuota_seguro, fecha_ingreso, fecha_contratacion,
+                $query = "INSERT INTO tbl_empleados(id_empleado, nombres, apellidos, nombre_isss, sexo, municipio, departamento, direccion, telefonos, no_documento, numero_nit, extendido_en, fecha_expedicion, fecha_nacimiento, no_licencia, no_isss, no_nup, profesion_oficio,
+                        nacionalidad, estado_civil, edad, nivel_estudios, clase, estatura, peso, tipo_sangre, senales_especiales, nombre_padre, nombre_madre, nombre_conyugue,
+                        trabajo_conyugue, persona_autorizada, id_afp, id_banco, id_departamento, tipo_contratacion, id_plaza, rol, numero_cuenta, por_afp, id_centro, cuota_seguro, fecha_ingreso, fecha_contratacion,
                         salario_ordinario, fecha_salario, empresa_refer1, cargo_refer1, jefe_refer1, tiempo_refer1, motivo_retiro1, empresa_refer2, cargo_refer2, jefe_refer2, tiempo_refer2, motivo_retiro2, nomb_ref_per1, tel_ref_per1,
                         nomb_ref_per2, tel_ref_per2, nomb_ref_per3, tel_ref_per3, nombre_ref_fam1, nombre_ref_fam2, estado_empleado, IdUsuario)
-                        VALUES(:nombres, :apellidos, :nombre_isss, :sexo, :municipio, :departamento, :direccion, :telefonos, :dui, :extendido_en, :fecha_expedicion, :fecha_nacimiento, :no_licencia, :no_isss, :no_nup, :profesion_oficio,
-                        :lugar_nacimiento, :nacionalidad, :estadoCivil, :edad, :nivel_estudios, :clase, :estatura, :peso, :tipo_sangre, :senales_especiales, :nombre_padre, :nombre_madre, :nombre_conyugue,
-                        :trabajo_conyugue, :persona_autorizada, :id_afp, :id_banco, :id_departamento, :tipo_contratacion, :id_plaza, :rol, :numero_cuenta, :por_afp, :cuota_seguro, :fecha_ingreso, :fecha_contratacion,
+                        VALUES(:id_empleado, :nombres, :apellidos, :nombre_isss, :sexo, :municipio, :departamento, :direccion, :telefonos, :dui, :extendido_en, :fecha_expedicion, :fecha_nacimiento, :no_licencia, :no_isss, :no_nup, :profesion_oficio,
+                        :nacionalidad, :estadoCivil, :edad, :nivel_estudios, :clase, :estatura, :peso, :tipo_sangre, :senales_especiales, :nombre_padre, :nombre_madre, :nombre_conyugue,
+                        :trabajo_conyugue, :persona_autorizada, :id_afp, :id_banco, :id_departamento, :tipo_contratacion, :id_plaza, :rol, :numero_cuenta, :por_afp, :id_centro, :cuota_seguro, :fecha_ingreso, :fecha_contratacion,
                         :salario_ordinario, :fecha_salario, :empresa_refer1, :cargo_refer1, :jefe_refer1, :tiempo_refer1, :motivo_retiro1, :empresa_refer2, :cargo_refer2, :jefe_refer2, :tiempo_refer2, :motivo_retiro2,
                         :nomb_ref_per1, :tel_ref_per1, :nomb_ref_per2, :tel_ref_per2, :nomb_ref_per3, :tel_ref_per3, :nomb_ref_per4, :tel_ref_per4,
                         :state, :idUsuario)";
@@ -103,37 +105,80 @@
                 $statement = $this->dbConnect->prepare($query);
 
                 $statement->execute(array(
+                ':id_empleado'=> $idEmpleado,
                 ':nombres'=> $nombres,
                 ':apellidos' => $apellidos,
                 ':nombre_isss' => $nombreisss,
                 ':municipio' => $id_municipio,
-                ':departamento' => $id_departamento,
+                ':departamento' => $departamentoPais,
                 ':direccion' => $direccionParticular,
                 ':telefonos'=> $telefono,
                 ':dui'=> $dui,
                 ':nit'=> $nit,
                 ':extendido_en'=> $extendidoEn,
-                ':fecha_expedicion'=> $fechaExpedicion,
-                ':fecha_nacimiento'=> $fechaNacimiento,
+                ':fecha_expedicion'=> date_format($fechaExpedicion, 'Y-m-d'),
+                ':fecha_nacimiento'=> date_format($fechaNacimiento, 'Y-m-d'),
                 ':no_licencia'=> $licencia,
                 ':no_isss'=> $numIsss,
                 ':no_nup' => $nup,
                 ':profesion_oficio' => $profesionOficio,
-                ':lugar_nacimiento' => $profesionOficio,
-                ':afp' => $afp,
+                ':nacionalidad' => $nacionalidad,
+                ':estado_civil' => $estadoCivil,
+                ':edad' => $edad,
+                ':nivel_estudios' => $nivelEstudios,
+                ':clase' => $clase,
+                ':estatura' => $estatura,
+                ':peso' => $peso,
+                ':tipo_sangre' => $tipoSangre,
+                ':senales_especiales' => $senalesEspeciales,
+                ':nombre_padre' => $nombrePadre,
+                ':nombre_madre' => $nombreMadre,
+                ':nombre_conyugue' => $nombreConyugue,
+                ':trabajo_conyugue' => $trabajoConyugue,
+                ':persona_autorizada' => $personaAutorizada,
+                ':id_afp' => $afpPertenece,
+                ':id_banco' => $banco,
+                ':id_departamento' => $departamentoEmpresa,
+                ':tipo_contratacion' => $tipoContratacion,
+                ':id_plaza' => $cargoPlaza,
+                ':rol' => $rol,
+                ':numero_cuenta' => $nCuenta,
+                ':por_afp' => $afpPorcent,
+                ':id_centro' => $centroTrabajoEmpleado,
+                ':cuota_seguro' => $isssPorcent,
+                ':fecha_ingreso' => date_format($fechaIngreso, 'Y-m-d'),
+                ':fecha_contratacion' => date_format($fechaContratacion, 'Y-m-d'),
+                ':salario_ordinario' => $salarioOrdinario,
+                ':fecha_salario' => date_format($fechaCambioSalario, 'Y-m-d'),
                 ':estadoFamiliar' => $estadoFamiliar,
-                ':gradoAcademico'=> $gradoAcademico,
-                ':nacimiento' => date_format($nacimiento, 'Y-m-d'),
-                ':telefono' => $telefono,
+                ':empresa_refer1' => $empresa1,
+                ':cargo_refer1' => $cargo1,
+                ':jefe_refer1'=> $jefe1,
+                ':tiempo_refer1' => $tiempoTrabajo1,
+                ':motivo_retiro1' => $motivoRetiro1,
+                ':empresa_refer2' => $empresa2,
+                ':cargo_refer2' => $cargo2,
+                ':jefe_refer2'=> $jefe2,
+                ':tiempo_refer2' => $tiempoTrabajo2,
+                ':motivo_retiro2' => $motivoRetiro2,
+                ':nomb_ref_per1'=> $nombreRef1,
+                ':tel_ref_per1' => $ref1Num,
+                ':nomb_ref_per2'=> $nombreRef2,
+                ':tel_ref_per2' => $ref2Num,
+                ':nomb_ref_per3'=> $nombreRef3,
+                ':tel_ref_per3' => $ref3Num,
+                ':nomb_ref_per4' => $nombreRef4,
+                ':tel_ref_per4' => $ref4Num,
+                ':state' => $state,
+                //':nacimiento' => date_format($nacimiento, 'Y-m-d'),
                 ':idUsuario'=> null,
-                ':departamento' => $departamento,
-                ':state' => 1
+
                 ));
 
                 /* UPDATE IDUSUARIO */
                 $lastId = $this->dbConnect->lastInsertId();
 
-                $query = "UPDATE tbl_empleado SET IdUsuario = $lastId WHERE IdEmpleado = $lastId";
+                $query = "UPDATE tbl_empleados SET IdUsuario = $lastId WHERE id_empleado = $lastId";
 
                 $statement = $this->dbConnect->prepare($query);
 
