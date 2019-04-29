@@ -13,6 +13,7 @@
         {
             try {
                 //$idEmpleado = $_POST["idEmpleado"];
+                $idEmpleado = $_POST["idEmpleado"];
                 $nombres = $_POST["nombres"];
                 $apellidos = $_POST["apellidos"];
                 $nombreisss = $_POST["nombreiss"];
@@ -89,7 +90,7 @@
                 $clave = password_hash($dui, PASSWORD_DEFAULT);
                 $rol = $_POST["rol"];
 
-                $query = "INSERT INTO tbl_empleados(nombres, apellidos, nombre_isss, sexo, municipio, departamento, direccion, telefonos, no_documento, numero_nit, extendido_en, fecha_expedicion, fecha_nacimiento, no_licencia, no_isss, no_nup, profesion_oficio,
+                $query = "INSERT INTO tbl_empleados(id_empleado, nombres, apellidos, nombre_isss, sexo, municipio, departamento, direccion, telefonos, no_documento, numero_nit, extendido_en, fecha_expedicion, fecha_nacimiento, no_licencia, no_isss, no_nup, profesion_oficio,
                         nacionalidad, estado_civil, edad, nivel_estudios, clase, estatura, peso, tipo_sangre, senales_especiales, nombre_padre, nombre_madre, nombre_conyuge,
                         trabajo_conyuge, persona_autorizada, id_afp, id_banco, id_departamento, tipo_contratacion, id_plaza, rol, numero_cuenta, por_afp, id_centro, cuota_seguro, fecha_ingreso, fecha_contratacion,
                         salario_ordinario, fecha_salario, empresa_refer1, cargo_refer1, jefe_refer1, tiempo_refer1, motivo_retiro1, empresa_refer2, cargo_refer2, jefe_refer2, tiempo_refer2, motivo_retiro2, nomb_ref_per1, tel_ref_per1,
@@ -104,6 +105,7 @@
                 $statement = $this->dbConnect->prepare($query);
 
                 $statement->execute(array(
+                ':id_empleado'=> $idEmpleado,
                 ':nombres'=> $nombres,
                 ':apellidos' => $apellidos,
                 ':nombre_isss' => $nombreisss,

@@ -2,6 +2,9 @@
     require("php/getAllPlazas.php");
     $plazas = new GetAllPlazas();
     $arrayPlazas = $plazas->getPlazas();
+    require("php/getid.php");
+    $ultimoIdEmpleado = new GetIdEmpleado();
+    $ultimoId = $ultimoIdEmpleado->getid();
     session_start();
 
  ?>
@@ -191,7 +194,7 @@
 
                                             <div class="col-md-2">
                                                 <label for="idEmpleado">Id empleado</label>
-                                                <input class="form-control input-sm" type="text" name="idEmpleado" readonly>
+                                                <input class="form-control" type="text" name="idEmpleado" value="<?php echo intval($ultimoId)+1 ?>" readonly>
                                             </div>
                                             <div class="col-md-5">
                                                 <label for="nombres">Nombres</label>
