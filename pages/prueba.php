@@ -1,6 +1,5 @@
 <?php
 include "../php/connection.php";
-
 date_default_timezone_set('America/El_Salvador');
 $day = date("Y-m-d");
 echo $day;
@@ -27,7 +26,6 @@ switch (date("l", strtotime($day))) {
         echo date("Y-m-d", strtotime( '+4 day', strtotime($day)))."<br>";
         echo date("Y-m-d", strtotime( '+5 day', strtotime($day)))."<br>";
         break;
-
     default:
         // code...
         break;
@@ -75,12 +73,9 @@ switch (date("l", strtotime($day))) {
 $statement = $this->dbConnect->prepare($query);
 $statement->execute();
 $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-
 foreach ($result as $key) {
     $key['hora'];
 }
-
 $nuevafecha = strtotime ( '+2 day' , strtotime ( $fecha ) ) ;
 $nuevafecha = date ( 'Y-m-j' , $nuevafecha );*/
-
 ?>
