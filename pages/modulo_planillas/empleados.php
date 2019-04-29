@@ -167,7 +167,7 @@
                                             <button class="btn btn-default btn-sm" id="editarEmpleado" onclick="editarEmpleado()" type="button" name="editar" data-toggle="tooltip" data-placement="bottom" title="Editar empleado"><i class="far fa-edit"></i></button>
                                             <button class="btn btn-default btn-sm" type="button" data-toggle="tooltip" data-placement="bottom" title="Buscar empleado"><i class="fas fa-search"></i></button>
                                             <button class="btn btn-default btn-sm" type="button" data-toggle="tooltip" data-placement="bottom" title="Imprimir ficha"><i class="fas fa-print"></i></button>
-                                            <form id="empleados" action="" method="POST">
+                                            <form style="display:inline;" id="empleados" action="" method="POST">
                                             <button class="btn btn-default btn-sm pull-right" id="guardar" type="submit" data-toggle="tooltip" data-placement="bottom" title="Guardar cambios" disabled><i class="far fa-save"></i></button>
                                         </div>
                                     </div>
