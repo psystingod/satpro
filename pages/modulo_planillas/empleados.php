@@ -157,13 +157,15 @@
                             </div>
                             <div class="panel-body">
                                 <div class="row">
+
                                     <div class="col-md-12">
                                         <div class="pull-right">
                                             <button class="btn btn-default btn-sm" id="nuevoEmpleado" onclick="nuevoEmpleado()" type="button" name="nuevo" data-toggle="tooltip" data-placement="bottom" title="Nuevo empleado"><i class="far fa-file"></i></button>
                                             <button class="btn btn-default btn-sm" id="editarEmpleado" onclick="editarEmpleado()" type="button" name="editar" data-toggle="tooltip" data-placement="bottom" title="Editar empleado"><i class="far fa-edit"></i></button>
-                                            <button class="btn btn-default btn-sm" id="guardar" type="submit" data-toggle="tooltip" data-placement="bottom" title="Guardar cambios" disabled><i class="far fa-save"></i></button>
                                             <button class="btn btn-default btn-sm" type="button" data-toggle="tooltip" data-placement="bottom" title="Buscar empleado"><i class="fas fa-search"></i></button>
                                             <button class="btn btn-default btn-sm" type="button" data-toggle="tooltip" data-placement="bottom" title="Imprimir ficha"><i class="fas fa-print"></i></button>
+                                            <form id="empleados" action="" method="POST">
+                                            <button class="btn btn-default btn-sm pull-right" id="guardar" type="submit" data-toggle="tooltip" data-placement="bottom" title="Guardar cambios" disabled><i class="far fa-save"></i></button>
                                         </div>
                                     </div>
                                     <br><br>
@@ -186,13 +188,13 @@
                                     <div class="tab-pane fade in active" id="datos-generales">
                                         <br>
                                         <div class="row">
-                                            <form id="empleados" action="" method="POST">
+
                                             <div class="col-md-2">
                                                 <label for="idEmpleado">Id empleado</label>
                                                 <input class="form-control input-sm" type="text" name="idEmpleado" readonly>
                                             </div>
                                             <div class="col-md-5">
-                                                <label for="nombres">Nombres</label
+                                                <label for="nombres">Nombres</label>
                                                 <input class="form-control input-sm" type="text" name="nombres" readonly>
                                             </div>
                                             <div class="col-md-5">
@@ -407,7 +409,7 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <label for="cargoPlaza">Rol a desempeñar</label>
-                                                <select class="form-control input-sm" type="text" name="cargoPlaza" readonly>
+                                                <select class="form-control input-sm" type="text" name="rol" readonly>
                                                     <?php
                                                     echo '<option value="administracion">Administración</option>';
                                                     echo '<option value="subgerencia">Subgerencia</option>';
@@ -483,7 +485,6 @@
                                               <div class="modal-footer">
                                                   <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                                                   <button type="button" class="btn btn-primary" data-dismiss="modal">Buscar</button>
-                                                </form>
                                               </div>
                                             </div>
 
@@ -559,6 +560,7 @@
                                             </div>
                                         </div>
                                     </div>
+                                    </form>
                                 </div><!--TAB-CONTENT-->
                             </div>
                         </div>

@@ -29,7 +29,7 @@
                 $nivelEstudios = $_POST["nivelEstudios"];
                 $nit = $_POST["nit"];
                 $licencia = $_POST["licencia"];
-                $numIsss = $_POST["numIss"];
+                $numIsss = $_POST["numIsss"];
                 $isssPorcent = $_POST["isssPorcent"];
                 $nup = $_POST["nup"];
                 $clase = $_POST["clase"];
@@ -50,21 +50,20 @@
                 $salarioOrdinario = $_POST["salarioOrdinario"];
                 $fechaCambioSalario = $_POST["fechaCambioSalario"];
                 $centroTrabajoEmpleado = $_POST["centroTrabajoEmpleado"];
-                $cuentaBanco = $_POST["cuentaBanco"];
+                $cuentaBanco = $_POST["nCuenta"];
                 $afpPertenece = $_POST["afpPertenece"];
                 $afpPorcent = $_POST["afpPorcent"];
                 $personaAutorizada = $_POST["personaAutorizada"];
                 $banco = $_POST["banco"];
                 $nCuenta = $_POST["nCuenta"];
                 $cargoPlaza = $_POST["cargoPlaza"];
-                $depto = $_POST["depto"];
+                $depto = $_POST["deptoEmpresa"];
                 $tipoContratacion = $_POST["tipoContratacion"];
                 $cca = $_POST["cca"];
                 $ccpi = $_POST["ccpi"];
                 $ccr = $_POST["ccr"];
-                $nacimiento = date_create($_POST["nacimiento"]);
                 $departamentoEmpresa = $_POST["deptoEmpresa"];
-                $direccion = $_POST["direccion"];
+                $direccion = $_POST["direccionParticular"];
                 $empresa1 = $_POST["empresa1"];
                 $cargo1 = $_POST["cargo1"];
                 $jefe1 = $_POST["jefe1"];
@@ -105,7 +104,6 @@
                 $statement = $this->dbConnect->prepare($query);
 
                 $statement->execute(array(
-                ':id_empleado'=> $idEmpleado,
                 ':nombres'=> $nombres,
                 ':apellidos' => $apellidos,
                 ':nombre_isss' => $nombreisss,
@@ -176,6 +174,11 @@
                 ));
 
                 /* UPDATE IDUSUARIO */
+                /*if ($idEmpleado == "") {
+                    $lastId = 1;
+                } else {
+                    $lastId = $this->dbConnect->lastInsertId();
+                }*/
                 $lastId = $this->dbConnect->lastInsertId();
 
                 $query = "UPDATE tbl_empleados SET IdUsuario = $lastId WHERE id_empleado = $lastId";
