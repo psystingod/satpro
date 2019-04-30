@@ -155,7 +155,7 @@
                         <tr>
                             <td><button class="btn btn-danger btn-block"><i class="fas fa-sign-out-alt fa-2x"></i></button></td>
                             <td><button class="btn btn-success btn-block"><i class="fas fa-print fa-2x"></i></button></td>
-                            <td><button class="btn btn-primary btn-block"><i class="fas fa-search fa-2x"></i></button></td>
+                            <td><button class="btn btn-primary btn-block" data-toggle="modal" data-target="#busquedaAvanzada"><i class="fas fa-search fa-2x"></i></button></td>
                         </tr>
                         <tr>
                             <td><button class="btn btn-primary btn-block" style="font-size: 16px;">Contrato de cable</button></td>
@@ -971,9 +971,29 @@
 
                   </div>
                 </div>
+                <!-- INICIO DEL MODAL DE BUSQUEDA -->
+                <!-- Modal -->
+                <div id="busquedaAvanzada" class="modal fade" role="dialog">
+                  <div class="modal-dialog">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Búsqueda avanzada</h4>
+                      </div>
+                      <div class="modal-body">
+
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!-- FINAL MODAL DE BUSQUEDA -->
         </div><!-- /.row -->
         <!-- /#page-wrapper -->
-
     </div>
     <!-- /#wrapper -->
 
