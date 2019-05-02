@@ -983,7 +983,6 @@
                         <h4 class="modal-title">Búsqueda avanzada</h4>
                       </div>
                       <div class="modal-body">
-
                       </div>
                       <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
