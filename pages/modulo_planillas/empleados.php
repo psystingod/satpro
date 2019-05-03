@@ -194,7 +194,7 @@
 
                                             <div class="col-md-2">
                                                 <label for="idEmpleado">Id empleado</label>
-                                                <input class="form-control" type="text" name="idEmpleado" value="<?php echo intval($ultimoId)+1 ?>" readonly>
+                                                <input class="form-control" type="text" name="idEmpleado" value="<?php echo intval($ultimoId)?>" readonly>
                                             </div>
                                             <div class="col-md-5">
                                                 <label for="nombres">Nombres</label>

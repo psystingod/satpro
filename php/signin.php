@@ -32,7 +32,7 @@
                 if (password_verify($pass, $result['Clave'])) {
 
                     // SQL query para obtener datos del usuario
-                    $query = "SELECT * FROM tbl_empleado, tbl_usuario WHERE Usuario=:user AND tbl_empleado.IdEmpleado = tbl_usuario.IdUsuario";
+                    $query = "SELECT * FROM tbl_empleados, tbl_usuario WHERE Usuario=:user AND tbl_empleados.id_empleado = tbl_usuario.IdUsuario";
                     // Prepare statement
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
@@ -46,8 +46,8 @@
                         session_start();
                         // Almacenamos los datos del usuario en la sesión
                         $_SESSION['id_usuario'] = $loginRow['IdUsuario'];
-                        $_SESSION['nombres'] = $loginRow['Nombres'];
-                        $_SESSION['apellidos'] = $loginRow['Apellidos'];
+                        $_SESSION['nombres'] = $loginRow['nombres'];
+                        $_SESSION['apellidos'] = $loginRow['apellidos'];
                         $_SESSION['user'] = $loginRow['Usuario'];
                         $_SESSION['pass'] = $loginRow['Clave'];
                         $_SESSION['rol'] = $loginRow['Rol'];

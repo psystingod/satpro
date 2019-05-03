@@ -25,8 +25,11 @@
                     if (strlen($valor) == "0") {
                         $valor = 1;
                     }
+                    else{
+                        $valor = $valor+1;
+                    }
                     $this->dbConnect = NULL;
-                    return $valor;
+                    return intval($valor);
 
             } catch (Exception $e) {
                 print "!Error¡: " . $e->getMessage() . "</br>";

@@ -18,7 +18,6 @@
                 $statement = $this->dbConnect->prepare($query);
                 $statement->execute();
                 $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-
                 $this->dbConnect = NULL;
                 return $result;
 

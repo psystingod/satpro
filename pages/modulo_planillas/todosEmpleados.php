@@ -1,5 +1,5 @@
 <?php
-    require("php/productsInfo.php");
+    require("../../php/productsInfo.php");
     require("php/getEmployees.php");
     $allEmployees = new GetEmployees();
     $allEmployeesRecords = $allEmployees->getEmployeesRecords();
@@ -7,7 +7,6 @@
     $departments = new ProductsInfo();
     $departmentsRecords = $departments->getDepartments();
     session_start();
-
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -20,7 +19,7 @@
     <meta name="author" content="">
 
     <title>Cablesat</title>
-<link rel="shortcut icon" href="../../images/Cablesat.png" />
+    <link rel="shortcut icon" href="../../images/Cablesat.png" />
     <!-- Bootstrap Core CSS -->
     <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -160,10 +159,10 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h1 class="page-header">Gestión de usuarios</h1>
+                        <h1 class="page-header">Gestión de empleados</h1>
                     </div>
                     <!-- /.col-lg-12 -->
-                    <a href="administrar.php"><button class="btn btn-success" type="button" name="regresar"><i class="fas fa-arrow-circle-left"></i> Atrás</button></a>
+                    <a href="empleados.php"><button class="btn btn-success" type="button" name="regresar"><i class="fas fa-arrow-circle-left"></i> Atrás</button></a>
                     <br>
                     <div class="row">
                         <div class="col-lg-12">
@@ -190,11 +189,10 @@
                             <form class="" action="resumenTraslado.php" method="POST">
                             <button id="btn_agregar" class="btn btn-primary pull-right" type="button" name="button" data-toggle="modal" data-target="#usuarioNuevo"><i class="fas fa-plus-circle"></i> Empleado nuevo</button>
                             <br><br>
-
                                 <table width="100%" class="table table-striped table-hover" id="nuevoUsuario">
                                     <thead>
                                         <tr>
-                                            <th>Codigo</th>
+                                            <th>Id</th>
                                             <th>Nombres</th>
                                             <th>Apellidos</th>
                                             <th>DUI</th>

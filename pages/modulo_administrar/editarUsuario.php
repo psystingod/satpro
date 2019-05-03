@@ -160,7 +160,7 @@
             // read current record's data
             try {
                 // prepare select query
-                $query = "SELECT * FROM tbl_usuario, tbl_empleado WHERE tbl_usuario.IdUsuario = ? AND tbl_empleado.IdEmpleado = ?";
+                $query = "SELECT * FROM tbl_usuario, tbl_empleados WHERE tbl_usuario.IdUsuario = ? AND tbl_empleados.id_empleado = ?";
                 $stmt = $con->prepare( $query );
 
                 // this is the first question mark
@@ -174,8 +174,8 @@
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 // values to fill up our form
-                $nombres = $row['Nombres'];
-                $apellidos = $row['Apellidos'];
+                $nombres = $row['nombres'];
+                $apellidos = $row['apellidos'];
                 $usuario = $row['Usuario'];
                 $clave = $row['Clave'];
                 $rol = $row['Rol'];
