@@ -466,7 +466,7 @@
                         <!-- /.row -->
                         <table class='table table-hover table-responsive table-bordered' style="background-color:#ffffff;">
                             <th>AGREGAR</th>
-                            <th>EDITAR</th>
+                            <th>MODIFICAR</th>
                             <th>ELIMINAR</th>
                             <?php
                             if (setMenu($totalPermissions, AGREGAR)) {
