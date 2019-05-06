@@ -37,7 +37,21 @@
         $dui = trim(ucwords(strtolower($row['numero_dui'])));
         $lugarExp = trim(ucwords(strtolower($row['lugar_exp'])));
         $nit = trim(ucwords(strtolower($row['numero_nit'])));
+        $fechaNacimiento = trim(ucwords(strtolower($row['numero_nit'])));
+        $fechaNacimiento = date_format($fechaNacimiento, "d/m/Y");
+        $direccion = $row["direccion"];
+        $departamento = $row["id_departamento"];
+        $municipio = $row["id_municipio"];
+        $colonia = $row["id_colonia"];
+        $direccionCobro = $row["direccion_cobro"];
         $telefonos = $row['telefonos'];
+        $telTrabajo = $row['tel_trabajo'];
+        $ocupacion = $row['profesion'];
+        $cuentaContable = $row['id_cuenta'];
+        $formaFacturar = $row['forma_pago'];
+        $saldoActual = $row['saldo_actual'];
+        $diasCredito = $row['dias_credito'];
+        $limiteCredito = $row['limite_credito'];
     }
 
     // show error
