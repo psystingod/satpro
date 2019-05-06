@@ -26,16 +26,17 @@
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         // values to fill up our form
+        $estado_cable = $row['servicio_suspendido']; // 0 o 1
+        $estado_internet = $row['estado_cliente_in']; // 1, 2, 3
         $codigo = str_pad($row["cod_cliente"],6,"0",STR_PAD_LEFT);
         $nContrato = $row["numero_contrato"];
         $nFactura = $row["num_factura"];
+        $nombre = trim(ucwords(strtolower($row['nombre'])));
         $empresa = $row["empresa"];
         $nRegistro = $row["num_registro"];
-        $estado_cable = $row['servicio_suspendido']; // 0 o 1
-        $estado_internet = $row['estado_cliente_in']; // 1, 2, 3
-        $nombre = trim(ucwords(strtolower($row['nombre'])));
         $dui = trim(ucwords(strtolower($row['numero_dui'])));
         $lugarExp = trim(ucwords(strtolower($row['lugar_exp'])));
+        $nit = trim(ucwords(strtolower($row['numero_nit'])));
         $telefonos = $row['telefonos'];
     }
 
