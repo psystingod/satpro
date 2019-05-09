@@ -4,6 +4,7 @@
     require("php/getDatos.php");
 
     $get = new getInfo();
+    $Catalogo = $get->getCatalogo();
     $CuentaTipo = $get->getCuentaTipo();
  ?>
 
@@ -167,7 +168,7 @@
                         else if ($_GET['status'] == 'failed'){
                             echo "<div id='temporal' class='alert alert-danger alert-dismissible'>
                                       <a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a>
-                                      El Nombre de Bodega ya <b>Existe</b>
+                                      La cuenta contable introducida ya <b>Existe</b>
                                   </div>";
                         }
                         else if ($_GET['status'] == 'Actualizar'){
@@ -199,25 +200,50 @@
                         <thead>
                             <tr>
 
-                                <th>Nombre Bodega</th>
-                                <th>Direccion</th>
-                                <th>Estado</th>
-                                <th></th>
+                                <th>Cuenta</th>
+                                <th>Nombre</th>
+                                <th>Cuenta Mayor</th>
+                                <th>Cuenta de:</th>
+                                <th>Tipo Cuenta</th>
+                                  <th></th>
                             </tr>
                         </thead>
                         <tbody>
                           <?php
-                              foreach ($Bodegas as $key) {
+                              foreach ($Catalogo as $key) {
                                   echo "<tr><td>";
-                                  echo $key["NombreBodega"] . "</td><td width='150' >";
-                                  echo $key["Direccion"] . "</td><td width='200' >";
-                                    if( $key["State"] == 0)
-                                    {
-                                      echo "<a style='font-size:2em; color:#00FF00;' >■</a> Activada en el Sistema</td><td>";
-                                    }
-                                    else {
-                                      echo "<a style='font-size:2em; color:#FF0000;' >■</a> Desactivada en el Sistema</td><td>";
-                                    }
+                                  echo $key["id_cuenta"] . "</td><td >";
+                                  echo $key["nombre_cuenta"] . "</td><td >";
+                                  echo $key["id_cuentamayor"] . "</td><td >";
+
+                                  if($key["cargar_como"] == 1)
+                                  {
+                                    echo "Activo"      . "</td><td >";
+                                  }
+                                  else if($key["cargar_como"] == 2)
+                                  {
+                                    echo "Pasivo"      . "</td><td >";
+                                  }
+                                  else if($key["cargar_como"] == 3)
+                                  {
+                                    echo "Patrimonio"      . "</td><td >";
+                                  }
+                                  else if($key["cargar_como"] == 4)
+                                  {
+                                    echo "Orden saldo deudor"      . "</td><td >";
+                                  }
+                                  else if($key["cargar_como"] == 5)
+                                  {
+                                    echo "Orden saldo acreedor"      . "</td><td >";
+                                  }
+                                  else if($key["cargar_como"] == 6)
+                                  {
+                                    echo "Cuenta Liquidadora resultado"      . "</td><td >";
+                                  }
+
+                                echo $key["Nombre"] . "</td><td >";
+
+
                                   echo "<div class='btn-group pull-right'>
                                               <button type='button' class='btn btn-default'>Opciones</button>
                                               <button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
@@ -225,24 +251,9 @@
                                                 <span class='sr-only'>Toggle Dropdown</span>
                                               </button>
                                               <ul class='dropdown-menu'>
-                                                  <li><a href='actualizarBodega.php?Id={$key["IdBodega"]}'><i class='fas fa-edit'></i> Editar</a>
+                                                  <li><a href='actualizarCatalogo.php?Id={$key["id_cuenta"]}'><i class='fas fa-edit'></i> Ver / Editar</a>
                                                   </li>
-                                                  ";
-                                                  if( $key["State"] == 1)
-                                                  {
-                                                    echo "
-                                                    <li><a href='php/updateInfo.php?Id={$key["IdBodega"]}'><i class='fas fa-edit'></i>Activar</a>
-                                                    </li>
-                                                    ";
-                                                  }
-                                                  else {
-                                                  echo  "
-                                                    <li><a href='php/updateInfo.php?Id={$key["IdBodega"]}'><i class='fas fa-edit'></i>Desactivar</a>
-                                                    </li>
-                                                    ";
-                                                  }
 
-                                                  "
                                                   <li class='divider'></li>
                                               </ul>
                                           </div>" . "</td></tr>";
@@ -278,8 +289,8 @@
                                           <input type="number" min="0" class="form-control" name="C_Cuenta" id="C_Cuenta" placeholder="Codigo Cuenta" required>
                                       </div>
                                       <div class="form-group col-md-8 col-xs-8">
-                                          <label for="codigo">Nombre de Cuenta</label>
-                                          <input type="text" class="form-control" name="N_Cuenta" id="N_Cuenta" placeholder="Nombre Cuenta" required>
+                                          <label for="nombre">Nombre de Cuenta</label>
+                                          <input type="text" class="form-control" name="Nombre_Cuenta" id="Nombre_Cuenta" placeholder="Nombre Cuenta" required>
                                       </div>
 
                                   </div>
@@ -287,7 +298,7 @@
 
                                       <div class="form-group col-md-12 col-xs-12">
 
-                                          <input type="checkbox" name="vehicle1" value="Bike"> Marque si es una cuenta que puede ser usada directamente en partidas de diario<br>
+                                          <input type="checkbox" name="Marcar" value="1"> Marque si es una cuenta que puede ser usada directamente en partidas de diario </input><br>
                                       </div>
 
                                   </div>
@@ -306,13 +317,15 @@
                                   <div class="form-row">
                                       <div class="form-group col-md-8 col-xs-8">
                                             <label for="message-text" class="control-label">Cargar como cuenta de:</label>
-                                            <select class="form-control form-control-lg" name="CuenatTipo" title="Escribe solamente letras y números" required>
+                                            <select class="form-control form-control-lg" name="CuentaTipo" title="Escribe solamente letras y números" required>
                                                <option value="" selected="selected">Seleccionar...</option>
-                                               <?php
-                                                 foreach ($CuentaTipo as $key) {
-                                                     echo "<option value='".strtolower($key['Nombre'])." '>".$key['Nombre']."</option>";
-                                                 }
-                                               ?>
+
+                                                <option value="1" >Activo</option>;
+                                                <option value="2" >Pasivo</option>;
+                                                <option value="3" >Patrimonio</option>;
+                                                <option value="4" >Orden Saldo Deudor</option>;
+                                                <option value="5" >Orden Saldo Acreedor</option>;
+                                                <option value="6" >Cuenta Liquidadora Resultado</option>;
                                            </select>
                                       </div>
                                       <div class="form-group col-md-4 col-xs-4">
@@ -320,11 +333,11 @@
 
                                             <select class="form-control form-control-lg" name="T_Cuenta" required>
                                                <option value="" selected="selected">Seleccionar...</option>
-
-                                                     <option value="0" >Mayor</option>
-                                                     <option value="0" >Auxiliar</option>
-                                                     <option value="0" >Diario</option>
-
+                                               <?php
+                                                 foreach ($CuentaTipo as $key) {
+                                                     echo "<option value='".strtolower($key['IdCuentaTipo'])." '>".$key['Nombre']."</option>";
+                                                 }
+                                               ?>
                                            </select>
                                       </div>
                                   </div>

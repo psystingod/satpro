@@ -24,11 +24,11 @@
             }
         }
 
-        public function getProveedor()
+        public function getCatalogo()
         {
             try {
 
-                  $query = "SELECT * from tbl_proveedor";
+                  $query = "SELECT * FROM tbl_cuentas_flujo as cf inner join tbl_CuentaTipo as ct on cf.tipo_cuenta=ct.IdCuentaTipo";
                           $statement = $this->dbConnect->prepare($query);
                           $statement->execute();
                           $result = $statement->fetchAll(PDO::FETCH_ASSOC);
