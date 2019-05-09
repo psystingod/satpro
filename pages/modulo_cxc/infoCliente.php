@@ -25,7 +25,7 @@
         // store retrieved row to a variable
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        // values to fill up our form
+        /****************** DATOS GENERALES ***********************/
         $estado_cable = $row['servicio_suspendido']; // 0 o 1
         $estado_internet = $row['estado_cliente_in']; // 1, 2, 3
         $codigo = str_pad($row["cod_cliente"],6,"0",STR_PAD_LEFT);
@@ -37,8 +37,7 @@
         $dui = trim(ucwords(strtolower($row['numero_dui'])));
         $lugarExp = trim(ucwords(strtolower($row['lugar_exp'])));
         $nit = trim(ucwords(strtolower($row['numero_nit'])));
-        $fechaNacimiento = trim(ucwords(strtolower($row['numero_nit'])));
-        $fechaNacimiento = date_format($fechaNacimiento, "d/m/Y");
+        $fechaNacimiento = $row['fecha_nacimiento'];
         $direccion = $row["direccion"];
         $departamento = $row["id_departamento"];
         $municipio = $row["id_municipio"];
@@ -48,10 +47,32 @@
         $telTrabajo = $row['tel_trabajo'];
         $ocupacion = $row['profesion'];
         $cuentaContable = $row['id_cuenta'];
-        $formaFacturar = $row['forma_pago'];
+        $formaFacturar = $row['forma_pago']; //Contado o al crédito
         $saldoActual = $row['saldo_actual'];
         $diasCredito = $row['dias_credito'];
         $limiteCredito = $row['limite_credito'];
+        $tipoFacturacion = $row['tipo_facturacion']; //Credito fiscal o consumidor final
+        $facebook = $row['facebook'];
+        $correo = $row['correo_electronico'];
+
+        /****************** OTROS DATOS ***********************/
+        $cobrador = $row['cod_cobrador'];
+        $contacto1 = $row['contactos'];
+        $contacto2 = $row['contacto2'];
+        $contacto3 = $row['contacto3'];
+        $telCon1 = $row['telcon1'];
+        $telCon2 = $row['telcon2'];
+        $telCon3 = $row['telcon3'];
+        $paren1 = $row['paren1'];
+        $paren2 = $row['paren2'];
+        $paren3 = $row['paren3'];
+        $dir1 = $row['dir1'];
+        $dir2 = $row['dir2'];
+        $dir3 = $row['dir3'];
+
+        /****************** DATOS CABLE ***********************/
+        $fechaInstalacion = date_format(date_create($row['fecha_instalacion']), "d/m/Y");
+        $fechaPrimerFactura = date_format(date_create($row['fecha_primer_factura']), "d/m/Y");
     }
 
     // show error
@@ -321,11 +342,11 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label for="contrato">Número de contrato</label>
-                                            <input class="form-control" type="text" name="contrato">
+                                            <input class="form-control" type="text" name="contrato" value="<?php echo $nContrato; ?>">
                                         </div>
                                         <div class="col-md-4">
                                             <label for="factura">Número de factura</label>
-                                            <input class="form-control" type="text" name="factura">
+                                            <input class="form-control" type="text" name="factura" value="<?php echo $nFactura; ?>">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -337,11 +358,11 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label for="empresa">Empresa</label>
-                                            <input class="form-control" type="text" name="empresa">
+                                            <input class="form-control" type="text" name="empresa" value="<?php echo $empresa; ?>">
                                         </div>
                                         <div class="col-md-6">
                                             <label for="ncr">Número de registro</label>
-                                            <input class="form-control" type="text" name="ncr">
+                                            <input class="form-control" type="text" name="ncr" value="<?php echo $nRegistro; ?>">
                                         </div>
                                     </div>
                                     <div class="row">
@@ -351,47 +372,41 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label for="expedicion">Lugar y fecha de expedición</label>
-                                            <input class="form-control" type="text" name="expedicion">
+                                            <input class="form-control" type="text" name="expedicion" value="<?php echo $lugarExp; ?>">
                                         </div>
                                         <div class="col-md-3">
                                             <label for="nit">NIT</label>
-                                            <input class="form-control" type="text" name="nit">
+                                            <input class="form-control" type="text" name="nit" value="<?php echo $nit; ?>">
                                         </div>
                                         <div class="col-md-3">
                                             <label for="fechaNacimiento">Fecha de nacimiento</label>
-                                            <input class="form-control" type="date" name="fechaNacimiento">
+                                            <input class="form-control" type="text" name="fechaNacimiento" value="<?php echo $fechaNacimiento; ?>">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <label for="direccion">Dirección</label>
-                                            <textarea class="form-control" name="direccion" rows="2" cols="40"></textarea>
+                                            <textarea class="form-control" name="direccion" rows="2" cols="40"><?php echo $direccion; ?></textarea>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-4">
                                             <label for="departamento">Departamento</label>
-                                            <select class="form-control" name="departamento">
-
-                                            </select>
+                                            <input class="form-control" type="text" name="departamento" value="<?php echo $departamento; ?>">
                                         </div>
                                         <div class="col-md-4">
                                             <label for="municipio">Municipio</label>
-                                            <select class="form-control" name="municipio">
-
-                                            </select>
+                                            <input class="form-control" type="text" name="municipio" value="<?php echo $municipio; ?>">
                                         </div>
                                         <div class="col-md-4">
                                             <label for="colonia">Barrio o colonia</label>
-                                            <select class="form-control" name="colonia">
-
-                                            </select>
+                                            <input class="form-control" type="text" name="colonia" value="<?php echo $colonia; ?>">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <label for="direccionCobro">Dirección de cobro</label>
-                                            <textarea class="form-control" name="direccionCobro" rows="2" cols="40"></textarea>
+                                            <textarea class="form-control" name="direccionCobro" rows="2" cols="40"><?php echo $direccionCobro; ?></textarea>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -401,55 +416,49 @@
                                         </div>
                                         <div class="col-md-4">
                                             <label for="telefonoTrabajo">Teléfono de trabajo</label>
-                                            <input class="form-control" type="text" name="telefonoTrabajo">
+                                            <input class="form-control" type="text" name="telefonoTrabajo" value="<?php echo $telTrabajo; ?>">
                                         </div>
                                         <div class="col-md-4">
                                             <label for="ocupacion">Ocupación</label>
-                                            <input class="form-control" type="text" name="ocupacion">
+                                            <input class="form-control" type="text" name="ocupacion" value="<?php echo $ocupacion; ?>">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-3">
                                             <label for="cuentaContable">Cuenta contable</label>
-                                            <select class="form-control" name="cuentaContable">
-
-                                            </select>
+                                            <input class="form-control" type="text" name="cuentaContable" value="<?php echo $cuentaContable; ?>">
                                         </div>
                                         <div class="col-md-2">
                                             <label for="formaFactura">Forma al facturar</label>
-                                            <select class="form-control" name="formaFactura">
-
-                                            </select>
+                                            <input class="form-control" type="text" name="formaFacturar" value="<?php echo $formaFacturar; ?>">
                                         </div>
                                         <div class="col-md-2">
                                             <label for="saldoActual">Saldo actual</label>
-                                            <input class="form-control" type="text" name="saldoActual">
+                                            <input class="form-control" type="text" name="saldoActual" value="<?php echo $saldoActual; ?>">
                                         </div>
                                         <div class="col-md-2">
                                             <label for="limiteCredito">Días de crédito</label>
-                                            <input class="form-control" type="text" name="diasCredito">
+                                            <input class="form-control" type="text" name="diasCredito" value="<?php echo $diasCredito; ?>">
                                         </div>
                                         <div class="col-md-3">
                                             <label for="limiteCredito">Límite de crédito</label>
-                                            <input class="form-control" type="text" name="limiteCredito">
+                                            <input class="form-control" type="text" name="limiteCredito" value="<?php echo $limiteCredito; ?>">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-3">
                                             <label for="tipoFacturacion">Tipo de facturación</label>
-                                            <select class="form-control" name="tipoFacturacion">
-
-                                            </select>
+                                            <input class="form-control" type="text" name="tipoFacturacion" value="<?php echo $tipoFacturacion; ?>">
                                         </div>
                                         <div class="col-md-9">
                                             <label for="facebook">Cuenta de Facebook</label>
-                                            <input class="form-control" type="text" name="facebook">
+                                            <input class="form-control" type="text" name="facebook" value="<?php echo $facebook; ?>">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-12">
                                             <label for="correo">Correo electrónico</label>
-                                            <input class="form-control" type="text" name="correo">
+                                            <input class="form-control" type="text" name="correo" value="<?php echo $correo; ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -458,62 +467,62 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <label for="cobrador">Cobrador que lo atiende</label>
-                                            <input class="form-control" type="text" name="cobrador">
+                                            <input class="form-control" type="text" name="cobrador" value="<?php echo $cobrador; ?>">
                                         </div>
                                     </div>
                                     <br><br>
                                     <div class="row">
                                         <div class="col-md-4">
                                             <label for="rp1_nombre">Referencia personal #1</label>
-                                            <input class="form-control" type="text" name="rf1_nombre">
+                                            <input class="form-control" type="text" name="rf1_nombre" value="<?php echo $contacto1; ?>">
                                         </div>
                                         <div class="col-md-2">
                                             <label for="rp1_telefono">Teléfono</label>
-                                            <input class="form-control" type="text" name="rp1_telefono">
+                                            <input class="form-control" type="text" name="rp1_telefono" value="<?php echo $telCon1; ?>">
                                         </div>
                                         <div class="col-md-4">
                                             <label for="rp1_direccion">Dirección</label>
-                                            <input class="form-control" type="text" name="rp1_direccion">
+                                            <input class="form-control" type="text" name="rp1_direccion" value="<?php echo $dir1; ?>">
                                         </div>
                                         <div class="col-md-2">
                                             <label for="rp1_parentezco">Parentezco</label>
-                                            <input class="form-control" type="text" name="rp1_parentezco">
+                                            <input class="form-control" type="text" name="rp1_parentezco" value="<?php echo $paren1; ?>">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-4">
                                             <label for="rp2_nombre">Referencia personal #2</label>
-                                            <input class="form-control" type="text" name="rf2_nombre">
+                                            <input class="form-control" type="text" name="rf2_nombre" value="<?php echo $contacto2; ?>">
                                         </div>
                                         <div class="col-md-2">
                                             <label for="rp2_telefono">Teléfono</label>
-                                            <input class="form-control" type="text" name="rp2_telefono">
+                                            <input class="form-control" type="text" name="rp2_telefono" value="<?php echo $telCon2; ?>">
                                         </div>
                                         <div class="col-md-4">
                                             <label for="rp2_direccion">Dirección</label>
-                                            <input class="form-control" type="text" name="rp2_direccion">
+                                            <input class="form-control" type="text" name="rp2_direccion" value="<?php echo $dir2; ?>">
                                         </div>
                                         <div class="col-md-2">
                                             <label for="rp2_parentezco">Parentezco</label>
-                                            <input class="form-control" type="text" name="rp2_parentezco">
+                                            <input class="form-control" type="text" name="rp2_parentezco" value="<?php echo $paren2; ?>">
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-4">
                                             <label for="rp3_nombre">Referencia personal #3</label>
-                                            <input class="form-control" type="text" name="rf3_nombre">
+                                            <input class="form-control" type="text" name="rf3_nombre" value="<?php echo $contacto3; ?>">
                                         </div>
                                         <div class="col-md-2">
                                             <label for="rp3_telefono">Teléfono</label>
-                                            <input class="form-control" type="text" name="rp3_telefono">
+                                            <input class="form-control" type="text" name="rp3_telefono" value="<?php echo $telCon3; ?>">
                                         </div>
                                         <div class="col-md-4">
                                             <label for="rp3_direccion">Dirección</label>
-                                            <input class="form-control" type="text" name="rp3_direccion">
+                                            <input class="form-control" type="text" name="rp3_direccion" value="<?php echo $dir3; ?>">
                                         </div>
                                         <div class="col-md-2">
                                             <label for="rp3_parentezco">Parentezco</label>
-                                            <input class="form-control" type="text" name="rp3_parentezco">
+                                            <input class="form-control" type="text" name="rp3_parentezco" value="<?php echo $paren3; ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -540,11 +549,11 @@
                                               <div class="row">
                                                   <div class="col-md-2">
                                                       <label for="fechaInstalacionCable">Fecha de instalación</label>
-                                                      <input class="form-control" type="text" name="fechaInstalacionCable">
+                                                      <input class="form-control" type="text" name="fechaInstalacionCable" value="<?php echo $fechaInstalacion; ?>">
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="fechaPrimerFacturaCable">Fecha de primer factura</label>
-                                                      <input class="form-control" type="text" name="fechaPrimerFacturaCable">
+                                                      <input class="form-control" type="text" name="fechaPrimerFacturaCable" value="<?php echo $fechaPrimerFactura; ?>">
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="exento">Exento</label>
