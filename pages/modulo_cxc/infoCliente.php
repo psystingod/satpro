@@ -73,6 +73,12 @@
         /****************** DATOS CABLE ***********************/
         $fechaInstalacion = date_format(date_create($row['fecha_instalacion']), "d/m/Y");
         $fechaPrimerFactura = date_format(date_create($row['fecha_primer_factura']), "d/m/Y");
+        $exento = $row['exento'];
+        $diaCobro = $row['dia_cobro'];
+        $cortesia = $row['servicio_cortesia'];
+        $cuotaMensualCable = $row['valor_cuota'];
+        $prepago = $row['prepago'];
+        $tipoComprobante = $row['tipo_comprobante'];
     }
 
     // show error
@@ -557,38 +563,46 @@
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="exento">Exento</label>
-                                                      <input class="form-control" type="checkbox" name="exento">
+                                                      <?php
+                                                      if ($exento == false) {
+                                                          echo "<input class='form-control' type='checkbox' name='exento'>";
+                                                      }else {
+                                                          echo "<input class='form-control' type='checkbox' name='exento' checked>";
+                                                      }
+                                                      ?>
+
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="diaGenerarFacturaCable">Día para generar factura</label>
-                                                      <input class="form-control" type="text" name="diaGenerarFacturaCable">
+                                                      <input class="form-control" type="text" name="diaGenerarFacturaCable" value="<?php echo $diaCobro; ?>">
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="cortesia">Cortesía</label>
-                                                      <input class="form-control" type="checkbox" name="cortesia">
+                                                      <?php
+                                                      if ($exento == false) {
+                                                          echo "<input class='form-control' type='checkbox' name='cortesia'>";
+                                                      }else {
+                                                          echo "<input class='form-control' type='checkbox' name='cortesia' checked>";
+                                                      }
+                                                      ?>
                                                   </div>
                                               </div>
                                               <div class="row">
                                                   <div class="col-md-2">
                                                       <label for="cuotaMensualCable">Cuota mensual</label>
-                                                      <input class="form-control" type="text" name="cuotaMensualCable">
+                                                      <input class="form-control" type="text" name="cuotaMensualCable" value="<?php echo $cuotaMensualCable; ?>">
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="prepago">Prepago</label>
-                                                      <input class="form-control" type="text" name="prepago">
+                                                      <input class="form-control" type="text" name="prepago" value="<?php echo $prepago; ?>">
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="tipoComprobante">Tipo de comprobante a generar</label>
-                                                      <select class="form-control" name="tipoComprobante">
-                                                          <option value=""></option>
-                                                      </select>
+                                                      <input class="form-control" type="text" name="tipoComprobante" value="<?php echo $tipoComprobante; ?>">
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="tipoServicio">Tipo de servicio</label>
-                                                      <select class="form-control" name="tipoServicio">
-                                                          <option value="basico">Básico</option>
-                                                          <option value="premium">Premium</option>
-                                                      </select>
+                                                      <input class="form-control" type="text" name="tipoServicio" value="<?php echo $tipoServicio; ?>">
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="mesesContratoCable">Período de contrato en meses</label>
