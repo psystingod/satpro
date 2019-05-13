@@ -79,6 +79,83 @@
         $cuotaMensualCable = $row['valor_cuota'];
         $prepago = $row['prepago'];
         $tipoComprobante = $row['tipo_comprobante'];
+        $tipoServicio = $row['tipo_servicio'];
+        $periodoContratoCable = $row['periodo_contrato_ca'];
+        $vencimientoCable = $row['vencimiento_ca'];
+        if (strlen($row['fecha_reinstalacion']) < 8) {
+            $fechaInstalacionCable = "";
+        }else {
+            $fechaInstalacionCable = date_format(date_create($row['fecha_instalacion']), "d/m/Y");
+        }
+
+        if (strlen($row['fecha_reinstalacion']) < 8) {
+            $fechaReinstalacionCable = "";
+        }else {
+            $fechaReinstalacionCable = date_format(date_create($row['fecha_reinstalacion']), "d/m/Y");
+        }
+        $tecnicoCable = $row['id_tecnico'];
+        $direccionCable = $row['dire_cable'];
+        $nDerivaciones = $row['numero_derivaciones'];
+
+        /****************** DATOS CABLE ***********************/
+        if (strlen($row['fecha_reinstalacion']) < 8) {
+            $fechaInstalacionInter = "";
+        }else {
+            $fechaInstalacionInter = date_format(date_create($row['fecha_instalacion_in']), "d/m/Y");
+        }
+
+        if (strlen($row['fecha_reinstalacion']) < 8) {
+            $fechaPrimerFacturaInter = "";
+        }else {
+            $fechaPrimerFacturaInter = date_format(date_create($row['fecha_primer_factura_in']), "d/m/Y");
+        }
+
+        $tipoServicioInternet = $row['tipo_servicio_in'];
+        $periodoContratoInternet = $row['periodo_contrato_int'];
+        $diaCobroInter = $row['dia_corbo_in'];
+        $velocidadInter = $row['id_velocidad'];
+        $cuotaMensualInter = $row['cuota_in'];
+        $tipoClienteInter = $row['id_tipo_cliente'];
+        $tecnologia = $row['tecnologia'];
+        $nContratoInter = $row['no_contrato_inter'];
+        if (strlen($row['vencimiento_in']) < 8) {
+            $vencimientoInternet = "";
+        }else {
+            $vencimientoInternet = date_format(date_create($row['vencimiento_in']), "d/m/Y");
+        }
+
+        if (strlen($row['ult_ren_in']) < 8) {
+            $ultimaRenovacionInternet = "";
+        }else {
+            $ultimaRenovacionInternet = date_format(date_create($row['ult_ren_in']), "d/m/Y");
+        }
+
+        if (strlen($row['fecha_suspencion_in']) < 8) {
+            $fechaSuspencionInternet = "";
+        }else {
+            $fechaSuspencionInternet = date_format(date_create($row['fecha_suspencion_in']), "d/m/Y");
+        }
+
+        if (strlen($row['fecha_reconexion_in']) < 8) {
+            $fechaReconexionInternet = "";
+        }else {
+            $fechaReconexionInternet = date_format(date_create($row['fecha_reconexion_in']), "d/m/Y");
+        }
+
+        $promocion = $row['id_promocion'];
+        if (strlen($row['dese_promocion_in']) < 8) {
+            $promocionDesde = "";
+        }else {
+            $promocionDesde = date_format(date_create($row['dese_promocion_in']), "d/m/Y");
+        }
+
+        if (strlen($row['hasta_promocion_in']) < 8) {
+            $promocionHasta = "";
+        }else {
+            $promocionHasta = date_format(date_create($row['hasta_promocion_in']), "d/m/Y");
+        }
+        $cuotaPromocion = $row['cuota_promocion'];
+        $direccionInternet = $row['dire_internet'];
     }
 
     // show error
@@ -87,7 +164,7 @@
     }
  ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
 
@@ -606,37 +683,35 @@
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="mesesContratoCable">Período de contrato en meses</label>
-                                                      <input class="form-control" type="text" name="mesesContratoCable">
+                                                      <input class="form-control" type="text" name="mesesContratoCable" value="<?php echo $periodoContratoCable; ?>">
                                                   </div>
                                               </div>
                                               <div class="row">
                                                   <div class="col-md-3">
                                                       <label for="vencimientoContratoCable">Fecha de vencimiento de contrato</label>
-                                                      <input class="form-control" type="text" name="vencimientoContratoCable">
+                                                      <input class="form-control" type="text" name="vencimientoContratoCable" value="<?php echo $vencimientoCable; ?>">
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="inicioContratoCable">Fecha de inicio de contrato</label>
-                                                      <input class="form-control" type="text" name="inicioContratoCable">
+                                                      <input class="form-control" type="text" name="inicioContratoCable" value="<?php echo $fechaInstalacionCable; ?>">
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="fechaReconexionCable">Fecha de reconexión</label>
-                                                      <input class="form-control" type="text" name="fechaReconexionCable">
+                                                      <input class="form-control" type="text" name="fechaReconexionCable" value="<?php echo $fechaReinstalacionCable; ?>">
                                                   </div>
                                                   <div class="col-md-4">
                                                       <label for="encargadoInstalacionCable"> Técnico que realizó la instalación</label>
-                                                      <select class="form-control" name="encargadoInstalacionCable">
-                                                          <option value=""></option>
-                                                      </select>
+                                                      <input class="form-control" type="text" name="encargadoInstalacionCable" value="<?php echo $tecnicoCable; ?>">
                                                   </div>
                                               </div>
                                               <div class="row">
                                                   <div class="col-md-10">
                                                       <label for="direccionCable">Dirección</label>
-                                                      <input class="form-control" type="text" name="direccionCable">
+                                                      <input class="form-control" type="text" name="direccionCable" value="<?php echo $direccionCable; ?>">
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="derivaciones">N° de derivaciones</label>
-                                                      <input class="form-control" type="text" name="derivaciones">
+                                                      <input class="form-control" type="text" name="derivaciones" value="<?php echo $nDerivaciones; ?>">
                                                   </div>
                                               </div>
                                           </div>
@@ -664,98 +739,87 @@
                                               <div class="row">
                                                   <div class="col-md-2">
                                                       <label for="fechaInstalacionInternet">Fecha de instalación</label>
-                                                      <input class="form-control" type="text" name="fechaInstalacionInternet">
+                                                      <input class="form-control" type="text" name="fechaInstalacionInternet" value="<?php echo $fechaInstalacionInter; ?>">
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="fechaPrimerFacturaInternet">Fecha de primer factura</label>
-                                                      <input class="form-control" type="text" name="fechaPrimerFacturaInternet">
+                                                      <input class="form-control" type="text" name="fechaPrimerFacturaInternet" value="<?php echo $fechaPrimerFacturaInter; ?>">
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="tipoServicioInternet">Tipo de servicio</label>
-                                                      <select class="form-control" name="tipoServicioInternet">
-                                                          <option value="prepago">Prepago</option>
-                                                          <option value="pospago">Pospago</option>
-                                                      </select>
+                                                      <input class="form-control" type="text" name="tipoServicioInternet" value="<?php echo $tipoServicioInternet; ?>">
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="mesesContratoInternet">Período de contrato en meses</label>
-                                                      <input class="form-control" type="text" name="mesesContratoInternet">
+                                                      <input class="form-control" type="text" name="mesesContratoInternet" value="<?php echo $periodoContratoInternet; ?>">
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="diaGenerarFacturaInternet">Día para generar factura</label>
-                                                      <input class="form-control" type="text" name="diaGenerarFacturaInternet">
+                                                      <input class="form-control" type="text" name="diaGenerarFacturaInternet" value="<?php echo $diaCobroInter; ?>">
                                                   </div>
                                               </div>
                                               <div class="row">
                                                   <div class="col-md-3">
                                                       <label for="velocidadInternet">Velocidad</label>
-                                                      <select class="form-control" name="velocidadInternet">
-                                                          <option value=""></option>
-                                                      </select>
+                                                      <input class="form-control" type="text" name="velocidadInternet" value="<?php echo $velocidadInter; ?>">
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="cuotaMensualInternet">Cuota mensual</label>
-                                                      <input class="form-control" type="text" name="cuotaMensualInternet">
+                                                      <input class="form-control" type="text" name="cuotaMensualInternet" value="<?php echo $cuotaMensualInter; ?>">
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="tipoCliente">Tipo de cliente</label>
-                                                      <select class="form-control" name="tipoCliente">
-                                                          <option value=""></option>
-                                                      </select>
+                                                      <input class="form-control" type="text" name="tipoCliente" value="<?php echo $tipoClienteInter; ?>">
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="tecnologia">Tecnología</label>
-                                                      <select class="form-control" name="tecnologia">
-                                                          <option value=""></option>
-                                                      </select>
+                                                      <input class="form-control" type="text" name="tecnologia" value="<?php echo $tecnologia; ?>">
                                                   </div>
                                               </div>
                                               <div class="row">
                                                   <div class="col-md-3">
                                                       <label for="nContratoVigente">N° de contrato vigente</label>
-                                                      <input class="form-control" type="text" name="nContratoVigente">
+                                                      <input class="form-control" type="text" name="nContratoVigente" value="<?php echo $nContratoInter; ?>">
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="vencimientoContratoInternet">Vencimiento de contrato</label>
-                                                      <input class="form-control" type="text" name="vencimientoContratoInternet">
+                                                      <input class="form-control" type="text" name="vencimientoContratoInternet" value="<?php echo $vencimientoInternet; ?>">
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="ultimaRenovacionInternet">Última renovación</label>
-                                                      <input class="form-control" type="text" name="ultimaRenovacionInternet">
+                                                      <input class="form-control" type="text" name="ultimaRenovacionInternet" value="<?php echo $ultimaRenovacionInternet; ?>">
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="fechaSuspencionInternet">Fecha de suspención</label>
-                                                      <input class="form-control" type="text" name="fechaSuspencionInternet">
+                                                      <input class="form-control" type="text" name="fechaSuspencionInternet" value="<?php echo $fechaSuspencionInternet; ?>">
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="fechaReconexionInternet">Fecha de reconexión</label>
-                                                      <input class="form-control" type="text" name="fechaReconexionInternet">
+                                                      <input class="form-control" type="text" name="fechaReconexionInternet" value="<?php echo $fechaReconexionInternet; ?>">
                                                   </div>
                                               </div>
                                               <div class="row">
                                                   <div class="col-md-5">
                                                       <label for="promocion">Promoción</label>
-                                                      <select class="form-control" name="promocion">
-                                                          <option value=""></option>
-                                                      </select>
+                                                      <input class="form-control" type="text" name="promocion" value="<?php echo $promocion; ?>">
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="promocionDesde">Desde</label>
-                                                      <input class="form-control" type="text" name="promocionDesde">
+                                                      <input class="form-control" type="text" name="promocionDesde" value="<?php echo $promocionDesde; ?>">
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="promocionHasta">Hasta</label>
-                                                      <input class="form-control" type="text" name="promocionHasta">
+                                                      <input class="form-control" type="text" name="promocionHasta" value="<?php echo $promocionHasta; ?>">
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="cuotaPromocion">Cuota de la promoción</label>
-                                                      <input class="form-control" type="text" name="cuotaPromocion">
+                                                      <input class="form-control" type="text" name="cuotaPromocion" value="<?php echo $cuotaPromocion; ?>">
                                                   </div>
                                               </div>
                                               <div class="row">
                                                   <div class="col-md-12">
                                                       <label for="direccionInternet">Dirección</label>
-                                                      <input class="form-control" type="text" name="direccionInternet">
+                                                      <input class="form-control" type="text" name="direccionInternet" value="<?php echo $direccionInternet; ?>">
                                                   </div>
                                               </div>
                                               <hr style="border-top: 1px solid red;">
