@@ -156,7 +156,7 @@
         <div id="page-wrapper">
             <div class="row">
 
-                    <h1 class="page-header alert alert-info">Catalogo de Cuentas</h1>
+                    <h1 class="page-header alert alert-info">Procesamiento de partidas</h1>
                     <?php
                     if (isset($_GET['status'])) {
                         if ($_GET['status'] == 'success') {
@@ -188,77 +188,75 @@
                 <a href="contabilidad.php"><button class="btn btn-success" type="button" name="regresar"><i class="fas fa-arrow-circle-left"></i> Atrás</button></a>
             </div>
             <br>
+            <table class="table table-striped table-hover" id="" >
+
+              <tr>
+                  <td><label for="Total">Fecha de la Partida:</label></td>
+                  <td><input type='text' size='".$A."' maxlength='30' class='form-control' name='' id='' ></td>
+                  <td><label for="Total">Tipo de Partida:</label></td>
+                  <td><input type='text' size='".$A."' maxlength='30' class='form-control' name='' id='' ></td>
+              </tr>
+              <tr>
+                  <td><label for="Total">N° departida:</label></td>
+                  <td><input type='text' size='".$A."' maxlength='30' class='form-control' name='' id='' ></td>
+                  <td><label for="Total">Concepto de Partida:</label></td>
+                  <td><textarea name="comentarios" class='form-control' rows="3" cols="50">Escribe aquí tus comentarios</textarea></td>
+              </tr>
+
+
+            </table>
+            <div class="row" style="text-align: right; width:460px">
+                <a href=""><button class="btn btn-primary pull-right agregar" type="button" name="regresar">Importar a .CSV</button></a>
+              <a href=""><button class="btn btn-primary pull-right agregar" type="button" name="regresar">Buscar en Asientos Contables</button></a>
+              <a href=""><button class="btn btn-primary pull-right agregar" type="button" name="regresar">Crear Cuentas</button></a>
+            </div>
             <div class="row">
                 <form class="" action="#" method="POST">
 
-                <button  title="Presione: Alt+A" class="btn btn-primary pull-right" type="button" name="button" data-toggle="modal" data-target="#agregar" accesskey="a"><i class="fas fa-plus-circle"></i> Agregar Cuenta</button>
-                <br><br>
+                <!-- <button  title="Presione: Alt+A" class="btn btn-primary pull-right" type="button" name="button" data-toggle="modal" data-target="#agregar" accesskey="a"><i class="fas fa-plus-circle"></i> Agregar Cuenta</button> -->
+                <hr>
 
-                    <table class="table table-striped table-hover" id="inventario" >
+                    <table class="table table-striped table-hover" id="" >
                         <thead>
                             <tr>
 
-                                <th>Cuenta</th>
-                                <th>Nombre</th>
-                                <th>Cuenta Mayor</th>
-                                <th>Cuenta de:</th>
-                                <th>Tipo Cuenta</th>
-                                  <th></th>
+                                <th>Cód. Cuenta</th>
+                                <th>Concepto de la transacción</th>
+                                <th>Debe</th>
+                                <th>Haber</th>
                             </tr>
                         </thead>
                         <tbody>
                           <?php
-                              foreach ($Catalogo as $key) {
-                                  echo "<tr><td>";
-                                  echo $key["id_cuenta"] . "</td><td >";
-                                  echo $key["nombre_cuenta"] . "</td><td >";
-                                  echo $key["id_cuentamayor"] . "</td><td >";
+                            for ($i = 0; $i < 5; $i++) {
+                              $A = 10;
+                              echo
+                              "<tr>
+                                  <td><input type='text' size='".$A."' maxlength='30' class='form-control' name='' id='' ></td>
+                                  <td><input type='text' size='".$A."' maxlength='30' class='form-control' name='' id='' ></td>
+                                  <td><input type='text' size='".$A."' maxlength='30' class='form-control' name='' id='' placeholder='0.00'></td>
+                                  <td><input type='text' size='".$A."' maxlength='30' class='form-control' name='' id='' placeholder='0.00'></td>
+                              </tr>";
 
-                                  if($key["cargar_como"] == 1)
-                                  {
-                                    echo "Activo"      . "</td><td >";
-                                  }
-                                  else if($key["cargar_como"] == 2)
-                                  {
-                                    echo "Pasivo"      . "</td><td >";
-                                  }
-                                  else if($key["cargar_como"] == 3)
-                                  {
-                                    echo "Patrimonio"      . "</td><td >";
-                                  }
-                                  else if($key["cargar_como"] == 4)
-                                  {
-                                    echo "Orden saldo deudor"      . "</td><td >";
-                                  }
-                                  else if($key["cargar_como"] == 5)
-                                  {
-                                    echo "Orden saldo acreedor"      . "</td><td >";
-                                  }
-                                  else if($key["cargar_como"] == 6)
-                                  {
-                                    echo "Cuenta Liquidadora resultado"      . "</td><td >";
-                                  }
+                            }
+                            echo "
+                            <tr>
+                              <td><button id='' class='btn btn-primary agregar' type='button' name='button'><i class='fas fa-plus-circle'></i> Nueva Linea</button></td>
+                            </tr>
+                            <tr>
+                            <td colspan='2' align='right'><label for='Total'>Totales:</label></td>
+                            <td><input type='text' size='".$A."' maxlength='30' class='form-control' name='' id='' placeholder='0.00'></td>
+                            <td><input type='text' size='".$A."' maxlength='30' class='form-control' name='' id='' placeholder='0.00'></td> </tr>
 
-                                echo $key["Nombre"] . "</td><td >";
+                            <tr>
+                            <td colspan='3' align='right'><label for='Total'>Diferencia:</label></td>
+                            <td><input type='text' size='".$A."' maxlength='30' class='form-control' name='' id='' placeholder='0.00'></td> </tr>";
+                            ?>
 
-
-                                  echo "<div class='btn-group pull-right'>
-                                              <button type='button' class='btn btn-default'>Opciones</button>
-                                              <button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
-                                                <span class='caret'></span>
-                                                <span class='sr-only'>Toggle Dropdown</span>
-                                              </button>
-                                              <ul class='dropdown-menu'>
-                                                  <li><a href='actualizarCatalogo.php?Id={$key["id_cuenta"]}'><i class='fas fa-edit'></i> Ver / Editar</a>
-                                                  </li>
-
-                                                  <li class='divider'></li>
-                                              </ul>
-                                          </div>" . "</td></tr>";
-                                      }
-                                  ?>
                         </tbody>
+
                     </table>
+
                     </form>
                     <!-- /.table-responsive -->
                 </div>

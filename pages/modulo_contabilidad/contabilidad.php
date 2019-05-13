@@ -159,7 +159,7 @@
                                 <div class="name">Catalogo de Cuentas</div>
                             </div>
                         </div></a>
-                        <a href="configuracion.php"><div class="col-lg-6 btn btn-default">
+                        <a href="Partidas.php"><div class="col-lg-6 btn btn-default">
                             <div class="stat-icon">
                                 <i class="fas fa-edit fa-3x"></i>
                             </div>
