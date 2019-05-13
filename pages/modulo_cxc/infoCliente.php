@@ -156,6 +156,17 @@
         }
         $cuotaPromocion = $row['cuota_promocion'];
         $direccionInternet = $row['dire_internet'];
+        $colilla = $row['colilla'];
+        $modelo = $row['marca_modem'];
+        $recepcion = $row['recep_modem'];
+        $wanip = $row['wanip'];
+        $mac = $row['mac_modem'];
+        $transmision = $row['trans_modem'];
+        //$coordenadas = $row['coordenadas'];
+        $serie = $row['serie_modem'];
+        $ruido = $row['ruido_modem'];
+        $nodo = "";
+        $wifiClave = $row['clave_modem'];
     }
 
     // show error
@@ -828,15 +839,15 @@
                                                       <div class="row">
                                                           <div class="col-md-12">
                                                               <label for="colilla">Colilla</label>
-                                                              <input class="form-control" type="text" name="colilla">
+                                                              <input class="form-control" type="text" name="colilla" value="<?php echo $colilla; ?>">
                                                           </div>
                                                           <div class="col-md-12">
                                                               <label for="wanip">WAN IP</label>
-                                                              <input class="form-control" type="text" name="wanip">
+                                                              <input class="form-control" type="text" name="wanip" value="<?php echo $wanip; ?>">
                                                           </div>
                                                           <div class="col-md-12">
                                                               <label for="coordenadas">Coordenadas</label>
-                                                              <input class="form-control" type="text" name="coordenadas">
+                                                              <input class="form-control" type="text" name="coordenadas" value="<?php if(isset($coordenadas)) echo $coordenadas; ?>">
                                                           </div>
                                                           <div class="col-md-12">
                                                               <label for="nodo">Nodo/Ap/Path</label>
@@ -848,27 +859,27 @@
                                                       <div class="row">
                                                           <div class="col-md-8">
                                                               <label for="modelo">Modelo</label>
-                                                              <input class="form-control" type="text" name="modelo">
+                                                              <input class="form-control" type="text" name="modelo" value="<?php echo $modelo; ?>">
                                                           </div>
                                                           <div class="col-md-4">
                                                               <label for="recepcion">Recepción</label>
-                                                              <input class="form-control" type="text" name="recepcion">
+                                                              <input class="form-control" type="text" name="recepcion" value="<?php echo $recepcion; ?>">
                                                           </div>
                                                           <div class="col-md-8">
                                                               <label for="mac">MAC</label>
-                                                              <input class="form-control" type="text" name="mac">
+                                                              <input class="form-control" type="text" name="mac" value="<?php echo $mac; ?>">
                                                           </div>
                                                           <div class="col-md-4">
                                                               <label for="transmicion">Transmición</label>
-                                                              <input class="form-control" type="text" name="transmicion">
+                                                              <input class="form-control" type="text" name="transmicion" value="<?php echo $transmision; ?>">
                                                           </div>
                                                           <div class="col-md-8">
                                                               <label for="serie">Serie</label>
-                                                              <input class="form-control" type="text" name="serie">
+                                                              <input class="form-control" type="text" name="serie" value="<?php echo $serie; ?>">
                                                           </div>
                                                           <div class="col-md-4">
                                                               <label for="ruido">Ruido</label>
-                                                              <input class="form-control" type="text" name="ruido">
+                                                              <input class="form-control" type="text" name="ruido" value="<?php echo $ruido; ?>">
                                                           </div>
                                                           <div class="col-md-12">
                                                               <label for="claveWifi">Clave WIFI</label>
