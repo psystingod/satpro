@@ -320,12 +320,12 @@
         </nav>
         <div id="page-wrapper">
             <div class="row">
-                <br>
                 <div class="col-md-8">
                     <table class="table table-responsive">
                         <tr>
                             <td><button class="btn btn-danger btn-block"><i class="fas fa-sign-out-alt fa-2x"></i></button></td>
                             <td><button class="btn btn-success btn-block"><i class="fas fa-print fa-2x"></i></button></td>
+                            <td><button class="btn btn-warning btn-block"><i class="far fa-edit fa-2x"></i></button></td>
                             <td><button class="btn btn-primary btn-block"><i class="fas fa-search fa-2x"></i></button></td>
                         </tr>
                         <tr>
