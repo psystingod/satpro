@@ -183,8 +183,6 @@
                                     </li>
                                     <li><a href="#refex" data-toggle="tab">Expericencia y referencias</a>
                                     </li>
-                                    <li><a href="#notificaciones-traslados" data-toggle="tab">Traslados</a>
-                                    </li>
                                 </ul>
                                 <!-- Tab panes -->
                                 <div class="tab-content">
