@@ -69,6 +69,22 @@
             </div>
             <!-- /.navbar-header -->
 
+            <ul class="nav navbar-top-links navbar-left">
+                <!-- /.dropdown -->
+                <li class="dropdown">
+                    <a style="color: white;" onMouseOver="this.style.color='black'" onMouseOut="this.style.color='white'" class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        Transacciones <i class="fas fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#" data-toggle="modal" data-target="#facturacionDiaria">Facturación diaria</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
             <ul class="nav navbar-top-links navbar-right">
                 <!-- /.dropdown -->
                 <li class="dropdown">
@@ -158,7 +174,7 @@
     <!-- /.row -->
     <div class="row">
         <div class="col-lg-12">
-            <h1 class="page-header"><b>Módulo de inventario</b></h1>
+            <h1 class="page-header"><b>Módulo de facturación e inventario</b></h1>
             <div class="row">
                 <a class="" href="inventario.php" ><div class="col-lg-6 btn btn-default">
                     <div class="stat-icon">
@@ -205,26 +221,145 @@
     </div>
     <!-- /.row -->
 </div>
-        <!-- /#page-wrapper -->
+<!-- /#page-wrapper -->
+<!-- Modal Facturación diaria -->
+<div id="facturacionDiaria" class="modal fade" role="dialog">
+  <div class="modal-dialog">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div style="background-color: #1565C0; color:white;" class="modal-header">
+        <button type="button" class="close" data-dismiss="modal">&times;</button>
+        <h4 class="modal-title">Generar facturas</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+            <div class="col-md-12">
+                <select class="form-control" name="tipoComprobante">
+                    <option value="1">Factura consumidor final</option>
+                    <option value="2">Crédito fiscal</option>
+                </select>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label for=""></label>
+                <select id="mesGenerar" class="form-control" name="mesGenerar">
+                    <option value="" selected>Mes a generar</option>
+                    <option value="01">Enero</option>
+                    <option value="02">Febrero</option>
+                    <option value="03">Marzo</option>
+                    <option value="04">Abril</option>
+                    <option value="05">Mayo</option>
+                    <option value="06">Junio</option>
+                    <option value="07">Julio</option>
+                    <option value="08">Agosto</option>
+                    <option value="09">Septiembre</option>
+                    <option value="10">Octubre</option>
+                    <option value="11">Noviembre</option>
+                    <option value="12">Diciembre</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for=""></label>
+                <input id="diaGenerar" class="form-control" type="text" name="diaGenerar" placeholder="Día a generar">
+            </div>
+            <div class="col-md-3">
+                <label for=""></label>
+                <input id="anoGenerar" class="form-control" type="text" name="anoGenerar" placeholder="Año a generar" value="<?php echo date('Y') ?>">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label for=""></label>
+                <input id="fechaComprobante" class="form-control" type="text" name="fechaComprobante" placeholder="Fecha para el comprobante">
+            </div>
+            <div class="col-md-6">
+                <label for=""></label>
+                <input id="fechaVencimiento" class="form-control" type="text" name="vencimiento" placeholder="Vencimiento">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6">
+                <label for="correlativo"></label>
+                <input class="form-control alert-danger" type="text" name="correlativo" value="25899">
+            </div>
+            <div class="col-md-4">
+                <label for=""></label>
+                <select class="form-control" name="tipoServicio">
+                    <option value="" selected>Tipo de servicio</option>
+                    <option value="cable">Cable</option>
+                    <option value="internet">Internet</option>
+                    <option value="ambos">Ambos</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <br>
+                <label style="color:#2E7D32;" for="cesc">CESC</label>
+                <input type="checkbox" name="cesc" value="1" checked>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+          <div class="row">
+              <div class="col-md-6">
+                  <button type="button" class="btn btn-success btn-lg btn-block" data-dismiss="modal">Generar facturas</button>
+              </div>
+              <div class="col-md-6">
+                  <button type="button" class="btn btn-default btn-lg btn-block" data-dismiss="modal">Cancelar</button>
+              </div>
+          </div>
+      </div>
     </div>
-    <!-- /#wrapper -->
 
-    <!-- jQuery -->
-    <script src="../vendor/jquery/jquery.min.js"></script>
+  </div>
+</div><!-- Fin Modal Facturación diaria -->
+</div>
+<!-- /#wrapper -->
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
+<!-- jQuery -->
+<script src="../vendor/jquery/jquery.min.js"></script>
 
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="../vendor/metisMenu/metisMenu.min.js"></script>
+<!-- Bootstrap Core JavaScript -->
+<script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
 
-    <!-- Morris Charts JavaScript -->
-    <script src="../vendor/raphael/raphael.min.js"></script>
-    <script src="../vendor/morrisjs/morris.min.js"></script>
-    <script src="../data/morris-data.js"></script>
+<!-- Metis Menu Plugin JavaScript -->
+<script src="../vendor/metisMenu/metisMenu.min.js"></script>
 
-    <!-- Custom Theme JavaScript -->
-    <script src="../dist/js/sb-admin-2.js"></script>
+<!-- Morris Charts JavaScript -->
+<script src="../vendor/raphael/raphael.min.js"></script>
+<script src="../vendor/morrisjs/morris.min.js"></script>
+<script src="../data/morris-data.js"></script>
+
+<script type="text/javascript">
+    // Get the input field
+    var mes = document.getElementById("mesGenerar");
+    var dia = document.getElementById("diaGenerar");
+    var ano = document.getElementById("anoGenerar");
+
+
+    // Execute a function when the user releases a key on the keyboard
+    ano.addEventListener("keyup", function(event) {
+    // Number 13 is the "Enter" key on the keyboard
+    if (event.keyCode === 13) {
+    // Cancel the default action, if needed
+    event.preventDefault();
+    // Trigger the button element with a click
+    var mesGenerar = document.getElementById("mesGenerar").value;
+    var diaGenerar = document.getElementById("diaGenerar").value;
+    var anoGenerar = document.getElementById("anoGenerar").value;
+
+    var fechaComprobante = new Date(mesGenerar+"-"+diaGenerar+"-"+anoGenerar);
+    console.log(fechaComprobante.setMonth(fechaComprobante.getMonth()+1));
+    document.getElementById("fechaComprobante").value = fechaComprobante.toLocaleDateString();
+    console.log(fechaComprobante.setDate(fechaComprobante.getDate()+8));
+    document.getElementById("fechaVencimiento").value = fechaComprobante.toLocaleDateString();
+    }
+    });
+</script>
+
+<!-- Custom Theme JavaScript -->
+<script src="../dist/js/sb-admin-2.js"></script>
 </body>
 
 </html>

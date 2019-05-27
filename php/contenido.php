@@ -24,7 +24,7 @@ $menuAdministracion = "<div class='navbar-default sidebar' role='navigation'>
                 <a class='' href='infoCliente.php'><i class='fas fa-users'></i> Clientes</a>
             </li>
             <li style='display:run-in;'>
-                <a href='moduloInventario.php'><i class='fas fa-scroll'></i> Inventario</a>
+                <a href='moduloInventario.php'><i class='fas fa-scroll'></i> Facturación e inventario</a>
             </li>
             <li style='display:run-in;'>
                 <a href='planillas.php'><i class='fas fa-file-signature'></i>Planillas</a>
@@ -148,7 +148,7 @@ $menuJefatura = "<div class='navbar-default sidebar' role='navigation'>
                 <a class='' href='infoCliente.php'><i class='fas fa-users'></i> Clientes</a>
             </li>
             <li style='display:run-in;'>
-                <a href='moduloInventario.php'><i class='fas fa-scroll'></i> Inventario</a>
+                <a href='moduloInventario.php'><i class='fas fa-scroll'></i> Facturación e inventario</a>
             </li>
             <li style='display:none;'>
                 <a href='planillas.php'><i class='fas fa-file-signature'></i>Planillas</a>
@@ -278,7 +278,7 @@ $menuUsuario = "<div class='navbar-default sidebar' role='navigation'>
                 <a class='' href='infoCliente.php'><i class='fas fa-users'></i> Clientes</a>
             </li>
             <li style='display:none;'>
-                <a href='moduloInventario.php'><i class='fas fa-scroll'></i> Inventario</a>
+                <a href='moduloInventario.php'><i class='fas fa-scroll'></i> Facturación e inventario</a>
             </li>
             <li style='display:none;'>
                 <a href='planillas.php'><i class='fas fa-file-signature'></i>Planillas</a>
