@@ -2,8 +2,11 @@
     session_start();
   //  include 'SelecBodega.php';
     require("../php/productsInfo.php");
+    require("../php/facturasGeneradas.php");
     $productsInfo = new ProductsInfo();
     $warehouses = $productsInfo->getWarehouses();
+    $fac = new FacturasGeneradas();
+    $facArray = $fac->verFacturas();
     //  Setcookie ("bdgSelec","0",time()-100);
     // $Bodega = array();
     // foreach ($warehouses as $key)
@@ -232,6 +235,7 @@
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Generar facturas</h4>
       </div>
+      <form id="generarFacturas" action="../php/generarFacturas.php" method="POST">
       <div class="modal-body">
         <div class="row">
             <div class="col-md-12">
@@ -303,15 +307,20 @@
       <div class="modal-footer">
           <div class="row">
               <div class="col-md-6">
-                  <button type="button" class="btn btn-success btn-lg btn-block" data-dismiss="modal">Generar facturas</button>
+                  <input type="submit" class="btn btn-success btn-lg btn-block" name="submit" value="Generar Facturas">
               </div>
               <div class="col-md-6">
                   <button type="button" class="btn btn-default btn-lg btn-block" data-dismiss="modal">Cancelar</button>
               </div>
           </div>
+      </form>
       </div>
     </div>
-
+    <?php
+    foreach ($facArray as $key) {
+        echo $key['nombre'].'<br>';
+    }
+    ?>
   </div>
 </div><!-- Fin Modal Facturación diaria -->
 </div>
@@ -330,6 +339,8 @@
 <script src="../vendor/raphael/raphael.min.js"></script>
 <script src="../vendor/morrisjs/morris.min.js"></script>
 <script src="../data/morris-data.js"></script>
+<!-- Custom Theme JavaScript -->
+<script src="../dist/js/sb-admin-2.js"></script>
 
 <script type="text/javascript">
     // Get the input field
@@ -337,6 +348,13 @@
     var dia = document.getElementById("diaGenerar");
     var ano = document.getElementById("anoGenerar");
 
+    $('#generarFacturas').on('keyup keypress', function(e) {
+      var keyCode = e.keyCode || e.which;
+      if (keyCode === 13) {
+        e.preventDefault();
+        return false;
+      }
+    });
 
     // Execute a function when the user releases a key on the keyboard
     ano.addEventListener("keyup", function(event) {
@@ -358,8 +376,6 @@
     });
 </script>
 
-<!-- Custom Theme JavaScript -->
-<script src="../dist/js/sb-admin-2.js"></script>
 </body>
 
 </html>

@@ -1,7 +1,13 @@
 <?php
-
+    require('php/getImpuestos.php');
     session_start();
-
+    $imp = new GetImpuestos();
+    $ivarr = $imp->verImpuestos('IVA');
+    $iva = $ivarr['valorImpuesto'] * 100;
+    $idIva = $ivarr['idImpuesto'];
+    $cescrr = $imp->verImpuestos('CESC');
+    $cesc = $cescrr['valorImpuesto'] * 100;
+    $idCesc = $cescrr['idImpuesto'];
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -15,7 +21,7 @@
     <meta name="author" content="">
 
     <title>Cablesat</title>
-<link rel="shortcut icon" href="../../images/Cablesat.png" />
+    <link rel="shortcut icon" href="../../images/Cablesat.png" />
     <!-- Bootstrap Core CSS -->
     <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -153,11 +159,16 @@
 
 
         <div id="page-wrapper">
-
+        <?php
+            if (isset($_GET['state'])) {
+                if ($_GET['state'] == 'success') {
+                echo "<script>alert('Impuestos actualizados con exito!')</script>";
+                }
+            } ?>
            <!-- /.row -->
            <div class="row">
                <div class="col-lg-12">
-                   <h1 class="page-header">Impuestos y porcentajes</h1>
+                   <h1 class="page-header"><b>Impuestos y porcentajes</b></h1>
                        <div class="row">
                            <div class="col-lg-6">
                                <a href="configuracion.php"><button class="btn btn-success" type="button" name="regresar"><i class="fas fa-arrow-circle-left"></i> Atrás</button></a>
@@ -168,31 +179,34 @@
            </div>
            <!-- /.row -->
            <div class="row">
+               <form class="" action="php/setImpuestos.php" method="POST">
                <table class="table">
                    <tr>
                        <div class="col-md-2">
-                           <label for="">IVA</label>
-                           <input class="form-control" type="text" name="" value="">
+                           <label for="">IVA (%)</label>
+                           <input type="hidden" name="idIva" value="<?php echo $idIva ?>">
+                           <input class="form-control" type="text" name="iva" value="<?php echo $iva ?>" placeholder="valor %">
                        </div>
                        <div class="col-md-2">
-                           <label for="">CES</label>
-                           <input class="form-control" type="text" name="" value="">
-                       </div>
-                       <div class="col-md-2">
-                           <label for="">IMP</label>
-                           <input class="form-control" type="text" name="" value="">
-                       </div>
-                       <div class="col-md-2">
-                           <label for="">IMP</label>
-                           <input class="form-control" type="text" name="" value="">
+                           <label for="">CESC (%)</label>
+                           <input type="hidden" name="idCesc" value="<?php echo $idCesc ?>">
+                           <input class="form-control" type="text" name="cesc" value="<?php echo $cesc ?>" placeholder="valor %">
                        </div>
                        <div class="col-md-2">
                            <label for="">IMP</label>
-                           <input class="form-control" type="text" name="" value="">
+                           <input class="form-control" type="text" name="" value="" disabled>
                        </div>
                        <div class="col-md-2">
                            <label for="">IMP</label>
-                           <input class="form-control" type="text" name="" value="">
+                           <input class="form-control" type="text" name="" value="" disabled>
+                       </div>
+                       <div class="col-md-2">
+                           <label for="">IMP</label>
+                           <input class="form-control" type="text" name="" value="" disabled>
+                       </div>
+                       <div class="col-md-2">
+                           <label for="">IMP</label>
+                           <input class="form-control" type="text" name="" value="" disabled>
                        </div>
                    </tr>
                </table>
@@ -205,7 +219,7 @@
 
                </div>
                <div class="col-md-2">
-                   <button class="btn btn-primary btn-block" type="button" name="button">Guardar</button>
+                   <button class="btn btn-primary btn-block" type="submit" name="submit">Guardar</button>
                </div>
                <div class="col-md-2">
                    <a href="administrar.php" style="text-decoration:none;"><button class="btn btn-default btn-block" type="button" name="button">Cancelar</button></a>
@@ -216,6 +230,7 @@
                <div class="col-md-2">
 
                </div>
+               </form>
            </div>
         </div>
     </div>

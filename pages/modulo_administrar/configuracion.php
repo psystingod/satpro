@@ -242,13 +242,10 @@
                          </div>
                      </div></a>
                    </div>
-
-                   <hr style="color: #0056b2;" />
-
                    <div class="row">
                      <a class="" href="afp.php"><div class="col-lg-6 btn btn-default">
                          <div class="stat-icon">
-                             <i class="fas fa-percent fa-3x"></i>
+                             <i class="fas fa-money-check-alt fa-3x"></i>
                          </div>
                          <div class="stat-values">
                              <br>
