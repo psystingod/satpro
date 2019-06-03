@@ -14,7 +14,7 @@
        {
            try {
                // SQL query para traer datos del servicio de cable de la tabla clientes
-               $query = "SELECT * FROM tbl_facturas";
+               $query = "SELECT * FROM tbl_facturas, clientes5 WHERE codigoCliente=clientes5.cod_cliente";
                // Preparación de sentencia
                $statement = $this->dbConnect->prepare($query);
                $statement->execute();

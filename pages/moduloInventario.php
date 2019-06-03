@@ -81,6 +81,8 @@
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="#" data-toggle="modal" data-target="#facturacionDiaria">Facturación diaria</a>
                         </li>
+                        <li><a href="#" data-toggle="modal" data-target="#verFacturasGeneradas">Ver facturas generadas</a>
+                        </li>
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>
@@ -239,7 +241,7 @@
       <div class="modal-body">
         <div class="row">
             <div class="col-md-12">
-                <select class="form-control" name="tipoComprobante">
+                <select class="form-control" name="tipoComprobante" required>
                     <option value="1">Factura consumidor final</option>
                     <option value="2">Crédito fiscal</option>
                 </select>
@@ -248,7 +250,7 @@
         <div class="row">
             <div class="col-md-6">
                 <label for=""></label>
-                <select id="mesGenerar" class="form-control" name="mesGenerar">
+                <select id="mesGenerar" class="form-control" name="mesGenerar" required>
                     <option value="" selected>Mes a generar</option>
                     <option value="01">Enero</option>
                     <option value="02">Febrero</option>
@@ -266,31 +268,31 @@
             </div>
             <div class="col-md-3">
                 <label for=""></label>
-                <input id="diaGenerar" class="form-control" type="text" name="diaGenerar" placeholder="Día a generar">
+                <input id="diaGenerar" class="form-control" type="text" name="diaGenerar" placeholder="Día a generar" required>
             </div>
             <div class="col-md-3">
                 <label for=""></label>
-                <input id="anoGenerar" class="form-control" type="text" name="anoGenerar" placeholder="Año a generar" value="<?php echo date('Y') ?>">
+                <input id="anoGenerar" class="form-control" type="text" name="anoGenerar" placeholder="Año a generar" value="<?php echo date('Y') ?>" required>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <label for=""></label>
-                <input id="fechaComprobante" class="form-control" type="text" name="fechaComprobante" placeholder="Fecha para el comprobante">
+                <input id="fechaComprobante" class="form-control" type="text" name="fechaComprobante" placeholder="Fecha para el comprobante" required>
             </div>
             <div class="col-md-6">
                 <label for=""></label>
-                <input id="fechaVencimiento" class="form-control" type="text" name="vencimiento" placeholder="Vencimiento">
+                <input id="fechaVencimiento" class="form-control" type="text" name="vencimiento" placeholder="Vencimiento" required>
             </div>
         </div>
         <div class="row">
             <div class="col-md-6">
                 <label for="correlativo"></label>
-                <input class="form-control alert-danger" type="text" name="correlativo" value="25899">
+                <input class="form-control alert-danger" type="text" name="correlativo" value="25899" required>
             </div>
             <div class="col-md-4">
                 <label for=""></label>
-                <select class="form-control" name="tipoServicio">
+                <select class="form-control" name="tipoServicio" required>
                     <option value="" selected>Tipo de servicio</option>
                     <option value="cable">Cable</option>
                     <option value="internet">Internet</option>
@@ -316,13 +318,13 @@
       </form>
       </div>
     </div>
-    <?php
-    foreach ($facArray as $key) {
-        echo $key['nombre'].'<br>';
-    }
-    ?>
   </div>
 </div><!-- Fin Modal Facturación diaria -->
+<?php
+foreach ($facArray as $key) {
+    echo $key['nombre'].'<br>';
+}
+?>
 </div>
 <!-- /#wrapper -->
 
