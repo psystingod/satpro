@@ -2,11 +2,8 @@
     session_start();
   //  include 'SelecBodega.php';
     require("../php/productsInfo.php");
-    require("../php/facturasGeneradas.php");
     $productsInfo = new ProductsInfo();
     $warehouses = $productsInfo->getWarehouses();
-    $fac = new FacturasGeneradas();
-    $facArray = $fac->verFacturas();
     //  Setcookie ("bdgSelec","0",time()-100);
     // $Bodega = array();
     // foreach ($warehouses as $key)
@@ -14,6 +11,11 @@
     //     array_push($Bodega,$key["NombreBodega"]);
     // }
     // setcookie('bdg', json_encode($Bodega), 0);
+    if (isset($_GET['found'])) {
+        if ($_GET['found'] == 'no') {
+            echo "<script>alert('No se encontraron cobros programados para este día')</script>";
+        }
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,6 +42,7 @@
     <!-- Custom CSS -->
     <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
     <link rel="stylesheet" href="../dist/css/custom-principal.css">
+    <link rel="stylesheet" href="js/menu.css">
 
     <!-- Morris Charts CSS -->
     <link href="../vendor/morrisjs/morris.css" rel="stylesheet">
@@ -74,14 +77,14 @@
 
             <ul class="nav navbar-top-links navbar-left">
                 <!-- /.dropdown -->
-                <li class="dropdown">
-                    <a style="color: white;" onMouseOver="this.style.color='black'" onMouseOut="this.style.color='white'" class="dropdown-toggle" data-toggle="dropdown" href="#">
+                <li class="dropdown procesos">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         Transacciones <i class="fas fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="#" data-toggle="modal" data-target="#facturacionDiaria">Facturación diaria</a>
                         </li>
-                        <li><a href="#" data-toggle="modal" data-target="#verFacturasGeneradas">Ver facturas generadas</a>
+                        <li><a href="facturacionGenerada.php" target="_blank">Ver facturas generadas</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -320,11 +323,6 @@
     </div>
   </div>
 </div><!-- Fin Modal Facturación diaria -->
-<?php
-foreach ($facArray as $key) {
-    echo $key['nombre'].'<br>';
-}
-?>
 </div>
 <!-- /#wrapper -->
 

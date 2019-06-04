@@ -13,6 +13,7 @@
         public function generar()
        {
            try {
+               date_default_timezone_set('America/El_Salvador');
                // SQL query para traer datos del servicio de cable de la tabla clientes
                $query = "SELECT valorImpuesto FROM tbl_impuestos WHERE siglasImpuesto = 'CESC'";
                // Preparación de sentencia
@@ -27,8 +28,17 @@
                $diaGenerar = $_POST['diaGenerar'];
                $anoGenerar = $_POST['anoGenerar'];
                $fechaGenerar = $anoGenerar."-".$mesGenerar."-".$diaGenerar;
-               $fechaComprobante = date_create($_POST['fechaComprobante']);
-               $fechaVencimiento = date_create($_POST['vencimiento']);
+               $comprobante = $_POST['fechaComprobante'];
+               $vencimiento = $_POST['vencimiento'];
+               $comprobante2 = str_replace("/", "-", $comprobante);
+               $vencimiento2 = str_replace("/", "-", $vencimiento);
+               var_dump($comprobante2);
+               var_dump($vencimiento2);
+               $fechaComprobante = date_format(date_create($comprobante2), 'Y-m-d');
+               $fechaVencimiento = date_format(date_create($vencimiento2), 'Y-m-d');
+               var_dump($fechaComprobante);
+               var_dump($fechaVencimiento);
+
                $correlativo = $_POST['correlativo'];
                $tipoServicio = $_POST['tipoServicio'];
 
@@ -50,6 +60,9 @@
                              ':fechaGenerar' => $fechaGenerar
                             ));
                    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+                   if (count($result) == 0) {
+                       header('Location: ../pages/moduloInventario.php?found=no');
+                   }
                    foreach ($result as $i) {
                        $qry = "INSERT INTO tbl_facturas(tipoFactura, numeroRecibo, codigoCliente, cuotaCable, cuotaInternet, saldoCable, saldoInternet, fechaCobro, fechaVencimiento, fechaFactura, tipoServicio, anticipado, impuesto)VALUES(:tipoComprobante, :numeroRecibo, :codigoCliente, :cuotaCable, :cuotaInternet, :saldoCable, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :tipoServicio, :anticipado, :impuesto)";
 
@@ -63,8 +76,8 @@
                                  ':saldoCable' => $i['valor_cuota'],
                                  ':saldoInternet' => $i['cuota_in'],
                                  ':fechaCobro' => $fechaGenerar,
-                                 ':fechaFactura' => date_format($fechaComprobante, 'Y-m-d'),
-                                 ':fechaVencimiento' => date_format($fechaVencimiento, 'Y-m-d'),
+                                 ':fechaFactura' => $fechaComprobante,
+                                 ':fechaVencimiento' => $fechaVencimiento,
                                  ':tipoServicio' => $ts,
                                  ':anticipado' => 0,
                                  ':impuesto' => $cesc
@@ -84,6 +97,10 @@
                              ':fechaGenerar' => $fechaGenerar
                             ));
                    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+                   if ($statement->rowCount() ) {
+                       header('Location: ../pages/moduloInventario.php?found=no');
+                   }
                    foreach ($result as $i) {
                        $qry = "INSERT INTO tbl_facturas(tipoFactura, numeroRecibo, codigoCliente, cuotaCable, cuotaInternet, saldoCable, saldoInternet, fechaCobro, fechaVencimiento, fechaFactura, tipoServicio, anticipado, impuesto)VALUES(:tipoComprobante, :numeroRecibo, :codigoCliente, :cuotaCable, :cuotaInternet, :saldoCable, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :tipoServicio, :anticipado, :impuesto)";
 
@@ -97,8 +114,8 @@
                                  ':saldoCable' => $i['valor_cuota'],
                                  ':saldoInternet' => $i['cuota_in'],
                                  ':fechaCobro' => $fechaGenerar,
-                                 ':fechaFactura' => date_format($fechaComprobante, 'Y-m-d'),
-                                 ':fechaVencimiento' => date_format($fechaVencimiento, 'Y-m-d'),
+                                 ':fechaFactura' => $fechaComprobante,
+                                 ':fechaVencimiento' => $fechaVencimiento,
                                  ':tipoServicio' => $ts,
                                  ':anticipado' => 0,
                                  ':impuesto' => $cesc
