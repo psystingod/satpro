@@ -157,7 +157,7 @@
                         <a href="cxc.php"><button class="btn btn-success pull-left" type="button" name="button"><i class="fas fa-arrow-left"></i> Atrás</button></a>
                         <button id="btn_agregar" class="btn btn-success pull-right" type="button" name="button" data-toggle="modal" data-target="#agregarCliente"><i class="fas fa-plus-circle"></i> Nuevo cliente</button>
                         <br><br><br>
-                            <table width="100%" class="table table-striped table-hover" id="clientes5">
+                            <table class="table table-striped table-hover" id="tbl_clientes">
                                 <thead class="bg-primary">
                                     <tr>
                                         <th width="6">Cód</th>
@@ -172,8 +172,8 @@
                                     <?php
 
                                         foreach ($allClientsArray as $key) {
-                                            echo "<tr><td class='badge'>";
-                                            echo str_pad($key["cod_cliente"],6,"0",STR_PAD_LEFT) . "</td><td>";
+                                            echo "<tr><td>";
+                                            echo "<span style='font-size:13px;' class='label label-danger'>".str_pad($key["cod_cliente"],6,"0",STR_PAD_LEFT) . "</span></td><td>";
                                             echo trim(ucwords(strtolower($key["nombre"]))) . "</td><td>";
                                             echo $key["numero_dui"] . "</td><td>";
                                             echo trim($key["telefonos"]) . "</td><td>";
@@ -810,8 +810,8 @@
 
     <script>
         $(document).ready(function() {
-            $('#clientes5').DataTable({
-                responsive: true,
+            $('#tbl_clientes').DataTable({
+                "responsive": true,
                 "paging": true,
                 "order": [[ 1, "desc" ]],
                 "language": {

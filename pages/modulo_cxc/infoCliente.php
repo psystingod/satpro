@@ -13,7 +13,7 @@
     // read current record's data
     try {
         // prepare select query
-        $query = "SELECT * FROM clientes5 WHERE cod_cliente = ? LIMIT 0,1";
+        $query = "SELECT * FROM tbl_clientes WHERE cod_cliente = ? LIMIT 0,1";
         $stmt = $con->prepare( $query );
 
         // this is the first question mark
@@ -32,7 +32,7 @@
         $nContrato = $row["numero_contrato"];
         $nFactura = $row["num_factura"];
         $nombre = trim(ucwords(strtolower($row['nombre'])));
-        $empresa = $row["empresa"];
+        //$empresa = $row["empresa"];
         $nRegistro = $row["num_registro"];
         $dui = trim(ucwords(strtolower($row['numero_dui'])));
         $lugarExp = trim(ucwords(strtolower($row['lugar_exp'])));
@@ -87,6 +87,11 @@
         }else {
             $fechaInstalacionCable = date_format(date_create($row['fecha_instalacion']), "d/m/Y");
         }
+        if (strlen($row['fecha_suspencion']) < 8) {
+            $fechaSuspensionCable = "";
+        }else {
+            $fechaSuspensionCable = date_format(date_create($row['fecha_suspencion']), "d/m/Y");
+        }
 
         if (strlen($row['fecha_reinstalacion']) < 8) {
             $fechaReinstalacionCable = "";
@@ -97,14 +102,14 @@
         $direccionCable = $row['dire_cable'];
         $nDerivaciones = $row['numero_derivaciones'];
 
-        /****************** DATOS CABLE ***********************/
-        if (strlen($row['fecha_reinstalacion']) < 8) {
+        /****************** DATOS INTERNET ***********************/
+        if (strlen($row['fecha_instalacion_in']) < 8) {
             $fechaInstalacionInter = "";
         }else {
             $fechaInstalacionInter = date_format(date_create($row['fecha_instalacion_in']), "d/m/Y");
         }
 
-        if (strlen($row['fecha_reinstalacion']) < 8) {
+        if (strlen($row['fecha_primer_factura_in']) < 8) {
             $fechaPrimerFacturaInter = "";
         }else {
             $fechaPrimerFacturaInter = date_format(date_create($row['fecha_primer_factura_in']), "d/m/Y");
@@ -326,7 +331,7 @@
                             <td><button class="btn btn-danger btn-block"><i class="fas fa-sign-out-alt fa-2x"></i></button></td>
                             <td><button class="btn btn-success btn-block"><i class="fas fa-print fa-2x"></i></button></td>
                             <td><button class="btn btn-warning btn-block"><i class="far fa-edit fa-2x"></i></button></td>
-                            <td><button class="btn btn-primary btn-block"><i class="fas fa-search fa-2x"></i></button></td>
+                            <td><button class="btn btn-primary btn-block" data-toggle="modal" data-target="#buscarCliente"><i class="fas fa-search fa-2x" accesskey="b"></i></button></td>
                         </tr>
                         <tr>
                             <td><button class="btn btn-primary btn-block" style="font-size: 16px;">Contrato de cable</button></td>
@@ -354,7 +359,7 @@
                                 <td><label class='switch'><input type='radio' name ='cable'  disabled><span class='slider round'></span></label></td>
                             </tr>";
                         }
-                        elseif ($estado_cable == 1) {
+                        else if ($estado_cable == 1) {
                             echo "<tr class='info'>
                                 <th>TV</th>
                                 <td><label class='switch'><input type='radio' name ='cable'  disabled><span class='slider round'></span></label></td>
@@ -452,7 +457,7 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label for="empresa">Empresa</label>
-                                            <input class="form-control" type="text" name="empresa" value="<?php echo $empresa; ?>">
+                                            <input class="form-control" type="text" name="empresa" value="">
                                         </div>
                                         <div class="col-md-6">
                                             <label for="ncr">Número de registro</label>
@@ -645,9 +650,13 @@
                                                       <label for="fechaInstalacionCable">Fecha de instalación</label>
                                                       <input class="form-control" type="text" name="fechaInstalacionCable" value="<?php echo $fechaInstalacion; ?>">
                                                   </div>
-                                                  <div class="col-md-3">
+                                                  <div class="col-md-2">
                                                       <label for="fechaPrimerFacturaCable">Fecha de primer factura</label>
                                                       <input class="form-control" type="text" name="fechaPrimerFacturaCable" value="<?php echo $fechaPrimerFactura; ?>">
+                                                  </div>
+                                                  <div class="col-md-2">
+                                                      <label for="fechaSuspensionCable">Fecha suspension</label>
+                                                      <input class="form-control" type="text" name="fechaSuspensionCable" value="<?php echo $fechaSuspensionCable; ?>">
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="exento">Exento</label>
@@ -660,7 +669,7 @@
                                                       ?>
 
                                                   </div>
-                                                  <div class="col-md-3">
+                                                  <div class="col-md-2">
                                                       <label for="diaGenerarFacturaCable">Día para generar factura</label>
                                                       <input class="form-control" type="text" name="diaGenerarFacturaCable" value="<?php echo $diaCobro; ?>">
                                                   </div>
@@ -1167,6 +1176,99 @@
         </div><!-- /.row -->
         <!-- /#page-wrapper -->
 
+        <!-- Modal Facturación diaria -->
+        <div id="buscarCliente" class="modal fade" role="dialog">
+          <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div style="background-color: #4CAF50; color:white;" class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Buscar cliente</h4>
+              </div>
+              <form id="generarFacturas" action="../php/generarFacturas.php" method="POST">
+              <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <select class="form-control" name="tipoComprobante" required>
+                            <option value="1">Factura consumidor final</option>
+                            <option value="2">Crédito fiscal</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for=""></label>
+                        <select id="mesGenerar" class="form-control" name="mesGenerar" required>
+                            <option value="" selected>Mes a generar</option>
+                            <option value="01">Enero</option>
+                            <option value="02">Febrero</option>
+                            <option value="03">Marzo</option>
+                            <option value="04">Abril</option>
+                            <option value="05">Mayo</option>
+                            <option value="06">Junio</option>
+                            <option value="07">Julio</option>
+                            <option value="08">Agosto</option>
+                            <option value="09">Septiembre</option>
+                            <option value="10">Octubre</option>
+                            <option value="11">Noviembre</option>
+                            <option value="12">Diciembre</option>
+                        </select>
+                    </div>
+                    <div class="col-md-3">
+                        <label for=""></label>
+                        <input id="diaGenerar" class="form-control" type="text" name="diaGenerar" placeholder="Día a generar" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label for=""></label>
+                        <input id="anoGenerar" class="form-control" type="text" name="anoGenerar" placeholder="Año a generar" value="<?php echo date('Y') ?>" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for=""></label>
+                        <input id="fechaComprobante" class="form-control" type="text" name="fechaComprobante" placeholder="Fecha para el comprobante" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for=""></label>
+                        <input id="fechaVencimiento" class="form-control" type="text" name="vencimiento" placeholder="Vencimiento" required>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="correlativo"></label>
+                        <input class="form-control alert-danger" type="text" name="correlativo" value="25899" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for=""></label>
+                        <select class="form-control" name="tipoServicio" required>
+                            <option value="" selected>Tipo de servicio</option>
+                            <option value="cable">Cable</option>
+                            <option value="internet">Internet</option>
+                            <option value="ambos">Ambos</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <br>
+                        <label style="color:#2E7D32;" for="cesc">CESC</label>
+                        <input type="checkbox" name="cesc" value="1" checked>
+                    </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                  <div class="row">
+                      <div class="col-md-6">
+                          <input type="submit" class="btn btn-success btn-lg btn-block" name="submit" value="Generar Facturas">
+                      </div>
+                      <div class="col-md-6">
+                          <button type="button" class="btn btn-default btn-lg btn-block" data-dismiss="modal">Cancelar</button>
+                      </div>
+                  </div>
+              </form>
+              </div>
+            </div>
+          </div>
+        </div><!-- Fin Modal Facturación diaria -->
     </div>
     <!-- /#wrapper -->
 

@@ -27,7 +27,9 @@
                $mesGenerar = $_POST['mesGenerar'];
                $diaGenerar = $_POST['diaGenerar'];
                $anoGenerar = $_POST['anoGenerar'];
-               $fechaGenerar = $anoGenerar."-".$mesGenerar."-".$diaGenerar;
+               $fechaGenerar1 = $anoGenerar."-".$mesGenerar."-".$diaGenerar;
+               $fechaGenerar = date_format(date_create($fechaGenerar1), 'd/m/Y');
+               var_dump($fechaGenerar);
                $comprobante = $_POST['fechaComprobante'];
                $vencimiento = $_POST['vencimiento'];
                $comprobante2 = str_replace("/", "-", $comprobante);
@@ -52,7 +54,7 @@
                if ($_POST['tipoServicio'] == 'cable') {
                    $ts = "C";
                    // SQL query para traer datos del servicio de cable de la tabla clientes
-                   $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_departamento, numero_nit, giro, valor_cuota, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento FROM clientes5 WHERE NOT servicio_suspendido AND NOT servicio_cortesia AND dia_cobro = :diaCobro AND fecha_primer_factura <= :fechaGenerar AND estado_cliente_in=3";
+                   $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_departamento, numero_nit, giro, valor_cuota, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento FROM tbl_clientes WHERE NOT servicio_suspendido AND NOT servicio_cortesia AND dia_cobro = :diaCobro AND fecha_primer_factura <= :fechaGenerar AND estado_cliente_in=3";
                    // Preparación de sentencia
                    $statement = $this->dbConnect->prepare($query);
                    $statement->execute(
@@ -63,33 +65,35 @@
                    if (count($result) == 0) {
                        header('Location: ../pages/moduloInventario.php?found=no');
                    }
-                   foreach ($result as $i) {
-                       $qry = "INSERT INTO tbl_facturas(tipoFactura, numeroRecibo, codigoCliente, cuotaCable, cuotaInternet, saldoCable, saldoInternet, fechaCobro, fechaVencimiento, fechaFactura, tipoServicio, anticipado, impuesto)VALUES(:tipoComprobante, :numeroRecibo, :codigoCliente, :cuotaCable, :cuotaInternet, :saldoCable, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :tipoServicio, :anticipado, :impuesto)";
+                   else {
+                       foreach ($result as $i) {
+                           $qry = "INSERT INTO tbl_facturas(tipoFactura, numeroRecibo, codigoCliente, cuotaCable, cuotaInternet, saldoCable, saldoInternet, fechaCobro, fechaVencimiento, fechaFactura, tipoServicio, anticipado, impuesto)VALUES(:tipoComprobante, :numeroRecibo, :codigoCliente, :cuotaCable, :cuotaInternet, :saldoCable, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :tipoServicio, :anticipado, :impuesto)";
 
-                       $stmt = $this->dbConnect->prepare($qry);
-                       $stmt->execute(
-                           array(':tipoComprobante' => $tipoComprobante,
-                                 ':numeroRecibo' => $correlativo,
-                                 ':codigoCliente' => str_pad($i["cod_cliente"],6,"0",STR_PAD_LEFT),
-                                 ':cuotaCable' => $i['valor_cuota'],
-                                 ':cuotaInternet' => $i['cuota_in'],
-                                 ':saldoCable' => $i['valor_cuota'],
-                                 ':saldoInternet' => $i['cuota_in'],
-                                 ':fechaCobro' => $fechaGenerar,
-                                 ':fechaFactura' => $fechaComprobante,
-                                 ':fechaVencimiento' => $fechaVencimiento,
-                                 ':tipoServicio' => $ts,
-                                 ':anticipado' => 0,
-                                 ':impuesto' => $cesc
-                                ));
+                           $stmt = $this->dbConnect->prepare($qry);
+                           $stmt->execute(
+                               array(':tipoComprobante' => $tipoComprobante,
+                                     ':numeroRecibo' => $correlativo,
+                                     ':codigoCliente' => str_pad($i["cod_cliente"],6,"0",STR_PAD_LEFT),
+                                     ':cuotaCable' => $i['valor_cuota'],
+                                     ':cuotaInternet' => $i['cuota_in'],
+                                     ':saldoCable' => $i['valor_cuota'],
+                                     ':saldoInternet' => $i['cuota_in'],
+                                     ':fechaCobro' => $fechaGenerar1,
+                                     ':fechaFactura' => $fechaComprobante,
+                                     ':fechaVencimiento' => $fechaVencimiento,
+                                     ':tipoServicio' => $ts,
+                                     ':anticipado' => 0,
+                                     ':impuesto' => $cesc
+                                    ));
+                       }
+                       header('Location: ../pages/moduloInventario.php?found=yes');
                    }
-                   header('Location: ../pages/moduloInventario.php');
                }
 
                else if ($_POST['tipoServicio'] == 'internet') {
                    $ts = "I";
                    // SQL query para traer datos del servicio de cable de la tabla clientes
-                   $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_departamento, numero_nit, giro, valor_cuota, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento FROM clientes5 WHERE NOT servicio_suspendido AND NOT servicio_cortesia AND dia_cobro = :diaCobro AND fecha_primer_factura <= :fechaGenerar AND estado_cliente_in=1";
+                   $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_departamento, numero_nit, giro, valor_cuota, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento FROM tbl_clientes WHERE dia_corbo_in = :diaCobro AND fecha_primer_factura_in <= :fechaGenerar AND estado_cliente_in=1";
                    // Preparación de sentencia
                    $statement = $this->dbConnect->prepare($query);
                    $statement->execute(
@@ -98,30 +102,33 @@
                             ));
                    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
-                   if ($statement->rowCount() ) {
-                       header('Location: ../pages/moduloInventario.php?found=no');
+                   if (count($result) == 0) {
+                       //header('Location: ../pages/moduloInventario.php?found=no');
                    }
-                   foreach ($result as $i) {
-                       $qry = "INSERT INTO tbl_facturas(tipoFactura, numeroRecibo, codigoCliente, cuotaCable, cuotaInternet, saldoCable, saldoInternet, fechaCobro, fechaVencimiento, fechaFactura, tipoServicio, anticipado, impuesto)VALUES(:tipoComprobante, :numeroRecibo, :codigoCliente, :cuotaCable, :cuotaInternet, :saldoCable, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :tipoServicio, :anticipado, :impuesto)";
+                   else {
+                       foreach ($result as $i) {
+                           $qry = "INSERT INTO tbl_facturas(tipoFactura, numeroRecibo, codigoCliente, cuotaCable, cuotaInternet, saldoCable, saldoInternet, fechaCobro, fechaVencimiento, fechaFactura, tipoServicio, anticipado, impuesto)VALUES(:tipoComprobante, :numeroRecibo, :codigoCliente, :cuotaCable, :cuotaInternet, :saldoCable, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :tipoServicio, :anticipado, :impuesto)";
 
-                       $stmt = $this->dbConnect->prepare($qry);
-                       $stmt->execute(
-                           array(':tipoComprobante' => $tipoComprobante,
-                                 ':numeroRecibo' => $correlativo,
-                                 ':codigoCliente' => str_pad($i["cod_cliente"],6,"0",STR_PAD_LEFT),
-                                 ':cuotaCable' => $i['valor_cuota'],
-                                 ':cuotaInternet' => $i['cuota_in'],
-                                 ':saldoCable' => $i['valor_cuota'],
-                                 ':saldoInternet' => $i['cuota_in'],
-                                 ':fechaCobro' => $fechaGenerar,
-                                 ':fechaFactura' => $fechaComprobante,
-                                 ':fechaVencimiento' => $fechaVencimiento,
-                                 ':tipoServicio' => $ts,
-                                 ':anticipado' => 0,
-                                 ':impuesto' => $cesc
-                                ));
+                           $stmt = $this->dbConnect->prepare($qry);
+                           $stmt->execute(
+                               array(':tipoComprobante' => $tipoComprobante,
+                                     ':numeroRecibo' => $correlativo,
+                                     ':codigoCliente' => str_pad($i["cod_cliente"],6,"0",STR_PAD_LEFT),
+                                     ':cuotaCable' => $i['valor_cuota'],
+                                     ':cuotaInternet' => $i['cuota_in'],
+                                     ':saldoCable' => $i['valor_cuota'],
+                                     ':saldoInternet' => $i['cuota_in'],
+                                     ':fechaCobro' => $fechaGenerar1,
+                                     ':fechaFactura' => $fechaComprobante,
+                                     ':fechaVencimiento' => $fechaVencimiento,
+                                     ':tipoServicio' => $ts,
+                                     ':anticipado' => 0,
+                                     ':impuesto' => $cesc
+                                    ));
+                       }
+                       //header('Location: ../pages/moduloInventario.php?found=yes');
                    }
-                   header('Location: ../pages/moduloInventario.php');
+
                }
 
 

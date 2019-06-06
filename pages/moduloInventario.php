@@ -15,6 +15,16 @@
         if ($_GET['found'] == 'no') {
             echo "<script>alert('No se encontraron cobros programados para este día')</script>";
         }
+        else if ($_GET['found'] == 'yes') {
+            echo "<script>var answer = confirm('¡Facturación generada con exito! ¿Desea ver las facturas generadas?');
+            if (answer){
+                window.location = 'facturacionGenerada.php';
+            }
+            else{
+                window.location = 'moduloInventario.php';
+            }
+            </script>";
+        }
     }
 ?>
 <!DOCTYPE html>
