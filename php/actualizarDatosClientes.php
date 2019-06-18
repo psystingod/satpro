@@ -15,7 +15,7 @@
            try {
                date_default_timezone_set('America/El_Salvador');
 
-                   $query = "SELECT cod_cliente, fecha_primer_factura_in FROM tbl_clientes";
+                   $query = "SELECT cod_cliente, fecha_primer_factura_in FROM tbl_clientes WHERE char_length(fecha_primer_factura_in) = 10 and fecha_primer_factura_in like '%-%' and fecha_primer_factura_in like '%/%'";
                    // Preparación de sentencia
                    $statement = $this->dbConnect->prepare($query);
                    $statement->execute();

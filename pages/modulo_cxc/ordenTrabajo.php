@@ -1,10 +1,128 @@
 <?php
 
     session_start();
+    require("php/getData.php");
+    $data = new OrdersInfo();
+    //$client = new GetClient();
+    $arrayTecnicos = $data->getTecnicos();
+    $arrayVendedores = $data->getVendedores();
+    $arrayActividadesC = $data->getActividadesCable();
+    $arrayActividadesT = $data->getActividadesInter();
+
+    /**************************************************/
+    if (isset($_GET['codigoCliente'])) {
+        // get passed parameter value, in this case, the record ID
+        // isset() is a PHP function used to verify if a value is there or not
+        $id=isset($_GET['codigoCliente']) ? $_GET['codigoCliente'] : die('ERROR: Record no encontrado.');
+
+        //include database connection
+        include '../../php/connection.php';
+        $precon = new ConectionDB();
+        $con = $precon->ConectionDB();
+        // read current record's data
+        try {
+            // prepare select query
+            $query = "SELECT cod_cliente, nombre, telefonos, id_municipio, saldo_actual, direccion, mac_modem, serie_modem, id_velocidad, recep_modem, trans_modem, ruido_modem  FROM tbl_clientes WHERE cod_cliente = ? LIMIT 0,1";
+            $stmt = $con->prepare( $query );
+
+            // this is the first question mark
+            $stmt->bindParam(1, $id);
+
+            // execute our query
+            $stmt->execute();
+
+            // store retrieved row to a variable
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            /****************** DATOS GENERALES ***********************/
+            date_default_timezone_set('America/El_Salvador');
+            $fechaOrden = date('d/m/Y');
+            $tipoOrden = "Técnica";
+            $codigoCliente = str_pad($row["cod_cliente"],6,"0",STR_PAD_LEFT);
+            $nombreCliente = $row['nombre'];
+            $idMunicipio = $row["id_municipio"];
+            $saldoActual = $row["saldo_actual"];
+            $direccion = $row["direccion"];
+            $macModem = $row['mac_modem'];
+            $serieModem = $row['serie_modem'];
+            $idVelocidad = $row['id_velocidad'];
+            $rx = $row['recep_modem'];
+            $tx = $row['trans_modem'];
+            $snr = $row['ruido_modem'];
+
+        }
+
+        // show error
+        catch(PDOException $exception){
+            die('ERROR: ' . $exception->getMessage());
+        }
+    }else if(isset($_GET['nOrden'])){
+        // get passed parameter value, in this case, the record ID
+        // isset() is a PHP function used to verify if a value is there or not
+        $id=isset($_GET['nOrden']) ? $_GET['nOrden'] : die('ERROR: Record no encontrado.');
+
+        //include database connection
+        include '../../php/connection.php';
+        $precon = new ConectionDB();
+        $con = $precon->ConectionDB();
+        // read current record's data
+        try {
+            // prepare select query
+            $query = "SELECT idOrdenTrabajo, codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, nombreCliente, telefonos, id_municipio, idActividadCable, saldoCable, direccionCable, idActividadInter, saldoInter, direccionInter, saldoInter, direccionInter, macModem, serieModem, velocidad, recep_modem, rx, tx, snr, colilla, fechaTrabajo, hora, fechaProgramacion, idTecnico, observaciones, nodo, idVendedor, recepcionTv, tipoServicio, creadoPor  FROM tbl_ordenes_trabajo WHERE idOrdenTrabajo = ? LIMIT 0,1";
+            $stmt = $con->prepare( $query );
+
+            // this is the first question mark
+            $stmt->bindParam(1, $id);
+
+            // execute our query
+            $stmt->execute();
+
+            // store retrieved row to a variable
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            /****************** DATOS GENERALES ***********************/
+            $codigoCliente = str_pad($row["cod_cliente"],6,"0",STR_PAD_LEFT);; // 0 o 1
+            $nombreCliente = $row['nombre'];
+            $idMunicipio = $row["id_municipio"];
+            $saldoActual = $row["saldo_actual"];
+            $direccion = $row["direccion"];
+            $macModem = $row['mac_modem'];
+            $serieModem = $row['serie_modem'];
+            $idVelocidad = $row['id_velocidad'];
+            $rx = $row['recep_modem'];
+            $tx = $row['trans_modem'];
+            $snr = $row['ruido_modem'];
+            // show error
+        }
+        catch(PDOException $exception){
+            die('ERROR: ' . $exception->getMessage());
+        }
+    }else {
+        $fechaOrden = "";
+        $codigoCliente = "";
+        $nombreCliente = "";
+        $telefonos = "";
+        $idMunicipio = "";
+        $saldoActual = "";
+        $direccion = "";
+        $macModem = "";
+        $serieModem = "";
+        $idVelocidad = "";
+        $rx = "";
+        $tx = "";
+        $snr = "";
+        $colilla = "";
+        $horaTrabajo="";
+        $fechaTrabajo="";
+        $observaciones="";
+        $fechaProgramacion="";
+        $nodo="";
+        $recepcionTv="";
+    }
 
  ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
 
@@ -151,8 +269,8 @@
                     <div class="col-lg-12">
                         <br>
                         <div class="panel panel-primary">
-                          <div class="panel-heading">Orden de trabajo</div>
-                          <form id="ordenTrabajo" action="#" method="POST">
+                          <div class="panel-heading"><b>Orden de trabajo</b></div>
+                          <form id="ordenTrabajo" action="" method="POST">
                           <div class="panel-body">
                               <div class="col-md-12">
                                   <button class="btn btn-default btn-sm" id="nuevaOrdenId" onclick="nuevaOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Nueva orden"><i class="far fa-file"></i></button>
@@ -160,15 +278,22 @@
                                   <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Ver cliente"><i class="far fa-eye"></i></button>
                                   <button class="btn btn-default btn-sm" id="guardar" type="submit" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Guardar orden" disabled><i class="far fa-save"></i></button>
                                   <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Buscar orden"><i class="fas fa-search"></i></button>
-                                  <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Imprimir orden"><i class="fas fa-print"></i></button>
+                                  <button class="btn btn-default btn-sm" id="imprimir" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Imprimir orden" ><i class="fas fa-print"></i></button>
                                   <div class="pull-right">
-                                      <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Nuevo cliente"><i class="far fa-user"></i></button>
+
                                       <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Estado de cuenta"><i class="far fa-file-alt"></i></button>
-                                      <button id="btn-cable" class="btn btn-default btn-sm" onclick="ordenCable()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Orden de cable"><i class="fas fa-tv"></i></button>
-                                      <button id="btn-internet" class="btn btn-default btn-sm" onclick="ordenInternet()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Orden de internet"><i class="fas fa-wifi"></i></button>
+                                      <button id="btn-cable" class="btn btn-default btn-sm" onclick="ordenCable()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Orden de cable" disabled><i class="fas fa-tv"></i></button>
+                                      <button id="btn-internet" class="btn btn-default btn-sm" onclick="ordenInternet()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Orden de internet" disabled><i class="fas fa-wifi"></i></button>
                                   </div>
                               </div>
                               <div class="form-row">
+                                  <div class="col-md-3">
+                                      <br>
+                                      <label for="fechaOrden">Fecha de orden</label>
+                                      <input id="creadoPor" class="form-control" type="hidden" name="creadoPor" value="<?php $_SESSION['nombres'].' '.$_SESSION['apellidos'] ?>">
+                                      <input id="tipoServicio" class="form-control input-sm" type="hidden" name="tipoServicio" readonly>
+                                      <input id="fechaOrden" class="form-control input-sm" type="text" name="fechaOrden" readonly>
+                                  </div>
                                   <div class="col-md-3">
                                       <br>
                                       <label for="numeroOrden">Número de orden</label>
@@ -177,43 +302,30 @@
                                   <div class="col-md-3">
                                       <br>
                                       <label for="codigoCliente">Código de cliente</label>
-                                      <input class="form-control input-sm" type="text" name="codigoCliente" readonly>
+                                      <input class="form-control input-sm" type="text" name="codigoCliente" value="<?php echo $codigoCliente; ?>" readonly>
                                   </div>
-                                  <div class="col-md-3">
-                                      <br>
-                                      <label for="fechaOrden">Fecha de orden</label>
-                                      <input class="form-control input-sm" type="text" name="fechaOrden" readonly>
-                                  </div>
+
                                   <div class="col-md-3">
                                       <br>
                                       <label for="tipoOrden">Tipo de orden</label>
-                                      <select class="form-control input-sm" name="tipoOrden" disabled>
-                                          <option value=""></option>
-                                      </select>
+                                      <input id="tipoOrden" class="form-control input-sm" type="text" name="tipoOrden" value="Técnica" readonly>
                                   </div>
                               </div>
                               <div class="form-row">
-                                  <div class="col-md-5">
+                                  <div class="col-md-6">
                                       <br>
                                       <label for="nombreCliente">Nombre del cliente</label>
-                                      <input class="form-control input-sm input-sm" type="text" name="nombreCliente" readonly>
+                                      <input class="form-control input-sm input-sm" type="text" name="nombreCliente" value="<?php echo $nombreCliente; ?>" readonly>
                                   </div>
                                   <div class="col-md-3">
                                       <br>
                                       <label for="telefonos">Teléfonos</label>
-                                      <input class="form-control input-sm input-sm" type="text" name="telefonos" readonly>
+                                      <input class="form-control input-sm input-sm" type="text" name="telefonos" value="<?php echo $telefonos; ?>" readonly>
                                   </div>
-                                  <div class="col-md-2">
+                                  <div class="col-md-3">
                                       <br>
                                       <label for="municipio">Municipio</label>
-                                      <input class="form-control input-sm input-sm" type="text" name="municipio" readonly>
-                                  </div>
-                                  <div class="col-md-2">
-                                      <br>
-                                      <label for="claseOrden">Clase de orden</label>
-                                      <select class="form-control input-sm input-sm" name="claseOrden" disabled>
-                                          <option value=""></option>
-                                      </select>
+                                      <input class="form-control input-sm input-sm" type="text" name="municipio" value="<?php echo $idMunicipio; ?>" readonly>
                                   </div>
                               </div>
                               <div class="form-row">
@@ -224,18 +336,23 @@
                                           <div class="col-md-8">
                                               <label for="tipoActividadCable">Tipo de actividad</label>
                                               <select class="form-control input-sm cable" name="tipoActividadCable" disabled>
-                                                  <option value=""></option>
+                                                  <?php
+                                                  foreach ($arrayActividadesC as $key) {
+                                                      echo "<option value=".$key['idActividadCable'].">".$key['nombreActividad']."</option>";
+                                                  }
+                                                  ?>
                                               </select>
+
                                           </div>
                                           <div class="col-md-4">
                                               <label for="saldoCable">Saldo</label>
-                                              <input class="form-control input-sm cable" type="text" name="saldoCable" readonly>
+                                              <input class="form-control input-sm cable" type="text" name="saldoCable" value="<?php echo $saldoActual; ?>" readonly="true">
                                           </div>
                                       </div>
                                       <div class="row">
                                           <div class="col-md-12">
                                               <label for="direccionCable">Dirección</label>
-                                              <textarea class="form-control input-sm cable" name="direccionCable" rows="2" cols="40" readonly></textarea>
+                                              <textarea class="form-control input-sm cable" name="direccionCable" rows="2" cols="40" readonly><?php echo $direccion; ?></textarea>
                                           </div>
                                       </div>
                                   </div>
@@ -246,18 +363,22 @@
                                           <div class="col-md-8">
                                               <label for="tipoActividadInternet">Tipo de actividad</label>
                                               <select class="form-control input-sm internet" name="tipoActividadInternet" disabled>
-                                                  <option value=""></option>
+                                                  <?php
+                                                  foreach ($arrayActividadesT as $key) {
+                                                      echo "<option value=".$key['idActividadInter'].">".$key['nombreActividad']."</option>";
+                                                  }
+                                                  ?>
                                               </select>
                                           </div>
                                           <div class="col-md-4">
                                               <label for="saldoInternet">Saldo</label>
-                                              <input class="form-control input-sm internet" type="text" name="saldoInternet" readonly>
+                                              <input class="form-control input-sm internet" type="text" name="saldoInternet" value="<?php echo $saldoActual; ?>" readonly>
                                           </div>
                                       </div>
                                       <div class="row">
                                           <div class="col-md-12">
                                               <label for="direccionInternet">Dirección</label>
-                                              <textarea class="form-control input-sm internet" name="direccionInternet" rows="2" cols="40" readonly></textarea>
+                                              <textarea class="form-control input-sm internet" name="direccionInternet" rows="2" cols="40" readonly><?php echo $direccion; ?></textarea>
                                           </div>
                                       </div>
                                   </div>
@@ -266,60 +387,64 @@
                                   <div class="col-md-3">
                                       <br>
                                       <label for="macModem">MAC del modem</label>
-                                      <input class="form-control input-sm internet" type="text" name="macModem" readonly>
+                                      <input class="form-control input-sm internet" type="text" name="macModem" value="<?php echo $macModem; ?>" readonly>
                                   </div>
                                   <div class="col-md-2">
                                       <br>
                                       <label for="serieModem">Serie del modem</label>
-                                      <input class="form-control input-sm internet" type="text" name="serieModem" readonly>
+                                      <input class="form-control input-sm internet" type="text" name="serieModem" value="<?php echo $serieModem; ?>" readonly>
                                   </div>
                                   <div class="col-md-2">
                                       <br>
                                       <label for="velocidad">Velocidad</label>
-                                      <input id="velocidad" class="form-control input-sm internet" type="text" name="velocidad" readonly>
+                                      <input id="velocidad" class="form-control input-sm internet" type="text" name="velocidad" value="<?php echo $idVelocidad; ?>" readonly>
                                   </div>
                                   <div class="col-md-1">
                                       <br>
-                                      <label for="recep">Recep</label>
-                                      <input class="form-control input-sm internet" type="text" name="recep" readonly>
+                                      <label for="rx">Rx</label>
+                                      <input class="form-control input-sm internet" type="text" name="rx" value="<?php echo $rx; ?>" readonly>
                                   </div>
                                   <div class="col-md-1">
                                       <br>
-                                      <label for="trans">Trans</label>
-                                      <input class="form-control input-sm internet" type="text" name="trans" readonly>
+                                      <label for="tx">Tx</label>
+                                      <input class="form-control input-sm internet" type="text" name="tx" value="<?php echo $tx; ?>" readonly>
                                   </div>
                                   <div class="col-md-1">
                                       <br>
-                                      <label for="ruido">Ruido</label>
-                                      <input class="form-control input-sm internet" type="text" name="ruido" readonly>
+                                      <label for="snr">SNR</label>
+                                      <input class="form-control input-sm internet" type="text" name="snr" value="<?php echo $snr; ?>" readonly>
                                   </div>
                                   <div class="col-md-2">
                                       <br>
                                       <label for="colilla">Colilla</label>
-                                      <input class="form-control input-sm internet" type="text" name="colilla" readonly>
+                                      <input class="form-control input-sm internet" type="text" name="colilla" value="<?php echo $colilla; ?>" readonly>
                                   </div>
                               </div>
                               <div class="form-row">
                                   <div class="col-md-2">
                                       <br>
                                       <label for="fechaTrabajo">Fecha de trabajo</label>
-                                      <input class="form-control input-sm" type="text" name="fechaTrabajo" readonly>
+                                      <input class="form-control input-sm" type="text" name="fechaTrabajo" value="<?php echo $fechaTrabajo; ?>" readonly>
                                   </div>
                                   <div class="col-md-2">
                                       <br>
                                       <label for="hora">Hora</label>
-                                      <input class="form-control input-sm" type="text" name="hora" readonly>
+                                      <input class="form-control input-sm" type="text" name="hora" value="<?php echo $horaTrabajo; ?>" readonly>
                                   </div>
                                   <div class="col-md-3">
                                       <br>
                                       <label for="fechaProgramacion">Fecha de programación</label>
-                                      <input class="form-control input-sm" type="text" name="fechaProgramacion" readonly>
+                                      <input class="form-control input-sm" type="text" name="fechaProgramacion" value="<?php echo $fechaProgramacion; ?>" readonly>
                                   </div>
                                   <div class="col-md-5">
                                       <br>
                                       <label for="responsable">Responsable</label>
                                       <select class="form-control input-sm" name="responsable" disabled>
-                                          <option value=""></option>
+                                          <?php
+                                          foreach ($arrayTecnicos as $key) {
+                                              echo "<option value=".$key['idTecnico'].">".$key['nombresTecnico']." ".$key['apellidosTecnico']."</option>";
+                                          }
+                                          ?>
                                       </select>
                                   </div>
                               </div>
@@ -327,14 +452,14 @@
                                   <div class="col-md-12">
                                       <br>
                                       <label for="observaciones">Observaciones</label>
-                                      <textarea class="form-control input-sm" name="observaciones" rows="2" cols="40" readonly></textarea>
+                                      <textarea class="form-control input-sm" name="observaciones" rows="2" cols="40" readonly><?php echo $observaciones; ?></textarea>
                                   </div>
                               </div>
                               <div class="form-row">
                                   <div class="col-md-4">
                                       <br>
                                       <label for="nodo">Nodo</label>
-                                      <input class="form-control input-sm" type="text" name="nodo" readonly>
+                                      <input class="form-control input-sm" type="text" name="nodo" value="<?php echo $nodo ?>" readonly>
                                   </div>
                                   <div class="col-md-4">
                                       <br>
@@ -344,7 +469,7 @@
                                   <div class="col-md-4">
                                       <br>
                                       <label for="recepcionTv">Recepción TV</label>
-                                      <input class="form-control input-sm cable" type="text" name="recepcionTv" readonly>
+                                      <input class="form-control input-sm cable" type="text" name="recepcionTv" value="<?php echo $recepcionTv; ?>" readonly>
                                   </div>
                               </div>
                           </div>

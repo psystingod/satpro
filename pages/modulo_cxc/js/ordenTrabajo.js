@@ -1,10 +1,16 @@
 //ENABLE OR DISABLE CABLE INPUTS FOR INTERNET ORDERS
 function ordenInternet(){
+    document.getElementById("tipoServicio").value = "I";
     var inputsCable = document.getElementsByClassName("cable");
-    if (inputsCable[0].disabled == true) {
+    if (inputsCable[0].disabled == true || inputsCable[0].readOnly == true) {
         document.getElementById("btn-internet").style.color="#333333";
         for (var i = 0; i < inputsCable.length; i++) {
-            inputsCable[i].disabled = false;
+            if (inputsCable[i].readOnly == true) {
+                inputsCable[i].readOnly = false;
+            }
+            else if (inputsCable[i].disabled == true) {
+                inputsCable[i].disabled = false;
+            }
         }
     }
     else {
@@ -18,11 +24,17 @@ function ordenInternet(){
 
 //ENABLE OR DISABLE INTERNET INPUTS FOR CABLE ORDERS
 function ordenCable(){
+    document.getElementById("tipoServicio").value = "C";
     var inputsInternet = document.getElementsByClassName("internet");
-    if (inputsInternet[0].disabled == true) {
+    if (inputsInternet[0].disabled == true || inputsInternet[0].readOnly == true) {
         document.getElementById("btn-cable").style.color="#333333";
         for (var i = 0; i < inputsInternet.length; i++) {
-            inputsInternet[i].disabled = false;
+            if (inputsInternet[i].readOnly == true) {
+                inputsInternet[i].readOnly = false;
+            }
+            else if (inputsInternet[i].disabled == true) {
+                inputsInternet[i].disabled = false;
+            }
         }
     }
     else {
@@ -36,6 +48,10 @@ function ordenCable(){
 
 // CHANGE FORM COMPORT
 function nuevaOrden(){
+    document.getElementById("btn-cable").disabled = false;
+    document.getElementById("btn-internet").disabled = false;
+    document.getElementById("imprimir").disabled = true;
+        document.getElementById("guardar").disabled = false;
     var clearInputs = document.getElementsByClassName("input-sm");
     for (var i = 0; i < clearInputs.length; i++) {
         clearInputs[i].value = "";
@@ -46,11 +62,21 @@ function nuevaOrden(){
             clearInputs[i].disabled = false;
         }
     }
-    document.getElementById("guardar").disabled = false;
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+
+    today = dd + '/' + mm + '/' + yyyy;
+    document.getElementById("fechaOrden").value = today;
+    document.getElementById("tipoOrden").value = "Técnica";
     document.getElementById("editar").disabled = true;
     changeAction("nueva");
 }
 function editarOrden(){
+    document.getElementById("btn-cable").disabled = false;
+    document.getElementById("btn-internet").disabled = false;
+    document.getElementById("imprimir").disabled = true;
     var editInputs = document.getElementsByClassName("input-sm");
     for (var i = 0; i < editInputs.length; i++) {
         if (editInputs[i].readOnly == true) {

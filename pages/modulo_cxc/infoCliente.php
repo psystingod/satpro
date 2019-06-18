@@ -240,6 +240,26 @@
             </div>
             <!-- /.navbar-header -->
 
+            <ul class="nav navbar-top-links navbar-left">
+                <!-- /.dropdown -->
+                <li class="dropdown procesos">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        Procesos <i class="fas fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="ordenTrabajo.php" target="_blank">Ordenes de trabajo</a>
+                        </li>
+                        <li><a href="ordenSuspension.php" target="_blank">Ordenes de suspensión</a>
+                        </li>
+                        <li><a href="ordenReconexion.php" target="_blank">Ordenes de reconexión</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+            </ul>
+            <!-- /.navbar-top-links -->
+
             <ul class="nav navbar-top-links navbar-right">
                 <!-- /.dropdown -->
                 <li class="dropdown">
