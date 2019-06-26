@@ -1,8 +1,76 @@
 <?php
+require_once('../../php/connection.php');
+$precon = new ConectionDB();
+$con = $precon->ConectionDB();
+/**************************************************/
+if (isset($_GET['nOrden'])) {
 
+    // get passed parameter value, in this case, the record ID
+    // isset() is a PHP function used to verify if a value is there or not
+    $id=isset($_GET['nOrden']) ? $_GET['nOrden'] : die('ERROR: Record no encontrado.');
+
+    // read current record's data
+    try {
+        // prepare select query
+        $query = "SELECT * FROM tbl_ordenes_trabajo WHERE idOrdenTrabajo = ? LIMIT 0,1";
+        $stmt = $con->prepare( $query );
+
+        // this is the first question mark
+        $stmt->bindParam(1, $id);
+
+        // execute our query
+        $stmt->execute();
+
+        // store retrieved row to a variable
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        /****************** DATOS GENERALES ***********************/
+        date_default_timezone_set('America/El_Salvador');
+        $fechaOrdenTrabajo = $row["fechaOrdenTrabajo"];
+        $idOrdenTrabajo = $row["idOrdenTrabajo"];
+        $tipoOrden = $row["tipoOrdenTrabajo"];
+        $telefonos = $row["telefonos"];
+        $codigoCliente = $row["codigoCliente"];
+        $nombreCliente = $row['nombreCliente'];
+        $idMunicipio = $row["idMunicipio"];
+        $idActividadCable = $row["idActividadCable"];
+        $idActividadInter = $row["idActividadInter"];
+        $saldoCable = $row["saldoCable"];
+        $saldoInter = $row["saldoInter"];
+        $direccionCable = $row["direccionCable"];
+        $direccionInter = $row["direccionInter"];
+        $macModem = $row['macModem'];
+        $serieModem = $row['serieModem'];
+        $rx = $row['rx'];
+        $tx = $row['tx'];
+        $snr = $row['snr'];
+        $velocidad = $row['velocidad'];
+        $colilla = $row['colilla'];
+        $fechaTrabajo = $row['fechaOrdenTrabajo'];
+        $hora = $row['hora'];
+        $fechaProgramacion = $row['fechaProgramacion'];
+        $idTecnico = $row['idTecnico'];
+        $observaciones = $row['observaciones'];
+        $nodo = $row['nodo'];
+        $tecnologia = $row['tecnologia'];
+        $observaciones = $row['observaciones'];
+        $coordenadas = $row['coordenadas'];
+        var_dump($tecnologia);
+        $marcaModelo = $row['marcaModelo'];
+        $idVendedor = $row['idVendedor'];
+        $recepcionTv = $row['recepcionTv'];
+        $tipoServicio = $row['tipoServicio'];
+        $creadoPor = strtoupper($row['creadoPor']);
+
+    }
+    // show error
+    catch(PDOException $exception){
+        die('ERROR: ' . $exception->getMessage());
+    }
+}
 ?>
 <!DOCTYPE html>
-<html lang="es" dir="ltr">
+<html lang="es">
     <head>
         <meta charset="utf-8">
         <title>Ordenes de trabajo</title>
@@ -29,141 +97,249 @@
 
     </head>
     <body style="background-color: #FAFAFA;">
-        <br>
         <div class="row-fluid">
             <div class="col-md-12">
                 <div class="panel panel-danger">
                   <div class="panel-heading"><h3 style="padding:0; margin:0;" class="text-center"><b>Orden de trabajo</b></h3><h4 style="padding:0; margin:0;" class="text-center"><b>Usulután centro</b></h4></div>
                   <div class="panel-body">
-                      <div class="row">
-                          <div class="col-md-6">
-                              <h6 class="label label-danger pull-left" style="font-size:13px;" class="text-left">N°111213</h6>
-                          </div>
-                          <div class="col-md-6">
-                              <h6 class="label label-danger pull-right" style="font-size:13px;" class="text-right">Día de cobro 5</h6>
-                          </div>
-                      </div>
-                    <div class="row">
-                        <div class="col-md-3 col-xs-3">
-                            <label for="fecha">Fecha</label>
-                            <input class="form-control" type="text" name="fecha" value="">
-                        </div>
-                        <div class="col-md-2 col-xs-2">
-                            <label for="fecha">Código</label>
-                            <input class="form-control" type="text" name="codigo" value="">
-                        </div>
-                        <div class="col-md-7 col-xs-7">
-                            <label for="nombre">Nombre</label>
-                            <input class="form-control" type="text" name="nombre" value="">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 col-xs-12">
-                            <label for="direccion">Dirección</label>
-                            <input class="form-control" type="text" name="direccion" value="">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-2 col-xs-2">
-                            <label for="hora">Hora</label>
-                            <input class="form-control" type="text" name="hora" value="">
-                        </div>
-                        <div class="col-md-3 col-xs-3">
-                            <label for="telefono">Teléfono</label>
-                            <input class="form-control" type="text" name="telefono" value="">
-                        </div>
-                        <div class="col-md-7 col-xs-7">
-                            <label for="trabajo">Trabajo a relizar</label>
-                            <input class="form-control" type="text" name="trabajo" value="">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4 col-xs-4">
-                            <label for="tecnico">Técnico</label>
-                            <input class="form-control" type="text" name="tecnico" value="">
-                        </div>
-                        <div class="col-md-8 col-xs-8">
-                            <label for="observaciones">Observaciones</label>
-                            <input class="form-control" type="text" name="observaciones" value="">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-1 col-xs-1">
-                            <label for="snr">SNR</label>
-                            <input class="form-control" type="text" name="snr" value="">
-                        </div>
-                        <div class="col-md-1 col-xs-1">
-                            <label for="tx">TX</label>
-                            <input class="form-control" type="text" name="tx" value="">
-                        </div>
-                        <div class="col-md-1 col-xs-1">
-                            <label for="rx">RX</label>
-                            <input class="form-control" type="text" name="rx" value="">
-                        </div>
-                        <div class="col-md-1 col-xs-1">
-                            <label for="velocidad">Velocidad</label>
-                            <input class="form-control" type="text" name="velocidad" value="">
-                        </div>
-                        <div class="col-md-2 col-xs-2">
-                            <label for="marca">Marca/Modelo</label>
-                            <input class="form-control" type="text" name="marca" value="">
-                        </div>
-                        <div class="col-md-2 col-xs-2">
-                            <label for="mac">MAC</label>
-                            <input class="form-control" type="text" name="mac" value="">
-                        </div>
-                        <div class="col-md-2 col-xs-2">
-                            <label for="colilla">Colilla</label>
-                            <input class="form-control" type="text" name="colilla" value="">
-                        </div>
-                        <div class="col-md-2 col-xs-2">
-                            <label for="tecnologia">Tecnología</label>
-                            <input class="form-control" type="text" name="tecnologia" value="">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-12 col-xs-12">
-                            <label for="coordenadas">coordenadas/otros datos</label>
-                            <input class="form-control" type="text" name="coordenadas" value="">
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-md-4 col-xs-4">
+                      <?php
+                      if (isset($_GET['nOrden'])) {
+                          if ($tipoServicio == "I") {
+                                echo"<div class='row'>
+                                    <div class='col-md-6'>
+                                        <h6 class='label label-danger pull-left' style='font-size:13px;' class='text-left'>N°{$idOrdenTrabajo}</h6>
+                                    </div>
+                                    <div class='col-md-6'>
+                                        <h6 class='label label-danger pull-right' style='font-size:13px;' class='text-right'>Día de cobro 5</h6>
+                                    </div>
+                                </div>
+                                <div class='row'>
+                                    <div class='col-md-3 col-xs-3'>
+                                        <label for='fecha'>Fecha</label>
+                                        <input class='form-control' type='text' name='fecha' value='{$fechaOrdenTrabajo}'>
+                                    </div>
+                                    <div class='col-md-2 col-xs-2'>
+                                        <label for='fecha'>Código</label>
+                                        <input class='form-control' type='text' name='codigo' value='{$codigoCliente}'>
+                                    </div>
+                                    <div class='col-md-7 col-xs-7'>
+                                        <label for='nombre'>Nombre</label>
+                                        <input class='form-control' type='text' name='nombre' value='{$nombreCliente}'>
+                                    </div>
+                                </div>
+                                <div class='row'>
+                                    <div class='col-md-12 col-xs-12'>
+                                        <label for='direccion'>Dirección</label>
+                                        <input class='form-control' type='text' name='direccion' value='{$direccionInter}'>
+                                    </div>
+                                </div>
+                                <div class='row'>
+                                    <div class='col-md-1 col-xs-1'>
+                                        <label for='hora'>Hora</label>
+                                        <input class='form-control' type='text' name='hora' value='{$hora}'>
+                                    </div>
+                                    <div class='col-md-3 col-xs-3'>
+                                        <label for='telefono'>Teléfono</label>
+                                        <input class='form-control' type='text' name='telefono' value='{$telefonos}'>
+                                    </div>
+                                    <div class='col-md-4 col-xs-4'>
+                                        <label for='trabajo'>Trabajo a relizar</label>
+                                        <input class='form-control' type='text' name='trabajo' value='{$idActividadCable}'>
+                                    </div>
+                                    <div class='col-md-4 col-xs-4'>
+                                        <label for='tecnico'>Técnico</label>
+                                        <input class='form-control' type='text' name='tecnico' value='{$idTecnico}'>
+                                    </div>
+                                </div>
+                                <div class='row'>
+                                    <div class='col-md-1 col-xs-1'>
+                                        <label for='snr'>SNR</label>
+                                        <input class='form-control' type='text' name='snr' value='{$snr}'>
+                                    </div>
+                                    <div class='col-md-1 col-xs-1'>
+                                        <label for='tx'>TX</label>
+                                        <input class='form-control' type='text' name='tx' value='{$tx}'>
+                                    </div>
+                                    <div class='col-md-1 col-xs-1'>
+                                        <label for='rx'>RX</label>
+                                        <input class='form-control' type='text' name='rx' value='{$rx}'>
+                                    </div>
+                                    <div class='col-md-1 col-xs-1'>
+                                        <label for='velocidad'>Velocidad</label>
+                                        <input class='form-control' type='text' name='velocidad' value='{$velocidad}'>
+                                    </div>
+                                    <div class='col-md-2 col-xs-2'>
+                                        <label for='marca'>Marca/Modelo</label>
+                                        <input class='form-control' type='text' name='marca' value='{$marcaModelo}'>
+                                    </div>
+                                    <div class='col-md-2 col-xs-2'>
+                                        <label for='mac'>MAC</label>
+                                        <input class='form-control' type='text' name='mac' value='{$macModem}'>
+                                    </div>
+                                    <div class='col-md-2 col-xs-2'>
+                                        <label for='colilla'>Colilla</label>
+                                        <input class='form-control' type='text' name='colilla' value='{$colilla}'>
+                                    </div>
+                                    <div class='col-md-2 col-xs-2'>
+                                        <label for='tecnologia'>Tecnología</label>
+                                        <input class='form-control' type='text' name='tecnologia' value='{$tecnologia}'>
+                                    </div>
+                                </div>
+                                <div class='row'>
+                                    <div class='col-md-12 col-xs-12'>
+                                        <label for='coordenadas'>coordenadas/otros datos</label>
+                                        <input class='form-control' type='text' name='coordenadas' value='{$coordenadas}'>
+                                    </div>
+                                </div>
+                                <div class='row'>
+                                    <div class='col-lg-12 col-xs-12'>
+                                        <label for='observaciones'>Observaciones</label>
+                                        <textarea class='form-control' name='observaciones' rows='3' cols='40'>{$observaciones}</textarea>
+                                    </div>
 
-                            <input class="form-control alert-danger" type="text" name="cliente" value="">
-                        </div>
-                        <div class="col-md-4 col-xs-4">
+                                </div>
+                                <br>
+                                <div class='row'>
+                                    <div class='col-md-4 col-xs-4'>
 
-                            <input class="form-control alert-danger" type="text" name="tecnico" value="">
-                        </div>
-                        <div class="col-md-4 col-xs-4">
+                                        <input class='form-control alert-danger' type='text' name='cliente' value=''>
+                                    </div>
+                                    <div class='col-md-4 col-xs-4'>
 
-                            <input class="form-control alert-danger" type="text" name="autorizacion" value="">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4 col-xs-4">
-                            <label class="pull-center" for="">CLIENTE</label>
-                        </div>
-                        <div class="col-md-4 col-xs-4">
-                            <label for="">TECNICO</label>
-                        </div>
-                        <div class="col-md-4 col-xs-4">
-                            <label for="">AUTORIZACION</label>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4 col-xs-4">
-                            <label style="border:dotted;" class="label label-danger" for="">CREADO POR: DIEGO</label>
-                        </div>
-                        <div class="col-md-4 col-xs-4">
+                                        <input class='form-control alert-danger' type='text' name='tecnico' value=''>
+                                    </div>
+                                    <div class='col-md-4 col-xs-4'>
 
-                        </div>
-                        <div class="col-md-4 col-xs-4">
-                            <label style="border:dotted;" class="label label-info pull-right" for="">INTERNET</label>
-                        </div>
-                    </div>
+                                        <input class='form-control alert-danger' type='text' name='autorizacion' value=''>
+                                    </div>
+                                </div>
+                                <div class='row'>
+                                    <div class='col-md-4 col-xs-4'>
+                                        <label class='pull-center' for=''>CLIENTE</label>
+                                    </div>
+                                    <div class='col-md-4 col-xs-4'>
+                                        <label for=''>TECNICO</label>
+                                    </div>
+                                    <div class='col-md-4 col-xs-4'>
+                                        <label for=''>AUTORIZACION</label>
+                                    </div>
+                                </div>
+                                <div class='row'>
+                                    <div class='col-md-4 col-xs-4'>
+                                        <label style='border:dotted;' class='label label-danger' for=''>CREADO POR: {$creadoPor}</label>
+                                    </div>
+                                    <div class='col-md-4 col-xs-4'>
+
+                                    </div>
+                                    <div class='col-md-4 col-xs-4'>
+                                        <label style='border:dotted; font-size:16px;' class='label label-info pull-right' for=''>{$tipoServicio}</label>
+                                    </div>
+                                </div>";
+                          }
+                          else if($tipoServicio == "C") {
+                              echo"<div class='row'>
+                                  <div class='col-md-6'>
+                                      <h6 class='label label-danger pull-left' style='font-size:13px;' class='text-left'>{$idOrdenTrabajo}</h6>
+                                  </div>
+                                  <div class='col-md-6'>
+                                      <h6 class='label label-danger pull-right' style='font-size:13px;' class='text-right'>Día de cobro 5</h6>
+                                  </div>
+                              </div>
+                              <div class='row'>
+                                  <div class='col-md-3 col-xs-3'>
+                                      <label for='fecha'>Fecha</label>
+                                      <input class='form-control' type='text' name='fecha' value='{$fechaOrdenTrabajo}'>
+                                  </div>
+                                  <div class='col-md-2 col-xs-2'>
+                                      <label for='fecha'>Código</label>
+                                      <input class='form-control' type='text' name='codigo' value='{$codigoCliente}'>
+                                  </div>
+                                  <div class='col-md-7 col-xs-7'>
+                                      <label for='nombre'>Nombre</label>
+                                      <input class='form-control' type='text' name='nombre' value='{$nombreCliente}'>
+                                  </div>
+                              </div>
+                              <div class='row'>
+                                  <div class='col-md-12 col-xs-12'>
+                                      <label for='direccion'>Dirección</label>
+                                      <input class='form-control' type='text' name='direccion' value='{$direccionCable}'>
+                                  </div>
+                              </div>
+                              <div class='row'>
+                                  <div class='col-md-1 col-xs-1'>
+                                      <label for='hora'>Hora</label>
+                                      <input class='form-control' type='text' name='hora' value='{$hora}'>
+                                  </div>
+                                  <div class='col-md-3 col-xs-3'>
+                                      <label for='telefono'>Teléfono</label>
+                                      <input class='form-control' type='text' name='telefono' value='{$telefonos}'>
+                                  </div>
+                                  <div class='col-md-4 col-xs-4'>
+                                      <label for='trabajo'>Trabajo a relizar</label>
+                                      <input class='form-control' type='text' name='trabajo' value='{$idActividadCable}'>
+                                  </div>
+                                  <div class='col-md-4 col-xs-4'>
+                                      <label for='tecnico'>Técnico</label>
+                                      <input class='form-control' type='text' name='tecnico' value='{$idTecnico}'>
+                                  </div>
+                              </div>
+                              <div class='row'>
+                                  <div class='col-md-6 col-xs-6'>
+                                      <label for='hora'>Colilla</label>
+                                      <input class='form-control' type='text' name='colilla' value='{$colilla}'>
+                                  </div>
+                                  <div class='col-md-6 col-xs-6'>
+                                      <label for='tecnologia'>Tecnología</label>
+                                      <input class='form-control' type='text' name='tecnologia' value='{$tecnologia}'>
+                                  </div>
+                              </div>
+                              <div class='row'>
+                                  <div class='col-lg-12 col-xs-12'>
+                                      <label for='observaciones'>Observaciones</label>
+                                      <textarea class='form-control' name='observaciones' rows='3' cols='40'>{$observaciones}</textarea>
+                                  </div>
+
+                              </div>
+                              <br>
+                              <div class='row'>
+                                  <div class='col-md-4 col-xs-4'>
+
+                                      <input class='form-control alert-danger' type='text' name='cliente' value=''>
+                                  </div>
+                                  <div class='col-md-4 col-xs-4'>
+
+                                      <input class='form-control alert-danger' type='text' name='tecnico' value=''>
+                                  </div>
+                                  <div class='col-md-4 col-xs-4'>
+
+                                      <input class='form-control alert-danger' type='text' name='autorizacion' value=''>
+                                  </div>
+                              </div>
+                              <div class='row'>
+                                  <div class='col-md-4 col-xs-4'>
+                                      <label class='pull-center' for=''>CLIENTE</label>
+                                  </div>
+                                  <div class='col-md-4 col-xs-4'>
+                                      <label for=''>TECNICO</label>
+                                  </div>
+                                  <div class='col-md-4 col-xs-4'>
+                                      <label for=''>AUTORIZACION</label>
+                                  </div>
+                              </div>
+                              <div class='row'>
+                                  <div class='col-md-4 col-xs-4'>
+                                      <label style='border:dotted;' class='label label-danger' for=''>CREADO POR: {$creadoPor}</label>
+                                  </div>
+                                  <div class='col-md-4 col-xs-4'>
+
+                                  </div>
+                                  <div class='col-md-4 col-xs-4'>
+                                      <label style='border:dotted;font-size:16px;' class='label label-info pull-right' for=''>{$tipoServicio}</label>
+                                  </div>
+                              </div>";
+                          }
+                      }
+                      ?>
                   </div>
                 </div>
             </div>
@@ -184,10 +360,5 @@
         <script src="../vendor/datatables-responsive/dataTables.responsive.js"></script>
         <!-- Custom Theme JavaScript -->
         <script src="../dist/js/sb-admin-2.js"></script>
-        <style media="screen">
-            .form-control{
-
-            }
-        </style>
     </body>
 </html>

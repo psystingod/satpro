@@ -13,7 +13,7 @@
     // read current record's data
     try {
         // prepare select query
-        $query = "SELECT * FROM tbl_clientes WHERE cod_cliente = ? LIMIT 0,1";
+        $query = "SELECT * FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
         $stmt = $con->prepare( $query );
 
         // this is the first question mark
@@ -343,7 +343,7 @@
             </div>
             <!-- /.navbar-static-side -->
         </nav>
-        <div id="page-wrapper">
+        <div class="" id="page-wrapper">
             <div class="row">
                 <div class="col-md-8">
                     <table class="table table-responsive">
@@ -371,7 +371,7 @@
                         <th>Suspendido</th>
                         <th>Sin servicio</th>
                         <?php
-                        if ($estado_cable == 0) {
+                        if ($estado_cable == "F") {
                             echo "<tr class='info'>
                                 <th>TV</th>
                                 <td><label class='switch'><input type='radio' name ='cable' checked disabled><span class='slider round'></span></label></td>
@@ -379,7 +379,7 @@
                                 <td><label class='switch'><input type='radio' name ='cable'  disabled><span class='slider round'></span></label></td>
                             </tr>";
                         }
-                        else if ($estado_cable == 1) {
+                        else if ($estado_cable == "T") {
                             echo "<tr class='info'>
                                 <th>TV</th>
                                 <td><label class='switch'><input type='radio' name ='cable'  disabled><span class='slider round'></span></label></td>
@@ -681,7 +681,7 @@
                                                   <div class="col-md-2">
                                                       <label for="exento">Exento</label>
                                                       <?php
-                                                      if ($exento == false) {
+                                                      if ($exento == "F" || $exento == NULL) {
                                                           echo "<input class='form-control' type='checkbox' name='exento'>";
                                                       }else {
                                                           echo "<input class='form-control' type='checkbox' name='exento' checked>";
@@ -696,9 +696,9 @@
                                                   <div class="col-md-2">
                                                       <label for="cortesia">Cortesía</label>
                                                       <?php
-                                                      if ($exento == false) {
+                                                      if ($exento == "F") {
                                                           echo "<input class='form-control' type='checkbox' name='cortesia'>";
-                                                      }else {
+                                                      }else if($exento == "T"){
                                                           echo "<input class='form-control' type='checkbox' name='cortesia' checked>";
                                                       }
                                                       ?>

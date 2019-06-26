@@ -7,22 +7,23 @@
     $arrayTecnicos = $data->getTecnicos();
     $arrayVendedores = $data->getVendedores();
     $arrayActividadesC = $data->getActividadesCable();
-    $arrayActividadesT = $data->getActividadesInter();
+    $arrayActividadesI = $data->getActividadesInter();
 
+    //include database connection
+    require_once('../../php/connection.php');
+    $precon = new ConectionDB();
+    $con = $precon->ConectionDB();
     /**************************************************/
     if (isset($_GET['codigoCliente'])) {
+
         // get passed parameter value, in this case, the record ID
         // isset() is a PHP function used to verify if a value is there or not
         $id=isset($_GET['codigoCliente']) ? $_GET['codigoCliente'] : die('ERROR: Record no encontrado.');
 
-        //include database connection
-        include '../../php/connection.php';
-        $precon = new ConectionDB();
-        $con = $precon->ConectionDB();
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT cod_cliente, nombre, telefonos, id_municipio, saldo_actual, direccion, mac_modem, serie_modem, id_velocidad, recep_modem, trans_modem, ruido_modem  FROM tbl_clientes WHERE cod_cliente = ? LIMIT 0,1";
+            $query = "SELECT cod_cliente, nombre, telefonos, id_municipio, saldo_actual, telefonos, dire_cable, dire_internet, mac_modem, serie_modem, id_velocidad, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia FROM tbl_clientes WHERE cod_cliente = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -36,19 +37,35 @@
 
             /****************** DATOS GENERALES ***********************/
             date_default_timezone_set('America/El_Salvador');
-            $fechaOrden = date('d/m/Y');
+            $fechaOrdenTrabajo = date('Y-m-d');
+            $idOrdenTrabajo = "";
             $tipoOrden = "Técnica";
-            $codigoCliente = str_pad($row["cod_cliente"],6,"0",STR_PAD_LEFT);
+            $telefonos = $row["telefonos"];
+            $codigoCliente = $row["cod_cliente"];
             $nombreCliente = $row['nombre'];
             $idMunicipio = $row["id_municipio"];
-            $saldoActual = $row["saldo_actual"];
-            $direccion = $row["direccion"];
+            $saldoCable = $row["saldo_actual"];
+            $saldoInter = $row["saldo_actual"];
+            $direccionCable = $row["dire_cable"];
+            $direccionInter = $row["dire_internet"];
             $macModem = $row['mac_modem'];
             $serieModem = $row['serie_modem'];
             $idVelocidad = $row['id_velocidad'];
             $rx = $row['recep_modem'];
             $tx = $row['trans_modem'];
             $snr = $row['ruido_modem'];
+            $velocidad = $row['id_velocidad'];
+            $colilla = $row['colilla'];
+            $marcaModelo = $row['marca_modem'];
+            $tecnologia = $row['tecnologia'];
+            $fechaTrabajo = "";
+            $hora = "";
+            $fechaProgramacion = "";
+            $coordenadas = "";
+            $observaciones = "";
+            $nodo = "";
+            $idVendedor = "";
+            $recepcionTv = "";
 
         }
 
@@ -61,14 +78,10 @@
         // isset() is a PHP function used to verify if a value is there or not
         $id=isset($_GET['nOrden']) ? $_GET['nOrden'] : die('ERROR: Record no encontrado.');
 
-        //include database connection
-        include '../../php/connection.php';
-        $precon = new ConectionDB();
-        $con = $precon->ConectionDB();
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT idOrdenTrabajo, codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, nombreCliente, telefonos, id_municipio, idActividadCable, saldoCable, direccionCable, idActividadInter, saldoInter, direccionInter, saldoInter, direccionInter, macModem, serieModem, velocidad, recep_modem, rx, tx, snr, colilla, fechaTrabajo, hora, fechaProgramacion, idTecnico, observaciones, nodo, idVendedor, recepcionTv, tipoServicio, creadoPor  FROM tbl_ordenes_trabajo WHERE idOrdenTrabajo = ? LIMIT 0,1";
+            $query = "SELECT idOrdenTrabajo, codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, nombreCliente, telefonos, idMunicipio, idActividadCable, saldoCable, direccionCable, idActividadInter, saldoInter, direccionInter, saldoInter, direccionInter, macModem, serieModem, velocidad, rx, tx, snr, colilla, fechaTrabajo, hora, fechaProgramacion, idTecnico, coordenadas, observaciones, nodo, marcaModelo, tecnologia, idVendedor, recepcionTv, tipoServicio, creadoPor  FROM tbl_ordenes_trabajo WHERE idOrdenTrabajo = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -81,41 +94,73 @@
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
             /****************** DATOS GENERALES ***********************/
-            $codigoCliente = str_pad($row["cod_cliente"],6,"0",STR_PAD_LEFT);; // 0 o 1
-            $nombreCliente = $row['nombre'];
-            $idMunicipio = $row["id_municipio"];
-            $saldoActual = $row["saldo_actual"];
-            $direccion = $row["direccion"];
-            $macModem = $row['mac_modem'];
-            $serieModem = $row['serie_modem'];
-            $idVelocidad = $row['id_velocidad'];
-            $rx = $row['recep_modem'];
-            $tx = $row['trans_modem'];
-            $snr = $row['ruido_modem'];
-            // show error
+            $idOrdenTrabajo = $row["idOrdenTrabajo"];
+            $fechaOrdenTrabajo = $row["fechaOrdenTrabajo"];
+            $tipoOrdenTrabajo = $row["tipoOrdenTrabajo"];
+            $codigoCliente = $row["codigoCliente"];
+            if ($codigoCliente === "00000") {
+                $codigoCliente = "SC";
+            }
+            $nombreCliente = $row['nombreCliente'];
+            $telefonos = $row["telefonos"];
+            $idMunicipio = $row["idMunicipio"];
+            $idActividadCable = $row["idActividadCable"];
+            $saldoCable = $row["saldoCable"];
+            $direccionCable = $row["direccionCable"];
+            $idActividadInter = $row["idActividadInter"];
+            $saldoInter = $row["saldoInter"];
+            $direccionInter = $row["direccionInter"];
+            $macModem = $row['macModem'];
+            $serieModem = $row['serieModem'];
+            $velocidad = $row['velocidad'];
+            $rx = $row['rx'];
+            $tx = $row['tx'];
+            $snr = $row['snr'];
+            $colilla = $row['colilla'];
+            $fechaTrabajo = $row['fechaTrabajo'];
+            $hora = $row['hora'];
+            $fechaProgramacion = $row['fechaProgramacion'];
+            $idTecnico = $row['idTecnico'];
+            $coordenadas = $row['coordenadas'];
+            $observaciones = $row['observaciones'];
+            $nodo = $row['nodo'];
+            $marcaModelo = $row['marcaModelo'];
+            $tecnologia = $row['tecnologia'];
+            $idVendedor = $row['idVendedor'];
+            $recepcionTv = $row['recepcionTv'];
+            $tipoServicio = $row['tipoServicio'];
+            $creadoPor = $row['creadoPor'];
+            //creadoPor
         }
         catch(PDOException $exception){
             die('ERROR: ' . $exception->getMessage());
         }
     }else {
-        $fechaOrden = "";
+        $fechaOrdenTrabajo = "";
+        $idOrdenTrabajo = "";
         $codigoCliente = "";
         $nombreCliente = "";
         $telefonos = "";
         $idMunicipio = "";
-        $saldoActual = "";
-        $direccion = "";
+        $saldoCable = "";
+        $direccionCable = "";
+        $saldoInter = "";
+        $direccionInter = "";
         $macModem = "";
         $serieModem = "";
-        $idVelocidad = "";
+        $velocidad = "";
         $rx = "";
         $tx = "";
         $snr = "";
         $colilla = "";
-        $horaTrabajo="";
+        $hora="";
         $fechaTrabajo="";
+        $coordenadas="";
         $observaciones="";
         $fechaProgramacion="";
+        $idVendedor="";
+        $tecnologia="";
+        $marcaModelo="";
         $nodo="";
         $recepcionTv="";
     }
@@ -158,7 +203,6 @@
 <body>
 
     <?php
-         // session_start();
          if(!isset($_SESSION["user"])) {
              header('Location: ../login.php');
          }
@@ -278,7 +322,7 @@
                                   <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Ver cliente"><i class="far fa-eye"></i></button>
                                   <button class="btn btn-default btn-sm" id="guardar" type="submit" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Guardar orden" disabled><i class="far fa-save"></i></button>
                                   <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Buscar orden"><i class="fas fa-search"></i></button>
-                                  <button class="btn btn-default btn-sm" id="imprimir" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Imprimir orden" ><i class="fas fa-print"></i></button>
+                                  <button class="btn btn-default btn-sm" id="imprimir" onclick="imprimirOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Imprimir orden" ><i class="fas fa-print"></i></button>
                                   <div class="pull-right">
 
                                       <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Estado de cuenta"><i class="far fa-file-alt"></i></button>
@@ -289,20 +333,28 @@
                               <div class="form-row">
                                   <div class="col-md-3">
                                       <br>
+                                      <?php
+                                      if (isset($_GET['nOrden'])) {
+                                         echo "<input id='creadoPor' class='form-control' type='hidden' name='creadoPor' value='{$creadoPor}'>";
+                                         echo "<input id='tipoServicio' class='form-control input-sm' type='hidden' name='tipoServicio' value='{$tipoServicio}' readonly>";
+                                      }
+                                      else{
+                                         echo "<input id='creadoPor' class='form-control' type='hidden' name='creadoPor' value='{$_SESSION['nombres']}.' '.{$_SESSION['apellidos']}'>";
+                                         echo "<input id='tipoServicio' class='form-control input-sm' type='hidden' name='tipoServicio' value='' readonly>";
+                                      }
+                                      ?>
                                       <label for="fechaOrden">Fecha de orden</label>
-                                      <input id="creadoPor" class="form-control" type="hidden" name="creadoPor" value="<?php $_SESSION['nombres'].' '.$_SESSION['apellidos'] ?>">
-                                      <input id="tipoServicio" class="form-control input-sm" type="hidden" name="tipoServicio" readonly>
-                                      <input id="fechaOrden" class="form-control input-sm" type="text" name="fechaOrden" readonly>
+                                      <input id="fechaOrden" class="form-control input-sm" type="text" name="fechaOrden" value="<?php echo $fechaOrdenTrabajo ?>" readonly>
                                   </div>
                                   <div class="col-md-3">
                                       <br>
                                       <label for="numeroOrden">Número de orden</label>
-                                      <input class="form-control input-sm" type="text" name="numeroOrden" readonly>
+                                      <input id="numeroOrden" class="form-control input-sm" type="text" name="numeroOrden" value="<?php echo $idOrdenTrabajo ?>" readonly>
                                   </div>
                                   <div class="col-md-3">
                                       <br>
                                       <label for="codigoCliente">Código de cliente</label>
-                                      <input class="form-control input-sm" type="text" name="codigoCliente" value="<?php echo $codigoCliente; ?>" readonly>
+                                      <input id="codigoCliente" class="form-control input-sm" type="text" name="codigoCliente" value="<?php echo $codigoCliente; ?>" readonly>
                                   </div>
 
                                   <div class="col-md-3">
@@ -315,7 +367,7 @@
                                   <div class="col-md-6">
                                       <br>
                                       <label for="nombreCliente">Nombre del cliente</label>
-                                      <input class="form-control input-sm input-sm" type="text" name="nombreCliente" value="<?php echo $nombreCliente; ?>" readonly>
+                                      <input class="form-control input-sm input-sm" type="text" name="nombreCliente" value="<?php echo strtoupper($nombreCliente); ?>" readonly>
                                   </div>
                                   <div class="col-md-3">
                                       <br>
@@ -336,23 +388,26 @@
                                           <div class="col-md-8">
                                               <label for="tipoActividadCable">Tipo de actividad</label>
                                               <select class="form-control input-sm cable" name="tipoActividadCable" disabled>
+                                                  <option value="" selected>Seleccionar</option>
                                                   <?php
                                                   foreach ($arrayActividadesC as $key) {
+                                                      if ($key['idActividadCable'] == $idActividadCable) {
+                                                          echo "<option value=".$key['idActividadCable']." selected>".$key['nombreActividad']."</option>";
+                                                      }
                                                       echo "<option value=".$key['idActividadCable'].">".$key['nombreActividad']."</option>";
                                                   }
                                                   ?>
                                               </select>
-
                                           </div>
                                           <div class="col-md-4">
                                               <label for="saldoCable">Saldo</label>
-                                              <input class="form-control input-sm cable" type="text" name="saldoCable" value="<?php echo $saldoActual; ?>" readonly="true">
+                                              <input id="saldoCable" class="form-control input-sm cable" type="text" name="saldoCable" value="<?php echo $saldoCable; ?>" readonly="true">
                                           </div>
                                       </div>
                                       <div class="row">
                                           <div class="col-md-12">
                                               <label for="direccionCable">Dirección</label>
-                                              <textarea class="form-control input-sm cable" name="direccionCable" rows="2" cols="40" readonly><?php echo $direccion; ?></textarea>
+                                              <textarea class="form-control input-sm cable" name="direccionCable" rows="2" cols="40" readonly><?php echo strtoupper($direccionCable); ?></textarea>
                                           </div>
                                       </div>
                                   </div>
@@ -363,8 +418,12 @@
                                           <div class="col-md-8">
                                               <label for="tipoActividadInternet">Tipo de actividad</label>
                                               <select class="form-control input-sm internet" name="tipoActividadInternet" disabled>
+                                                  <option value="" selected>Seleccionar</option>
                                                   <?php
-                                                  foreach ($arrayActividadesT as $key) {
+                                                  foreach ($arrayActividadesI as $key) {
+                                                      if ($key['idActividadInter'] == $idActividadInter) {
+                                                          echo "<option value=".$key['idActividadInter']." selected>".$key['nombreActividad']."</option>";
+                                                      }
                                                       echo "<option value=".$key['idActividadInter'].">".$key['nombreActividad']."</option>";
                                                   }
                                                   ?>
@@ -372,13 +431,13 @@
                                           </div>
                                           <div class="col-md-4">
                                               <label for="saldoInternet">Saldo</label>
-                                              <input class="form-control input-sm internet" type="text" name="saldoInternet" value="<?php echo $saldoActual; ?>" readonly>
+                                              <input id="saldoInternet" class="form-control input-sm internet" type="text" name="saldoInternet" value="<?php echo $saldoInter; ?>" readonly>
                                           </div>
                                       </div>
                                       <div class="row">
                                           <div class="col-md-12">
                                               <label for="direccionInternet">Dirección</label>
-                                              <textarea class="form-control input-sm internet" name="direccionInternet" rows="2" cols="40" readonly><?php echo $direccion; ?></textarea>
+                                              <textarea class="form-control input-sm internet" name="direccionInternet" rows="2" cols="40" readonly><?php echo strtoupper($direccionInter); ?></textarea>
                                           </div>
                                       </div>
                                   </div>
@@ -387,17 +446,17 @@
                                   <div class="col-md-3">
                                       <br>
                                       <label for="macModem">MAC del modem</label>
-                                      <input class="form-control input-sm internet" type="text" name="macModem" value="<?php echo $macModem; ?>" readonly>
+                                      <input id="macModem" class="form-control input-sm internet" type="text" name="macModem" value="<?php echo $macModem; ?>" readonly>
                                   </div>
                                   <div class="col-md-2">
                                       <br>
                                       <label for="serieModem">Serie del modem</label>
-                                      <input class="form-control input-sm internet" type="text" name="serieModem" value="<?php echo $serieModem; ?>" readonly>
+                                      <input id="serieModem" class="form-control input-sm internet" type="text" name="serieModem" value="<?php echo $serieModem; ?>" readonly>
                                   </div>
                                   <div class="col-md-2">
                                       <br>
                                       <label for="velocidad">Velocidad</label>
-                                      <input id="velocidad" class="form-control input-sm internet" type="text" name="velocidad" value="<?php echo $idVelocidad; ?>" readonly>
+                                      <input id="velocidad" class="form-control input-sm internet" type="text" name="velocidad" value="<?php echo $velocidad; ?>" readonly>
                                   </div>
                                   <div class="col-md-1">
                                       <br>
@@ -417,7 +476,7 @@
                                   <div class="col-md-2">
                                       <br>
                                       <label for="colilla">Colilla</label>
-                                      <input class="form-control input-sm internet" type="text" name="colilla" value="<?php echo $colilla; ?>" readonly>
+                                      <input id="colilla" class="form-control input-sm internet" type="text" name="colilla" value="<?php echo $colilla; ?>" readonly>
                                   </div>
                               </div>
                               <div class="form-row">
@@ -429,7 +488,7 @@
                                   <div class="col-md-2">
                                       <br>
                                       <label for="hora">Hora</label>
-                                      <input class="form-control input-sm" type="text" name="hora" value="<?php echo $horaTrabajo; ?>" readonly>
+                                      <input id="hora" class="form-control input-sm" type="text" name="hora" value="<?php echo $hora; ?>" readonly>
                                   </div>
                                   <div class="col-md-3">
                                       <br>
@@ -440,12 +499,23 @@
                                       <br>
                                       <label for="responsable">Responsable</label>
                                       <select class="form-control input-sm" name="responsable" disabled>
+                                          <option value="" selected>Seleccionar</option>
                                           <?php
                                           foreach ($arrayTecnicos as $key) {
+                                              if ($key['idTecnico'] == $idTecnico) {
+                                                  echo "<option value=".$key['idTecnico']." selected>".$key['nombresTecnico']." ".$key['apellidosTecnico']."</option>";
+                                              }
                                               echo "<option value=".$key['idTecnico'].">".$key['nombresTecnico']." ".$key['apellidosTecnico']."</option>";
                                           }
                                           ?>
                                       </select>
+                                  </div>
+                              </div>
+                              <div class="form-row">
+                                  <div class="col-md-12">
+                                      <br>
+                                      <label for="coordenadas">Coordenadas/otros datos</label>
+                                      <input class="form-control input-sm internet" type="text" name="coordenadas" value="<?php echo $coordenadas; ?>" readonly>
                                   </div>
                               </div>
                               <div class="form-row">
@@ -456,19 +526,29 @@
                                   </div>
                               </div>
                               <div class="form-row">
-                                  <div class="col-md-4">
+                                  <div class="col-md-2">
                                       <br>
                                       <label for="nodo">Nodo</label>
-                                      <input class="form-control input-sm" type="text" name="nodo" value="<?php echo $nodo ?>" readonly>
+                                      <input id="nodo" class="form-control input-sm" type="text" name="nodo" value="<?php echo $nodo ?>" readonly>
                                   </div>
-                                  <div class="col-md-4">
+                                  <div class="col-md-3">
+                                      <br>
+                                      <label for="marcaModelo">Marca/modelo</label>
+                                      <input class="form-control input-sm internet" type="text" name="marcaModelo" value="<?php echo $marcaModelo ?>" readonly>
+                                  </div>
+                                  <div class="col-md-2">
+                                      <br>
+                                      <label for="tecnologia">Tecnología</label>
+                                      <input class="form-control input-sm" type="text" name="tecnologia" value="<?php echo $tecnologia ?>" readonly>
+                                  </div>
+                                  <div class="col-md-3">
                                       <br>
                                       <label for="vendedor">Vendedor</label>
-                                      <input class="form-control input-sm" type="text" name="vendedor" readonly>
+                                      <input class="form-control input-sm" type="text" name="vendedor" value="<?php echo $idVendedor ?>" readonly>
                                   </div>
-                                  <div class="col-md-4">
+                                  <div class="col-md-2">
                                       <br>
-                                      <label for="recepcionTv">Recepción TV</label>
+                                      <label for="recepcionTv">Rx TV</label>
                                       <input class="form-control input-sm cable" type="text" name="recepcionTv" value="<?php echo $recepcionTv; ?>" readonly>
                                   </div>
                               </div>
@@ -500,7 +580,59 @@
     <script src="../../dist/js/sb-admin-2.js"></script>
     <script src="../../dist/js/jquery-validation-1.19.0/dist/jquery.validate.js"></script>
     <script src="js/ordenTrabajo.js"></script>
+    <script type="text/javascript">
+        // Get the input field
+        var cod = document.getElementById("codigoCliente");
 
+        $('#ordenTrabajo').on('keyup keypress', function(e) {
+          var keyCode = e.keyCode || e.which;
+          if (keyCode === 13) {
+            e.preventDefault();
+            return false;
+          }
+        });
+
+        // Execute a function when the user releases a key on the keyboard
+        cod.addEventListener("keyup", function(event) {
+        // Number 13 is the "Enter" key on the keyboard
+        if (event.keyCode === 13) {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        var codValue = document.getElementById("codigoCliente").value
+        // Trigger the button element with a click
+        window.location="ordenTrabajo.php?codigoCliente="+codValue;
+        }
+        });
+    </script>
+    <?php
+    if (isset($_GET['codigoCliente'])) {
+        echo "<script>
+            document.getElementById('ordenTrabajo').action = 'php/nuevaOrdenTrabajo.php';
+            document.getElementById('btn-cable').disabled = false;
+            document.getElementById('btn-internet').disabled = false;
+            document.getElementById('guardar').disabled = false;
+            document.getElementById('editar').disabled = true;
+            document.getElementById('imprimir').disabled = true;
+            var inputs = document.getElementsByClassName('input-sm');
+            for (var i = 0; i < inputs.length; i++) {
+                if (inputs[i].readOnly == true) {
+                    inputs[i].readOnly = false;
+                }
+                else if (inputs[i].disabled == true) {
+                    inputs[i].disabled = false;
+                }
+            }
+            var time = new Date();
+
+            var seconds = time.getSeconds();
+            var minutes = time.getMinutes();
+            var hour = time.getHours();
+            time = hour + ':' + minutes + ':' + seconds;
+            document.getElementById('hora').value = time;
+        </script>";
+    }
+
+    ?>
 
 </body>
 

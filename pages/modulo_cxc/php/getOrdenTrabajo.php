@@ -6,18 +6,17 @@
     /**
      * Clase para tarer los datos de reportes de la base de datos
      */
-    class GetAllClients extends ConectionDB
+    class GetOrdenTrabajo extends ConectionDB
     {
-        public function GetAllClients()
+        public function GetOrdenTrabajo()
         {
             parent::__construct ();
         }
-        public function getClients()
+        public function getOrden()
         {
             try {
-                    $query = "SELECT cod_cliente, nombre, numero_dui, telefonos, direccion FROM clientes LIMIT 2000";
+                    $query = "SELECT * FROM tbl_ordenes_trabajo";
                     $statement = $this->dbConnect->prepare($query);
-                    ini_set('memory_limit', '-1');
                     $statement->execute();
                     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
                     return $result;

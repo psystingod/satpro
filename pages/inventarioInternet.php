@@ -24,7 +24,7 @@
     <meta name="author" content="">
 
     <title>Cablesat</title>
-<link rel="shortcut icon" href="../images/Cablesat.png" />
+    <link rel="shortcut icon" href="../images/Cablesat.png" />
     <!-- Bootstrap Core CSS -->
     <link href="../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 

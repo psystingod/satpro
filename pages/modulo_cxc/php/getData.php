@@ -20,6 +20,7 @@
                $statement->execute();
                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
+
                return $result;
 
            } catch (Exception $e) {
@@ -36,6 +37,7 @@
                $statement = $this->dbConnect->prepare($query);
                $statement->execute();
                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
 
                return $result;
 
@@ -54,6 +56,7 @@
                $statement->execute();
                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
+
                return $result;
 
            } catch (Exception $e) {
@@ -70,6 +73,8 @@
                $statement = $this->dbConnect->prepare($query);
                $statement->execute();
                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+               //$statement->closeCursor();
+               //$this->dbConnect = null;
 
                return $result;
 

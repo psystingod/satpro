@@ -67,16 +67,26 @@ function nuevaOrden(){
     var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
     var yyyy = today.getFullYear();
 
-    today = dd + '/' + mm + '/' + yyyy;
+    var time = new Date();
+
+    var seconds = time.getSeconds();
+    var minutes = time.getMinutes();
+    var hour = time.getHours();
+    time = hour + ':' + minutes + ':' + seconds;
+
+    today = yyyy + '-' + mm + '-' + dd;
     document.getElementById("fechaOrden").value = today;
+    document.getElementById("hora").value = time;
     document.getElementById("tipoOrden").value = "Técnica";
     document.getElementById("editar").disabled = true;
     changeAction("nueva");
 }
 function editarOrden(){
     document.getElementById("btn-cable").disabled = false;
+    document.getElementById("guardar").disabled = false;
     document.getElementById("btn-internet").disabled = false;
     document.getElementById("imprimir").disabled = true;
+
     var editInputs = document.getElementsByClassName("input-sm");
     for (var i = 0; i < editInputs.length; i++) {
         if (editInputs[i].readOnly == true) {
@@ -86,7 +96,21 @@ function editarOrden(){
             editInputs[i].disabled = false;
         }
     }
+    document.getElementById("numeroOrden").readOnly = true;
+    document.getElementById("saldoCable").readOnly = true;
+    document.getElementById("saldoInternet").readOnly = true;
+    document.getElementById("nodo").readOnly = true;
+    document.getElementById("colilla").readOnly = true;
+    document.getElementById("velocidad").readOnly = true;
+    document.getElementById("macModem").readOnly = true;
+    document.getElementById("serieModem").readOnly = true;
     changeAction("editar");
+}
+
+function imprimirOrden(){
+    var nOrden = document.getElementById("numeroOrden").value
+    // Trigger the button element with a click
+    window.open("ordenTrabajoImp.php?nOrden="+nOrden, '_blank');
 }
 
 function changeAction(action){

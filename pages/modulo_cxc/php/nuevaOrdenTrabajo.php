@@ -14,8 +14,8 @@
             if ($_POST['tipoServicio'] == 'C') {
                 try {
                     date_default_timezone_set('America/El_Salvador');
-
-                    $fechaOrden = $_POST["fechaOrden"];
+                    $fechaOrden = date_format(date_create($_POST["fechaOrden"]), 'Y-m-d');
+                    $numeroOrden = $_POST["numeroOrden"];
                     $codigoCliente = $_POST["codigoCliente"];
                     $tipoOrden = $_POST["tipoOrden"];
                     $nombreCliente = $_POST['nombreCliente'];
@@ -24,7 +24,7 @@
                     $tipoActividadCable = $_POST['tipoActividadCable'];
                     $saldoCable = $_POST['saldoCable'];
                     $direccionCable = $_POST['direccionCable'];
-                    //$colilla = $_POST["colilla"];
+                    $colilla = "Amarilla";
                     $fechaTrabajo = $_POST["fechaTrabajo"];
                     $hora = $_POST["hora"];
                     $fechaProgramacion = $_POST["fechaProgramacion"];
@@ -32,13 +32,14 @@
                     $observaciones = $_POST["observaciones"];
                     $vendedor = $_POST["vendedor"];
                     $recepcionTv = $_POST["recepcionTv"];
+                    $tecnologia = $_POST["tecnologia"];
                     $tipoServicio = $_POST["tipoServicio"];
                     $creadoPor = $_POST['creadoPor'];
 
                     //$Fecha = date('Y/m/d g:i');
 
-                    $query = "INSERT INTO tbl_ordenes_trabajo(codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, nombreCliente, telefonos, idMunicipio, idActividadCable, saldoCable, direccionCable, fechaTrabajo, hora, fechaProgramacion, idTecnico, observaciones, idVendedor, recepcionTv, tipoServicio, creadoPor                                                                                              )
-                              VALUES(:codigoCliente, :fechaOrdenTrabajo, :tipoOrdenTrabajo, :nombreCliente, :telefonos, :idMunicipio, :idActividadCable, :saldoCable, :direccionCable, :fechaTrabajo, :hora, :fechaProgramacion, :idTecnico, :observaciones, :idVendedor, :recepcionTv, :tipoServicio, :creadoPor)";
+                    $query = "INSERT INTO tbl_ordenes_trabajo(codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, nombreCliente, telefonos, idMunicipio, idActividadCable, saldoCable, direccionCable, fechaTrabajo, hora, fechaProgramacion, idTecnico, observaciones, idVendedor, tecnologia, recepcionTv, tipoServicio, creadoPor                                                                                              )
+                              VALUES(:codigoCliente, :fechaOrdenTrabajo, :tipoOrdenTrabajo, :nombreCliente, :telefonos, :idMunicipio, :idActividadCable, :saldoCable, :direccionCable, :fechaTrabajo, :hora, :fechaProgramacion, :idTecnico, :observaciones, :idVendedor, :tecnologia, :recepcionTv, :tipoServicio, :creadoPor)";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
@@ -57,10 +58,13 @@
                                 ':idTecnico' => $responsable,
                                 ':observaciones' => $observaciones,
                                 ':idVendedor' => $vendedor,
+                                ':tecnologia' => $tecnologia,
                                 ':recepcionTv' => $recepcionTv,
                                 ':tipoServicio' => $tipoServicio,
                                 ':creadoPor' => $creadoPor
                                 ));
+                    $numeroOrden = $this->dbConnect->lastInsertId();
+                    header('Location: ../ordenTrabajo.php?nOrden='.$numeroOrden);
 
                 }
                 catch (Exception $e)
@@ -95,7 +99,10 @@
                     $hora = $_POST["hora"];
                     $fechaProgramacion = $_POST["fechaProgramacion"];
                     $responsable = $_POST["responsable"];
+                    $coordenadas = $_POST["coordenadas"];
                     $observaciones = $_POST["observaciones"];
+                    $tecnologia = $_POST["tecnologia"];
+                    $marcaModelo = $_POST["marcaModelo"];
                     $nodo = $_POST["nodo"];
                     $vendedor = $_POST["vendedor"];
                     $tipoServicio = $_POST["tipoServicio"];
@@ -103,8 +110,8 @@
 
                     //$Fecha = date('Y/m/d g:i');
 
-                    $query = "INSERT INTO tbl_ordenes_trabajo(codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, nombreCliente, telefonos, idMunicipio, idActividadInter, saldoInter, direccionInter, macModem, serieModem, velocidad, rx, tx, snr, colilla, fechaTrabajo, hora, fechaProgramacion, idTecnico, observaciones, nodo, idVendedor, tipoServicio, creadoPor                                                                                              )
-                              VALUES(:codigoCliente, :fechaOrdenTrabajo, :tipoOrdenTrabajo, :nombreCliente, :telefonos, :idMunicipio, :idActividadInter, :saldoInter, :direccionInter, :macModem, :serieModem, :velocidad, :rx, :tx, :snr, :colilla, :fechaTrabajo, :hora, :fechaProgramacion, :idTecnico, :observaciones, :nodo, :idVendedor, :tipoServicio, :creadoPor)";
+                    $query = "INSERT INTO tbl_ordenes_trabajo(codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, nombreCliente, telefonos, idMunicipio, idActividadInter, saldoInter, direccionInter, macModem, serieModem, velocidad, rx, tx, snr, colilla, fechaTrabajo, hora, fechaProgramacion, idTecnico, coordenadas, observaciones, marcaModelo, tecnologia, nodo, idVendedor, tipoServicio, creadoPor                                                                                              )
+                              VALUES(:codigoCliente, :fechaOrdenTrabajo, :tipoOrdenTrabajo, :nombreCliente, :telefonos, :idMunicipio, :idActividadInter, :saldoInter, :direccionInter, :macModem, :serieModem, :velocidad, :rx, :tx, :snr, :colilla, :fechaTrabajo, :hora, :fechaProgramacion, :idTecnico, :coordenadas, :observaciones, :marcaModelo, :tecnologia, :nodo, :idVendedor, :tipoServicio, :creadoPor)";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
@@ -128,12 +135,18 @@
                                 ':hora' => $hora,
                                 ':fechaProgramacion' => $fechaProgramacion,
                                 ':idTecnico' => $responsable,
+                                ':coordenadas' => $coordenadas,
                                 ':observaciones' => $observaciones,
+                                ':marcaModelo' => $marcaModelo,
+                                ':tecnologia' => $tecnologia,
                                 ':nodo' => $nodo,
                                 ':idVendedor' => $vendedor,
                                 ':tipoServicio' => $tipoServicio,
                                 ':creadoPor' => $creadoPor
                                 ));
+
+                        $numeroOrden = $this->dbConnect->lastInsertId();
+                        header('Location: ../ordenTrabajo.php?nOrden='.$numeroOrden);
 
                 }
                 catch (Exception $e)

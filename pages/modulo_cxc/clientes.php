@@ -170,10 +170,9 @@
                                 </thead>
                                 <tbody>
                                     <?php
-
                                         foreach ($allClientsArray as $key) {
                                             echo "<tr><td>";
-                                            echo "<span style='font-size:13px;' class='label label-danger'>".str_pad($key["cod_cliente"],6,"0",STR_PAD_LEFT) . "</span></td><td>";
+                                            echo "<span style='font-size:13px;' class='label label-danger'>".$key["cod_cliente"] . "</span></td><td>";
                                             echo trim(ucwords(strtolower($key["nombre"]))) . "</td><td>";
                                             echo $key["numero_dui"] . "</td><td>";
                                             echo trim($key["telefonos"]) . "</td><td>";
