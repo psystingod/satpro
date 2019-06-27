@@ -503,9 +503,9 @@
                                           <?php
                                           foreach ($arrayTecnicos as $key) {
                                               if ($key['idTecnico'] == $idTecnico) {
-                                                  echo "<option value=".$key['idTecnico']." selected>".$key['nombresTecnico']." ".$key['apellidosTecnico']."</option>";
+                                                  echo "<option value=".$key['idTecnico']." selected>".strtoupper($key['nombreTecnico'])."</option>";
                                               }
-                                              echo "<option value=".$key['idTecnico'].">".$key['nombresTecnico']." ".$key['apellidosTecnico']."</option>";
+                                              echo "<option value=".$key['idTecnico'].">".strtoupper($key['nombreTecnico'])."</option>";
                                           }
                                           ?>
                                       </select>

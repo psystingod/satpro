@@ -14,7 +14,7 @@
        {
            try {
                // SQL query para traer nombre de las categorías
-               $query = "SELECT idTecnico, nombresTecnico, apellidosTecnico FROM tbl_tecnicos where state = 1";
+               $query = "SELECT idTecnico, nombreTecnico FROM tbl_tecnicos_cxc";
                // Preparación de sentencia
                $statement = $this->dbConnect->prepare($query);
                $statement->execute();

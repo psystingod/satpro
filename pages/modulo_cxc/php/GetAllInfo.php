@@ -11,12 +11,25 @@ class GetAllInfo extends ConectionDB
     {
         parent::__construct ();
     }
-    //Acá comienzan las funciones para obtener los datos de clientes
-    public function getDepartamento($idDepartamento){
+    public function getData($tabla){
         try {
-                $query = "SELECT * FROM departamentos_cxc WHERE id_departamento=:idDepartamento";
+                $query = "SELECT * FROM $tabla";
                 $statement = $this->dbConnect->prepare($query);
-                $statement->bindParam(':$idDepartamento', $idDepartamento, PDO::PARAM_INT);
+                $statement->execute();
+                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+                return $result;
+
+        } catch (Exception $e) {
+            print "!Error¡: " . $e->getMessage() . "</br>";
+            die();
+        }
+    }
+    //Acá comienzan las funciones para obtener los datos de clientes
+    /*public function getDepartamento($idDepartamento){
+        try {
+                $query = "SELECT * FROM tbl_departamentos_cxc WHERE idDepartamento=:idDepartamento";
+                $statement = $this->dbConnect->prepare($query);
+                $statement->bindParam(':idDepartamento', $idDepartamento, PDO::PARAM_INT);
                 $statement->execute();
                 $result = $statement->fetchAll(PDO::FETCH_ASSOC);
                 return $result;
@@ -70,9 +83,9 @@ class GetAllInfo extends ConectionDB
     }
     public function getCobrador($codigoCobrador){
         try {
-                $query = "SELECT Cod_cobrador, Nombre_cobrador FROM Cobradores WHERE Cod_cobrador=:codigoCobrador";
+                $query = "SELECT codigoCobrador, nombreCobrador FROM cobradores WHERE codigoCobrador=:codigoCobrador";
                 $statement = $this->dbConnect->prepare($query);
-                $statement->bindParam(':idFormaPago', $codigoCobrador, PDO::PARAM_SRT);
+                $statement->bindParam(':codigoCobrador', $codigoCobrador, PDO::PARAM_SRT);
                 $statement->execute();
                 $result = $statement->fetchAll(PDO::FETCH_ASSOC);
                 return $result;
@@ -166,7 +179,7 @@ class GetAllInfo extends ConectionDB
             print "!Error¡: " . $e->getMessage() . "</br>";
             die();
         }
-    }
+    }*/
 }
 
 ?>

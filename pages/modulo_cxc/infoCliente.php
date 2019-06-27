@@ -116,6 +116,7 @@
         }
 
         $tipoServicioInternet = $row['tipo_servicio_in'];
+        $nodo = $row['dire_telefonia'];
         $periodoContratoInternet = $row['periodo_contrato_int'];
         $diaCobroInter = $row['dia_corbo_in'];
         $velocidadInter = $row['id_velocidad'];
@@ -179,6 +180,21 @@
         die('ERROR: ' . $exception->getMessage());
     }
  ?>
+ <?php
+ require_once 'php/GetAllInfo.php';
+ $arrayDatos = new GetAllInfo();
+ $arrDepartamentos = $arrayDatos->getData('tbl_departamentos_cxc');
+ $arrMunicipios = $arrayDatos->getData('tbl_municipios_cxc');
+ $arrColonias = $arrayDatos->getData('tbl_colonias_cxc');
+ $arrFormaFacturar = $arrayDatos->getData('tbl_forma_pago');
+ $arrCobradores = $arrayDatos->getData('tbl_cobradores');
+ $arrComprobantes = $arrayDatos->getData('tbl_tipo_comprobante');
+ $arrServicioCable = $arrayDatos->getData('tbl_servicios_cable');
+ $arrServicioInter = $arrayDatos->getData('tbl_servicios_inter');
+ $arrVelocidad = $arrayDatos->getData('tbl_velocidades');
+ $arrTecnologias = $arrayDatos->getData('tbl_tecnologias');
+ $arrTiposClientes = $arrayDatos->getData('tbl_tipos_clientes');
+ ?>
 <!DOCTYPE html>
 <html lang="es">
 
@@ -214,7 +230,14 @@
     <!-- DataTables CSS -->
     <!--<link rel="stylesheet" href="../vendor/datatables/css/dataTables.bootstrap.min.css"> -->
     <!--<link rel="stylesheet" href="../vendor/datatables/css/jquery.dataTables.min.css"> -->
+    <style media="screen">
+    .form-control {
+        color: #01579B;
+        font-size: 15px;
+        font-weight: bold;
 
+    }
+    </style>
 </head>
 
 <body>
@@ -433,7 +456,7 @@
                 <div class="col-md-12">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <span class="badge"><?php echo $codigo; ?></span> <span><?php echo $nombre; ?></span>
+                            <span style="font-size:15px;" class="label label-danger"><?php echo $codigo; ?></span> <span><?php echo strtoupper($nombre); ?></span>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
@@ -509,17 +532,56 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label for="departamento">Departamento</label>
-                                            <input class="form-control" type="text" name="departamento" value="<?php echo $departamento; ?>">
+                                            <select class="form-control" name="departamento">
+                                                <option value="" selected>Seleccionar</option>
+                                                <?php
+                                                foreach ($arrDepartamentos as $key) {
+                                                    if ($key['idDepartamento'] == $departamento) {
+                                                        echo "<option value=".$key['idDepartamento']." selected>".$key['nombreDepartamento']."</option>";
+                                                    }
+                                                    else {
+                                                        echo "<option value=".$key['idDepartamento'].">".$key['nombreDepartamento']."</option>";
+                                                    }
+
+                                                }
+                                                 ?>
+                                            </select>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label for="municipio">Municipio</label>
-                                            <input class="form-control" type="text" name="municipio" value="<?php echo $municipio; ?>">
+                                            <select class="form-control" name="municipio">
+                                                <option value="" selected>Seleccionar</option>
+                                                <?php
+                                                foreach ($arrMunicipios as $key) {
+                                                    if ($key['idMunicipio'] == $municipio) {
+                                                        echo "<option value=".$key['idMunicipio']." selected>".$key['nombreMunicipio']."</option>";
+                                                    }
+                                                    else {
+                                                        echo "<option value=".$key['idMunicipio'].">".$key['nombreMunicipio']."</option>";
+                                                    }
+
+                                                }
+                                                 ?>
+                                            </select>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <label for="colonia">Barrio o colonia</label>
-                                            <input class="form-control" type="text" name="colonia" value="<?php echo $colonia; ?>">
+                                            <select class="form-control" name="municipio">
+                                                <option value="" selected>Seleccionar</option>
+                                                <?php
+                                                foreach ($arrColonias as $key) {
+                                                    if ($key['idColonia'] == $colonia) {
+                                                        echo "<option value=".$key['idColonia']." selected>".$key['nombreColonia']."</option>";
+                                                    }
+                                                    else {
+                                                        echo "<option value=".$key['idColonia'].">".$key['nombreColonia']."</option>";
+                                                    }
+
+                                                }
+                                                 ?>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -547,9 +609,22 @@
                                             <label for="cuentaContable">Cuenta contable</label>
                                             <input class="form-control" type="text" name="cuentaContable" value="<?php echo $cuentaContable; ?>">
                                         </div>
-                                        <div class="col-md-2">
-                                            <label for="formaFactura">Forma al facturar</label>
-                                            <input class="form-control" type="text" name="formaFacturar" value="<?php echo $formaFacturar; ?>">
+                                        <div class="col-md-3">
+                                            <label for="formaFacturar">Forma al facturar</label>
+                                            <select class="form-control" name="formaFacturar">
+                                                <option value="" selected>Seleccionar</option>
+                                                <?php
+                                                foreach ($arrFormaFacturar as $key) {
+                                                    if ($key['idFormaPago'] == $formaFacturar) {
+                                                        echo "<option value=".$key['idFormaPago']." selected>".$key['nombreFormaPago']."</option>";
+                                                    }
+                                                    else {
+                                                        echo "<option value=".$key['idFormaPago'].">".$key['nombreFormaPago']."</option>";
+                                                    }
+
+                                                }
+                                                 ?>
+                                            </select>
                                         </div>
                                         <div class="col-md-2">
                                             <label for="saldoActual">Saldo actual</label>
@@ -559,17 +634,17 @@
                                             <label for="limiteCredito">Días de crédito</label>
                                             <input class="form-control" type="text" name="diasCredito" value="<?php echo $diasCredito; ?>">
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-2">
                                             <label for="limiteCredito">Límite de crédito</label>
                                             <input class="form-control" type="text" name="limiteCredito" value="<?php echo $limiteCredito; ?>">
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-3">
+                                        <!--<div class="col-md-3">
                                             <label for="tipoFacturacion">Tipo de facturación</label>
                                             <input class="form-control" type="text" name="tipoFacturacion" value="<?php echo $tipoFacturacion; ?>">
-                                        </div>
-                                        <div class="col-md-9">
+                                        </div>-->
+                                        <div class="col-md-12">
                                             <label for="facebook">Cuenta de Facebook</label>
                                             <input class="form-control" type="text" name="facebook" value="<?php echo $facebook; ?>">
                                         </div>
@@ -586,7 +661,20 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <label for="cobrador">Cobrador que lo atiende</label>
-                                            <input class="form-control" type="text" name="cobrador" value="<?php echo $cobrador; ?>">
+                                            <select class="form-control" name="cobrador">
+                                                <option value="" selected>Seleccionar</option>
+                                                <?php
+                                                foreach ($arrCobradores as $key) {
+                                                    if ($key['codigoCobrador'] == $cobrador) {
+                                                        echo "<option value=".$key['codigoCobrador']." selected>".$key['nombreCobrador']."</option>";
+                                                    }
+                                                    else {
+                                                        echo "<option value=".$key['codigoCobrador'].">".$key['nombreCobrador']."</option>";
+                                                    }
+
+                                                }
+                                                 ?>
+                                            </select>
                                         </div>
                                     </div>
                                     <br><br>
@@ -696,10 +784,13 @@
                                                   <div class="col-md-2">
                                                       <label for="cortesia">Cortesía</label>
                                                       <?php
-                                                      if ($exento == "F") {
+                                                      if ($cortesia == "F") {
                                                           echo "<input class='form-control' type='checkbox' name='cortesia'>";
-                                                      }else if($exento == "T"){
+                                                      }else if($cortesia == "T"){
                                                           echo "<input class='form-control' type='checkbox' name='cortesia' checked>";
+                                                      }
+                                                      else {
+                                                          echo "<input class='form-control' type='checkbox' name='cortesia'>";
                                                       }
                                                       ?>
                                                   </div>
@@ -715,11 +806,37 @@
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="tipoComprobante">Tipo de comprobante a generar</label>
-                                                      <input class="form-control" type="text" name="tipoComprobante" value="<?php echo $tipoComprobante; ?>">
+                                                      <select class="form-control" name="tipoComprobante">
+                                                          <option value="" selected>Seleccionar</option>
+                                                          <?php
+                                                          foreach ($arrComprobantes as $key) {
+                                                              if ($key['idComprobante'] == $tipoComprobante) {
+                                                                  echo "<option value=".$key['idComprobante']." selected>".$key['nombreComprobante']."</option>";
+                                                              }
+                                                              else {
+                                                                  echo "<option value=".$key['idComprobante'].">".$key['nombreComprobante']."</option>";
+                                                              }
+
+                                                          }
+                                                           ?>
+                                                      </select>
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="tipoServicio">Tipo de servicio</label>
-                                                      <input class="form-control" type="text" name="tipoServicio" value="<?php echo $tipoServicio; ?>">
+                                                      <select class="form-control" name="tipoServicio">
+                                                          <option value="" selected>Seleccionar</option>
+                                                          <?php
+                                                          foreach ($arrServicioCable as $key) {
+                                                              if ($key['idServicioCable'] == $tipoServicio) {
+                                                                  echo "<option value=".$key['idServicioCable']." selected>".$key['nombreServicioCable']."</option>";
+                                                              }
+                                                              else {
+                                                                  echo "<option value=".$key['idServicioCable'].">".$key['nombreServicioCable']."</option>";
+                                                              }
+
+                                                          }
+                                                           ?>
+                                                      </select>
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="mesesContratoCable">Período de contrato en meses</label>
@@ -781,19 +898,32 @@
                                                       <label for="fechaInstalacionInternet">Fecha de instalación</label>
                                                       <input class="form-control" type="text" name="fechaInstalacionInternet" value="<?php echo $fechaInstalacionInter; ?>">
                                                   </div>
-                                                  <div class="col-md-3">
-                                                      <label for="fechaPrimerFacturaInternet">Fecha de primer factura</label>
+                                                  <div class="col-md-2">
+                                                      <label for="fechaPrimerFacturaInternet">Fecha primer factura</label>
                                                       <input class="form-control" type="text" name="fechaPrimerFacturaInternet" value="<?php echo $fechaPrimerFacturaInter; ?>">
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="tipoServicioInternet">Tipo de servicio</label>
-                                                      <input class="form-control" type="text" name="tipoServicioInternet" value="<?php echo $tipoServicioInternet; ?>">
+                                                      <select class="form-control" name="tipoServicioInternet">
+                                                          <option value="" selected>Seleccionar</option>
+                                                          <?php
+                                                          foreach ($arrServicioInter as $key) {
+                                                              if ($key['idServicioInter'] == $tipoServicioInternet) {
+                                                                  echo "<option value=".$key['idServicioInter']." selected>".$key['nombreServicioInter']."</option>";
+                                                              }
+                                                              else {
+                                                                  echo "<option value=".$key['idServicioInter'].">".$key['nombreServicioInter']."</option>";
+                                                              }
+
+                                                          }
+                                                           ?>
+                                                      </select>
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="mesesContratoInternet">Período de contrato en meses</label>
                                                       <input class="form-control" type="text" name="mesesContratoInternet" value="<?php echo $periodoContratoInternet; ?>">
                                                   </div>
-                                                  <div class="col-md-2">
+                                                  <div class="col-md-3">
                                                       <label for="diaGenerarFacturaInternet">Día para generar factura</label>
                                                       <input class="form-control" type="text" name="diaGenerarFacturaInternet" value="<?php echo $diaCobroInter; ?>">
                                                   </div>
@@ -801,7 +931,20 @@
                                               <div class="row">
                                                   <div class="col-md-3">
                                                       <label for="velocidadInternet">Velocidad</label>
-                                                      <input class="form-control" type="text" name="velocidadInternet" value="<?php echo $velocidadInter; ?>">
+                                                      <select class="form-control" name="velocidadInternet">
+                                                          <option value="" selected>Seleccionar</option>
+                                                          <?php
+                                                          foreach ($arrVelocidad as $key) {
+                                                              if ($key['idVelocidad'] == $velocidad) {
+                                                                  echo "<option value=".$key['idVelocidad']." selected>".$key['nombreVelocidad']."</option>";
+                                                              }
+                                                              else {
+                                                                  echo "<option value=".$key['idVelocidad'].">".$key['nombreVelocidad']."</option>";
+                                                              }
+
+                                                          }
+                                                           ?>
+                                                      </select>
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="cuotaMensualInternet">Cuota mensual</label>
@@ -809,11 +952,37 @@
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="tipoCliente">Tipo de cliente</label>
-                                                      <input class="form-control" type="text" name="tipoCliente" value="<?php echo $tipoClienteInter; ?>">
+                                                      <select class="form-control" name="tipoCliente">
+                                                          <option value="" selected>Seleccionar</option>
+                                                          <?php
+                                                          foreach ($arrTiposClientes as $key) {
+                                                              if ($key['idTipoCliente'] == $tipoClienteInter) {
+                                                                  echo "<option value=".$key['idTipoCliente']." selected>".$key['nombreTipoCliente']."</option>";
+                                                              }
+                                                              else {
+                                                                  echo "<option value=".$key['idTipoCliente'].">".$key['nombreTipoCliente']."</option>";
+                                                              }
+
+                                                          }
+                                                           ?>
+                                                      </select>
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="tecnologia">Tecnología</label>
-                                                      <input class="form-control" type="text" name="tecnologia" value="<?php echo $tecnologia; ?>">
+                                                      <select class="form-control" name="tecnologia">
+                                                          <option value="" selected>Seleccionar</option>
+                                                          <?php
+                                                          foreach ($arrTecnologias as $key) {
+                                                              if ($key['idTecnologia'] == $tecnologia || strtolower($key['nombreTecnologia']) == strtolower($tecnologia)) {
+                                                                  echo "<option value=".$key['idTecnologia']." selected>".$key['nombreTecnologia']."</option>";
+                                                              }
+                                                              else {
+                                                                  echo "<option value=".$key['idTecnologia'].">".$key['nombreTecnologia']."</option>";
+                                                              }
+
+                                                          }
+                                                           ?>
+                                                      </select>
                                                   </div>
                                               </div>
                                               <div class="row">
@@ -880,7 +1049,7 @@
                                                           </div>
                                                           <div class="col-md-12">
                                                               <label for="nodo">Nodo/Ap/Path</label>
-                                                              <input class="form-control" type="text" name="nodo">
+                                                              <input class="form-control" type="text" name="nodo" value="<?php echo $nodo ?>">
                                                           </div>
                                                       </div>
                                                   </div>
