@@ -2,6 +2,9 @@
 
     session_start();
     require("php/getData.php");
+    require("php/GetAllInfo.php");
+    $dataInfo = new GetAllInfo();
+    $arrMunicipios = $dataInfo->getData('tbl_municipios_cxc');
     $data = new OrdersInfo();
     //$client = new GetClient();
     $arrayTecnicos = $data->getTecnicos();
@@ -23,7 +26,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT cod_cliente, nombre, telefonos, id_municipio, saldo_actual, telefonos, dire_cable, dire_internet, mac_modem, serie_modem, id_velocidad, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia FROM tbl_clientes WHERE cod_cliente = ? LIMIT 0,1";
+            $query = "SELECT cod_cliente, nombre, telefonos, id_municipio, saldo_actual, telefonos, dire_cable, dire_internet, mac_modem, serie_modem, id_velocidad, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -81,7 +84,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT idOrdenTrabajo, codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, nombreCliente, telefonos, idMunicipio, idActividadCable, saldoCable, direccionCable, idActividadInter, saldoInter, direccionInter, saldoInter, direccionInter, macModem, serieModem, velocidad, rx, tx, snr, colilla, fechaTrabajo, hora, fechaProgramacion, idTecnico, coordenadas, observaciones, nodo, marcaModelo, tecnologia, idVendedor, recepcionTv, tipoServicio, creadoPor  FROM tbl_ordenes_trabajo WHERE idOrdenTrabajo = ? LIMIT 0,1";
+            $query = "SELECT idOrdenTrabajo, codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, nombreCliente, telefonos, idMunicipio, actividadCable, saldoCable, direccionCable, actividadInter, saldoInter, direccionInter, saldoInter, direccionInter, macModem, serieModem, velocidad, rx, tx, snr, colilla, fechaTrabajo, hora, fechaProgramacion, idTecnico, coordenadas, observaciones, nodo, marcaModelo, tecnologia, idVendedor, recepcionTv, tipoServicio, creadoPor  FROM tbl_ordenes_trabajo WHERE idOrdenTrabajo = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -104,10 +107,10 @@
             $nombreCliente = $row['nombreCliente'];
             $telefonos = $row["telefonos"];
             $idMunicipio = $row["idMunicipio"];
-            $idActividadCable = $row["idActividadCable"];
+            $idActividadCable = $row["actividadCable"];
             $saldoCable = $row["saldoCable"];
             $direccionCable = $row["direccionCable"];
-            $idActividadInter = $row["idActividadInter"];
+            $idActividadInter = $row["actividadInter"];
             $saldoInter = $row["saldoInter"];
             $direccionInter = $row["direccionInter"];
             $macModem = $row['macModem'];
@@ -313,7 +316,7 @@
                     <div class="col-lg-12">
                         <br>
                         <div class="panel panel-primary">
-                          <div class="panel-heading"><b>Orden de trabajo</b></div>
+                          <div class="panel-heading"><b>Orden de trabajo</b> <span id="nombreOrden" class="label label-danger"></span></div>
                           <form id="ordenTrabajo" action="" method="POST">
                           <div class="panel-body">
                               <div class="col-md-12">
@@ -335,11 +338,11 @@
                                       <br>
                                       <?php
                                       if (isset($_GET['nOrden'])) {
-                                         echo "<input id='creadoPor' class='form-control' type='hidden' name='creadoPor' value='{$creadoPor}'>";
+                                         echo "<input id='creadoPor' class='form-control input-sm' type='hidden' name='creadoPor' value='{$creadoPor}'>";
                                          echo "<input id='tipoServicio' class='form-control input-sm' type='hidden' name='tipoServicio' value='{$tipoServicio}' readonly>";
                                       }
                                       else{
-                                         echo "<input id='creadoPor' class='form-control' type='hidden' name='creadoPor' value='{$_SESSION['nombres']}.' '.{$_SESSION['apellidos']}'>";
+                                         echo "<input id='creadoPor' class='form-control input-sm' type='hidden' name='creadoPor' value='{$_SESSION['nombres']}.' '.{$_SESSION['apellidos']}'>";
                                          echo "<input id='tipoServicio' class='form-control input-sm' type='hidden' name='tipoServicio' value='' readonly>";
                                       }
                                       ?>
@@ -377,7 +380,20 @@
                                   <div class="col-md-3">
                                       <br>
                                       <label for="municipio">Municipio</label>
-                                      <input class="form-control input-sm input-sm" type="text" name="municipio" value="<?php echo $idMunicipio; ?>" readonly>
+                                      <select class="form-control input-sm" name="municipio" disabled>
+                                          <option value="" selected>Seleccionar</option>
+                                          <?php
+                                          foreach ($arrMunicipios as $key) {
+                                              if ($key['idMunicipio'] == $idMunicipio) {
+                                                  echo "<option value=".$key['idMunicipio']." selected>".$key['nombreMunicipio']."</option>";
+                                              }
+                                              else {
+                                                  echo "<option value=".$key['idMunicipio'].">".$key['nombreMunicipio']."</option>";
+                                              }
+
+                                          }
+                                           ?>
+                                      </select>
                                   </div>
                               </div>
                               <div class="form-row">
@@ -387,14 +403,17 @@
                                       <div class="row">
                                           <div class="col-md-8">
                                               <label for="tipoActividadCable">Tipo de actividad</label>
-                                              <select class="form-control input-sm cable" name="tipoActividadCable" disabled>
+                                              <select id="tipoActividadCable" class="form-control input-sm cable" name="tipoActividadCable" disabled>
                                                   <option value="" selected>Seleccionar</option>
                                                   <?php
+
                                                   foreach ($arrayActividadesC as $key) {
-                                                      if ($key['idActividadCable'] == $idActividadCable) {
-                                                          echo "<option value=".$key['idActividadCable']." selected>".$key['nombreActividad']."</option>";
+                                                      if ($key['nombreActividad'] == strval($idActividadCable)) {
+                                                          echo "<option value='".$key['nombreActividad']."' selected>".$key['nombreActividad']."</option>";
+                                                      }else {
+                                                          echo "<option value='".$key['nombreActividad']."'>".$key['nombreActividad']."</option>";
                                                       }
-                                                      echo "<option value=".$key['idActividadCable'].">".$key['nombreActividad']."</option>";
+
                                                   }
                                                   ?>
                                               </select>
@@ -407,7 +426,7 @@
                                       <div class="row">
                                           <div class="col-md-12">
                                               <label for="direccionCable">Dirección</label>
-                                              <textarea class="form-control input-sm cable" name="direccionCable" rows="2" cols="40" readonly><?php echo strtoupper($direccionCable); ?></textarea>
+                                              <textarea id="direccionCable" class="form-control input-sm cable" name="direccionCable" rows="2" cols="40" readonly><?php echo strtoupper($direccionCable); ?></textarea>
                                           </div>
                                       </div>
                                   </div>
@@ -417,14 +436,15 @@
                                       <div class="row">
                                           <div class="col-md-8">
                                               <label for="tipoActividadInternet">Tipo de actividad</label>
-                                              <select class="form-control input-sm internet" name="tipoActividadInternet" disabled>
+                                              <select id="tipoActividadInter" class="form-control input-sm internet" name="tipoActividadInternet" disabled>
                                                   <option value="" selected>Seleccionar</option>
                                                   <?php
                                                   foreach ($arrayActividadesI as $key) {
-                                                      if ($key['idActividadInter'] == $idActividadInter) {
-                                                          echo "<option value=".$key['idActividadInter']." selected>".$key['nombreActividad']."</option>";
+                                                      if ($key['nombreActividad'] == $idActividadInter) {
+                                                          echo "<option value='".$key['nombreActividad']."' selected>".$key['nombreActividad']."</option>";
+                                                      }else {
+                                                          echo "<option value='".$key['nombreActividad']."'>".$key['nombreActividad']."</option>";
                                                       }
-                                                      echo "<option value=".$key['idActividadInter'].">".$key['nombreActividad']."</option>";
                                                   }
                                                   ?>
                                               </select>
@@ -437,7 +457,7 @@
                                       <div class="row">
                                           <div class="col-md-12">
                                               <label for="direccionInternet">Dirección</label>
-                                              <textarea class="form-control input-sm internet" name="direccionInternet" rows="2" cols="40" readonly><?php echo strtoupper($direccionInter); ?></textarea>
+                                              <textarea id="direccionInternet" class="form-control input-sm internet" name="direccionInternet" rows="2" cols="40" readonly><?php echo strtoupper($direccionInter); ?></textarea>
                                           </div>
                                       </div>
                                   </div>
@@ -461,17 +481,17 @@
                                   <div class="col-md-1">
                                       <br>
                                       <label for="rx">Rx</label>
-                                      <input class="form-control input-sm internet" type="text" name="rx" value="<?php echo $rx; ?>" readonly>
+                                      <input id="rx" class="form-control input-sm internet" type="text" name="rx" value="<?php echo $rx; ?>" readonly>
                                   </div>
                                   <div class="col-md-1">
                                       <br>
                                       <label for="tx">Tx</label>
-                                      <input class="form-control input-sm internet" type="text" name="tx" value="<?php echo $tx; ?>" readonly>
+                                      <input id="tx" class="form-control input-sm internet" type="text" name="tx" value="<?php echo $tx; ?>" readonly>
                                   </div>
                                   <div class="col-md-1">
                                       <br>
                                       <label for="snr">SNR</label>
-                                      <input class="form-control input-sm internet" type="text" name="snr" value="<?php echo $snr; ?>" readonly>
+                                      <input id="snr" class="form-control input-sm internet" type="text" name="snr" value="<?php echo $snr; ?>" readonly>
                                   </div>
                                   <div class="col-md-2">
                                       <br>
@@ -534,17 +554,28 @@
                                   <div class="col-md-3">
                                       <br>
                                       <label for="marcaModelo">Marca/modelo</label>
-                                      <input class="form-control input-sm internet" type="text" name="marcaModelo" value="<?php echo $marcaModelo ?>" readonly>
+                                      <input id="marcaModelo" class="form-control input-sm internet" type="text" name="marcaModelo" value="<?php echo $marcaModelo ?>" readonly>
                                   </div>
                                   <div class="col-md-2">
                                       <br>
                                       <label for="tecnologia">Tecnología</label>
-                                      <input class="form-control input-sm" type="text" name="tecnologia" value="<?php echo $tecnologia ?>" readonly>
+                                      <input id="tecnologia" class="form-control input-sm" type="text" name="tecnologia" value="<?php echo $tecnologia ?>" readonly>
                                   </div>
                                   <div class="col-md-3">
                                       <br>
                                       <label for="vendedor">Vendedor</label>
-                                      <input class="form-control input-sm" type="text" name="vendedor" value="<?php echo $idVendedor ?>" readonly>
+                                      <select id="vendedor" class="form-control input-sm" name="vendedor" readonly>
+                                          <option value="" selected>Seleccionar</option>
+                                          <?php
+                                          foreach ($arrayVendedores as $key) {
+                                              if ($key['nombreActividad'] == $idVendedor) {
+                                                  echo "<option value='".$key['idVendedor']."' selected>".$key['nombresVendedor'].$key['apellidosVendedor']."</option>";
+                                              }else {
+                                                  echo "<option value='".$key['idVendedor']."'>".$key['nombresVendedor'].$key['apellidosVendedor']."</option>";
+                                              }
+                                          }
+                                          ?>
+                                      </select>
                                   </div>
                                   <div class="col-md-2">
                                       <br>
@@ -631,7 +662,17 @@
             document.getElementById('hora').value = time;
         </script>";
     }
+    if (isset($_GET['nOrden'])) {
+        echo "<script>
+        var tipoServicio = document.getElementById('tipoServicio').value
+        if (tipoServicio == 'C') {
+            document.getElementById('nombreOrden').innerHTML = 'CABLE';
+        }else if (tipoServicio == 'I') {
+            document.getElementById('nombreOrden').innerHTML = 'INTERNET';
+        }
+        </script>";
 
+    }
     ?>
 
 </body>

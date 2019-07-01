@@ -3,13 +3,13 @@
     /**
      * Clase para ingresar productos al inventario
      */
-    class GuardarOrden extends ConectionDB
+    class EditarOrden extends ConectionDB
     {
-        public function GuardarOrden()
+        public function EditarOrden()
         {
             parent::__construct ();
         }
-        public function guardar()
+        public function editar()
         {
             if ($_POST['tipoServicio'] == 'C') {
                 try {
@@ -38,8 +38,7 @@
 
                     //$Fecha = date('Y/m/d g:i');
 
-                    $query = "INSERT INTO tbl_ordenes_trabajo(codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, nombreCliente, telefonos, idMunicipio, actividadCable, saldoCable, direccionCable, fechaTrabajo, hora, fechaProgramacion, idTecnico, observaciones, idVendedor, tecnologia, recepcionTv, tipoServicio, creadoPor                                                                                              )
-                              VALUES(:codigoCliente, :fechaOrdenTrabajo, :tipoOrdenTrabajo, :nombreCliente, :telefonos, :idMunicipio, :idActividadCable, :saldoCable, :direccionCable, :fechaTrabajo, :hora, :fechaProgramacion, :idTecnico, :observaciones, :idVendedor, :tecnologia, :recepcionTv, :tipoServicio, :creadoPor)";
+                    $query = "UPDATE tbl_ordenes_trabajo SET codigoCliente=:codigoCliente, fechaOrdenTrabajo=:fechaOrdenTrabajo, tipoOrdenTrabajo=:tipoOrdenTrabajo, nombreCliente=:nombreCliente, telefonos=:telefonos, idMunicipio=:idMunicipio, actividadCable=:idActividadCable, saldoCable=:saldoCable, direccionCable=:direccionCable, fechaTrabajo=:fechaTrabajo, hora=:hora, fechaProgramacion=:fechaProgramacion, idTecnico=:idTecnico, observaciones=:observaciones, idVendedor=:idVendedor, tecnologia=:tecnologia, recepcionTv=:recepcionTv, tipoServicio=:tipoServicio, creadoPor=:creadoPor WHERE codigoCliente=:codigoCliente";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
@@ -63,7 +62,7 @@
                                 ':tipoServicio' => $tipoServicio,
                                 ':creadoPor' => $creadoPor
                                 ));
-                    $numeroOrden = $this->dbConnect->lastInsertId();
+                    //$numeroOrden = $this->dbConnect->lastInsertId();
                     header('Location: ../ordenTrabajo.php?nOrden='.$numeroOrden);
 
                 }
@@ -71,7 +70,7 @@
                 {
                     print "Error!: " . $e->getMessage() . "</br>";
                     die();
-                    header('Location: nuevaOrdenTrabajo.php');
+                    header('Location: ../ordenTrabajo.php?status=failedEdit');
                 }
                 //ACÁ IRÍA EL FIN DEL IF
             }
@@ -80,13 +79,14 @@
                     date_default_timezone_set('America/El_Salvador');
 
                     $fechaOrden = $_POST["fechaOrden"];
+                    $numeroOrden = $_POST["numeroOrden"];
                     $codigoCliente = $_POST["codigoCliente"];
                     $tipoOrden = $_POST["tipoOrden"];
                     $nombreCliente = $_POST['nombreCliente'];
                     $telefonos = $_POST['telefonos'];
                     $municipio = $_POST['municipio'];
                     $tipoActividadInter = $_POST['tipoActividadInternet'];
-                    $saldoInter = $_POST['saldoInter'];
+                    $saldoInter = $_POST['saldoInternet'];
                     $direccionInter = $_POST['direccionInternet'];
                     $macModem = $_POST["macModem"];
                     $serieModem = $_POST["serieModem"];
@@ -110,8 +110,8 @@
 
                     //$Fecha = date('Y/m/d g:i');
 
-                    $query = "INSERT INTO tbl_ordenes_trabajo(codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, nombreCliente, telefonos, idMunicipio, actividadInter, saldoInter, direccionInter, macModem, serieModem, velocidad, rx, tx, snr, colilla, fechaTrabajo, hora, fechaProgramacion, idTecnico, coordenadas, observaciones, marcaModelo, tecnologia, nodo, idVendedor, tipoServicio, creadoPor                                                                                              )
-                              VALUES(:codigoCliente, :fechaOrdenTrabajo, :tipoOrdenTrabajo, :nombreCliente, :telefonos, :idMunicipio, :idActividadInter, :saldoInter, :direccionInter, :macModem, :serieModem, :velocidad, :rx, :tx, :snr, :colilla, :fechaTrabajo, :hora, :fechaProgramacion, :idTecnico, :coordenadas, :observaciones, :marcaModelo, :tecnologia, :nodo, :idVendedor, :tipoServicio, :creadoPor)";
+                    $query = "UPDATE tbl_ordenes_trabajo SET codigoCliente=:codigoCliente, fechaOrdenTrabajo=:fechaOrdenTrabajo, tipoOrdenTrabajo=:tipoOrdenTrabajo, nombreCliente=:nombreCliente,
+                    telefonos=:telefonos, idMunicipio=:idMunicipio, actividadInter=:idActividadInter, tipoServicio=:tipoServicio, saldoInter=:saldoInter, direccionInter=:direccionInter, fechaTrabajo=:fechaTrabajo, hora=:hora, fechaProgramacion=:fechaProgramacion, idTecnico=:idTecnico, observaciones=:observaciones, idVendedor=:idVendedor, tecnologia=:tecnologia, macModem=:macModem, serieModem=:serieModem, velocidad=:velocidad, rx=:rx, tx=:tx, snr=:snr, colilla=:colilla, marcaModelo=:marcaModelo, nodo=:nodo, coordenadas=:coordenadas, creadoPor=:creadoPor WHERE codigoCliente=:codigoCliente";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
@@ -122,6 +122,7 @@
                                 ':telefonos' => $telefonos,
                                 ':idMunicipio' => $municipio,
                                 ':idActividadInter' => $tipoActividadInter,
+                                ':tipoServicio' => $tipoServicio,
                                 ':saldoInter' => $saldoInter,
                                 ':direccionInter' => $direccionInter,
                                 ':macModem' => $macModem,
@@ -145,7 +146,7 @@
                                 ':creadoPor' => $creadoPor
                                 ));
 
-                        $numeroOrden = $this->dbConnect->lastInsertId();
+                        //$numeroOrden = $this->dbConnect->lastInsertId();
                         header('Location: ../ordenTrabajo.php?nOrden='.$numeroOrden);
 
                 }
@@ -153,13 +154,13 @@
                 {
                     print "Error!: " . $e->getMessage() . "</br>";
                     die();
-                    header('Location: nuevaOrdenTrabajo.php');
+                    header('Location: ../ordenTrabajo.php?status=failedEdit');
                 }
                 //ACÁ IRÍA EL FIN DEL IF
             }
 
         }
     }
-    $save = new GuardarOrden();
-    $save->guardar();
+    $edit = new EditarOrden();
+    $edit->editar();
 ?>

@@ -24,6 +24,20 @@ class GetAllInfo extends ConectionDB
             die();
         }
     }
+    public function getDataOrders($tabla, $codigoCliente){
+        try {
+                $query = "SELECT * FROM $tabla WHERE codigoCliente = :codigoCliente";
+                $statement = $this->dbConnect->prepare($query);
+                $statement->bindValue(':codigoCliente', $codigoCliente);
+                $statement->execute();
+                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+                return $result;
+
+        } catch (Exception $e) {
+            print "!Error¡: " . $e->getMessage() . "</br>";
+            die();
+        }
+    }
     //Acá comienzan las funciones para obtener los datos de clientes
     /*public function getDepartamento($idDepartamento){
         try {

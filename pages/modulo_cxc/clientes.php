@@ -157,7 +157,30 @@
                         <a href="cxc.php"><button class="btn btn-success pull-left" type="button" name="button"><i class="fas fa-arrow-left"></i> Atrás</button></a>
                         <button id="btn_agregar" class="btn btn-success pull-right" type="button" name="button" data-toggle="modal" data-target="#agregarCliente"><i class="fas fa-plus-circle"></i> Nuevo cliente</button>
                         <br><br><br>
-                            <table class="table table-striped table-hover" id="tbl_clientes">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input class="form-control" type="text" name="username" id="textbox" placeholder="Código, nombre, dirección, tecnología, Mac, Serial">
+                            </div>
+                            <div class="col-md-3">
+                                <select id="param" class="form-control" name="">
+                                    <option value="1" selected>Código</option>
+                                    <option value="2">Nombre</option>
+                                    <option value="3">Dirección</option>
+                                    <option value="4">MAC modem</option>
+                                    <option value="5">Serie modem</option>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <select id="paramServicio" class="form-control" name="">
+                                    <option value="1" selected>Todos los clientes</option>
+                                    <option value="2">Solo internet</option>
+                                </select>
+                            </div>
+                        </div>
+                    	<div id="result">
+
+                        </div>
+                            <!--<table class="table table-striped table-hover" id="tbl_clientes">
                                 <thead class="bg-primary">
                                     <tr>
                                         <th width="6">Cód</th>
@@ -170,7 +193,7 @@
                                 </thead>
                                 <tbody>
                                     <?php
-                                        foreach ($allClientsArray as $key) {
+                                        /*foreach ($allClientsArray as $key) {
                                             echo "<tr><td>";
                                             echo "<span style='font-size:13px;' class='label label-danger'>".$key["cod_cliente"] . "</span></td><td>";
                                             echo trim(ucwords(strtolower($key["nombre"]))) . "</td><td>";
@@ -192,9 +215,9 @@
                                                         </ul>
                                                     </div>" . "</td></tr>";
                                                 }
-                                            ?>
+                                            */?>
                                 </tbody>
-                            </table>
+                            </table>-->
                             <!-- /.table-responsive -->
                     </div>
                 </div>
@@ -832,7 +855,153 @@
 
         });
     </script>
+    <script type="text/javascript">
 
+		var textBox = document.getElementById('textbox'),
+			resultContainer = document.getElementById('result')
+
+		// keep this global to abort it if already a request is running even textbox is upated
+		var ajax = null;
+		var loadedUsers = 0; // number of users shown in the results
+
+		textBox.onkeyup = function() {
+			// "this" refers to the textbox
+			var val = this.value;
+
+			// trim - remove spaces in the begining and the end
+			val = val.replace(/^\s|\s+$/, "");
+
+			// check if the value is not empty
+			if (val !== "") {
+				// search for data
+				searchForData(val);
+			} else {
+				// clear the result content
+				clearResult();
+			}
+		}
+
+
+		function searchForData(value, isLoadMoreMode) {
+			// abort if ajax request is already there
+			if (ajax && typeof ajax.abort === 'function') {
+				ajax.abort();
+			}
+
+			// nocleaning result is set to true on load more mode
+			if (isLoadMoreMode !== true) {
+				clearResult();
+			}
+
+			// create the ajax object
+			ajax = new XMLHttpRequest();
+			// the function to execute on ready state is changed
+			ajax.onreadystatechange = function() {
+				if (this.readyState === 4 && this.status === 200) {
+					try {
+						var json = JSON.parse(this.responseText)
+					} catch (e) {
+						noUsers();
+						return;
+					}
+
+					if (json.length === 0) {
+						if (isLoadMoreMode) {
+							alert('No hay más elementos para ver');
+						} else {
+							noUsers();
+						}
+					} else {
+						showUsers(json);
+					}
+
+
+				}
+			}
+			// open the connection
+            var param = document.getElementById('param').value;
+            var paramServicio = document.getElementById('paramServicio').value;
+            console.log(param, paramServicio);
+			ajax.open('GET', 'php/search.php?username=' + value + '&startFrom=' + loadedUsers + '&param=' + param + '&paramServicio=' + paramServicio, true);
+			// send
+			ajax.send();
+		}
+
+		function showUsers(data) {
+			// the function to create a row
+			function createRow(rowData) {
+				// creating the wrap
+				var wrap = document.createElement("div");
+				// add a class name
+				wrap.className = 'row'
+                var col = document.createElement("div");
+                col.className = 'col-md-12'
+                var table = document.createElement("table");
+                table.className = 'table table-hover table-striped'
+                var tr = document.createElement("tr");
+                var td = document.createElement("td");
+				// name holder
+				var codigo = document.createElement("span");
+				codigo.innerHTML = rowData.codigo + " ";
+
+				// picture of the user
+				var nombre = document.createElement("span");
+				nombre.innerHTML = rowData.nombre;
+
+				// show descript on click
+				wrap.onclick = function() {
+					alert("MAC: "+rowData.mac);
+                    alert("SERIE: "+rowData.serie);
+
+				}
+                wrap.appendChild(col);
+				col.appendChild(table);
+                table.appendChild(tr);
+                tr.appendChild(td);
+				td.appendChild(codigo);
+				td.appendChild(nombre);
+
+				// append wrap into result container
+				resultContainer.appendChild(wrap);
+			}
+
+			// loop through the data
+			for (var i = 0, len = data.length; i < len; i++) {
+				// get each data
+				var userData = data[i];
+				// create the row (see above function)
+				createRow(userData);
+			}
+
+			//  create load more button
+			var loadMoreButton = document.createElement("span");
+            loadMoreButton.className = "btn btn-default btn-block";
+			loadMoreButton.innerHTML = "Cargar más";
+			// add onclick event to it.
+			loadMoreButton.onclick = function() {
+				// searchForData() function is called in loadMoreMode
+				searchForData(textBox.value, true);
+				// remove loadmorebutton
+				this.parentElement.removeChild(this);
+			}
+			// append loadMoreButton to result container
+			resultContainer.appendChild(loadMoreButton);
+
+			// increase the user count
+			loadedUsers += len;
+		}
+
+		function clearResult() {
+			// clean the result <div>
+			resultContainer.innerHTML = "";
+			// make loaded users to 0
+			loadedUsers = 0;
+		}
+
+		function noUsers() {
+			resultContainer.innerHTML = "No se encontraron clientes";
+		}
+	</script>
 </body>
 
 </html>

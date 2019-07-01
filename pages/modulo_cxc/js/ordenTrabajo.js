@@ -79,6 +79,7 @@ function nuevaOrden(){
     document.getElementById("hora").value = time;
     document.getElementById("tipoOrden").value = "Técnica";
     document.getElementById("editar").disabled = true;
+    document.getElementById("nombreOrden").style.display = "none";
     changeAction("nueva");
 }
 function editarOrden(){
@@ -104,6 +105,27 @@ function editarOrden(){
     document.getElementById("velocidad").readOnly = true;
     document.getElementById("macModem").readOnly = true;
     document.getElementById("serieModem").readOnly = true;
+
+    document.getElementById("nombreOrden").style.display = "run-in";
+    var tipoServicio = document.getElementById('tipoServicio').value;
+    if (tipoServicio == 'C') {
+        document.getElementById('btn-internet').disabled = true;
+        document.getElementById('btn-cable').style.color="#4CAF50";
+        document.getElementById('tipoActividadInter').disabled=true;
+        document.getElementById('direccionInternet').readOnly=true;
+        document.getElementById('rx').readOnly=true;
+        document.getElementById('tx').readOnly=true;
+        document.getElementById('snr').readOnly=true;
+        document.getElementById('tecnologia').readOnly=true;
+    }else if (tipoServicio == 'I') {
+        document.getElementById('btn-cable').disabled = true;
+        document.getElementById('btn-internet').style.color="#039BE5";
+
+        document.getElementById('tipoActividadCable').disabled=true;
+        document.getElementById('direccionCable').readOnly=true;
+        document.getElementById('saldoCable').readOnly=true;
+        document.getElementById('tecnologia').readOnly=true;
+    }
     changeAction("editar");
 }
 

@@ -33,8 +33,8 @@ if (isset($_GET['nOrden'])) {
         $codigoCliente = $row["codigoCliente"];
         $nombreCliente = $row['nombreCliente'];
         $idMunicipio = $row["idMunicipio"];
-        $idActividadCable = $row["idActividadCable"];
-        $idActividadInter = $row["idActividadInter"];
+        $idActividadCable = $row["actividadCable"];
+        $idActividadInter = $row["actividadInter"];
         $saldoCable = $row["saldoCable"];
         $saldoInter = $row["saldoInter"];
         $direccionCable = $row["direccionCable"];

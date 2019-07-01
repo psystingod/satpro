@@ -28,7 +28,7 @@
         /****************** DATOS GENERALES ***********************/
         $estado_cable = $row['servicio_suspendido']; // 0 o 1
         $estado_internet = $row['estado_cliente_in']; // 1, 2, 3
-        $codigo = str_pad($row["cod_cliente"],6,"0",STR_PAD_LEFT);
+        $codigo = $row["cod_cliente"];
         $nContrato = $row["numero_contrato"];
         $nFactura = $row["num_factura"];
         $nombre = trim(ucwords(strtolower($row['nombre'])));
@@ -182,18 +182,21 @@
  ?>
  <?php
  require_once 'php/GetAllInfo.php';
- $arrayDatos = new GetAllInfo();
- $arrDepartamentos = $arrayDatos->getData('tbl_departamentos_cxc');
- $arrMunicipios = $arrayDatos->getData('tbl_municipios_cxc');
- $arrColonias = $arrayDatos->getData('tbl_colonias_cxc');
- $arrFormaFacturar = $arrayDatos->getData('tbl_forma_pago');
- $arrCobradores = $arrayDatos->getData('tbl_cobradores');
- $arrComprobantes = $arrayDatos->getData('tbl_tipo_comprobante');
- $arrServicioCable = $arrayDatos->getData('tbl_servicios_cable');
- $arrServicioInter = $arrayDatos->getData('tbl_servicios_inter');
- $arrVelocidad = $arrayDatos->getData('tbl_velocidades');
- $arrTecnologias = $arrayDatos->getData('tbl_tecnologias');
- $arrTiposClientes = $arrayDatos->getData('tbl_tipos_clientes');
+ $data = new GetAllInfo();
+ $arrDepartamentos = $data->getData('tbl_departamentos_cxc');
+ $arrMunicipios = $data->getData('tbl_municipios_cxc');
+ $arrColonias = $data->getData('tbl_colonias_cxc');
+ $arrFormaFacturar = $data->getData('tbl_forma_pago');
+ $arrCobradores = $data->getData('tbl_cobradores');
+ $arrComprobantes = $data->getData('tbl_tipo_comprobante');
+ $arrServicioCable = $data->getData('tbl_servicios_cable');
+ $arrServicioInter = $data->getData('tbl_servicios_inter');
+ $arrVelocidad = $data->getData('tbl_velocidades');
+ $arrTecnologias = $data->getData('tbl_tecnologias');
+ $arrTiposClientes = $data->getData('tbl_tipos_clientes');
+ //Array de ordenes de trabajo por cliente
+ var_dump($codigo);
+ $arrOrdenesTrabajo = $data->getDataOrders('tbl_ordenes_trabajo', $codigo);
  ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -742,9 +745,9 @@
 
                                         <!-- Card header -->
                                         <div class="card-header" role="tab" id="headingTwo1">
-                                          <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx1" href="#collapseTwo1"
+                                          <a style="text-decoration:none;" class="collapsed" data-toggle="collapse" data-parent="#accordionEx1" href="#collapseTwo1"
                                             aria-expanded="false" aria-controls="collapseTwo1">
-                                            <h5 class="mb-0 alert alert-info">
+                                            <h5 class="mb-0 alert bg-info">
                                               TV POR CABLE <i class="fas fa-angle-down rotate-icon"></i>
                                             </h5>
                                           </a>
@@ -882,9 +885,9 @@
 
                                         <!-- Card header -->
                                         <div class="card-header" role="tab" id="headingTwo2">
-                                          <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx1" href="#collapseTwo21"
+                                          <a style="text-decoration:none;" class="collapsed" data-toggle="collapse" data-parent="#accordionEx1" href="#collapseTwo21"
                                             aria-expanded="false" aria-controls="collapseTwo21">
-                                            <h5 class="mb-0 alert alert-success">
+                                            <h5 class="mb-0 alert bg-success">
                                               INTERNET <i class="fas fa-angle-down rotate-icon"></i>
                                             </h5>
                                           </a>
@@ -1106,9 +1109,9 @@
 
                                         <!-- Card header -->
                                         <div class="card-header" role="tab" id="headingThree31">
-                                          <a class="collapsed" data-toggle="collapse" data-parent="#accordionEx1" href="#collapseThree31"
+                                          <a style="text-decoration:none;" class="collapsed" data-toggle="collapse" data-parent="#accordionEx1" href="#collapseThree31"
                                             aria-expanded="false" aria-controls="collapseThree31">
-                                            <h5 class="mb-0 alert alert-warning">
+                                            <h5 class="mb-0 alert bg-warning">
                                               TELEFONIA <i class="fas fa-angle-down rotate-icon"></i>
                                             </h5>
                                           </a>
@@ -1128,73 +1131,71 @@
                                     <!-- Accordion wrapper -->
                                 </div>
                                 <div class="tab-pane fade" id="ordenes-tecnicas">
-                                    <h4 class="alert alert-success"><strong>Historial de ordenes de trabajo</strong></h4>
+                                    <h4 class="alert bg-success"><strong>Historial de ordenes de trabajo</strong></h4>
                                     <div class="ordenes">
                                         <div class="col-md-12">
                                             <button class="btn btn-danger pull-right" type="button" name="button" data-toggle="modal" data-target="#ordenesTrabajo"><i class="fas fa-search"></i></button>
                                             <br><br>
                                         </div>
                                         <table class="table table-bordered table-hover">
-                                                <tr class="info">
-                                                    <th>N° de orden</th>
-                                                    <th>Tipo de orden</th>
-                                                    <th>Fecha de orden</th>
-                                                    <th>Actividad realizada</th>
-                                                    <th>Fecha de trabajo</th>
-                                                    <th>Actividad internet</th>
-                                                </tr>
-                                                <tr>
-                                                    <td>99947</td>
-                                                    <td>Técnica</td>
-                                                    <td>12/10/2019</td>
-                                                    <td>Revisión de mala señal</td>
-                                                    <td>25/7/2018</td>
-                                                    <td>Cambio de contraseña de WIFI</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>99947</td>
-                                                    <td>Técnica</td>
-                                                    <td>12/10/2019</td>
-                                                    <td>Revisión de mala señal</td>
-                                                    <td>25/7/2018</td>
-                                                    <td>Cambio de contraseña de WIFI</td>
-                                                </tr>
+                                                <thead class="info">
+                                                    <tr class="bg-danger">
+                                                        <th>N° de orden</th>
+                                                        <th>Tipo de orden</th>
+                                                        <th>Fecha de orden</th>
+                                                        <th>Fecha realizada</th>
+                                                        <th>Actividad cable</th>
+                                                        <th>Actividad internet</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                        foreach ($arrOrdenesTrabajo as $key) {
+                                                            echo "<tr><td>";
+                                                            echo $key["idOrdenTrabajo"] . "</td><td>";
+                                                            echo $key["tipoOrdenTrabajo"] . "</td><td>";
+                                                            echo $key["fechaOrdenTrabajo"] . "</td><td>";
+                                                            echo $key["fechatrabajo"] . "</td><td>";
+                                                            echo $key["actividadCable"] . "</td><td>";
+                                                            echo $key["actividadInter"] . "</td><tr>";
+                                                                }
+                                                    ?>
+                                                </tbody>
                                         </table>
                                     </div>
-                                    <h4 class="alert alert-success"><strong>Historial de ordenes de suspensión</strong></h4>
+                                    <h4 class="alert bg-success"><strong>Historial de ordenes de suspensión</strong></h4>
                                     <div class="ordenes">
                                         <div class="col-md-12">
                                             <button class="btn btn-danger pull-right" type="button" name="button" data-toggle="modal" data-target="#ordenesSuspension"><i class="fas fa-search"></i></button>
                                             <br><br>
                                         </div>
                                         <table class="table table-bordered table-hover">
-                                                <tr class="info">
-                                                    <th>N° de orden</th>
-                                                    <th>Tipo de orden</th>
-                                                    <th>Fecha de orden</th>
-                                                    <th>Actividad realizada</th>
-                                                    <th>Fecha de trabajo</th>
-                                                    <th>Actividad internet</th>
-                                                </tr>
-                                                <tr>
-                                                    <td>99947</td>
-                                                    <td>Técnica</td>
-                                                    <td>12/10/2019</td>
-                                                    <td>Revisión de mala señal</td>
-                                                    <td>25/7/2018</td>
-                                                    <td>Cambio de contraseña de WIFI</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>99947</td>
-                                                    <td>Técnica</td>
-                                                    <td>12/10/2019</td>
-                                                    <td>Revisión de mala señal</td>
-                                                    <td>25/7/2018</td>
-                                                    <td>Cambio de contraseña de WIFI</td>
-                                                </tr>
+                                                <thead class="info">
+                                                    <tr>
+                                                        <th>N° de orden</th>
+                                                        <th>Tipo de orden</th>
+                                                        <th>Fecha de orden</th>
+                                                        <th>Fecha realizada</th>
+                                                        <th>Actividad cable</th>
+                                                        <th>Actividad internet</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                        foreach ($arrOrdenesTrabajo as $key) {
+                                                            echo "<tr><td>";
+                                                            echo $key["idOrdenTrabajo"] . "</td><td>";
+                                                            echo $key["codigoCliente"] . "</td><td>";
+                                                            echo $key["fechaOrdenTrabajo"] . "</td><td>";
+                                                            echo $key["fechatrabajo"] . "</td><td>";
+                                                            echo $key["actividadCable"] . "</td><td>";
+                                                            echo $key["actividadInter"] . "</td><td>";
+                                                                }
+                                                            ?>
+                                                </tbody>
                                         </table>
                                     </div>
-                                    <h4 class="alert alert-success"><strong>Historial de ordenes de reconexión</strong></h4>
+                                    <h4 class="alert bg-success"><strong>Historial de ordenes de reconexión</strong></h4>
                                     <div class="ordenes">
                                         <div class="col-md-12">
                                             <button class="btn btn-danger pull-right" type="button" name="button" data-toggle="modal" data-target="#ordenesReconexion"><i class="fas fa-search"></i></button>
@@ -1229,7 +1230,7 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="notificaciones-traslados">
-                                    <h4 class="alert alert-success"><strong>Historial de traslados</strong></h4>
+                                    <h4 class="alert bg-success"><strong>Historial de traslados</strong></h4>
                                     <div class="ordenes">
                                         <div class="col-md-12">
                                             <button class="btn btn-danger pull-right" type="button" name="button" data-toggle="modal" data-target="#traslados"><i class="fas fa-search"></i></button>
@@ -1272,7 +1273,6 @@
                 <!-- Modal Ordenes de Trabajo -->
                 <div id="ordenesTrabajo" class="modal fade" role="dialog">
                   <div class="modal-dialog modal-sm">
-
                     <!-- Modal content-->
                     <div class="modal-content">
                       <div class="modal-header">
