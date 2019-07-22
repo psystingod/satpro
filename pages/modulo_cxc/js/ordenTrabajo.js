@@ -51,7 +51,7 @@ function nuevaOrden(){
     document.getElementById("btn-cable").disabled = false;
     document.getElementById("btn-internet").disabled = false;
     document.getElementById("imprimir").disabled = true;
-        document.getElementById("guardar").disabled = false;
+    document.getElementById("guardar").disabled = false;
     var clearInputs = document.getElementsByClassName("input-sm");
     for (var i = 0; i < clearInputs.length; i++) {
         clearInputs[i].value = "";
@@ -145,5 +145,14 @@ function changeAction(action){
             break;
         default:
 
+    }
+}
+
+function guardarOrden(){
+    var token = document.getElementById("tipoServicio").value;
+    if (token == "C" || token == "I") {
+        document.getElementById('guardar2').click();
+    }else {
+        alert("Por favor indique si la orden es de cable o de internet");
     }
 }

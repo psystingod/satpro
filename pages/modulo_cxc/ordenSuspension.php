@@ -1,6 +1,166 @@
 <?php
 
     session_start();
+    require("php/getData.php");
+    require("php/GetAllInfo.php");
+    $dataInfo = new GetAllInfo();
+    $arrMunicipios = $dataInfo->getData('tbl_municipios_cxc');
+    $data = new OrdersInfo();
+    //$client = new GetClient();
+    $arrayTecnicos = $data->getTecnicos();
+    $arrayActividadesSusp = $data->getActividadesSusp();
+    $arrayVelocidades = $data->getVelocidades();
+
+    //include database connection
+    require_once('../../php/connection.php');
+    $precon = new ConectionDB();
+    $con = $precon->ConectionDB();
+    /**************************************************/
+    if (isset($_GET['codigoCliente'])) {
+
+        // get passed parameter value, in this case, the record ID
+        // isset() is a PHP function used to verify if a value is there or not
+        $id=isset($_GET['codigoCliente']) ? $_GET['codigoCliente'] : die('ERROR: Record no encontrado.');
+
+        // read current record's data
+        try {
+            // prepare select query
+            $query = "SELECT cod_cliente, nombre, telefonos, direccion, id_municipio, saldo_actual, telefonos, dire_cable, dire_internet, mac_modem, serie_modem, id_velocidad, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
+            $stmt = $con->prepare( $query );
+
+            // this is the first question mark
+            $stmt->bindParam(1, $id);
+
+            // execute our query
+            $stmt->execute();
+
+            // store retrieved row to a variable
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            /****************** DATOS GENERALES ***********************/
+            date_default_timezone_set('America/El_Salvador');
+            $fechaOrden = date('Y-m-d');
+            $idOrdenSuspension = "";
+            $tipoOrden = "Suspension";
+            $ordenaSuspensionCable = "";
+            $ordenaSuspensionInter = "";
+            //$telefonos = $row["telefonos"];
+            $codigoCliente = $row["cod_cliente"];
+            $nombreCliente = $row['nombre'];
+            $direccion = $row["direccion"];
+            //$idMunicipio = $row["id_municipio"];
+            $saldoCable = $row["saldo_actual"];
+            $saldoInter = $row["saldo_actual"];
+            $macModem = $row['mac_modem'];
+            $serieModem = $row['serie_modem'];
+            $idVelocidad = $row['id_velocidad'];
+            $rx = $row['recep_modem'];
+            $tx = $row['trans_modem'];
+            $snr = $row['ruido_modem'];
+            $velocidad = $row['id_velocidad'];
+            $colilla = $row['colilla'];
+            $marcaModelo = $row['marca_modem'];
+            $tecnologia = $row['tecnologia'];
+            $fechaSuspension = "";
+            $hora = "";
+            $fechaProgramacion = "";
+            $coordenadas = "";
+            $observaciones = "";
+            $nodo = "";
+            $idVendedor = "";
+            $recepcionTv = "";
+
+        }
+
+        // show error
+        catch(PDOException $exception){
+            die('ERROR: ' . $exception->getMessage());
+        }
+    }else if(isset($_GET['nOrden'])){
+        // get passed parameter value, in this case, the record ID
+        // isset() is a PHP function used to verify if a value is there or not
+        $id=isset($_GET['nOrden']) ? $_GET['nOrden'] : die('ERROR: Record no encontrado.');
+
+        // read current record's data
+        try {
+            // prepare select query
+            $query = "SELECT idOrdenSuspension, codigoCliente, fechaOrden, tipoOrden, nombreCliente, direccion, actividadCable, saldoCable, actividadInter, saldoInter, ordenaSuspension, macModem, serieModem, velocidad, colilla, fechaSuspension, idTecnico, observaciones, tipoServicio, creadoPor  FROM tbl_ordenes_suspension WHERE idOrdenSuspension = ? LIMIT 0,1";
+            $stmt = $con->prepare( $query );
+
+            // this is the first question mark
+            $stmt->bindParam(1, $id);
+
+            // execute our query
+            $stmt->execute();
+
+            // store retrieved row to a variable
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            /****************** DATOS GENERALES ***********************/
+            $idOrdenSuspension = $row["idOrdenSuspension"];
+            $fechaOrden = $row["fechaOrden"];
+            $tipoOrden = $row["tipoOrden"];
+            $codigoCliente = $row["codigoCliente"];
+            if ($codigoCliente === "00000") {
+                $codigoCliente = "SC";
+            }
+            $nombreCliente = $row['nombreCliente'];
+            //$telefonos = $row["telefonos"];
+            //$idMunicipio = $row["idMunicipio"];
+            $idActividadCable = $row["actividadCable"];
+            $saldoCable = $row["saldoCable"];
+            if ($row['tipoServicio'] == "I") {
+                $ordenaSuspensionInter = $row["ordenaSuspension"];
+                $ordenaSuspensionCable = "";
+            }else if ($row['tipoServicio'] == "C") {
+                $ordenaSuspensionInter = "";
+                $ordenaSuspensionCable = $row["ordenaSuspension"];
+            }else {
+                $ordenaSuspensionInter = "";
+                $ordenaSuspensionCable = "";
+            }
+            $direccion = $row["direccion"];
+            $saldoInter = $row["saldoInter"];
+            $macModem = $row['macModem'];
+            $serieModem = $row['serieModem'];
+            $velocidad = $row['velocidad'];
+            $colilla = $row['colilla'];
+            $fechaSuspension = $row["fechaSuspension"];
+
+            //$hora = $row['hora'];
+            $idTecnico = $row['idTecnico'];
+            $observaciones = $row['observaciones'];
+            //$nodo = $row['nodo'];
+            $tipoServicio = $row['tipoServicio'];
+            $creadoPor = $row['creadoPor'];
+            //creadoPor
+        }
+        catch(PDOException $exception){
+            die('ERROR: ' . $exception->getMessage());
+        }
+    }else {
+        $fechaOrden = "";
+        $idOrdenSuspension = "";
+        $codigoCliente = "";
+        $nombreCliente = "";
+        //$telefonos = "";
+        //$idMunicipio = "";
+        $saldoCable = "";
+        $ordenaSuspensionCable = "";
+        $direccion = "";
+        $saldoInter = "";
+        $macModem = "";
+        $serieModem = "";
+        $velocidad = "";
+        $colilla = "";
+        //$hora="";
+        $fechaSuspension="";
+        $ordenaSuspensionInter = "";
+        $observaciones="";
+        //$tipoServicio = "";
+        //$creadoPor = "";
+        //$nodo="";
+    }
 
  ?>
 <!DOCTYPE html>
@@ -150,70 +310,102 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <br>
-                        <div class="panel panel-primary">
-                          <div class="panel-heading">Orden de suspensión</div>
-                          <form id="ordenSuspension" action="#" method="POST">
+                        <div class="panel panel-danger">
+                          <div class="panel-heading"><b>Orden de suspensión</b> <span id="nombreOrden" class="label label-danger"></span></div>
+                          <form id="ordenSuspension" action="" method="POST">
                           <div class="panel-body">
                               <div class="col-md-12">
                                   <button class="btn btn-default btn-sm" id="nuevaOrdenId" onclick="nuevaOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Nueva orden"><i class="far fa-file"></i></button>
                                   <button class="btn btn-default btn-sm" id="editar" onclick="editarOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Editar orden"><i class="far fa-edit"></i></button>
                                   <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Ver cliente"><i class="far fa-eye"></i></button>
-                                  <button class="btn btn-default btn-sm" id="guardar" type="submit" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Guardar orden" disabled><i class="far fa-save"></i></button>
-                                  <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Buscar orden"><i class="fas fa-search"></i></button>
-                                  <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Imprimir orden"><i class="fas fa-print"></i></button>
+                                  <button class="btn btn-default btn-sm" type="button" id="guardar" name="btn_nuevo" onclick="guardarOrden()" data-toggle="tooltip" data-placement="bottom" title="Guardar orden" disabled><i class="far fa-save"></i></button>
+                                  <?php echo '<input style="display: none;" type="submit" id="guardar2" value="">'; ?>
+                                  <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-placement="bottom" title="Buscar orden" data-toggle="modal" data-target="#buscarOrden"><i class="fas fa-search"></i></button>
+                                  <button class="btn btn-default btn-sm" id="imprimir" onclick="imprimirOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Imprimir orden" ><i class="fas fa-print"></i></button>
                                   <div class="pull-right">
-                                      <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Nuevo cliente"><i class="far fa-user"></i></button>
+
                                       <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Estado de cuenta"><i class="far fa-file-alt"></i></button>
-                                      <button id="btn-cable" class="btn btn-default btn-sm" onclick="ordenCable()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Orden de cable"><i class="fas fa-tv"></i></button>
-                                      <button id="btn-internet" class="btn btn-default btn-sm" onclick="ordenInternet()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Orden de internet"><i class="fas fa-wifi"></i></button>
+                                      <button id="btn-cable" class="btn btn-default btn-sm" onclick="ordenCable()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Orden de cable" disabled><i class="fas fa-tv"></i></button>
+                                      <button id="btn-internet" class="btn btn-default btn-sm" onclick="ordenInternet()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Orden de internet" disabled><i class="fas fa-wifi"></i></button>
                                   </div>
                               </div>
                               <div class="form-row">
                                   <div class="col-md-2">
                                       <br>
-                                      <label for="numeroSuspencion">N° de suspención</label>
-                                      <input class="form-control input-sm" type="text" name="numeroSuspencion" readonly>
+                                      <?php
+                                      if (isset($_GET['nOrden'])) {
+                                         echo "<input id='creadoPor' class='form-control input-sm' type='hidden' name='creadoPor' value='{$creadoPor}'>";
+                                         echo "<input id='tipoServicio' class='form-control input-sm' type='hidden' name='tipoServicio' value='{$tipoServicio}' readonly>";
+                                      }
+                                      else{
+                                         echo '<input id="creadoPor" class="form-control input-sm" type="hidden" name="creadoPor" value="'.$_SESSION['nombres'] . " " . $_SESSION['apellidos'].'"' . '>';
+                                         echo '<input id="tipoServicio" class="form-control input-sm" type="hidden" name="tipoServicio" value="" readonly>';
+                                      }
+                                      ?>
+                                      <label for="numeroSuspension">N° de suspensión</label>
+                                      <input id="numeroSuspension" class="form-control input-sm" type="text" name="numeroSuspension" value="<?php echo $idOrdenSuspension; ?>" readonly>
                                   </div>
                                   <div class="col-md-2">
                                       <br>
                                       <label for="fechaElaborada">Fecha de elaborada</label>
-                                      <input class="form-control input-sm" type="text" name="fechaElaborada" readonly>
+                                      <input id="fechaOrden" class="form-control input-sm" type="text" name="fechaOrden" value="<?php echo $fechaOrden; ?>" readonly>
                                   </div>
                                   <div class="col-md-2">
                                       <br>
                                       <label for="codigoCliente">Código del cliente</label>
-                                      <input class="form-control input-sm" type="text" name="codigoCliente" readonly>
+                                      <input id="codigoCliente" class="form-control input-sm" type="text" name="codigoCliente" value="<?php echo $codigoCliente; ?>" readonly>
                                   </div>
                                   <div class="col-md-6">
                                       <br>
                                       <label for="nombreCliente">Nombre del cliente</label>
-                                      <input class="form-control input-sm" type="text" name="nombreCliente" readonly>
+                                      <input class="form-control input-sm" type="text" name="nombreCliente" value="<?php echo $nombreCliente; ?>" readonly>
                                   </div>
                               </div>
                               <div class="form-row">
                                   <div class="col-md-12">
                                       <label for="direccionCliente">Dirección</label>
-                                      <textarea class="form-control input-sm cable" name="direccionCliente" rows="2" cols="40" readonly></textarea>
+                                      <textarea class="form-control input-sm" name="direccionCliente" rows="2" cols="40" readonly><?php echo $direccion; ?></textarea>
                                   </div>
                               </div>
                               <div class="form-row">
-                                  <div class="col-md-12">
+                                  <div id="divCable" class="col-md-12">
                                       <h4 class="alert alert-info cable"><strong>Cable</strong></h4>
                                       <div class="row">
                                           <div class="col-md-4">
-                                              <label for="tipoActividadCable">Tipo de actividad</label>
-                                              <select class="form-control input-sm cable" name="tipoActividadCable" disabled>
-                                                  <option value=""></option>
+                                              <label for="tipoActividadCable">Motivo</label>
+                                              <select id="tipoActividadCable" class="form-control input-sm cable" name="tipoActividadCable" disabled>
+                                                  <option value="" selected>Seleccionar</option>
+                                                  <?php
+                                                  foreach ($arrayActividadesSusp as $key) {
+                                                      if ($key['idActividadSusp'] == $idActividadCable) {
+                                                          echo "<option value='".$key['idActividadSusp']."' selected>".$key['nombreActividad']."</option>";
+                                                      }else {
+                                                          echo "<option value='".$key['idActividadSusp']."'>".$key['nombreActividad']."</option>";
+                                                      }
+                                                  }
+                                                  ?>
                                               </select>
                                           </div>
                                           <div class="col-md-4">
                                               <label for="saldoCable">Saldo</label>
-                                              <input class="form-control input-sm cable" type="text" name="saldoCable" readonly>
+                                              <input id="saldoCable" class="form-control input-sm cable" type="text" name="saldoCable" value="<?php echo $saldoCable ?>" readonly>
                                           </div>
                                           <div class="col-md-4">
-                                              <label for="ordenaSuspencionCable">Ordena la suspención</label>
-                                              <select class="form-control input-sm cable" name="ordenaSuspencionCable" disabled>
-                                                  <option value=""></option>
+                                              <label for="ordenaSuspencionCable">Ordena la suspensión</label>
+                                              <select class="form-control input-sm cable" name="ordenaSuspensionCable" disabled>
+                                                  <option value="" selected>Seleccionar</option>
+                                                  <?php
+                                                  if ($ordenaSuspensionCable == 'oficina') {
+                                                      echo '<option value="oficina" selected>Oficina</option>';
+                                                      echo '<option value="administracion">La administración</option>';
+                                                  }else if ($ordenaSuspensionCable == 'administracion') {
+                                                      echo '<option value="oficina">Oficina</option>';
+                                                      echo '<option value="administracion" selected>La administración</option>';
+                                                  }else {
+                                                      echo '<option value="oficina">Oficina</option>';
+                                                      echo '<option value="administracion">La administración</option>';
+                                                  }
+                                                  ?>
                                               </select>
                                           </div>
                                       </div>
@@ -222,19 +414,40 @@
                                       <h4 class="alert alert-info"><strong>Internet</strong></h4>
                                       <div class="row">
                                           <div class="col-md-4">
-                                              <label for="tipoActividadInternet">Tipo de actividad</label>
-                                              <select class="form-control input-sm internet" name="tipoActividadInternet" disabled>
-                                                  <option value=""></option>
+                                              <label for="tipoActividadInternet">Motivo</label>
+                                              <select id="tipoActividadInternet" class="form-control input-sm internet" name="tipoActividadInternet" disabled>
+                                                  <option value="" selected>Seleccionar</option>
+                                                  <?php
+                                                  foreach ($arrayActividadesSusp as $key) {
+                                                      if ($key['idActividadSusp'] == $idActividadInter) {
+                                                          echo "<option value='".$key['idActividadSusp']."' selected>".$key['nombreActividad']."</option>";
+                                                      }else {
+                                                          echo "<option value='".$key['idActividadSusp']."'>".$key['nombreActividad']."</option>";
+                                                      }
+                                                  }
+                                                  ?>
                                               </select>
                                           </div>
                                           <div class="col-md-4">
                                               <label for="saldoInternet">Saldo</label>
-                                              <input class="form-control input-sm internet" type="text" name="saldoInternet" readonly>
+                                              <input id="saldoInternet" class="form-control input-sm internet" type="text" name="saldoInternet" value="<?php echo $saldoCable ?>" readonly>
                                           </div>
                                           <div class="col-md-4">
-                                              <label for="ordenaSuspencionInternet">Ordena suspención</label>
-                                              <select class="form-control input-sm internet" name="ordenaSuspencionInternet" disabled>
-                                                  <option value=""></option>
+                                              <label for="ordenaSuspencionInternet">Ordena suspensión</label>
+                                              <select id="ordenaSuspensionInter" class="form-control input-sm internet" name="ordenaSuspensionInter" disabled>
+                                                  <option value="" selected>Seleccionar</option>
+                                                  <?php
+                                                  if ($ordenaSuspensionInter == 'oficina') {
+                                                      echo '<option value="oficina" selected>Oficina</option>';
+                                                      echo '<option value="administracion">La administración</option>';
+                                                  }else if ($ordenaSuspensionInter == 'administracion') {
+                                                      echo '<option value="oficina">Oficina</option>';
+                                                      echo '<option value="administracion" selected>La administración</option>';
+                                                  }else {
+                                                      echo '<option value="oficina">Oficina</option>';
+                                                      echo '<option value="administracion">La administración</option>';
+                                                  }
+                                                  ?>
                                               </select>
                                           </div>
                                       </div>
@@ -243,43 +456,57 @@
                               <div class="form-row">
                                   <div class="col-md-4">
                                       <label for="macModem">MAC del modem</label>
-                                      <input class="form-control input-sm internet" type="text" name="macModem" readonly>
+                                      <input id="macModem" class="form-control input-sm internet" type="text" name="macModem" readonly>
                                   </div>
                                   <div class="col-md-4">
                                       <label for="serieModem">Serie del modem</label>
-                                      <input class="form-control input-sm internet" type="text" name="serieModem" readonly>
+                                      <input id="serieModem" class="form-control input-sm internet" type="text" name="serieModem" readonly>
                                   </div>
                                   <div class="col-md-4">
                                       <label for="velocidad">Velocidad</label>
-                                      <input id="velocidad" class="form-control input-sm internet" type="text" name="velocidad" readonly>
+                                      <select id="velocidad" class="form-control input-sm internet" name="velocidad" disabled>
+                                          <option value="" selected>Seleccionar</option>
+                                          <?php
+                                          foreach ($arrayVelocidades as $key) {
+                                              if ($key['idVelocidad'] == $idVelocidad) {
+                                                  echo "<option value=".$key['idVelocidad']." selected>".strtoupper($key['nombreVelocidad'])."</option>";
+                                              }
+                                              echo "<option value=".$key['idVelocidad'].">".strtoupper($key['nombreVelocidad'])."</option>";
+                                          }
+                                          ?>
+                                      </select>
+                                      <br>
                                   </div>
+
                               </div>
                               <div class="form-row">
-                                  <div class="col-md-2">
-                                      <label for="fechaSuspencionInternet">Fecha suspención</label>
-                                      <input class="form-control input-sm" type="text" name="fechaSuspencionInternet" readonly>
+                                  <div class="col-md-3">
+                                      <label for="fechaSuspension">Fecha suspención</label>
+                                      <input class="form-control input-sm" type="date" name="fechaSuspension" value="<?php echo $fechaSuspension; ?>" readonly>
                                   </div>
                                   <div class="col-md-5">
                                       <label for="tecnico">Técnico</label>
-                                      <select class="form-control input-sm" name="tecnico" disabled>
-                                          <option value=""></option>
+                                      <select class="form-control input-sm" name="responsable" disabled>
+                                          <option value="" selected>Seleccionar</option>
+                                          <?php
+                                          foreach ($arrayTecnicos as $key) {
+                                              if ($key['idTecnico'] == $idTecnico) {
+                                                  echo "<option value=".$key['idTecnico']." selected>".strtoupper($key['nombreTecnico'])."</option>";
+                                              }
+                                              echo "<option value=".$key['idTecnico'].">".strtoupper($key['nombreTecnico'])."</option>";
+                                          }
+                                          ?>
                                       </select>
                                   </div>
-                                  <div class="col-md-5">
-                                      <label for="motivo">Motivo</label>
-                                      <input class="form-control input-sm" type="text" name="motivo" readonly>
+                                  <div class="col-md-4">
+                                      <label for="colilla">Colilla</label>
+                                      <input id="colilla" class="form-control input-sm" type="text" name="colilla" value="<?php echo $colilla; ?>" readonly>
                                   </div>
                               </div>
                               <div class="form-row">
-                                  <div class="col-md-3">
-                                  </div>
-                                  <div class="col-md-3">
-                                  </div>
-                                  <div class="col-md-3">
-                                  </div>
-                                  <div class="col-md-3">
-                                      <label for="colilla">Colilla</label>
-                                      <input class="form-control input-sm" type="text" name="colilla" readonly>
+                                  <div class="col-md-12">
+                                      <label for="observaciones">Observaciones</label>
+                                      <textarea class="form-control input-sm" name="observaciones" rows="2" cols="40" readonly><?php echo $observaciones; ?></textarea>
                                   </div>
                               </div>
                           </div>
@@ -293,7 +520,37 @@
             <!-- /.container-fluid -->
         </div>
         <!-- /#page-wrapper -->
+        <!-- Modal -->
+        <div id="buscarOrden" class="modal fade" role="dialog">
+          <div class="modal-dialog modal-lg">
 
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Buscar orden de suspensión</h4>
+              </div>
+              <div class="modal-body">
+                  <div class="row">
+                      <div class="col-md-12">
+                          <input class="form-control" type="text" name="caja_busqueda" id="caja_busqueda" placeholder="N°suspensión, Fecha orden, Código cliente, Nombre, Dirección, Observaciones, Mac, Serial">
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-12">
+                          <div id="datos">
+
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
     </div>
     <!-- /#wrapper -->
 
@@ -308,9 +565,73 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="../../dist/js/sb-admin-2.js"></script>
-    <script src="../../dist/js/jquery-validation-1.19.0/dist/jquery.validate.js"></script>
     <script src="js/ordenSuspension.js"></script>
+    <script src="js/searchos.js"></script>
+    <script type="text/javascript">
+        // Get the input field
+        var cod = document.getElementById("codigoCliente");
 
+        $('#ordenSuspension').on('keyup keypress', function(e) {
+          var keyCode = e.keyCode || e.which;
+          if (keyCode === 13) {
+            e.preventDefault();
+            return false;
+          }
+        });
+
+        // Execute a function when the user releases a key on the keyboard
+        cod.addEventListener("keyup", function(event) {
+        // Number 13 is the "Enter" key on the keyboard
+        if (event.keyCode === 13) {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        var codValue = document.getElementById("codigoCliente").value
+        // Trigger the button element with a click
+        window.location="ordenSuspension.php?codigoCliente="+codValue;
+        }
+        });
+    </script>
+    <?php
+    if (isset($_GET['codigoCliente'])) {
+        echo "<script>
+            token = false;
+            document.getElementById('ordenSuspension').action = 'php/nuevaOrdenSuspension.php';
+            document.getElementById('btn-cable').disabled = false;
+            document.getElementById('btn-internet').disabled = false;
+            document.getElementById('guardar').disabled = false;
+            document.getElementById('editar').disabled = true;
+            document.getElementById('imprimir').disabled = true;
+            var inputs = document.getElementsByClassName('input-sm');
+            for (var i = 0; i < inputs.length; i++) {
+                if (inputs[i].readOnly == true) {
+                    inputs[i].readOnly = false;
+                }
+                else if (inputs[i].disabled == true) {
+                    inputs[i].disabled = false;
+                }
+            }
+            var time = new Date();
+
+            var seconds = time.getSeconds();
+            var minutes = time.getMinutes();
+            var hour = time.getHours();
+            time = hour + ':' + minutes + ':' + seconds;
+            document.getElementById('hora').value = time;
+        </script>";
+    }
+    if (isset($_GET['nOrden'])) {
+        echo "<script>
+        token = true;
+        var tipoServicio = document.getElementById('tipoServicio').value
+        if (tipoServicio == 'C') {
+            document.getElementById('nombreOrden').innerHTML = 'CABLE';
+        }else if (tipoServicio == 'I') {
+            document.getElementById('nombreOrden').innerHTML = 'INTERNET';
+        }
+        </script>";
+
+    }
+    ?>
 
 </body>
 

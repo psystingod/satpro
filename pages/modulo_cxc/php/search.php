@@ -9,79 +9,44 @@ $database = DB_NAME;
 
 $mysqli = new mysqli($host, $user, $password, $database);
 
-$username = $_GET['username'];
-$startFrom = $_GET['startFrom'];
-$param = $_GET['param'];
-$paramServicio = $_GET['paramServicio'];
+$salida = "";
+$query = "SELECT cod_cliente, nombre, direccion, telefonos, Mac_modem, Serie_modem, Dire_telefonia FROM clientes ORDER BY cod_cliente LIMIT 7";
+ if (isset($_POST['consulta'])) {
+ 	$q = $mysqli->real_escape_string($_POST['consulta']);
+	$query = "SELECT cod_cliente, nombre, direccion, telefonos, Mac_modem, Serie_modem, Dire_telefonia FROM clientes
+	WHERE cod_cliente LIKE '%".$q."%' OR nombre LIKE '%".$q."%' OR direccion LIKE '%".$q."%' OR telefonos LIKE '%".$q."%' OR Mac_modem LIKE '%".$q."%' OR Serie_modem LIKE '%".$q."%' OR Dire_telefonia LIKE '%".$q."%' LIMIT 10";
+ }
 
-// validate - https://developer.hyvor.com/php/input-validation-with-php
-$username = trim(htmlspecialchars($username));
-$startFrom = filter_var($startFrom, FILTER_VALIDATE_INT);
+ $resultado = $mysqli->query($query);
 
-// make username search friendly
-$like = '%' . strtolower($username) . '%'; // search for a the username, case-insensitive (see strtolower() here and MYSQL lower() function in the query)
-if ($paramServicio == 1) {
-	if ($param == 1) {
-		$statement = $mysqli -> prepare('
-			SELECT cod_cliente, nombre, direccion FROM clientes
-			WHERE lower(cod_cliente) LIKE ?
-			ORDER BY INSTR(cod_cliente, ?), cod_cliente
-			LIMIT 6 OFFSET ?
-		');
-	}else if ($param == 2) {
-		$statement = $mysqli -> prepare('
-			SELECT cod_cliente, nombre, direccion FROM clientes
-			WHERE lower(nombre) LIKE ?
-			ORDER BY INSTR(nombre, ?), nombre
-			LIMIT 6 OFFSET ?
-		');
-	}else if ($param == 3) {
-		$statement = $mysqli -> prepare('
-			SELECT cod_cliente, nombre, direccion FROM clientes
-			WHERE lower(direccion) LIKE ?
-			ORDER BY INSTR(direccion, ?), direccion
-			LIMIT 6 OFFSET ?
-		');
+ if ($resultado->num_rows > 0) {
+ 	$salida.="<br><table class='table table-striped table-responsive'>
+			    <thead>
+					<tr class='success'>
+						<th>CODIGO</th>
+						<th>NOMBRE</th>
+						<th>DIRECCION</th>
+                        <th>TELEFONOS</th>
+                        <th>MAC</th>
+                        <th>SERIE</th>
+                        <th>NODO</th>
+					</tr>
+				</thead>
+				<tbody>";
+	while ($fila = $resultado->fetch_assoc()) {
+		$salida.= "<tr>
+			<td>"."<a class='btn btn-primary btn-sm' href=infoCliente.php?id={$fila['cod_cliente']} target='_blank'>".$fila['cod_cliente']."<a></td>
+			<td>".$fila['nombre']."</td>
+			<td>".$fila['direccion']."</td>
+            <td>".$fila['telefonos']."</td>
+            <td>".$fila['Mac_modem']."</td>
+            <td>".$fila['Serie_modem']."</td>
+            <td>".$fila['Dire_telefonia']."</td>
+		</tr>";
 	}
+	$salida.="</tbody></table>";
+}else {
+	$salida.="No se encontraron coincidencias";
 }
-
-// open new mysql prepared statement
-/*$statement = $mysqli -> prepare('
-	SELECT cod_cliente, nombre, numero_dui, mac_modem, serie_modem, direccion, tecnologia FROM clientes
-	WHERE lower(cod_cliente) LIKE ?
-	ORDER BY INSTR(cod_cliente, ?), cod_cliente
-	LIMIT 6 OFFSET ?
-');*/
-
-if (
-	// $mysqli -> prepare returns false on failure, stmt object on success
-	$statement &&
-	// bind_param returns false on failure, true on success
-	$statement -> bind_param('ssi', $like, $username, $startFrom ) &&
-	// execute returns false on failure, true on success
-	$statement -> execute() &&
-	// same happens in store_result
-	$statement -> store_result() &&
-	// same happens here
-	$statement -> bind_result($codigo, $nombre, $direccion);
-	//$statement -> bind_result($codigo, $nombre, $dui, $mac, $serie, $direccion, $tecnologia)
-) {
-	// I'm in! everything was successful.
-
-	// new array to store data
-	$array = [];
-
-
-	while ($statement -> fetch()) {
-		$array[] = [
-			'codigo' => $codigo,
-			'nombre' => $nombre,
-			'direccion' => $direccion
-		];
-	}
-
-	echo json_encode($array);
-	exit();
-
-
-}
+echo $salida;
+$mysqli->close();

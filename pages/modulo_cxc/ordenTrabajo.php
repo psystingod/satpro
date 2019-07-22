@@ -166,6 +166,7 @@
         $marcaModelo="";
         $nodo="";
         $recepcionTv="";
+
     }
 
  ?>
@@ -323,8 +324,9 @@
                                   <button class="btn btn-default btn-sm" id="nuevaOrdenId" onclick="nuevaOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Nueva orden"><i class="far fa-file"></i></button>
                                   <button class="btn btn-default btn-sm" id="editar" onclick="editarOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Editar orden"><i class="far fa-edit"></i></button>
                                   <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Ver cliente"><i class="far fa-eye"></i></button>
-                                  <button class="btn btn-default btn-sm" id="guardar" type="submit" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Guardar orden" disabled><i class="far fa-save"></i></button>
-                                  <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Buscar orden"><i class="fas fa-search"></i></button>
+                                  <button class="btn btn-default btn-sm" type="button" id="guardar" name="btn_nuevo" onclick="guardarOrden()" data-toggle="tooltip" data-placement="bottom" title="Guardar orden" disabled><i class="far fa-save"></i></button>
+                                  <?php echo '<input style="display: none;" type="submit" id="guardar2" value="">'; ?>
+                                  <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-placement="bottom" title="Buscar orden" data-toggle="modal" data-target="#buscarOrden"><i class="fas fa-search"></i></button>
                                   <button class="btn btn-default btn-sm" id="imprimir" onclick="imprimirOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Imprimir orden" ><i class="fas fa-print"></i></button>
                                   <div class="pull-right">
 
@@ -342,7 +344,7 @@
                                          echo "<input id='tipoServicio' class='form-control input-sm' type='hidden' name='tipoServicio' value='{$tipoServicio}' readonly>";
                                       }
                                       else{
-                                         echo "<input id='creadoPor' class='form-control input-sm' type='hidden' name='creadoPor' value='{$_SESSION['nombres']}.' '.{$_SESSION['apellidos']}'>";
+                                         echo "<input id='creadoPor' class='form-control input-sm' type='hidden' name='creadoPor' value='{$_SESSION['nombres']}' . ' ' . '{$_SESSION['apellidos']}'>";
                                          echo "<input id='tipoServicio' class='form-control input-sm' type='hidden' name='tipoServicio' value='' readonly>";
                                       }
                                       ?>
@@ -564,7 +566,7 @@
                                   <div class="col-md-3">
                                       <br>
                                       <label for="vendedor">Vendedor</label>
-                                      <select id="vendedor" class="form-control input-sm" name="vendedor" readonly>
+                                      <select id="vendedor" class="form-control input-sm" name="vendedor" disabled>
                                           <option value="" selected>Seleccionar</option>
                                           <?php
                                           foreach ($arrayVendedores as $key) {
@@ -594,7 +596,37 @@
             <!-- /.container-fluid -->
         </div>
         <!-- /#page-wrapper -->
+        <!-- Modal -->
+        <div id="buscarOrden" class="modal fade" role="dialog">
+          <div class="modal-dialog modal-lg">
 
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Buscar orden de trabajo</h4>
+              </div>
+              <div class="modal-body">
+                  <div class="row">
+                      <div class="col-md-12">
+                          <input class="form-control" type="text" name="caja_busqueda" id="caja_busqueda" placeholder="N°orden, Fecha orden, Código cliente, Nombre, Dirección, Observaciones, Mac, Serial">
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-12">
+                          <div id="datos">
+
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
     </div>
     <!-- /#wrapper -->
 
@@ -609,8 +641,8 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="../../dist/js/sb-admin-2.js"></script>
-    <script src="../../dist/js/jquery-validation-1.19.0/dist/jquery.validate.js"></script>
     <script src="js/ordenTrabajo.js"></script>
+    <script src="js/searchot.js"></script>
     <script type="text/javascript">
         // Get the input field
         var cod = document.getElementById("codigoCliente");

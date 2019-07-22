@@ -195,7 +195,6 @@
  $arrTecnologias = $data->getData('tbl_tecnologias');
  $arrTiposClientes = $data->getData('tbl_tipos_clientes');
  //Array de ordenes de trabajo por cliente
- var_dump($codigo);
  $arrOrdenesTrabajo = $data->getDataOrders('tbl_ordenes_trabajo', $codigo);
  ?>
 <!DOCTYPE html>
@@ -394,30 +393,30 @@
                     <table class="table table-bordered table-responsive table-condensed">
                         <th></th>
                         <th>Activo</th>
-                        <th>Suspendido</th>
-                        <th>Sin servicio</th>
+                        <th>Susp</th>
+                        <th>Sin serv</th>
                         <?php
-                        if ($estado_cable == "F") {
+                        if ($estado_cable == "F" OR $estado_cable == "") {
                             echo "<tr class='info'>
                                 <th>TV</th>
                                 <td><label class='switch'><input type='radio' name ='cable' checked disabled><span class='slider round'></span></label></td>
-                                <td><label class='switch'><input type='radio' name ='cable'  disabled><span class='slider round'></span></label></td>
-                                <td><label class='switch'><input type='radio' name ='cable'  disabled><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input type='radio' name ='cable' disabled><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input type='radio' name ='cable' disabled><span class='slider round'></span></label></td>
                             </tr>";
                         }
                         else if ($estado_cable == "T") {
                             echo "<tr class='info'>
                                 <th>TV</th>
-                                <td><label class='switch'><input type='radio' name ='cable'  disabled><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input type='radio' name ='cable' disabled><span class='slider round'></span></label></td>
                                 <td><label class='switch'><input type='radio' name ='cable' checked disabled><span class='slider round'></span></label></td>
-                                <td><label class='switch'><input type='radio' name ='cable'  disabled><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input type='radio' name ='cable' disabled><span class='slider round'></span></label></td>
                             </tr>";
                         }
                         else {
                             echo "<tr class='info'>
                                 <th>TV</th>
-                                <td><label class='switch'><input type='radio' name ='cable'  disabled><span class='slider round'></span></label></td>
-                                <td><label class='switch'><input type='radio' name ='cable'  disabled><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input type='radio' name ='cable' disabled><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input type='radio' name ='cable' disabled><span class='slider round'></span></label></td>
                                 <td><label class='switch'><input type='radio' name ='cable' checked disabled><span class='slider round'></span></label></td>
                             </tr>";
                         }

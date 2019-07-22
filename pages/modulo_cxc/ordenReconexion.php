@@ -150,7 +150,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <br>
-                        <div class="panel panel-primary">
+                        <div class="panel panel-success">
                           <div class="panel-heading">Orden de Reconexión</div>
                           <form id="ordenReconexion" action="#" method="POST">
                           <div class="panel-body">
