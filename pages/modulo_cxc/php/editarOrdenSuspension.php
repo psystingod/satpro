@@ -18,12 +18,14 @@
                     $numeroOrden = $_POST["numeroSuspension"];
                     $codigoCliente = $_POST["codigoCliente"];
                     $tipoOrden = "Suspensión";
+                    $diaCobro = $_POST['diaCobro'];
                     $nombreCliente = $_POST['nombreCliente'];
                     $ordenaSuspension = $_POST['ordenaSuspensionCable'];
                     //$telefonos = $_POST['telefonos'];
                     $tipoActividadCable = $_POST['tipoActividadCable'];
                     $saldoCable = $_POST['saldoCable'];
                     $direccion = $_POST['direccionCliente'];
+                    $mactv = $_POST['mactv'];
                     $colilla = $_POST['colilla'];
                     $fechaSuspension = date_format(date_create($_POST["fechaSuspension"]), 'Y-m-d');
                     $responsable = $_POST["responsable"];
@@ -32,13 +34,14 @@
                     $creadoPor = $_POST['creadoPor'];
 
                     //$Fecha = date('Y/m/d g:i');
-                    $query = "UPDATE tbl_ordenes_suspension SET codigoCliente=:codigoCliente, fechaOrden=:fechaOrden, tipoOrden=:tipoOrden, nombreCliente=:nombreCliente, actividadCable=:idActividadCable, saldoCable=:saldoCable, direccion=:direccion, fechaSuspension=:fechaSuspension, ordenaSuspension=:ordenaSuspension, idTecnico=:idTecnico, observaciones=:observaciones, tipoServicio=:tipoServicio, creadoPor=:creadoPor WHERE codigoCliente=:codigoCliente";
+                    $query = "UPDATE tbl_ordenes_suspension SET codigoCliente=:codigoCliente, fechaOrden=:fechaOrden, tipoOrden=:tipoOrden, diaCobro=:diaCobro, nombreCliente=:nombreCliente, actividadCable=:idActividadCable, saldoCable=:saldoCable, direccion=:direccion, fechaSuspension=:fechaSuspension, ordenaSuspension=:ordenaSuspension, idTecnico=:idTecnico, mactv=:mactv, observaciones=:observaciones, tipoServicio=:tipoServicio, creadoPor=:creadoPor WHERE codigoCliente=:codigoCliente";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
                                 ':codigoCliente' => $codigoCliente,
                                 ':fechaOrden' => $fechaOrden,
                                 ':tipoOrden' => $tipoOrden,
+                                ':diaCobro' => $diaCobro,
                                 ':nombreCliente' => $nombreCliente,
                                 //':telefonos' => $telefonos,
                                 ':idActividadCable' => $tipoActividadCable,
@@ -47,6 +50,7 @@
                                 ':fechaSuspension' => $fechaSuspension,
                                 ':ordenaSuspension' => $ordenaSuspension,
                                 ':idTecnico' => $responsable,
+                                ':mactv' => $mactv,
                                 ':observaciones' => $observaciones,
                                 ':tipoServicio' => $tipoServicio,
                                 ':creadoPor' => $creadoPor
@@ -71,6 +75,7 @@
                     $numeroOrden = $_POST["numeroOrden"];
                     $codigoCliente = $_POST["codigoCliente"];
                     $tipoOrden = $_POST["tipoOrden"];
+                    $diaCobro = $_POST["diaCobro"];
                     $nombreCliente = $_POST['nombreCliente'];
                     //$telefonos = $_POST['telefonos'];
                     $tipoActividadInter = $_POST['tipoActividadInternet'];
@@ -88,7 +93,7 @@
 
                     //$Fecha = date('Y/m/d g:i');
 
-                    $query = "UPDATE tbl_ordenes_suspension SET codigoCliente=:codigoCliente, fechaOrden=:fechaOrden, tipoOrdenTrabajo=:tipoOrdenTrabajo, nombreCliente=:nombreCliente,
+                    $query = "UPDATE tbl_ordenes_suspension SET codigoCliente=:codigoCliente, fechaOrden=:fechaOrden, tipoOrden=:tipoOrden, diaCobro=:diaCobro, nombreCliente=:nombreCliente,
                     actividadInter=:idActividadInter, tipoServicio=:tipoServicio, saldoInter=:saldoInter, direccion=:direccion, fechaSuspension=:fechaSuspension, idTecnico=:idTecnico, observaciones=:observaciones, macModem=:macModem, serieModem=:serieModem, velocidad=:velocidad, colilla=:colilla, creadoPor=:creadoPor WHERE codigoCliente=:codigoCliente";
 
                     $statement = $this->dbConnect->prepare($query);
@@ -96,6 +101,7 @@
                                 ':codigoCliente' => $codigoCliente,
                                 ':fechaOrden' => $fechaOrden,
                                 ':tipoOrden' => $tipoOrden,
+                                ':diaCobro' => $diaCobro,
                                 ':nombreCliente' => $nombreCliente,
                                 ':telefonos' => $telefonos,
                                 ':idActividadInter' => $tipoActividadInter,

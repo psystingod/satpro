@@ -29,6 +29,7 @@ if (isset($_GET['nOrden'])) {
         $fechaOrdenTrabajo = $row["fechaOrdenTrabajo"];
         $idOrdenTrabajo = $row["idOrdenTrabajo"];
         $tipoOrden = $row["tipoOrdenTrabajo"];
+        $diaCobro = $row["diaCobro"];
         $telefonos = $row["telefonos"];
         $codigoCliente = $row["codigoCliente"];
         $nombreCliente = $row['nombreCliente'];
@@ -39,6 +40,7 @@ if (isset($_GET['nOrden'])) {
         $saldoInter = $row["saldoInter"];
         $direccionCable = $row["direccionCable"];
         $direccionInter = $row["direccionInter"];
+        $mactv = $row["mactv"];
         $macModem = $row['macModem'];
         $serieModem = $row['serieModem'];
         $rx = $row['rx'];
@@ -110,7 +112,7 @@ if (isset($_GET['nOrden'])) {
                                         <h6 class='label label-danger pull-left' style='font-size:13px;' class='text-left'>N°{$idOrdenTrabajo}</h6>
                                     </div>
                                     <div class='col-md-6'>
-                                        <h6 class='label label-danger pull-right' style='font-size:13px;' class='text-right'>Día de cobro 5</h6>
+                                        <h6 class='label label-danger pull-right' style='font-size:13px;' class='text-right'>Día de cobro {$diaCobro}</h6>
                                     </div>
                                 </div>
                                 <div class='row'>
@@ -242,7 +244,7 @@ if (isset($_GET['nOrden'])) {
                                       <h6 class='label label-danger pull-left' style='font-size:13px;' class='text-left'>{$idOrdenTrabajo}</h6>
                                   </div>
                                   <div class='col-md-6'>
-                                      <h6 class='label label-danger pull-right' style='font-size:13px;' class='text-right'>Día de cobro 5</h6>
+                                      <h6 class='label label-danger pull-right' style='font-size:13px;' class='text-right'>Día de cobro {$diaCobro}</h6>
                                   </div>
                               </div>
                               <div class='row'>
@@ -284,11 +286,15 @@ if (isset($_GET['nOrden'])) {
                                   </div>
                               </div>
                               <div class='row'>
-                                  <div class='col-md-6 col-xs-6'>
+                                  <div class='col-md-4 col-xs-4'>
+                                      <label for='mactv'>MAC TV</label>
+                                      <input class='form-control' type='text' name='mactv' value='{$mactv}'>
+                                  </div>
+                                  <div class='col-md-4 col-xs-4'>
                                       <label for='hora'>Colilla</label>
                                       <input class='form-control' type='text' name='colilla' value='{$colilla}'>
                                   </div>
-                                  <div class='col-md-6 col-xs-6'>
+                                  <div class='col-md-4 col-xs-4'>
                                       <label for='tecnologia'>Tecnología</label>
                                       <input class='form-control' type='text' name='tecnologia' value='{$tecnologia}'>
                                   </div>

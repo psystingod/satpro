@@ -5,6 +5,7 @@ CREATE TABLE tbl_ordenes_suspension (
   codigoCliente INT(5) ZEROFILL DEFAULT NULL,
   fechaOrden DATE NOT NULL,
   tipoOrden VARCHAR(20) NOT NULL,
+  diaCobro int(2) DEFAULT NULL,
   nombreCliente VARCHAR(50) NOT NULL,
   direccion VARCHAR(100) DEFAULT NULL,
   /*telefonos VARCHAR(25) NOT NULL,*/
@@ -14,12 +15,13 @@ CREATE TABLE tbl_ordenes_suspension (
   actividadInter TINYINT(1) DEFAULT NULL,
   saldoInter DOUBLE DEFAULT NULL,
   ordenaSuspension VARCHAR(20) DEFAULT NULL,
-  macModem VARCHAR(20) DEFAULT NULL,
-  serieModem VARCHAR(20) DEFAULT NULL,
+  macModem VARCHAR(25) DEFAULT NULL,
+  serieModem VARCHAR(25) DEFAULT NULL,
   velocidad VARCHAR(10) DEFAULT NULL,
   colilla VARCHAR(10) DEFAULT NULL,
   fechaSuspension DATE DEFAULT NULL,
   idTecnico INT(6) DEFAULT NULL,
+  mactv VARCHAR(25) DEFAULT NULL,
   observaciones VARCHAR(80) DEFAULT NULL,
   /*nodo VARCHAR(20) DEFAULT NULL,*/
   tipoServicio CHAR(1) NOT NULL,

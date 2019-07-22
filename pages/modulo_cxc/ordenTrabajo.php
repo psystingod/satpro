@@ -26,7 +26,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT cod_cliente, nombre, telefonos, id_municipio, saldo_actual, telefonos, dire_cable, dire_internet, mac_modem, serie_modem, id_velocidad, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
+            $query = "SELECT cod_cliente, nombre, telefonos, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, mac_modem, serie_modem, id_velocidad, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -43,6 +43,7 @@
             $fechaOrdenTrabajo = date('Y-m-d');
             $idOrdenTrabajo = "";
             $tipoOrden = "Técnica";
+            $diaCobro = $row["diaCobro"];
             $telefonos = $row["telefonos"];
             $codigoCliente = $row["cod_cliente"];
             $nombreCliente = $row['nombre'];
@@ -50,6 +51,7 @@
             $saldoCable = $row["saldo_actual"];
             $saldoInter = $row["saldo_actual"];
             $direccionCable = $row["dire_cable"];
+            $mactv = $row['mactv'];
             $direccionInter = $row["dire_internet"];
             $macModem = $row['mac_modem'];
             $serieModem = $row['serie_modem'];
@@ -84,7 +86,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT idOrdenTrabajo, codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, nombreCliente, telefonos, idMunicipio, actividadCable, saldoCable, direccionCable, actividadInter, saldoInter, direccionInter, saldoInter, direccionInter, macModem, serieModem, velocidad, rx, tx, snr, colilla, fechaTrabajo, hora, fechaProgramacion, idTecnico, coordenadas, observaciones, nodo, marcaModelo, tecnologia, idVendedor, recepcionTv, tipoServicio, creadoPor  FROM tbl_ordenes_trabajo WHERE idOrdenTrabajo = ? LIMIT 0,1";
+            $query = "SELECT idOrdenTrabajo, codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, diaCobro, nombreCliente, telefonos, idMunicipio, actividadCable, saldoCable, direccionCable, actividadInter, saldoInter, direccionInter, saldoInter, direccionInter, macModem, serieModem, velocidad, rx, tx, snr, colilla, fechaTrabajo, hora, fechaProgramacion, idTecnico, mactv, coordenadas, observaciones, nodo, marcaModelo, tecnologia, idVendedor, recepcionTv, tipoServicio, creadoPor  FROM tbl_ordenes_trabajo WHERE idOrdenTrabajo = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -100,6 +102,7 @@
             $idOrdenTrabajo = $row["idOrdenTrabajo"];
             $fechaOrdenTrabajo = $row["fechaOrdenTrabajo"];
             $tipoOrdenTrabajo = $row["tipoOrdenTrabajo"];
+            $diaCobro = $row["diaCobro"];
             $codigoCliente = $row["codigoCliente"];
             if ($codigoCliente === "00000") {
                 $codigoCliente = "SC";
@@ -124,6 +127,7 @@
             $hora = $row['hora'];
             $fechaProgramacion = $row['fechaProgramacion'];
             $idTecnico = $row['idTecnico'];
+            $mactv = $row['mactv'];
             $coordenadas = $row['coordenadas'];
             $observaciones = $row['observaciones'];
             $nodo = $row['nodo'];
@@ -145,10 +149,12 @@
         $nombreCliente = "";
         $telefonos = "";
         $idMunicipio = "";
+        $diaCobro = "";
         $saldoCable = "";
         $direccionCable = "";
         $saldoInter = "";
         $direccionInter = "";
+        $mactv = "";
         $macModem = "";
         $serieModem = "";
         $velocidad = "";
@@ -351,7 +357,7 @@
                                       <label for="fechaOrden">Fecha de orden</label>
                                       <input id="fechaOrden" class="form-control input-sm" type="text" name="fechaOrden" value="<?php echo $fechaOrdenTrabajo ?>" readonly>
                                   </div>
-                                  <div class="col-md-3">
+                                  <div class="col-md-2">
                                       <br>
                                       <label for="numeroOrden">Número de orden</label>
                                       <input id="numeroOrden" class="form-control input-sm" type="text" name="numeroOrden" value="<?php echo $idOrdenTrabajo ?>" readonly>
@@ -366,6 +372,11 @@
                                       <br>
                                       <label for="tipoOrden">Tipo de orden</label>
                                       <input id="tipoOrden" class="form-control input-sm" type="text" name="tipoOrden" value="Técnica" readonly>
+                                  </div>
+                                  <div class="col-md-1">
+                                      <br>
+                                      <label for="diaCobro">Día c</label>
+                                      <input class="form-control input-sm" type="text" name="diaCobro" value="<?php echo $diaCobro; ?>" readonly>
                                   </div>
                               </div>
                               <div class="form-row">
@@ -534,7 +545,12 @@
                                   </div>
                               </div>
                               <div class="form-row">
-                                  <div class="col-md-12">
+                                  <div class="col-md-3">
+                                      <br>
+                                      <label for="mactv">MAC TV</label>
+                                      <input id="mactv" class="form-control input-sm cable" type="text" name="mactv" value="<?php echo $mactv ?>" readonly>
+                                  </div>
+                                  <div class="col-md-9">
                                       <br>
                                       <label for="coordenadas">Coordenadas/otros datos</label>
                                       <input class="form-control input-sm internet" type="text" name="coordenadas" value="<?php echo $coordenadas; ?>" readonly>

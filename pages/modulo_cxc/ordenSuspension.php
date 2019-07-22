@@ -25,7 +25,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT cod_cliente, nombre, telefonos, direccion, id_municipio, saldo_actual, telefonos, dire_cable, dire_internet, mac_modem, serie_modem, id_velocidad, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
+            $query = "SELECT cod_cliente, nombre, telefonos, direccion, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, mac_modem, serie_modem, id_velocidad, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -42,6 +42,7 @@
             $fechaOrden = date('Y-m-d');
             $idOrdenSuspension = "";
             $tipoOrden = "Suspension";
+            $diaCobro = $row["dia_cobro"];
             $ordenaSuspensionCable = "";
             $ordenaSuspensionInter = "";
             //$telefonos = $row["telefonos"];
@@ -50,6 +51,7 @@
             $direccion = $row["direccion"];
             //$idMunicipio = $row["id_municipio"];
             $saldoCable = $row["saldo_actual"];
+            $mactv = $row["mactv"];
             $saldoInter = $row["saldo_actual"];
             $macModem = $row['mac_modem'];
             $serieModem = $row['serie_modem'];
@@ -100,6 +102,7 @@
             $idOrdenSuspension = $row["idOrdenSuspension"];
             $fechaOrden = $row["fechaOrden"];
             $tipoOrden = $row["tipoOrden"];
+            $diaCobro = $row["diaCobro"];
             $codigoCliente = $row["codigoCliente"];
             if ($codigoCliente === "00000") {
                 $codigoCliente = "SC";
@@ -129,6 +132,7 @@
 
             //$hora = $row['hora'];
             $idTecnico = $row['idTecnico'];
+            $mactv = $row['mactv'];
             $observaciones = $row['observaciones'];
             //$nodo = $row['nodo'];
             $tipoServicio = $row['tipoServicio'];
@@ -143,12 +147,14 @@
         $idOrdenSuspension = "";
         $codigoCliente = "";
         $nombreCliente = "";
+        $diaCobro = "";
         //$telefonos = "";
         //$idMunicipio = "";
         $saldoCable = "";
         $ordenaSuspensionCable = "";
         $direccion = "";
         $saldoInter = "";
+        $mactv = "";
         $macModem = "";
         $serieModem = "";
         $velocidad = "";
@@ -355,10 +361,15 @@
                                       <label for="codigoCliente">Código del cliente</label>
                                       <input id="codigoCliente" class="form-control input-sm" type="text" name="codigoCliente" value="<?php echo $codigoCliente; ?>" readonly>
                                   </div>
-                                  <div class="col-md-6">
+                                  <div class="col-md-5">
                                       <br>
                                       <label for="nombreCliente">Nombre del cliente</label>
                                       <input class="form-control input-sm" type="text" name="nombreCliente" value="<?php echo $nombreCliente; ?>" readonly>
+                                  </div>
+                                  <div class="col-md-1">
+                                      <br>
+                                      <label for="diaCobro">Día c</label>
+                                      <input class="form-control input-sm" type="text" name="diaCobro" value="<?php echo $diaCobro; ?>" readonly>
                                   </div>
                               </div>
                               <div class="form-row">
@@ -386,11 +397,15 @@
                                                   ?>
                                               </select>
                                           </div>
-                                          <div class="col-md-4">
+                                          <div class="col-md-3">
+                                              <label for="mactv">MAC TV</label>
+                                              <input id="mactv" class="form-control input-sm cable" type="text" name="mactv" value="<?php echo $mactv ?>" readonly>
+                                          </div>
+                                          <div class="col-md-2">
                                               <label for="saldoCable">Saldo</label>
                                               <input id="saldoCable" class="form-control input-sm cable" type="text" name="saldoCable" value="<?php echo $saldoCable ?>" readonly>
                                           </div>
-                                          <div class="col-md-4">
+                                          <div class="col-md-3">
                                               <label for="ordenaSuspencionCable">Ordena la suspensión</label>
                                               <select class="form-control input-sm cable" name="ordenaSuspensionCable" disabled>
                                                   <option value="" selected>Seleccionar</option>

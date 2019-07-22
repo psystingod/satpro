@@ -16,6 +16,7 @@
                     date_default_timezone_set('America/El_Salvador');
                     $fechaOrden = date_format(date_create($_POST["fechaOrden"]), 'Y-m-d');
                     $numeroOrden = $_POST["numeroSuspension"];
+                    $diaCobro = $_POST["diaCobro"];
                     $codigoCliente = $_POST["codigoCliente"];
                     $tipoOrden = "Suspension";
                     $nombreCliente = $_POST['nombreCliente'];
@@ -28,20 +29,22 @@
                     $colilla = "Amarilla";
                     $fechaSuspension = date_format(date_create($_POST["fechaSuspension"]), 'Y-m-d');
                     $responsable = $_POST["responsable"];
+                    $mactv = $_POST["mactv"];
                     $observaciones = $_POST["observaciones"];
                     $tipoServicio = $_POST["tipoServicio"];
                     $creadoPor = $_POST['creadoPor'];
 
                     //$Fecha = date('Y/m/d g:i');
 
-                    $query = "INSERT INTO tbl_ordenes_suspension(codigoCliente, fechaOrden, tipoOrden, nombreCliente, actividadCable, saldoCable, ordenaSuspension, direccion, fechaSuspension, idTecnico, colilla, observaciones, tipoServicio, creadoPor)
-                              VALUES(:codigoCliente, :fechaOrden, :tipoOrden, :nombreCliente, :idActividadCable, :saldoCable, :ordenaSuspension, :direccion, :fechaSuspension, :idTecnico, :colilla, :observaciones, :tipoServicio, :creadoPor)";
+                    $query = "INSERT INTO tbl_ordenes_suspension(codigoCliente, fechaOrden, tipoOrden, diaCobro, nombreCliente, actividadCable, saldoCable, ordenaSuspension, direccion, fechaSuspension, idTecnico, mactv, colilla, observaciones, tipoServicio, creadoPor)
+                              VALUES(:codigoCliente, :fechaOrden, :tipoOrden, :diaCobro, :nombreCliente, :idActividadCable, :saldoCable, :ordenaSuspension, :direccion, :fechaSuspension, :idTecnico, :mactv, :colilla, :observaciones, :tipoServicio, :creadoPor)";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
                                 ':codigoCliente' => $codigoCliente,
                                 ':fechaOrden' => $fechaOrden,
                                 ':tipoOrden' => $tipoOrden,
+                                ':diaCobro' => $diaCobro,
                                 ':nombreCliente' => $nombreCliente,
                                 ':idActividadCable' => $tipoActividadCable,
                                 ':saldoCable' => $saldoCable,
@@ -49,6 +52,7 @@
                                 ':ordenaSuspension' => $ordenaSuspension,
                                 ':fechaSuspension' => $fechaSuspension,
                                 ':idTecnico' => $responsable,
+                                ':mactv' => $mactv,
                                 ':colilla' => $colilla,
                                 ':observaciones' => $observaciones,
                                 ':tipoServicio' => $tipoServicio,
@@ -73,6 +77,8 @@
                     $numeroOrden = $_POST["numeroOrden"];
                     $codigoCliente = $_POST["codigoCliente"];
                     $tipoOrden = "Suspension";
+                    $diaCobro = $_POST["diaCobro"];
+                    $diaCobro = $_POST["diaCobro"];
                     $nombreCliente = $_POST['nombreCliente'];
                     $direccion = $_POST['direccion'];
                     //$telefonos = $_POST['telefonos'];
@@ -92,14 +98,15 @@
 
                     //$Fecha = date('Y/m/d g:i');
 
-                    $query = "INSERT INTO tbl_ordenes_suspension(codigoCliente, fechaOrden, tipoOrden, nombreCliente, actividadInter, saldoInter, ordenaSuspension, macModem, serieModem, velocidad, direccion, fechaSuspension, idTecnico, colilla, observaciones, tipoServicio, creadoPor)
-                              VALUES(:codigoCliente, :fechaOrden, :tipoOrden, :nombreCliente, :idActividadInter, :saldoInter, :ordenaSuspension, :macModem, :serieModem, :velocidad, :direccion, :fechaSuspension, :idTecnico, :colilla, :observaciones, :tipoServicio, :creadoPor)";
+                    $query = "INSERT INTO tbl_ordenes_suspension(codigoCliente, fechaOrden, tipoOrden, diaCobro, nombreCliente, actividadInter, saldoInter, ordenaSuspension, macModem, serieModem, velocidad, direccion, fechaSuspension, idTecnico, colilla, observaciones, tipoServicio, creadoPor)
+                              VALUES(:codigoCliente, :fechaOrden, :tipoOrden, :diaCobro, :nombreCliente, :idActividadInter, :saldoInter, :ordenaSuspension, :macModem, :serieModem, :velocidad, :direccion, :fechaSuspension, :idTecnico, :colilla, :observaciones, :tipoServicio, :creadoPor)";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
                                 ':codigoCliente' => $codigoCliente,
                                 ':fechaOrden' => $fechaOrden,
                                 ':tipoOrden' => $tipoOrden,
+                                ':diaCobro' => $diaCobro,
                                 ':nombreCliente' => $nombreCliente,
                                 ':idActividadInter' => $tipoActividadInter,
                                 ':saldoInter' => $saldoInter,

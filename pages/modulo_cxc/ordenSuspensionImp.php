@@ -29,6 +29,7 @@ if (isset($_GET['nOrden'])) {
         $fechaOrden = $row["fechaOrden"];
         $idOrdenSuspension = $row["idOrdenSuspension"];
         $tipoOrden = $row["tipoOrden"];
+        $diaCobro = $row["diaCobro"];
         //$telefonos = $row["telefonos"];
         $codigoCliente = $row["codigoCliente"];
         $nombreCliente = $row['nombreCliente'];
@@ -38,6 +39,7 @@ if (isset($_GET['nOrden'])) {
         $saldoCable = $row["saldoCable"];
         $saldoInter = $row["saldoInter"];
         $direccion = $row["direccion"];
+        $mactv = $row['mactv'];
         $macModem = $row['macModem'];
         $serieModem = $row['serieModem'];
         //$rx = $row['rx'];
@@ -71,7 +73,7 @@ if (isset($_GET['nOrden'])) {
 <html lang="es">
     <head>
         <meta charset="utf-8">
-        <title>Ordenes de trabajo</title>
+        <title>Ordenes de suspensión</title>
         <link rel="shortcut icon" href="../../images/Cablesat.png" />
         <!-- Bootstrap Core CSS -->
         <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -108,7 +110,7 @@ if (isset($_GET['nOrden'])) {
                                         <h6 class='label label-danger pull-left' style='font-size:13px;' class='text-left'>N°{$idOrdenSuspension}</h6>
                                     </div>
                                     <div class='col-md-6'>
-                                        <h6 class='label label-danger pull-right' style='font-size:13px;' class='text-right'>Día de cobro 5</h6>
+                                        <h6 class='label label-danger pull-right' style='font-size:13px;' class='text-right'>Día de cobro {$diaCobro}</h6>
                                     </div>
                                 </div>
                                 <div class='row'>
@@ -134,7 +136,7 @@ if (isset($_GET['nOrden'])) {
                                 <div class='row'>
                                     <div class='col-md-6 col-xs-6'>
                                         <label for='trabajo'>Trabajo a relizar</label>
-                                        <input class='form-control' type='text' name='trabajo' value='{$idActividadCable}'>
+                                        <input class='form-control' type='text' name='trabajo' value='{$idActividadInter}'>
                                     </div>
                                     <div class='col-md-6 col-xs-6'>
                                         <label for='tecnico'>Técnico</label>
@@ -205,7 +207,7 @@ if (isset($_GET['nOrden'])) {
                                       <h6 class='label label-danger pull-left' style='font-size:13px;' class='text-left'>{$idOrdenSuspension}</h6>
                                   </div>
                                   <div class='col-md-6'>
-                                      <h6 class='label label-danger pull-right' style='font-size:13px;' class='text-right'>Día de cobro 5</h6>
+                                      <h6 class='label label-danger pull-right' style='font-size:13px;' class='text-right'>Día de cobro {$diaCobro}</h6>
                                   </div>
                               </div>
                               <div class='row'>
@@ -239,7 +241,7 @@ if (isset($_GET['nOrden'])) {
                                   </div>
                                   <div class='col-md-3 col-xs-3'>
                                       <label for='macTv'>MAC TV</label>
-                                      <input class='form-control' type='text' name='macTv' value='{}'>
+                                      <input class='form-control' type='text' name='macTv' value='{$mactv}'>
                                   </div>
                                   <div class='col-md-2 col-xs-2'>
                                       <label for='hora'>Colilla</label>
