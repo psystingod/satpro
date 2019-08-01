@@ -7,7 +7,7 @@ CREATE TABLE tbl_ordenes_suspension (
   tipoOrden VARCHAR(20) NOT NULL,
   diaCobro int(2) DEFAULT NULL,
   nombreCliente VARCHAR(50) NOT NULL,
-  direccion VARCHAR(100) DEFAULT NULL,
+  direccion VARCHAR(150) DEFAULT NULL,
   /*telefonos VARCHAR(25) NOT NULL,*/
   /*idMunicipio VARCHAR(10) NOT NULL,*/
   actividadCable TINYINT(1) DEFAULT NULL,

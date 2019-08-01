@@ -2,6 +2,8 @@
 require_once('../../php/connection.php');
 $precon = new ConectionDB();
 $con = $precon->ConectionDB();
+require("php/getData.php");
+$data = new OrdersInfo();
 /**************************************************/
 if (isset($_GET['nOrden'])) {
 
@@ -91,7 +93,6 @@ if (isset($_GET['nOrden'])) {
 
         <!-- Morris Charts CSS -->
         <link href="../../vendor/morrisjs/morris.css" rel="stylesheet">
-
         <!-- Custom Fonts -->
         <link href="../../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
@@ -136,17 +137,17 @@ if (isset($_GET['nOrden'])) {
                                 <div class='row'>
                                     <div class='col-md-6 col-xs-6'>
                                         <label for='trabajo'>Trabajo a relizar</label>
-                                        <input class='form-control' type='text' name='trabajo' value='{$idActividadInter}'>
+                                        <input class='form-control' type='text' name='trabajo' value='{$data->getAiById($idActividadInter)}'>
                                     </div>
                                     <div class='col-md-6 col-xs-6'>
                                         <label for='tecnico'>Técnico</label>
-                                        <input class='form-control' type='text' name='tecnico' value='{$idTecnico}'>
+                                        <input class='form-control' type='text' name='tecnico' value='{$data->getTecnicoById($idTecnico)}'>
                                     </div>
                                 </div>
                                 <div class='row'>
                                     <div class='col-md-4 col-xs-4'>
                                         <label for='velocidad'>Velocidad</label>
-                                        <input class='form-control' type='text' name='velocidad' value='{$velocidad}'>
+                                        <input class='form-control' type='text' name='velocidad' value='{$data->getVelocidadById($velocidad)}'>
                                     </div>
                                     <div class='col-md-4 col-xs-4'>
                                         <label for='mac'>MAC</label>
@@ -233,11 +234,11 @@ if (isset($_GET['nOrden'])) {
                               <div class='row'>
                                   <div class='col-md-3 col-xs-3'>
                                       <label for='trabajo'>Trabajo a relizar</label>
-                                      <input class='form-control' type='text' name='trabajo' value='{$idActividadCable}'>
+                                      <input class='form-control' type='text' name='trabajo' value='{$data->getAcById($idActividadCable)}'>
                                   </div>
                                   <div class='col-md-4 col-xs-4'>
                                       <label for='tecnico'>Técnico</label>
-                                      <input class='form-control' type='text' name='tecnico' value='{$idTecnico}'>
+                                      <input class='form-control' type='text' name='tecnico' value='{$data->getTecnicoById($idTecnico)}'>
                                   </div>
                                   <div class='col-md-3 col-xs-3'>
                                       <label for='macTv'>MAC TV</label>

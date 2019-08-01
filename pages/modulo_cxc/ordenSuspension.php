@@ -25,7 +25,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT cod_cliente, nombre, telefonos, direccion, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, mac_modem, serie_modem, id_velocidad, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
+            $query = "SELECT cod_cliente, nombre, telefonos, direccion, saldoCable, mactv, saldoInternet, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, mac_modem, serie_modem, id_velocidad, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -39,7 +39,7 @@
 
             /****************** DATOS GENERALES ***********************/
             date_default_timezone_set('America/El_Salvador');
-            $fechaOrden = date('Y-m-d');
+            $fechaOrden = date_format(date_create(date('Y-m-d')), 'd/m/Y');
             $idOrdenSuspension = "";
             $tipoOrden = "Suspension";
             $diaCobro = $row["dia_cobro"];
@@ -50,9 +50,9 @@
             $nombreCliente = $row['nombre'];
             $direccion = $row["direccion"];
             //$idMunicipio = $row["id_municipio"];
-            $saldoCable = $row["saldo_actual"];
+            $saldoCable = $row["saldoCable"];
             $mactv = $row["mactv"];
-            $saldoInter = $row["saldo_actual"];
+            $saldoInter = $row["saldoInternet"];
             $macModem = $row['mac_modem'];
             $serieModem = $row['serie_modem'];
             $idVelocidad = $row['id_velocidad'];
@@ -86,7 +86,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT idOrdenSuspension, codigoCliente, fechaOrden, tipoOrden, nombreCliente, direccion, actividadCable, saldoCable, actividadInter, saldoInter, ordenaSuspension, macModem, serieModem, velocidad, colilla, fechaSuspension, idTecnico, observaciones, tipoServicio, creadoPor  FROM tbl_ordenes_suspension WHERE idOrdenSuspension = ? LIMIT 0,1";
+            $query = "SELECT idOrdenSuspension, codigoCliente, fechaOrden, tipoOrden, diaCobro, nombreCliente, direccion, actividadCable, saldoCable, actividadInter, saldoInter, ordenaSuspension, macModem, serieModem, velocidad, colilla, fechaSuspension, idTecnico, mactv, observaciones, tipoServicio, creadoPor  FROM tbl_ordenes_suspension WHERE idOrdenSuspension = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -100,7 +100,7 @@
 
             /****************** DATOS GENERALES ***********************/
             $idOrdenSuspension = $row["idOrdenSuspension"];
-            $fechaOrden = $row["fechaOrden"];
+            $fechaOrden = date_format(date_create($row["fechaOrden"]), 'd/m/Y');
             $tipoOrden = $row["tipoOrden"];
             $diaCobro = $row["diaCobro"];
             $codigoCliente = $row["codigoCliente"];
@@ -111,6 +111,7 @@
             //$telefonos = $row["telefonos"];
             //$idMunicipio = $row["idMunicipio"];
             $idActividadCable = $row["actividadCable"];
+            $idActividadInter = $row["actividadInter"];
             $saldoCable = $row["saldoCable"];
             if ($row['tipoServicio'] == "I") {
                 $ordenaSuspensionInter = $row["ordenaSuspension"];
@@ -128,7 +129,7 @@
             $serieModem = $row['serieModem'];
             $velocidad = $row['velocidad'];
             $colilla = $row['colilla'];
-            $fechaSuspension = $row["fechaSuspension"];
+            $fechaSuspension = date_format(date_create($row["fechaSuspension"]), 'd/m/Y');
 
             //$hora = $row['hora'];
             $idTecnico = $row['idTecnico'];
@@ -384,7 +385,7 @@
                                       <div class="row">
                                           <div class="col-md-4">
                                               <label for="tipoActividadCable">Motivo</label>
-                                              <select id="tipoActividadCable" class="form-control input-sm cable" name="tipoActividadCable" disabled>
+                                              <select class="form-control input-sm cable" id="tipoActividadCable" name="tipoActividadCable" disabled>
                                                   <option value="" selected>Seleccionar</option>
                                                   <?php
                                                   foreach ($arrayActividadesSusp as $key) {
@@ -407,7 +408,7 @@
                                           </div>
                                           <div class="col-md-3">
                                               <label for="ordenaSuspencionCable">Ordena la suspensión</label>
-                                              <select class="form-control input-sm cable" name="ordenaSuspensionCable" disabled>
+                                              <select id="ordenaSuspensionCable" class="form-control input-sm cable" name="ordenaSuspensionCable" disabled>
                                                   <option value="" selected>Seleccionar</option>
                                                   <?php
                                                   if ($ordenaSuspensionCable == 'oficina') {
@@ -445,7 +446,7 @@
                                           </div>
                                           <div class="col-md-4">
                                               <label for="saldoInternet">Saldo</label>
-                                              <input id="saldoInternet" class="form-control input-sm internet" type="text" name="saldoInternet" value="<?php echo $saldoCable ?>" readonly>
+                                              <input id="saldoInternet" class="form-control input-sm internet" type="text" name="saldoInternet" value="<?php echo $saldoInter ?>" readonly>
                                           </div>
                                           <div class="col-md-4">
                                               <label for="ordenaSuspencionInternet">Ordena suspensión</label>
@@ -471,11 +472,11 @@
                               <div class="form-row">
                                   <div class="col-md-4">
                                       <label for="macModem">MAC del modem</label>
-                                      <input id="macModem" class="form-control input-sm internet" type="text" name="macModem" readonly>
+                                      <input id="macModem" class="form-control input-sm internet" type="text" name="macModem" value="<?php echo $macModem ?>" readonly>
                                   </div>
                                   <div class="col-md-4">
                                       <label for="serieModem">Serie del modem</label>
-                                      <input id="serieModem" class="form-control input-sm internet" type="text" name="serieModem" readonly>
+                                      <input id="serieModem" class="form-control input-sm internet" type="text" name="serieModem" value="<?php echo $serieModem ?>" readonly>
                                   </div>
                                   <div class="col-md-4">
                                       <label for="velocidad">Velocidad</label>
@@ -483,10 +484,12 @@
                                           <option value="" selected>Seleccionar</option>
                                           <?php
                                           foreach ($arrayVelocidades as $key) {
-                                              if ($key['idVelocidad'] == $idVelocidad) {
+                                              if ($key['idVelocidad'] == $velocidad) {
                                                   echo "<option value=".$key['idVelocidad']." selected>".strtoupper($key['nombreVelocidad'])."</option>";
+                                              }else {
+                                                  echo "<option value=".$key['idVelocidad'].">".strtoupper($key['nombreVelocidad'])."</option>";
                                               }
-                                              echo "<option value=".$key['idVelocidad'].">".strtoupper($key['nombreVelocidad'])."</option>";
+
                                           }
                                           ?>
                                       </select>
@@ -497,7 +500,7 @@
                               <div class="form-row">
                                   <div class="col-md-3">
                                       <label for="fechaSuspension">Fecha suspención</label>
-                                      <input class="form-control input-sm" type="date" name="fechaSuspension" value="<?php echo $fechaSuspension; ?>" readonly>
+                                      <input class="form-control input-sm" type="text" name="fechaSuspension" value="<?php echo $fechaSuspension; ?>" readonly>
                                   </div>
                                   <div class="col-md-5">
                                       <label for="tecnico">Técnico</label>

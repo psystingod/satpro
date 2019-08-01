@@ -74,7 +74,7 @@ function nuevaOrden(){
     var hour = time.getHours();
     time = hour + ':' + minutes + ':' + seconds;
 
-    today = yyyy + '-' + mm + '-' + dd;
+    today = dd + '/' + mm + '/' + yyyy;
     document.getElementById("fechaOrden").value = today;
     document.getElementById("hora").value = time;
     document.getElementById("tipoOrden").value = "Técnica";
@@ -82,6 +82,7 @@ function nuevaOrden(){
     document.getElementById("nombreOrden").style.display = "none";
     changeAction("nueva");
 }
+
 function editarOrden(){
     document.getElementById("btn-cable").disabled = false;
     document.getElementById("guardar").disabled = false;

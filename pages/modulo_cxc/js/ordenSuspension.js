@@ -78,7 +78,7 @@ function nuevaOrden(){
     var hour = time.getHours();
     time = hour + ':' + minutes + ':' + seconds;
 
-    today = yyyy + '-' + mm + '-' + dd;
+    today = dd + '/' + mm + '/' + yyyy;
     document.getElementById("fechaOrden").value = today;
     //document.getElementById("hora").value = time;
     //document.getElementById("tipoOrden").value = "Técnica";
@@ -108,7 +108,7 @@ function editarOrden(){
     //document.getElementById("nodo").readOnly = true;
     document.getElementById("codigoCliente").readOnly = true;
     document.getElementById("colilla").readOnly = true;
-    document.getElementById("velocidad").disabled = true;
+    //document.getElementById("velocidad").disabled = true;
     document.getElementById("macModem").readOnly = true;
     document.getElementById("serieModem").readOnly = true;
 
@@ -131,6 +131,8 @@ function editarOrden(){
         document.getElementById('tipoActividadCable').disabled=true;
         //document.getElementById('direccionCable').readOnly=true;
         document.getElementById('saldoCable').readOnly=true;
+        document.getElementById('ordenaSuspensionCable').disabled=true;
+        document.getElementById('mactv').readOnly=true;
         //document.getElementById('tecnologia').readOnly=true;
     }
     changeAction("editar");

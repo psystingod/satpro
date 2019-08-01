@@ -1,5 +1,7 @@
 <?php
 require_once('../../php/connection.php');
+require("php/getData.php");
+$data = new OrdersInfo();
 $precon = new ConectionDB();
 $con = $precon->ConectionDB();
 /**************************************************/
@@ -57,7 +59,6 @@ if (isset($_GET['nOrden'])) {
         $tecnologia = $row['tecnologia'];
         $observaciones = $row['observaciones'];
         $coordenadas = $row['coordenadas'];
-        var_dump($tecnologia);
         $marcaModelo = $row['marcaModelo'];
         $idVendedor = $row['idVendedor'];
         $recepcionTv = $row['recepcionTv'];
@@ -102,7 +103,7 @@ if (isset($_GET['nOrden'])) {
         <div class="row-fluid">
             <div class="col-md-12">
                 <div class="panel panel-danger">
-                  <div class="panel-heading"><h3 style="padding:0; margin:0;" class="text-center"><b>Orden de trabajo</b></h3><h4 style="padding:0; margin:0;" class="text-center"><b>Usulután centro</b></h4></div>
+                  <div class="panel-heading"><h4 style="padding:0; margin:0;" class="text-center"><b>Orden de trabajo</b></h4><h5 style="padding:0; margin:0;" class="text-center"><b>Usulután centro</b></h5></div>
                   <div class="panel-body">
                       <?php
                       if (isset($_GET['nOrden'])) {
@@ -118,85 +119,87 @@ if (isset($_GET['nOrden'])) {
                                 <div class='row'>
                                     <div class='col-md-3 col-xs-3'>
                                         <label for='fecha'>Fecha</label>
-                                        <input class='form-control' type='text' name='fecha' value='{$fechaOrdenTrabajo}'>
+                                        <input class='form-control input-sm' type='text' name='fecha' value='{$fechaOrdenTrabajo}'>
                                     </div>
                                     <div class='col-md-2 col-xs-2'>
                                         <label for='fecha'>Código</label>
-                                        <input class='form-control' type='text' name='codigo' value='{$codigoCliente}'>
+                                        <input class='form-control input-sm' type='text' name='codigo' value='{$codigoCliente}'>
                                     </div>
                                     <div class='col-md-7 col-xs-7'>
                                         <label for='nombre'>Nombre</label>
-                                        <input class='form-control' type='text' name='nombre' value='{$nombreCliente}'>
+                                        <input class='form-control input-sm' type='text' name='nombre' value='{$nombreCliente}'>
                                     </div>
                                 </div>
                                 <div class='row'>
                                     <div class='col-md-12 col-xs-12'>
                                         <label for='direccion'>Dirección</label>
-                                        <input class='form-control' type='text' name='direccion' value='{$direccionInter}'>
+                                        <input class='form-control input-sm' type='text' name='direccion' value='{$direccionInter}'>
                                     </div>
                                 </div>
                                 <div class='row'>
                                     <div class='col-md-1 col-xs-1'>
                                         <label for='hora'>Hora</label>
-                                        <input class='form-control' type='text' name='hora' value='{$hora}'>
+                                        <input class='form-control input-sm' type='text' name='hora' value='{$hora}'>
                                     </div>
                                     <div class='col-md-3 col-xs-3'>
                                         <label for='telefono'>Teléfono</label>
-                                        <input class='form-control' type='text' name='telefono' value='{$telefonos}'>
+                                        <input class='form-control input-sm' type='text' name='telefono' value='{$telefonos}'>
                                     </div>
                                     <div class='col-md-4 col-xs-4'>
                                         <label for='trabajo'>Trabajo a relizar</label>
-                                        <input class='form-control' type='text' name='trabajo' value='{$idActividadCable}'>
+                                        <input class='form-control input-sm' type='text' name='trabajo' value='{$idActividadInter}'>
                                     </div>
                                     <div class='col-md-4 col-xs-4'>
                                         <label for='tecnico'>Técnico</label>
-                                        <input class='form-control' type='text' name='tecnico' value='{$idTecnico}'>
+                                        <input class='form-control input-sm' type='text' name='tecnico' value='{$data->getTecnicoById($idTecnico)}'>
                                     </div>
                                 </div>
                                 <div class='row'>
-                                    <div class='col-md-1 col-xs-1'>
+                                    <div class='col-md-4 col-xs-4'>
                                         <label for='snr'>SNR</label>
-                                        <input class='form-control' type='text' name='snr' value='{$snr}'>
+                                        <input class='form-control input-sm' type='text' name='snr' value='{$snr}'>
                                     </div>
-                                    <div class='col-md-1 col-xs-1'>
+                                    <div class='col-md-4 col-xs-4'>
                                         <label for='tx'>TX</label>
-                                        <input class='form-control' type='text' name='tx' value='{$tx}'>
+                                        <input class='form-control input-sm' type='text' name='tx' value='{$tx}'>
                                     </div>
-                                    <div class='col-md-1 col-xs-1'>
+                                    <div class='col-md-4 col-xs-4'>
                                         <label for='rx'>RX</label>
-                                        <input class='form-control' type='text' name='rx' value='{$rx}'>
+                                        <input class='form-control input-sm' type='text' name='rx' value='{$rx}'>
                                     </div>
-                                    <div class='col-md-1 col-xs-1'>
+                                </div>
+                                <div class='row'>
+                                    <div class='col-md-2 col-xs-2'>
                                         <label for='velocidad'>Velocidad</label>
-                                        <input class='form-control' type='text' name='velocidad' value='{$velocidad}'>
+                                        <input class='form-control input-sm' type='text' name='velocidad' value='{$data->getVelocidadById($velocidad)}'>
                                     </div>
                                     <div class='col-md-2 col-xs-2'>
                                         <label for='marca'>Marca/Modelo</label>
-                                        <input class='form-control' type='text' name='marca' value='{$marcaModelo}'>
+                                        <input class='form-control input-sm' type='text' name='marca' value='{$marcaModelo}'>
                                     </div>
-                                    <div class='col-md-2 col-xs-2'>
+                                    <div class='col-md-3 col-xs-3'>
                                         <label for='mac'>MAC</label>
-                                        <input class='form-control' type='text' name='mac' value='{$macModem}'>
+                                        <input class='form-control input-sm' type='text' name='mac' value='{$macModem}'>
                                     </div>
                                     <div class='col-md-2 col-xs-2'>
                                         <label for='colilla'>Colilla</label>
-                                        <input class='form-control' type='text' name='colilla' value='{$colilla}'>
+                                        <input class='form-control input-sm' type='text' name='colilla' value='{$colilla}'>
                                     </div>
-                                    <div class='col-md-2 col-xs-2'>
+                                    <div class='col-md-3 col-xs-3'>
                                         <label for='tecnologia'>Tecnología</label>
-                                        <input class='form-control' type='text' name='tecnologia' value='{$tecnologia}'>
+                                        <input class='form-control input-sm' type='text' name='tecnologia' value='{$tecnologia}'>
                                     </div>
                                 </div>
                                 <div class='row'>
                                     <div class='col-md-12 col-xs-12'>
                                         <label for='coordenadas'>coordenadas/otros datos</label>
-                                        <input class='form-control' type='text' name='coordenadas' value='{$coordenadas}'>
+                                        <input class='form-control input-sm' type='text' name='coordenadas' value='{$coordenadas}'>
                                     </div>
                                 </div>
                                 <div class='row'>
                                     <div class='col-lg-12 col-xs-12'>
                                         <label for='observaciones'>Observaciones</label>
-                                        <textarea class='form-control' name='observaciones' rows='3' cols='40'>{$observaciones}</textarea>
+                                        <textarea class='form-control input-sm' name='observaciones' rows='2' cols='40'>{$observaciones}</textarea>
                                     </div>
 
                                 </div>
@@ -204,15 +207,15 @@ if (isset($_GET['nOrden'])) {
                                 <div class='row'>
                                     <div class='col-md-4 col-xs-4'>
 
-                                        <input class='form-control alert-danger' type='text' name='cliente' value=''>
+                                        <input class='form-control input-sm alert-danger' type='text' name='cliente' value=''>
                                     </div>
                                     <div class='col-md-4 col-xs-4'>
 
-                                        <input class='form-control alert-danger' type='text' name='tecnico' value=''>
+                                        <input class='form-control input-sm alert-danger' type='text' name='tecnico' value=''>
                                     </div>
                                     <div class='col-md-4 col-xs-4'>
 
-                                        <input class='form-control alert-danger' type='text' name='autorizacion' value=''>
+                                        <input class='form-control input-sm alert-danger' type='text' name='autorizacion' value=''>
                                     </div>
                                 </div>
                                 <div class='row'>
@@ -250,59 +253,59 @@ if (isset($_GET['nOrden'])) {
                               <div class='row'>
                                   <div class='col-md-3 col-xs-3'>
                                       <label for='fecha'>Fecha</label>
-                                      <input class='form-control' type='text' name='fecha' value='{$fechaOrdenTrabajo}'>
+                                      <input class='form-control input-sm' type='text' name='fecha' value='{$fechaOrdenTrabajo}'>
                                   </div>
                                   <div class='col-md-2 col-xs-2'>
                                       <label for='fecha'>Código</label>
-                                      <input class='form-control' type='text' name='codigo' value='{$codigoCliente}'>
+                                      <input class='form-control input-sm' type='text' name='codigo' value='{$codigoCliente}'>
                                   </div>
                                   <div class='col-md-7 col-xs-7'>
                                       <label for='nombre'>Nombre</label>
-                                      <input class='form-control' type='text' name='nombre' value='{$nombreCliente}'>
+                                      <input class='form-control input-sm' type='text' name='nombre' value='{$nombreCliente}'>
                                   </div>
                               </div>
                               <div class='row'>
                                   <div class='col-md-12 col-xs-12'>
                                       <label for='direccion'>Dirección</label>
-                                      <input class='form-control' type='text' name='direccion' value='{$direccionCable}'>
+                                      <input class='form-control input-sm' type='text' name='direccion' value='{$direccionCable}'>
                                   </div>
                               </div>
                               <div class='row'>
                                   <div class='col-md-1 col-xs-1'>
                                       <label for='hora'>Hora</label>
-                                      <input class='form-control' type='text' name='hora' value='{$hora}'>
+                                      <input class='form-control input-sm' type='text' name='hora' value='{$hora}'>
                                   </div>
                                   <div class='col-md-3 col-xs-3'>
                                       <label for='telefono'>Teléfono</label>
-                                      <input class='form-control' type='text' name='telefono' value='{$telefonos}'>
+                                      <input class='form-control input-sm' type='text' name='telefono' value='{$telefonos}'>
                                   </div>
                                   <div class='col-md-4 col-xs-4'>
                                       <label for='trabajo'>Trabajo a relizar</label>
-                                      <input class='form-control' type='text' name='trabajo' value='{$idActividadCable}'>
+                                      <input class='form-control input-sm' type='text' name='trabajo' value='{$idActividadCable}'>
                                   </div>
                                   <div class='col-md-4 col-xs-4'>
                                       <label for='tecnico'>Técnico</label>
-                                      <input class='form-control' type='text' name='tecnico' value='{$idTecnico}'>
+                                      <input class='form-control input-sm' type='text' name='tecnico' value='{$idTecnico}'>
                                   </div>
                               </div>
                               <div class='row'>
                                   <div class='col-md-4 col-xs-4'>
                                       <label for='mactv'>MAC TV</label>
-                                      <input class='form-control' type='text' name='mactv' value='{$mactv}'>
+                                      <input class='form-control input-sm' type='text' name='mactv' value='{$mactv}'>
                                   </div>
                                   <div class='col-md-4 col-xs-4'>
                                       <label for='hora'>Colilla</label>
-                                      <input class='form-control' type='text' name='colilla' value='{$colilla}'>
+                                      <input class='form-control input-sm' type='text' name='colilla' value='{$colilla}'>
                                   </div>
                                   <div class='col-md-4 col-xs-4'>
                                       <label for='tecnologia'>Tecnología</label>
-                                      <input class='form-control' type='text' name='tecnologia' value='{$tecnologia}'>
+                                      <input class='form-control input-sm' type='text' name='tecnologia' value='{$tecnologia}'>
                                   </div>
                               </div>
                               <div class='row'>
                                   <div class='col-lg-12 col-xs-12'>
                                       <label for='observaciones'>Observaciones</label>
-                                      <textarea class='form-control' name='observaciones' rows='3' cols='40'>{$observaciones}</textarea>
+                                      <textarea class='form-control input-sm' name='observaciones' rows='2' cols='40'>{$observaciones}</textarea>
                                   </div>
 
                               </div>
@@ -310,15 +313,15 @@ if (isset($_GET['nOrden'])) {
                               <div class='row'>
                                   <div class='col-md-4 col-xs-4'>
 
-                                      <input class='form-control alert-danger' type='text' name='cliente' value=''>
+                                      <input class='form-control input-sm alert-danger' type='text' name='cliente' value=''>
                                   </div>
                                   <div class='col-md-4 col-xs-4'>
 
-                                      <input class='form-control alert-danger' type='text' name='tecnico' value=''>
+                                      <input class='form-control input-sm alert-danger' type='text' name='tecnico' value=''>
                                   </div>
                                   <div class='col-md-4 col-xs-4'>
 
-                                      <input class='form-control alert-danger' type='text' name='autorizacion' value=''>
+                                      <input class='form-control input-sm alert-danger' type='text' name='autorizacion' value=''>
                                   </div>
                               </div>
                               <div class='row'>

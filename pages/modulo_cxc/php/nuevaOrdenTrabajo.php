@@ -14,21 +14,29 @@
             if ($_POST['tipoServicio'] == 'C') {
                 try {
                     date_default_timezone_set('America/El_Salvador');
-                    $fechaOrden = date_format(date_create($_POST["fechaOrden"]), 'Y-m-d');
+                    $str = $_POST["fechaOrden"];
+                    $date = DateTime::createFromFormat('d/m/Y', $str);
+                    $fechaOrden = $date->format('Y-m-d');
                     $numeroOrden = $_POST["numeroOrden"];
                     $codigoCliente = $_POST["codigoCliente"];
                     $tipoOrden = $_POST["tipoOrden"];
+                    $diaCobro = $_POST["diaCobro"];
                     $nombreCliente = $_POST['nombreCliente'];
                     $telefonos = $_POST['telefonos'];
                     $municipio = $_POST['municipio'];
                     $tipoActividadCable = $_POST['tipoActividadCable'];
                     $saldoCable = $_POST['saldoCable'];
                     $direccionCable = $_POST['direccionCable'];
-                    $colilla = "Amarilla";
-                    $fechaTrabajo = $_POST["fechaTrabajo"];
+                    $colilla = ucwords($_POST['colilla']);
+                    $str2 = $_POST["fechaTrabajo"];
+                    $date2 = DateTime::createFromFormat('d/m/Y', $str2);
+                    $fechaTrabajo = $date2->format('Y-m-d');
                     $hora = $_POST["hora"];
-                    $fechaProgramacion = $_POST["fechaProgramacion"];
+                    $str3 = $_POST["fechaProgramacion"];
+                    $date3 = DateTime::createFromFormat('d/m/Y', $str3);
+                    $fechaProgramacion = $date3->format('Y-m-d');
                     $responsable = $_POST["responsable"];
+                    $mactv = $_POST["mactv"];
                     $observaciones = $_POST["observaciones"];
                     $vendedor = $_POST["vendedor"];
                     $recepcionTv = $_POST["recepcionTv"];
@@ -38,14 +46,15 @@
 
                     //$Fecha = date('Y/m/d g:i');
 
-                    $query = "INSERT INTO tbl_ordenes_trabajo(codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, nombreCliente, telefonos, idMunicipio, actividadCable, saldoCable, direccionCable, fechaTrabajo, hora, fechaProgramacion, idTecnico, observaciones, idVendedor, tecnologia, recepcionTv, tipoServicio, creadoPor                                                                                              )
-                              VALUES(:codigoCliente, :fechaOrdenTrabajo, :tipoOrdenTrabajo, :nombreCliente, :telefonos, :idMunicipio, :idActividadCable, :saldoCable, :direccionCable, :fechaTrabajo, :hora, :fechaProgramacion, :idTecnico, :observaciones, :idVendedor, :tecnologia, :recepcionTv, :tipoServicio, :creadoPor)";
+                    $query = "INSERT INTO tbl_ordenes_trabajo(codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, diaCobro, nombreCliente, telefonos, idMunicipio, actividadCable, saldoCable, direccionCable, fechaTrabajo, hora, fechaProgramacion, idTecnico, mactv, observaciones, idVendedor, tecnologia, recepcionTv, tipoServicio, creadoPor                                                                                              )
+                              VALUES(:codigoCliente, :fechaOrdenTrabajo, :tipoOrdenTrabajo, :diaCobro, :nombreCliente, :telefonos, :idMunicipio, :idActividadCable, :saldoCable, :direccionCable, :fechaTrabajo, :hora, :fechaProgramacion, :idTecnico, :mactv, :observaciones, :idVendedor, :tecnologia, :recepcionTv, :tipoServicio, :creadoPor)";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
                                 ':codigoCliente' => $codigoCliente,
                                 ':fechaOrdenTrabajo' => $fechaOrden,
                                 ':tipoOrdenTrabajo' => $tipoOrden,
+                                ':diaCobro' => $diaCobro,
                                 ':nombreCliente' => $nombreCliente,
                                 ':telefonos' => $telefonos,
                                 ':idMunicipio' => $municipio,
@@ -56,6 +65,7 @@
                                 ':hora' => $hora,
                                 ':fechaProgramacion' => $fechaProgramacion,
                                 ':idTecnico' => $responsable,
+                                ':mactv' => $mactv,
                                 ':observaciones' => $observaciones,
                                 ':idVendedor' => $vendedor,
                                 ':tecnologia' => $tecnologia,
@@ -78,15 +88,17 @@
             else if ($_POST['tipoServicio'] == 'I') {
                 try {
                     date_default_timezone_set('America/El_Salvador');
-
-                    $fechaOrden = $_POST["fechaOrden"];
+                    $str = $_POST["fechaOrden"];
+                    $date = DateTime::createFromFormat('d/m/Y', $str);
+                    $fechaOrden = $date->format('Y-m-d');
                     $codigoCliente = $_POST["codigoCliente"];
                     $tipoOrden = $_POST["tipoOrden"];
+                    $diaCobro = $_POST["diaCobro"];
                     $nombreCliente = $_POST['nombreCliente'];
                     $telefonos = $_POST['telefonos'];
                     $municipio = $_POST['municipio'];
                     $tipoActividadInter = $_POST['tipoActividadInternet'];
-                    $saldoInter = $_POST['saldoInter'];
+                    $saldoInter = $_POST['saldoInternet'];
                     $direccionInter = $_POST['direccionInternet'];
                     $macModem = $_POST["macModem"];
                     $serieModem = $_POST["serieModem"];
@@ -94,10 +106,14 @@
                     $rx = $_POST["rx"];
                     $tx = $_POST["tx"];
                     $snr = $_POST["snr"];
-                    $colilla = $_POST["colilla"];
-                    $fechaTrabajo = $_POST["fechaTrabajo"];
+                    $colilla = ucwords($_POST['colilla']);
+                    $str2 = $_POST["fechaTrabajo"];
+                    $date2 = DateTime::createFromFormat('d/m/Y', $str2);
+                    $fechaTrabajo = $date2->format('Y-m-d');
                     $hora = $_POST["hora"];
-                    $fechaProgramacion = $_POST["fechaProgramacion"];
+                    $str3 = $_POST["fechaProgramacion"];
+                    $date3 = DateTime::createFromFormat('d/m/Y', $str3);
+                    $fechaProgramacion = $date3->format('Y-m-d');
                     $responsable = $_POST["responsable"];
                     $coordenadas = $_POST["coordenadas"];
                     $observaciones = $_POST["observaciones"];
@@ -110,14 +126,15 @@
 
                     //$Fecha = date('Y/m/d g:i');
 
-                    $query = "INSERT INTO tbl_ordenes_trabajo(codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, nombreCliente, telefonos, idMunicipio, actividadInter, saldoInter, direccionInter, macModem, serieModem, velocidad, rx, tx, snr, colilla, fechaTrabajo, hora, fechaProgramacion, idTecnico, coordenadas, observaciones, marcaModelo, tecnologia, nodo, idVendedor, tipoServicio, creadoPor                                                                                              )
-                              VALUES(:codigoCliente, :fechaOrdenTrabajo, :tipoOrdenTrabajo, :nombreCliente, :telefonos, :idMunicipio, :idActividadInter, :saldoInter, :direccionInter, :macModem, :serieModem, :velocidad, :rx, :tx, :snr, :colilla, :fechaTrabajo, :hora, :fechaProgramacion, :idTecnico, :coordenadas, :observaciones, :marcaModelo, :tecnologia, :nodo, :idVendedor, :tipoServicio, :creadoPor)";
+                    $query = "INSERT INTO tbl_ordenes_trabajo(codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, diaCobro, nombreCliente, telefonos, idMunicipio, actividadInter, saldoInter, direccionInter, macModem, serieModem, velocidad, rx, tx, snr, colilla, fechaTrabajo, hora, fechaProgramacion, idTecnico, coordenadas, observaciones, marcaModelo, tecnologia, nodo, idVendedor, tipoServicio, creadoPor                                                                                              )
+                              VALUES(:codigoCliente, :fechaOrdenTrabajo, :tipoOrdenTrabajo, :diaCobro, :nombreCliente, :telefonos, :idMunicipio, :idActividadInter, :saldoInter, :direccionInter, :macModem, :serieModem, :velocidad, :rx, :tx, :snr, :colilla, :fechaTrabajo, :hora, :fechaProgramacion, :idTecnico, :coordenadas, :observaciones, :marcaModelo, :tecnologia, :nodo, :idVendedor, :tipoServicio, :creadoPor)";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
                                 ':codigoCliente' => $codigoCliente,
                                 ':fechaOrdenTrabajo' => $fechaOrden,
                                 ':tipoOrdenTrabajo' => $tipoOrden,
+                                ':diaCobro' => $diaCobro,
                                 ':nombreCliente' => $nombreCliente,
                                 ':telefonos' => $telefonos,
                                 ':idMunicipio' => $municipio,

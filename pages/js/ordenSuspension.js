@@ -46,10 +46,19 @@ function nuevaOrden(){
             clearInputs[i].disabled = false;
         }
     }
+    var today = new Date();
+    var dd = String(today.getDate()).padStart(2, '0');
+    var mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    var yyyy = today.getFullYear();
+
+    today = dd + '/' + mm + '/' + yyyy;
+
+    document.getElementById("fechaOrden").value = today;
     document.getElementById("guardar").disabled = false;
     document.getElementById("editar").disabled = true;
     changeAction("nueva");
 }
+
 function editarOrden(){
     var editInputs = document.getElementsByClassName("input-sm");
     for (var i = 0; i < editInputs.length; i++) {

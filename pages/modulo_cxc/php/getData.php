@@ -28,6 +28,65 @@
                die();
            }
        }
+
+       public function getTecnicoById($idTecnico)
+      {
+          try {
+              // SQL query para traer nombre de las categorías
+              $query = "SELECT nombreTecnico FROM tbl_tecnicos_cxc WHERE idTecnico = :idTecnico";
+              // Preparación de sentencia
+              $statement = $this->dbConnect->prepare($query);
+              $statement->bindParam(':idTecnico', $idTecnico);
+              $statement->execute();
+              $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+
+              return $result['nombreTecnico'];
+
+          } catch (Exception $e) {
+              print "!Error¡: " . $e->getMessage() . "</br>";
+              die();
+          }
+      }
+      public function getAcById($idActividadCable)
+     {
+         try {
+             // SQL query para traer nombre de las categorías
+             $query = "SELECT nombreActividad FROM tbl_actividades_susp WHERE idActividadSusp = :idActividadCable";
+             // Preparación de sentencia
+             $statement = $this->dbConnect->prepare($query);
+             $statement->bindParam(':idActividadCable', $idActividadCable);
+             $statement->execute();
+             $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+
+             return $result['nombreActividad'];
+
+         } catch (Exception $e) {
+             print "!Error¡: " . $e->getMessage() . "</br>";
+             die();
+         }
+     }
+     public function getAiById($idActividadInter)
+    {
+        try {
+            // SQL query para traer nombre de las categorías
+            $query = "SELECT nombreActividad FROM tbl_actividades_susp WHERE idActividadSusp = :idActividadInter";
+            // Preparación de sentencia
+            $statement = $this->dbConnect->prepare($query);
+            $statement->bindParam(':idActividadInter', $idActividadInter);
+            $statement->execute();
+            $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+
+            return $result['nombreActividad'];
+
+        } catch (Exception $e) {
+            print "!Error¡: " . $e->getMessage() . "</br>";
+            die();
+        }
+    }
+
         public function getVendedores()
        {
            try {
@@ -116,6 +175,27 @@
                //$this->dbConnect = null;
 
                return $result;
+
+           } catch (Exception $e) {
+               print "!Error¡: " . $e->getMessage() . "</br>";
+               die();
+           }
+       }
+
+       public function getVelocidadById($idVelocidad)
+       {
+           try {
+               // SQL query para traer nombre de las categorías
+               $query = "SELECT nombreVelocidad FROM tbl_velocidades WHERE idVelocidad=:idVelocidad";
+               // Preparación de sentencia
+               $statement = $this->dbConnect->prepare($query);
+               $statement->bindParam(':idVelocidad', $idVelocidad);
+               $statement->execute();
+               $result = $statement->fetch(PDO::FETCH_ASSOC);
+               //$statement->closeCursor();
+               //$this->dbConnect = null;
+
+               return $result["nombreVelocidad"];
 
            } catch (Exception $e) {
                print "!Error¡: " . $e->getMessage() . "</br>";

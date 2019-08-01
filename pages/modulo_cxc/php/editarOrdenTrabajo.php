@@ -14,7 +14,9 @@
             if ($_POST['tipoServicio'] == 'C') {
                 try {
                     date_default_timezone_set('America/El_Salvador');
-                    $fechaOrden = date_format(date_create($_POST["fechaOrden"]), 'Y-m-d');
+                    $str = $_POST["fechaOrden"];
+                    $date = DateTime::createFromFormat('d/m/Y', $str);
+                    $fechaOrden = $date->format('Y-m-d');
                     $numeroOrden = $_POST["numeroOrden"];
                     $codigoCliente = $_POST["codigoCliente"];
                     $tipoOrden = $_POST["tipoOrden"];
@@ -26,9 +28,13 @@
                     $saldoCable = $_POST['saldoCable'];
                     $direccionCable = $_POST['direccionCable'];
                     $colilla = "Amarilla";
-                    $fechaTrabajo = $_POST["fechaTrabajo"];
+                    $str2 = $_POST["fechaTrabajo"];
+                    $date2 = DateTime::createFromFormat('d/m/Y', $str2);
+                    $fechaTrabajo = $date2->format('Y-m-d');
                     $hora = $_POST["hora"];
-                    $fechaProgramacion = $_POST["fechaProgramacion"];
+                    $str3 = $_POST["fechaProgramacion"];
+                    $date3 = DateTime::createFromFormat('d/m/Y', $str3);
+                    $fechaProgramacion = $date3->format('Y-m-d');
                     $responsable = $_POST["responsable"];
                     $mactv = $_POST["mactv"];
                     $observaciones = $_POST["observaciones"];
@@ -40,7 +46,7 @@
 
                     //$Fecha = date('Y/m/d g:i');
 
-                    $query = "UPDATE tbl_ordenes_trabajo SET codigoCliente=:codigoCliente, fechaOrdenTrabajo=:fechaOrdenTrabajo, tipoOrdenTrabajo=:tipoOrdenTrabajo, diaCobro=:diaCobro, nombreCliente=:nombreCliente, telefonos=:telefonos, idMunicipio=:idMunicipio, actividadCable=:idActividadCable, saldoCable=:saldoCable, direccionCable=:direccionCable, fechaTrabajo=:fechaTrabajo, hora=:hora, fechaProgramacion=:fechaProgramacion, idTecnico=:idTecnico, mactv=:mactv, observaciones=:observaciones, idVendedor=:idVendedor, tecnologia=:tecnologia, recepcionTv=:recepcionTv, tipoServicio=:tipoServicio, creadoPor=:creadoPor WHERE codigoCliente=:codigoCliente";
+                    $query = "UPDATE tbl_ordenes_trabajo SET codigoCliente=:codigoCliente, fechaOrdenTrabajo=:fechaOrdenTrabajo, tipoOrdenTrabajo=:tipoOrdenTrabajo, diaCobro=:diaCobro, nombreCliente=:nombreCliente, telefonos=:telefonos, idMunicipio=:idMunicipio, actividadCable=:idActividadCable, saldoCable=:saldoCable, direccionCable=:direccionCable, fechaTrabajo=:fechaTrabajo, hora=:hora, fechaProgramacion=:fechaProgramacion, idTecnico=:idTecnico, mactv=:mactv, observaciones=:observaciones, idVendedor=:idVendedor, tecnologia=:tecnologia, recepcionTv=:recepcionTv, tipoServicio=:tipoServicio, creadoPor=:creadoPor WHERE idOrdenTrabajo=:idOrdenTrabajo";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
@@ -64,7 +70,8 @@
                                 ':tecnologia' => $tecnologia,
                                 ':recepcionTv' => $recepcionTv,
                                 ':tipoServicio' => $tipoServicio,
-                                ':creadoPor' => $creadoPor
+                                ':creadoPor' => $creadoPor,
+                                ':idOrdenTrabajo' => $numeroOrden
                                 ));
                     //$numeroOrden = $this->dbConnect->lastInsertId();
                     header('Location: ../ordenTrabajo.php?nOrden='.$numeroOrden);
@@ -82,7 +89,9 @@
                 try {
                     date_default_timezone_set('America/El_Salvador');
 
-                    $fechaOrden = $_POST["fechaOrden"];
+                    $str = $_POST["fechaOrden"];
+                    $date = DateTime::createFromFormat('d/m/Y', $str);
+                    $fechaOrden = $date->format('Y-m-d');
                     $numeroOrden = $_POST["numeroOrden"];
                     $codigoCliente = $_POST["codigoCliente"];
                     $tipoOrden = $_POST["tipoOrden"];
@@ -100,9 +109,13 @@
                     $tx = $_POST["tx"];
                     $snr = $_POST["snr"];
                     $colilla = $_POST["colilla"];
-                    $fechaTrabajo = $_POST["fechaTrabajo"];
+                    $str2 = $_POST["fechaTrabajo"];
+                    $date2 = DateTime::createFromFormat('d/m/Y', $str2);
+                    $fechaTrabajo = $date2->format('Y-m-d');
                     $hora = $_POST["hora"];
-                    $fechaProgramacion = $_POST["fechaProgramacion"];
+                    $str3 = $_POST["fechaProgramacion"];
+                    $date3 = DateTime::createFromFormat('d/m/Y', $str3);
+                    $fechaProgramacion = $date3->format('Y-m-d');
                     $responsable = $_POST["responsable"];
                     $coordenadas = $_POST["coordenadas"];
                     $observaciones = $_POST["observaciones"];
@@ -116,7 +129,7 @@
                     //$Fecha = date('Y/m/d g:i');
 
                     $query = "UPDATE tbl_ordenes_trabajo SET codigoCliente=:codigoCliente, fechaOrdenTrabajo=:fechaOrdenTrabajo, tipoOrdenTrabajo=:tipoOrdenTrabajo, diaCobro=:diaCobro, nombreCliente=:nombreCliente,
-                    telefonos=:telefonos, idMunicipio=:idMunicipio, actividadInter=:idActividadInter, tipoServicio=:tipoServicio, saldoInter=:saldoInter, direccionInter=:direccionInter, fechaTrabajo=:fechaTrabajo, hora=:hora, fechaProgramacion=:fechaProgramacion, idTecnico=:idTecnico, observaciones=:observaciones, idVendedor=:idVendedor, tecnologia=:tecnologia, macModem=:macModem, serieModem=:serieModem, velocidad=:velocidad, rx=:rx, tx=:tx, snr=:snr, colilla=:colilla, marcaModelo=:marcaModelo, nodo=:nodo, coordenadas=:coordenadas, creadoPor=:creadoPor WHERE codigoCliente=:codigoCliente";
+                    telefonos=:telefonos, idMunicipio=:idMunicipio, actividadInter=:idActividadInter, tipoServicio=:tipoServicio, saldoInter=:saldoInter, direccionInter=:direccionInter, fechaTrabajo=:fechaTrabajo, hora=:hora, fechaProgramacion=:fechaProgramacion, idTecnico=:idTecnico, observaciones=:observaciones, idVendedor=:idVendedor, tecnologia=:tecnologia, macModem=:macModem, serieModem=:serieModem, velocidad=:velocidad, rx=:rx, tx=:tx, snr=:snr, colilla=:colilla, marcaModelo=:marcaModelo, nodo=:nodo, coordenadas=:coordenadas, creadoPor=:creadoPor WHERE idOrdenTrabajo=:idOrdenTrabajo";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
@@ -149,7 +162,8 @@
                                 ':nodo' => $nodo,
                                 ':idVendedor' => $vendedor,
                                 ':tipoServicio' => $tipoServicio,
-                                ':creadoPor' => $creadoPor
+                                ':creadoPor' => $creadoPor,
+                                ':idOrdenTrabajo' => $numeroOrden
                                 ));
 
                         //$numeroOrden = $this->dbConnect->lastInsertId();

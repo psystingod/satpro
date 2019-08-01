@@ -14,7 +14,9 @@
             if ($_POST['tipoServicio'] == 'C') {
                 try {
                     date_default_timezone_set('America/El_Salvador');
-                    $fechaOrden = date_format(date_create($_POST["fechaOrden"]), 'Y-m-d');
+                    $str = $_POST["fechaOrden"];
+                    $date = DateTime::createFromFormat('d/m/Y', $str);
+                    $fechaOrden = $date->format('Y-m-d');
                     $numeroOrden = $_POST["numeroSuspension"];
                     $diaCobro = $_POST["diaCobro"];
                     $codigoCliente = $_POST["codigoCliente"];
@@ -26,8 +28,10 @@
                     $tipoActividadCable = $_POST['tipoActividadCable']; //Motivo
                     $saldoCable = $_POST['saldoCable'];
                     $ordenaSuspension = $_POST['ordenaSuspensionCable'];
-                    $colilla = "Amarilla";
-                    $fechaSuspension = date_format(date_create($_POST["fechaSuspension"]), 'Y-m-d');
+                    $colilla = ucwords($_POST['colilla']);
+                    $str2 = $_POST["fechaSuspension"];
+                    $date2 = DateTime::createFromFormat('d/m/Y', $str2);
+                    $fechaSuspension = $date2->format('Y-m-d');
                     $responsable = $_POST["responsable"];
                     $mactv = $_POST["mactv"];
                     $observaciones = $_POST["observaciones"];
@@ -73,24 +77,27 @@
             else if ($_POST['tipoServicio'] == 'I') {
                 try {
                     date_default_timezone_set('America/El_Salvador');
-                    $fechaOrden = date_format(date_create($_POST["fechaOrden"]), 'Y-m-d');
+                    $str = $_POST["fechaOrden"];
+                    $date = DateTime::createFromFormat('d/m/Y', $str);
+                    $fechaOrden = $date->format('Y-m-d');
                     $numeroOrden = $_POST["numeroOrden"];
                     $codigoCliente = $_POST["codigoCliente"];
                     $tipoOrden = "Suspension";
                     $diaCobro = $_POST["diaCobro"];
-                    $diaCobro = $_POST["diaCobro"];
                     $nombreCliente = $_POST['nombreCliente'];
-                    $direccion = $_POST['direccion'];
+                    $direccion = $_POST['direccionCliente'];
                     //$telefonos = $_POST['telefonos'];
                     //$municipio = $_POST['municipio'];
-                    $tipoActividadInter = $_POST['tipoActividadInter']; //Motivo
+                    $tipoActividadInter = $_POST['tipoActividadInternet']; //Motivo
                     $saldoInter = $_POST['saldoInternet'];
                     $serieModem = $_POST['serieModem'];
                     $macModem = $_POST['macModem'];
                     $velocidad = $_POST['velocidad'];
                     $ordenaSuspension = $_POST['ordenaSuspensionInter'];
-                    $colilla = "Roja";
-                    $fechaSuspension = date_format(date_create($_POST["fechaSuspension"]), 'Y-m-d');
+                    $colilla = ucwords($_POST['colilla']);
+                    $str2 = $_POST["fechaSuspension"];
+                    $date2 = DateTime::createFromFormat('d/m/Y', $str2);
+                    $fechaSuspension = $date2->format('Y-m-d');
                     $responsable = $_POST["responsable"];
                     $observaciones = $_POST["observaciones"];
                     $tipoServicio = $_POST["tipoServicio"];

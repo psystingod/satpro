@@ -11,6 +11,7 @@
     $arrayVendedores = $data->getVendedores();
     $arrayActividadesC = $data->getActividadesCable();
     $arrayActividadesI = $data->getActividadesInter();
+    $arrayVelocidades = $data->getVelocidades();
 
     //include database connection
     require_once('../../php/connection.php');
@@ -26,7 +27,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT cod_cliente, nombre, telefonos, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, mac_modem, serie_modem, id_velocidad, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
+            $query = "SELECT cod_cliente, nombre, telefonos, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, mac_modem, serie_modem, id_velocidad, dire_telefonia, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia, saldoCable, saldoInternet FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -40,16 +41,16 @@
 
             /****************** DATOS GENERALES ***********************/
             date_default_timezone_set('America/El_Salvador');
-            $fechaOrdenTrabajo = date('Y-m-d');
+            $fechaOrdenTrabajo = date_format(date_create(date('Y-m-d')), 'd/m/Y');
             $idOrdenTrabajo = "";
             $tipoOrden = "Técnica";
-            $diaCobro = $row["diaCobro"];
+            $diaCobro = $row["dia_cobro"];
             $telefonos = $row["telefonos"];
             $codigoCliente = $row["cod_cliente"];
             $nombreCliente = $row['nombre'];
             $idMunicipio = $row["id_municipio"];
-            $saldoCable = $row["saldo_actual"];
-            $saldoInter = $row["saldo_actual"];
+            $saldoCable = $row["saldoCable"];
+            $saldoInter = $row["saldoInternet"];
             $direccionCable = $row["dire_cable"];
             $mactv = $row['mactv'];
             $direccionInter = $row["dire_internet"];
@@ -68,7 +69,7 @@
             $fechaProgramacion = "";
             $coordenadas = "";
             $observaciones = "";
-            $nodo = "";
+            $nodo = $row['dire_telefonia'];
             $idVendedor = "";
             $recepcionTv = "";
 
@@ -100,7 +101,8 @@
 
             /****************** DATOS GENERALES ***********************/
             $idOrdenTrabajo = $row["idOrdenTrabajo"];
-            $fechaOrdenTrabajo = $row["fechaOrdenTrabajo"];
+            $fechaOrdenTrabajo = date_format(date_create($row["fechaOrdenTrabajo"]), 'd/m/Y');
+            var_dump($fechaOrdenTrabajo);
             $tipoOrdenTrabajo = $row["tipoOrdenTrabajo"];
             $diaCobro = $row["diaCobro"];
             $codigoCliente = $row["codigoCliente"];
@@ -123,9 +125,9 @@
             $tx = $row['tx'];
             $snr = $row['snr'];
             $colilla = $row['colilla'];
-            $fechaTrabajo = $row['fechaTrabajo'];
+            $fechaTrabajo = date_format(date_create($row["fechaTrabajo"]), 'd/m/Y');
             $hora = $row['hora'];
-            $fechaProgramacion = $row['fechaProgramacion'];
+            $fechaProgramacion = date_format(date_create($row["fechaProgramacion"]), 'd/m/Y');
             $idTecnico = $row['idTecnico'];
             $mactv = $row['mactv'];
             $coordenadas = $row['coordenadas'];
@@ -350,8 +352,8 @@
                                          echo "<input id='tipoServicio' class='form-control input-sm' type='hidden' name='tipoServicio' value='{$tipoServicio}' readonly>";
                                       }
                                       else{
-                                         echo "<input id='creadoPor' class='form-control input-sm' type='hidden' name='creadoPor' value='{$_SESSION['nombres']}' . ' ' . '{$_SESSION['apellidos']}'>";
-                                         echo "<input id='tipoServicio' class='form-control input-sm' type='hidden' name='tipoServicio' value='' readonly>";
+                                         echo '<input id="creadoPor" class="form-control input-sm" type="hidden" name="creadoPor" value="'.$_SESSION['nombres'] . " " . $_SESSION['apellidos'].'"' . '>';
+                                         echo '<input id="tipoServicio" class="form-control input-sm" type="hidden" name="tipoServicio" value="" readonly>';
                                       }
                                       ?>
                                       <label for="fechaOrden">Fecha de orden</label>
@@ -489,7 +491,19 @@
                                   <div class="col-md-2">
                                       <br>
                                       <label for="velocidad">Velocidad</label>
-                                      <input id="velocidad" class="form-control input-sm internet" type="text" name="velocidad" value="<?php echo $velocidad; ?>" readonly>
+                                      <select id="velocidad" class="form-control input-sm internet" name="velocidad" disabled>
+                                          <option value="" selected>Seleccionar</option>
+                                          <?php
+                                          foreach ($arrayVelocidades as $key) {
+                                              if ($key['idVelocidad'] == $velocidad) {
+                                                  echo "<option value=".$key['idVelocidad']." selected>".strtoupper($key['nombreVelocidad'])."</option>";
+                                              }else {
+                                                  echo "<option value=".$key['idVelocidad'].">".strtoupper($key['nombreVelocidad'])."</option>";
+                                              }
+
+                                          }
+                                          ?>
+                                      </select>
                                   </div>
                                   <div class="col-md-1">
                                       <br>
@@ -586,10 +600,10 @@
                                           <option value="" selected>Seleccionar</option>
                                           <?php
                                           foreach ($arrayVendedores as $key) {
-                                              if ($key['nombreActividad'] == $idVendedor) {
-                                                  echo "<option value='".$key['idVendedor']."' selected>".$key['nombresVendedor'].$key['apellidosVendedor']."</option>";
+                                              if ($key['idVendedor'] == $idVendedor) {
+                                                  echo "<option value='".$key['idVendedor']."' selected>".$key['nombresVendedor']." ".$key['apellidosVendedor']."</option>";
                                               }else {
-                                                  echo "<option value='".$key['idVendedor']."'>".$key['nombresVendedor'].$key['apellidosVendedor']."</option>";
+                                                  echo "<option value='".$key['idVendedor']."'>".$key['nombresVendedor']." ".$key['apellidosVendedor']."</option>";
                                               }
                                           }
                                           ?>
