@@ -376,16 +376,19 @@
                             <td><button class="btn btn-danger btn-block"><i class="fas fa-sign-out-alt fa-2x"></i></button></td>
                             <td><button class="btn btn-success btn-block"><i class="fas fa-print fa-2x"></i></button></td>
                             <td><button class="btn btn-warning btn-block"><i class="far fa-edit fa-2x"></i></button></td>
-                            <td><button class="btn btn-primary btn-block" data-toggle="modal" data-target="#buscarCliente"><i class="fas fa-search fa-2x" accesskey="b"></i></button></td>
+                            <td><button class="btn btn-primary btn-block" data-toggle="modal" data-target="#buscarCliente"><i class="fas fa-user-plus fa-2x"></i></button></td>
                         </tr>
+
                         <tr>
                             <td><button class="btn btn-primary btn-block" style="font-size: 16px;">Contrato de cable</button></td>
                             <td><button class="btn btn-primary btn-block" style="font-size: 16px;">Contrato de internet</button></td>
                             <td><button class="btn btn-primary btn-block" style="font-size: 16px;">Estado de cuenta</button></td>
+                            <td><button class="btn btn-success btn-block"><i class="fas fa-user-edit fa-2x"></i></button></td>
                         </tr>
                         <tr>
                             <td><button class="btn btn-info btn-block" style="font-size: 16px; ;">Reporte</button></td>
                             <td colspan="2"><button class="btn btn-info btn-block" style="font-size: 16px; ;">Compromiso de internet</button></td>
+                            <td><button class="btn btn-danger btn-block"><i class="fas fa-save fa-2x"></i></button></td>
                         </tr>
                     </table>
                 </div>

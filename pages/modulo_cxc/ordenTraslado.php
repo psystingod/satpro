@@ -40,7 +40,7 @@
             /****************** DATOS GENERALES ***********************/
             date_default_timezone_set('America/El_Salvador');
             $fechaOrden = date_format(date_create(date('Y-m-d')), 'd/m/Y');
-            $idOrdenReconex = "";
+            $idOrdenTraslado = "";
             $tipoOrden = "Reconexion";
             $diaCobro = $row["dia_cobro"];
             //$ordenaSuspensionCable = "";
@@ -113,7 +113,7 @@
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
             /****************** DATOS GENERALES ***********************/
-            $idOrdenReconex = $row["idOrdenReconex"];
+            $idOrdenTraslado = $row["idOrdenReconex"];
             $fechaOrden = date_format(date_create($row["fechaOrden"]), 'd/m/Y');
             $tipoOrden = $row["tipoOrden"];
             $tipoReconexCable = $row["tipoReconexCable"];
@@ -170,7 +170,7 @@
         }
     }else {
         $fechaOrden = "";
-        $idOrdenReconex = "";
+        $idOrdenTraslado = "";
         $codigoCliente = "";
         $nombreCliente = "";
         $diaCobro = "";
@@ -346,9 +346,9 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <br>
-                        <div class="panel panel-success">
-                          <div class="panel-heading"><b>Orden de Reconexión</b> <span id="nombreOrden" class="label label-danger"></span></div>
-                          <form id="ordenReconexion" action="" method="POST">
+                        <div class="panel panel-info">
+                          <div class="panel-heading"><b>Orden de Traslado</b> <span id="nombreOrden" class="label label-danger"></span></div>
+                          <form id="ordenTraslado" action="" method="POST">
                           <div class="panel-body">
                               <div class="col-md-12">
                                   <button class="btn btn-default btn-sm" id="nuevaOrdenId" onclick="nuevaOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Nueva orden"><i class="far fa-file"></i></button>
@@ -378,8 +378,8 @@
                                          echo '<input id="tipoServicio" class="form-control input-sm" type="hidden" name="tipoServicio" value="" readonly>';
                                       }
                                       ?>
-                                      <label for="numeroReconexion  ">N° de reconexión</label>
-                                      <input id="numeroReconexion" class="form-control input-sm" type="text" name="numeroReconexion" value="<?php echo $idOrdenReconex; ?>" readonly>
+                                      <label for="numeroReconexion  ">N° de traslado</label>
+                                      <input id="numeroTraslado" class="form-control input-sm" type="text" name="numeroTraslado" value="<?php echo $idOrdenTraslado; ?>" readonly>
                                   </div>
                                   <div class="col-md-2">
                                       <br>
@@ -404,94 +404,84 @@
                               </div>
                               <div class="form-row">
                                   <div class="col-md-12">
-                                      <label for="telefonos">Telefonos</label>
-                                      <input id="telefonos" class="form-control input-sm" type="text" name="telefonos" value="<?php echo $telefonos; ?>" readonly>
+                                      <label for="direccionCliente">Dirección anterior</label>
+                                      <textarea class="form-control input-sm" name="direccionCliente" rows="2" cols="40" readonly><?php echo $direccion; ?></textarea>
                                   </div>
                               </div>
                               <div class="form-row">
                                   <div class="col-md-12">
-                                      <label for="direccionCliente">Dirección</label>
-                                      <textarea class="form-control input-sm" name="direccionCliente" rows="2" cols="40" readonly><?php echo $direccion; ?></textarea>
+                                      <label for="direccionTraslado">Dirección de traslado</label>
+                                      <textarea class="form-control input-sm" name="direccionTraslado" rows="2" cols="40" readonly><?php echo $direccionTraslado; ?></textarea>
+                                  </div>
+                              </div>
+                              <div class="form-row">
+                                  <div class="col-md-4">
+                                      <label for="departamento">Departamento</label>
+                                      <select id="departamento" class="form-control input-sm" name="departamento" disabled>
+                                          <option value="">Seleccionar</option>
+                                          <?php
+                                          foreach ($arrayDepartamentos as $key) {
+                                              if ($key['nombreActividad'] == $idDepartamento) {
+                                                  echo "<option value='".$key['nombreActividad']."' selected>".$key['nombreActividad']."</option>";
+                                              }else {
+                                                  echo "<option value='".$key['nombreActividad']."'>".$key['nombreActividad']."</option>";
+                                              }
+                                          }
+                                          ?>
+                                      </select>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <label for="municipio">Municipio</label>
+                                      <select id="municipio" class="form-control input-sm" name="municipio" disabled>
+                                          <option value="">Seleccionar</option>
+                                          <?php
+                                          foreach ($arrayMunicipios as $key) {
+                                              if ($key['nombreActividad'] == $idMunicipio) {
+                                                  echo "<option value='".$key['nombreActividad']."' selected>".$key['nombreActividad']."</option>";
+                                              }else {
+                                                  echo "<option value='".$key['nombreActividad']."'>".$key['nombreActividad']."</option>";
+                                              }
+                                          }
+                                          ?>
+                                      </select>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <label for="colonia">Barrio o colonia</label>
+                                      <select id="colonia" class="form-control input-sm" name="colonia" disabled>
+                                          <option value="">Seleccionar</option>
+                                          <?php
+                                          foreach ($arrayColonias as $key) {
+                                              if ($key['nombreActividad'] == $idColonia) {
+                                                  echo "<option value='".$key['nombreActividad']."' selected>".$key['nombreActividad']."</option>";
+                                              }else {
+                                                  echo "<option value='".$key['nombreActividad']."'>".$key['nombreActividad']."</option>";
+                                              }
+                                          }
+                                          ?>
+                                      </select>
                                   </div>
                               </div>
                               <div class="form-row">
                                   <div id="divCable" class="col-md-12">
                                       <h4 class="alert alert-info cable"><strong>Cable</strong></h4>
                                       <div class="row">
-                                          <div class="col-md-2">
-                                              <label for="fechaReconexCable">Fecha reconexión</label>
-                                              <input id="fechaReconexCable" class="form-control input-sm cable" type="text" name="fechaReconexCable" value="<?php echo $fechaReconexCable ?>" readonly>
-                                          </div>
-                                          <div class="col-md-2">
-                                              <label for="ultSusp">última suspensión</label>
-                                              <input id="ultSuspCable" class="form-control input-sm cable" type="text" name="ultSuspCable" value="<?php echo $ultSuspCable ?>" readonly>
-                                          </div>
-                                          <div class="col-md-3">
+                                          <div class="col-md-8">
                                               <label for="mactv">MAC TV</label>
                                               <input id="mactv" class="form-control input-sm cable" type="text" name="mactv" value="<?php echo $mactv ?>" readonly>
                                           </div>
-                                          <div class="col-md-2">
+                                          <div class="col-md-4">
                                               <label for="saldoCable">Saldo</label>
                                               <input id="saldoCable" class="form-control input-sm cable" type="text" name="saldoCable" value="<?php echo $saldoCable ?>" readonly>
-                                          </div>
-                                          <div class="col-md-3">
-                                              <label for="tipoReconexCable">Tipo de reconexión</label>
-                                              <select id="tipoReconexCable" class="form-control input-sm cable" name="tipoReconexCable" disabled>
-                                                  <option value="" selected>Seleccionar</option>
-                                                  <?php
-                                                  if ($tipoReconexCable == 'con contrato') {
-                                                      echo '<option value="con contrato" selected>Con contrato</option>';
-                                                      echo '<option value="menor a 5 dias">Reconexión menor a 5 días</option>';
-                                                  }else if ($tipoReconexCable == 'menor a 5 dias') {
-                                                      echo '<option value="con contrato">Con contrato</option>';
-                                                      echo '<option value="menor a 5 dias" selected>Reconexión menor a 5 días</option>';
-                                                  }else {
-                                                      echo '<option value="con contrato">Con contrato</option>';
-                                                      echo '<option value="menor a 5 dias">Reconexión menor a 5 días</option>';
-                                                  }
-                                                  ?>
-                                              </select>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="col-md-12">
-                                      <h4 class="alert alert-info"><strong>Internet</strong></h4>
-                                      <div class="row">
-                                          <div class="col-md-2">
-                                              <label for="fechaReconexInter">Fecha reconexión</label>
-                                              <input id="fechaReconexInter" class="form-control input-sm internet" type="text" name="fechaReconexInter" value="<?php echo $fechaReconexInter ?>" readonly>
-                                          </div>
-                                          <div class="col-md-2">
-                                              <label for="ultSusp">última suspensión</label>
-                                              <input id="ultSuspInter" class="form-control input-sm internet" type="text" name="ultSuspInter" value="<?php echo $ultSuspInter ?>" readonly>
-                                          </div>
-                                          <div class="col-md-4">
-                                              <label for="saldoInternet">Saldo</label>
-                                              <input id="saldoInternet" class="form-control input-sm internet" type="text" name="saldoInternet" value="<?php echo $saldoInter ?>" readonly>
-                                          </div>
-                                          <div class="col-md-4">
-                                              <label for="tipoReconexInter">Tipo de reconexión</label>
-                                              <select id="tipoReconexInter" class="form-control input-sm internet" name="tipoReconexInter" disabled>
-                                                  <option value="" selected>Seleccionar</option>
-                                                  <?php
-                                                  if ($tipoReconexInter == 'con contrato') {
-                                                      echo '<option value="con contrato" selected>Con contrato</option>';
-                                                      echo '<option value="menor a 5 dias">Reconexión menor a 5 días</option>';
-                                                  }else if ($tipoReconexInter == 'menor a 5 dias') {
-                                                      echo '<option value="con contrato">Con contrato</option>';
-                                                      echo '<option value="menor a 5 dias" selected>Reconexión menor a 5 días</option>';
-                                                  }else {
-                                                      echo '<option value="con contrato">Con contrato</option>';
-                                                      echo '<option value="menor a 5 dias">Reconexión menor a 5 días</option>';
-                                                  }
-                                                  ?>
-                                              </select>
                                           </div>
                                       </div>
                                   </div>
                               </div>
                               <div class="form-row">
-                                  <div class="col-md-4">
+                                  <div class="col-md-2">
+                                      <label for="saldoInternet">Saldo</label>
+                                      <input id="saldoInternet" class="form-control input-sm internet" type="text" name="saldoInternet" value="<?php echo $saldoInter ?>" readonly>
+                                  </div>
+                                  <div class="col-md-3">
                                       <label for="macModem">MAC del modem</label>
                                       <input id="macModem" class="form-control input-sm internet" type="text" name="macModem" value="<?php echo $macModem ?>" readonly>
                                   </div>
@@ -499,7 +489,7 @@
                                       <label for="serieModem">Serie del modem</label>
                                       <input id="serieModem" class="form-control input-sm internet" type="text" name="serieModem" value="<?php echo $serieModem ?>" readonly>
                                   </div>
-                                  <div class="col-md-4">
+                                  <div class="col-md-3">
                                       <label for="velocidad">Velocidad</label>
                                       <select id="velocidad" class="form-control input-sm internet" name="velocidad" disabled>
                                           <option value="" selected>Seleccionar</option>
@@ -519,7 +509,15 @@
 
                               </div>
                               <div class="form-row">
-                                  <div class="col-md-8">
+                                  <div class="col-md-2">
+                                      <label for="fechaTraslado">Fecha traslado</label>
+                                      <input id="fechaTraslado" class="form-control input-sm" type="text" name="fechaTraslado" value="<?php echo $fechaTraslado; ?>" readonly>
+                                  </div>
+                                  <div class="col-md-2">
+                                      <label for="telefonos">Teléfono reciente</label>
+                                      <input id="telefonos" class="form-control input-sm" type="text" name="telefonos" value="<?php echo $telefonos; ?>" readonly>
+                                  </div>
+                                  <div class="col-md-5">
                                       <label for="tecnico">Técnico</label>
                                       <select class="form-control input-sm" name="responsable" disabled>
                                           <option value="" selected>Seleccionar</option>
@@ -533,7 +531,7 @@
                                           ?>
                                       </select>
                                   </div>
-                                  <div class="col-md-4">
+                                  <div class="col-md-3">
                                       <label for="colilla">Colilla</label>
                                       <input id="colilla" class="form-control input-sm" type="text" name="colilla" value="<?php echo $colilla; ?>" readonly>
                                   </div>

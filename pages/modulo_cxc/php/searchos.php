@@ -10,23 +10,28 @@ $database = DB_NAME;
 $mysqli = new mysqli($host, $user, $password, $database);
 
 $salida = "";
-$query = "SELECT idOrdenSuspension, codigoCliente, nombreCliente, fechaOrden, observaciones FROM tbl_ordenes_suspension ORDER BY idOrdenSuspension LIMIT 0";
+$query = "SELECT idOrdenSuspension, codigoCliente, nombreCliente, direccion, fechaOrden, macModem, mactv, serieModem, observaciones FROM tbl_ordenes_suspension ORDER BY idOrdenSuspension LIMIT 0";
  if (isset($_POST['consulta'])) {
  	$q = $mysqli->real_escape_string($_POST['consulta']);
-	$query = "SELECT idOrdenSuspension, codigoCliente, nombreCliente, fechaOrden, observaciones FROM tbl_ordenes_suspension
-	WHERE idOrdenSuspension LIKE '%".$q."%' OR codigoCliente LIKE '%".$q."%' OR nombreCliente LIKE '%".$q."%' OR fechaOrden LIKE '%".$q."%' OR observaciones LIKE '%".$q."%' LIMIT 5";
+	$query = "SELECT idOrdenSuspension, codigoCliente, nombreCliente, direccion, fechaOrden, macModem, mactv, serieModem, observaciones FROM tbl_ordenes_suspension
+	          WHERE idOrdenSuspension LIKE '%".$q."%' OR codigoCliente LIKE '%".$q."%' OR nombreCliente LIKE '%".$q."%' OR direccion LIKE '%".$q."%' OR fechaOrden LIKE '%".$q."%'
+              OR macModem LIKE '%".$q."%' OR mactv LIKE '%".$q."%' OR serieModem LIKE '%".$q."%' OR observaciones LIKE '%".$q."%' LIMIT 5";
  }
 
  $resultado = $mysqli->query($query);
 
  if ($resultado->num_rows > 0) {
- 	$salida.="<br><table class='table table-striped table-responsive'>
+ 	$salida.="<br><table style='font-size:12px;' class='table table-striped table-responsive'>
 			    <thead>
 					<tr class='active'>
 						<th>#Orden</th>
 						<th>CODIGO CLIENTE</th>
 						<th>NOMBRE</th>
                         <th>FECHA ORDEN</th>
+                        <th>DIRECCION</th>
+                        <th>MAC MODEM</th>
+                        <th>SERIAL</th>
+                        <th>MAC TV</th>
                         <th>OBSERVACIONES</th>
 					</tr>
 				</thead>
@@ -37,6 +42,10 @@ $query = "SELECT idOrdenSuspension, codigoCliente, nombreCliente, fechaOrden, ob
 			<td>".$fila['codigoCliente']."</td>
 			<td>".$fila['nombreCliente']."</td>
             <td>".$fila['fechaOrden']."</td>
+            <td>".$fila['direccion']."</td>
+            <td>".$fila['macModem']."</td>
+            <td>".$fila['serieModem']."</td>
+            <td>".$fila['mactv']."</td>
             <td>".$fila['observaciones']."</td>
 		</tr>";
 	}
