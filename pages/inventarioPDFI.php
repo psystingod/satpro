@@ -26,7 +26,6 @@
             foreach( $showInventoryTranslateReport as $res)
           {
             date_default_timezone_set('America/El_Salvador');
-
             $content .=
                        '<tr>
                        <td COLSPAN="2" width="150" HEIGHT="20" >Nombre de Empleado:</td>
@@ -59,7 +58,7 @@
                          ';
                foreach( $showInventoryTranslateReport as $res)
                  {
-            
+
                    $content .=
                        '<tr>
                             <td colspan="6" width="85" HEIGHT="5" align="center" >'.  $res["Marca"] .'</td>
@@ -87,7 +86,6 @@
                                 $content .=
                                 '</td>
                                 <td COLSPAN="2" width="90" HEIGHT="5" align="center">'.  $res["Descripcion"].'</td>
-
                         </tr>
                       ';
                    }

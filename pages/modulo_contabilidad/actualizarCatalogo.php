@@ -262,6 +262,7 @@ if($_POST)
     }
 }
 ?>
+
  <h1 class="page-header alert alert-info">Actualmente Mirando Cuenta: <?php echo htmlspecialchars($IdCuenta, ENT_QUOTES);  ?></h1>
                     <?php
                     if (isset($_GET['status'])) {

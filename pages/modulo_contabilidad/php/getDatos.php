@@ -9,6 +9,8 @@
         {
             parent::__construct ();
         }
+
+
         public function getCuentaTipo()
         {
             try {
@@ -27,7 +29,6 @@
         public function getCatalogo()
         {
             try {
-
                   $query = "SELECT * FROM tbl_cuentas_flujo as cf inner join tbl_CuentaTipo as ct on cf.tipo_cuenta=ct.IdCuentaTipo";
                           $statement = $this->dbConnect->prepare($query);
                           $statement->execute();
@@ -39,11 +40,12 @@
             }
         }
 
-        public function getCategoria()
+
+        public function getNumeroPartida()
         {
             try {
 
-                  $query = "select * from tbl_categoria";
+                  $query = "select count(*) + 1 as Cantidad from tbl_partidas";
                           $statement = $this->dbConnect->prepare($query);
                           $statement->execute();
                           $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -54,39 +56,11 @@
             }
         }
 
-        public function getUnidadMedida()
+        public function getPartidas()
         {
             try {
 
-                  $query = "select * from tbl_unidadmedida";
-                          $statement = $this->dbConnect->prepare($query);
-                          $statement->execute();
-                          $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                          return $result;
-            } catch (Exception $e) {
-                print "!Error¡: " . $e->getMessage() . "</br>";
-                die();
-            }
-        }
-        public function getDepartamentos()
-        {
-            try {
-
-                  $query = "SELECT * FROM tbl_departamento";
-                          $statement = $this->dbConnect->prepare($query);
-                          $statement->execute();
-                          $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                          return $result;
-            } catch (Exception $e) {
-                print "!Error¡: " . $e->getMessage() . "</br>";
-                die();
-            }
-        }
-        public function getTipo()
-        {
-            try {
-
-                  $query = "SELECT * FROM tbl_tipoproducto";
+                  $query = "SELECT * FROM satpro.tbl_partidas";
                           $statement = $this->dbConnect->prepare($query);
                           $statement->execute();
                           $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -97,11 +71,11 @@
             }
         }
 
-        public function getPlazas()
+        public function getBalanceComprobacion()
         {
             try {
 
-                  $query = "SELECT * from tbl_plazas";
+                  $query = "SELECT * FROM satpro.tbl_balanceComprobacion as bc inner join tbl_cuentas_flujo as cf on bc.idcuenta= cf.id_cuenta";
                           $statement = $this->dbConnect->prepare($query);
                           $statement->execute();
                           $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -111,9 +85,5 @@
                 die();
             }
         }
-
-
-
-
     }
 ?>

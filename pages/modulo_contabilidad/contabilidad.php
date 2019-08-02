@@ -143,7 +143,6 @@
         </nav>
 
         <div id="page-wrapper">
-
             <!-- /.row -->
             <div class="row">
                 <div class="col-lg-12">
@@ -166,6 +165,26 @@
                             <div class="stat-values">
                                 <br>
                                 <div class="name">Partidas</div>
+                            </div>
+                        </div></a>
+                    </div>
+                    <div class="row">
+                        <a data-toggle="modal" data-target="#VerBalance" ><div class="col-lg-6 btn btn-default">
+                            <div class="stat-icon">
+                              <i class="fas fa-clipboard-list fa-3x"></i>
+                            </div>
+                            <div class="stat-values">
+                                <br>
+                                <div class="name">Balance de Comprobación</div>
+                            </div>
+                        </div></a>
+                        <a href=""><div class="col-lg-6 btn btn-default">
+                            <div class="stat-icon">
+                                <i class="fas fa-book fa-3x"></i>
+                            </div>
+                            <div class="stat-values">
+                                <br>
+                                <div class="name">Libro de Iva</div>
                             </div>
                         </div></a>
                     </div>
@@ -198,6 +217,62 @@
 
     </div>
     <!-- /#wrapper -->
+
+
+    <!-- Add modal -->
+
+    <div class="modal fade" id="VerBalance" tabindex="-1" role="dialog" aria-labelledby="VerBalance">
+          <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                      <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="Balance Comprobación">Balance Comprobación</h4>
+                      </div>
+                      <form action="balanceComprobacionPDF.php" method="POST">
+                      <div class="modal-body">
+                                  <div class="form-row">
+                                      <div class="form-group col-md-4 col-xs-4">
+                                          <label for="codigo">Tipo de cuentas:</label>
+                                          <input type="number" min="0" class="form-control" name="C_Cuenta" id="C_Cuenta" placeholder="Codigo Cuenta" required>
+                                      </div>
+                                      <div class="form-group col-md-4 col-xs-4">
+                                          <label for="nombre">Mes</label>
+                                          <select class="form-control form-control-lg" name="CuentaTipo" title="Escribe solamente letras y números" required>
+                                             <option value="" selected="selected">Seleccionar...</option>
+                                              <option value="1" >Enero</option>;
+                                              <option value="2" >Febrero</option>;
+                                              <option value="3" >Marzo</option>;
+                                              <option value="4" >Abril</option>;
+                                              <option value="5" >Mayo</option>;
+                                              <option value="6" >Junio</option>;
+                                              <option value="7" >Julio</option>;
+                                              <option value="8" >Agosto</option>;
+                                              <option value="9" >Septiembre</option>;
+                                              <option value="10" >Octubre</option>;
+                                              <option value="11" >Noviembre</option>;
+                                              <option value="12" >Diciembre</option>;
+                                         </select>
+                                      </div>
+                                      <div class="form-group col-md-4 col-xs-4">
+                                          <label for="nombre">Año:</label>
+                                          <select class="form-control form-control-lg" name="CuentaTipo" title="Escribe solamente letras y números" required>
+                                             <option value="" selected="selected">Seleccionar...</option>
+                                              <option value="1" >2017</option>;
+                                              <option value="2" >2018</option>;
+                                              <option value="3" >2019</option>;
+                                         </select>
+                                      </div>
+                                  </div>
+
+                      </div>
+                      <div class="modal-footer">
+                            <button type="button" name="Action1" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            <input type="submit" name="Action2" class="btn btn-primary" value="Agregar">
+                      </div>
+                           </form>
+                </div>
+          </div>
+    </div><!-- /Add modal -->
 
     <!-- jQuery -->
     <script src="../../vendor/jquery/jquery.min.js"></script>
