@@ -613,8 +613,9 @@
   </script>
 
   <script type="text/javascript">
-  var permisos = <?php echo $_SESSION["permisosTotales"]; ?>;</script>
-  <script src="../js/permisos.js"></script>
+  var permisos = <?php echo $_SESSION["permisosTotales"]; ?>;
+</script>
+  <!-- <script src="../js/permisos.js"></script> -->
 
   <script type="text/javascript">
     function Actualizacion(Nombre,Cantidad,Bodega,Id)
