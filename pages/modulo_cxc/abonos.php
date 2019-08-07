@@ -159,13 +159,22 @@
                                   </div>
                               </div>
                               <div class="form-row">
+                                  <div class="col-md-6">
+                                      <label for="nRecibo">Crédito fiscal</label>
+                                      <input class="form-control input-sm" type="checkbox" name="tipoComprobante" readonly>
+                                  </div>
+                                  <div class="col-md-6">
+                                      <label for="nRecibo">Consumidor final</label>
+                                      <input class="form-control input-sm" type="checkbox" name="tipoComprobante" readonly>
+                                  </div>
+                              </div>
+                              <div class="form-row">
                                   <div class="col-md-2">
-                                      <br>
                                       <label for="nRecibo">N° de recibo</label>
                                       <input class="form-control input-sm" type="text" name="nRecibo" readonly>
                                   </div>
                                   <div class="col-md-4">
-                                      <br>
+
                                       <label for="numeroOrden">Zona</label>
                                       <select class="form-control input-sm" name="zona" readonly>
                                           <?php
@@ -174,7 +183,7 @@
                                       </select>
                                   </div>
                                   <div class="col-md-4">
-                                      <br>
+
                                       <label for="numeroOrden">Cobrador</label>
                                       <select class="form-control input-sm" name="cobrador" readonly>
                                           <?php
@@ -183,34 +192,34 @@
                                       </select>
                                   </div>
                                   <div class="col-md-2">
-                                      <br>
+
                                       <label for="codCobrador">Cód cobrador</label>
                                       <input class="form-control input-sm" type="text" name="codCobrador" value="" readonly>
                                   </div>
                               </div>
                               <div class="form-row">
                                   <div class="col-md-2">
-                                      <br>
+
                                       <label for="claseOrden">Fecha del abono</label>
                                       <input class="form-control input-sm input-sm" name="fechaAbono" type="text" value= "<?php echo date('d/m/Y'); ?>" readonly>
                                   </div>
                                   <div class="col-md-2">
-                                      <br>
+
                                       <label for="telefonos">Código</label>
                                       <input class="form-control input-sm input-sm" type="text" name="telefonos" readonly>
                                   </div>
                                   <div class="col-md-4">
-                                      <br>
+
                                       <label for="nombreCliente">Nombre del cliente</label>
                                       <input class="form-control input-sm input-sm" type="text" name="nombreCliente" value="Diego Armando Herrera Flores" readonly>
                                   </div>
                                   <div class="col-md-2">
-                                      <br>
+
                                       <label for="nrc">NRC</label>
                                       <input class="form-control input-sm input-sm" type="text" name="nrc" readonly>
                                   </div>
                                   <div class="col-md-2">
-                                      <br>
+
                                       <label for="servicio">Servicio</label>
                                       <select class="form-control input-sm" name="servicio" readonly>
                                           <?php
@@ -221,12 +230,12 @@
                               </div>
                               <div class="form-row">
                                   <div class="col-md-2">
-                                      <br>
+
                                       <label for="macModem">Valor de la cuota</label>
                                       <input class="form-control input-sm" type="text" name="valorCuota" readonly>
                                   </div>
                                   <div class="col-md-10">
-                                      <br>
+
                                       <label for="serieModem">Dirección</label>
                                       <input class="form-control input-sm" type="text" name="serieModem" readonly>
                                   </div>
@@ -234,51 +243,51 @@
                               </div>
                               <div class="form-row">
                                   <div class="col-md-2">
-                                      <br>
+
                                       <label for="formaPago">Forma de pago</label>
                                       <select class="form-control input-sm" type="text" name="formaPago" readonly>
                                           <option value="">Efectivo</option>
                                       </select>
                                   </div>
                                   <div class="col-md-2">
-                                      <br>
+
                                       <label for="hora">Total a pagar</label>
                                       <input class="form-control input-sm" type="text" name="hora" readonly>
                                   </div>
                                   <div class="col-md-1">
-                                      <br>
+
                                       <label for="porImp">% imp</label>
                                       <input class="form-control input-sm" type="text" name="porImp" readonly>
                                   </div>
                                   <div class="col-md-2">
-                                      <br>
+
                                       <label for="impSeg">Impusto seguridad</label>
                                       <input type="text" class="form-control input-sm" name="impSeg" readonly>
                                   </div>
                                   <div class="col-md-2">
-                                      <br>
+
                                       <label for="totalAbono">Total a abonar</label>
                                       <input class="form-control input-sm" type="text" name="totalAbono" readonly>
                                   </div>
                                   <div class="col-md-3">
-                                      <br>
+
                                       <label for="totalAbonoImpSeg">Con Impuesto de seguridad</label>
                                       <input type="text" class="form-control input-sm alert-danger" name="totalAbonoImpSeg" value="0.00" style="color:red; font-weight:bold;">
                                   </div>
                               </div>
                               <div class="form-row">
                                   <div class="col-md-7">
-                                      <br>
+
                                       <label for="concepto">Concepto</label>
                                       <input class="form-control input-sm" type="text" name="concepto" readonly>
                                   </div>
                                   <div class="col-md-2">
-                                      <br>
+
                                       <label for="diaCobro">Día cobro</label>
                                       <input class="form-control input-sm" type="text" name="diaCobro" readonly>
                                   </div>
                                   <div class="col-md-3">
-                                      <br>
+
                                       <label for="cuotaImpuesto">Cuota/solo impuesto</label>
                                       <select class="form-control input-sm" type="text" name="cuotaImpuesto" readonly>
                                           <option value="">Solo impuesto</option>
@@ -287,7 +296,7 @@
                               </div>
                               <div class="form-row">
                                   <div class="col-md-9">
-                                      <br>
+
                                       <input class="" type="radio" name="aplicarIS" value="5">
                                       <label for="5">5%</label>
                                       <input class="" type="radio" name="aplicarIS" value="10">
@@ -296,14 +305,14 @@
                                       <label for="5">Excento</label>
                                   </div>
                                   <div class="col-md-3">
-                                      <br>
+
                                       <input class="" type="checkbox" name="anularComp">
                                       <label for="5">Anular comprobante</label>
                                   </div>
                               </div>
                               <div class="form-row">
                                   <div class="col-md-12">
-                                      <br>
+                                      
                                       <table class="table table-hover table-striped">
                                           <tr class="">
                                               <th class="bg-success">Abonar?</th>
