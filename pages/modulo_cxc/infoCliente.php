@@ -296,7 +296,9 @@
  ?>
  <?php
  require_once 'php/GetAllInfo.php';
+ require_once 'php/getData.php';
  $data = new GetAllInfo();
+ $data2 = new OrdersInfo();
  $arrDepartamentos = $data->getData('tbl_departamentos_cxc');
  $arrMunicipios = $data->getData('tbl_municipios_cxc');
  $arrColonias = $data->getData('tbl_colonias_cxc');
@@ -499,7 +501,7 @@
                         <tr>
                             <td><button class="btn btn-primary btn-block" style="font-size: 16px;">Contrato de cable</button></td>
                             <td><button class="btn btn-primary btn-block" style="font-size: 16px;">Contrato de internet</button></td>
-                            <td><button class="btn btn-primary btn-block" style="font-size: 16px;">Estado de cuenta</button></td>
+                            <td><a href="estadoCuenta.php?codigoCliente=<?php echo $codigo; ?>" target="_blank"><button class="btn btn-primary btn-block" style="font-size: 16px;">Estado de cuenta</button></a></td>
                             <td><button id="btn-editar" onclick="editarCliente();" class="btn btn-success btn-block" title="Editar"><i class="fas fa-user-edit fa-2x"></i></button></td>
                         </tr>
                <form id="formClientes" class="" action="#" method="POST">
@@ -1356,8 +1358,8 @@
                                                             echo $key["tipoOrden"] . "</td><td>";
                                                             echo $key["fechaOrden"] . "</td><td>";
                                                             echo $key["fechaSuspension"] . "</td><td>";
-                                                            echo $key["actividadCable"] . "</td><td>";
-                                                            echo $key["actividadInter"] . "</td><tr>";
+                                                            echo $data2->getAcById($key["actividadCable"]) . "</td><td>";
+                                                            echo $data2->getAiById($key["actividadInter"]) . "</td><tr>";
                                                         }
                                                     ?>
                                                 </tbody>
@@ -1375,9 +1377,8 @@
                                                         <th>N° de orden</th>
                                                         <th>Tipo de orden</th>
                                                         <th>Fecha de orden</th>
-                                                        <th>Fecha realizada</th>
-                                                        <th>Actividad cable</th>
-                                                        <th>Actividad internet</th>
+                                                        <th>Fecha realizada Cable</th>
+                                                        <th>Fecha realizada Internet</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
@@ -1388,8 +1389,8 @@
                                                             echo $key["tipoOrden"] . "</td><td>";
                                                             echo $key["fechaOrden"] . "</td><td>";
                                                             echo $key["fechaSuspension"] . "</td><td>";
-                                                            echo $key["actividadCable"] . "</td><td>";
-                                                            echo $key["actividadInter"] . "</td><tr>";
+                                                            echo $key["fechaReconexCable"] . "</td><td>";
+                                                            echo $key["fechaReconexInter"] . "</td><tr>";
                                                         }
                                                     ?>
                                                 </tbody>
