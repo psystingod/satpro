@@ -1,7 +1,6 @@
 <?php
 
     session_start();
-
     // get passed parameter value, in this case, the record ID
     // isset() is a PHP function used to verify if a value is there or not
     if (isset($_GET['id'])) {
@@ -33,7 +32,7 @@
             $nContrato = $row["numero_contrato"];
             $nFactura = $row["num_factura"];
             $nombre = trim(ucwords(strtolower($row['nombre'])));
-            //$empresa = $row["empresa"];
+            $empresa = $row["empresa"];
             $nRegistro = $row["num_registro"];
             $dui = trim(ucwords(strtolower($row['numero_dui'])));
             $lugarExp = trim(ucwords(strtolower($row['lugar_exp'])));
@@ -49,10 +48,12 @@
             $ocupacion = $row['profesion'];
             $cuentaContable = $row['id_cuenta'];
             $formaFacturar = $row['forma_pago']; //Contado o al crédito
+            $saldoCable = $row['saldoCable'];
+            $saldoInter = $row['saldoInternet'];
             $saldoActual = $row['saldo_actual'];
             $diasCredito = $row['dias_credito'];
             $limiteCredito = $row['limite_credito'];
-            $tipoFacturacion = $row['tipo_facturacion']; //Credito fiscal o consumidor final
+            $tipoComprobante = $row['tipo_comprobante']; //Credito fiscal o consumidor final
             $facebook = $row['facebook'];
             $correo = $row['correo_electronico'];
 
@@ -81,23 +82,28 @@
             $prepago = $row['prepago'];
             $tipoComprobante = $row['tipo_comprobante'];
             $tipoServicio = $row['tipo_servicio'];
+            $mactv = $row['mactv'];
             $periodoContratoCable = $row['periodo_contrato_ca'];
             $vencimientoCable = $row['vencimiento_ca'];
-            if (strlen($row['fecha_reinstalacion']) < 8) {
-                $fechaInstalacionCable = "";
+            if (strlen($row['fecha_instalacion']) < 8) {
+                $fechaInstalacion = "";
             }else {
-                $fechaInstalacionCable = date_format(date_create($row['fecha_instalacion']), "d/m/Y");
+                $fechaInstalacion = DateTime::createFromFormat('d/m/Y', $row['fecha_instalacion']);
+                $fechaInstalacion = $fechaInstalacion->format('d/m/Y');
             }
+
             if (strlen($row['fecha_suspencion']) < 8) {
                 $fechaSuspensionCable = "";
             }else {
-                $fechaSuspensionCable = date_format(date_create($row['fecha_suspencion']), "d/m/Y");
+                $fechaSuspensionCable = DateTime::createFromFormat('d/m/Y', $row['fecha_suspencion']);
+                $fechaSuspensionCable = $fechaSuspensionCable->format('d/m/Y');
             }
 
             if (strlen($row['fecha_reinstalacion']) < 8) {
                 $fechaReinstalacionCable = "";
             }else {
-                $fechaReinstalacionCable = date_format(date_create($row['fecha_reinstalacion']), "d/m/Y");
+                $fechaReinstalacionCable = DateTime::createFromFormat('d/m/Y', $row['fecha_reinstalacion']);
+                $fechaReinstalacionCable = $fechaReinstalacionCable->format('d/m/Y');
             }
             $tecnicoCable = $row['id_tecnico'];
             $direccionCable = $row['dire_cable'];
@@ -107,17 +113,18 @@
             if (strlen($row['fecha_instalacion_in']) < 8) {
                 $fechaInstalacionInter = "";
             }else {
-                $fechaInstalacionInter = date_format(date_create($row['fecha_instalacion_in']), "d/m/Y");
+                $fechaInstalacionInter = DateTime::createFromFormat('d/m/Y', $row['fecha_instalacion_in']);
+                $fechaInstalacionInter = $fechaInstalacionInter->format('d/m/Y');
             }
 
             if (strlen($row['fecha_primer_factura_in']) < 8) {
                 $fechaPrimerFacturaInter = "";
             }else {
-                $fechaPrimerFacturaInter = date_format(date_create($row['fecha_primer_factura_in']), "d/m/Y");
+                $fechaPrimerFacturaInter = DateTime::createFromFormat('d/m/Y', $row['fecha_primer_factura_in']);
+                $fechaPrimerFacturaInter = $fechaPrimerFacturaInter->format('d/m/Y');
             }
 
             $tipoServicioInternet = $row['tipo_servicio_in'];
-            $nodo = $row['dire_telefonia'];
             $periodoContratoInternet = $row['periodo_contrato_int'];
             $diaCobroInter = $row['dia_corbo_in'];
             $velocidadInter = $row['id_velocidad'];
@@ -128,51 +135,58 @@
             if (strlen($row['vencimiento_in']) < 8) {
                 $vencimientoInternet = "";
             }else {
-                $vencimientoInternet = date_format(date_create($row['vencimiento_in']), "d/m/Y");
+                $vencimientoInternet = DateTime::createFromFormat('d/m/Y', $row['vencimiento_in']);
+                $vencimientoInternet = $vencimientoInternet->format('d/m/Y');
             }
 
             if (strlen($row['ult_ren_in']) < 8) {
                 $ultimaRenovacionInternet = "";
             }else {
-                $ultimaRenovacionInternet = date_format(date_create($row['ult_ren_in']), "d/m/Y");
+                $ultimaRenovacionInternet = DateTime::createFromFormat('d/m/Y', $row['ult_ren_in']);
+                $ultimaRenovacionInternet = $ultimaRenovacionInternet->format('d/m/Y');
             }
 
             if (strlen($row['fecha_suspencion_in']) < 8) {
                 $fechaSuspencionInternet = "";
             }else {
-                $fechaSuspencionInternet = date_format(date_create($row['fecha_suspencion_in']), "d/m/Y");
+                $fechaSuspencionInternet = DateTime::createFromFormat('d/m/Y', $row['fecha_suspencion_in']);
+                $fechaSuspencionInternet = $fechaSuspencionInternet->format('d/m/Y');
             }
 
             if (strlen($row['fecha_reconexion_in']) < 8) {
                 $fechaReconexionInternet = "";
             }else {
-                $fechaReconexionInternet = date_format(date_create($row['fecha_reconexion_in']), "d/m/Y");
+                $fechaReconexionInternet = DateTime::createFromFormat('d/m/Y', $row['fecha_reconexion_in']);
+                $fechaReconexionInternet = $fechaReconexionInternet->format('d/m/Y');
             }
 
             $promocion = $row['id_promocion'];
             if (strlen($row['dese_promocion_in']) < 8) {
                 $promocionDesde = "";
             }else {
-                $promocionDesde = date_format(date_create($row['dese_promocion_in']), "d/m/Y");
+                $promocionDesde = DateTime::createFromFormat('d/m/Y', $row['dese_promocion_in']);
+                $promocionDesde = $promocionDesde->format('d/m/Y');
             }
 
             if (strlen($row['hasta_promocion_in']) < 8) {
                 $promocionHasta = "";
             }else {
-                $promocionHasta = date_format(date_create($row['hasta_promocion_in']), "d/m/Y");
+                $promocionHasta = DateTime::createFromFormat('d/m/Y', $row['hasta_promocion_in']);
+                $promocionHasta = $promocionHasta->format('d/m/Y');
             }
             $cuotaPromocion = $row['cuota_promocion'];
             $direccionInternet = $row['dire_internet'];
+            $tecnicoInternet = $row['id_tecnico_in'];
             $colilla = $row['colilla'];
             $modelo = $row['marca_modem'];
             $recepcion = $row['recep_modem'];
             $wanip = $row['wanip'];
             $mac = $row['mac_modem'];
             $transmision = $row['trans_modem'];
-            //$coordenadas = $row['coordenadas'];
+            $coordenadas = $row['coordenadas'];
             $serie = $row['serie_modem'];
             $ruido = $row['ruido_modem'];
-            $nodo = "";
+            $nodo = $row['dire_telefonia'];
             $wifiClave = $row['clave_modem'];
         }
 
@@ -189,7 +203,7 @@
         $nContrato = "";
         $nFactura = "";
         $nombre = "";
-        //$empresa = $row["empresa"];
+        $empresa = "";
         $nRegistro = "";
         $dui = "";
         $lugarExp = "";
@@ -231,13 +245,14 @@
         $fechaInstalacion = "";
         $fechaPrimerFactura = "";
         $fechaSuspensionCable = "";
-        $exento = "";
+        $exento = "F";
         $diaCobro = "";
-        $cortesia = "";
+        $cortesia = "F";
         $cuotaMensualCable = "";
         $prepago = "";
         $tipoComprobante = "";
         $tipoServicio = "";
+        $mactv = "";
         $periodoContratoCable = "";
         $vencimientoCable = "";
         $fechaInstalacionCable = "";
@@ -273,7 +288,7 @@
         $wanip = "";
         $mac = "";
         $transmision = "";
-        //$coordenadas = $row['coordenadas'];
+        $coordenadas = "";
         $serie = "";
         $ruido = "";
         $wifiClave = "";
@@ -291,10 +306,13 @@
  $arrServicioCable = $data->getData('tbl_servicios_cable');
  $arrServicioInter = $data->getData('tbl_servicios_inter');
  $arrVelocidad = $data->getData('tbl_velocidades');
+ $arrTecnicos = $data->getData('tbl_tecnicos_cxc');
  $arrTecnologias = $data->getData('tbl_tecnologias');
  $arrTiposClientes = $data->getData('tbl_tipos_clientes');
  //Array de ordenes de trabajo por cliente
  $arrOrdenesTrabajo = $data->getDataOrders('tbl_ordenes_trabajo', $codigo);
+ $arrOrdenesSuspension = $data->getDataOrders('tbl_ordenes_suspension', $codigo);
+ $arrOrdenesReconex = $data->getDataOrders('tbl_ordenes_reconexion', $codigo);
  ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -475,14 +493,14 @@
                             <td><button class="btn btn-danger btn-block"><i class="fas fa-sign-out-alt fa-2x"></i></button></td>
                             <td><button class="btn btn-success btn-block"><i class="fas fa-print fa-2x"></i></button></td>
                             <td><button class="btn btn-warning btn-block"><i class="far fa-edit fa-2x"></i></button></td>
-                            <td><button id="btn-nuevo" onclick="nuevoCliente();" class="btn btn-primary btn-block"><i class="fas fa-user-plus fa-2x"></i></button></td>
+                            <td><button id="btn-nuevo" onclick="nuevoCliente();" class="btn btn-primary btn-block" title="Nuevo"><i class="fas fa-user-plus fa-2x"></i></button></td>
                         </tr>
 
                         <tr>
                             <td><button class="btn btn-primary btn-block" style="font-size: 16px;">Contrato de cable</button></td>
                             <td><button class="btn btn-primary btn-block" style="font-size: 16px;">Contrato de internet</button></td>
                             <td><button class="btn btn-primary btn-block" style="font-size: 16px;">Estado de cuenta</button></td>
-                            <td><button id="btn-editar" class="btn btn-success btn-block"><i class="fas fa-user-edit fa-2x"></i></button></td>
+                            <td><button id="btn-editar" class="btn btn-success btn-block" title="Editar"><i class="fas fa-user-edit fa-2x"></i></button></td>
                         </tr>
                <form id="formClientes" class="" action="#" method="POST">
 
@@ -490,7 +508,7 @@
                         <tr>
                             <td><button class="btn btn-info btn-block" style="font-size: 16px; ;">Reporte</button></td>
                             <td colspan="2"><button class="btn btn-info btn-block" style="font-size: 16px; ;">Compromiso de internet</button></td>
-                            <td><button id="btn-guardar" class="btn btn-danger btn-block" disabled><i class="fas fa-save fa-2x"></i></button></td>
+                            <td><button id="btn-guardar" class="btn btn-danger btn-block" title="Guardar" disabled><i class="fas fa-save fa-2x"></i></button></td>
                         </tr>
                     </table>
                 </div>
@@ -521,9 +539,9 @@
                         else {
                             echo "<tr class='info'>
                                 <th>TV</th>
-                                <td><label class='switch'><input class='switch' type='radio' name ='cable' value='activo' disabled><span class='slider round'></span></label></td>
-                                <td><label class='switch'><input class='switch' type='radio' name ='cable' value='suspendido' disabled><span class='slider round'></span></label></td>
-                                <td><label class='switch'><input class='switch' type='radio' name ='cable' value='sin' checked disabled><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input class='switch' type='radio' name ='cable' value='activo' disabled required><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input class='switch' type='radio' name ='cable' value='suspendido' disabled required><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input class='switch' type='radio' name ='cable' value='sin' checked disabled required><span class='slider round'></span></label></td>
                             </tr>";
                         }
                         if ($estado_internet == 1) {
@@ -545,9 +563,9 @@
                         else {
                             echo "<tr class='success'>
                                 <th>Internet</th>
-                                <td><label class='switch'><input id='activoInter' class='switch' type='radio' name='internet' value='activo' disabled><span class='slider round'></span></label></td>
-                                <td><label class='switch'><input id='suspendidoInter' class='switch' type='radio' name='internet' value='suspendido' disabled><span class='slider round'></span></label></td>
-                                <td><label class='switch'><input id='sinInter' class='switch' type='radio' name='internet' value='sin' checked disabled><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input id='activoInter' class='switch' type='radio' name='internet' value='activo' disabled required><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input id='suspendidoInter' class='switch' type='radio' name='internet' value='suspendido' disabled required><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input id='sinInter' class='switch' type='radio' name='internet' value='sin' checked disabled required><span class='slider round'></span></label></td>
                             </tr>";
                         }
                         echo "<tr class='warning'>
@@ -606,13 +624,23 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-9">
                                             <label for="empresa">Empresa</label>
-                                            <input class="form-control input-sm" type="text" name="empresa" value="" readonly>
+                                            <input class="form-control input-sm" type="text" name="empresa" value="<?php echo $empresa; ?>" readonly>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="ncr">Número de registro</label>
+                                            <input class="form-control input-sm" type="text" name="nrc" value="<?php echo $nRegistro; ?>" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <label for="saldoCable">Saldo actual cable</label>
+                                            <input class="form-control input-sm" type="text" name="saldoCable" value="<?php echo $saldoCable; ?>" readonly>
                                         </div>
                                         <div class="col-md-6">
-                                            <label for="ncr">Número de registro</label>
-                                            <input class="form-control input-sm" type="text" name="ncr" value="<?php echo $nRegistro; ?>" readonly>
+                                            <label for="saldoInternet">Saldo actual internet</label>
+                                            <input class="form-control input-sm" type="text" name="saldoInternet" value="<?php echo $saldoInter; ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -739,6 +767,7 @@
                                             <select class="form-control input-sm" name="tipoComprobante" disabled>
                                                 <option value="" selected>Seleccionar</option>
                                                 <?php
+
                                                 foreach ($arrComprobantes as $key) {
                                                     if ($key['idComprobante'] == $tipoComprobante) {
                                                         echo "<option value=".$key['idComprobante']." selected>".$key['nombreComprobante']."</option>";
@@ -875,25 +904,21 @@
                                         <div id="collapseTwo1" class="collapse" role="tabpanel" aria-labelledby="headingTwo1" data-parent="#accordionEx1">
                                           <div class="card-body">
                                               <div class="row">
-                                                  <div class="col-md-2">
+                                                  <div class="col-md-3">
                                                       <label for="fechaInstalacionCable">Fecha de instalación</label>
                                                       <input class="form-control input-sm" type="text" name="fechaInstalacionCable" value="<?php echo $fechaInstalacion; ?>" readonly>
                                                   </div>
-                                                  <div class="col-md-2">
+                                                  <div class="col-md-3">
                                                       <label for="fechaPrimerFacturaCable">Fecha primer factura</label>
                                                       <input class="form-control input-sm" type="text" name="fechaPrimerFacturaCable" value="<?php echo $fechaPrimerFactura; ?>" readonly>
-                                                  </div>
-                                                  <div class="col-md-2">
-                                                      <label for="fechaSuspensionCable">Fecha suspension</label>
-                                                      <input class="form-control input-sm" type="text" name="fechaSuspensionCable" value="<?php echo $fechaSuspensionCable; ?>" readonly>
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="exento">Exento</label>
                                                       <?php
                                                       if ($exento == "F" || $exento == NULL) {
-                                                          echo "<input class='form-control input-sm' type='checkbox' name='exento' disabled>";
+                                                          echo "<input id='exento' onchange='getExento(this)' class='form-control input-sm' type='checkbox' name='exento' value='F'>";
                                                       }else {
-                                                          echo "<input class='form-control input-sm' type='checkbox' name='exento' checked>";
+                                                          echo "<input id='exento' onchange='getExento(this)' class='form-control input-sm' type='checkbox' name='exento' value='T' checked>";
                                                       }
                                                       ?>
 
@@ -906,12 +931,12 @@
                                                       <label for="cortesia">Cortesía</label>
                                                       <?php
                                                       if ($cortesia == "F") {
-                                                          echo "<input class='form-control input-sm' type='checkbox' name='cortesia' disabled>";
+                                                          echo "<input id='cortesia' onchange='getCortesia(this)' class='form-control input-sm' type='checkbox' name='cortesia' value='F'>";
                                                       }else if($cortesia == "T"){
-                                                          echo "<input class='form-control input-sm' type='checkbox' name='cortesia' checked>";
+                                                          echo "<input id='cortesia' onchange='getCortesia(this)' class='form-control input-sm' type='checkbox' name='cortesia' value='T' checked>";
                                                       }
                                                       else {
-                                                          echo "<input class='form-control input-sm' type='checkbox' name='cortesia' disabled>";
+                                                          echo "<input id='cortesia' onchange='getCortesia(this)' class='form-control input-sm' type='checkbox' name='cortesia' value='F'>";
                                                       }
                                                       ?>
                                                   </div>
@@ -925,7 +950,7 @@
                                                       <label for="prepago">Prepago</label>
                                                       <input class="form-control input-sm" type="text" name="prepago" value="<?php echo $prepago; ?>" readonly>
                                                   </div>
-                                                  <div class="col-md-5">
+                                                  <div class="col-md-3">
                                                       <label for="tipoServicio">Tipo de servicio</label>
                                                       <select class="form-control input-sm" name="tipoServicioCable" disabled>
                                                           <option value="" selected>Seleccionar</option>
@@ -943,30 +968,53 @@
                                                       </select>
                                                   </div>
                                                   <div class="col-md-3">
-                                                      <label for="mesesContratoCable">Período de contrato en meses</label>
+                                                      <label for="mactv">MAC TV</label>
+                                                      <input class="form-control input-sm" type="text" name="mactv" value="<?php echo $mactv; ?>" readonly>
+                                                  </div>
+                                                  <div class="col-md-2">
+                                                      <label for="mesesContratoCable">Meses de contrato</label>
                                                       <input class="form-control input-sm" type="text" name="mesesContratoCable" value="<?php echo $periodoContratoCable; ?>" readonly>
                                                   </div>
                                               </div>
                                               <div class="row">
-                                                  <div class="col-md-2">
+                                                  <div class="col-md-3">
                                                       <label for="inicioContratoCable">Inicio de contrato</label>
-                                                      <input class="form-control input-sm" type="text" name="inicioContratoCable" value="<?php echo $fechaInstalacionCable; ?>" readonly>
+                                                      <input class="form-control input-sm" type="text" name="inicioContratoCable" value="<?php echo $fechaInstalacion; ?>" readonly>
                                                   </div>
-                                                  <div class="col-md-2">
+                                                  <div class="col-md-3">
                                                       <label for="vencimientoContratoCable">Vence contrato</label>
                                                       <input class="form-control input-sm" type="text" name="vencimientoContratoCable" value="<?php echo $vencimientoCable; ?>" readonly>
+                                                  </div>
+                                                  <div class="col-md-2">
+                                                      <label for="fechaSuspensionCable">Fecha suspension</label>
+                                                      <input class="form-control input-sm" type="text" name="fechaSuspensionCable" value="<?php echo $fechaSuspensionCable; ?>" readonly>
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="fechaReconexionCable">Fecha de reconexión</label>
                                                       <input class="form-control input-sm" type="text" name="fechaReconexionCable" value="<?php echo $fechaReinstalacionCable; ?>" readonly>
                                                   </div>
-                                                  <div class="col-md-4">
-                                                      <label for="encargadoInstalacionCable"> Técnico que realizó la instalación</label>
-                                                      <input class="form-control input-sm" type="text" name="encargadoInstalacionCable" value="<?php echo $tecnicoCable; ?>" readonly>
-                                                  </div>
                                                   <div class="col-md-2">
                                                       <label for="derivaciones">N° de derivaciones</label>
                                                       <input class="form-control input-sm" type="text" name="derivaciones" value="<?php echo $nDerivaciones; ?>" readonly>
+                                                  </div>
+                                              </div>
+                                              <div class="row">
+                                                  <div class="col-md-12">
+                                                      <label for="encargadoInstalacionCable">Técnico que realizó la instalación</label>
+                                                      <select class="form-control input-sm" name="encargadoInstalacionCable" disabled>
+                                                          <option value="" selected>Seleccionar</option>
+                                                          <?php
+                                                          foreach ($arrTecnicos as $key) {
+                                                              if ($key['idTecnico'] == $tecnicoCable) {
+                                                                  echo "<option value=".$key['idTecnico']." selected>".$key['nombreTecnico']."</option>";
+                                                              }
+                                                              else {
+                                                                  echo "<option value=".$key['idTecnico'].">".$key['nombreTecnico']."</option>";
+                                                              }
+
+                                                          }
+                                                           ?>
+                                                      </select>
                                                   </div>
                                               </div>
                                               <div class="row">
@@ -1024,7 +1072,7 @@
                                                       </select>
                                                   </div>
                                                   <div class="col-md-3">
-                                                      <label for="mesesContratoInternet">Período de contrato en meses</label>
+                                                      <label for="mesesContratoInternet">Meses de contrato</label>
                                                       <input class="form-control input-sm" type="text" name="mesesContratoInternet" value="<?php echo $periodoContratoInternet; ?>" readonly>
                                                   </div>
                                                   <div class="col-md-3">
@@ -1039,7 +1087,7 @@
                                                           <option value="" selected>Seleccionar</option>
                                                           <?php
                                                           foreach ($arrVelocidad as $key) {
-                                                              if ($key['idVelocidad'] == $velocidad) {
+                                                              if ($key['idVelocidad'] == $velocidadInter) {
                                                                   echo "<option value=".$key['idVelocidad']." selected>".$key['nombreVelocidad']."</option>";
                                                               }
                                                               else {
@@ -1131,11 +1179,30 @@
                                               </div>
                                               <div class="row">
                                                   <div class="col-md-12">
+                                                      <label for="encargadoInstalacionInter">Técnico que realizó la instalación</label>
+                                                      <select class="form-control input-sm" name="encargadoInstalacionInter" disabled>
+                                                          <option value="" selected>Seleccionar</option>
+                                                          <?php
+                                                          foreach ($arrTecnicos as $key) {
+                                                              if ($key['idTecnico'] == $tecnicoInternet) {
+                                                                  echo "<option value=".$key['idTecnico']." selected>".$key['nombreTecnico']."</option>";
+                                                              }
+                                                              else {
+                                                                  echo "<option value=".$key['idTecnico'].">".$key['nombreTecnico']."</option>";
+                                                              }
+
+                                                          }
+                                                           ?>
+                                                      </select>
+                                                  </div>
+                                              </div>
+                                              <div class="row">
+                                                  <div class="col-md-12">
                                                       <label for="direccionInternet">Dirección</label>
                                                       <input class="form-control input-sm" type="text" name="direccionInternet" value="<?php echo $direccionInternet; ?>" readonly>
                                                   </div>
                                               </div>
-                                              <hr style="border-top: 1px solid red;">
+                                              <hr style="border-top: 1px solid #0288D1;">
                                               <div class="row">
                                                   <div class="col-md-3">
                                                       <div class="row">
@@ -1172,8 +1239,8 @@
                                                               <input class="form-control input-sm" type="text" name="mac" value="<?php echo $mac; ?>" readonly>
                                                           </div>
                                                           <div class="col-md-4">
-                                                              <label for="transmicion">Transmición</label>
-                                                              <input class="form-control input-sm" type="text" name="transmicion" value="<?php echo $transmision; ?>" readonly>
+                                                              <label for="transmicion">Transmisión</label>
+                                                              <input class="form-control input-sm" type="text" name="transmision" value="<?php echo $transmision; ?>" readonly>
                                                           </div>
                                                           <div class="col-md-8">
                                                               <label for="serie">Serie</label>
@@ -1185,7 +1252,7 @@
                                                           </div>
                                                           <div class="col-md-12">
                                                               <label for="claveWifi">Clave WIFI</label>
-                                                              <input class="form-control input-sm" type="text" name="claveWifi" readonly>
+                                                              <input class="form-control input-sm" type="text" name="claveWifi" value="<?php echo $wifiClave; ?>" readonly>
                                                           </div>
                                                       </div>
                                                   </div>
@@ -1198,7 +1265,7 @@
                                                       <button class="btn btn-danger btn-block" type="button" name="desactivarServicio" style="font-size:16px" disabled>Desactivar servicio</button>
                                                   </div>
                                               </div>
-                                              <hr style="border-top: 1px solid red;">
+                                              <hr style="border-top: 1px solid #0288D1;">
                                           </div>
                                         </div>
 
@@ -1259,7 +1326,7 @@
                                                             echo $key["fechatrabajo"] . "</td><td>";
                                                             echo $key["actividadCable"] . "</td><td>";
                                                             echo $key["actividadInter"] . "</td><tr>";
-                                                                }
+                                                        }
                                                     ?>
                                                 </tbody>
                                         </table>
@@ -1272,7 +1339,7 @@
                                         </div>
                                         <table class="table table-bordered table-hover">
                                                 <thead class="info">
-                                                    <tr>
+                                                    <tr class="bg-danger">
                                                         <th>N° de orden</th>
                                                         <th>Tipo de orden</th>
                                                         <th>Fecha de orden</th>
@@ -1283,16 +1350,16 @@
                                                 </thead>
                                                 <tbody>
                                                     <?php
-                                                        foreach ($arrOrdenesTrabajo as $key) {
+                                                        foreach ($arrOrdenesSuspension as $key) {
                                                             echo "<tr><td>";
-                                                            echo $key["idOrdenTrabajo"] . "</td><td>";
-                                                            echo $key["codigoCliente"] . "</td><td>";
-                                                            echo $key["fechaOrdenTrabajo"] . "</td><td>";
-                                                            echo $key["fechatrabajo"] . "</td><td>";
+                                                            echo $key["idOrdenSuspension"] . "</td><td>";
+                                                            echo $key["tipoOrden"] . "</td><td>";
+                                                            echo $key["fechaOrden"] . "</td><td>";
+                                                            echo $key["fechaSuspension"] . "</td><td>";
                                                             echo $key["actividadCable"] . "</td><td>";
-                                                            echo $key["actividadInter"] . "</td><td>";
-                                                                }
-                                                            ?>
+                                                            echo $key["actividadInter"] . "</td><tr>";
+                                                        }
+                                                    ?>
                                                 </tbody>
                                         </table>
                                     </div>
@@ -1303,30 +1370,29 @@
                                             <br><br>
                                         </div>
                                         <table class="table table-bordered table-hover">
-                                                <tr class="info">
-                                                    <th>N° de orden</th>
-                                                    <th>Tipo de orden</th>
-                                                    <th>Fecha de orden</th>
-                                                    <th>Actividad realizada</th>
-                                                    <th>Fecha de trabajo</th>
-                                                    <th>Actividad internet</th>
-                                                </tr>
-                                                <tr>
-                                                    <td>99947</td>
-                                                    <td>Técnica</td>
-                                                    <td>12/10/2019</td>
-                                                    <td>Revisión de mala señal</td>
-                                                    <td>25/7/2018</td>
-                                                    <td>Cambio de contraseña de WIFI</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>99947</td>
-                                                    <td>Técnica</td>
-                                                    <td>12/10/2019</td>
-                                                    <td>Revisión de mala señal</td>
-                                                    <td>25/7/2018</td>
-                                                    <td>Cambio de contraseña de WIFI</td>
-                                                </tr>
+                                                <thead class="info">
+                                                    <tr class="bg-danger">
+                                                        <th>N° de orden</th>
+                                                        <th>Tipo de orden</th>
+                                                        <th>Fecha de orden</th>
+                                                        <th>Fecha realizada</th>
+                                                        <th>Actividad cable</th>
+                                                        <th>Actividad internet</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <?php
+                                                        foreach ($arrOrdenesReconex as $key) {
+                                                            echo "<tr><td>";
+                                                            echo $key["idOrdenReconex"] . "</td><td>";
+                                                            echo $key["tipoOrden"] . "</td><td>";
+                                                            echo $key["fechaOrden"] . "</td><td>";
+                                                            echo $key["fechaSuspension"] . "</td><td>";
+                                                            echo $key["actividadCable"] . "</td><td>";
+                                                            echo $key["actividadInter"] . "</td><tr>";
+                                                        }
+                                                    ?>
+                                                </tbody>
                                         </table>
                                     </div>
                                 </div>
@@ -1608,14 +1674,43 @@
             }
         }
         //CABLE
-        document.getElementById("activoCable").value = "activo";
-        document.getElementById("suspendidoCable").value = "suspendido";
-        document.getElementById("sinCable").value = "sin";
+        document.getElementById("activoCable").value = "F";
+        document.getElementById("suspendidoCable").value = "T";
+        document.getElementById("sinCable").value = "";
 
         //INTERNET
-        document.getElementById("activoInter").value = "activo";
-        document.getElementById("suspendidoInter").value = "suspendido";
-        document.getElementById("sinInter").value = "sin";
+        document.getElementById("activoInter").value = "1";
+        document.getElementById("suspendidoInter").value = "2";
+        document.getElementById("sinInter").value = "3";
+
+        //CORTESIA Y EXENTOS
+        if (document.getElementById("exento").checked == true) {
+            document.getElementById("exento").value = "T";
+        }else if (document.getElementById("exento").checked == false) {
+            document.getElementById("exento").value = "F";
+        }
+
+        function getExento(){
+            if (document.getElementById("exento").checked == true) {
+                document.getElementById("exento").value = "T";
+            }else if (document.getElementById("exento").checked == false) {
+                document.getElementById("exento").value = "F";
+            }
+        }
+
+        if (document.getElementById("cortesia").checked == true) {
+            document.getElementById("cortesia").value = "T";
+        }else if (document.getElementById("cortesia").checked == false) {
+            document.getElementById("cortesia").value = "F";
+        }
+
+        function getCortesia(){
+            if (document.getElementById("cortesia").checked == true) {
+                document.getElementById("cortesia").value = "T";
+            }else if (document.getElementById("cortesia").checked == false) {
+                document.getElementById("cortesia").value = "F";
+            }
+        }
 
         document.getElementById("formClientes").action = "php/nuevoCliente.php";
         </script>';
