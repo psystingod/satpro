@@ -20,7 +20,7 @@ CREATE TABLE tbl_ordenes_reconexion (
   colilla VARCHAR(10) DEFAULT NULL,
   fechaReconexCable VARCHAR(15) DEFAULT NULL,
   fechaReconexInter VARCHAR(15) DEFAULT NULL,
-  fechaReconex DATE DEFAULT NULL,
+  fechaReconex VARCHAR(15) DEFAULT NULL,
   ultSuspCable VARCHAR(15) DEFAULT NULL,
   ultSuspInter VARCHAR(15) DEFAULT NULL,
   idTecnico INT(6) DEFAULT NULL,
@@ -38,3 +38,5 @@ CREATE TABLE tbl_ordenes_reconexion (
   FOREIGN KEY (idVendedor) REFERENCES tbl_vendedores(idVendedor)*/
   
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE tbl_ordenes_reconexion AUTO_INCREMENT=1;

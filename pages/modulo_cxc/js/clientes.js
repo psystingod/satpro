@@ -90,9 +90,8 @@ function nuevoCliente(){
 
 function editarCliente(){
     document.getElementById("btn-nuevo").disabled = true;
-    document.getElementById("guardar").disabled = false;
-    document.getElementById("btn-internet").disabled = false;
-    document.getElementById("imprimir").disabled = true;
+    document.getElementById("btn-guardar").disabled = false;
+    //document.getElementById("imprimir").disabled = true;
 
     var editInputs = document.getElementsByClassName("input-sm");
     for (var i = 0; i < editInputs.length; i++) {
@@ -103,39 +102,40 @@ function editarCliente(){
             editInputs[i].disabled = false;
         }
     }
-    document.getElementById("numeroSuspension").readOnly = true;
-    document.getElementById("saldoCable").readOnly = true;
-    document.getElementById("saldoInternet").readOnly = true;
-    //document.getElementById("nodo").readOnly = true;
-    document.getElementById("codigoCliente").readOnly = true;
-    document.getElementById("colilla").readOnly = true;
-    //document.getElementById("velocidad").disabled = true;
-    document.getElementById("macModem").readOnly = true;
-    document.getElementById("serieModem").readOnly = true;
+    document.getElementById("activoCable").disabled = false;
+    document.getElementById("suspendidoCable").disabled = false;
+    document.getElementById("sinCable").disabled = false;
+    document.getElementById("activoInter").disabled = false;
+    document.getElementById("suspendidoInter").disabled = false;
+    document.getElementById("sinInter").disabled = false;
 
-    document.getElementById("nombreOrden").style.display = "run-in";
-    var tipoServicio = document.getElementById('tipoServicio').value;
-    if (tipoServicio == 'C') {
-        document.getElementById('btn-internet').disabled = true;
-        document.getElementById('btn-cable').style.color="#4CAF50";
-        document.getElementById('tipoActividadInternet').disabled=true;
-        document.getElementById('ordenaSuspensionInter').disabled=true;
-        //document.getElementById('direccionInternet').readOnly=true;
-        //document.getElementById('rx').readOnly=true;
-        //document.getElementById('tx').readOnly=true;
-        //document.getElementById('snr').readOnly=true;
-        //document.getElementById('tecnologia').readOnly=true;
-    }else if (tipoServicio == 'I') {
-        document.getElementById('btn-cable').disabled = true;
-        document.getElementById('btn-internet').style.color="#039BE5";
+    //CABLE
+    document.getElementById("activoCable").value = "F";
+    document.getElementById("suspendidoCable").value = "T";
+    document.getElementById("sinCable").value = "";
 
-        document.getElementById('tipoActividadCable').disabled=true;
-        //document.getElementById('direccionCable').readOnly=true;
-        document.getElementById('saldoCable').readOnly=true;
-        document.getElementById('ordenaSuspensionCable').disabled=true;
-        document.getElementById('mactv').readOnly=true;
-        //document.getElementById('tecnologia').readOnly=true;
+    //INTERNET
+    document.getElementById("activoInter").value = "1";
+    document.getElementById("suspendidoInter").value = "2";
+    document.getElementById("sinInter").value = "3";
+
+    //CORTESIA Y EXENTOS
+    if (document.getElementById("exento").checked == true) {
+        document.getElementById("exento").value = "T";
+    }else if (document.getElementById("exento").checked == false) {
+        document.getElementById("exento").value = "F";
     }
+
+
+    if (document.getElementById("cortesia").checked == true) {
+        document.getElementById("cortesia").value = "T";
+    }else if (document.getElementById("cortesia").checked == false) {
+        document.getElementById("cortesia").value = "F";
+    }
+
+    //document.getElementById("macModem").readOnly = true;
+    //document.getElementById("serieModem").readOnly = true;
+
     changeAction("editar");
 }
 
@@ -145,14 +145,14 @@ function changeAction(action){
             document.getElementById("ordenSuspension").action = "php/nuevoCliente.php";
             break;
         case "editar":
-            document.getElementById("ordenSuspension").action = "php/editarCliente.php";
+            document.getElementById("formClientes").action = "php/editarCliente.php";
             break;
         default:
 
     }
 }
 
-function imprimirOrden(){
+/*function imprimirOrden(){
     var nOrden = document.getElementById("numeroSuspension").value
     // Trigger the button element with a click
     window.open("ordenSuspensionImp.php?nOrden="+nOrden, '_blank');
@@ -164,5 +164,21 @@ function guardarOrden(){
         document.getElementById('guardar2').click();
     }else {
         alert("Por favor indique si la orden es de cable o de internet");
+    }
+}*/
+
+function getExento(){
+    if (document.getElementById("exento").checked == true) {
+        document.getElementById("exento").value = "T";
+    }else if (document.getElementById("exento").checked == false) {
+        document.getElementById("exento").value = "F";
+    }
+}
+
+function getCortesia(){
+    if (document.getElementById("cortesia").checked == true) {
+        document.getElementById("cortesia").value = "T";
+    }else if (document.getElementById("cortesia").checked == false) {
+        document.getElementById("cortesia").value = "F";
     }
 }

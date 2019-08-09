@@ -500,7 +500,7 @@
                             <td><button class="btn btn-primary btn-block" style="font-size: 16px;">Contrato de cable</button></td>
                             <td><button class="btn btn-primary btn-block" style="font-size: 16px;">Contrato de internet</button></td>
                             <td><button class="btn btn-primary btn-block" style="font-size: 16px;">Estado de cuenta</button></td>
-                            <td><button id="btn-editar" class="btn btn-success btn-block" title="Editar"><i class="fas fa-user-edit fa-2x"></i></button></td>
+                            <td><button id="btn-editar" onclick="editarCliente();" class="btn btn-success btn-block" title="Editar"><i class="fas fa-user-edit fa-2x"></i></button></td>
                         </tr>
                <form id="formClientes" class="" action="#" method="POST">
 
@@ -531,33 +531,33 @@
                         else if ($estado_cable == "T") {
                             echo "<tr class='info'>
                                 <th>TV</th>
-                                <td><label class='switch'><input class='switch' type='radio' name ='cable' value='activo' disabled><span class='slider round'></span></label></td>
-                                <td><label class='switch'><input class='switch' type='radio' name ='cable' value='suspendido' checked disabled><span class='slider round'></span></label></td>
-                                <td><label class='switch'><input class='switch' type='radio' name ='cable' value='sin' disabled><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input id='activoCable' class='switch' type='radio' name ='cable' value='activo' disabled><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input id='suspendidoCable' class='switch' type='radio' name ='cable' value='suspendido' checked disabled><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input id='sinCable' class='switch' type='radio' name ='cable' value='sin' disabled><span class='slider round'></span></label></td>
                             </tr>";
                         }
                         else {
                             echo "<tr class='info'>
                                 <th>TV</th>
-                                <td><label class='switch'><input class='switch' type='radio' name ='cable' value='activo' disabled required><span class='slider round'></span></label></td>
-                                <td><label class='switch'><input class='switch' type='radio' name ='cable' value='suspendido' disabled required><span class='slider round'></span></label></td>
-                                <td><label class='switch'><input class='switch' type='radio' name ='cable' value='sin' checked disabled required><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input id='activoCable' class='switch' type='radio' name ='cable' value='activo' disabled required><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input id='suspendidoCable' class='switch' type='radio' name ='cable' value='suspendido' disabled required><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input id='sinCable' class='switch' type='radio' name ='cable' value='sin' checked disabled required><span class='slider round'></span></label></td>
                             </tr>";
                         }
                         if ($estado_internet == 1) {
                             echo "<tr class='success'>
                                 <th>Internet</th>
-                                <td><label class='switch'><input class='switch' type='radio' name='internet' value='activo' checked disabled><span class='slider round'></span></label></td>
-                                <td><label class='switch'><input class='switch' type='radio' name='internet' value='suspendido' disabled><span class='slider round'></span></label></td>
-                                <td><label class='switch'><input class='switch' type='radio' name='internet' value='sin' disabled><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input id='activoInter' class='switch' type='radio' name='internet' value='activo' checked disabled><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input id='suspendidoInter' class='switch' type='radio' name='internet' value='suspendido' disabled><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input id='sinInter' class='switch' type='radio' name='internet' value='sin' disabled><span class='slider round'></span></label></td>
                             </tr>";
                         }
                         elseif ($estado_internet == 2) {
                             echo "<tr class='success'>
                                 <th>Internet</th>
-                                <td><label class='switch'><input class='switch' type='radio' name='internet' value='activo' disabled><span class='slider round'></span></label></td>
-                                <td><label class='switch'><input class='switch' type='radio' name='internet' value='suspendido' checked disabled><span class='slider round'></span></label></td>
-                                <td><label class='switch'><input class='switch' type='radio' name='internet' value='sin' disabled><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input id='activoInter' class='switch' type='radio' name='internet' value='activo' disabled><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input id='suspendidoInter' class='switch' type='radio' name='internet' value='suspendido' checked disabled><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input id='sinInter' class='switch' type='radio' name='internet' value='sin' disabled><span class='slider round'></span></label></td>
                             </tr>";
                         }
                         else {
@@ -1299,15 +1299,15 @@
                 </form>             <!-- Accordion wrapper -->
                                 </div>
                                 <div class="tab-pane fade" id="ordenes-tecnicas">
-                                    <h4 class="alert bg-success"><strong>Historial de ordenes de trabajo</strong></h4>
+                                    <h4 class="alert bg-info"><strong>Historial de ordenes de trabajo</strong></h4>
                                     <div class="ordenes">
-                                        <div class="col-md-12">
+                                        <!-- <div class="col-md-12">
                                             <button class="btn btn-danger pull-right" type="button" name="button" data-toggle="modal" data-target="#ordenesTrabajo"><i class="fas fa-search"></i></button>
                                             <br><br>
-                                        </div>
+                                        </div>-->
                                         <table class="table table-bordered table-hover">
                                                 <thead class="info">
-                                                    <tr class="bg-danger">
+                                                    <tr class="bg-warning">
                                                         <th>N° de orden</th>
                                                         <th>Tipo de orden</th>
                                                         <th>Fecha de orden</th>
@@ -1320,10 +1320,10 @@
                                                     <?php
                                                         foreach ($arrOrdenesTrabajo as $key) {
                                                             echo "<tr><td>";
-                                                            echo $key["idOrdenTrabajo"] . "</td><td>";
+                                                            echo "<a href='ordenTrabajo.php?nOrden={$key["idOrdenTrabajo"]}' target='_blank' class='btn btn-primary btn-xs'>".$key["idOrdenTrabajo"] . "</td><td>";
                                                             echo $key["tipoOrdenTrabajo"] . "</td><td>";
-                                                            echo $key["fechaOrdenTrabajo"] . "</td><td>";
-                                                            echo $key["fechatrabajo"] . "</td><td>";
+                                                            echo date_format(date_create($key["fechaOrdenTrabajo"]), 'd/m/Y') . "</td><td>";
+                                                            echo $key["fechaTrabajo"] . "</td><td>";
                                                             echo $key["actividadCable"] . "</td><td>";
                                                             echo $key["actividadInter"] . "</td><tr>";
                                                         }
@@ -1331,12 +1331,12 @@
                                                 </tbody>
                                         </table>
                                     </div>
-                                    <h4 class="alert bg-success"><strong>Historial de ordenes de suspensión</strong></h4>
+                                    <h4 class="alert bg-info"><strong>Historial de ordenes de suspensión</strong></h4>
                                     <div class="ordenes">
-                                        <div class="col-md-12">
+                                        <!--<div class="col-md-12">
                                             <button class="btn btn-danger pull-right" type="button" name="button" data-toggle="modal" data-target="#ordenesSuspension"><i class="fas fa-search"></i></button>
                                             <br><br>
-                                        </div>
+                                        </div>-->
                                         <table class="table table-bordered table-hover">
                                                 <thead class="info">
                                                     <tr class="bg-danger">
@@ -1352,7 +1352,7 @@
                                                     <?php
                                                         foreach ($arrOrdenesSuspension as $key) {
                                                             echo "<tr><td>";
-                                                            echo $key["idOrdenSuspension"] . "</td><td>";
+                                                            echo "<a href='ordenSuspension.php?nOrden={$key["idOrdenSuspension"]}' target='_blank' class='btn btn-primary btn-xs'>".$key["idOrdenSuspension"] . "</td><td>";
                                                             echo $key["tipoOrden"] . "</td><td>";
                                                             echo $key["fechaOrden"] . "</td><td>";
                                                             echo $key["fechaSuspension"] . "</td><td>";
@@ -1363,15 +1363,15 @@
                                                 </tbody>
                                         </table>
                                     </div>
-                                    <h4 class="alert bg-success"><strong>Historial de ordenes de reconexión</strong></h4>
+                                    <h4 class="alert bg-info"><strong>Historial de ordenes de reconexión</strong></h4>
                                     <div class="ordenes">
-                                        <div class="col-md-12">
+                                        <!--<div class="col-md-12">
                                             <button class="btn btn-danger pull-right" type="button" name="button" data-toggle="modal" data-target="#ordenesReconexion"><i class="fas fa-search"></i></button>
                                             <br><br>
-                                        </div>
+                                        </div>-->
                                         <table class="table table-bordered table-hover">
                                                 <thead class="info">
-                                                    <tr class="bg-danger">
+                                                    <tr class="bg-success">
                                                         <th>N° de orden</th>
                                                         <th>Tipo de orden</th>
                                                         <th>Fecha de orden</th>
@@ -1384,7 +1384,7 @@
                                                     <?php
                                                         foreach ($arrOrdenesReconex as $key) {
                                                             echo "<tr><td>";
-                                                            echo $key["idOrdenReconex"] . "</td><td>";
+                                                            echo "<a href='ordenReconexion.php?nOrden={$key["idOrdenReconex"]}' target='_blank' class='btn btn-primary btn-xs'>".$key["idOrdenReconex"] . "</td><td>";
                                                             echo $key["tipoOrden"] . "</td><td>";
                                                             echo $key["fechaOrden"] . "</td><td>";
                                                             echo $key["fechaSuspension"] . "</td><td>";

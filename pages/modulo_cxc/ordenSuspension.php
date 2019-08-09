@@ -129,7 +129,12 @@
             $serieModem = $row['serieModem'];
             $velocidad = $row['velocidad'];
             $colilla = $row['colilla'];
-            $fechaSuspension = date_format(date_create($row["fechaSuspension"]), 'd/m/Y');
+            if ($row["fechaSuspension"]) {
+                $fechaSuspension = date_format(date_create($row["fechaSuspension"]), 'd/m/Y');
+            }else {
+                $fechaSuspension = "";
+            }
+
 
             //$hora = $row['hora'];
             $idTecnico = $row['idTecnico'];

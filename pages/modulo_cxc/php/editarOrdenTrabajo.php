@@ -29,12 +29,20 @@
                     $direccionCable = $_POST['direccionCable'];
                     $colilla = "Amarilla";
                     $str2 = $_POST["fechaTrabajo"];
-                    $date2 = DateTime::createFromFormat('d/m/Y', $str2);
-                    $fechaTrabajo = $date2->format('Y-m-d');
+                    if (strlen($str2) >= 7) {
+                        $date2 = DateTime::createFromFormat('d/m/Y', $str2);
+                        $fechaTrabajo = $date2->format('d/m/Y');
+                    }else {
+                        $fechaTrabajo = "";
+                    }
                     $hora = $_POST["hora"];
                     $str3 = $_POST["fechaProgramacion"];
-                    $date3 = DateTime::createFromFormat('d/m/Y', $str3);
-                    $fechaProgramacion = $date3->format('Y-m-d');
+                    if (strlen($str3) >= 7) {
+                        $date3 = DateTime::createFromFormat('d/m/Y', $str3);
+                        $fechaProgramacion = $date3->format('d/m/Y');
+                    }else {
+                        $fechaProgramacion = "";
+                    }
                     $responsable = $_POST["responsable"];
                     $mactv = $_POST["mactv"];
                     $observaciones = $_POST["observaciones"];
@@ -110,12 +118,20 @@
                     $snr = $_POST["snr"];
                     $colilla = $_POST["colilla"];
                     $str2 = $_POST["fechaTrabajo"];
-                    $date2 = DateTime::createFromFormat('d/m/Y', $str2);
-                    $fechaTrabajo = $date2->format('Y-m-d');
+                    if (strlen($str2) >= 7) {
+                        $date2 = DateTime::createFromFormat('d/m/Y', $str2);
+                        $fechaTrabajo = $date2->format('d/m/Y');
+                    }else {
+                        $fechaTrabajo = "";
+                    }
                     $hora = $_POST["hora"];
                     $str3 = $_POST["fechaProgramacion"];
-                    $date3 = DateTime::createFromFormat('d/m/Y', $str3);
-                    $fechaProgramacion = $date3->format('Y-m-d');
+                    if (strlen($str3) >= 7) {
+                        $date3 = DateTime::createFromFormat('d/m/Y', $str3);
+                        $fechaProgramacion = $date3->format('d/m/Y');
+                    }else {
+                        $fechaProgramacion = "";
+                    }
                     $responsable = $_POST["responsable"];
                     $coordenadas = $_POST["coordenadas"];
                     $observaciones = $_POST["observaciones"];
