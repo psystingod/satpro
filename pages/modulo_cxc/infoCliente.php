@@ -85,24 +85,32 @@
             $mactv = $row['mactv'];
             $periodoContratoCable = $row['periodo_contrato_ca'];
             $vencimientoCable = $row['vencimiento_ca'];
+            //var_dump($row['fecha_instalacion']);
             if (strlen($row['fecha_instalacion']) < 8) {
                 $fechaInstalacion = "";
             }else {
-                $fechaInstalacion = DateTime::createFromFormat('d/m/Y', $row['fecha_instalacion']);
+                $fechaInstalacion = DateTime::createFromFormat('Y-m-d', $row['fecha_instalacion']);
                 $fechaInstalacion = $fechaInstalacion->format('d/m/Y');
+            }
+
+            if (strlen($row['fecha_primer_factura']) < 8) {
+                $fechaPrimerFactura = "";
+            }else {
+                $fechaPrimerFactura = DateTime::createFromFormat('Y-m-d', $row['fecha_primer_factura']);
+                $fechaPrimerFactura = $fechaPrimerFactura->format('d/m/Y');
             }
 
             if (strlen($row['fecha_suspencion']) < 8) {
                 $fechaSuspensionCable = "";
             }else {
-                $fechaSuspensionCable = DateTime::createFromFormat('d/m/Y', $row['fecha_suspencion']);
+                $fechaSuspensionCable = DateTime::createFromFormat('Y-m-d', $row['fecha_suspencion']);
                 $fechaSuspensionCable = $fechaSuspensionCable->format('d/m/Y');
             }
 
             if (strlen($row['fecha_reinstalacion']) < 8) {
                 $fechaReinstalacionCable = "";
             }else {
-                $fechaReinstalacionCable = DateTime::createFromFormat('d/m/Y', $row['fecha_reinstalacion']);
+                $fechaReinstalacionCable = DateTime::createFromFormat('Y-m-d', $row['fecha_reinstalacion']);
                 $fechaReinstalacionCable = $fechaReinstalacionCable->format('d/m/Y');
             }
             $tecnicoCable = $row['id_tecnico'];
@@ -113,14 +121,14 @@
             if (strlen($row['fecha_instalacion_in']) < 8) {
                 $fechaInstalacionInter = "";
             }else {
-                $fechaInstalacionInter = DateTime::createFromFormat('d/m/Y', $row['fecha_instalacion_in']);
+                $fechaInstalacionInter = DateTime::createFromFormat('Y-m-d', $row['fecha_instalacion_in']);
                 $fechaInstalacionInter = $fechaInstalacionInter->format('d/m/Y');
             }
 
             if (strlen($row['fecha_primer_factura_in']) < 8) {
                 $fechaPrimerFacturaInter = "";
             }else {
-                $fechaPrimerFacturaInter = DateTime::createFromFormat('d/m/Y', $row['fecha_primer_factura_in']);
+                $fechaPrimerFacturaInter = DateTime::createFromFormat('Y-m-d', $row['fecha_primer_factura_in']);
                 $fechaPrimerFacturaInter = $fechaPrimerFacturaInter->format('d/m/Y');
             }
 
@@ -135,28 +143,28 @@
             if (strlen($row['vencimiento_in']) < 8) {
                 $vencimientoInternet = "";
             }else {
-                $vencimientoInternet = DateTime::createFromFormat('d/m/Y', $row['vencimiento_in']);
+                $vencimientoInternet = DateTime::createFromFormat('Y-m-d', $row['vencimiento_in']);
                 $vencimientoInternet = $vencimientoInternet->format('d/m/Y');
             }
 
             if (strlen($row['ult_ren_in']) < 8) {
                 $ultimaRenovacionInternet = "";
             }else {
-                $ultimaRenovacionInternet = DateTime::createFromFormat('d/m/Y', $row['ult_ren_in']);
+                $ultimaRenovacionInternet = DateTime::createFromFormat('Y-m-d', $row['ult_ren_in']);
                 $ultimaRenovacionInternet = $ultimaRenovacionInternet->format('d/m/Y');
             }
 
             if (strlen($row['fecha_suspencion_in']) < 8) {
                 $fechaSuspencionInternet = "";
             }else {
-                $fechaSuspencionInternet = DateTime::createFromFormat('d/m/Y', $row['fecha_suspencion_in']);
+                $fechaSuspencionInternet = DateTime::createFromFormat('Y-m-d', $row['fecha_suspencion_in']);
                 $fechaSuspencionInternet = $fechaSuspencionInternet->format('d/m/Y');
             }
 
             if (strlen($row['fecha_reconexion_in']) < 8) {
                 $fechaReconexionInternet = "";
             }else {
-                $fechaReconexionInternet = DateTime::createFromFormat('d/m/Y', $row['fecha_reconexion_in']);
+                $fechaReconexionInternet = DateTime::createFromFormat('Y-m-d', $row['fecha_reconexion_in']);
                 $fechaReconexionInternet = $fechaReconexionInternet->format('d/m/Y');
             }
 
@@ -164,14 +172,14 @@
             if (strlen($row['dese_promocion_in']) < 8) {
                 $promocionDesde = "";
             }else {
-                $promocionDesde = DateTime::createFromFormat('d/m/Y', $row['dese_promocion_in']);
+                $promocionDesde = DateTime::createFromFormat('Y-m-d', $row['dese_promocion_in']);
                 $promocionDesde = $promocionDesde->format('d/m/Y');
             }
 
             if (strlen($row['hasta_promocion_in']) < 8) {
                 $promocionHasta = "";
             }else {
-                $promocionHasta = DateTime::createFromFormat('d/m/Y', $row['hasta_promocion_in']);
+                $promocionHasta = DateTime::createFromFormat('Y-m-d', $row['hasta_promocion_in']);
                 $promocionHasta = $promocionHasta->format('d/m/Y');
             }
             $cuotaPromocion = $row['cuota_promocion'];
@@ -385,6 +393,18 @@
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-left">
+                <li class="dropdown procesos">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        Transacciones <i class="fas fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="#" data-toggle="modal" data-target="#facturacionDiaria">Facturación diaria</a>
+                        </li>
+                        <li><a href="facturacionGenerada.php" target="_blank">Ver facturas generadas</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
                 <!-- /.dropdown -->
                 <li class="dropdown procesos">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
@@ -1534,16 +1554,16 @@
         <!-- /#page-wrapper -->
 
         <!-- Modal Facturación diaria -->
-        <div id="buscarCliente" class="modal fade" role="dialog">
-          <div class="modal-dialog modal-lg">
+        <div id="facturacionDiaria" class="modal fade" role="dialog">
+          <div class="modal-dialog">
 
             <!-- Modal content-->
             <div class="modal-content">
-              <div style="background-color: #4CAF50; color:white;" class="modal-header">
+              <div style="background-color: #1565C0; color:white;" class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Buscar cliente</h4>
+                <h4 class="modal-title">Generar facturas</h4>
               </div>
-              <form id="generarFacturas" action="../php/generarFacturas.php" method="POST">
+              <form id="generarFacturas" action="php/generarFacturas.php" method="POST">
               <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
@@ -1554,7 +1574,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-5">
                         <label for=""></label>
                         <select id="mesGenerar" class="form-control" name="mesGenerar" required>
                             <option value="" selected>Mes a generar</option>
@@ -1572,9 +1592,42 @@
                             <option value="12">Diciembre</option>
                         </select>
                     </div>
-                    <div class="col-md-3">
+                    <div class="col-md-4">
                         <label for=""></label>
-                        <input id="diaGenerar" class="form-control" type="text" name="diaGenerar" placeholder="Día a generar" required>
+                        <select id="diaGenerar" class="form-control" name="diaGenerar" required>
+                            <option value="" selected>Día a generar</option>
+                            <option value="01">1</option>
+                            <option value="02">2</option>
+                            <option value="03">3</option>
+                            <option value="04">4</option>
+                            <option value="05">5</option>
+                            <option value="06">6</option>
+                            <option value="07">7</option>
+                            <option value="08">8</option>
+                            <option value="09">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                            <option value="13">13</option>
+                            <option value="14">14</option>
+                            <option value="15">15</option>
+                            <option value="16">16</option>
+                            <option value="17">17</option>
+                            <option value="18">18</option>
+                            <option value="19">19</option>
+                            <option value="20">20</option>
+                            <option value="21">21</option>
+                            <option value="22">22</option>
+                            <option value="23">23</option>
+                            <option value="24">24</option>
+                            <option value="25">25</option>
+                            <option value="26">26</option>
+                            <option value="27">27</option>
+                            <option value="28">28</option>
+                            <option value="29">29</option>
+                            <option value="30">30</option>
+                            <option value="31">31</option>
+                        </select>
                     </div>
                     <div class="col-md-3">
                         <label for=""></label>
@@ -1646,6 +1699,39 @@
     <!-- Custom Theme JavaScript -->
     <script src="js/clientes.js"></script>
     <script src="../../dist/js/sb-admin-2.js"></script>
+    <script type="text/javascript">
+        // Get the input field
+        var mes = document.getElementById("mesGenerar");
+        var dia = document.getElementById("diaGenerar");
+        var ano = document.getElementById("anoGenerar");
+
+        $('#generarFacturas').on('keyup keypress', function(e) {
+          var keyCode = e.keyCode || e.which;
+          if (keyCode === 13) {
+            e.preventDefault();
+            return false;
+          }
+        });
+
+        // Execute a function when the user releases a key on the keyboard
+        ano.addEventListener("keyup", function(event) {
+        // Number 13 is the "Enter" key on the keyboard
+        if (event.keyCode === 13) {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        // Trigger the button element with a click
+        var mesGenerar = document.getElementById("mesGenerar").value;
+        var diaGenerar = document.getElementById("diaGenerar").value;
+        var anoGenerar = document.getElementById("anoGenerar").value;
+
+        var fechaComprobante = new Date(mesGenerar+"-"+diaGenerar+"-"+anoGenerar);
+        console.log(fechaComprobante.setMonth(fechaComprobante.getMonth()+1));
+        document.getElementById("fechaComprobante").value = fechaComprobante.toLocaleDateString();
+        console.log(fechaComprobante.setDate(fechaComprobante.getDate()+8));
+        document.getElementById("fechaVencimiento").value = fechaComprobante.toLocaleDateString();
+        }
+        });
+    </script>
     <?php
     if (isset($_GET['action'])) {
         echo '<script>

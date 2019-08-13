@@ -63,21 +63,50 @@ class NuevoCliente extends ConectionDB
             $dir2 = $_POST['rp3_direccion'];
             $dir3 = $_POST['rp3_parentezco'];
             /****************** DATOS CABLE ***********************/
-            $fechaInstalacion = $_POST['fechaInstalacionCable'];
-            $fechaPrimerFactura = $_POST['fechaPrimerFacturaCable'];
-            $fechaSuspensionCable = $_POST['fechaSuspensionCable'];
-            $exento = $_POST['exento'];
+            var_dump($_POST['fechaInstalacionCable']);
+            $date1 = $_POST['fechaInstalacionCable'];
+            $date2 = str_replace('/', '-', $date1);
+            $fechaInstalacion = date("Y-m-d", strtotime($date2));
+
+            $date1 = $_POST['fechaPrimerFacturaCable'];
+            $date2 = str_replace('/', '-', $date1);
+            $fechaPrimerFactura = date("Y-m-d", strtotime($date2));
+
+            $date1 = $_POST['fechaSuspensionCable'];
+            $date2 = str_replace('/', '-', $date1);
+            $fechaSuspensionCable = date("Y-m-d", strtotime($date2));
+
+            if (isset($_POST['exento'])) {
+                $exento = $_POST['exento'];
+            }else {
+                $exento = "F";
+            }
+
             $diaCobro = $_POST['diaGenerarFacturaCable'];
-            $cortesia = $_POST['cortesia'];
+            if (isset($_POST['cortesia'])) {
+                $cortesia = $_POST['cortesia'];
+            }else {
+                $cortesia = "F";
+            }
+
+            $diaCobro = $_POST['diaGenerarFacturaCable'];
             $cuotaMensualCable = $_POST['cuotaMensualCable'];
             $prepago = $_POST['prepago'];
             //$tipoComprobante = $_POST[''];
             $tipoServicio = $_POST['tipoServicioCable'];
             $periodoContratoCable = $_POST['mesesContratoCable'];
-            $vencimientoCable = $_POST['vencimientoContratoCable'];
-            $fechaInicioContratoCable = $_POST['inicioContratoCable'];
+
+            $date1 = $_POST['vencimientoContratoCable'];
+            $date2 = str_replace('/', '-', $date1);
+            $vencimientoCable = date("Y-m-d", strtotime($date2));
+
+            $date1 = $_POST['fechaSuspensionCable'];
+            $date2 = str_replace('/', '-', $date1);
+            $fechaInicioContratoCable = date("Y-m-d", strtotime($date2));
             //$fechaSuspensionCable = $_POST[''];
-            $fechaReinstalacionCable = $_POST['fechaReconexionCable'];
+            $date1 = $_POST['fechaReconexionCable'];
+            $date2 = str_replace('/', '-', $date1);
+            $fechaReinstalacionCable = date("Y-m-d", strtotime($date2));
             $tecnicoCable = $_POST['encargadoInstalacionCable'];
             $codigoCobrador = $_POST['cobrador'];
             $tecnicoInternet = $_POST['encargadoInstalacionInter'];
@@ -86,8 +115,14 @@ class NuevoCliente extends ConectionDB
             $direccionCable = $_POST['direccionCable'];
 
             /****************** DATOS INTERNET ***********************/
-            $fechaInstalacionInter = $_POST['fechaInstalacionInternet'];
-            $fechaPrimerFacturaInter = $_POST['fechaPrimerFacturaInternet'];
+            $date1 = $_POST['fechaInstalacionInternet'];
+            $date2 = str_replace('/', '-', $date1);
+            $fechaInstalacionInter = date("Y-m-d", strtotime($date2));
+
+            $date1 = $_POST['fechaPrimerFacturaInternet'];
+            $date2 = str_replace('/', '-', $date1);
+            $fechaPrimerFacturaInter = date("Y-m-d", strtotime($date2));
+
             $tipoServicioInternet = $_POST['tipoServicioInternet']; //Prepago o pospago
             $periodoContratoInternet = $_POST['mesesContratoInternet'];
             $diaCobroInter = $_POST['diaGenerarFacturaInternet'];
@@ -96,10 +131,23 @@ class NuevoCliente extends ConectionDB
             $tipoClienteInter = $_POST['tipoCliente'];
             $tecnologia = $_POST['tecnologia'];
             $nContratoInter = $_POST['nContratoVigente'];
-            $vencimientoInternet = $_POST['vencimientoContratoInternet'];
-            $ultimaRenovacionInternet = $_POST['ultimaRenovacionInternet'];
-            $fechaSuspencionInternet = $_POST['fechaSuspencionInternet'];
-            $fechaReconexionInternet = $_POST['fechaReconexionInternet'];
+
+            $date1 = $_POST['vencimientoContratoInternet'];
+            $date2 = str_replace('/', '-', $date1);
+            $vencimientoInternet = date("Y-m-d", strtotime($date2));
+
+            $date1 = $_POST['ultimaRenovacionInternet'];
+            $date2 = str_replace('/', '-', $date1);
+            $ultimaRenovacionInternet = date("Y-m-d", strtotime($date2));
+
+            $date1 = $_POST['fechaSuspencionInternet'];
+            $date2 = str_replace('/', '-', $date1);
+            $fechaSuspencionInternet = date("Y-m-d", strtotime($date2));
+
+            $date1 = $_POST['fechaReconexionInternet'];
+            $date2 = str_replace('/', '-', $date1);
+            $fechaReconexionInternet = date("Y-m-d", strtotime($date2));
+
             $promocion = $_POST['promocion'];
             $promocionDesde = $_POST['promocionDesde'];
             $promocionHasta = $_POST['promocionHasta'];

@@ -1,6 +1,6 @@
 USE satpro;
-DROP TABLE IF EXISTS tbl_facturas;
-CREATE TABLE tbl_facturas (
+DROP TABLE IF EXISTS tbl_cargos;
+CREATE TABLE tbl_cargos (
   idFactura INT(11) NOT NULL AUTO_INCREMENT,
   numeroFactura INT(11) NOT NULL,
   tipoFactura TINYINT(1) NOT NULL,
@@ -13,14 +13,14 @@ CREATE TABLE tbl_facturas (
   fechaCobro DATE DEFAULT NULL,
   fechaFactura DATE DEFAULT NULL,
   fechaVencimiento DATE DEFAULT NULL,
-  montoCancelado DOUBLE DEFAULT 0,
-  fechaCancelado DATE DEFAULT NULL,
-  mesCancelado VARCHAR(3) DEFAULT '',
+  /*montoCancelado DOUBLE DEFAULT 0,*/
+  fechaAbonado DATE DEFAULT NULL,
+  mesCargo VARCHAR(3) DEFAULT '',
   formaPago VARCHAR(10) DEFAULT '',
   tipoServicio CHAR NOT NULL,
-  anticipado TINYINT(1) DEFAULT 0,
-  impuesto DOUBLE NOT NULL,
-  impuestoAbonado DOUBLE DEFAULT 0,
+  estado VARCHAR(9) DEFAULT '',
+  /*anticipado TINYINT(1) DEFAULT 0,*/
+  cargoImpuesto DOUBLE NOT NULL,
   anulada TINYINT(1) DEFAULT FALSE,
   PRIMARY KEY(idFactura)
   
