@@ -1,5 +1,4 @@
 <?php
-
     /**
      * Clase para capturar los datos de la solicitud
      */

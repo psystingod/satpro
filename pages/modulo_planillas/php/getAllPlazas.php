@@ -15,7 +15,7 @@
         public function getPlazas()
         {
             try {
-                    $query = "SELECT nombrePlaza FROM tbl_plazas";
+                    $query = "SELECT * FROM tbl_plazas";
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute();
                     $result = $statement->fetchAll(PDO::FETCH_ASSOC);

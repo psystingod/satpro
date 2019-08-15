@@ -161,7 +161,7 @@
                            </div>
                            <br><br><br>
                        </div>
-                       <a class="" href="empleados.php" ><div class="col-lg-6 btn btn-default">
+                       <a class="" href="empleados.php?idEmpleado=1" ><div class="col-lg-6 btn btn-default">
                            <div class="stat-icon">
                                <i class="fas fa-users fa-3x"></i>
                            </div>

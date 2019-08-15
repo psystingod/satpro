@@ -312,7 +312,7 @@
                               </div>
                               <div class="form-row">
                                   <div class="col-md-12">
-                                      
+
                                       <table class="table table-hover table-striped">
                                           <tr class="">
                                               <th class="bg-success">Abonar?</th>

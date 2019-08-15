@@ -23,8 +23,8 @@
                 $departamentoPais = $_POST["deptoPais"];
                 $dui = $_POST["dui"];
                 $extendidoEn = $_POST["extendidoEn"];
-                $fechaExpedicion = date_create($_POST["fechaExpedicion"]);
-                $fechaNacimiento = date_create($_POST["fechaNacimiento"]);
+                $fechaExpedicion = $_POST["fechaExpedicion"];
+                $fechaNacimiento = $_POST["fechaNacimiento"];
                 $edad = $_POST["edad"];
                 $nacionalidad = $_POST["nacionalidad"];
                 $nivelEstudios = $_POST["nivelEstudios"];
@@ -46,10 +46,10 @@
                 $nombrePadre = $_POST["nombrePadre"];
                 $nombreMadre = $_POST["nombreMadre"];
                 $contactos = $_POST["contactos"];
-                $fechaIngreso = date_create($_POST["fechaIngreso"]);
-                $fechaContratacion = date_create($_POST["fechaContratacion"]);
+                $fechaIngreso = $_POST["fechaIngreso"];
+                $fechaContratacion = $_POST["fechaContratacion"];
                 $salarioOrdinario = $_POST["salarioOrdinario"];
-                $fechaCambioSalario = date_create($_POST["fechaCambioSalario"]);
+                $fechaCambioSalario = $_POST["fechaCambioSalario"];
                 $centroTrabajoEmpleado = $_POST["centroTrabajoEmpleado"];
                 $cuentaBanco = $_POST["nCuenta"];
                 $afpPertenece = $_POST["afpPertenece"];
@@ -202,7 +202,7 @@
                 ':state' => 1
                 ));
                 /* END INSERT NEW USER */
-                if ($rol == "administracion") {
+                if ($rol == "1") {
                     /* INSERT NEW PERMISSIONS BASED ON NEW EMPLOYEE TYPE */
                     $query = "INSERT INTO tbl_permisosglobal(Madmin, Mcont, Mplan, Macti, Minve, Miva, Mbanc, Mcxc, Mcxp, Ag, Ed, El, IdUsuario) VALUES
                                                             (:madmin, :mcont, :mplan, :macti, :minve, :miva, :mbanc, :mcxc, :mcxp, :ag, :ed, :el, :idusuario)";
@@ -225,7 +225,7 @@
                     ));
                     /* END INSERT NEW PERMISSIONS */
                 }
-                else if ($rol == "subgerencia") {
+                else if ($rol == "2") {
                     /* INSERT NEW PERMISSIONS BASED ON NEW EMPLOYEE TYPE */
                     $query = "INSERT INTO tbl_permisosglobal(Madmin, Mcont, Mplan, Macti, Minve, Miva, Mbanc, Mcxc, Mcxp, Ag, Ed, El, IdUsuario) VALUES
                                                             (:madmin, :mcont, :mplan, :macti, :minve, :miva, :mbanc, :mcxc, :mcxp, :ag, :ed, :el, :idusuario)";
@@ -248,7 +248,7 @@
                     ));
                     /* END INSERT NEW PERMISSIONS */
                 }
-                else if ($rol == "jefatura") {
+                else if ($rol == "3") {
                     /* INSERT NEW PERMISSIONS BASED ON NEW EMPLOYEE TYPE */
                     $query = "INSERT INTO tbl_permisosglobal(Madmin, Mcont, Mplan, Macti, Minve, Miva, Mbanc, Mcxc, Mcxp, Ag, Ed, El, IdUsuario) VALUES
                                                             (:madmin, :mcont, :mplan, :macti, :minve, :miva, :mbanc, :mcxc, :mcxp, :ag, :ed, :el, :idusuario)";
@@ -272,7 +272,31 @@
                     /* END INSERT NEW PERMISSIONS */
                 }
 
-                else if ($rol == "contabilidad") {
+                else if ($rol == "4") {
+                    /* INSERT NEW PERMISSIONS BASED ON NEW EMPLOYEE TYPE */
+                    $query = "INSERT INTO tbl_permisosglobal(Madmin, Mcont, Mplan, Macti, Minve, Miva, Mbanc, Mcxc, Mcxp, Ag, Ed, El, IdUsuario) VALUES
+                                                            (:madmin, :mcont, :mplan, :macti, :minve, :miva, :mbanc, :mcxc, :mcxp, :ag, :ed, :el, :idusuario)";
+                    $statement = $this->dbConnect->prepare($query);
+
+                    $statement->execute(array(
+                    ':madmin' => 0,
+                    ':mcont' => 0,
+                    ':mplan' => 0,
+                    ':macti' => 0,
+                    ':minve' => 16,
+                    ':miva' => 0,
+                    ':mbanc' => 0,
+                    ':mcxc' => 128,
+                    ':mcxp' => 0,
+                    ':ag' => 1,
+                    ':ed' => 0,
+                    ':el' => 0,
+                    ':idusuario' => $lastId
+                    ));
+                    /* END INSERT NEW PERMISSIONS */
+                }
+
+                else if ($rol == "5") {
                     /* INSERT NEW PERMISSIONS BASED ON NEW EMPLOYEE TYPE */
                     $query = "INSERT INTO tbl_permisosglobal(Madmin, Mcont, Mplan, Macti, Minve, Miva, Mbanc, Mcxc, Mcxp, Ag, Ed, El, IdUsuario) VALUES
                                                             (:madmin, :mcont, :mplan, :macti, :minve, :miva, :mbanc, :mcxc, :mcxp, :ag, :ed, :el, :idusuario)";
@@ -295,7 +319,7 @@
                     ));
                     /* END INSERT NEW PERMISSIONS */
                 }
-                else if ($rol == "atencion") {
+                else if ($rol == "6") {
                     /* INSERT NEW PERMISSIONS BASED ON NEW EMPLOYEE TYPE */
                     $query = "INSERT INTO tbl_permisosglobal(Madmin, Mcont, Mplan, Macti, Minve, Miva, Mbanc, Mcxc, Mcxp, Ag, Ed, El, IdUsuario) VALUES
                                                             (:madmin, :mcont, :mplan, :macti, :minve, :miva, :mbanc, :mcxc, :mcxp, :ag, :ed, :el, :idusuario)";

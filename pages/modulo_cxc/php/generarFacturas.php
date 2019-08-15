@@ -23,7 +23,7 @@
 
                $cesc = floatval($result['valorImpuesto']);
 
-               $tipoComprobante = $_POST['tipoComprobante'];
+               $tipoComprobante = $_POST['tipoComprobante']; // Credito fiscal o consumidor final
                $mesGenerar = $_POST['mesGenerar'];
                $diaGenerar = $_POST['diaGenerar'];
                var_dump($diaGenerar == 05);
