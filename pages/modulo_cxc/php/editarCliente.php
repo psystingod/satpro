@@ -1,14 +1,14 @@
 <?php
 require_once('../../../php/connection.php');
 session_start();
-class NuevoCliente extends ConectionDB
+class EditarCliente extends ConectionDB
 {
-    public function NuevoCliente()
+    public function EditarCliente()
     {
         parent::__construct();
     }
 
-    public function guardar(){
+    public function editar(){
         try {
 
             /****************** DATOS GENERALES ***********************/
@@ -63,7 +63,6 @@ class NuevoCliente extends ConectionDB
             $dir2 = $_POST['rp3_direccion'];
             $dir3 = $_POST['rp3_parentezco'];
             /****************** DATOS CABLE ***********************/
-            var_dump($_POST['fechaInstalacionCable']);
             $date1 = $_POST['fechaInstalacionCable'];
             $date2 = str_replace('/', '-', $date1);
             $fechaInstalacion = date("Y-m-d", strtotime($date2));
@@ -75,7 +74,6 @@ class NuevoCliente extends ConectionDB
             $date1 = $_POST['fechaSuspensionCable'];
             $date2 = str_replace('/', '-', $date1);
             $fechaSuspensionCable = date("Y-m-d", strtotime($date2));
-
             if (isset($_POST['exento'])) {
                 $exento = $_POST['exento'];
             }else {
@@ -88,8 +86,7 @@ class NuevoCliente extends ConectionDB
             }else {
                 $cortesia = "F";
             }
-
-            $diaCobro = $_POST['diaGenerarFacturaCable'];
+            var_dump($cortesia);
             $cuotaMensualCable = $_POST['cuotaMensualCable'];
             $prepago = $_POST['prepago'];
             //$tipoComprobante = $_POST[''];
@@ -100,13 +97,14 @@ class NuevoCliente extends ConectionDB
             $date2 = str_replace('/', '-', $date1);
             $vencimientoCable = date("Y-m-d", strtotime($date2));
 
-            $date1 = $_POST['fechaSuspensionCable'];
+            $date1 = $_POST['inicioContratoCable'];
             $date2 = str_replace('/', '-', $date1);
             $fechaInicioContratoCable = date("Y-m-d", strtotime($date2));
             //$fechaSuspensionCable = $_POST[''];
             $date1 = $_POST['fechaReconexionCable'];
             $date2 = str_replace('/', '-', $date1);
             $fechaReinstalacionCable = date("Y-m-d", strtotime($date2));
+
             $tecnicoCable = $_POST['encargadoInstalacionCable'];
             $codigoCobrador = $_POST['cobrador'];
             $tecnicoInternet = $_POST['encargadoInstalacionInter'];
@@ -164,16 +162,15 @@ class NuevoCliente extends ConectionDB
             $serie = $_POST['serie'];
             $ruido = $_POST['ruido'];
             $wifiClave = $_POST['claveWifi'];
-            $creadoPor = $_SESSION['nombres']." ".$_SESSION['apellidos'];
+            $ultUser = $_SESSION['nombres']." ".$_SESSION['apellidos'];
             $fechaHora = date('d/m/Y h:i:s');
 
-            $query = "INSERT INTO clientes(servicio_suspendido, estado_cliente_in, numero_contrato, num_factura, nombre, empresa, numero_nit, numero_dui, lugar_exp, num_registro, saldoCable, saldoInternet, direccion_cobro, direccion, fecha_nacimiento, id_departamento, id_municipio, id_colonia, telefonos, tel_trabajo, correo_electronico, profesion, id_cuenta, forma_pago, tipo_comprobante, saldo_actual, facebook, contactos, contacto2, contacto3,
-                      telcon1, telcon2, telcon3, paren1, paren2, paren3, dir1, dir2, dir3,
-                      fecha_instalacion, fecha_primer_factura, fecha_suspencion, exento, dia_cobro, servicio_cortesia, valor_cuota, prepago, tipo_servicio, mactv, periodo_contrato_ca, vencimiento_ca, fecha_reinstalacion, id_tecnico, cod_cobrador, numero_derivaciones, dire_cable, fecha_instalacion_in, fecha_primer_factura_in, tipo_servicio_in, periodo_contrato_int, dia_corbo_in, id_velocidad, cuota_in, id_tipo_cliente, tecnologia, no_contrato_inter,
-                      vencimiento_in, ult_ren_in, fecha_suspencion_in, fecha_reconexion_in, id_promocion, dese_promocion_in, hasta_promocion_in, cuota_promocion, dire_internet, id_tecnico_in, colilla, marca_modem, recep_modem, wanip, mac_modem, trans_modem, coordenadas, serie_modem, ruido_modem, dire_telefonia, clave_modem, creado_por, fecha_hora_creacion)
-                      VALUES(:servicioSuspendido, :estadoClienteIn, :nContrato, :nFactura, :nombre, :empresa, :nit, :dui, :lugarExp, :nrc, :saldoCable, :saldoInter, :dirCobro, :dir, :fechaNacimiento, :idDepartamento, :idMunicipio, :idColonia, :telefonos, :telTrabajo, :email, :ocupacion, :cuentaContable, :formaPago, :tipoComprobante, :saldoActual, :facebook, :contactos, :contacto2, :contacto3, :telcon1, :telcon2, :telcon3, :paren1, :paren2, :paren3, :dir1, :dir2, :dir3,
-                      :fechaInstalacionCable, :fechaPrimerFacturaCable, :fechaSuspensionCable, :exento, :diaCobro, :servicioCortesia, :cuotaCable, :prepago, :tipoServicio, :mactv, :periodoContratoCable, :vencimientoCable, :fechaReconexCable, :idTecnico, :codigoCobrador, :nDerivaciones, :direCable, :fechaInstalacionIn, :fechaPrimerFacturaIn, :tipoServicioIn, :periodoContratoIn, :diaCobroIn, :idVelocidadIn, :cuotaIn, :tipoClienteIn, :tecnologia, :noContratoIn,
-                      :vencimientoContratoIn, :ultRenIn, :fechaSuspensionIn, :fechaReconexIn, :promoIn, :promoInDesde, :promoInHasta, :cuotaPromoIn, :direInter, :idTecnicoIn, :colilla, :modelo, :recepcion, :wanip, :macModem, :trans, :coordenadas, :serieModem, :ruido, :nodo, :claveWifi, :creadoPor, :fechaHoraCreado)";
+            $query = "UPDATE clientes SET servicio_suspendido=:servicioSuspendido, estado_cliente_in=:estadoClienteIn, numero_contrato=:nContrato, num_factura=:nFactura, nombre=:nombre, empresa=:empresa, numero_nit=:nit, numero_dui=:dui, lugar_exp=:lugarExp, num_registro=:nrc, saldoCable=:saldoCable, saldoInternet=:saldoInter, direccion_cobro=:dirCobro, direccion=:dir,
+                      fecha_nacimiento=:fechaNacimiento, id_departamento=:idDepartamento, id_municipio=:idMunicipio, id_colonia=:idColonia, telefonos=:telefonos, tel_trabajo=:telTrabajo, correo_electronico=:email, profesion=:ocupacion, id_cuenta=:cuentaContable, forma_pago=:formaPago, tipo_comprobante=:tipoComprobante, saldo_actual=:saldoActual, facebook=:facebook, contactos=:contactos, contacto2=:contacto2, contacto3=:contacto3,
+                      telcon1=:telcon1, telcon2=:telcon2, telcon3=:telcon3, paren1=:paren1, paren2=:paren2, paren3=:paren3, dir1=:dir1, dir2=:dir2, dir3=:dir3,
+                      fecha_instalacion=:fechaInstalacionCable, fecha_primer_factura=:fechaPrimerFacturaCable, fecha_suspencion=:fechaSuspensionCable, exento=:exento, dia_cobro=:diaCobro, servicio_cortesia=:servicioCortesia, valor_cuota=:cuotaCable, prepago=:prepago, tipo_servicio=:tipoServicio, mactv=:mactv, periodo_contrato_ca=:periodoContratoCable, vencimiento_ca=:vencimientoCable, fecha_reinstalacion=:fechaReconexCable, id_tecnico=:idTecnico, cod_cobrador=:codigoCobrador, numero_derivaciones=:nDerivaciones, dire_cable=:direCable, fecha_instalacion_in=:fechaInstalacionIn, fecha_primer_factura_in=:fechaPrimerFacturaIn, tipo_servicio_in=:tipoServicioIn, periodo_contrato_int=:periodoContratoIn, dia_corbo_in=:diaCobroIn, id_velocidad=:idVelocidadIn, cuota_in=:cuotaIn, id_tipo_cliente=:tipoClienteIn,
+                      tecnologia=:tecnologia, no_contrato_inter=:noContratoIn,
+                      vencimiento_in=:vencimientoContratoIn, ult_ren_in=:ultRenIn, fecha_suspencion_in=:fechaSuspensionIn, fecha_reconexion_in=:fechaReconexIn, id_promocion=:promoIn, dese_promocion_in=:promoInDesde, hasta_promocion_in=:promoInHasta, cuota_promocion=:cuotaPromoIn, dire_internet=:direInter, id_tecnico_in=:idTecnicoIn, colilla=:colilla, marca_modem=:modelo, recep_modem=:recepcion, wanip=:wanip, mac_modem=:macModem, trans_modem=:trans, coordenadas=:coordenadas, serie_modem=:serieModem, ruido_modem=:ruido, dire_telefonia=:nodo, clave_modem=:claveWifi, ult_usuario=:ultUser WHERE cod_cliente = :codigo";
 
             $stmt = $this->dbConnect->prepare($query);
             $stmt->execute(array(
@@ -264,11 +261,11 @@ class NuevoCliente extends ConectionDB
                         ':ruido' => $ruido,
                         ':nodo' => $nodo,
                         ':claveWifi' => $wifiClave,
-                        ':creadoPor' => $creadoPor,
-                        ':fechaHoraCreado' => $fechaHora
+                        ':ultUser' => $ultUser,
+                        ':codigo' => $codigo
                         ));
-            $codigoClienteNuevo = $this->dbConnect->lastInsertId();
-            header('Location: ../infoCliente.php?id='.$codigoClienteNuevo);
+            //$codigoClienteNuevo = $this->dbConnect->lastInsertId();
+            header('Location: ../infoCliente.php?id='.$codigo);
 
         } catch (Exception $e) {
             print "!Error¡: " . $e->getMessage() . "</br>";
@@ -276,6 +273,6 @@ class NuevoCliente extends ConectionDB
         }
     }
 }
-$nuevoCliente = new NuevoCliente();
-$nuevoCliente->guardar();
+$EditarCliente = new EditarCliente();
+$EditarCliente->editar();
 ?>

@@ -30,8 +30,13 @@
                     $ordenaSuspension = $_POST['ordenaSuspensionCable'];
                     $colilla = ucwords($_POST['colilla']);
                     $str2 = $_POST["fechaSuspension"];
-                    $date2 = DateTime::createFromFormat('d/m/Y', $str2);
-                    $fechaSuspension = $date2->format('Y-m-d');
+                    if ($str2 >= 7) {
+                        $date2 = DateTime::createFromFormat('d/m/Y', $str2);
+                        $fechaSuspension = $date2->format('Y-m-d');
+                    }else {
+                        $fechaSuspension = "";
+                    }
+
                     $responsable = $_POST["responsable"];
                     $mactv = $_POST["mactv"];
                     $observaciones = $_POST["observaciones"];
@@ -96,8 +101,12 @@
                     $ordenaSuspension = $_POST['ordenaSuspensionInter'];
                     $colilla = ucwords($_POST['colilla']);
                     $str2 = $_POST["fechaSuspension"];
-                    $date2 = DateTime::createFromFormat('d/m/Y', $str2);
-                    $fechaSuspension = $date2->format('Y-m-d');
+                    if ($str2 >= 7) {
+                        $date2 = DateTime::createFromFormat('d/m/Y', $str2);
+                        $fechaSuspension = $date2->format('Y-m-d');
+                    }else {
+                        $fechaSuspension = "";
+                    }
                     $responsable = $_POST["responsable"];
                     $observaciones = $_POST["observaciones"];
                     $tipoServicio = $_POST["tipoServicio"];

@@ -102,7 +102,6 @@
             /****************** DATOS GENERALES ***********************/
             $idOrdenTrabajo = $row["idOrdenTrabajo"];
             $fechaOrdenTrabajo = date_format(date_create($row["fechaOrdenTrabajo"]), 'd/m/Y');
-            var_dump($fechaOrdenTrabajo);
             $tipoOrdenTrabajo = $row["tipoOrdenTrabajo"];
             $diaCobro = $row["diaCobro"];
             $codigoCliente = $row["codigoCliente"];
@@ -125,9 +124,19 @@
             $tx = $row['tx'];
             $snr = $row['snr'];
             $colilla = $row['colilla'];
-            $fechaTrabajo = date_format(date_create($row["fechaTrabajo"]), 'd/m/Y');
+            if ($row["fechaTrabajo"] >= 7) {
+                $fechaTrabajo = date_format(date_create($row["fechaTrabajo"]), 'd/m/Y');
+            }else {
+                $fechaTrabajo = "";
+            }
+
             $hora = $row['hora'];
-            $fechaProgramacion = date_format(date_create($row["fechaProgramacion"]), 'd/m/Y');
+            if ($row["fechaProgramacion"] >= 7) {
+                $fechaProgramacion = date_format(date_create($row["fechaProgramacion"]), 'd/m/Y');
+            }else {
+                $fechaProgramacion = "";
+            }
+
             $idTecnico = $row['idTecnico'];
             $mactv = $row['mactv'];
             $coordenadas = $row['coordenadas'];

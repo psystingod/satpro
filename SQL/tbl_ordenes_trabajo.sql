@@ -1,22 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 4.8.3
--- https://www.phpmyadmin.net/
---
--- Servidor: 127.0.0.1
--- Tiempo de generación: 22-07-2019 a las 18:21:07
--- Versión del servidor: 10.1.37-MariaDB
--- Versión de PHP: 7.2.12
-
-SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
-START TRANSACTION;
-SET time_zone = "+00:00";
-
-
-/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
-/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
-/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8mb4 */;
 
 --
 -- Base de datos: `satpro`
@@ -30,8 +11,8 @@ DROP TABLE IF EXISTS tbl_ordenes_trabajo;
 --
 
 CREATE TABLE `tbl_ordenes_trabajo` (
-  `idOrdenTrabajo` int(6) UNSIGNED ZEROFILL NOT NULL,
-  `codigoCliente` int(5) UNSIGNED ZEROFILL DEFAULT NULL,
+  `idOrdenTrabajo` int(6) ZEROFILL NOT NULL AUTO_INCREMENT,
+  `codigoCliente` int(5) ZEROFILL DEFAULT NULL,
   `fechaOrdenTrabajo` date NOT NULL,
   `tipoOrdenTrabajo` varchar(20) NOT NULL,
   `diaCobro` int(2) DEFAULT NULL,
@@ -51,9 +32,9 @@ CREATE TABLE `tbl_ordenes_trabajo` (
   `tx` varchar(6) DEFAULT NULL,
   `snr` varchar(6) DEFAULT NULL,
   `colilla` varchar(10) DEFAULT NULL,
-  `fechaTrabajo` date DEFAULT NULL,
+  `fechaTrabajo` VARCHAR(10) DEFAULT NULL,
   `hora` time DEFAULT NULL,
-  `fechaProgramacion` date DEFAULT NULL,
+  `fechaProgramacion` VARCHAR(10) DEFAULT NULL,
   `idTecnico` int(6) DEFAULT NULL,
   `mactv` varchar(25) DEFAULT NULL,
   `coordenadas` varchar(50) DEFAULT NULL,
@@ -64,35 +45,9 @@ CREATE TABLE `tbl_ordenes_trabajo` (
   `idVendedor` int(6) NOT NULL,
   `recepcionTv` varchar(10) DEFAULT NULL,
   `tipoServicio` char(1) NOT NULL,
-  `creadoPor` varchar(50) NOT NULL
+  `creadoPor` varchar(50) NOT NULL,
+  PRIMARY KEY (idOrdenTrabajo)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
--- Volcado de datos para la tabla `tbl_ordenes_trabajo`
---
 
-
---
--- Índices para tablas volcadas
---
-
---
--- Indices de la tabla `tbl_ordenes_trabajo`
---
-ALTER TABLE `tbl_ordenes_trabajo`
-  ADD PRIMARY KEY (`idOrdenTrabajo`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `tbl_ordenes_trabajo`
---
-ALTER TABLE `tbl_ordenes_trabajo`
-  MODIFY `idOrdenTrabajo` int(6) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+ALTER TABLE tbl_ordenes_trabajo AUTO_INCREMENT=1;

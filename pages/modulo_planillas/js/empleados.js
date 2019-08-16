@@ -25,7 +25,7 @@ function editarEmpleado(){
         }
     }
     document.getElementById("nuevoEmpleado").disabled = true;
-    document.getElementById("guardar").disabled = true;
+    document.getElementById("guardar").disabled = false;
     changeAction("editar");
 }
 

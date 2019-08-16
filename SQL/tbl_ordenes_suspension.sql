@@ -19,7 +19,7 @@ CREATE TABLE tbl_ordenes_suspension (
   serieModem VARCHAR(25) DEFAULT NULL,
   velocidad VARCHAR(10) DEFAULT NULL,
   colilla VARCHAR(10) DEFAULT NULL,
-  fechaSuspension DATE DEFAULT NULL,
+  fechaSuspension VARCHAR(10) DEFAULT NULL,
   idTecnico INT(6) DEFAULT NULL,
   mactv VARCHAR(25) DEFAULT NULL,
   observaciones VARCHAR(80) DEFAULT NULL,
@@ -35,3 +35,5 @@ CREATE TABLE tbl_ordenes_suspension (
   FOREIGN KEY (idVendedor) REFERENCES tbl_vendedores(idVendedor)*/
   
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE tbl_ordenes_suspension AUTO_INCREMENT=1;
