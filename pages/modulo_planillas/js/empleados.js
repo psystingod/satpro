@@ -12,6 +12,8 @@ function nuevoEmpleado(){
     }
     document.getElementById("guardar").disabled = false;
     document.getElementById("editarEmpleado").disabled = true;
+    var ultimoId = document.getElementById("ultimoId").value;
+    document.getElementById("idEmpleado").value = parseInt(ultimoId);
     changeAction("nueva");
 }
 function editarEmpleado(){

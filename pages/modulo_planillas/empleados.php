@@ -190,7 +190,7 @@
     }
  ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -346,7 +346,7 @@
                                         <div class="pull-right">
                                             <button class="btn btn-default btn-sm" id="nuevoEmpleado" onclick="nuevoEmpleado()" type="button" name="nuevo" data-toggle="tooltip" data-placement="bottom" title="Nuevo empleado"><i class="far fa-file"></i></button>
                                             <button class="btn btn-default btn-sm" id="editarEmpleado" onclick="editarEmpleado()" type="button" name="editar" data-toggle="tooltip" data-placement="bottom" title="Editar empleado"><i class="far fa-edit"></i></button>
-                                            <button class="btn btn-default btn-sm" type="button" data-toggle="tooltip" data-placement="bottom" title="Buscar empleado"><i class="fas fa-search"></i></button>
+                                            <button class="btn btn-default btn-sm" data-toggle="modal" data-target="#buscarEmp" type="button" data-toggle="tooltip" data-placement="bottom" title="Buscar empleado"><i class="fas fa-search"></i></button>
                                             <button class="btn btn-default btn-sm" type="button" data-toggle="tooltip" data-placement="bottom" title="Imprimir ficha"><i class="fas fa-print"></i></button>
                                             <form style="display:inline;" id="empleados" action="" method="POST">
                                             <button class="btn btn-default btn-sm pull-right" id="guardar" type="submit" data-toggle="tooltip" data-placement="bottom" title="Guardar cambios" disabled><i class="far fa-save"></i></button>
@@ -373,7 +373,8 @@
 
                                             <div class="col-md-2">
                                                 <label for="idEmpleado">Id empleado</label>
-                                                <input class="form-control" type="text" name="idEmpleado" value="<?php echo intval($idEmpleado)?>" readonly>
+                                                <input id="ultimoId" type="hidden" name="" value="<?php echo $ultimoId ?>">
+                                                <input id="idEmpleado" class="form-control" type="text" name="idEmpleado" value="<?php echo intval($idEmpleado)?>" readonly>
                                             </div>
                                             <div class="col-md-5">
                                                 <label for="nombres">Nombres</label>
@@ -897,6 +898,36 @@
 
               </div>
             </div>
+            <!-- Modal -->
+            <div id="buscarEmp" class="modal fade" role="dialog">
+              <div class="modal-dialog modal-lg">
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Buscar empleado</h4>
+                  </div>
+                  <div class="modal-body">
+                      <div class="row">
+                          <div class="col-md-12">
+                              <input class="form-control" type="text" name="caja_busqueda" id="caja_busqueda" placeholder="ID, Nombres, Apellidos, Nombre completo, dirección">
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-md-12">
+                              <div id="datos">
+
+                              </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
         </div>
         <!-- /#page-wrapper -->
     </div>
@@ -915,6 +946,7 @@
     <script src="../../dist/js/sb-admin-2.js"></script>
     <script src="../../dist/js/jquery-validation-1.19.0/dist/jquery.validate.js"></script>
     <script src="js/empleados.js"></script>
+    <script src="js/searchemp.js"></script>
 
 </body>
 </html>
