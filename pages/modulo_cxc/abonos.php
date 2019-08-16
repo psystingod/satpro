@@ -1,7 +1,6 @@
 <?php
 
     session_start();
-
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -199,24 +198,24 @@
                               </div>
                               <div class="form-row">
                                   <div class="col-md-2">
-
+                                    <!-- readonly -->
                                       <label for="claseOrden">Fecha del abono</label>
-                                      <input class="form-control input-sm input-sm" name="fechaAbono" type="text" value= "<?php echo date('d/m/Y'); ?>" readonly>
+                                      <input class="form-control input-sm input-sm" name="fechaAbono" type="text" value= "<?php echo date('d/m/Y'); ?>" >
                                   </div>
                                   <div class="col-md-2">
-
+                                    <!-- readonly -->
                                       <label for="telefonos">Código</label>
                                       <input class="form-control input-sm input-sm" type="text" name="telefonos" readonly>
                                   </div>
                                   <div class="col-md-4">
 
                                       <label for="nombreCliente">Nombre del cliente</label>
-                                      <input class="form-control input-sm input-sm" type="text" name="nombreCliente" value="Diego Armando Herrera Flores" readonly>
+                                      <input class="form-control input-sm input-sm" type="text" name="nombreCliente" value="Diego Armando Herrera Flores">
                                   </div>
                                   <div class="col-md-2">
-
+                                      <!-- readonly --> 
                                       <label for="nrc">NRC</label>
-                                      <input class="form-control input-sm input-sm" type="text" name="nrc" readonly>
+                                      <input class="form-control input-sm input-sm" type="text" name="nrc">
                                   </div>
                                   <div class="col-md-2">
 
