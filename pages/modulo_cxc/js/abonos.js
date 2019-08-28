@@ -66,7 +66,7 @@ function getMesesPagar(){
             document.getElementById("total").value = cargoTotal;
             var mesCargo1 = document.getElementById("mesCargo1").value;
             //document.getElementById("pendiente").value = mes2;
-            document.getElementById("meses").value = "Resumen de abono: " + mesCargo1;
+            document.getElementById("meses").value = mesCargo1;
 
             document.getElementById("meses").value = mesCargo1;
         }else if (document.getElementById("mesx1").checked == true && document.getElementById("mesx2").checked == true) {
@@ -79,7 +79,7 @@ function getMesesPagar(){
 
             var mesCargo1 = document.getElementById("mesCargo1").value;
             var mesCargo2 = document.getElementById("mesCargo2").value;
-            document.getElementById("meses").value = "Resumen de abono: " + mesCargo1+" "+mesCargo2;
+            document.getElementById("meses").value = mesCargo1+","+mesCargo2;
             document.getElementById("impSeg").value = (parseFloat(cesc)*parseFloat(totalSinIva)).toFixed(2);
             var impSeg = document.getElementById("impSeg").value;
             document.getElementById("totalAbonoImpSeg").value = (parseFloat(total)+parseFloat(impSeg)).toFixed(2);
@@ -91,6 +91,7 @@ function getMesesPagar(){
             document.getElementById("impSeg").value = "0.0";
             document.getElementById("totalAbonoImpSeg").value = "0.0";
             document.getElementById("total").value = "0.0";
+            document.getElementById("meses").value = "";
         }
     }
 }
