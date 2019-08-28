@@ -130,32 +130,47 @@
                    }
                    else {
                        foreach ($result as $i) {
-                           $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroRecibo, codigoCliente, cuotaCable, cuotaInternet, saldoCable, saldoInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto)VALUES(:tipoComprobante, :numeroRecibo, :codigoCliente, :cuotaCable, :cuotaInternet, :saldoCable, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto)";
+                           $qry = "SELECT COUNT(mesCargo)FROM tbl_cargos WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
 
                            $stmt = $this->dbConnect->prepare($qry);
                            $stmt->execute(
-                               array(':tipoComprobante' => $tipoComprobante,
-                                     ':numeroRecibo' => $correlativo,
-                                     ':codigoCliente' => $i["cod_cliente"],
-                                     ':cuotaCable' => $i['valor_cuota'],
-                                     ':cuotaInternet' => $i['cuota_in'],
-                                     ':saldoCable' => $i['valor_cuota'],
-                                     ':saldoInternet' => $i['cuota_in'],
-                                     ':fechaCobro' => $fechaGenerar1,
-                                     ':fechaFactura' => $fechaComprobante,
-                                     ':fechaVencimiento' => $fechaVencimiento,
+                               array(':codigoCliente' => $i["cod_cliente"],
                                      ':mesCargo' => $mesCargo,
                                      ':tipoServicio' => $ts,
-                                     ':estado' => $estado,
-                                     ':cargoImpuesto' => $cesc
                                     ));
+                           $contador = $stmt->fetchColumn();
+
+                           var_dump("vuelta: " . $vuelta++);
+                           //var_dump($contador);
+                           if ($contador == 0) {
+                               $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroRecibo, codigoCliente, cuotaCable, cuotaInternet, saldoCable, saldoInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto)VALUES(:tipoComprobante, :numeroRecibo, :codigoCliente, :cuotaCable, :cuotaInternet, :saldoCable, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto)";
+
+                               $stmt = $this->dbConnect->prepare($qry);
+                               $stmt->execute(
+                                   array(':tipoComprobante' => $tipoComprobante,
+                                         ':numeroRecibo' => $correlativo,
+                                         ':codigoCliente' => $i["cod_cliente"],
+                                         ':cuotaCable' => $i['valor_cuota'],
+                                         ':cuotaInternet' => $i['cuota_in'],
+                                         ':saldoCable' => $i['valor_cuota'],
+                                         ':saldoInternet' => $i['cuota_in'],
+                                         ':fechaCobro' => $fechaGenerar1,
+                                         ':fechaFactura' => $fechaComprobante,
+                                         ':fechaVencimiento' => $fechaVencimiento,
+                                         ':mesCargo' => $mesCargo,
+                                         ':tipoServicio' => $ts,
+                                         ':estado' => $estado,
+                                         ':cargoImpuesto' => $cesc
+                                        ));
+                           }elseif ($contador > 0) {
+                               continue;
+                           }
+
                        }
                        //header('Location: ../pages/moduloInventario.php?found=yes');
                    }
 
                }
-
-
 
            } catch (Exception $e) {
                print "!Error¡: " . $e->getMessage() . "</br>";
