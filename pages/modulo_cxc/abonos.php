@@ -533,8 +533,16 @@
                                       <label for="numeroOrden">Zona</label>
                                       <select class="form-control input-sm" name="zona">
                                           <?php
-                                          echo "<option value=''>Zona de cobro #1</option>";
-                                          ?>
+                                          foreach ($arrCobradores as $key) {
+                                              if ($key['codigoCobrador'] == "000") {
+                                                  echo "<option value=".$key['codigoCobrador'].">".$key['nombreCobrador']."</option>";
+                                              }
+                                              else {
+                                                  echo "<option value=".$key['codigoCobrador'].">".$key['nombreCobrador']."</option>";
+                                              }
+
+                                          }
+                                           ?>
                                       </select>
                                   </div>
                                   <div class="col-md-5">
@@ -542,8 +550,16 @@
                                       <label for="numeroOrden">Cobrador</label>
                                       <select class="form-control input-sm" name="cobrador">
                                           <?php
-                                          echo "<option value=''>Colecturia</option>";
-                                          ?>
+                                          foreach ($arrCobradores as $key) {
+                                              if ($key['codigoCobrador'] == $cobrador) {
+                                                  echo "<option value=".$key['codigoCobrador']." selected>".$key['nombreCobrador']."</option>";
+                                              }
+                                              else {
+                                                  echo "<option value=".$key['codigoCobrador'].">".$key['nombreCobrador']."</option>";
+                                              }
+
+                                          }
+                                           ?>
                                       </select>
                                   </div>
                               </div>
@@ -704,12 +720,12 @@
                               <div class="form-row">
                                   <div class="col-md-8">
                                       <label for="meses">Meses</label>
-                                      <textarea id="meses" class="form-control" name="meses" rows="4" cols="40"></textarea>
+                                      <textarea id="meses" class="form-control" name="meses" rows="2" cols="40"></textarea>
                                   </div>
                                   <div class="col-md-4">
                                       <label for="meses" style="color: brown;"></label>
-                                      <button class="btn btn-success btn-lg btn-block" type="button" name="button" style="margin-bottom: 6px; margin-top: 17px;"><i class="fas fa-check" style="color: white;"></i> Aplicar abonos</button>
-                                      <a href="cxc.php" style="text-decoration: none;"><button class="btn btn-danger btn-lg btn-block" type="button" name="button"><i class="fas fa-sign-out-alt" style="color: white;"></i> Salir</button></a>
+                                      <button class="btn btn-success btn-md btn-block" type="button" name="button" style="margin-bottom: 6px; margin-top: 0px;"><i class="fas fa-check" style="color: white;"></i> Aplicar abonos</button>
+                                      <a href="cxc.php" style="text-decoration: none;"><button class="btn btn-danger btn-md btn-block" type="button" name="button"><i class="fas fa-sign-out-alt" style="color: white;"></i> Salir</button></a>
                                   </div>
                               </div>
                           </div>

@@ -67,7 +67,7 @@
                    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
                    if (count($result) == 0) {
-                       //header('Location: ../infoCliente.php?found=no');
+                       header('Location: ../cxc.php?gen=no');
                    }
                    else {
                        $vuelta = 0;
@@ -109,7 +109,7 @@
                            }
 
                        }
-                       //header('Location: ../infoCliente.php?found=yes');
+                       header('Location: ../cxc.php?gen=yes');
                    }
                }
 
@@ -126,7 +126,7 @@
                    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
                    if (count($result) == 0) {
-                       //header('Location: ../pages/moduloInventario.php?found=no');
+                       header('Location: ../cxc.php?gen=yes');
                    }
                    else {
                        foreach ($result as $i) {
@@ -167,7 +167,7 @@
                            }
 
                        }
-                       //header('Location: ../pages/moduloInventario.php?found=yes');
+                       header('Location: ../cxc.php?gen=yes');
                    }
 
                }
