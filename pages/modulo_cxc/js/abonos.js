@@ -39,6 +39,17 @@ function getMesesPagar(){
             document.getElementById("totalPagar").value = parseFloat(mes1);
             var mesCargo1 = document.getElementById("mesCargo1").value;
             document.getElementById("meses").value = mesCargo1;
+            var total = document.getElementById("totalPagar").value;
+            var cesc = document.getElementById("cesc").value;
+            totalSinIva = (parseFloat(total)/1.13).toFixed(2);
+            document.getElementById("impSeg").value = (parseFloat(cesc)*parseFloat(totalSinIva)).toFixed(2);
+            var impSeg = document.getElementById("impSeg").value;
+        }else {
+            var mes1 = document.getElementById("mesx1value").value;
+            document.getElementById("totalPagar").value = "0.0";
+            var mesCargo1 = document.getElementById("mesCargo1").value;
+            document.getElementById("meses").value = "";
+            var cesc = document.getElementById("impSeg").value = "0.0 ";
         }
     }else if (document.getElementById("mesx1") != null && document.getElementById("mesx2") != null) {
         if (document.getElementById("mesx1").checked == true && document.getElementById("mesx2").checked == false) {

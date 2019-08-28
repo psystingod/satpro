@@ -26,9 +26,9 @@ CREATE TABLE tbl_cargos (
   
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `tbl_cargos` (`idFactura`, `numeroFactura`, `tipoFactura`, `numeroRecibo`, `codigoCliente`, `cuotaCable`, `cuotaInternet`, `saldoCable`, `saldoInternet`, `fechaCobro`, `fechaFactura`, `fechaVencimiento`, `fechaAbonado`, `mesCargo`, `formaPago`, `tipoServicio`, `estado`, `cargoImpuesto`, `anulada`) VALUES
+/*INSERT INTO `tbl_cargos` (`idFactura`, `numeroFactura`, `tipoFactura`, `numeroRecibo`, `codigoCliente`, `cuotaCable`, `cuotaInternet`, `saldoCable`, `saldoInternet`, `fechaCobro`, `fechaFactura`, `fechaVencimiento`, `fechaAbonado`, `mesCargo`, `formaPago`, `tipoServicio`, `estado`, `cargoImpuesto`, `anulada`) VALUES
 (1, 0, 1, 25899, '00028', 13.03, NULL, 13.03, NULL, '2019-02-16', '2019-03-16', '2019-03-24', NULL, '02/2019', '', 'C', 'pendiente', 0.05, 0),
-(2, 0, 1, 25899, '00030', 13.03, NULL, 13.03, NULL, '2019-02-16', '2019-03-16', '2019-03-24', NULL, '02/2019', '', 'C', 'pendiente', 0.05, 0);
+(2, 0, 1, 25899, '00030', 13.03, NULL, 13.03, NULL, '2019-02-16', '2019-03-16', '2019-03-24', NULL, '02/2019', '', 'C', 'pendiente', 0.05, 0);*/
 
 
 DROP TABLE IF EXISTS tbl_abonos;
