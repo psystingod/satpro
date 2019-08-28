@@ -26,7 +26,7 @@
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
             /****************** DATOS GENERALES ***********************/
-            $estado_cable = $row['servicio_suspendido']; // 0 o 1
+            $estado_cable = $row['servicio_suspendido']; // 0 o 1 SIN Servicio
             $estado_internet = $row['estado_cliente_in']; // 1, 2, 3
             $codigo = $row["cod_cliente"];
             $nContrato = $row["numero_contrato"];

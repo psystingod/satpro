@@ -28,9 +28,10 @@
                $diaGenerar = $_POST['diaGenerar'];
                var_dump($diaGenerar == 05);
                $anoGenerar = $_POST['anoGenerar'];
-               $fechaGenerar1 = $anoGenerar."-".$mesGenerar."-".$diaGenerar;
+               $fechaGenerar1 = $anoGenerar."-".$mesGenerar."-".$diaGenerar; //FECHA PIVOTE
                $fechaGenerar = date_format(date_create($fechaGenerar1), 'd/m/Y');
-               //var_dump($fechaGenerar1);
+               $mesCargo = date_format(date_create($fechaGenerar1), 'm/Y');
+               //var_dump($mesCargo);
                $comprobante = $_POST['fechaComprobante'];
                $vencimiento = $_POST['vencimiento'];
                $comprobante2 = str_replace("/", "-", $comprobante);
@@ -64,31 +65,49 @@
                              ':fechaGenerar' => $fechaGenerar1
                             ));
                    $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                   //var_dump($fechaGenerar1 <= '2019-08-05');
-                   //var_dump($result);
+
                    if (count($result) == 0) {
                        //header('Location: ../infoCliente.php?found=no');
                    }
                    else {
+                       $vuelta = 0;
                        foreach ($result as $i) {
-                           $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroRecibo, codigoCliente, cuotaCable, cuotaInternet, saldoCable, saldoInternet, fechaCobro, fechaVencimiento, fechaFactura, tipoServicio, estado, cargoImpuesto)VALUES(:tipoComprobante, :numeroRecibo, :codigoCliente, :cuotaCable, :cuotaInternet, :saldoCable, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :tipoServicio, :estado, :cargoImpuesto)";
+                           $qry = "SELECT COUNT(mesCargo)FROM tbl_cargos WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
 
                            $stmt = $this->dbConnect->prepare($qry);
                            $stmt->execute(
-                               array(':tipoComprobante' => $tipoComprobante,
-                                     ':numeroRecibo' => $correlativo,
-                                     ':codigoCliente' => $i["cod_cliente"],
-                                     ':cuotaCable' => $i['valor_cuota'],
-                                     ':cuotaInternet' => $i['cuota_in'],
-                                     ':saldoCable' => $i['valor_cuota'],
-                                     ':saldoInternet' => $i['cuota_in'],
-                                     ':fechaCobro' => $fechaGenerar1,
-                                     ':fechaFactura' => $fechaComprobante,
-                                     ':fechaVencimiento' => $fechaVencimiento,
+                               array(':codigoCliente' => $i["cod_cliente"],
+                                     ':mesCargo' => $mesCargo,
                                      ':tipoServicio' => $ts,
-                                     ':estado' => $estado,
-                                     ':cargoImpuesto' => $cesc
                                     ));
+                           $contador = $stmt->fetchColumn();
+
+                           var_dump("vuelta: " . $vuelta++);
+                           //var_dump($contador);
+                           if ($contador == 0) {
+                               $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroRecibo, codigoCliente, cuotaCable, cuotaInternet, saldoCable, saldoInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto)VALUES(:tipoComprobante, :numeroRecibo, :codigoCliente, :cuotaCable, :cuotaInternet, :saldoCable, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto)";
+
+                               $stmt = $this->dbConnect->prepare($qry);
+                               $stmt->execute(
+                                   array(':tipoComprobante' => $tipoComprobante,
+                                         ':numeroRecibo' => $correlativo,
+                                         ':codigoCliente' => $i["cod_cliente"],
+                                         ':cuotaCable' => $i['valor_cuota'],
+                                         ':cuotaInternet' => $i['cuota_in'],
+                                         ':saldoCable' => $i['valor_cuota'],
+                                         ':saldoInternet' => $i['cuota_in'],
+                                         ':fechaCobro' => $fechaGenerar1,
+                                         ':fechaFactura' => $fechaComprobante,
+                                         ':fechaVencimiento' => $fechaVencimiento,
+                                         ':mesCargo' => $mesCargo,
+                                         ':tipoServicio' => $ts,
+                                         ':estado' => $estado,
+                                         ':cargoImpuesto' => $cesc
+                                        ));
+                           }elseif ($contador > 0) {
+                               continue;
+                           }
+
                        }
                        //header('Location: ../infoCliente.php?found=yes');
                    }
@@ -111,7 +130,7 @@
                    }
                    else {
                        foreach ($result as $i) {
-                           $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroRecibo, codigoCliente, cuotaCable, cuotaInternet, saldoCable, saldoInternet, fechaCobro, fechaVencimiento, fechaFactura, tipoServicio, estado, cargoImpuesto)VALUES(:tipoComprobante, :numeroRecibo, :codigoCliente, :cuotaCable, :cuotaInternet, :saldoCable, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :tipoServicio, :estado, :cargoImpuesto)";
+                           $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroRecibo, codigoCliente, cuotaCable, cuotaInternet, saldoCable, saldoInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto)VALUES(:tipoComprobante, :numeroRecibo, :codigoCliente, :cuotaCable, :cuotaInternet, :saldoCable, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto)";
 
                            $stmt = $this->dbConnect->prepare($qry);
                            $stmt->execute(
@@ -125,6 +144,7 @@
                                      ':fechaCobro' => $fechaGenerar1,
                                      ':fechaFactura' => $fechaComprobante,
                                      ':fechaVencimiento' => $fechaVencimiento,
+                                     ':mesCargo' => $mesCargo,
                                      ':tipoServicio' => $ts,
                                      ':estado' => $estado,
                                      ':cargoImpuesto' => $cesc

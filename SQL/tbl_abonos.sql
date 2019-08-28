@@ -6,16 +6,16 @@ CREATE TABLE tbl_cargos (
   tipoFactura TINYINT(1) NOT NULL,
   numeroRecibo INT(11) NOT NULL,
   codigoCliente VARCHAR(6) NOT NULL,
-  cuotaCable DOUBLE NOT NULL,
-  cuotaInternet DOUBLE NOT NULL,
-  saldoCable DOUBLE NOT NULL,
-  saldoInternet DOUBLE NOT NULL,
+  cuotaCable DOUBLE DEFAULT NULL,
+  cuotaInternet DOUBLE DEFAULT NULL,
+  saldoCable DOUBLE DEFAULT NULL,
+  saldoInternet DOUBLE DEFAULT NULL,
   fechaCobro DATE DEFAULT NULL,
   fechaFactura DATE DEFAULT NULL,
   fechaVencimiento DATE DEFAULT NULL,
   /*montoCancelado DOUBLE DEFAULT 0,*/
   fechaAbonado DATE DEFAULT NULL,
-  mesCargo VARCHAR(3) DEFAULT '',
+  mesCargo VARCHAR(10) DEFAULT '',
   formaPago VARCHAR(10) DEFAULT '',
   tipoServicio CHAR NOT NULL,
   estado VARCHAR(9) DEFAULT '',
@@ -26,6 +26,11 @@ CREATE TABLE tbl_cargos (
   
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `tbl_cargos` (`idFactura`, `numeroFactura`, `tipoFactura`, `numeroRecibo`, `codigoCliente`, `cuotaCable`, `cuotaInternet`, `saldoCable`, `saldoInternet`, `fechaCobro`, `fechaFactura`, `fechaVencimiento`, `fechaAbonado`, `mesCargo`, `formaPago`, `tipoServicio`, `estado`, `cargoImpuesto`, `anulada`) VALUES
+(1, 0, 1, 25899, '00028', 13.03, NULL, 13.03, NULL, '2019-02-16', '2019-03-16', '2019-03-24', NULL, '02/2019', '', 'C', 'pendiente', 0.05, 0),
+(2, 0, 1, 25899, '00030', 13.03, NULL, 13.03, NULL, '2019-02-16', '2019-03-16', '2019-03-24', NULL, '02/2019', '', 'C', 'pendiente', 0.05, 0);
+
+
 DROP TABLE IF EXISTS tbl_abonos;
 CREATE TABLE tbl_abonos (
   idAbono INT(11) NOT NULL AUTO_INCREMENT,
@@ -33,24 +38,26 @@ CREATE TABLE tbl_abonos (
   tipoFactura TINYINT(1) NOT NULL,
   numeroRecibo INT(11) NOT NULL,
   codigoCliente VARCHAR(6) NOT NULL,
-  cuotaCable DOUBLE NOT NULL,
-  cuotaInternet DOUBLE NOT NULL,
-  saldoCable DOUBLE NOT NULL,
-  saldoInternet DOUBLE NOT NULL,
+  cuotaCable DOUBLE DEFAULT NULL,
+  cuotaInternet DOUBLE DEFAULT NULL,
+  saldoCable DOUBLE DEFAULT NULL,
+  saldoInternet DOUBLE DEFAULT NULL,
   fechaCobro DATE DEFAULT NULL,
   fechaFactura DATE DEFAULT NULL,
   fechaVencimiento DATE DEFAULT NULL,
   /*montoCancelado DOUBLE DEFAULT 0,*/
   fechaAbonado DATE DEFAULT NULL,
-  mesCargo VARCHAR(3) DEFAULT '',
+  mesCargo VARCHAR(10) DEFAULT '',
   formaPago VARCHAR(10) DEFAULT '',
   tipoServicio CHAR NOT NULL,
   estado VARCHAR(9) DEFAULT '',
   /*anticipado TINYINT(1) DEFAULT 0,*/
   cargoImpuesto DOUBLE NOT NULL,
   anulada TINYINT(1) DEFAULT FALSE,
-  idFactura INT(11) NOT NULL,
-  PRIMARY KEY(idAbono),
-  FOREIGN KEY(idFactura) REFERENCES tbl_cargos(idFactura)
+  /*idFactura INT(11) NOT NULL,*/
+  PRIMARY KEY(idAbono)
+  /*FOREIGN KEY(idFactura) REFERENCES tbl_cargos(idFactura)*/
   
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+INSERT INTO tbl_abonos VALUES(1, 1452, 2, 3214, "00001", 10.5, 10.5, 50.1, 50.1, '2019-08-25', '2019-08-25', '2019-08-25', '2019-08-25', '02/2019', 'contado', 'C', 'cancelado', 0.05, false)

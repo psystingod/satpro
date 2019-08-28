@@ -1,6 +1,324 @@
 <?php
 
     session_start();
+    // get passed parameter value, in this case, the record ID
+    // isset() is a PHP function used to verify if a value is there or not
+    if (isset($_GET['codigoCliente'])) {
+        $id=isset($_GET['codigoCliente']) ? $_GET['codigoCliente'] : die('ERROR: Record no encontrado.');
+
+        //include database connection
+        include '../../php/connection.php';
+        $precon = new ConectionDB();
+        $con = $precon->ConectionDB();
+        // read current record's data
+        try {
+            // prepare select query
+            $query = "SELECT * FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
+            $stmt = $con->prepare( $query );
+
+            // this is the first question mark
+            $stmt->bindParam(1, $id);
+
+            // execute our query
+            $stmt->execute();
+
+            // store retrieved row to a variable
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            /****************** DATOS GENERALES ***********************/
+            $estado_cable = $row['servicio_suspendido']; // F o T
+            $estado_internet = $row['estado_cliente_in']; // 1, 2, 3
+            $codigo = $row["cod_cliente"];
+            $nContrato = $row["numero_contrato"];
+            $cuotaCable = $row["valor_cuota"];
+            $cuotaInter = $row["cuota_in"];
+            $nFactura = $row["num_factura"];
+            $nombre = trim(ucwords(strtolower($row['nombre'])));
+            $empresa = $row["empresa"];
+            $nRegistro = $row["num_registro"];
+            $dui = trim(ucwords(strtolower($row['numero_dui'])));
+            $lugarExp = trim(ucwords(strtolower($row['lugar_exp'])));
+            $nit = trim(ucwords(strtolower($row['numero_nit'])));
+            $fechaNacimiento = $row['fecha_nacimiento'];
+            $direccion = $row["direccion"];
+            $departamento = $row["id_departamento"];
+            $municipio = $row["id_municipio"];
+            $colonia = $row["id_colonia"];
+            $direccionCobro = $row["direccion_cobro"];
+            $telefonos = $row['telefonos'];
+            $telTrabajo = $row['tel_trabajo'];
+            $ocupacion = $row['profesion'];
+            $cuentaContable = $row['id_cuenta'];
+            $formaFacturar = $row['forma_pago']; //Contado o al crédito
+            $saldoCable = $row['saldoCable'];
+            $saldoInter = $row['saldoInternet'];
+            $saldoActual = $row['saldo_actual'];
+            $diasCredito = $row['dias_credito'];
+            $limiteCredito = $row['limite_credito'];
+            $tipoComprobante = $row['tipo_comprobante']; //Credito fiscal o consumidor final
+            $facebook = $row['facebook'];
+            $correo = $row['correo_electronico'];
+
+            /****************** OTROS DATOS ***********************/
+            $cobrador = $row['cod_cobrador'];
+            $contacto1 = $row['contactos'];
+            $contacto2 = $row['contacto2'];
+            $contacto3 = $row['contacto3'];
+            $telCon1 = $row['telcon1'];
+            $telCon2 = $row['telcon2'];
+            $telCon3 = $row['telcon3'];
+            $paren1 = $row['paren1'];
+            $paren2 = $row['paren2'];
+            $paren3 = $row['paren3'];
+            $dir1 = $row['dir1'];
+            $dir2 = $row['dir2'];
+            $dir3 = $row['dir3'];
+
+            /****************** DATOS CABLE ***********************/
+            $fechaInstalacion = date_format(date_create($row['fecha_instalacion']), "d/m/Y");
+            $fechaPrimerFactura = date_format(date_create($row['fecha_primer_factura']), "d/m/Y");
+            $exento = $row['exento'];
+            $diaCobro = $row['dia_cobro'];
+            $cortesia = $row['servicio_cortesia'];
+            $cuotaMensualCable = $row['valor_cuota'];
+            $prepago = $row['prepago'];
+            $tipoComprobante = $row['tipo_comprobante'];
+            $tipoServicio = $row['tipo_servicio'];
+            $mactv = $row['mactv'];
+            $periodoContratoCable = $row['periodo_contrato_ca'];
+            $vencimientoCable = $row['vencimiento_ca'];
+            //var_dump($row['fecha_instalacion']);
+            if (strlen($row['fecha_instalacion']) < 8) {
+                $fechaInstalacion = "";
+            }else {
+                $fechaInstalacion = DateTime::createFromFormat('Y-m-d', $row['fecha_instalacion']);
+                $fechaInstalacion = $fechaInstalacion->format('d/m/Y');
+            }
+
+            if (strlen($row['fecha_primer_factura']) < 8) {
+                $fechaPrimerFactura = "";
+            }else {
+                $fechaPrimerFactura = DateTime::createFromFormat('Y-m-d', $row['fecha_primer_factura']);
+                $fechaPrimerFactura = $fechaPrimerFactura->format('d/m/Y');
+            }
+
+            if (strlen($row['fecha_suspencion']) < 8) {
+                $fechaSuspensionCable = "";
+            }else {
+                $fechaSuspensionCable = DateTime::createFromFormat('Y-m-d', $row['fecha_suspencion']);
+                $fechaSuspensionCable = $fechaSuspensionCable->format('d/m/Y');
+            }
+
+            if (strlen($row['fecha_reinstalacion']) < 8) {
+                $fechaReinstalacionCable = "";
+            }else {
+                $fechaReinstalacionCable = DateTime::createFromFormat('Y-m-d', $row['fecha_reinstalacion']);
+                $fechaReinstalacionCable = $fechaReinstalacionCable->format('d/m/Y');
+            }
+            $tecnicoCable = $row['id_tecnico'];
+            $direccionCable = $row['dire_cable'];
+            $nDerivaciones = $row['numero_derivaciones'];
+
+            /****************** DATOS INTERNET ***********************/
+            if (strlen($row['fecha_instalacion_in']) < 8) {
+                $fechaInstalacionInter = "";
+            }else {
+                $fechaInstalacionInter = DateTime::createFromFormat('Y-m-d', $row['fecha_instalacion_in']);
+                $fechaInstalacionInter = $fechaInstalacionInter->format('d/m/Y');
+            }
+
+            if (strlen($row['fecha_primer_factura_in']) < 8) {
+                $fechaPrimerFacturaInter = "";
+            }else {
+                $fechaPrimerFacturaInter = DateTime::createFromFormat('Y-m-d', $row['fecha_primer_factura_in']);
+                $fechaPrimerFacturaInter = $fechaPrimerFacturaInter->format('d/m/Y');
+            }
+
+            $tipoServicioInternet = $row['tipo_servicio_in'];
+            $periodoContratoInternet = $row['periodo_contrato_int'];
+            $diaCobroInter = $row['dia_corbo_in'];
+            $velocidadInter = $row['id_velocidad'];
+            $cuotaMensualInter = $row['cuota_in'];
+            $tipoClienteInter = $row['id_tipo_cliente'];
+            $tecnologia = $row['tecnologia'];
+            $nContratoInter = $row['no_contrato_inter'];
+            if (strlen($row['vencimiento_in']) < 8) {
+                $vencimientoInternet = "";
+            }else {
+                $vencimientoInternet = DateTime::createFromFormat('Y-m-d', $row['vencimiento_in']);
+                $vencimientoInternet = $vencimientoInternet->format('d/m/Y');
+            }
+
+            if (strlen($row['ult_ren_in']) < 8) {
+                $ultimaRenovacionInternet = "";
+            }else {
+                $ultimaRenovacionInternet = DateTime::createFromFormat('Y-m-d', $row['ult_ren_in']);
+                $ultimaRenovacionInternet = $ultimaRenovacionInternet->format('d/m/Y');
+            }
+
+            if (strlen($row['fecha_suspencion_in']) < 8) {
+                $fechaSuspencionInternet = "";
+            }else {
+                $fechaSuspencionInternet = DateTime::createFromFormat('Y-m-d', $row['fecha_suspencion_in']);
+                $fechaSuspencionInternet = $fechaSuspencionInternet->format('d/m/Y');
+            }
+
+            if (strlen($row['fecha_reconexion_in']) < 8) {
+                $fechaReconexionInternet = "";
+            }else {
+                $fechaReconexionInternet = DateTime::createFromFormat('Y-m-d', $row['fecha_reconexion_in']);
+                $fechaReconexionInternet = $fechaReconexionInternet->format('d/m/Y');
+            }
+
+            $promocion = $row['id_promocion'];
+            if (strlen($row['dese_promocion_in']) < 8) {
+                $promocionDesde = "";
+            }else {
+                $promocionDesde = DateTime::createFromFormat('Y-m-d', $row['dese_promocion_in']);
+                $promocionDesde = $promocionDesde->format('d/m/Y');
+            }
+
+            if (strlen($row['hasta_promocion_in']) < 8) {
+                $promocionHasta = "";
+            }else {
+                $promocionHasta = DateTime::createFromFormat('Y-m-d', $row['hasta_promocion_in']);
+                $promocionHasta = $promocionHasta->format('d/m/Y');
+            }
+            $cuotaPromocion = $row['cuota_promocion'];
+            $direccionInternet = $row['dire_internet'];
+            $tecnicoInternet = $row['id_tecnico_in'];
+            $colilla = $row['colilla'];
+            $modelo = $row['marca_modem'];
+            $recepcion = $row['recep_modem'];
+            $wanip = $row['wanip'];
+            $mac = $row['mac_modem'];
+            $transmision = $row['trans_modem'];
+            $coordenadas = $row['coordenadas'];
+            $serie = $row['serie_modem'];
+            $ruido = $row['ruido_modem'];
+            $nodo = $row['dire_telefonia'];
+            $wifiClave = $row['clave_modem'];
+        }
+
+        // show error
+        catch(PDOException $exception){
+            die('ERROR: ' . $exception->getMessage());
+        }
+    }
+    else {
+        /****************** DATOS GENERALES ***********************/
+        $estado_cable = ""; // 0 o 1
+        $estado_internet = ""; // 1, 2, 3
+        $codigo = "";
+        $nContrato = "";
+        $nRecibo = "";
+        $nombre = "";
+        $empresa = "";
+        $cuotaCable = "";
+        $cuotaInter = "";
+        $nRegistro = "";
+        $dui = "";
+        $lugarExp = "";
+        $nit = "";
+        $fechaNacimiento = "";
+        $direccion = "";
+        $departamento = "";
+        $municipio = "";
+        $colonia = "";
+        $direccionCobro = "";
+        $telefonos = "";
+        $telTrabajo = "";
+        $ocupacion = "";
+        $cuentaContable = "";
+        $formaFacturar = ""; //Contado o al crédito
+        $saldoActual = "";
+        $diasCredito = "";
+        $limiteCredito = "";
+        $tipoFacturacion = ""; //Credito fiscal o consumidor final
+        $facebook = "";
+        $correo = "";
+        /****************** OTROS DATOS ***********************/
+        $cobrador = "";
+
+        /****************** DATOS CABLE ***********************/
+        $fechaInstalacion = "";
+        $fechaPrimerFactura = "";
+        $fechaSuspensionCable = "";
+        $exento = "F";
+        $diaCobro = "";
+        $cortesia = "F";
+        $cuotaMensualCable = "";
+        $prepago = "";
+        $tipoComprobante = "";
+        $tipoServicio = "";
+        $mactv = "";
+        $periodoContratoCable = "";
+        $vencimientoCable = "";
+        $fechaInstalacionCable = "";
+        $fechaReinstalacionCable = "";
+        $tecnicoCable = "";
+        $direccionCable = "";
+        $nDerivaciones = "";
+
+        /****************** DATOS INTERNET ***********************/
+        $fechaInstalacionInter = "";
+        $fechaPrimerFacturaInter = "";
+        $tipoServicioInternet = "";
+        $nodo = "";
+        $periodoContratoInternet = "";
+        $diaCobroInter = "";
+        $velocidadInter = "";
+        $cuotaMensualInter = "";
+        $tipoClienteInter = "";
+        $tecnologia = "";
+        $nContratoInter = "";
+        $vencimientoInternet = "";
+        $ultimaRenovacionInternet = "";
+        $fechaSuspencionInternet = "";
+        $fechaReconexionInternet = "";
+        $promocion = "";
+        $promocionDesde = "";
+        $promocionHasta = "";
+        $cuotaPromocion = "";
+        $direccionInternet = "";
+        $colilla = "";
+        $modelo = "";
+        $recepcion = "";
+        $wanip = "";
+        $mac = "";
+        $transmision = "";
+        $coordenadas = "";
+        $serie = "";
+        $ruido = "";
+        $wifiClave = "";
+    }
+ ?>
+ <?php
+ require_once 'php/GetAllInfo.php';
+ require_once 'php/getData.php';
+ $data = new GetAllInfo();
+ $data2 = new OrdersInfo();
+ $arrDepartamentos = $data->getData('tbl_departamentos_cxc');
+ $arrMunicipios = $data->getData('tbl_municipios_cxc');
+ $arrColonias = $data->getData('tbl_colonias_cxc');
+ $arrFormaFacturar = $data->getData('tbl_forma_pago');
+ $arrCobradores = $data->getData('tbl_cobradores');
+ $arrComprobantes = $data->getData('tbl_tipo_comprobante');
+ $arrServicioCable = $data->getData('tbl_servicios_cable');
+ $arrServicioInter = $data->getData('tbl_servicios_inter');
+ $arrVelocidad = $data->getData('tbl_velocidades');
+ $arrTecnicos = $data->getData('tbl_tecnicos_cxc');
+ $arrTecnologias = $data->getData('tbl_tecnologias');
+ $arrTiposClientes = $data->getData('tbl_tipos_clientes');
+ if (isset($_GET['tipoServicio'])) {
+      $tipoServicio = strtoupper($_GET['tipoServicio']);
+ }
+
+ $arrCargos = $data->getDataAbonos('tbl_cargos', $codigo, $tipoServicio, "pendiente");
+ //Array de ordenes de trabajo por cliente
+ //$arrOrdenesTrabajo = $data->getDataOrders('tbl_ordenes_trabajo', $codigo);
+ //$arrOrdenesSuspension = $data->getDataOrders('tbl_ordenes_suspension', $codigo);
+ //$arrOrdenesReconex = $data->getDataOrders('tbl_ordenes_reconexion', $codigo);
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +350,14 @@
 
     <!-- Custom Fonts -->
     <link href="../../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <style media="screen">
+    .form-control {
+        color: #01579B;
+        font-size: 15px;
+        font-weight: bold;
 
+    }
+    </style>
 </head>
 
 <body>
@@ -150,244 +475,241 @@
                         <br>
                         <div class="panel panel-primary">
                           <div class="panel-heading">Abonos</div>
-                          <form id="ordenTrabajo" action="#" method="POST">
-                          <div class="panel-body">
+                          <form id="frAbonos" action="#" method="POST">
+                          <div class="panel-body" style="color">
                               <div class="col-md-12">
                                   <div class="pull-right">
                                       <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Estado de cuenta">Estado de cuenta</button>
                                   </div>
                               </div>
                               <div class="form-row">
-                                  <div class="col-md-6">
-                                      <label for="nRecibo">Crédito fiscal</label>
-                                      <input class="form-control input-sm" type="checkbox" name="tipoComprobante" readonly>
-                                  </div>
-                                  <div class="col-md-6">
-                                      <label for="nRecibo">Consumidor final</label>
-                                      <input class="form-control input-sm" type="checkbox" name="tipoComprobante" readonly>
-                                  </div>
+                                  <?php
+                                  if ($tipoComprobante == 1) {
+                                      echo '<div class="col-md-4">
+                                          <label for="creditoFiscal">Crédito fiscal</label>
+                                          <input class="form-control input-sm" type="checkbox" name="creditoFiscal" value="'.$tipoComprobante.'" checked readonly>
+                                      </div>
+                                      <div class="col-md-4">
+                                          <label for="consumidorFinal">Consumidor final</label>
+                                          <input class="form-control input-sm" type="checkbox" name="consumidorFinal" value="" readonly>
+                                      </div>';
+                                  }elseif ($tipoComprobante == 2) {
+                                      echo '<div class="col-md-4">
+                                          <label for="creditoFiscal">Crédito fiscal</label>
+                                          <input class="form-control input-sm" type="checkbox" name="creditoFiscal" readonly>
+                                      </div>
+                                      <div class="col-md-4">
+                                          <label for="consumidorFinal">Consumidor final</label>
+                                          <input class="form-control input-sm" type="checkbox" name="consumidorFinal" value="'.$tipoComprobante.'" checked readonly>
+                                      </div>';
+                                  }
+
+                                  if ($estado_cable == "T") {
+                                      echo '<div class="col-md-4">
+                                              <label for="servicioSuspendido">Servicio suspendido</label>
+                                              <input class="form-control input-sm" type="checkbox" name="servicioSuspendido" value="'.$estado_cable.'" checked readonly>
+                                            </div>';
+                                  }elseif ($estado_cable == "F") {
+                                      echo '<div class="col-md-4">
+                                              <label for="servicioSuspendido">Servicio suspendido</label>
+                                              <input class="form-control input-sm" type="checkbox" name="servicioSuspendido" value="'.$estado_cable.'" readonly>
+                                            </div>';
+                                  }
+                                  ?>
                               </div>
+                              <form id="aplicarAbonos" action="aplicarAbonos.php" method="POST">
                               <div class="form-row">
                                   <div class="col-md-2">
-                                      <label for="nRecibo">N° de recibo</label>
-                                      <input class="form-control input-sm" type="text" name="nRecibo" readonly>
+                                    <!-- readonly -->
+                                      <label for="claseOrden">Fecha del abono</label>
+                                      <input class="form-control input-sm input-sm" name="fechaAbono" type="text" value= "<?php date_default_timezone_set('America/El_Salvador'); echo date('d/m/Y'); ?>" >
                                   </div>
-                                  <div class="col-md-4">
+                                  <!--<div class="col-md-2">
+                                      <label for="nRecibo">N° de recibo</label>
+                                      <input class="form-control input-sm" type="text" name="nRecibo" value="<?php echo $nRecibo; ?>">
+                                  </div>-->
+                                  <div class="col-md-5">
 
                                       <label for="numeroOrden">Zona</label>
-                                      <select class="form-control input-sm" name="zona" readonly>
+                                      <select class="form-control input-sm" name="zona">
                                           <?php
                                           echo "<option value=''>Zona de cobro #1</option>";
                                           ?>
                                       </select>
                                   </div>
-                                  <div class="col-md-4">
+                                  <div class="col-md-5">
 
                                       <label for="numeroOrden">Cobrador</label>
-                                      <select class="form-control input-sm" name="cobrador" readonly>
+                                      <select class="form-control input-sm" name="cobrador">
                                           <?php
                                           echo "<option value=''>Colecturia</option>";
                                           ?>
                                       </select>
                                   </div>
-                                  <div class="col-md-2">
-
-                                      <label for="codCobrador">Cód cobrador</label>
-                                      <input class="form-control input-sm" type="text" name="codCobrador" value="" readonly>
-                                  </div>
                               </div>
                               <div class="form-row">
                                   <div class="col-md-2">
                                     <!-- readonly -->
-                                      <label for="claseOrden">Fecha del abono</label>
-                                      <input class="form-control input-sm input-sm" name="fechaAbono" type="text" value= "<?php echo date('d/m/Y'); ?>" >
-                                  </div>
-                                  <div class="col-md-2">
-                                    <!-- readonly -->
-                                      <label for="telefonos">Código</label>
-                                      <input class="form-control input-sm input-sm" type="text" name="telefonos" readonly>
+                                      <label for="codigoCliente">Código</label>
+                                      <input id="codigoCliente" class="form-control input-sm input-sm" type="text" name="codigoCliente" value="<?php echo $codigo; ?>">
                                   </div>
                                   <div class="col-md-4">
-
                                       <label for="nombreCliente">Nombre del cliente</label>
-                                      <input class="form-control input-sm input-sm" type="text" name="nombreCliente" value="Diego Armando Herrera Flores">
+                                      <input class="form-control input-sm input-sm" type="text" name="nombreCliente" value="<?php echo $nombre; ?>">
                                   </div>
                                   <div class="col-md-2">
-                                      <!-- readonly --> 
+                                      <!-- readonly -->
                                       <label for="nrc">NRC</label>
-                                      <input class="form-control input-sm input-sm" type="text" name="nrc">
+                                      <input class="form-control input-sm input-sm" type="text" name="nrc" value="<?php echo $nRegistro; ?>">
                                   </div>
                                   <div class="col-md-2">
 
                                       <label for="servicio">Servicio</label>
-                                      <select class="form-control input-sm" name="servicio" readonly>
+                                      <select id="servicio" class="form-control input-sm" onchange='getValorCuota(this)' name="servicio">
                                           <?php
-                                          echo "<option value=''>Cable</option>"
+                                          if ($_GET['tipoServicio'] == "c") {
+                                              echo "<option value='c' selected>Cable</option>";
+                                              echo "<option value='i'>Internet</option>";
+                                          }elseif ($_GET['tipoServicio'] == "i") {
+                                              echo "<option value='i' selected>Internet</option>";
+                                              echo "<option value='c'>Cable</option>";
+                                          }else {
+                                              echo "<option value='c' selected>Cable</option>";
+                                              echo "<option value='i'>Internet</option>";
+                                          }
+
                                           ?>
                                       </select>
                                   </div>
+                                  <div class="col-md-2">
+                                      <label for="valorCuota">Valor de la cuota</label>
+                                      <input id="cuotaCable" type="hidden" name="cuotaCable" value="<?php echo $cuotaCable; ?>">
+                                      <input id="cuotaInter" type="hidden" name="cuotaInter" value="<?php echo $cuotaInter; ?>">
+                                      <input id="valorCuota" class="form-control input-sm alert-info" type="text" name="valorCuota" value="0.00" style="font-weight: bold;">
+                                  </div>
                               </div>
                               <div class="form-row">
-                                  <div class="col-md-2">
-
-                                      <label for="macModem">Valor de la cuota</label>
-                                      <input class="form-control input-sm" type="text" name="valorCuota" readonly>
+                                  <div class="col-md-12">
+                                      <label for="direccion">Dirección</label>
+                                      <input class="form-control input-sm" type="text" name="direccion" value="<?php echo $direccion; ?>">
                                   </div>
-                                  <div class="col-md-10">
-
-                                      <label for="serieModem">Dirección</label>
-                                      <input class="form-control input-sm" type="text" name="serieModem" readonly>
-                                  </div>
-
                               </div>
                               <div class="form-row">
-                                  <div class="col-md-2">
-
+                                  <div class="col-md-3">
                                       <label for="formaPago">Forma de pago</label>
-                                      <select class="form-control input-sm" type="text" name="formaPago" readonly>
-                                          <option value="">Efectivo</option>
+                                      <select class="form-control input-sm" type="text" name="formaPago">
+                                          <option value="efectivo">Efectivo</option>
                                       </select>
                                   </div>
                                   <div class="col-md-2">
-
-                                      <label for="hora">Total a pagar</label>
-                                      <input class="form-control input-sm" type="text" name="hora" readonly>
-                                  </div>
-                                  <div class="col-md-1">
-
-                                      <label for="porImp">% imp</label>
-                                      <input class="form-control input-sm" type="text" name="porImp" readonly>
+                                      <label for="totalPagar">Total a pagar</label>
+                                      <input class="form-control input-sm" type="text" id="totalPagar" name="totalPagar" value="">
                                   </div>
                                   <div class="col-md-2">
-
+                                      <label for="porImp">% CESC</label>
+                                      <input id="cesc" class="form-control input-sm" type="text" name="porImp" value="">
+                                  </div>
+                                  <div class="col-md-2">
                                       <label for="impSeg">Impusto seguridad</label>
-                                      <input type="text" class="form-control input-sm" name="impSeg" readonly>
+                                      <input type="text" class="form-control input-sm" id="impSeg" name="impSeg" value="">
                                   </div>
-                                  <div class="col-md-2">
+                                  <!--<div class="col-md-3">
 
                                       <label for="totalAbono">Total a abonar</label>
-                                      <input class="form-control input-sm" type="text" name="totalAbono" readonly>
-                                  </div>
+                                      <input class="form-control input-sm" type="text" name="totalAbono">
+                                  </div>-->
                                   <div class="col-md-3">
-
                                       <label for="totalAbonoImpSeg">Con Impuesto de seguridad</label>
-                                      <input type="text" class="form-control input-sm alert-danger" name="totalAbonoImpSeg" value="0.00" style="color:red; font-weight:bold;">
+                                      <input type="text" class="form-control input-sm alert-danger" id="totalAbonoImpSeg" name="totalAbonoImpSeg" value="0.00" style="color:red; font-weight:bold;">
                                   </div>
                               </div>
                               <div class="form-row">
                                   <div class="col-md-7">
 
                                       <label for="concepto">Concepto</label>
-                                      <input class="form-control input-sm" type="text" name="concepto" readonly>
+                                      <input class="form-control input-sm" type="text" name="concepto" value="">
                                   </div>
                                   <div class="col-md-2">
-
                                       <label for="diaCobro">Día cobro</label>
-                                      <input class="form-control input-sm" type="text" name="diaCobro" readonly>
+                                      <input class="form-control input-sm" type="text" name="diaCobro" value="<?php echo $diaCobro; ?>">
                                   </div>
                                   <div class="col-md-3">
-
                                       <label for="cuotaImpuesto">Cuota/solo impuesto</label>
-                                      <select class="form-control input-sm" type="text" name="cuotaImpuesto" readonly>
-                                          <option value="">Solo impuesto</option>
+                                      <select class="form-control input-sm" type="text" name="cuotaImpuesto" value="">
+                                          <option value="cuota" selected>Cuota</option>
+                                          <option value="impuesto">Solo impuesto</option>
                                       </select>
                                   </div>
                               </div>
                               <div class="form-row">
                                   <div class="col-md-9">
-
-                                      <input class="" type="radio" name="aplicarIS" value="5">
+                                      <input id="aplicarCesc" class="" onclick="getCesc()" type="radio" name="aplicarCesc" value="0.05">
                                       <label for="5">5%</label>
-                                      <input class="" type="radio" name="aplicarIS" value="10">
+                                      <input class="" type="radio" onclick="getCesc()" name="aplicarCesc" value="0.10">
                                       <label for="5">10%</label>
-                                      <input class="" type="radio" name="aplicarIS" value="excento">
+                                      <input class="" type="radio" onclick="getCesc()" name="aplicarCesc" value="0">
                                       <label for="5">Excento</label>
                                   </div>
                                   <div class="col-md-3">
-
                                       <input class="" type="checkbox" name="anularComp">
                                       <label for="5">Anular comprobante</label>
                                   </div>
                               </div>
                               <div class="form-row">
                                   <div class="col-md-12">
-
-                                      <table class="table table-hover table-striped">
+                                      <table class="table table-bordered table-hover table-striped">
                                           <tr class="">
                                               <th class="bg-success">Abonar?</th>
-                                              <th class="bg-success">N°comprobante</th>
-                                              <th class="bg-success">Cuota mes</th>
-                                              <th class="bg-success">Servicio desde</th>
-                                              <th class="bg-success">Fecha vencimiento</th>
-                                              <th class="bg-success">Total comprobante</th>
-                                              <th class="bg-success">Saldo comprobante</th>
-                                              <th class="bg-success">Monto abonar</th>
+
+                                              <th class="bg-success">N° recibo</th>
+                                              <th class="bg-success">Mes de servicio</th>
+                                              <th class="bg-success">Cuota</th>
+                                              <th class="bg-success">Vencimiento</th>
                                           </tr>
-                                          <tr>
-                                              <td>Prueba</td>
-                                              <td>Prueba</td>
-                                              <td>Prueba</td>
-                                              <td>Prueba</td>
-                                              <td>Prueba</td>
-                                              <td>Prueba</td>
-                                              <td>Prueba</td>
-                                              <td>Prueba</td>
-                                          </tr>
-                                          <tr>
-                                              <td>Prueba</td>
-                                              <td>Prueba</td>
-                                              <td>Prueba</td>
-                                              <td>Prueba</td>
-                                              <td>Prueba</td>
-                                              <td>Prueba</td>
-                                              <td>Prueba</td>
-                                              <td>Prueba</td>
-                                          </tr>
+
+                                          <?php
+                                          $counter = 1;
+                                          foreach ($arrCargos as $key) {
+                                              echo "<tr><td>";
+                                              echo "<input name='' type='checkbox' id='mesx{$counter}' onchange='getMesesPagar()' value=''>"."</td>";
+                                              echo "<input type='hidden' name='idFactura' value='".$key["idFactura"] . "' readonly>"."</td><td>";
+                                              echo "<input class='form-control input-sm' type='text' name='nFactura' value='".$key["numeroRecibo"] . "' readonly>"."</td><td>";
+                                              echo "<input class='form-control input-sm' type='text' id='mesCargo{$counter}' name='mesCargo' value='".$key["mesCargo"] . "' readonly>"."</td><td>";
+                                              if ($key["tipoServicio"] == 'C') {
+                                                  echo "<input class='form-control input-sm' type='text' id='mesx{$counter}value' name='cuotaCable' value='".$key["cuotaCable"] . "' readonly>"."</td><td>";
+                                              }elseif ($key["tipoServicio"] == 'I') {
+                                                  echo "<input class='form-control input-sm' type='text' id='mesx{$counter}value' name='cuotaInternet' value='".$key["cuotaInternet"] . "' readonly>"."</td><td>";
+                                              }
+                                              echo "<input class='form-control type='text' name='vencimiento' value='".date_format(date_create($key["fechaVencimiento"]), "d/m/Y") . "' readonly>"."</td><tr>";
+                                              $counter++;
+                                          }
+                                          ?>
                                       </table>
                                   </div>
                               </div>
                               <div class="form-row">
-                                  <div class="col-md-2">
+                                  <div class="col-md-4">
+                                      <label for="meses">TOTAL (INCLUYE IMPUESTOS)</label>
                                   </div>
-                                  <div class="col-md-2">
-                                  </div>
-                                  <div class="col-md-2">
-                                  </div>
-                                  <div class="col-md-2">
-                                      <label for="meses">TOTALES</label>
-                                  </div>
-                                  <div class="col-md-2">
-                                      <input class="form-control input-sm alert-danger" type="text" name="total1" value="0.00" style="color:red; font-weight:bold;">
-                                  </div>
-                                  <div class="col-md-2">
-                                      <input class="form-control input-sm alert-danger" type="text" name="total2" value="0.00" style="color:red; font-weight:bold;">
-                                  </div>
-                              </div>
-                              <div class="form-row">
-                                  <div class="col-md-2">
-                                  </div>
-                                  <div class="col-md-2">
-                                  </div>
-                                  <div class="col-md-2">
+                                  <div class="col-md-3">
+                                      <input id="total" class="form-control input-sm alert-danger" type="text" name="total" value="0.00" style="color:red; font-weight:bold;">
                                   </div>
                                   <div class="col-md-2">
                                       <label for="meses">PENDIENTE</label>
                                   </div>
-                                  <div class="col-md-2">
-                                  </div>
-                                  <div class="col-md-2">
-                                      <input class="form-control input-sm alert-danger" type="text" name="pendiente" value="0.00" style="color:red; font-weight:bold;">
+                                  <div class="col-md-3">
+                                      <input class="form-control input-sm alert-danger" type="text" id="pendiente" name="pendiente" value="0.00" style="color:red; font-weight:bold;">
                                   </div>
                               </div>
                               <div class="form-row">
                                   <div class="col-md-8">
                                       <label for="meses">Meses</label>
-                                      <textarea class="form-control" name="meses" rows="4" cols="40"></textarea>
+                                      <textarea id="meses" class="form-control" name="meses" rows="4" cols="40"></textarea>
                                   </div>
                                   <div class="col-md-4">
                                       <label for="meses" style="color: brown;"></label>
-                                      <button class="btn btn-default btn-lg btn-block" type="button" name="button"><i class="fas fa-check" style="color: green;"></i> Aplicar abonos</button>
-                                      <a href="cxc.php" style="text-decoration: none;"><button class="btn btn-default btn-lg btn-block" type="button" name="button"><i class="fas fa-sign-out-alt" style="color: brown;"></i> Salir</button></a>
+                                      <button class="btn btn-success btn-lg btn-block" type="button" name="button" style="margin-bottom: 6px; margin-top: 17px;"><i class="fas fa-check" style="color: white;"></i> Aplicar abonos</button>
+                                      <a href="cxc.php" style="text-decoration: none;"><button class="btn btn-danger btn-lg btn-block" type="button" name="button"><i class="fas fa-sign-out-alt" style="color: white;"></i> Salir</button></a>
                                   </div>
                               </div>
                           </div>
@@ -417,8 +739,44 @@
     <!-- Custom Theme JavaScript -->
     <script src="../../dist/js/sb-admin-2.js"></script>
     <script src="../../dist/js/jquery-validation-1.19.0/dist/jquery.validate.js"></script>
-    <script src="js/ordenTrabajo.js"></script>
+    <script src="js/abonos.js"></script>
+    <script type="text/javascript">
+        // Get the input field
+        var cod = document.getElementById("codigoCliente");
 
+        $('#aplicarAbonos').on('keyup keypress', function(e) {
+          var keyCode = e.keyCode || e.which;
+          if (keyCode === 13) {
+            e.preventDefault();
+            return false;
+          }
+        });
+
+        // Execute a function when the user releases a key on the keyboard
+        cod.addEventListener("keyup", function(event) {
+        // Number 13 is the "Enter" key on the keyboard
+        if (event.keyCode === 13) {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        var codValue = document.getElementById("codigoCliente").value;
+        var servicio = document.getElementById("servicio").value;
+        // Trigger the button element with a click
+        window.location="abonos.php?codigoCliente="+codValue+"&tipoServicio="+servicio;
+        }
+        });
+    </script>
+
+    <?php
+    if (isset($_GET['codigoCliente'])) {
+        echo "<script>
+            //document.getElementById('ordenTrabajo').action = 'php/nuevaOrdenTrabajo.php';
+            //document.getElementById('guardar').disabled = false;
+            //document.getElementById('editar').disabled = true;
+            //document.getElementById('imprimir').disabled = true;
+            //var inputs = document.getElementsByClassName('input-sm');
+        </script>";
+    }
+    ?>
 
 </body>
 
