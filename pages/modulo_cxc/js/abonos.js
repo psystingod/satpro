@@ -41,12 +41,13 @@ function getMesesPagar(){
             document.getElementById("meses").value = mesCargo1;
             var total = document.getElementById("totalPagar").value;
             var cesc = document.getElementById("cesc").value;
-            totalSinIva = (parseFloat(total)/1.13).toFixed(2);
-            document.getElementById("impSeg").value = (parseFloat(cesc)*parseFloat(totalSinIva)).toFixed(2);
+            totalSinIva = String(parseFloat(total)/1.13).substring(0, 5);
+            document.getElementById("impSeg").value = String(parseFloat(cesc)*parseFloat(totalSinIva)).substring(0, 4);
             var impSeg = document.getElementById("impSeg").value;
-            document.getElementById("totalAbonoImpSeg").value = (parseFloat(total)+parseFloat(impSeg)).toFixed(2);
-            cargoTotal = document.getElementById("totalAbonoImpSeg").value = (parseFloat(total)+parseFloat(impSeg)).toFixed(2);
+            document.getElementById("totalAbonoImpSeg").value = String(parseFloat(total)+parseFloat(impSeg)).substring(0, 5);
+            cargoTotal = document.getElementById("totalAbonoImpSeg").value = String(parseFloat(total)+parseFloat(impSeg)).substring(0, 5);
             document.getElementById("total").value = cargoTotal;
+            document.getElementById("pendiente").value = "0.0";
         }else {
             var mes1 = document.getElementById("mesx1value").value;
             document.getElementById("totalPagar").value = "0.0";
@@ -55,6 +56,20 @@ function getMesesPagar(){
             var cesc = document.getElementById("impSeg").value = "0.0 ";
             document.getElementById("totalAbonoImpSeg").value = "0.0";
             document.getElementById("total").value = "0.0";
+            var total = document.getElementById("totalPagar").value;
+            var cesc = document.getElementById("cesc").value;
+            totalSinIva = String(parseFloat(total)/1.13).substring(0, 5);
+            document.getElementById("impSeg").value = String(parseFloat(cesc)*parseFloat(totalSinIva)).substring(0, 4);
+            var impSeg = document.getElementById("impSeg").value;
+            document.getElementById("totalAbonoImpSeg").value = String(parseFloat(total)+parseFloat(impSeg)).substring(0, 5);
+            cargoTotal = document.getElementById("totalAbonoImpSeg").value = String(parseFloat(total)+parseFloat(impSeg)).substring(0, 5);
+            var saldoActual = document.getElementById("saldoActual0").value;
+            console.log(saldoActual);
+            var saldoActualSinIva = String(parseFloat(saldoActual)/1.13).substring(0, 5);
+            console.log(saldoActualSinIva);
+            var impuesto = String(parseFloat(saldoActualSinIva)*parseFloat(cesc)).substring(0, 4);
+            console.log(impuesto);
+            document.getElementById("pendiente").value = String(parseFloat(saldoActual) + parseFloat(impuesto)).substring(0, 5);
         }
     }else if (document.getElementById("mesx1") != null && document.getElementById("mesx2") != null) {
         if (document.getElementById("mesx1").checked == true && document.getElementById("mesx2").checked == false) {
@@ -62,13 +77,16 @@ function getMesesPagar(){
             var mes2 = document.getElementById("mesx2value").value;
             document.getElementById("totalPagar").value = parseFloat(mes1);
             var total = document.getElementById("totalPagar").value;
-            var cesc = document.getElementById("cesc").value
-            totalSinIva = (parseFloat(total)/1.13).toFixed(2);
-            document.getElementById("impSeg").value = (parseFloat(cesc)*parseFloat(totalSinIva)).toFixed(2);
+            var cesc = document.getElementById("cesc").value;
+            totalSinIva = String(parseFloat(total)/1.13).substring(0, 5);
+            document.getElementById("impSeg").value = String(parseFloat(cesc)*parseFloat(totalSinIva)).substring(0, 4);
             var impSeg = document.getElementById("impSeg").value;
-            document.getElementById("totalAbonoImpSeg").value = (parseFloat(total)+parseFloat(impSeg)).toFixed(2);
-            cargoTotal = document.getElementById("totalAbonoImpSeg").value = (parseFloat(total)+parseFloat(impSeg)).toFixed(2);
+            document.getElementById("totalAbonoImpSeg").value = String(parseFloat(total)+parseFloat(impSeg)).substring(0, 5);
+            cargoTotal = document.getElementById("totalAbonoImpSeg").value = String(parseFloat(total)+parseFloat(impSeg)).substring(0, 5);
             document.getElementById("total").value = cargoTotal;
+            var mes2SinIva = (parseFloat(mes2)/1.13);
+            var impSegMes2 = (parseFloat(cesc)*parseFloat(mes2SinIva));
+            document.getElementById("pendiente").value = String(parseFloat(impSegMes2) + parseFloat(mes2)).substring(0, 5);
             var mesCargo1 = document.getElementById("mesCargo1").value;
             //document.getElementById("pendiente").value = mes2;
             document.getElementById("meses").value = mesCargo1;
@@ -79,23 +97,29 @@ function getMesesPagar(){
             var mes2 = document.getElementById("mesx2value").value;
             document.getElementById("totalPagar").value = parseFloat(mes1) + parseFloat(mes2);
             var total = document.getElementById("totalPagar").value;
-            var cesc = document.getElementById("cesc").value
-            totalSinIva = (parseFloat(total)/1.13).toFixed(2);
+            var cesc = document.getElementById("cesc").value;
+            totalSinIva = String(parseFloat(total)/1.13).substring(0, 5);
 
             var mesCargo1 = document.getElementById("mesCargo1").value;
             var mesCargo2 = document.getElementById("mesCargo2").value;
             document.getElementById("meses").value = mesCargo1+","+mesCargo2;
-            document.getElementById("impSeg").value = (parseFloat(cesc)*parseFloat(totalSinIva)).toFixed(2);
+            document.getElementById("impSeg").value = String(parseFloat(cesc)*parseFloat(totalSinIva)).substring(0, 4);
             var impSeg = document.getElementById("impSeg").value;
-            document.getElementById("totalAbonoImpSeg").value = (parseFloat(total)+parseFloat(impSeg)).toFixed(2);
-            cargoTotal = document.getElementById("totalAbonoImpSeg").value = (parseFloat(total)+parseFloat(impSeg)).toFixed(2);
+            document.getElementById("totalAbonoImpSeg").value = String(parseFloat(total)+parseFloat(impSeg)).substring(0, 5);
+            cargoTotal = document.getElementById("totalAbonoImpSeg").value = String(parseFloat(total)+parseFloat(impSeg)).substring(0, 5);
             document.getElementById("total").value = cargoTotal;
+            document.getElementById("pendiente").value = "0.0";
 
         }else {
             document.getElementById("totalPagar").value = "0.0";
             document.getElementById("impSeg").value = "0.0";
             document.getElementById("totalAbonoImpSeg").value = "0.0";
             document.getElementById("total").value = "0.0";
+            var cesc = document.getElementById("cesc").value;
+            var saldoActual = document.getElementById("saldoActual0").value;
+            var totalSinIvaSaldo = String(parseFloat(saldoActual)/1.13).substring(0, 5);
+            var impuestoSeg = String(parseFloat(cesc)*parseFloat(totalSinIvaSaldo)).substring(0, 4);
+            document.getElementById("pendiente").value = String(parseFloat(saldoActual)+parseFloat(impuestoSeg)).substring(0, 5);
             document.getElementById("meses").value = "";
         }
     }

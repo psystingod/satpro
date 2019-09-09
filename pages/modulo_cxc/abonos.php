@@ -50,9 +50,9 @@
             $ocupacion = $row['profesion'];
             $cuentaContable = $row['id_cuenta'];
             $formaFacturar = $row['forma_pago']; //Contado o al crédito
-            $saldoCable = $row['saldoCable'];
-            $saldoInter = $row['saldoInternet'];
-            $saldoActual = $row['saldo_actual'];
+            $saldoCable = $row['saldoCable']; //SALDO CABLE
+            $saldoInter = $row['saldoInternet']; //SALDO INTERNET
+            //$saldoActual = $row['saldo_actual'];
             $diasCredito = $row['dias_credito'];
             $limiteCredito = $row['limite_credito'];
             $tipoComprobante = $row['tipo_comprobante']; //Credito fiscal o consumidor final
@@ -80,7 +80,6 @@
             $exento = $row['exento'];
             $diaCobro = $row['dia_cobro'];
             $cortesia = $row['servicio_cortesia'];
-            $cuotaMensualCable = $row['valor_cuota'];
             $prepago = $row['prepago'];
             $tipoComprobante = $row['tipo_comprobante'];
             $tipoServicio = $row['tipo_servicio'];
@@ -475,9 +474,23 @@
                         <br>
                         <div class="panel panel-primary">
                           <div class="panel-heading">Abonos</div>
-                          <form id="frAbonos" action="#" method="POST">
+                          <form id="frAbonos" action="php/aplicarAbonos.php" method="POST">
                           <div class="panel-body" style="color">
                               <div class="col-md-12">
+                                  <?php
+                                  if (isset($_GET['abonado'])) {
+                                      if ($_GET['abonado'] == 'yes') {
+                                          echo "<br>";
+                                          echo '<span class="alert alert-info">Abono ingresado con exito. Para ingresar otro abono coloque el código de cliente y el tipo de servicio.</span>';
+                                          echo "<br>";
+                                      }
+                                      elseif ($_GET['abonado'] == 'no') {
+                                          echo "<br>";
+                                          echo '<span class="alert alert-danger">No se pudo ingresar el abono.</span>';
+                                          echo "<br>";
+                                      }
+                                  }
+                                  ?>
                                   <div class="pull-right">
                                       <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Estado de cuenta">Estado de cuenta</button>
                                   </div>
@@ -517,7 +530,7 @@
                                   }
                                   ?>
                               </div>
-                              <form id="aplicarAbonos" action="aplicarAbonos.php" method="POST">
+
                               <div class="form-row">
                                   <div class="col-md-2">
                                     <!-- readonly -->
@@ -676,7 +689,8 @@
                                       <table class="table table-bordered table-hover table-striped">
                                           <tr class="">
                                               <th class="bg-success">Abonar?</th>
-
+                                              <th class="bg-success"></th>
+                                              <th class="bg-success"></th>
                                               <th class="bg-success">N° recibo</th>
                                               <th class="bg-success">Mes de servicio</th>
                                               <th class="bg-success">Cuota</th>
@@ -686,17 +700,45 @@
                                           <?php
                                           $counter = 1;
                                           foreach ($arrCargos as $key) {
+                                              if (isset($_GET['tipoServicio'])) {
+                                                  if ($_GET['tipoServicio'] == "c") {
+                                                      $cesc = 0.05;
+                                                      $saldoActualSinIva = substr((floatVal($saldoCable)/1.13), 0,5);
+                                                      //echo var_dump($saldoActualSinIva);
+                                                      $impSeg = substr($saldoActualSinIva * $cesc, 0,4);
+                                                      //echo var_dump($impSeg);
+                                                      //echo var_dump($saldoCable);
+                                                      $saldoActual = substr((floatVal($saldoCable) + floatVal($impSeg)), 0,5);
+                                                      //echo var_dump($saldoActual. "Mira");
+                                                      echo "<input type='hidden' id='saldoActual' name='saldoActual' value='".$saldoActual. "' readonly>";
+                                                      echo "<input type='hidden' id='saldoActual0' value='".$saldoCable. "' readonly>";
+                                                  }
+                                                  elseif ($_GET['tipoServicio'] == "i") {
+                                                      $cesc = 0.05;
+                                                      $saldoActualSinIva = substr((floatVal($saldoInter)/1.13), 0,5);
+                                                      //echo var_dump($saldoActualSinIva);
+                                                      $impSeg = substr($saldoActualSinIva * $cesc, 0,4);
+                                                      //echo var_dump($impSeg);
+                                                      $saldoActual = substr((floatVal($saldoInter) + floatVal($impSeg)), 0,5);
+                                                      //echo var_dump($saldoActual);
+                                                      echo "<input type='hidden' id='saldoActual' name='saldoActual' value='".$saldoActual . "' readonly>";
+                                                      echo "<input type='hidden' id='saldoActual0' value='".$saldoInter. "' readonly>";
+                                                  }
+                                              }
+
                                               echo "<tr><td>";
-                                              echo "<input name='' type='checkbox' id='mesx{$counter}' onchange='getMesesPagar()' value=''>"."</td>";
-                                              echo "<input type='hidden' name='idFactura' value='".$key["idFactura"] . "' readonly>"."</td><td>";
-                                              echo "<input class='form-control input-sm' type='text' name='nFactura' value='".$key["numeroRecibo"] . "' readonly>"."</td><td>";
-                                              echo "<input class='form-control input-sm' type='text' id='mesCargo{$counter}' name='mesCargo' value='".$key["mesCargo"] . "' readonly>"."</td><td>";
+                                              echo "<input name='mesx{$counter}' type='checkbox' id='mesx{$counter}' onchange='getMesesPagar()' value=''>"."</td>";
+                                              echo "<input type='hidden' name='idFacturax{$counter}' value='".$key["idFactura"] . "' readonly>"."</td><td>";
+                                              echo "<input type='hidden' name='fechaCobrox{$counter}' value='".$key["fechaCobro"] . "' readonly>"."</td><td>";
+                                              echo "<input type='hidden' name='fechaFacturax{$counter}' value='".$key["fechaFactura"] . "' readonly>"."</td><td>";
+                                              echo "<input class='form-control input-sm' type='text' name='nFacturax{$counter}' value='".$key["numeroRecibo"] . "' readonly>"."</td><td>";
+                                              echo "<input class='form-control input-sm' type='text' id='mesCargo{$counter}' name='mesCargo{$counter}' value='".$key["mesCargo"] . "' readonly>"."</td><td>";
                                               if ($key["tipoServicio"] == 'C') {
                                                   echo "<input class='form-control input-sm' type='text' id='mesx{$counter}value' name='cuotaCable' value='".$key["cuotaCable"] . "' readonly>"."</td><td>";
                                               }elseif ($key["tipoServicio"] == 'I') {
                                                   echo "<input class='form-control input-sm' type='text' id='mesx{$counter}value' name='cuotaInternet' value='".$key["cuotaInternet"] . "' readonly>"."</td><td>";
                                               }
-                                              echo "<input class='form-control type='text' name='vencimiento' value='".date_format(date_create($key["fechaVencimiento"]), "d/m/Y") . "' readonly>"."</td><tr>";
+                                              echo "<input class='form-control type='text' name='vencimientox{$counter}' value='".date_format(date_create($key["fechaVencimiento"]), "d/m/Y") . "' readonly>"."</td><tr>";
                                               $counter++;
                                           }
                                           ?>
@@ -713,8 +755,15 @@
                                   <div class="col-md-2">
                                       <label for="meses">PENDIENTE</label>
                                   </div>
+                                  <?php
+                                  /*if ($_GET['tipoServicio'] == "c"){
+                                      $saldoActual = $saldoCable;
+                                  }elseif ($_GET['tipoServicio'] == "i") {
+                                      $saldoActual = $saldoInter;
+                                  }*/
+                                  ?>
                                   <div class="col-md-3">
-                                      <input class="form-control input-sm alert-danger" type="text" id="pendiente" name="pendiente" value="0.00" style="color:red; font-weight:bold;">
+                                      <input class="form-control input-sm alert-danger" type="text" id="pendiente" name="pendiente" value="<?php echo $saldoActual ?>" style="color:red; font-weight:bold;">
                                   </div>
                               </div>
                               <div class="form-row">
@@ -724,7 +773,7 @@
                                   </div>
                                   <div class="col-md-4">
                                       <label for="meses" style="color: brown;"></label>
-                                      <button class="btn btn-success btn-md btn-block" type="button" name="button" style="margin-bottom: 6px; margin-top: 0px;"><i class="fas fa-check" style="color: white;"></i> Aplicar abonos</button>
+                                      <button class="btn btn-success btn-md btn-block" type="submit" name="button" style="margin-bottom: 6px; margin-top: 0px;"><i class="fas fa-check" style="color: white;"></i> Aplicar abonos</button>
                                       <a href="cxc.php" style="text-decoration: none;"><button class="btn btn-danger btn-md btn-block" type="button" name="button"><i class="fas fa-sign-out-alt" style="color: white;"></i> Salir</button></a>
                                   </div>
                               </div>
@@ -754,13 +803,12 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="../../dist/js/sb-admin-2.js"></script>
-    <script src="../../dist/js/jquery-validation-1.19.0/dist/jquery.validate.js"></script>
     <script src="js/abonos.js"></script>
     <script type="text/javascript">
         // Get the input field
         var cod = document.getElementById("codigoCliente");
 
-        $('#aplicarAbonos').on('keyup keypress', function(e) {
+        $('#frAbonos').on('keyup keypress', function(e) {
           var keyCode = e.keyCode || e.which;
           if (keyCode === 13) {
             e.preventDefault();

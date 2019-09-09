@@ -246,8 +246,8 @@
                     <div class="row">
                         <div class="col-md-12">
                             <select class="form-control" name="tipoComprobante" required>
-                                <option value="1">Factura consumidor final</option>
-                                <option value="2">Crédito fiscal</option>
+                                <option value="2">Factura consumidor final</option>
+                                <option value="1">Crédito fiscal</option>
                             </select>
                         </div>
                     </div>

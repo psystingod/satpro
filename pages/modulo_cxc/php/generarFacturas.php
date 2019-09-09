@@ -72,6 +72,7 @@
                    else {
                        $vuelta = 0;
                        foreach ($result as $i) {
+
                            $qry = "SELECT COUNT(mesCargo)FROM tbl_cargos WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
 
                            $stmt = $this->dbConnect->prepare($qry);
@@ -85,7 +86,8 @@
                            var_dump("vuelta: " . $vuelta++);
                            //var_dump($contador);
                            if ($contador == 0) {
-                               $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroRecibo, codigoCliente, cuotaCable, cuotaInternet, saldoCable, saldoInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto)VALUES(:tipoComprobante, :numeroRecibo, :codigoCliente, :cuotaCable, :cuotaInternet, :saldoCable, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto)";
+
+                               $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroRecibo, codigoCliente, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto)VALUES(:tipoComprobante, :numeroRecibo, :codigoCliente, :cuotaCable, :cuotaInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto)";
 
                                $stmt = $this->dbConnect->prepare($qry);
                                $stmt->execute(
@@ -94,8 +96,6 @@
                                          ':codigoCliente' => $i["cod_cliente"],
                                          ':cuotaCable' => $i['valor_cuota'],
                                          ':cuotaInternet' => $i['cuota_in'],
-                                         ':saldoCable' => $i['valor_cuota'],
-                                         ':saldoInternet' => $i['cuota_in'],
                                          ':fechaCobro' => $fechaGenerar1,
                                          ':fechaFactura' => $fechaComprobante,
                                          ':fechaVencimiento' => $fechaVencimiento,
@@ -104,6 +104,29 @@
                                          ':estado' => $estado,
                                          ':cargoImpuesto' => $cesc
                                         ));
+
+                                        //ACA HACER ACTUALIZACION DE SALDO
+                                        $qry2 = "UPDATE tbl_cargos SET saldoCable= saldoCable + :cuotaCable WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
+
+                                        $stmt2 = $this->dbConnect->prepare($qry2);
+                                        $stmt2->execute(
+                                            array(
+                                                  ':cuotaCable' => floatval($i['valor_cuota']),
+                                                  ':codigoCliente' => $i["cod_cliente"],
+                                                  ':mesCargo' => $mesCargo,
+                                                  ':tipoServicio' => $ts,
+                                                 ));
+
+                                         //ACA HACER ACTUALIZACION DE SALDO EN TABLA CLIENTES
+                                         $qry3 = "UPDATE clientes SET saldoCable= saldoCable + :cuotaCable WHERE cod_cliente=:codigoCliente";
+
+                                         $stmt3 = $this->dbConnect->prepare($qry3);
+                                         $stmt3->execute(
+                                             array(
+                                                   ':codigoCliente' => $i["cod_cliente"],
+                                                   ':cuotaCable' => floatval($i['valor_cuota'])
+                                                  ));
+
                            }elseif ($contador > 0) {
                                continue;
                            }
@@ -143,7 +166,7 @@
                            var_dump("vuelta: " . $vuelta++);
                            //var_dump($contador);
                            if ($contador == 0) {
-                               $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroRecibo, codigoCliente, cuotaCable, cuotaInternet, saldoCable, saldoInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto)VALUES(:tipoComprobante, :numeroRecibo, :codigoCliente, :cuotaCable, :cuotaInternet, :saldoCable, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto)";
+                               $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroRecibo, codigoCliente, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto)VALUES(:tipoComprobante, :numeroRecibo, :codigoCliente, :cuotaCable, :cuotaInternet, :saldoCable, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto)";
 
                                $stmt = $this->dbConnect->prepare($qry);
                                $stmt->execute(
@@ -152,8 +175,6 @@
                                          ':codigoCliente' => $i["cod_cliente"],
                                          ':cuotaCable' => $i['valor_cuota'],
                                          ':cuotaInternet' => $i['cuota_in'],
-                                         ':saldoCable' => $i['valor_cuota'],
-                                         ':saldoInternet' => $i['cuota_in'],
                                          ':fechaCobro' => $fechaGenerar1,
                                          ':fechaFactura' => $fechaComprobante,
                                          ':fechaVencimiento' => $fechaVencimiento,
@@ -162,6 +183,28 @@
                                          ':estado' => $estado,
                                          ':cargoImpuesto' => $cesc
                                         ));
+
+                                        //ACA HACER ACTUALIZACION DE SALDO
+                                        $qry2 = "UPDATE tbl_cargos SET saldoInternet= saldoInternet + :cuotaInter WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
+
+                                        $stmt2 = $this->dbConnect->prepare($qry2);
+                                        $stmt2->execute(
+                                            array(
+                                                  ':cuotaInter' => floatval($i['cuota_in']),
+                                                  ':codigoCliente' => $i["cod_cliente"],
+                                                  ':mesCargo' => $mesCargo,
+                                                  ':tipoServicio' => $ts,
+                                                 ));
+
+                                         //ACA HACER ACTUALIZACION DE SALDO EN TABLA CLIENTES
+                                         $qry3 = "UPDATE clientes SET saldoInternet= saldoInternet + :cuotaInter WHERE cod_cliente=:codigoCliente";
+
+                                         $stmt3 = $this->dbConnect->prepare($qry3);
+                                         $stmt3->execute(
+                                             array(
+                                                   ':codigoCliente' => $i["cod_cliente"],
+                                                   ':cuotaInter' => floatval($i['cuota_in'])
+                                                  ));
                            }elseif ($contador > 0) {
                                continue;
                            }
