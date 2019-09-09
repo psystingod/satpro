@@ -53,11 +53,11 @@ CREATE TABLE tbl_abonos (
   estado VARCHAR(9) DEFAULT '',
   /*anticipado TINYINT(1) DEFAULT 0,*/
   cargoImpuesto DOUBLE NOT NULL,
-  anulada TINYINT(1) DEFAULT FALSE,
+  /*anulada TINYINT(1) DEFAULT FALSE,*/
   /*idFactura INT(11) NOT NULL,*/
   PRIMARY KEY(idAbono)
   /*FOREIGN KEY(idFactura) REFERENCES tbl_cargos(idFactura)*/
   
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO tbl_abonos VALUES(1, 1452, 2, 3214, "00001", 10.5, 10.5, 50.1, 50.1, '2019-08-25', '2019-08-25', '2019-08-25', '2019-08-25', '02/2019', 'contado', 'C', 'cancelado', 0.05, false)
+/*INSERT INTO tbl_abonos VALUES(1, 1452, 2, 3214, "00001", 10.5, 10.5, 50.1, 50.1, '2019-08-25', '2019-08-25', '2019-08-25', '2019-08-25', '02/2019', 'contado', 'C', 'cancelado', 0.05, false)*/
