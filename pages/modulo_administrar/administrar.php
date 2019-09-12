@@ -39,7 +39,7 @@
          if(isset($_SESSION["user"])) {
              if ($_SESSION["rol"] != "administracion") {
                  echo "<script>
-                            alert('No tienes permisos para ingresar a esta área. Att: Don Manuel.');
+                            alert('No tienes permisos para ingresar a esta área. Att: Gerencia.');
                             window.location.href='../index.php';
                        </script>";
              }
@@ -191,5 +191,6 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="../../dist/js/sb-admin-2.js"></script>
+
 </body>
 </html>

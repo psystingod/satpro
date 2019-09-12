@@ -69,7 +69,7 @@ function getMesesPagar(){
             console.log(saldoActualSinIva);
             var impuesto = String(parseFloat(saldoActualSinIva)*parseFloat(cesc)).substring(0, 4);
             console.log(impuesto);
-            document.getElementById("pendiente").value = String(parseFloat(saldoActual) + parseFloat(impuesto)).substring(0, 5);
+            document.getElementById("pendiente").value = saldoActual;
         }
     }else if (document.getElementById("mesx1") != null && document.getElementById("mesx2") != null) {
         if (document.getElementById("mesx1").checked == true && document.getElementById("mesx2").checked == false) {
@@ -86,7 +86,7 @@ function getMesesPagar(){
             document.getElementById("total").value = cargoTotal;
             var mes2SinIva = (parseFloat(mes2)/1.13);
             var impSegMes2 = (parseFloat(cesc)*parseFloat(mes2SinIva));
-            document.getElementById("pendiente").value = String(parseFloat(impSegMes2) + parseFloat(mes2)).substring(0, 5);
+            document.getElementById("pendiente").value = String(parseFloat(mes2)).substring(0, 5);
             var mesCargo1 = document.getElementById("mesCargo1").value;
             //document.getElementById("pendiente").value = mes2;
             document.getElementById("meses").value = mesCargo1;
@@ -117,9 +117,11 @@ function getMesesPagar(){
             document.getElementById("total").value = "0.0";
             var cesc = document.getElementById("cesc").value;
             var saldoActual = document.getElementById("saldoActual0").value;
+            console.log(saldoActual);
+            document.getElementById("pendiente").value = saldoActual;
             var totalSinIvaSaldo = String(parseFloat(saldoActual)/1.13).substring(0, 5);
             var impuestoSeg = String(parseFloat(cesc)*parseFloat(totalSinIvaSaldo)).substring(0, 4);
-            document.getElementById("pendiente").value = String(parseFloat(saldoActual)+parseFloat(impuestoSeg)).substring(0, 5);
+            document.getElementById("pendiente").value = String(parseFloat(saldoActual)).substring(0, 5);
             document.getElementById("meses").value = "";
         }
     }

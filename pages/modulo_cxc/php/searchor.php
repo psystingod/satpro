@@ -19,7 +19,6 @@ $query = "SELECT idOrdenReconex, codigoCliente, nombreCliente, direccion, fechaO
  }
 
  $resultado = $mysqli->query($query);
-var_dump($resultado);
  if ($resultado->num_rows > 0) {
  	$salida.="<br><table style='font-size:12px;' class='table table-striped table-responsive'>
 			    <thead>

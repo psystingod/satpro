@@ -1,7 +1,11 @@
 <?php
     require('../php/contenido.php');
     require('../php/modulePermissions.php');
-    session_start();
+    require('../php/permissions.php');
+
+    /*session_start();
+    $permisos = new Permissions();
+    $permisosUsuario = $permisos->getPermissions($_SESSION['id_usuario']);*/
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,7 +43,7 @@
 
 <body>
     <!-- <?php
-         // session_start();
+         session_start();
          if(!isset($_SESSION["user"])) {
              header('Location: login.php');
          }
@@ -186,9 +190,11 @@
     <script src="../vendor/raphael/raphael.min.js"></script>
     <script src="../vendor/morrisjs/morris.min.js"></script>
     <script src="../data/morris-data.js"></script>
-
     <!-- Custom Theme JavaScript -->
     <script src="../dist/js/sb-admin-2.js"></script>
+    <script type="text/javascript">
+        var permisos = '<?php echo $permisosUsuario;?>'
+    </script>
 </body>
 
 </html>

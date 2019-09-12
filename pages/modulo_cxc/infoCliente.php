@@ -1,13 +1,16 @@
 <?php
 
     session_start();
+    require($_SERVER['DOCUMENT_ROOT'].'/satpro'.'/php/permissions.php');
+    $permisos = new Permissions();
+    $permisosUsuario = $permisos->getPermissions($_SESSION['id_usuario']);
     // get passed parameter value, in this case, the record ID
     // isset() is a PHP function used to verify if a value is there or not
     if (isset($_GET['id'])) {
         $id=isset($_GET['id']) ? $_GET['id'] : die('ERROR: Record no encontrado.');
 
         //include database connection
-        include '../../php/connection.php';
+        require_once '../../php/connection.php';
         $precon = new ConectionDB();
         $con = $precon->ConectionDB();
         // read current record's data
@@ -510,14 +513,14 @@
                             <td><button class="btn btn-danger btn-block"><i class="fas fa-sign-out-alt fa-2x"></i></button></td>
                             <td><button class="btn btn-success btn-block"><i class="fas fa-print fa-2x"></i></button></td>
                             <td><button class="btn btn-warning btn-block"><i class="far fa-edit fa-2x"></i></button></td>
-                            <td><button id="btn-nuevo" onclick="nuevoCliente();" class="btn btn-primary btn-block" title="Nuevo"><i class="fas fa-user-plus fa-2x"></i></button></td>
+                            <td><button id="btn-nuevo" name="agregar" onclick="nuevoCliente();" class="btn btn-primary btn-block" title="Nuevo"><i class="fas fa-user-plus fa-2x"></i></button></td>
                         </tr>
 
                         <tr>
                             <td><button class="btn btn-primary btn-block" style="font-size: 16px;">Contrato de cable</button></td>
                             <td><button class="btn btn-primary btn-block" style="font-size: 16px;">Contrato de internet</button></td>
                             <td><a href="estadoCuenta.php?codigoCliente=<?php echo $codigo; ?>" target="_blank"><button class="btn btn-primary btn-block" style="font-size: 16px;">Estado de cuenta</button></a></td>
-                            <td><button id="btn-editar" onclick="editarCliente();" class="btn btn-success btn-block" title="Editar"><i class="fas fa-user-edit fa-2x"></i></button></td>
+                            <td><button id="btn-editar" name="editar" onclick="editarCliente();" class="btn btn-success btn-block" title="Editar"><i class="fas fa-user-edit fa-2x"></i></button></td>
                         </tr>
                <form id="formClientes" class="" action="#" method="POST">
                         <tr>
@@ -1273,11 +1276,11 @@
                                                   </div>
                                                   <div class="col-md-6">
                                                       <br>
-                                                      <button class="btn btn-success btn-block" type="button" name="activarServicio" style="font-size:16px" disabled>Activar servicio</button>
+                                                      <button class="btn btn-success btn-block" type="button" name="agregar" style="font-size:16px">Activar servicio</button>
                                                   </div>
                                                   <div class="col-md-6">
                                                       <br>
-                                                      <button class="btn btn-danger btn-block" type="button" name="desactivarServicio" style="font-size:16px" disabled>Desactivar servicio</button>
+                                                      <button class="btn btn-danger btn-block" type="button" name="eliminar" style="font-size:16px">Desactivar servicio</button>
                                                   </div>
                                               </div>
                                               <hr style="border-top: 1px solid #0288D1;">
@@ -1565,6 +1568,10 @@
     <!-- Custom Theme JavaScript -->
     <script src="js/clientes.js"></script>
     <script src="../../dist/js/sb-admin-2.js"></script>
+    <script type="text/javascript">
+        var permisos = '<?php echo $permisosUsuario;?>'
+    </script>
+    <script src="../modulo_administrar/js/permisos.js"></script>
 
     <?php
     if (isset($_GET['action'])) {

@@ -12,6 +12,63 @@
         $con = $precon->ConectionDB();
         // read current record's data
         try {
+            /*******INICIO DE INSTRUCCIONES PARA SACAR EL SALDO REAL DEL CLIENTE**********/
+            // prepare select query
+            $query = "SELECT SUM(cuotaCable) FROM tbl_cargos WHERE codigoCliente = ? LIMIT 0,1";
+            $stmt = $con->prepare( $query );
+            // this is the first question mark
+            $stmt->bindParam(1, $id);
+            // execute our query
+            $stmt->execute();
+            // store retrieved row to a variable
+            $totalCargosCable = $stmt->fetchColumn();
+            var_dump(floatVal($totalCargosCable));
+
+            // prepare select query
+            $query = "SELECT SUM(cuotaInternet) FROM tbl_cargos WHERE codigoCliente = ? LIMIT 0,1";
+            $stmt = $con->prepare( $query );
+            // this is the first question mark
+            $stmt->bindParam(1, $id);
+            // execute our query
+            $stmt->execute();
+            // store retrieved row to a variable
+            $totalCargosInter = $stmt->fetchColumn();
+            var_dump(floatVal($totalCargosInter));
+
+            /***  ABONOS  ***/
+            // prepare select query
+            $query = "SELECT SUM(cuotaCable) FROM tbl_abonos WHERE codigoCliente = ? LIMIT 0,1";
+            $stmt = $con->prepare( $query );
+
+            // this is the first question mark
+            $stmt->bindParam(1, $id);
+
+            // execute our query
+            $stmt->execute();
+
+            // store retrieved row to a variable
+            $totalAbonosCable = $stmt->fetchColumn();
+            var_dump(floatVal($totalAbonosCable));
+
+            // prepare select query
+            $query = "SELECT SUM(cuotaInternet) FROM tbl_abonos WHERE codigoCliente = ? LIMIT 0,1";
+            $stmt = $con->prepare( $query );
+
+            // this is the first question mark
+            $stmt->bindParam(1, $id);
+
+            // execute our query
+            $stmt->execute();
+
+            // store retrieved row to a variable
+            $totalAbonosInter = $stmt->fetchColumn();
+            var_dump(floatVal($totalAbonosInter));
+
+
+            $saldoRealCable = floatVal($totalCargosCable) - floatVal($totalAbonosCable);
+            $saldoRealInter = floatVal($totalCargosInter) - floatVal($totalAbonosInter);
+            /*******FINAL DE INSTRUCCIONES PARA SACAR EL SALDO REAL DEL CLIENTE**********/
+
             // prepare select query
             $query = "SELECT * FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
@@ -703,26 +760,27 @@
                                               if (isset($_GET['tipoServicio'])) {
                                                   if ($_GET['tipoServicio'] == "c") {
                                                       $cesc = 0.05;
-                                                      $saldoActualSinIva = substr((floatVal($saldoCable)/1.13), 0,5);
+                                                      $saldoActualSinIva = substr((floatVal($saldoRealCable)/1.13), 0,5);
                                                       //echo var_dump($saldoActualSinIva);
                                                       $impSeg = substr($saldoActualSinIva * $cesc, 0,4);
                                                       //echo var_dump($impSeg);
                                                       //echo var_dump($saldoCable);
-                                                      $saldoActual = substr((floatVal($saldoCable) + floatVal($impSeg)), 0,5);
+                                                      $saldoActual = substr((floatVal($saldoRealCable) + floatVal($impSeg)), 0,5);
                                                       //echo var_dump($saldoActual. "Mira");
                                                       echo "<input type='hidden' id='saldoActual' name='saldoActual' value='".$saldoActual. "' readonly>";
-                                                      echo "<input type='hidden' id='saldoActual0' value='".$saldoCable. "' readonly>";
+                                                      echo "<input type='hidden' id='saldoActual0' value='".$saldoRealCable. "' readonly>";
+
                                                   }
                                                   elseif ($_GET['tipoServicio'] == "i") {
                                                       $cesc = 0.05;
-                                                      $saldoActualSinIva = substr((floatVal($saldoInter)/1.13), 0,5);
+                                                      $saldoActualSinIva = substr((floatVal($saldoRealInter)/1.13), 0,5);
                                                       //echo var_dump($saldoActualSinIva);
                                                       $impSeg = substr($saldoActualSinIva * $cesc, 0,4);
                                                       //echo var_dump($impSeg);
-                                                      $saldoActual = substr((floatVal($saldoInter) + floatVal($impSeg)), 0,5);
+                                                      $saldoActual = substr((floatVal($saldoRealInter) + floatVal($impSeg)), 0,5);
                                                       //echo var_dump($saldoActual);
                                                       echo "<input type='hidden' id='saldoActual' name='saldoActual' value='".$saldoActual . "' readonly>";
-                                                      echo "<input type='hidden' id='saldoActual0' value='".$saldoInter. "' readonly>";
+                                                      echo "<input type='hidden' id='saldoActual0' value='".$saldoRealInter. "' readonly>";
                                                   }
                                               }
 
@@ -749,21 +807,21 @@
                                   <div class="col-md-4">
                                       <label for="meses">TOTAL (INCLUYE IMPUESTOS)</label>
                                   </div>
-                                  <div class="col-md-3">
+                                  <div class="col-md-2">
                                       <input id="total" class="form-control input-sm alert-danger" type="text" name="total" value="0.00" style="color:red; font-weight:bold;">
                                   </div>
-                                  <div class="col-md-2">
-                                      <label for="meses">PENDIENTE</label>
+                                  <div class="col-md-3">
+                                      <label for="meses">PENDIENTE (SIN CESC)</label>
                                   </div>
                                   <?php
-                                  /*if ($_GET['tipoServicio'] == "c"){
-                                      $saldoActual = $saldoCable;
+                                  if ($_GET['tipoServicio'] == "c"){
+                                      $saldoReal = $saldoRealCable;
                                   }elseif ($_GET['tipoServicio'] == "i") {
-                                      $saldoActual = $saldoInter;
-                                  }*/
+                                      $saldoReal = $saldoRealInter;
+                                  }
                                   ?>
-                                  <div class="col-md-3">
-                                      <input class="form-control input-sm alert-danger" type="text" id="pendiente" name="pendiente" value="<?php echo $saldoActual ?>" style="color:red; font-weight:bold;">
+                                  <div class="col-md-2">
+                                      <input class="form-control input-sm alert-danger" type="text" id="pendiente" name="pendiente" value="<?php echo $saldoReal ?>" style="color:red; font-weight:bold;">
                                   </div>
                               </div>
                               <div class="form-row">

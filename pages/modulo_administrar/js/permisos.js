@@ -8,13 +8,13 @@ function getAccess(permisosActuales, permisoRequerido){
 
 //Si el usuario tiene permiso de AGREGAR, podrá agregar datos, sino se deshabilitan las opciones
 if (getAccess(permisos, AGREGAR)) {
-    var agregElements = document.getElementsByClassName('agregar');
+    var agregElements = document.getElementsByName('agregar');
     for (var i = 0; i < agregElements.length; i++) {
         agregElements[i].disabled = false;
     }
 }
 else {
-    var agregElements = document.getElementsByClassName('agregar');
+    var agregElements = document.getElementsByName('agregar');
     for (var i = 0; i < agregElements.length; i++) {
         if(agregElements[i].tagName = 'li'){
             agregElements[i].style.display = 'none';
@@ -24,13 +24,13 @@ else {
 }
 //Si el usuario tiene permiso de EDITAR, podrá modificar datos, sino se deshabilitan las opciones
 if (getAccess(permisos, EDITAR)) {
-    var editElements = document.getElementsByClassName('editar');
+    var editElements = document.getElementsByName('editar');
     for (var i = 0; i < editElements.length; i++) {
         editElements[i].disabled = false;
     }
 }
 else {
-    var editElements = document.getElementsByClassName('editar');
+    var editElements = document.getElementsByName('editar');
     for (var i = 0; i < editElements.length; i++) {
         if(editElements[i].tagName = 'li'){
             editElements[i].style.display = 'none';
@@ -40,13 +40,13 @@ else {
 }
 //Si el usuario tiene permiso de ELIMINAR, podrá modificar datos, sino se deshabilitan las opciones
 if (getAccess(permisos, ELIMINAR)) {
-    var deleteElements = document.getElementsByClassName('eliminar');
+    var deleteElements = document.getElementsByName('eliminar');
     for (var i = 0; i < deleteElements.length; i++) {
         deleteElements[i].disabled = false;
     }
 }
 else {
-    var deleteElements = document.getElementsByClassName('eliminar');
+    var deleteElements = document.getElementsByName('eliminar');
     for (var i = 0; i < deleteElements.length; i++) {
         if(deleteElements[i].tagName = 'li'){
             deleteElements[i].style.display = 'none';
