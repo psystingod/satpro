@@ -141,7 +141,6 @@
             </div>
             <!-- /.navbar-static-side -->
         </nav>
-
         <div id="page-wrapper">
             <!-- /.row -->
             <div class="row">
@@ -158,7 +157,8 @@
                                 <div class="name">Libro Contribuyentes</div>
                             </div>
                         </div></a>
-                        <a href="Partidas.php"><div class="col-lg-6 btn btn-default">
+
+                        <a data-toggle="modal" data-target="#VerLibroConsuFinal"><div class="col-lg-6 btn btn-default">
                             <div class="stat-icon">
                                       <i class="fas fa-book fa-3x"></i>
                             </div>
@@ -168,7 +168,6 @@
                             </div>
                         </div></a>
                     </div>
-
 
                 </div>
             </div>
@@ -190,7 +189,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title" id="Balance Comprobación">Imprimir el libro de ventas a Contribuyentes</h4>
                       </div>
-                      <form action="libroOperacionesPDF.php" method="POST">
+                      <form action="libroContriPDF.php" method="POST">
                       <div class="modal-body">
                                   <div class="form-row">
 
@@ -260,6 +259,88 @@
                 </div>
           </div>
     </div><!-- /Add modal -->
+
+
+    <!-- Add modal -->
+
+    <div class="modal fade" id="VerLibroConsuFinal" tabindex="-1" role="dialog" aria-labelledby="VerLibroConsuFinal">
+          <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                      <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="Balance Comprobación">Imprimir el libro de ventas a Contribuyentes</h4>
+                      </div>
+                      <form action="libroConsuFinalPDF.php" method="POST">
+                      <div class="modal-body">
+                                  <div class="form-row">
+
+                                      <div class="form-group col-md-4 col-xs-4">
+                                          <label for="codigo">Punto de Venta:</label>
+                                          <select class="form-control form-control-lg" name="PuntoImprimir" required>
+                                             <option value="" selected="selected">Seleccionar...</option>
+                                              <option value="1">Cablesat</option>;
+                                              <option value="2">Otro...</option>;
+                                         </select>
+                                      </div>
+
+                                      <div class="form-group col-md-4 col-xs-4">
+                                          <label for="nombre">Mes a Imprimir</label>
+                                          <select class="form-control form-control-lg" name="MesImprimir" required>
+                                             <option value="" selected="selected">Seleccionar...</option>
+                                              <option value="1" >Enero</option>;
+                                              <option value="2" >Febrero</option>;
+                                              <option value="3" >Marzo</option>;
+                                              <option value="4" >Abril</option>;
+                                              <option value="5" >Mayo</option>;
+                                              <option value="6" >Junio</option>;
+                                              <option value="7" >Julio</option>;
+                                              <option value="8" >Agosto</option>;
+                                              <option value="9" >Septiembre</option>;
+                                              <option value="10" >Octubre</option>;
+                                              <option value="11" >Noviembre</option>;
+                                              <option value="12" >Diciembre</option>;
+                                         </select>
+                                      </div>
+
+                                      <div class="form-group col-md-4 col-xs-4">
+                                          <label for="nombre">Año:</label>
+                                          <select class="form-control form-control-lg" name="AñoImprimir" required>
+                                             <option value="" selected="selected">Seleccionar...</option>
+                                              <option value="1" >2017</option>;
+                                              <option value="2" >2018</option>;
+                                              <option value="3" >2019</option>;
+                                         </select>
+                                      </div>
+                                  </div>
+
+                                  <div class="form-row">
+
+                                      <div class="form-group col-md-6 col-xs-6">
+                                        <input type='checkbox' class='' name="" value="">
+                                          <label for="codigo">Encabezados en el libro</label>
+                                      </div>
+                                      <div class="form-group col-md-6 col-xs-6">
+                                        <input class="" type="radio" name="1" value="1">
+                                        <label for="5">Normal</label>
+                                        &nbsp
+                                          &nbsp
+                                            &nbsp
+                                              &nbsp
+                                         <input class="" type="radio" name="0" value="5">
+                                        <label for="5">Impuesto</label>
+                                      </div>
+                                  </div>
+
+                      </div>
+                      <div class="modal-footer">
+                            <button type="button" name="Action1" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            <input type="submit" name="Action2" class="btn btn-primary" value="Agregar">
+                      </div>
+                           </form>
+                </div>
+          </div>
+    </div><!-- /Add modal -->
+
 
     <!-- jQuery -->
     <script src="../../vendor/jquery/jquery.min.js"></script>
