@@ -696,7 +696,7 @@
                                       <input id="cesc" class="form-control input-sm" type="text" name="porImp" value="">
                                   </div>
                                   <div class="col-md-2">
-                                      <label for="impSeg">Impusto seguridad</label>
+                                      <label for="impSeg">Impuesto seg</label>
                                       <input type="text" class="form-control input-sm" id="impSeg" name="impSeg" value="">
                                   </div>
                                   <!--<div class="col-md-3">

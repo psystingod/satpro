@@ -39,6 +39,24 @@ class GetAllInfo extends ConectionDB
         }
     }
 
+    public function getDataCargos($tabla, $codigoCliente, $tipoServicio, $estado){
+        try {
+                //$estado = "pendiente";
+                $query = "SELECT * FROM $tabla WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado";
+                $statement = $this->dbConnect->prepare($query);
+                $statement->bindValue(':codigoCliente', $codigoCliente);
+                $statement->bindValue(':tipoServicio', $tipoServicio);
+                $statement->bindValue(':estado', $estado);
+                $statement->execute();
+                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+                return $result;
+
+        } catch (Exception $e) {
+            print "!Error¡: " . $e->getMessage() . "</br>";
+            die();
+        }
+    }
+
     public function getDataAbonos($tabla, $codigoCliente, $tipoServicio, $estado){
         try {
                 //$estado = "pendiente";

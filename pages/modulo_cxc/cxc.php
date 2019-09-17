@@ -56,7 +56,7 @@
              if ($_GET['gen'] == "no") {
                  echo "<script>alert('No se encontraron datos para generar facturación')</script>";
              }elseif ($_GET['gen'] == "yes") {
-                 echo "<script>alert('Facturación generada con exito')</script>";
+                 echo "<script>alert('Facturación generada con exito.')</script>";
              }
          }
      ?>
@@ -80,12 +80,21 @@
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         Transacciones <i class="fas fa-caret-down"></i>
                     </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#" data-toggle="modal" data-target="#facturacionDiaria">Facturación diaria</a>
-                        </li>
-                        <li><a href="facturacionGenerada.php" target="_blank">Ver facturas generadas</a>
-                        </li>
-                    </ul>
+                    <?php
+                    if(!isset($_SESSION["user"])) {
+                        header('Location: ../login.php');
+                    }elseif (isset($_SESSION["user"])) {
+                        if ($_SESSION["rol"] == 'administracion' || $_SESSION["rol"] == 'subgerencia') {
+                            echo
+                            '<ul class="dropdown-menu dropdown-user">
+                                <li><a href="#" data-toggle="modal" data-target="#facturacionDiaria">Facturación diaria</a>
+                                </li>
+                                <li><a href="facturacionGenerada.php" target="_blank">Ver facturas generadas</a>
+                                </li>
+                            </ul>';
+                        }
+                    }
+                    ?>
                     <!-- /.dropdown-user -->
                 </li>
                 <!-- /.dropdown -->

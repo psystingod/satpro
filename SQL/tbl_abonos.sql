@@ -20,7 +20,8 @@ CREATE TABLE tbl_cargos (
   tipoServicio CHAR NOT NULL,
   estado VARCHAR(9) DEFAULT '',
   /*anticipado TINYINT(1) DEFAULT 0,*/
-  cargoImpuesto DOUBLE NOT NULL,
+  cargoImpuesto DOUBLE DEFAULT NULL,
+  totalImpuesto DOUBLE DEFAULT NULL,
   anulada TINYINT(1) DEFAULT FALSE,
   PRIMARY KEY(idFactura)
   
@@ -52,7 +53,8 @@ CREATE TABLE tbl_abonos (
   tipoServicio CHAR NOT NULL,
   estado VARCHAR(9) DEFAULT '',
   /*anticipado TINYINT(1) DEFAULT 0,*/
-  cargoImpuesto DOUBLE NOT NULL,
+  cargoImpuesto DOUBLE DEFAULT NULL,
+  totalImpuesto DOUBLE DEFAULT NULL,
   /*anulada TINYINT(1) DEFAULT FALSE,*/
   idFactura INT(11) NOT NULL,
   PRIMARY KEY(idAbono)

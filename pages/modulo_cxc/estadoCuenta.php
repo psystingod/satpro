@@ -14,6 +14,9 @@
     $arrayActividadesI = $data->getActividadesInter();
     $arrayVelocidades = $data->getVelocidades();
 
+    $arrCargos = $dataInfo->getDataCargos('tbl_cargos', $_GET['codigoCliente'], 'C', 'pendiente');
+    $arrAbonos = $dataInfo->getDataAbonos('tbl_abonos', $_GET['codigoCliente'], 'C', 'CANCELADA');
+
     //include database connection
     require_once('../../php/connection.php');
     $precon = new ConectionDB();
@@ -28,7 +31,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT cod_cliente, nombre, telefonos, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, mac_modem, serie_modem, id_velocidad, dire_telefonia, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia, saldoCable, saldoInternet FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
+            $query = "SELECT cod_cliente, nombre, direccion, telefonos, dia_cobro, fecha_ult_pago, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, mac_modem, serie_modem, id_velocidad, dire_telefonia, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia, saldoCable, saldoInternet FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -42,13 +45,16 @@
 
             /****************** DATOS GENERALES ***********************/
             date_default_timezone_set('America/El_Salvador');
-            $fechaOrdenTrabajo = date_format(date_create(date('Y-m-d')), 'd/m/Y');
-            $idOrdenTrabajo = "";
-            $tipoOrden = "Técnica";
+            //$fechaOrdenTrabajo = date_format(date_create(date('Y-m-d')), 'd/m/Y');
+            //$idOrdenTrabajo = "";
+            //$tipoOrden = "Técnica";
             $diaCobro = $row["dia_cobro"];
             $telefonos = $row["telefonos"];
             $codigoCliente = $row["cod_cliente"];
             $nombreCliente = $row['nombre'];
+            $direccion = $row['direccion'];
+            $diaCobro = $row['dia_cobro'];
+            $fechaUltPago = $row['fecha_ult_pago'];
             $idMunicipio = $row["id_municipio"];
             $saldoCable = $row["saldoCable"];
             $saldoInter = $row["saldoInternet"];
@@ -118,7 +124,7 @@
 
 </head>
 
-<body>
+<body style="background-color:#eeeeee;">
 
     <?php
          // session_start();
@@ -153,7 +159,7 @@
                         <li><a href="config.php"><i class="fas fa-cog"></i> Configuración</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="../php/logout.php"><i class="fas fa-sign-out-alt"></i></i> Salir</a>
+                        <li><a href="../../php/logout.php"><i class="fas fa-sign-out-alt"></i></i> Salir</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -174,21 +180,21 @@
                             <tbody class="">
                                 <tr>
                                     <th>Nombre</th>
-                                    <td>DIEGO ARMANDO HERRERA FLORES</td>
+                                    <td><?php echo $nombreCliente; ?></td>
                                     <th>Fecha</th>
                                     <td><?php date_default_timezone_set('America/El_Salvador'); echo date('d/m/Y H:i:s') ?></td>
                                 </tr>
                                 <tr>
                                     <th>Domicilio</th>
-                                    <td> 7 AVENIDA NORTE FRENTE A ISSS</td>
+                                    <td><?php echo $direccion; ?></td>
                                     <th>Día de cobro</th>
-                                    <td> 25</td>
+                                    <td><?php echo $diaCobro; ?></td>
                                 </tr>
                                 <tr>
                                     <th>Teléfonos</th>
-                                    <td>7022-1905</td>
+                                    <td><?php echo $telefonos?></td>
                                     <th>última fecha de pago</th>
-                                    <td>07/05/2019</td>
+                                    <td><?php echo $fechaUltPago ?></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -220,6 +226,23 @@
                                               <th>CESC cargo</th>
                                               <th>CESC abono</th>
                                           </thead>
+                                          <tbody>
+                                              <?php
+                                              foreach ($arrCargos as $key) {
+                                                  echo "<tr><td>";
+                                                  echo $key['numeroRecibo']."</td><td>";
+                                                  echo $key['tipoServicio']."</td><td>";
+                                                  echo $key['numeroFactura']."</td><td>";
+                                                  echo $key['mesCargo']."</td><td>";
+                                                  echo $key['fechaAbonado']."</td><td>";
+                                                  echo $key['fechaVencimiento']."</td><td>";
+                                                  echo $key['cuotaCable']."</td><td>";
+                                                  echo "0.00"."</td><td>";
+                                                  echo $key['cargoImpuesto']."</td><td>";
+                                                  echo "0.00"."</td><td>";
+                                              }
+                                              ?>
+                                          </tbody>
                                       </table>
                                   </div>
                               </div>
