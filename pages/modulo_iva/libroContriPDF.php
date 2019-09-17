@@ -92,7 +92,11 @@
                          <td  width="45" style="font-size: 10px;">0.00</td>
                          <td  width="29" style="font-size: 10px;">565.00</td>
                          </tr>
+<<<<<<< HEAD
 
+=======
+                      
+>>>>>>> 457033a1198bd5e7928a056bbe9d803eea749e75
                          <tr>
                          <td  WIDTH="40" style="font-size: 10px;">2589</td>
                          <td  width="50"  style="font-size: 10px;">01/08/2019</td>
