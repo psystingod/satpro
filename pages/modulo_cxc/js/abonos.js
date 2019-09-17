@@ -100,15 +100,24 @@ function getMesesPagar(){
             document.getElementById("totalPagar").value = parseFloat(mes1) + parseFloat(mes2);
             var total = document.getElementById("totalPagar").value;
             var cesc = document.getElementById("cesc").value;
-            totalSinIva = String(parseFloat(total)/1.13).substring(0, 5);
-            console.log(totalSinIva);
+            console.log(total);
+            var totalSinIvaMesx1 = String(parseFloat(mes1)/1.13).substring(0, 5);
+            var totalSinIvaMesx2 = String(parseFloat(mes2)/1.13).substring(0, 5);
+            var totalSinIva = parseFloat(totalSinIvaMesx1) + parseFloat(totalSinIvaMesx2);
+            var impSegx1 = String(parseFloat(cesc)*parseFloat(totalSinIvaMesx1)).substring(0, 4);
+            var impSegx2 = String(parseFloat(cesc)*parseFloat(totalSinIvaMesx2)).substring(0, 4);
+            var impSegTotal = parseFloat(impSegx1) + parseFloat(impSegx2);
+            console.log(impSegTotal);
+            var cargoTotal = parseFloat(total) + parseFloat(impSegTotal);
+            console.log(cargoTotal);
+
             var mesCargo1 = document.getElementById("mesCargo1").value;
             var mesCargo2 = document.getElementById("mesCargo2").value;
             document.getElementById("meses").value = mesCargo1+","+mesCargo2;
-            document.getElementById("impSeg").value = String(parseFloat(cesc)*parseFloat(totalSinIva)).substring(0, 4);
+            document.getElementById("impSeg").value = impSegTotal;
             var impSeg = document.getElementById("impSeg").value;
             document.getElementById("totalAbonoImpSeg").value = String(parseFloat(total)+parseFloat(impSeg)).substring(0, 5);
-            cargoTotal = document.getElementById("totalAbonoImpSeg").value = String(parseFloat(total)+parseFloat(impSeg)).substring(0, 5);
+            //cargoTotal = document.getElementById("totalAbonoImpSeg").value = String(parseFloat(totalSinIva)+parseFloat(impSeg)).substring(0, 5);
             document.getElementById("total").value = cargoTotal;
             document.getElementById("pendiente").value = "0.0";
 
