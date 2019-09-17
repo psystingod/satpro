@@ -25,7 +25,10 @@
                // Fin de verificación del tipo de comprobante del cliente
                var_dump("Probandollegar hasta acá1");
                $codigoCliente = $_POST['codigoCliente'];
-               $fechaAbonado = date_format(date_create($_POST['fechaAbono']), 'Y-m-d');
+
+               $fechaAbonado = $_POST['fechaAbono'];
+               $date = str_replace('/', '-', $fechaAbonado);
+               $fechaAbonado = date('Y-m-d', strtotime($date));
                $formaPago = $_POST['formaPago'];
                if (isset($_POST['mesx1']) && !isset($_POST['mesx2'])) {
                    if ($_POST['servicio'] == "c") {
@@ -74,6 +77,7 @@
                                  ':totalImpuesto' => $impSeg,
                                  ':idFactura' => $idFactura1,
                                  ':cargoImpuesto' => $cesc
+
                                 ));
 
                         //ACA HACER UN INSERT DEL ABONO EN LA TABLA ABONOS
@@ -198,6 +202,8 @@
                        $saldoCable = $_POST['pendiente']; // Quizá update
                        $estado = "CANCELADA";
                        $impSeg = $_POST['impSeg'];
+                       $impSeg1 = $impSeg/2;
+                       $impSeg2 = $impSeg/2;
 
                        $qry = "UPDATE tbl_cargos SET tipoFactura=:tipoComprobante, numeroRecibo=:numeroRecibo, codigoCliente=:codigoCliente, cuotaCable=:cuotaCable, saldoCable=:saldoCable, fechaCobro=:fechaCobro, fechaVencimiento=:fechaVencimiento, fechaAbonado=:fechaAbonado, fechaFactura=:fechaFactura, mesCargo=:mesCargo, tipoServicio=:tipoServicio, estado=:estado, cargoImpuesto=:cargoImpuesto, totalImpuesto=:totalImpuesto WHERE idFactura=:idFactura";
 
@@ -215,7 +221,7 @@
                                  ':mesCargo' => $mesCargo1,
                                  ':tipoServicio' => $tipoServicio,
                                  ':estado' => $estado,
-                                 ':totalImpuesto' => $impSeg,
+                                 ':totalImpuesto' => $impSeg1,
                                  ':idFactura' => $idFactura1,
                                  ':cargoImpuesto' => $cesc
                                 ));
@@ -237,7 +243,7 @@
                                   ':mesCargo' => $mesCargo1,
                                   ':tipoServicio' => $tipoServicio,
                                   ':estado' => $estado,
-                                  ':totalImpuesto' => $impSeg,
+                                  ':totalImpuesto' => $impSeg1,
                                   ':idFactura' => $idFactura1,
                                   ':cargoImpuesto' => $cesc
                                  ));
@@ -282,7 +288,7 @@
                                  ':mesCargo' => $mesCargo2,
                                  ':tipoServicio' => $tipoServicio,
                                  ':estado' => $estado,
-                                 ':totalImpuesto' => $impSeg,
+                                 ':totalImpuesto' => $impSeg2,
                                  ':idFactura' => $idFactura2,
                                  ':cargoImpuesto' => $cesc
                                 ));
@@ -304,7 +310,7 @@
                                   ':mesCargo' => $mesCargo2,
                                   ':tipoServicio' => $tipoServicio,
                                   ':estado' => $estado,
-                                  ':totalImpuesto' => $impSeg,
+                                  ':totalImpuesto' => $impSeg2,
                                   ':idFactura' => $idFactura2,
                                   ':cargoImpuesto' => $cesc
                                  ));
@@ -338,6 +344,8 @@
                        $saldoInter = $_POST['pendiente']; // Quizá update
                        $estado = "CANCELADA";
                        $impSeg = $_POST['impSeg'];
+                       $impSeg1 = $impSeg/2;
+                       $impSeg2 = $impSeg/2;
 
                        $qry = "UPDATE tbl_cargos SET tipoFactura=:tipoComprobante, numeroRecibo=:numeroRecibo, codigoCliente=:codigoCliente, cuotaCable=:cuotaCable, saldoCable=:saldoCable, fechaCobro=:fechaCobro, fechaVencimiento=:fechaVencimiento, fechaAbonado=:fechaAbonado, fechaFactura=:fechaFactura, mesCargo=:mesCargo, tipoServicio=:tipoServicio, estado=:estado, cargoImpuesto=:cargoImpuesto, totalImpuesto=:totalImpuesto WHERE idFactura=:idFactura";
 
@@ -355,7 +363,7 @@
                                  ':mesCargo' => $mesCargo1,
                                  ':tipoServicio' => $tipoServicio,
                                  ':estado' => $estado,
-                                 ':totalImpuesto' => $impSeg,
+                                 ':totalImpuesto' => $impSeg1,
                                  ':idFactura' => $idFactura1,
                                  ':cargoImpuesto' => $cesc
                                 ));
@@ -377,7 +385,7 @@
                                   ':mesCargo' => $mesCargo1,
                                   ':tipoServicio' => $tipoServicio,
                                   ':estado' => $estado,
-                                  ':totalImpuesto' => $impSeg,
+                                  ':totalImpuesto' => $impSeg1,
                                   ':idFactura' => $idFactura1,
                                   ':cargoImpuesto' => $cesc
                                  ));
@@ -422,7 +430,7 @@
                                  ':mesCargo' => $mesCargo2,
                                  ':tipoServicio' => $tipoServicio,
                                  ':estado' => $estado,
-                                 ':totalImpuesto' => $impSeg,
+                                 ':totalImpuesto' => $impSeg2,
                                  ':idFactura' => $idFactura2,
                                  ':cargoImpuesto' => $cesc
                                 ));
@@ -444,7 +452,7 @@
                                   ':mesCargo' => $mesCargo2,
                                   ':tipoServicio' => $tipoServicio,
                                   ':estado' => $estado,
-                                  ':totalImpuesto' => $impSeg,
+                                  ':totalImpuesto' => $impSeg2,
                                   ':idFactura' => $idFactura2,
                                   ':cargoImpuesto' => $cesc
                                  ));

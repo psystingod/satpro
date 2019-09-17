@@ -79,8 +79,10 @@ function getMesesPagar(){
             var total = document.getElementById("totalPagar").value;
             var cesc = document.getElementById("cesc").value;
             totalSinIva = String(parseFloat(total)/1.13).substring(0, 5);
+            console.log(totalSinIva);
             document.getElementById("impSeg").value = String(parseFloat(cesc)*parseFloat(totalSinIva)).substring(0, 4);
             var impSeg = document.getElementById("impSeg").value;
+            console.log(impSeg);
             document.getElementById("totalAbonoImpSeg").value = String(parseFloat(total)+parseFloat(impSeg)).substring(0, 5);
             cargoTotal = document.getElementById("totalAbonoImpSeg").value = String(parseFloat(total)+parseFloat(impSeg)).substring(0, 5);
             document.getElementById("total").value = cargoTotal;
@@ -99,7 +101,7 @@ function getMesesPagar(){
             var total = document.getElementById("totalPagar").value;
             var cesc = document.getElementById("cesc").value;
             totalSinIva = String(parseFloat(total)/1.13).substring(0, 5);
-
+            console.log(totalSinIva);
             var mesCargo1 = document.getElementById("mesCargo1").value;
             var mesCargo2 = document.getElementById("mesCargo2").value;
             document.getElementById("meses").value = mesCargo1+","+mesCargo2;

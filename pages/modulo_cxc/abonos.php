@@ -769,7 +769,7 @@
                                                       //echo var_dump($saldoActual. "Mira");
                                                       echo "<input type='hidden' id='saldoActual' name='saldoActual' value='".$saldoActual. "' readonly>";
                                                       echo "<input type='hidden' id='saldoActual0' value='".$saldoRealCable. "' readonly>";
-
+                                                      
                                                   }
                                                   elseif ($_GET['tipoServicio'] == "i") {
                                                       $cesc = 0.05;
