@@ -37,6 +37,7 @@
                        $nRecibox1 = $_POST['nFacturax1'];
                        $impSeg = $_POST['impSeg'];
 
+                       //CALCULANDO FECHAS
                        if (isset($_POST['fechaCobrox1'])) {
                            $fechaCobrox1 = date_format(date_create($_POST['fechaCobrox1']), 'Y-m-d');
                        }else {
@@ -44,14 +45,19 @@
                        }
                        if (isset($_POST['fechaFacturax1'])) {
                            $fechaFacturax1 = date_format(date_create($_POST['fechaFacturax1']), 'Y-m-d');
+                           $date = str_replace('/', '-', $fechaFacturax1);
+                           $fechaFacturax1 = date('Y-m-d', strtotime($date));
                        }else {
                            $fechaFacturax1 = "//";
                        }
                        if (isset($_POST['vencimientox1'])) {
                            $fechaVencimientox1 = date_format(date_create($_POST['vencimientox1']), 'Y-m-d');
+                           $date = str_replace('/', '-', $fechaVencimientox1);
+                           $fechaVencimientox1 = date('Y-m-d', strtotime($date));
                        }else {
                            $fechaVencimientox1 = "//";
                        }
+
                        $mesCargo1 = $_POST['mesCargo1'];
                        $cesc = $_POST['porImp'];
                        $cuotaCable = $_POST['valorCuota'];
@@ -119,9 +125,26 @@
                        $tipoServicio = strtoupper($_POST['servicio']);
                        $idFactura1 = $_POST['idFacturax1'];
                        $nRecibox1 = $_POST['nFacturax1'];
-                       $fechaCobrox1 = date_format(date_create($_POST['fechaCobrox1']), 'Y-m-d');
-                       $fechaFacturax1 = date_format(date_create($_POST['fechaFacturax1']), 'Y-m-d');
-                       $fechaVencimientox1 = date_format(date_create($_POST['fechaVencimientox1']), 'Y-m-d');
+                       //CALCULANDO FECHAS
+                       if (isset($_POST['fechaCobrox1'])) {
+                           $fechaCobrox1 = date_format(date_create($_POST['fechaCobrox1']), 'Y-m-d');
+                       }else {
+                           $fechaCobrox1 = "//";
+                       }
+                       if (isset($_POST['fechaFacturax1'])) {
+                           $fechaFacturax1 = date_format(date_create($_POST['fechaFacturax1']), 'Y-m-d');
+                           $date = str_replace('/', '-', $fechaFacturax1);
+                           $fechaFacturax1 = date('Y-m-d', strtotime($date));
+                       }else {
+                           $fechaFacturax1 = "//";
+                       }
+                       if (isset($_POST['vencimientox1'])) {
+                           $fechaVencimientox1 = date_format(date_create($_POST['vencimientox1']), 'Y-m-d');
+                           $date = str_replace('/', '-', $fechaVencimientox1);
+                           $fechaVencimientox1 = date('Y-m-d', strtotime($date));
+                       }else {
+                           $fechaVencimientox1 = "//";
+                       }
                        $mesCargo1 = $_POST['mesCargo1'];
                        $cesc = $_POST['porImp'];
                        $cuotaInter = $_POST['valorCuota'];
@@ -193,9 +216,26 @@
                        $tipoServicio = strtoupper($_POST['servicio']);
                        $idFactura1 = $_POST['idFacturax1'];
                        $nRecibox1 = $_POST['nFacturax1'];
-                       $fechaCobrox1 = date_format(date_create($_POST['fechaCobrox1']), 'Y-m-d');
-                       $fechaFacturax1 = date_format(date_create($_POST['fechaFacturax1']), 'Y-m-d');
-                       $fechaVencimientox1 = date_format(date_create($_POST['fechaVencimientox1']), 'Y-m-d');
+                       //CALCULANDO FECHAS
+                       if (isset($_POST['fechaCobrox1'])) {
+                           $fechaCobrox1 = date_format(date_create($_POST['fechaCobrox1']), 'Y-m-d');
+                       }else {
+                           $fechaCobrox1 = "//";
+                       }
+                       if (isset($_POST['fechaFacturax1'])) {
+                           $fechaFacturax1 = date_format(date_create($_POST['fechaFacturax1']), 'Y-m-d');
+                           $date = str_replace('/', '-', $fechaFacturax1);
+                           $fechaFacturax1 = date('Y-m-d', strtotime($date));
+                       }else {
+                           $fechaFacturax1 = "//";
+                       }
+                       if (isset($_POST['vencimientox1'])) {
+                           $fechaVencimientox1 = date_format(date_create($_POST['vencimientox1']), 'Y-m-d');
+                           $date = str_replace('/', '-', $fechaVencimientox1);
+                           $fechaVencimientox1 = date('Y-m-d', strtotime($date));
+                       }else {
+                           $fechaVencimientox1 = "//";
+                       }
                        $mesCargo1 = $_POST['mesCargo1'];
                        $cesc = $_POST['porImp'];
                        $cuotaCable = $_POST['valorCuota'];
@@ -263,9 +303,26 @@
                        $tipoServicio = strtoupper($_POST['servicio']);
                        $idFactura2 = $_POST['idFacturax2'];
                        $nRecibox2 = $_POST['nFacturax2'];
-                       $fechaCobrox2 = date_format(date_create($_POST['fechaCobrox2']), 'Y-m-d');
-                       $fechaFacturax2 = date_format(date_create($_POST['fechaFacturax2']), 'Y-m-d');
-                       $fechaVencimientox2 = date_format(date_create($_POST['fechaVencimientox2']), 'Y-m-d');
+                       //CALCULANDO FECHAS
+                       if (isset($_POST['fechaCobrox2'])) {
+                           $fechaCobrox2 = date_format(date_create($_POST['fechaCobrox2']), 'Y-m-d');
+                       }else {
+                           $fechaCobrox2 = "//";
+                       }
+                       if (isset($_POST['fechaFacturax2'])) {
+                           $fechaFacturax2 = date_format(date_create($_POST['fechaFacturax2']), 'Y-m-d');
+                           $date = str_replace('/', '-', $fechaFacturax2);
+                           $fechaFacturax2 = date('Y-m-d', strtotime($date));
+                       }else {
+                           $fechaFacturax2 = "//";
+                       }
+                       if (isset($_POST['vencimientox2'])) {
+                           $fechaVencimientox2 = date_format(date_create($_POST['vencimientox2']), 'Y-m-d');
+                           $date = str_replace('/', '-', $fechaVencimientox2);
+                           $fechaVencimientox2 = date('Y-m-d', strtotime($date));
+                       }else {
+                           $fechaVencimientox2 = "//";
+                       }
                        $mesCargo2 = $_POST['mesCargo2'];
                        $cesc = $_POST['porImp'];
                        $cuotaCable = $_POST['valorCuota'];
@@ -333,9 +390,26 @@
                        $tipoServicio = strtoupper($_POST['servicio']);
                        $idFactura1 = $_POST['idFacturax1'];
                        $nRecibox1 = $_POST['nFacturax1'];
-                       $fechaCobrox1 = date_format(date_create($_POST['fechaCobrox1']), 'Y-m-d');
-                       $fechaFacturax1 = date_format(date_create($_POST['fechaFacturax1']), 'Y-m-d');
-                       $fechaVencimientox1 = date_format(date_create($_POST['fechaVencimientox1']), 'Y-m-d');
+                       //CALCULANDO FECHAS
+                       if (isset($_POST['fechaCobrox1'])) {
+                           $fechaCobrox1 = date_format(date_create($_POST['fechaCobrox1']), 'Y-m-d');
+                       }else {
+                           $fechaCobrox1 = "//";
+                       }
+                       if (isset($_POST['fechaFacturax1'])) {
+                           $fechaFacturax1 = date_format(date_create($_POST['fechaFacturax1']), 'Y-m-d');
+                           $date = str_replace('/', '-', $fechaFacturax1);
+                           $fechaFacturax1 = date('Y-m-d', strtotime($date));
+                       }else {
+                           $fechaFacturax1 = "//";
+                       }
+                       if (isset($_POST['vencimientox1'])) {
+                           $fechaVencimientox1 = date_format(date_create($_POST['vencimientox1']), 'Y-m-d');
+                           $date = str_replace('/', '-', $fechaVencimientox1);
+                           $fechaVencimientox1 = date('Y-m-d', strtotime($date));
+                       }else {
+                           $fechaVencimientox1 = "//";
+                       }
                        $mesCargo1 = $_POST['mesCargo1'];
                        $cesc = $_POST['porImp'];
                        $cuotaCable = $_POST['valorCuota'];
@@ -405,9 +479,26 @@
                        $tipoServicio = strtoupper($_POST['servicio']);
                        $idFactura2 = $_POST['idFacturax2'];
                        $nRecibox2 = $_POST['nFacturax2'];
-                       $fechaCobrox2 = date_format(date_create($_POST['fechaCobrox2']), 'Y-m-d');
-                       $fechaFacturax2 = date_format(date_create($_POST['fechaFacturax2']), 'Y-m-d');
-                       $fechaVencimientox2 = date_format(date_create($_POST['fechaVencimientox2']), 'Y-m-d');
+                       //CALCULANDO FECHAS
+                       if (isset($_POST['fechaCobrox2'])) {
+                           $fechaCobrox2 = date_format(date_create($_POST['fechaCobrox2']), 'Y-m-d');
+                       }else {
+                           $fechaCobrox2 = "//";
+                       }
+                       if (isset($_POST['fechaFacturax2'])) {
+                           $fechaFacturax2 = date_format(date_create($_POST['fechaFacturax2']), 'Y-m-d');
+                           $date = str_replace('/', '-', $fechaFacturax2);
+                           $fechaFacturax2 = date('Y-m-d', strtotime($date));
+                       }else {
+                           $fechaFacturax2 = "//";
+                       }
+                       if (isset($_POST['vencimientox2'])) {
+                           $fechaVencimientox2 = date_format(date_create($_POST['vencimientox2']), 'Y-m-d');
+                           $date = str_replace('/', '-', $fechaVencimientox2);
+                           $fechaVencimientox2 = date('Y-m-d', strtotime($date));
+                       }else {
+                           $fechaVencimientox2 = "//";
+                       }
                        $mesCargo2 = $_POST['mesCargo2'];
                        $cesc = $_POST['porImp'];
                        $cuotaCable = $_POST['valorCuota'];
