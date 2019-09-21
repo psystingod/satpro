@@ -8,66 +8,14 @@
 
         //include database connection
         include '../../php/connection.php';
+        require_once 'php/getSaldoReal.php';
         $precon = new ConectionDB();
         $con = $precon->ConectionDB();
         // read current record's data
         try {
-            /*******INICIO DE INSTRUCCIONES PARA SACAR EL SALDO REAL DEL CLIENTE**********/
-            // prepare select query
-            $query = "SELECT SUM(cuotaCable) FROM tbl_cargos WHERE codigoCliente = ? LIMIT 0,1";
-            $stmt = $con->prepare( $query );
-            // this is the first question mark
-            $stmt->bindParam(1, $id);
-            // execute our query
-            $stmt->execute();
-            // store retrieved row to a variable
-            $totalCargosCable = $stmt->fetchColumn();
-            var_dump(floatVal($totalCargosCable));
-
-            // prepare select query
-            $query = "SELECT SUM(cuotaInternet) FROM tbl_cargos WHERE codigoCliente = ? LIMIT 0,1";
-            $stmt = $con->prepare( $query );
-            // this is the first question mark
-            $stmt->bindParam(1, $id);
-            // execute our query
-            $stmt->execute();
-            // store retrieved row to a variable
-            $totalCargosInter = $stmt->fetchColumn();
-            var_dump(floatVal($totalCargosInter));
-
-            /***  ABONOS  ***/
-            // prepare select query
-            $query = "SELECT SUM(cuotaCable) FROM tbl_abonos WHERE codigoCliente = ? LIMIT 0,1";
-            $stmt = $con->prepare( $query );
-
-            // this is the first question mark
-            $stmt->bindParam(1, $id);
-
-            // execute our query
-            $stmt->execute();
-
-            // store retrieved row to a variable
-            $totalAbonosCable = $stmt->fetchColumn();
-            var_dump(floatVal($totalAbonosCable));
-
-            // prepare select query
-            $query = "SELECT SUM(cuotaInternet) FROM tbl_abonos WHERE codigoCliente = ? LIMIT 0,1";
-            $stmt = $con->prepare( $query );
-
-            // this is the first question mark
-            $stmt->bindParam(1, $id);
-
-            // execute our query
-            $stmt->execute();
-
-            // store retrieved row to a variable
-            $totalAbonosInter = $stmt->fetchColumn();
-            var_dump(floatVal($totalAbonosInter));
-
-
-            $saldoRealCable = floatVal($totalCargosCable) - floatVal($totalAbonosCable);
-            $saldoRealInter = floatVal($totalCargosInter) - floatVal($totalAbonosInter);
-            /*******FINAL DE INSTRUCCIONES PARA SACAR EL SALDO REAL DEL CLIENTE**********/
+            $getSaldoReal = new GetSaldoReal();
+            $saldoRealCable = $getSaldoReal->getSaldoCable($id);
+            $saldoRealInter = $getSaldoReal->getSaldoInter($id);
 
             // prepare select query
             $query = "SELECT * FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
@@ -769,7 +717,7 @@
                                                       //echo var_dump($saldoActual. "Mira");
                                                       echo "<input type='hidden' id='saldoActual' name='saldoActual' value='".$saldoActual. "' readonly>";
                                                       echo "<input type='hidden' id='saldoActual0' value='".$saldoRealCable. "' readonly>";
-                                                      
+
                                                   }
                                                   elseif ($_GET['tipoServicio'] == "i") {
                                                       $cesc = 0.05;

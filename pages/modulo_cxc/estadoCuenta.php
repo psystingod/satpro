@@ -4,6 +4,7 @@
 
     require("php/getData.php");
     require("php/GetAllInfo.php");
+    require_once 'php/getSaldoReal.php';
     $dataInfo = new GetAllInfo();
     $arrMunicipios = $dataInfo->getData('tbl_municipios_cxc');
     $data = new OrdersInfo();
@@ -14,8 +15,22 @@
     $arrayActividadesI = $data->getActividadesInter();
     $arrayVelocidades = $data->getVelocidades();
 
-    $arrCargos = $dataInfo->getDataCargos('tbl_cargos', $_GET['codigoCliente'], 'C', 'pendiente');
-    $arrAbonos = $dataInfo->getDataAbonos('tbl_abonos', $_GET['codigoCliente'], 'C', 'CANCELADA');
+    if (isset($_POST['submit'])) {
+        $desde = $_POST["desde"];
+        $hasta = $_POST["hasta"];
+        //var_dump("Con SUBMIT");
+        $arrCargos = $dataInfo->getDataCargosBy('tbl_cargos', $_GET['codigoCliente'], 'C', $desde, $hasta);
+        $arrAbonos = $dataInfo->getDataAbonosBy('tbl_abonos', $_GET['codigoCliente'], 'C', 'CANCELADA', $desde, $hasta);
+        //var_dump($arrCargos);
+    }else {
+        //var_dump("SIN submit, no legaste");
+        $arrCargos = $dataInfo->getDataCargos('tbl_cargos', $_GET['codigoCliente'], 'C');
+        $arrAbonos = $dataInfo->getDataAbonos('tbl_abonos', $_GET['codigoCliente'], 'C', 'CANCELADA');
+    }
+
+    $getSaldoReal = new GetSaldoReal();
+    $saldoRealCable = $getSaldoReal->getSaldoCable($_GET['codigoCliente']);
+    $saldoRealInter = $getSaldoReal->getSaldoInter($_GET['codigoCliente']);
 
     //include database connection
     require_once('../../php/connection.php');
@@ -175,8 +190,8 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <h2 class="page-header text-center" style="border: none;"><b>Estado de cuenta</b></h2>
-                        <table class="table table-responsive table-condensed" style="border: none;">
+                        <h3 class="page-header text-center" style="border: none;"><b>Estado de cuenta</b></h3>
+                        <table class="table table-responsive table-condensed" style="border: none; font-size:12px;">
                             <tbody class="">
                                 <tr>
                                     <th>Nombre</th>
@@ -210,10 +225,10 @@
                         <div class="tab-content mt-3 mb-3" id="pills-tabContent" style="font-size: 14px;">
                           <div class="tab-pane fade active" id="cable" role="tabpanel" aria-labelledby="pills-home-tab">
                               <br>
-                              <div class="panel panel-success">
-                                  <div class="panel-heading">Resumen estado de cuenta cable, <b>saldo actual: $30</b></div>
+                              <div class="panel panel-primary">
+                                  <div class="panel-heading">Resumen estado de cuenta cable, <b>saldo actual: <?php echo $saldoRealCable; ?></b></div>
                                   <div class="panel-body">
-                                      <table class="table table-striped">
+                                      <table class="table table-striped table-hover">
                                           <thead>
                                               <th>N° recibo</th>
                                               <th>Tipo servicio</th>
@@ -227,20 +242,79 @@
                                               <th>CESC abono</th>
                                           </thead>
                                           <tbody>
+                                              <div class="row">
+                                              <form class="" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'].'?codigoCliente='.$_GET['codigoCliente']); ?>" method="POST">
+                                                  <div class="col-md-7">
+
+                                                  </div>
+                                                  <div class="col-md-2">
+                                                      <input class="form-control" type="text" name="desde" placeholder="Desde mes/año">
+                                                  </div>
+                                                  <div class="col-md-2">
+                                                      <input class="form-control" type="text" name="hasta" placeholder="Hasta mes/año">
+                                                  </div>
+                                                  <div class="col-md-1">
+                                                      <input class="btn btn-info btn-block" type="submit" name="submit" value="ver">
+                                                  </div>
+                                              </form>
+                                              </div>
                                               <?php
-                                              foreach ($arrCargos as $key) {
-                                                  echo "<tr><td>";
-                                                  echo $key['numeroRecibo']."</td><td>";
-                                                  echo $key['tipoServicio']."</td><td>";
-                                                  echo $key['numeroFactura']."</td><td>";
-                                                  echo $key['mesCargo']."</td><td>";
-                                                  echo $key['fechaAbonado']."</td><td>";
-                                                  echo $key['fechaVencimiento']."</td><td>";
-                                                  echo $key['cuotaCable']."</td><td>";
-                                                  echo "0.00"."</td><td>";
-                                                  echo $key['cargoImpuesto']."</td><td>";
-                                                  echo "0.00"."</td><td>";
-                                              }
+                                              foreach ($arrCargos as $cargo) {
+                                                  if ($cargo['estado'] == "CANCELADA") {
+                                                      echo "<tr><td class='text-danger danger'>";
+                                                      echo $cargo['numeroRecibo']."</td><td class='text-danger danger'>";
+                                                      echo $cargo['tipoServicio']."</td><td class='text-danger danger'>";
+                                                      echo $cargo['numeroFactura']."</td><td class='text-danger danger'>";
+                                                      echo "<span class='label label-primary'>".$cargo['mesCargo']."</span>"."</td><td class='text-danger danger'>";
+                                                      echo "<span class='label label-success'>".$cargo['fechaAbonado']."</span>"."</td><td class='text-danger danger'>";
+                                                      echo "<span class='label label-danger'>".$cargo['fechaVencimiento']."</span>"."</td><td class='text-danger danger'>";
+                                                      echo $cargo['cuotaCable']."</td><td class='text-danger danger'>";
+                                                      echo "0.00"."</td><td class='text-danger danger'>";
+                                                      echo $cargo['totalImpuesto']."</td><td class='text-danger danger'>";
+                                                      echo "0.00"."</td></tr>";
+                                                          foreach ($arrAbonos as $abono) {
+                                                              if ($cargo['mesCargo'] == $abono['mesCargo']) {
+                                                                  echo "<tr><td class='text-success success'>";
+                                                                  echo $abono['numeroRecibo']."</td><td class='text-success success'>";
+                                                                  echo $abono['tipoServicio']."</td><td class='text-success success'>";
+                                                                  echo $abono['numeroFactura']."</td><td class='text-success success'>";
+                                                                  echo "<span class='label label-primary'>".$abono['mesCargo']."</span>"."</td><td class='text-success success'>";
+                                                                  echo "<span class='label label-success'>".$abono['fechaAbonado']."</span>"."</td><td class='text-success success'>";
+                                                                  echo "<span class='label label-danger'>".$abono['fechaVencimiento']."</span>"."</td><td class='text-success success'>";
+                                                                  echo "0.00"."</td><td class='text-success success'>";
+                                                                  echo $abono['cuotaCable']."</td><td class='text-success success'>";
+                                                                  echo "0.00"."</td><td class='text-success success'>";
+                                                                  echo $abono['totalImpuesto']."</td></tr>";
+                                                              }
+
+                                                          }
+                                                  }elseif ($cargo['estado'] == "pendiente") {
+                                                      echo "<tr><td class='text-danger danger'>";
+                                                      echo $cargo['numeroRecibo']."</td><td class='text-danger danger'>";
+                                                      echo $cargo['tipoServicio']."</td><td class='text-danger danger'>";
+                                                      echo $cargo['numeroFactura']."</td><td class='text-danger danger'>";
+                                                      echo "<span class='label label-primary'>".$cargo['mesCargo']."</span>"."</td><td class='text-danger danger'>";
+                                                      echo "<span class='label label-success'>".$cargo['fechaAbonado']."</span>"."</td><td class='text-danger danger'>";
+                                                      echo "<span class='label label-danger'>".$cargo['fechaVencimiento']."</span>"."</td><td class='text-danger danger'>";
+                                                      echo $cargo['cuotaCable']."</td><td class='text-danger danger'>";
+                                                      echo "0.00"."</td><td class='text-danger danger'>";
+                                                      echo $cargo['totalImpuesto']."</td><td class='text-danger danger'>";
+                                                      echo "0.00"."</td></tr>";
+                                                  }
+
+                                                  }
+                                                  /*echo "<tr><td class='text-danger danger'>";
+                                                  echo $cargo['numeroRecibo']."</td><td class='text-danger danger'>";
+                                                  echo $cargo['tipoServicio']."</td><td class='text-danger danger'>";
+                                                  echo $cargo['numeroFactura']."</td><td class='text-danger danger'>";
+                                                  echo "<span class='label label-info'>".$cargo['mesCargo']."</span>"."</td><td class='text-danger danger'>";
+                                                  echo "<span class='label label-success'>".$cargo['fechaAbonado']."</span>"."</td><td class='text-danger danger'>";
+                                                  echo "<span class='label label-danger'>".$cargo['fechaVencimiento']."</span>"."</td><td class='text-danger danger'>";
+                                                  echo $cargo['cuotaCable']."</td><td class='text-danger danger'>";
+                                                  echo "0.00"."</td><td class='text-danger danger'>";
+                                                  echo $cargo['totalImpuesto']."</td><td class='text-danger danger'>";
+                                                  echo "0.00"."</td></tr>";
+                                              }*/
                                               ?>
                                           </tbody>
                                       </table>
@@ -249,8 +323,8 @@
                           </div>
                           <div class="tab-pane fade" id="internet" role="tabpanel" aria-labelledby="pills-profile-tab">
                               <br>
-                              <div class="panel panel-info">
-                                  <div class="panel-heading">Resumen estado de cuenta internet, <b>saldo actual: $23.98</b></div>
+                              <div class="panel panel-primary">
+                                  <div class="panel-heading">Resumen estado de cuenta internet, <b>saldo actual: <?php echo $saldoRealInter; ?></b></div>
                                   <div class="panel-body">
                                       <table class="table table-striped">
                                           <thead>

@@ -1,6 +1,12 @@
 <?php
 include "../php/connection.php";
-date_default_timezone_set('America/El_Salvador');
+
+$f1 = date('6/2019');
+$f2 = date('8/2019');
+
+echo $f2 - $f1;
+
+/*date_default_timezone_set('America/El_Salvador');
 $day = date("Y-m-d");
 echo $day;
 echo "<br>";

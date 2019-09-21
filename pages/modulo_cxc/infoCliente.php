@@ -517,9 +517,9 @@
                         </tr>
 
                         <tr>
-                            <td><button class="btn btn-primary btn-block" style="font-size: 16px;">Contrato de cable</button></td>
-                            <td><button class="btn btn-primary btn-block" style="font-size: 16px;">Contrato de internet</button></td>
-                            <td><a href="estadoCuenta.php?codigoCliente=<?php echo $codigo; ?>" target="_blank"><button class="btn btn-primary btn-block" style="font-size: 16px;">Estado de cuenta</button></a></td>
+                            <td><button class="btn btn-primary btn-block" style="font-size: 16px;"><i class="far fa-file-alt"></i> Contrato de cable</button></td>
+                            <td><button class="btn btn-primary btn-block" style="font-size: 16px;"><i class="far fa-file-alt"></i> Contrato de internet</button></td>
+                            <td><a href="estadoCuenta.php?codigoCliente=<?php echo $codigo; ?>" target="_blank"><button class="btn btn-primary btn-block" style="font-size: 16px;"><i class="fas fa-dollar"></i> Estado de cuenta</button></a></td>
                             <td><button id="btn-editar" name="editar" onclick="editarCliente();" class="btn btn-success btn-block" title="Editar"><i class="fas fa-user-edit fa-2x"></i></button></td>
                         </tr>
                <form id="formClientes" class="" action="#" method="POST">

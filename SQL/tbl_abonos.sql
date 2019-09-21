@@ -2,9 +2,9 @@ USE satpro;
 DROP TABLE IF EXISTS tbl_cargos;
 CREATE TABLE tbl_cargos (
   idFactura INT(11) NOT NULL AUTO_INCREMENT,
-  numeroFactura INT(11) NOT NULL,
+  numeroFactura INT(11) DEFAULT NULL,
   tipoFactura TINYINT(1) NOT NULL,
-  numeroRecibo INT(11) NOT NULL,
+  numeroRecibo INT(11) DEFAULT NULL,
   codigoCliente VARCHAR(6) NOT NULL,
   cuotaCable DOUBLE DEFAULT NULL,
   cuotaInternet DOUBLE DEFAULT NULL,
@@ -24,7 +24,6 @@ CREATE TABLE tbl_cargos (
   totalImpuesto DOUBLE DEFAULT NULL,
   anulada TINYINT(1) DEFAULT FALSE,
   PRIMARY KEY(idFactura)
-  
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*INSERT INTO `tbl_cargos` (`idFactura`, `numeroFactura`, `tipoFactura`, `numeroRecibo`, `codigoCliente`, `cuotaCable`, `cuotaInternet`, `saldoCable`, `saldoInternet`, `fechaCobro`, `fechaFactura`, `fechaVencimiento`, `fechaAbonado`, `mesCargo`, `formaPago`, `tipoServicio`, `estado`, `cargoImpuesto`, `anulada`) VALUES
@@ -35,9 +34,9 @@ CREATE TABLE tbl_cargos (
 DROP TABLE IF EXISTS tbl_abonos;
 CREATE TABLE tbl_abonos (
   idAbono INT(11) NOT NULL AUTO_INCREMENT,
-  numeroFactura INT(11) NOT NULL,
+  numeroFactura INT(11) DEFAULT NULL,
   tipoFactura TINYINT(1) NOT NULL,
-  numeroRecibo INT(11) NOT NULL,
+  numeroRecibo INT(11) DEFAULT NULL,
   codigoCliente VARCHAR(6) NOT NULL,
   cuotaCable DOUBLE DEFAULT NULL,
   cuotaInternet DOUBLE DEFAULT NULL,

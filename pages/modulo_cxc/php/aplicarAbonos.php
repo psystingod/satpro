@@ -4,7 +4,7 @@
     * Clase para capturar los datos de la solicitud
     */
    class AplicarAbonos extends ConectionDB
-   {
+   { //MODIFICAR FECHA FACTURA SOLAMENTE DE CARGOS MÁS NO DE ABONOS
        public function AplicarAbonos()
        {
            parent::__construct ();
@@ -51,7 +51,7 @@
                            $fechaFacturax1 = "//";
                        }
                        if (isset($_POST['vencimientox1'])) {
-                           $fechaVencimientox1 = date_format(date_create($_POST['vencimientox1']), 'Y-m-d');
+                           $fechaVencimientox1 = $_POST['vencimientox1'];
                            $date = str_replace('/', '-', $fechaVencimientox1);
                            $fechaVencimientox1 = date('Y-m-d', strtotime($date));
                        }else {
@@ -139,7 +139,7 @@
                            $fechaFacturax1 = "//";
                        }
                        if (isset($_POST['vencimientox1'])) {
-                           $fechaVencimientox1 = date_format(date_create($_POST['vencimientox1']), 'Y-m-d');
+                           $fechaVencimientox1 = $_POST['vencimientox1'];
                            $date = str_replace('/', '-', $fechaVencimientox1);
                            $fechaVencimientox1 = date('Y-m-d', strtotime($date));
                        }else {
@@ -230,7 +230,7 @@
                            $fechaFacturax1 = "//";
                        }
                        if (isset($_POST['vencimientox1'])) {
-                           $fechaVencimientox1 = date_format(date_create($_POST['vencimientox1']), 'Y-m-d');
+                           $fechaVencimientox1 = $_POST['vencimientox1'];
                            $date = str_replace('/', '-', $fechaVencimientox1);
                            $fechaVencimientox1 = date('Y-m-d', strtotime($date));
                        }else {
@@ -317,7 +317,7 @@
                            $fechaFacturax2 = "//";
                        }
                        if (isset($_POST['vencimientox2'])) {
-                           $fechaVencimientox2 = date_format(date_create($_POST['vencimientox2']), 'Y-m-d');
+                           $fechaVencimientox2 = $_POST['vencimientox2'];
                            $date = str_replace('/', '-', $fechaVencimientox2);
                            $fechaVencimientox2 = date('Y-m-d', strtotime($date));
                        }else {
@@ -404,7 +404,7 @@
                            $fechaFacturax1 = "//";
                        }
                        if (isset($_POST['vencimientox1'])) {
-                           $fechaVencimientox1 = date_format(date_create($_POST['vencimientox1']), 'Y-m-d');
+                           $fechaVencimientox1 = $_POST['vencimientox1'];
                            $date = str_replace('/', '-', $fechaVencimientox1);
                            $fechaVencimientox1 = date('Y-m-d', strtotime($date));
                        }else {
@@ -493,7 +493,7 @@
                            $fechaFacturax2 = "//";
                        }
                        if (isset($_POST['vencimientox2'])) {
-                           $fechaVencimientox2 = date_format(date_create($_POST['vencimientox2']), 'Y-m-d');
+                           $fechaVencimientox2 = $_POST['vencimientox2'];
                            $date = str_replace('/', '-', $fechaVencimientox2);
                            $fechaVencimientox2 = date('Y-m-d', strtotime($date));
                        }else {
@@ -647,7 +647,7 @@
                                  ':tipoServicio' => $tipoServicio,
                                  ':estado' => $estado,
                                  ':cargoImpuesto' => $cesc,
-                                 ':totalImpuesto' => $impSeg,
+                                 ':totalImpuesto' => $impSeg
                                 ));
                         $lastId = $stmt->lastInsertId();
 

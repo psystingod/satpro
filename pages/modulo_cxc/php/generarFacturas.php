@@ -87,7 +87,7 @@
                            //var_dump($contador);
                            if ($contador == 0) {
 
-                               $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroRecibo, codigoCliente, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto)VALUES(:tipoComprobante, :numeroRecibo, :codigoCliente, :cuotaCable, :cuotaInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto)";
+                               $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroRecibo, codigoCliente, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto)VALUES(:tipoComprobante, :numeroRecibo, :codigoCliente, :cuotaCable, :cuotaInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto)";
 
                                $stmt = $this->dbConnect->prepare($qry);
                                $stmt->execute(
@@ -102,7 +102,8 @@
                                          ':mesCargo' => $mesCargo,
                                          ':tipoServicio' => $ts,
                                          ':estado' => $estado,
-                                         ':cargoImpuesto' => $cesc
+                                         ':cargoImpuesto' => $cesc,
+                                         ':totalImpuesto' => substr((($i['valor_cuota']/1.13)*$cesc),0,4)
                                         ));
 
                                         //ACA HACER ACTUALIZACION DE SALDO
@@ -166,7 +167,7 @@
                            var_dump("vuelta: " . $vuelta++);
                            //var_dump($contador);
                            if ($contador == 0) {
-                               $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroRecibo, codigoCliente, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto)VALUES(:tipoComprobante, :numeroRecibo, :codigoCliente, :cuotaCable, :cuotaInternet, :saldoCable, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto)";
+                               $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroRecibo, codigoCliente, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto)VALUES(:tipoComprobante, :numeroRecibo, :codigoCliente, :cuotaCable, :cuotaInternet, :saldoCable, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto)";
 
                                $stmt = $this->dbConnect->prepare($qry);
                                $stmt->execute(
@@ -181,7 +182,8 @@
                                          ':mesCargo' => $mesCargo,
                                          ':tipoServicio' => $ts,
                                          ':estado' => $estado,
-                                         ':cargoImpuesto' => $cesc
+                                         ':cargoImpuesto' => $cesc,
+                                         ':totalImpuesto' => substr((($i['cuota_in']/1.13)*$cesc),0,4)
                                         ));
 
                                         //ACA HACER ACTUALIZACION DE SALDO
