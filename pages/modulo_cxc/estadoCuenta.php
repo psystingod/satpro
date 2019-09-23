@@ -306,7 +306,7 @@
                                                       echo "0.00"."</td><td class='text-danger danger'>";
                                                       echo $cargo['totalImpuesto']."</td><td class='text-danger danger'>";
                                                       echo "0.00"."</td></tr>";
-                                                  }
+                                                    }
 
                                                   }
                                                   /*echo "<tr><td class='text-danger danger'>";
@@ -404,7 +404,7 @@
                                                       echo "0.00"."</td><td class='text-danger danger'>";
                                                       echo $cargoI['totalImpuesto']."</td><td class='text-danger danger'>";
                                                       echo "0.00"."</td></tr>";
-                                                  }
+                                                    }
 
                                                   }
                                                   /*echo "<tr><td class='text-danger danger'>";

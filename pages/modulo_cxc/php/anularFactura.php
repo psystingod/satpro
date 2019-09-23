@@ -1,5 +1,5 @@
 <?php
-   require_once('connection.php');
+   require_once('../../../php/connection.php');
    /**
     * Clase para capturar los datos de la solicitud
     */
@@ -14,13 +14,30 @@
        {
            try {
                $id = $_GET['id'];
+
+               // SQL query para traer datos del servicio de cable de la tabla clientes
+               $query = "SELECT * FROM tbl_cargos WHERE idFactura=:id";
+               // Preparación de sentencia
+               $statement = $this->dbConnect->prepare($query);
+               $statement->bindValue(':id', $id);
+               $statement->execute();
+               $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
                // SQL query para traer datos del servicio de cable de la tabla clientes
                $query = "UPDATE tbl_facturas SET anulada=1 WHERE idFactura=:id";
+
                // Preparación de sentencia
                $statement = $this->dbConnect->prepare($query);
                $statement->bindValue(':id', $id, PDO::PARAM_INT);
                $statement->execute();
-               header('Location:../pages/facturacionGenerada.php');
+
+
+               //$query = "UPDATE tbl_facturas SET anulada=1 WHERE idFactura=:id";
+               // Preparación de sentencia
+               $statement = $this->dbConnect->prepare($query);
+               $statement->bindValue(':id', $id, PDO::PARAM_INT);
+               $statement->execute();
+               //header('Location:../pages/facturacionGenerada.php');
 
            } catch (Exception $e) {
                print "!Error¡: " . $e->getMessage() . "</br>";

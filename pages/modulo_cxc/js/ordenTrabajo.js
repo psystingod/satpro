@@ -157,3 +157,8 @@ function guardarOrden(){
         alert("Por favor indique si la orden es de cable o de internet");
     }
 }
+
+function estadoCuenta(){
+    var cod = document.getElementById("codigoCliente").value;
+    window.open("estadoCuenta.php?codigoCliente="+cod, '_blank');
+}
