@@ -91,6 +91,8 @@
                                 </li>
                                 <li><a href="facturacionGenerada.php" target="_blank">Ver facturas generadas</a>
                                 </li>
+                                <li><a href="consultarAbonos.php" target="_blank">Consultar/Eliminar abonos</a>
+                                </li>
                             </ul>';
                         }
                     }

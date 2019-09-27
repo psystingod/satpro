@@ -654,11 +654,11 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <label for="saldoCable">Saldo actual cable</label>
-                                            <input class="form-control input-sm" type="text" name="saldoCable" value="<?php echo $saldoCable; ?>" readonly>
+                                            <input class="form-control input-sm" type="text" name="saldoCable" value="<?php echo round($saldoCable,2); ?>" readonly>
                                         </div>
                                         <div class="col-md-6">
                                             <label for="saldoInternet">Saldo actual internet</label>
-                                            <input class="form-control input-sm" type="text" name="saldoInternet" value="<?php echo $saldoInter; ?>" readonly>
+                                            <input class="form-control input-sm" type="text" name="saldoInternet" value="<?php echo round($saldoInter,2); ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="row">

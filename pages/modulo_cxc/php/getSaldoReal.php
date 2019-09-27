@@ -15,10 +15,12 @@
            try {
                /*******INICIO DE INSTRUCCIONES PARA SACAR EL SALDO REAL DEL CLIENTE**********/
                // prepare select query
-               $query = "SELECT SUM(cuotaCable) FROM tbl_cargos WHERE codigoCliente = ? LIMIT 0,1";
+               $anulada = 0;
+               $query = "SELECT SUM(cuotaCable) FROM tbl_cargos WHERE codigoCliente=:codigo AND anulada=:anulada LIMIT 0,1";
                $stmt = $this->dbConnect->prepare( $query );
                // this is the first question mark
-               $stmt->bindParam(1, $id);
+               $stmt->bindParam(':codigo', $id);
+               $stmt->bindParam(':anulada', $anulada);
                // execute our query
                $stmt->execute();
                // store retrieved row to a variable

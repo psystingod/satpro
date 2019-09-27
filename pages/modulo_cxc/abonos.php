@@ -318,7 +318,7 @@
       $tipoServicio = strtoupper($_GET['tipoServicio']);
  }
 
- $arrCargos = $data->getDataAbonos('tbl_cargos', $codigo, $tipoServicio, "pendiente");
+ $arrCargos = $data->getDataCargos2('tbl_cargos', $codigo, $tipoServicio, "pendiente");
  //Array de ordenes de trabajo por cliente
  //$arrOrdenesTrabajo = $data->getDataOrders('tbl_ordenes_trabajo', $codigo);
  //$arrOrdenesSuspension = $data->getDataOrders('tbl_ordenes_suspension', $codigo);
@@ -740,9 +740,9 @@
                                               echo "<input class='form-control input-sm' type='text' name='nFacturax{$counter}' value='".$key["numeroRecibo"] . "' readonly>"."</td><td>";
                                               echo "<input class='form-control input-sm' type='text' id='mesCargo{$counter}' name='mesCargo{$counter}' value='".$key["mesCargo"] . "' readonly>"."</td><td>";
                                               if ($key["tipoServicio"] == 'C') {
-                                                  echo "<input class='form-control input-sm' type='text' id='mesx{$counter}value' name='cuotaCable' value='".$key["cuotaCable"] . "' readonly>"."</td><td>";
+                                                  echo "<input class='form-control input-sm' type='text' id='mesx{$counter}value' name='cuotaCable{$counter}' value='".$key["cuotaCable"] . "' readonly>"."</td><td>";
                                               }elseif ($key["tipoServicio"] == 'I') {
-                                                  echo "<input class='form-control input-sm' type='text' id='mesx{$counter}value' name='cuotaInternet' value='".$key["cuotaInternet"] . "' readonly>"."</td><td>";
+                                                  echo "<input class='form-control input-sm' type='text' id='mesx{$counter}value' name='cuotaInternet{$counter}' value='".$key["cuotaInternet"] . "' readonly>"."</td><td>";
                                               }
                                               echo "<input class='form-control type='text' name='vencimientox{$counter}' value='".date_format(date_create($key["fechaVencimiento"]), "d/m/Y") . "' readonly>"."</td><tr>";
                                               $counter++;

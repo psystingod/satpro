@@ -114,12 +114,12 @@
                         $stmt3 = $this->dbConnect->prepare($qry3);
                         $stmt3->execute(
                             array(
-                                  ':codigoCliente' => $i["cod_cliente"],
+                                  ':codigoCliente' => $codigoCliente,
                                   ':cuotaCable' => floatVal($cuotaCable),
                                   ':fechaUltPago' => $fechaAbonado
                                  ));
 
-                                header('Location: ../abonos.php?abonado=yes');
+                        header('Location: ../abonos.php?abonado=yes');
                    }
                    elseif ($_POST['servicio'] == "i") {
                        $tipoServicio = strtoupper($_POST['servicio']);
@@ -201,7 +201,7 @@
                         $stmt3 = $this->dbConnect->prepare($qry3);
                         $stmt3->execute(
                             array(
-                                  ':codigoCliente' => $i["cod_cliente"],
+                                  ':codigoCliente' => $codigoCliente,
                                   ':cuotaInter' => floatVal($cuotaInter),
                                   ':fechaUltPago' => $fechaAbonado
                                  ));
@@ -294,7 +294,7 @@
                         $stmt3 = $this->dbConnect->prepare($qry3);
                         $stmt3->execute(
                             array(
-                                  ':codigoCliente' => $i["cod_cliente"],
+                                  ':codigoCliente' => $codigoCliente,
                                   ':cuotaCable' => floatVal($cuotaCable),
                                   ':fechaUltPago' => $fechaAbonado
                                  ));
@@ -378,7 +378,7 @@
                         $stmt3 = $this->dbConnect->prepare($qry3);
                         $stmt3->execute(
                             array(
-                                  ':codigoCliente' => $i["cod_cliente"],
+                                  ':codigoCliente' => $codigoCliente,
                                   ':cuotaCable' => floatVal($cuotaCable),
                                   ':fechaUltPago' => $fechaAbonado
                                  ));
@@ -470,7 +470,7 @@
                         $stmt3 = $this->dbConnect->prepare($qry3);
                         $stmt3->execute(
                             array(
-                                  ':codigoCliente' => $i["cod_cliente"],
+                                  ':codigoCliente' => $codigoCliente,
                                   ':cuotaInter' => floatVal($cuotaInter),
                                   ':fechaUltPago' => $fechaAbonado
                                  ));
@@ -554,7 +554,7 @@
                         $stmt3 = $this->dbConnect->prepare($qry3);
                         $stmt3->execute(
                             array(
-                                  ':codigoCliente' => $i["cod_cliente"],
+                                  ':codigoCliente' => $codigoCliente,
                                   ':cuotaInter' => floatVal($cuotaInter),
                                   ':fechaUltPago' => $fechaAbonado
                                  ));

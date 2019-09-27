@@ -1,11 +1,28 @@
 <?php
     session_start();
+    require_once "php/getFacturaConfig.php";
+    $config = new getFacturaConfig();
+    $arrConfig = $config->getConfig();
+
+    $prefijoFactura = $arrConfig['prefijoFactura'];
+    $prefijoFiscal = $arrConfig['prefijoFiscal'];
+    $prefijoFacturaPeque = $arrConfig['prefijoFacturaPeque'];
+
+    $ultimaFactura = $arrConfig['ultimaFactura'];
+    $ultimaFiscal = $arrConfig['ultimaFiscal'];
+    $ultimaPeque = $arrConfig['ultimaPeque'];
+
+    $rangoDesdeFactura = $arrConfig['rangoDesdeFactura'];
+    $rangoHastaFactura = $arrConfig['rangoHastaFactura'];
+    $rangoDesdeFiscal = $arrConfig['rangoDesdeFiscal'];
+    $rangoHastaFiscal = $arrConfig['rangoHastaFiscal'];
+    $rangoDesdePeque = $arrConfig['rangoDesdePeque'];
+    $rangoHastaPeque = $arrConfig['rangoHastaPeque'];
  ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,7 +30,7 @@
     <meta name="author" content="">
 
     <title>Cablesat</title>
-<link rel="shortcut icon" href="../../images/Cablesat.png" />
+    <link rel="shortcut icon" href="../../images/Cablesat.png" />
     <!-- Bootstrap Core CSS -->
     <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -155,130 +172,46 @@
            <!-- /.row -->
            <div class="row">
                <div class="col-lg-12">
-                   <h1 class="page-header">Administrar</h1>
-                   <div class="row">
-                       <div class="row">
-                           <div class="col-lg-6">
-                               <a href="administrar.php"><button class="btn btn-success" type="button" name="regresar"><i class="fas fa-arrow-circle-left"></i> Atrás</button></a>
-                           </div>
-                           <br><br><br>
-                       </div>
-                         <a class="" href="configFacturas.php"><div class="col-lg-6 btn btn-default">
-                             <div class="stat-icon">
-                                 <i class="fas fa-file-invoice fa-3x"></i>
-                             </div>
-                             <div class="stat-values">
-                                 <br>
-                                 <div class="name">Facturación</b></div>
-                             </div>
-                         </div></a>
-                         <a href=""><div class="col-lg-6 btn btn-default">
-                             <div class="stat-icon">
-                                <i class="fas fa-align-left fa-3x"></i>
-                             </div>
-                             <div class="stat-values">
-                               <br>
-                                 <div class="name">Por asignar</div>
-                             </div>
-                         </div></a>
-                       <a class="" href="bodegas.php" ><div class="col-lg-6 btn btn-default">
-                           <div class="stat-icon">
-                               <i class="fas fa-project-diagram fa-3x"></i>
-                           </div>
-                           <div class="stat-values">
-                               <br>
-                               <div class="name">Bodegas</b></div>
-                           </div>
-                       </div></a>
-                       <a href="proveedores.php"><div class="col-lg-6 btn btn-default">
-                           <div class="stat-icon">
-                               <i class="fas fa-dolly fa-3x"></i>
-                           </div>
-                           <div class="stat-values">
-                               <br>
-                               <div class="name" >Proveedores</b></div>
-                           </div>
-                       </div></a>
-                   </div>
-                   <div class="row">
-                     <a class="" href="categorias.php"><div class="col-lg-6 btn btn-default">
-                         <div class="stat-icon">
-                             <i class="far fa-check-square fa-3x"></i>
-                         </div>
-                         <div class="stat-values">
-                             <br>
-                             <div class="name">Categorias</b></div>
-                         </div>
-                     </div></a>
-                     <a href="tipoProductos.php"><div class="col-lg-6 btn btn-default">
-                         <div class="stat-icon">
-                            <i class="fas fa-align-left fa-3x"></i>
-                         </div>
-                         <div class="stat-values">
-                           <br>
-                             <div class="name">Tipo de Productos</div>
-                         </div>
-                     </div></a>
-                   </div>
-                   <div class="row">
-                     <a class="" href="unidadMedidas.php"><div class="col-lg-6 btn btn-default">
-                         <div class="stat-icon">
-                             <i class="fas fa-ruler-combined fa-3x"></i>
-                         </div>
-                         <div class="stat-values">
-                             <br>
-                             <div class="name">Unidades de Medida</b></div>
-                         </div>
-                     </div></a>
-                     <a class="" href="departamentos.php"><div class="col-lg-6 btn btn-default">
-                         <div class="stat-icon">
-                             <i class="fas fa-grip-vertical fa-3x"></i>
-                         </div>
-                         <div class="stat-values">
-                             <br>
-                             <div class="name">Departamentos de la Empresa</b></div>
-                         </div>
-                     </div></a>
-                   </div>
-                   <div class="row">
-                     <a class="" href="impuestos.php"><div class="col-lg-6 btn btn-default">
-                         <div class="stat-icon">
-                             <i class="fas fa-percent fa-3x"></i>
-                         </div>
-                         <div class="stat-values">
-                             <br>
-                             <div class="name">Impuestos y porcentajes</b></div>
-                         </div>
-                     </div></a>
-                     <a class="" href="plazas.php"><div class="col-lg-6 btn btn-default">
-                         <div class="stat-icon">
-                             <i class="fas fa-users fa-3x"></i>
-                         </div>
-                         <div class="stat-values">
-                             <br>
-                             <div class="name">Plazas</b></div>
-                         </div>
-                     </div></a>
-                   </div>
-                   <div class="row">
-                     <a class="" href="afp.php"><div class="col-lg-6 btn btn-default">
-                         <div class="stat-icon">
-                             <i class="fas fa-money-check-alt fa-3x"></i>
-                         </div>
-                         <div class="stat-values">
-                             <br>
-                             <div class="name">AFP</b></div>
-                         </div>
-                     </div></a>
-                     <a class="" href="bancos.php"><div class="col-lg-6 btn btn-default">
-                         <div class="stat-icon">
-                           <i class="fas fa-university fa-3x"></i>
-                         </div>
-                         <div class="stat-values">
-                             <br>
-                             <div class="name">Bancos</b></div>
-                         </div>
-                     </div></a>
+                   <h1 class="page-header"><b>Configuración general</b></h1>
+                   <div class="panel panel-primary">
+                      <div class="panel-heading">Configuración de facturas</div>
+                      <div class="panel-body">
+                      <form class="" action="php/setFacturaConfig.php" method="POST">
+                          <table class="table table-bordered table-striped">
+                              <thead>
+                                  <th></th>
+                                  <th>Prefijo/serie</th>
+                                  <th>Prefijo fact peq</th>
+                                  <th>Último N°</th>
+                                  <th>Últ N° fact peq</th>
+                                  <th>Rango desde</th>
+                                  <th>Rango hasta</th>
+                              </thead>
+                              <tbody>
+
+                                  <tr>
+                                      <th>Crédito fiscal</th>
+                                      <td><input class="form-control" type="text" name="prefijoFactura" value="<?php echo $prefijoFactura ?>"></td>
+                                      <td><input class="form-control" type="text" name="prefijoFacturaPeque" value="<?php echo $prefijoFacturaPeque ?>"></td>
+                                      <td><input class="form-control" type="text" name="ultimaFactura" value="<?php echo $ultimaFactura ?>"></td>
+                                      <td><input class="form-control" type="text" name="$ultimaPeque" value="<?php echo $ultimaPeque ?>"></td>
+                                      <td><input class="form-control" type="text" name="rangoDesdeFactura" value="<?php echo $rangoDesdeFactura ?>"></td>
+                                      <td><input class="form-control" type="text" name="rangoHastaFactura" value="<?php echo $rangoHastaFactura ?>"></td>
+                                  </tr>
+                                  <tr>
+                                      <th>Fact cons final</th>
+                                      <td><input class="form-control" type="text" name="prefijoFiscal" value="<?php echo $prefijoFiscal ?>"></td>
+                                      <td><input class="form-control" type="text" name="" value=""></td>
+                                      <td><input class="form-control" type="text" name="ultimaFiscal" value="<?php echo $ultimaFiscal?>"></td>
+                                      <td><input class="form-control" type="text" name="" value=""></td>
+                                      <td><input class="form-control" type="text" name="rangoDesdeFiscal" value="<?php echo $rangoDesdeFiscal ?>"></td>
+                                      <td><input class="form-control" type="text" name="rangoHastaFiscal" value="<?php echo $rangoHastaFiscal ?>"></td>
+                                  </tr>
+                              </tbody>
+                          </table>
+                          <button class="btn btn-danger btn-block btn-lg" type="submit" name="submit">Guardar configuración</button>
+                      </form>
+                      </div>
                    </div>
                </div>
            </div>
