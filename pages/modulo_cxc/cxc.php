@@ -255,6 +255,9 @@
                   <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
+                            <div class="alert alert-warning">
+                                <b><i>Nota:</i></b> Antes de generar la facturación favor verificar si tiene suficiente rango disposible <a href="../modulo_administrar/configFacturas.php" target="_blank">aquí</a>
+                            </div>
                             <select class="form-control" name="tipoComprobante" required>
                                 <option value="2">Factura consumidor final</option>
                                 <option value="1">Crédito fiscal</option>

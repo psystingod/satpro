@@ -191,21 +191,21 @@
 
                                   <tr>
                                       <th>Crédito fiscal</th>
-                                      <td><input class="form-control" type="text" name="prefijoFactura" value="<?php echo $prefijoFactura ?>"></td>
+                                      <td><input class="form-control" type="text" name="prefijoFiscal" value="<?php echo $prefijoFiscal ?>"></td>
                                       <td><input class="form-control" type="text" name="prefijoFacturaPeque" value="<?php echo $prefijoFacturaPeque ?>"></td>
-                                      <td><input class="form-control" type="text" name="ultimaFactura" value="<?php echo $ultimaFactura ?>"></td>
+                                      <td><input class="form-control" type="text" name="ultimaFiscal" value="<?php echo $ultimaFiscal ?>"></td>
                                       <td><input class="form-control" type="text" name="$ultimaPeque" value="<?php echo $ultimaPeque ?>"></td>
-                                      <td><input class="form-control" type="text" name="rangoDesdeFactura" value="<?php echo $rangoDesdeFactura ?>"></td>
-                                      <td><input class="form-control" type="text" name="rangoHastaFactura" value="<?php echo $rangoHastaFactura ?>"></td>
+                                      <td><input class="form-control" type="text" name="rangoDesdeFiscal" value="<?php echo $rangoDesdeFiscal ?>"></td>
+                                      <td><input class="form-control" type="text" name="rangoHastaFiscal" value="<?php echo $rangoHastaFiscal ?>"></td>
                                   </tr>
                                   <tr>
                                       <th>Fact cons final</th>
-                                      <td><input class="form-control" type="text" name="prefijoFiscal" value="<?php echo $prefijoFiscal ?>"></td>
+                                      <td><input class="form-control" type="text" name="prefijoFactura" value="<?php echo $prefijoFactura ?>"></td>
                                       <td><input class="form-control" type="text" name="" value=""></td>
-                                      <td><input class="form-control" type="text" name="ultimaFiscal" value="<?php echo $ultimaFiscal?>"></td>
+                                      <td><input class="form-control" type="text" name="ultimaFactura" value="<?php echo $ultimaFactura?>"></td>
                                       <td><input class="form-control" type="text" name="" value=""></td>
-                                      <td><input class="form-control" type="text" name="rangoDesdeFiscal" value="<?php echo $rangoDesdeFiscal ?>"></td>
-                                      <td><input class="form-control" type="text" name="rangoHastaFiscal" value="<?php echo $rangoHastaFiscal ?>"></td>
+                                      <td><input class="form-control" type="text" name="rangoDesdeFactura" value="<?php echo $rangoDesdeFactura ?>"></td>
+                                      <td><input class="form-control" type="text" name="rangoHastaFactura" value="<?php echo $rangoHastaFactura ?>"></td>
                                   </tr>
                               </tbody>
                           </table>

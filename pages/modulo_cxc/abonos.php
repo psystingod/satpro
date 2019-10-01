@@ -762,10 +762,15 @@
                                       <label for="meses">PENDIENTE (SIN CESC)</label>
                                   </div>
                                   <?php
-                                  if ($_GET['tipoServicio'] == "c"){
-                                      $saldoReal = $saldoRealCable;
-                                  }elseif ($_GET['tipoServicio'] == "i") {
-                                      $saldoReal = $saldoRealInter;
+                                  if (isset($_GET['tipoServicio'])) {
+                                      if ($_GET['tipoServicio'] == "c"){
+                                          $saldoReal = $saldoRealCable;
+                                      }elseif ($_GET['tipoServicio'] == "i") {
+                                          $saldoReal = $saldoRealInter;
+                                      }
+                                  }
+                                  else {
+                                      $saldoReal = "";
                                   }
                                   ?>
                                   <div class="col-md-2">
