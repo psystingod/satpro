@@ -176,6 +176,23 @@
                    <div class="panel panel-primary">
                       <div class="panel-heading">Configuración de facturas</div>
                       <div class="panel-body">
+                          <?php
+                          if (isset($_GET['gen'])) {
+                              if ($_GET['gen'] == "continuecre") {
+                                  echo '
+                                  <div class="alert alert-warning">
+                                  <b><i>Nota:</i></b> No hay rango disponible de facturas con el prefijo actual. Por favor actualice el prefijo y rango nuevo de <b>CREDITO FISCAL</b> y posteriormente vuelva a generar las facturas de la misma fecha en la que se quedó. La generación continuará donde se quedó y comenzará con el nuevo prefijo.
+                                  </div>
+                                  ';
+                              }elseif ($_GET['gen'] == "continuecon") {
+                                  echo '
+                                  <div class="alert alert-warning">
+                                  <b><i>Nota:</i></b> No hay rango disponible de facturas con el prefijo actual. Por favor actualice el prefijo y rango nuevo de <b>CONSUMIDOR FINAL</b> y posteriormente vuelva a generar las facturas de la misma fecha en la que se quedó. La generación continuará donde se quedó y comenzará con el nuevo prefijo.
+                                  </div>
+                                  ';
+                              }
+                          }
+                          ?>
                       <form class="" action="php/setFacturaConfig.php" method="POST">
                           <table class="table table-bordered table-striped">
                               <thead>
