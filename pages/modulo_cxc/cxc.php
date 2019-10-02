@@ -76,7 +76,27 @@
             <!-- /.navbar-header -->
 
             <ul class="nav navbar-top-links navbar-left">
-                <li class="dropdown procesos">
+                <li class="dropdown archivo">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        Archivo <i class="fas fa-caret-down"></i>
+                    </a>
+                    <?php
+                    if(!isset($_SESSION["user"])) {
+                        header('Location: ../login.php');
+                    }elseif (isset($_SESSION["user"])) {
+                        if ($_SESSION["rol"] == 'administracion' || $_SESSION["rol"] == 'subgerencia' || $_SESSION["rol"] == 'jefatura') {
+                            echo
+                            '<ul class="dropdown-menu dropdown-user">
+                                <li><a href="cobradores.php">Cobradores</a>
+                                </li>
+                            </ul>';
+                        }
+                    }
+                    ?>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
+                <li class="dropdown transacciones">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">
                         Transacciones <i class="fas fa-caret-down"></i>
                     </a>

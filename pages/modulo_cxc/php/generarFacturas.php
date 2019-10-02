@@ -114,7 +114,7 @@
                                        $ultimaFiscal = $ultimaFiscal + 1;
                                        $numeroFactura = $prefijoFiscal ."-". strval($ultimaFiscal);
 
-                                       $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroFactura, numeroRecibo, codigoCliente, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto)VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :cuotaCable, :cuotaInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto)";
+                                       $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto)VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :cuotaInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto)";
 
                                        $stmt = $this->dbConnect->prepare($qry);
                                        $stmt->execute(
@@ -122,6 +122,7 @@
                                                  ':numeroFactura' => $numeroFactura,
                                                  ':numeroRecibo' => $correlativo,
                                                  ':codigoCliente' => $i["cod_cliente"],
+                                                 ':codigoCobrador' => $i["cod_cobrador"],
                                                  ':cuotaCable' => $i['valor_cuota'],
                                                  ':cuotaInternet' => $i['cuota_in'],
                                                  ':fechaCobro' => $fechaGenerar1,
@@ -213,7 +214,7 @@
                                    if ($ultimaFactura <= $rangoHastaFactura) {
                                        $ultimaFactura = $ultimaFactura + 1;
                                        $numeroFactura = strval($prefijoFactura) ."-". strval($ultimaFactura);
-                                       $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroFactura, numeroRecibo, codigoCliente, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto)VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :cuotaCable, :cuotaInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto)";
+                                       $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto)VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :cuotaInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto)";
 
                                        $stmt = $this->dbConnect->prepare($qry);
                                        $stmt->execute(
@@ -221,6 +222,7 @@
                                                  ':numeroFactura' => $numeroFactura,
                                                  ':numeroRecibo' => $correlativo,
                                                  ':codigoCliente' => $i["cod_cliente"],
+                                                 ':codigoCobrador' => $i["cod_cobrador"],
                                                  ':cuotaCable' => $i['valor_cuota'],
                                                  ':cuotaInternet' => $i['cuota_in'],
                                                  ':fechaCobro' => $fechaGenerar1,
@@ -314,7 +316,7 @@
                                        $ultimaFiscal = $ultimaFiscal + 1;
                                        $numeroFactura = $prefijoFiscal ."-". strval($ultimaFiscal);
 
-                                       $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroFactura, numeroRecibo, codigoCliente, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto)VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :cuotaCable, :cuotaInternet, :saldoCable, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto)";
+                                       $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto)VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :cuotaInternet, :saldoCable, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto)";
 
                                        $stmt = $this->dbConnect->prepare($qry);
                                        $stmt->execute(
@@ -322,6 +324,7 @@
                                                  ':numeroFactura' => $numeroFactura,
                                                  ':numeroRecibo' => $correlativo,
                                                  ':codigoCliente' => $i["cod_cliente"],
+                                                 ':codigoCobrador' => $i["cod_cobrador"],
                                                  ':cuotaCable' => $i['valor_cuota'],
                                                  ':cuotaInternet' => $i['cuota_in'],
                                                  ':fechaCobro' => $fechaGenerar1,
@@ -412,7 +415,7 @@
                                        $ultimaFactura = $ultimaFactura + 1;
                                        $numeroFactura = $prefijoFactura ."-". strval($ultimaFactura);
 
-                                       $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroFactura, numeroRecibo, codigoCliente, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto)VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :cuotaCable, :cuotaInternet, :saldoCable, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto)";
+                                       $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto)VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :cuotaInternet, :saldoCable, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto)";
 
                                        $stmt = $this->dbConnect->prepare($qry);
                                        $stmt->execute(
@@ -420,6 +423,7 @@
                                                  ':numeroFactura' => $numeroFactura,
                                                  ':numeroRecibo' => $correlativo,
                                                  ':codigoCliente' => $i["cod_cliente"],
+                                                 ':codigoCobrador' => $i["cod_cobrador"],
                                                  ':cuotaCable' => $i['valor_cuota'],
                                                  ':cuotaInternet' => $i['cuota_in'],
                                                  ':fechaCobro' => $fechaGenerar1,

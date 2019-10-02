@@ -25,6 +25,21 @@ class GetAllInfo extends ConectionDB
         }
     }
 
+    public function getDataCob($tabla, $codigoCobrador){
+        try {
+                $query = "SELECT * FROM $tabla WHERE codigoCobrador = :codigoCobrador";
+                $statement = $this->dbConnect->prepare($query);
+                $statement->bindParam(':codigoCobrador', $codigoCobrador);
+                $statement->execute();
+                $result = $statement->fetch(PDO::FETCH_ASSOC);
+                return $result;
+
+        } catch (Exception $e) {
+            print "!Error¡: " . $e->getMessage() . "</br>";
+            die();
+        }
+    }
+
     public function getDataOrders($tabla, $codigoCliente){
         try {
                 $query = "SELECT * FROM $tabla WHERE codigoCliente = :codigoCliente";
