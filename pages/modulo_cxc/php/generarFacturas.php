@@ -65,7 +65,7 @@
                //var_dump($fechaComprobante);
                //var_dump($fechaVencimiento);
 
-               $correlativo = $_POST['correlativo'];
+               $correlativo = "---"; //$_POST['correlativo'];
                $tipoServicio = $_POST['tipoServicio'];
                $estado = "pendiente";
 
@@ -113,7 +113,7 @@
                                    if ($ultimaFiscal <= $rangoHastaFiscal) {
                                        $ultimaFiscal = $ultimaFiscal + 1;
                                        $numeroFactura = $prefijoFiscal ."-". strval($ultimaFiscal);
-
+                                       //$this->dbConnect->beginTransaction(); $this->dbConnect->exec('LOCK TABLES tbl_cargos, tbl_abonos, clientes, tbl_facturas_config WRITE');
                                        $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto)VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :cuotaInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto)";
 
                                        $stmt = $this->dbConnect->prepare($qry);
@@ -165,6 +165,9 @@
                                                      array(
                                                            ':ultimaFiscal' => $ultimaFiscal
                                                           ));
+
+                                                //$this->dbConnect->commit();
+                                                //$this->dbConnect->exec('UNLOCK TABLES');
                                     header('Location: ../cxc.php?gen=yes');
                                    }elseif($ultimaFiscal > $rangoHastaFiscal) {
                                        header('Location: ../../modulo_administrar/configFacturas.php?gen=continuecre');
@@ -214,6 +217,7 @@
                                    if ($ultimaFactura <= $rangoHastaFactura) {
                                        $ultimaFactura = $ultimaFactura + 1;
                                        $numeroFactura = strval($prefijoFactura) ."-". strval($ultimaFactura);
+                                       //$this->dbConnect->beginTransaction(); $this->dbConnect->exec('LOCK TABLES tbl_cargos, tbl_abonos, clientes, tbl_facturas_config');
                                        $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto)VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :cuotaInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto)";
 
                                        $stmt = $this->dbConnect->prepare($qry);
@@ -265,6 +269,9 @@
                                                      array(
                                                            ':ultimaFactura' => $ultimaFactura
                                                           ));
+
+                                                 //$this->dbConnect->commit();
+                                                 //$this->dbConnect->exec('UNLOCK TABLES');
                                     header('Location: ../cxc.php?gen=yes');
                                    }elseif($ultimaFactura > $rangoHastaFactura) {
                                        header('Location: ../../modulo_administrar/configFacturas.php?gen=continuecon');
@@ -315,7 +322,7 @@
                                    if ($ultimaFiscal <= $rangoHastaFiscal) {
                                        $ultimaFiscal = $ultimaFiscal + 1;
                                        $numeroFactura = $prefijoFiscal ."-". strval($ultimaFiscal);
-
+                                       //$this->dbConnect->beginTransaction(); $this->dbConnect->exec('LOCK TABLES tbl_cargos, tbl_abonos, clientes, tbl_facturas_config');
                                        $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto)VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :cuotaInternet, :saldoCable, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto)";
 
                                        $stmt = $this->dbConnect->prepare($qry);
@@ -368,6 +375,9 @@
                                                            ':ultimaFiscal' => $ultimaFiscal
                                                           ));
 
+                                                 //$this->dbConnect->commit();
+                                                 //$this->dbConnect->exec('UNLOCK TABLES');
+
                                     header('Location: ../cxc.php?gen=yes');
                                    }elseif($ultimaFiscal > $rangoHastaFiscal) {
                                        header('Location: ../../modulo_administrar/configFacturas.php?gen=continuecre');
@@ -414,7 +424,7 @@
                                    if ($ultimaFactura <= $rangoHastaFactura) {
                                        $ultimaFactura = $ultimaFactura + 1;
                                        $numeroFactura = $prefijoFactura ."-". strval($ultimaFactura);
-
+                                       //$this->dbConnect->beginTransaction(); $this->dbConnect->exec('LOCK TABLES tbl_cargos, tbl_abonos, clientes, tbl_facturas_config');
                                        $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto)VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :cuotaInternet, :saldoCable, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto)";
 
                                        $stmt = $this->dbConnect->prepare($qry);
@@ -466,6 +476,9 @@
                                                      array(
                                                      ':ultimaFactura' => $ultimaFactura
                                                           ));
+
+                                                 //$this->dbConnect->commit();
+                                                 //$this->dbConnect->exec('UNLOCK TABLES');
 
                                     header('Location: ../cxc.php?gen=yes');
                                    }elseif($ultimaFactura > $rangoHastaFactura) {

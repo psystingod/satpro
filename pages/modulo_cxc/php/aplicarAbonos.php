@@ -25,6 +25,15 @@
                // Fin de verificación del tipo de comprobante del cliente
                var_dump("Probandollegar hasta acá1");
                $codigoCliente = $_POST['codigoCliente'];
+               $zona = $_POST['zona'];
+               $cobrador = $_POST['cobrador'];
+               //INICIO DE EXTRAER DATOS DEL COBRADOR
+               // SQL query para traer datos
+               $query = "SELECT * FROM tbl_facturas_config";
+               // Preparación de sentencia
+               $statement = $this->dbConnect->prepare($query);
+               $statement->execute();
+               $result = $statement->fetch(PDO::FETCH_ASSOC);
 
                $fechaAbonado = $_POST['fechaAbono'];
                $date = str_replace('/', '-', $fechaAbonado);
@@ -64,6 +73,9 @@
                        $saldoCable = $_POST['pendiente']; // Quizá update
                        $estado = "CANCELADA";
                        var_dump("Probandollegar hasta acá2");
+
+                       //$this->dbConnect->beginTransaction(); $this->dbConnect->exec('LOCK TABLES tbl_cargos, tbl_abonos, clientes');
+
                        $qry = "UPDATE tbl_cargos SET tipoFactura=:tipoComprobante, numeroRecibo=:numeroRecibo, codigoCliente=:codigoCliente, cuotaCable=:cuotaCable, saldoCable=:saldoCable, fechaCobro=:fechaCobro, fechaVencimiento=:fechaVencimiento, fechaAbonado=:fechaAbonado, fechaFactura=:fechaFactura, mesCargo=:mesCargo, tipoServicio=:tipoServicio, estado=:estado, cargoImpuesto=:cargoImpuesto, totalImpuesto=:totalImpuesto WHERE idFactura=:idFactura";
 
                        $stmt = $this->dbConnect->prepare($qry);
@@ -120,6 +132,9 @@
                                  ));
 
                         header('Location: ../abonos.php?abonado=yes');
+
+                        //$this->dbConnect->commit();
+                        //$this->dbConnect->exec('UNLOCK TABLES');
                    }
                    elseif ($_POST['servicio'] == "i") {
                        $tipoServicio = strtoupper($_POST['servicio']);
@@ -152,6 +167,9 @@
                        $estado = "CANCELADA";
                        var_dump("Probandollegar hasta acá");
                        $impSeg = $_POST['impSeg'];
+
+                       //$this->dbConnect->beginTransaction(); $this->dbConnect->exec('LOCK TABLES tbl_cargos, tbl_abonos, clientes');
+
                        $qry = "UPDATE tbl_cargos SET tipoFactura=:tipoComprobante, numeroRecibo=:numeroRecibo, codigoCliente=:codigoCliente, cuotaInter=:cuotaInter, saldoInter=:saldoInter, fechaCobro=:fechaCobro, fechaVencimiento=:fechaVencimiento, fechaAbonado=:fechaAbonado, fechaFactura=:fechaFactura, mesCargo=:mesCargo, tipoServicio=:tipoServicio, estado=:estado, cargoImpuesto=:cargoImpuesto, totalImpuesto=:totalImpuesto WHERE idFactura=:idFactura";
 
                        $stmt = $this->dbConnect->prepare($qry);
@@ -208,6 +226,9 @@
 
                                 var_dump("Probandollegar hasta acá");
                                 header('Location: ../abonos.php?abonado=yes');
+
+                        //$this->dbConnect->commit();
+                        //$this->dbConnect->exec('UNLOCK TABLES');
                    }
                }
                elseif (isset($_POST['mesx1']) && isset($_POST['mesx2'])) {
@@ -244,6 +265,8 @@
                        $impSeg = $_POST['impSeg'];
                        $impSeg1 = $impSeg/2;
                        $impSeg2 = $impSeg/2;
+
+                       //$this->dbConnect->beginTransaction(); $this->dbConnect->exec('LOCK TABLES tbl_cargos, tbl_abonos, clientes');
 
                        $qry = "UPDATE tbl_cargos SET tipoFactura=:tipoComprobante, numeroRecibo=:numeroRecibo, codigoCliente=:codigoCliente, cuotaCable=:cuotaCable, saldoCable=:saldoCable, fechaCobro=:fechaCobro, fechaVencimiento=:fechaVencimiento, fechaAbonado=:fechaAbonado, fechaFactura=:fechaFactura, mesCargo=:mesCargo, tipoServicio=:tipoServicio, estado=:estado, cargoImpuesto=:cargoImpuesto, totalImpuesto=:totalImpuesto WHERE idFactura=:idFactura";
 
@@ -385,6 +408,9 @@
 
                                 header('Location: ../abonos.php?abonado=yes');
 
+                        //$this->dbConnect->commit();
+                        //$this->dbConnect->exec('UNLOCK TABLES');
+
                    }
                    elseif ($_POST['servicio'] == "i") {
                        $tipoServicio = strtoupper($_POST['servicio']);
@@ -420,6 +446,8 @@
                        $impSeg = $_POST['impSeg'];
                        $impSeg1 = $impSeg/2;
                        $impSeg2 = $impSeg/2;
+
+                       //$this->dbConnect->beginTransaction(); $this->dbConnect->exec('LOCK TABLES tbl_cargos, tbl_abonos, clientes');
 
                        $qry = "UPDATE tbl_cargos SET tipoFactura=:tipoComprobante, numeroRecibo=:numeroRecibo, codigoCliente=:codigoCliente, cuotaCable=:cuotaCable, saldoCable=:saldoCable, fechaCobro=:fechaCobro, fechaVencimiento=:fechaVencimiento, fechaAbonado=:fechaAbonado, fechaFactura=:fechaFactura, mesCargo=:mesCargo, tipoServicio=:tipoServicio, estado=:estado, cargoImpuesto=:cargoImpuesto, totalImpuesto=:totalImpuesto WHERE idFactura=:idFactura";
 
@@ -560,6 +588,9 @@
                                  ));
 
                                 header('Location: ../abonos.php?abonado=yes');
+
+                        //$this->dbConnect->commit();
+                        //$this->dbConnect->exec('UNLOCK TABLES');
                    }
                }
                else { //SIRVE PARA LOS PAGOS DE FACTURAS ANTES DE QUE SE GENEREN
@@ -578,6 +609,9 @@
 
                        //$saldoCable = $_POST['pendiente']; // Quizá update
                        $estado = "CANCELADA";
+
+                       //$this->dbConnect->beginTransaction(); $this->dbConnect->exec('LOCK TABLES tbl_cargos, tbl_abonos, clientes');
+
                        $qry = "INSERT INTO tbl_cargos (tipoFactura, codigoCliente, cuotaCable, fechaAbonado, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto) VALUES(:tipoComprobante, :codigoCliente, :cuotaCable, :fechaAbonado, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto)";
 
                        $stmt = $this->dbConnect->prepare($qry);
@@ -621,6 +655,9 @@
                                  ));
 
                                 header('Location: ../abonos.php?abonado=yes');
+
+                        //$this->dbConnect->commit();
+                        //$this->dbConnect->exec('UNLOCK TABLES');
                    }
                    elseif ($_POST['servicio'] == "i") {
                        $tipoServicio = strtoupper($_POST['servicio']);
@@ -635,6 +672,9 @@
                        $impSeg = $_POST['impSeg'];
                        //$saldoCable = $_POST['pendiente']; // Quizá update
                        $estado = "CANCELADA";
+
+                       //$this->dbConnect->beginTransaction(); $this->dbConnect->exec('LOCK TABLES tbl_cargos, tbl_abonos, clientes');
+
                        $qry = "INSERT INTO tbl_cargos (tipoFactura, codigoCliente, cuotaInternet, fechaAbonado, mesCargo, estado, cargoImpuesto, totalImpuesto) VALUES(:tipoComprobante, :codigoCliente, :cuotaInter, :fechaAbonado, :mesCargo, :estado, :cargoImpuesto, :totalImpuesto)";
 
                        $stmt = $this->dbConnect->prepare($qry);
@@ -680,6 +720,9 @@
 
                                 var_dump("Probandollegar hasta acá");
                                 header('Location: ../abonos.php?abonado=yes');
+
+                        //$this->dbConnect->commit();
+                        //$this->dbConnect->exec('UNLOCK TABLES');
 
                    }
                }

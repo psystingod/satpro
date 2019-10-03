@@ -549,7 +549,7 @@
                                   <div class="col-md-5">
 
                                       <label for="numeroOrden">Zona</label>
-                                      <select class="form-control input-sm" name="zona">
+                                      <select class="form-control input-sm" name="zona" required>
                                           <?php
                                           foreach ($arrCobradores as $key) {
                                               if ($key['codigoCobrador'] == "000") {
@@ -566,7 +566,7 @@
                                   <div class="col-md-5">
 
                                       <label for="numeroOrden">Cobrador</label>
-                                      <select class="form-control input-sm" name="cobrador">
+                                      <select class="form-control input-sm" name="cobrador" required>
                                           <?php
                                           foreach ($arrCobradores as $key) {
                                               if ($key['codigoCobrador'] == $cobrador) {
