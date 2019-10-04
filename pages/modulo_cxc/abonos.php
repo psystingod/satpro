@@ -39,7 +39,7 @@
             $cuotaInter = $row["cuota_in"];
             $nFactura = $row["num_factura"];
             $nombre = trim(ucwords(strtolower($row['nombre'])));
-            $empresa = $row["empresa"];
+            //$empresa = $row["empresa"];
             $nRegistro = $row["num_registro"];
             $dui = trim(ucwords(strtolower($row['numero_dui'])));
             $lugarExp = trim(ucwords(strtolower($row['lugar_exp'])));

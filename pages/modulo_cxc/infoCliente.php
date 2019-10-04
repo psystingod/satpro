@@ -35,7 +35,7 @@
             $nContrato = $row["numero_contrato"];
             $nFactura = $row["num_factura"];
             $nombre = trim(ucwords(strtolower($row['nombre'])));
-            $empresa = $row["empresa"];
+            //$empresa = $row["empresa"];
             $nRegistro = $row["num_registro"];
             $dui = trim(ucwords(strtolower($row['numero_dui'])));
             $lugarExp = trim(ucwords(strtolower($row['lugar_exp'])));
@@ -644,7 +644,7 @@
                                     <div class="row">
                                         <div class="col-md-9">
                                             <label for="empresa">Empresa</label>
-                                            <input class="form-control input-sm" type="text" name="empresa" value="<?php echo $empresa; ?>" readonly>
+                                            <input class="form-control input-sm" type="text" name="empresa" value="<?php //echo $empresa; ?>" readonly>
                                         </div>
                                         <div class="col-md-3">
                                             <label for="ncr">Número de registro</label>
