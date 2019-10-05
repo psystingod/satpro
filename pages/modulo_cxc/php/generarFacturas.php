@@ -179,7 +179,7 @@
                                }
 
                            }
-                           //header('Location: ../cxc.php?gen=yes');
+                           header('Location: ../cxc.php?gen=yes');
                        }
                    }
                    elseif($tipoComprobante == 2){
@@ -283,7 +283,7 @@
                                }
 
                            }
-                           //header('Location: ../cxc.php?gen=yes');
+                           header('Location: ../cxc.php?gen=yes');
                        }
                    }
                }
@@ -292,20 +292,21 @@
                    $ts = "I";
                    if ($tipoComprobante == 1) {
                        // SQL query para traer datos del servicio de cable de la tabla clientes
-                       $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_departamento, numero_nit, giro, valor_cuota, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento FROM clientes WHERE dia_corbo_in = :diaCobro AND fecha_primer_factura_in <= :fechaGenerar AND estado_cliente_in=1 AND tipo_comprobante =:tipoComprobante";
+                       $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_departamento, numero_nit, giro, valor_cuota, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento FROM clientes WHERE estado_cliente_in=1 AND dia_corbo_in = :diaCobro AND fecha_primer_factura_in <= :fechaGenerar AND tipo_comprobante =:tipoComprobante";
                        // Preparación de sentencia
                        $statement = $this->dbConnect->prepare($query);
                        $statement->execute(
                            array(':diaCobro' => $diaGenerar,
-                                 ':fechaGenerar' => $fechaGenerar,
+                                 ':fechaGenerar' => $fechaGenerar1,
                                  ':tipoComprobante' => $tipoComprobante
                                 ));
                        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
                        if (count($result) == 0) {
-                           header('Location: ../cxc.php?gen=yes');
+                           header('Location: ../cxc.php?gen=no');
                        }
                        else {
+                           $vuelta = 0;
                            foreach ($result as $i) {
                                $qry = "SELECT COUNT(mesCargo)FROM tbl_cargos WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
 
@@ -324,7 +325,8 @@
                                        $ultimaFiscal = $ultimaFiscal + 1;
                                        $numeroFactura = $prefijoFiscal ."-". strval($ultimaFiscal);
                                        $this->dbConnect->beginTransaction();
-                                       $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto)VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :cuotaInternet, :saldoCable, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto)";
+                                       $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto)VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador,
+                                              :cuotaCable, :cuotaInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto)";
 
                                        $stmt = $this->dbConnect->prepare($qry);
                                        $stmt->execute(
@@ -389,17 +391,17 @@
                                }
 
                            }
-                           //header('Location: ../cxc.php?gen=yes');
+                           header('Location: ../cxc.php?gen=yes');
                        }
                    }
                    elseif($tipoComprobante == 2){
                        // SQL query para traer datos del servicio de cable de la tabla clientes
-                       $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_departamento, numero_nit, giro, valor_cuota, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento FROM clientes WHERE dia_corbo_in = :diaCobro AND fecha_primer_factura_in <= :fechaGenerar AND estado_cliente_in=1 AND tipo_comprobante =:tipoComprobante";
+                       $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_departamento, numero_nit, giro, valor_cuota, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento FROM clientes WHERE estado_cliente_in=1 AND dia_corbo_in = :diaCobro AND fecha_primer_factura_in <= :fechaGenerar AND tipo_comprobante =:tipoComprobante";
                        // Preparación de sentencia
                        $statement = $this->dbConnect->prepare($query);
                        $statement->execute(
                            array(':diaCobro' => $diaGenerar,
-                                 ':fechaGenerar' => $fechaGenerar,
+                                 ':fechaGenerar' => $fechaGenerar1,
                                  ':tipoComprobante' => $tipoComprobante
                                 ));
                        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -408,6 +410,7 @@
                            header('Location: ../cxc.php?gen=yes');
                        }
                        else {
+                           $vuelta = 0;
                            foreach ($result as $i) {
                                $qry = "SELECT COUNT(mesCargo)FROM tbl_cargos WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
 
@@ -426,7 +429,8 @@
                                        $ultimaFactura = $ultimaFactura + 1;
                                        $numeroFactura = $prefijoFactura ."-". strval($ultimaFactura);
                                        $this->dbConnect->beginTransaction();
-                                       $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto)VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :cuotaInternet, :saldoCable, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto)";
+                                       $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto)VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :cuotaInternet,
+                                               :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto)";
 
                                        $stmt = $this->dbConnect->prepare($qry);
                                        $stmt->execute(
@@ -491,7 +495,7 @@
                                }
 
                            }
-                           //header('Location: ../cxc.php?gen=yes');
+                           header('Location: ../cxc.php?gen=yes');
                        }
                    }
                }
