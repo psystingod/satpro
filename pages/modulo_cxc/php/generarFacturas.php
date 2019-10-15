@@ -135,7 +135,7 @@
                                                  ':cargoImpuesto' => $cesc,
                                                  ':totalImpuesto' => substr((($i['valor_cuota']/1.13)*$cesc),0,4)
                                                 ));
-
+                                                
                                                 //ACA HACER ACTUALIZACION DE SALDO
                                                 $qry2 = "UPDATE tbl_cargos SET saldoCable= saldoCable + :cuotaCable WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
 

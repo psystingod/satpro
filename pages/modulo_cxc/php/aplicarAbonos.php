@@ -44,6 +44,7 @@
                        $tipoServicio = strtoupper($_POST['servicio']);
                        $idFactura1 = $_POST['idFacturax1'];
                        $nRecibox1 = $_POST['nFacturax1'];
+                       $nFacturax1 = $_POST['nFacturax1'];
                        $impSeg = $_POST['impSeg'];
                        $reciboCobx1 = $_POST['nRecibox1']; //Recibo de cobro
 
@@ -77,17 +78,17 @@
 
                        //$this->dbConnect->beginTransaction(); $this->dbConnect->exec('LOCK TABLES tbl_cargos, tbl_abonos, clientes');
                        $this->dbConnect->beginTransaction();
-                       $qry = "UPDATE tbl_cargos SET tipoFactura=:tipoComprobante, numeroRecibo=:numeroRecibo, codigoCliente=:codigoCliente, cuotaCable=:cuotaCable, saldoCable=:saldoCable, fechaCobro=:fechaCobro, fechaVencimiento=:fechaVencimiento, fechaAbonado=:fechaAbonado, fechaFactura=:fechaFactura, mesCargo=:mesCargo, tipoServicio=:tipoServicio, estado=:estado, cargoImpuesto=:cargoImpuesto, totalImpuesto=:totalImpuesto WHERE idFactura=:idFactura";
+                       $qry = "UPDATE tbl_cargos SET tipoFactura=:tipoComprobante, /*numeroRecibo=:numeroRecibo,*/ codigoCliente=:codigoCliente, cuotaCable=:cuotaCable, saldoCable=:saldoCable, fechaCobro=:fechaCobro, fechaVencimiento=:fechaVencimiento, fechaAbonado=:fechaAbonado, /*fechaFactura=:fechaFactura,*/ mesCargo=:mesCargo, tipoServicio=:tipoServicio, estado=:estado, cargoImpuesto=:cargoImpuesto, totalImpuesto=:totalImpuesto WHERE idFactura=:idFactura";
 
                        $stmt = $this->dbConnect->prepare($qry);
                        $stmt->execute(
                            array(':tipoComprobante' => $tipoComprobante,
-                                 ':numeroRecibo' => $reciboCobx1,
+                                 //':numeroRecibo' => $reciboCobx1,
                                  ':codigoCliente' => $codigoCliente,
                                  ':cuotaCable' => $cuotaCable,
                                  ':saldoCable' => $saldoCable,
                                  ':fechaCobro' => $fechaCobrox1,
-                                 ':fechaFactura' => $fechaFacturax1,
+                                 //':fechaFactura' => $fechaFacturax1,
                                  ':fechaVencimiento' => $fechaVencimientox1,
                                  ':fechaAbonado' => $fechaAbonado,
                                  ':mesCargo' => $mesCargo1,
@@ -100,12 +101,13 @@
                                 ));
 
                         //ACA HACER UN INSERT DEL ABONO EN LA TABLA ABONOS
-                        $qry2 = "INSERT INTO tbl_abonos(tipoFactura, numeroRecibo, codigoCliente, cuotaCable, saldoCable, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, fechaAbonado, estado, cargoImpuesto, totalImpuesto, idFactura)VALUES(:tipoComprobante, :numeroRecibo, :codigoCliente, :cuotaCable, :saldoCable, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :fechaAbonado, :estado, :cargoImpuesto, :totalImpuesto, :idFactura)";
+                        $qry2 = "INSERT INTO tbl_abonos(tipoFactura, numeroRecibo, numeroFactura, codigoCliente, cuotaCable, saldoCable, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, fechaAbonado, estado, cargoImpuesto, totalImpuesto, idFactura)VALUES(:tipoComprobante, :numeroRecibo, :numeroFactura, :codigoCliente, :cuotaCable, :saldoCable, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :fechaAbonado, :estado, :cargoImpuesto, :totalImpuesto, :idFactura)";
 
                         $stmt2 = $this->dbConnect->prepare($qry2);
                         $stmt2->execute(
                             array(':tipoComprobante' => $tipoComprobante,
                                   ':numeroRecibo' => $reciboCobx1,
+                                  ':numeroFactura' => $nFacturax1,
                                   ':codigoCliente' => $codigoCliente,
                                   ':cuotaCable' => $cuotaCable,
                                   ':saldoCable' => $saldoCable,
@@ -141,6 +143,7 @@
                        $tipoServicio = strtoupper($_POST['servicio']);
                        $idFactura1 = $_POST['idFacturax1'];
                        $nRecibox1 = $_POST['nFacturax1'];
+                       $nFacturax1 = $_POST['nFacturax1'];
                        $reciboCobx1 = $_POST['nRecibox1']; //Recibo de cobro
                        //CALCULANDO FECHAS
                        if (isset($_POST['fechaCobrox1'])) {
@@ -172,17 +175,17 @@
 
                        //$this->dbConnect->beginTransaction(); $this->dbConnect->exec('LOCK TABLES tbl_cargos, tbl_abonos, clientes');
                        $this->dbConnect->beginTransaction();
-                       $qry = "UPDATE tbl_cargos SET tipoFactura=:tipoComprobante, numeroRecibo=:numeroRecibo, codigoCliente=:codigoCliente, cuotaInter=:cuotaInter, saldoInter=:saldoInter, fechaCobro=:fechaCobro, fechaVencimiento=:fechaVencimiento, fechaAbonado=:fechaAbonado, fechaFactura=:fechaFactura, mesCargo=:mesCargo, tipoServicio=:tipoServicio, estado=:estado, cargoImpuesto=:cargoImpuesto, totalImpuesto=:totalImpuesto WHERE idFactura=:idFactura";
+                       $qry = "UPDATE tbl_cargos SET tipoFactura=:tipoComprobante, /*numeroRecibo=:numeroRecibo,*/ codigoCliente=:codigoCliente, cuotaInter=:cuotaInter, saldoInter=:saldoInter, fechaCobro=:fechaCobro, fechaVencimiento=:fechaVencimiento, fechaAbonado=:fechaAbonado, /*fechaFactura=:fechaFactura,*/ mesCargo=:mesCargo, tipoServicio=:tipoServicio, estado=:estado, cargoImpuesto=:cargoImpuesto, totalImpuesto=:totalImpuesto WHERE idFactura=:idFactura";
 
                        $stmt = $this->dbConnect->prepare($qry);
                        $stmt->execute(
                            array(':tipoComprobante' => $tipoComprobante,
-                                 ':numeroRecibo' => $reciboCobx1,
+                                 //':numeroRecibo' => $reciboCobx1,
                                  ':codigoCliente' => $codigoCliente,
                                  ':cuotaInter' => $cuotaInter,
                                  ':saldoInter' => $saldoInter,
                                  ':fechaCobro' => $fechaCobrox1,
-                                 ':fechaFactura' => $fechaFacturax1,
+                                 //':fechaFactura' => $fechaFacturax1,
                                  ':fechaVencimiento' => $fechaVencimientox1,
                                  ':fechaAbonado' => $fechaAbonado,
                                  ':mesCargo' => $mesCargo1,
@@ -194,12 +197,13 @@
                                 ));
 
                         //ACA HACER UN INSERT DEL ABONO EN LA TABLA ABONOS
-                        $qry2 = "INSERT INTO tbl_abonos(tipoFactura, numeroRecibo, codigoCliente, cuotaInternet, saldoInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, fechaAbonado, estado, cargoImpuesto, totalImpuesto, idFactura)VALUES(:tipoComprobante, :numeroRecibo, :codigoCliente, :cuotaInternet, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :fechaAbonado, :estado, :cargoImpuesto, :totalImpuesto, :idFactura)";
+                        $qry2 = "INSERT INTO tbl_abonos(tipoFactura, numeroRecibo, numeroFactura, codigoCliente, cuotaInternet, saldoInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, fechaAbonado, estado, cargoImpuesto, totalImpuesto, idFactura)VALUES(:tipoComprobante, :numeroRecibo, :numeroFactura, :codigoCliente, :cuotaInternet, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :fechaAbonado, :estado, :cargoImpuesto, :totalImpuesto, :idFactura)";
 
                         $stmt2 = $this->dbConnect->prepare($qry2);
                         $stmt2->execute(
                             array(':tipoComprobante' => $tipoComprobante,
                                   ':numeroRecibo' => $reciboCobx1,
+                                  ':numeroFactura' => $nFacturax1,
                                   ':codigoCliente' => $codigoCliente,
                                   ':cuotaInternet' => $cuotaInter,
                                   ':saldoInternet' => $saldoInter,
@@ -240,6 +244,7 @@
                        $tipoServicio = strtoupper($_POST['servicio']);
                        $idFactura1 = $_POST['idFacturax1'];
                        $nRecibox1 = $_POST['nFacturax1'];
+                       $nFacturax1 = $_POST['nFacturax1'];
                        $reciboCobx1 = $_POST['nRecibox1']; //Recibo de cobro
                        //CALCULANDO FECHAS
                        if (isset($_POST['fechaCobrox1'])) {
@@ -272,17 +277,17 @@
 
                        //$this->dbConnect->beginTransaction(); $this->dbConnect->exec('LOCK TABLES tbl_cargos, tbl_abonos, clientes');
                        $this->dbConnect->beginTransaction();
-                       $qry = "UPDATE tbl_cargos SET tipoFactura=:tipoComprobante, numeroRecibo=:numeroRecibo, codigoCliente=:codigoCliente, cuotaCable=:cuotaCable, saldoCable=:saldoCable, fechaCobro=:fechaCobro, fechaVencimiento=:fechaVencimiento, fechaAbonado=:fechaAbonado, fechaFactura=:fechaFactura, mesCargo=:mesCargo, tipoServicio=:tipoServicio, estado=:estado, cargoImpuesto=:cargoImpuesto, totalImpuesto=:totalImpuesto WHERE idFactura=:idFactura";
+                       $qry = "UPDATE tbl_cargos SET tipoFactura=:tipoComprobante, /*numeroRecibo=:numeroRecibo,*/ codigoCliente=:codigoCliente, cuotaCable=:cuotaCable, saldoCable=:saldoCable, fechaCobro=:fechaCobro, fechaVencimiento=:fechaVencimiento, fechaAbonado=:fechaAbonado, /*fechaFactura=:fechaFactura,*/ mesCargo=:mesCargo, tipoServicio=:tipoServicio, estado=:estado, cargoImpuesto=:cargoImpuesto, totalImpuesto=:totalImpuesto WHERE idFactura=:idFactura";
 
                        $stmt = $this->dbConnect->prepare($qry);
                        $stmt->execute(
                            array(':tipoComprobante' => $tipoComprobante,
-                                 ':numeroRecibo' => $reciboCobx1,
+                                 //':numeroRecibo' => $reciboCobx1,
                                  ':codigoCliente' => $codigoCliente,
                                  ':cuotaCable' => $cuotaCable,
                                  ':saldoCable' => $saldoCable,
                                  ':fechaCobro' => $fechaCobrox1,
-                                 ':fechaFactura' => $fechaFacturax1,
+                                 //':fechaFactura' => $fechaFacturax1,
                                  ':fechaVencimiento' => $fechaVencimientox1,
                                  ':fechaAbonado' => $fechaAbonado,
                                  ':mesCargo' => $mesCargo1,
@@ -294,12 +299,13 @@
                                 ));
 
                         //ACA HACER UN INSERT DEL ABONO EN LA TABLA ABONOS
-                        $qry2 = "INSERT INTO tbl_abonos(tipoFactura, numeroRecibo, codigoCliente, cuotaCable, saldoCable, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, fechaAbonado, estado, cargoImpuesto, totalImpuesto, idFactura)VALUES(:tipoComprobante, :numeroRecibo, :codigoCliente, :cuotaCable, :saldoCable, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :fechaAbonado, :estado, :cargoImpuesto, :totalImpuesto, :idFactura)";
+                        $qry2 = "INSERT INTO tbl_abonos(tipoFactura, numeroRecibo, numeroFactura, codigoCliente, cuotaCable, saldoCable, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, fechaAbonado, estado, cargoImpuesto, totalImpuesto, idFactura)VALUES(:tipoComprobante, :numeroRecibo, :numeroFactura, :codigoCliente, :cuotaCable, :saldoCable, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :fechaAbonado, :estado, :cargoImpuesto, :totalImpuesto, :idFactura)";
 
                         $stmt2 = $this->dbConnect->prepare($qry2);
                         $stmt2->execute(
                             array(':tipoComprobante' => $tipoComprobante,
                                   ':numeroRecibo' => $reciboCobx1,
+                                  ':numeroFactura' => $nFacturax1,
                                   ':codigoCliente' => $codigoCliente,
                                   ':cuotaCable' => $cuotaCable,
                                   ':saldoCable' => $saldoCable,
@@ -330,6 +336,7 @@
                        $tipoServicio = strtoupper($_POST['servicio']);
                        $idFactura2 = $_POST['idFacturax2'];
                        $nRecibox2 = $_POST['nFacturax2'];
+                       $nFacturax2 = $_POST['nFacturax2'];
                        $reciboCobx2 = $_POST['nRecibox2']; //Recibo de cobro
                        //CALCULANDO FECHAS
                        if (isset($_POST['fechaCobrox2'])) {
@@ -357,17 +364,17 @@
                        $saldoCable = $_POST['pendiente']; // Quizá update
                        $estado = "CANCELADA";
 
-                       $qry = "UPDATE tbl_cargos SET tipoFactura=:tipoComprobante, numeroRecibo=:numeroRecibo, codigoCliente=:codigoCliente, cuotaCable=:cuotaCable, saldoCable=:saldoCable, fechaCobro=:fechaCobro, fechaVencimiento=:fechaVencimiento, fechaAbonado=:fechaAbonado, fechaFactura=:fechaFactura, mesCargo=:mesCargo, tipoServicio=:tipoServicio, estado=:estado, cargoImpuesto=:cargoImpuesto, totalImpuesto=:totalImpuesto WHERE idFactura=:idFactura";
+                       $qry = "UPDATE tbl_cargos SET tipoFactura=:tipoComprobante, /*numeroRecibo=:numeroRecibo,*/ codigoCliente=:codigoCliente, cuotaCable=:cuotaCable, saldoCable=:saldoCable, fechaCobro=:fechaCobro, fechaVencimiento=:fechaVencimiento, fechaAbonado=:fechaAbonado, /*fechaFactura=:fechaFactura,*/ mesCargo=:mesCargo, tipoServicio=:tipoServicio, estado=:estado, cargoImpuesto=:cargoImpuesto, totalImpuesto=:totalImpuesto WHERE idFactura=:idFactura";
 
                        $stmt = $this->dbConnect->prepare($qry);
                        $stmt->execute(
                            array(':tipoComprobante' => $tipoComprobante,
-                                 ':numeroRecibo' => $reciboCobx2,
+                                 //':numeroRecibo' => $reciboCobx2,
                                  ':codigoCliente' => $codigoCliente,
                                  ':cuotaCable' => $cuotaCable,
                                  ':saldoCable' => $saldoCable,
                                  ':fechaCobro' => $fechaCobrox2,
-                                 ':fechaFactura' => $fechaFacturax2,
+                                 //':fechaFactura' => $fechaFacturax2,
                                  ':fechaVencimiento' => $fechaVencimientox2,
                                  ':fechaAbonado' => $fechaAbonado,
                                  ':mesCargo' => $mesCargo2,
@@ -379,12 +386,13 @@
                                 ));
 
                         //ACA HACER UN INSERT DEL ABONO EN LA TABLA ABONOS
-                        $qry2 = "INSERT INTO tbl_abonos(tipoFactura, numeroRecibo, codigoCliente, cuotaCable, saldoCable, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, fechaAbonado, estado, cargoImpuesto, totalImpuesto, idFactura)VALUES(:tipoComprobante, :numeroRecibo, :codigoCliente, :cuotaCable, :saldoCable, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :fechaAbonado, :estado, :cargoImpuesto, :totalImpuesto, :idFactura)";
+                        $qry2 = "INSERT INTO tbl_abonos(tipoFactura, numeroRecibo, numeroFactura, codigoCliente, cuotaCable, saldoCable, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, fechaAbonado, estado, cargoImpuesto, totalImpuesto, idFactura)VALUES(:tipoComprobante, :numeroRecibo, :numeroFactura, :codigoCliente, :cuotaCable, :saldoCable, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :fechaAbonado, :estado, :cargoImpuesto, :totalImpuesto, :idFactura)";
 
                         $stmt2 = $this->dbConnect->prepare($qry2);
                         $stmt2->execute(
                             array(':tipoComprobante' => $tipoComprobante,
                                   ':numeroRecibo' => $reciboCobx2,
+                                  ':numeroFactura' => $nFacturax2,
                                   ':codigoCliente' => $codigoCliente,
                                   ':cuotaCable' => $cuotaCable,
                                   ':saldoCable' => $saldoCable,
@@ -422,6 +430,8 @@
                        $tipoServicio = strtoupper($_POST['servicio']);
                        $idFactura1 = $_POST['idFacturax1'];
                        $nRecibox1 = $_POST['nFacturax1'];
+                       $nFacturax1 = $_POST['nFacturax1'];
+                       $nFacturax1 = $_POST['nFacturax1'];
                        $reciboCobx1 = $_POST['nRecibox1']; //Recibo de cobro
                        //CALCULANDO FECHAS
                        if (isset($_POST['fechaCobrox1'])) {
@@ -456,17 +466,17 @@
 
                        //$this->dbConnect->beginTransaction(); $this->dbConnect->exec('LOCK TABLES tbl_cargos, tbl_abonos, clientes');
                        $this->dbConnect->beginTransaction();
-                       $qry = "UPDATE tbl_cargos SET tipoFactura=:tipoComprobante, numeroRecibo=:numeroRecibo, codigoCliente=:codigoCliente, cuotaCable=:cuotaCable, saldoCable=:saldoCable, fechaCobro=:fechaCobro, fechaVencimiento=:fechaVencimiento, fechaAbonado=:fechaAbonado, fechaFactura=:fechaFactura, mesCargo=:mesCargo, tipoServicio=:tipoServicio, estado=:estado, cargoImpuesto=:cargoImpuesto, totalImpuesto=:totalImpuesto WHERE idFactura=:idFactura";
+                       $qry = "UPDATE tbl_cargos SET tipoFactura=:tipoComprobante, /*numeroRecibo=:numeroRecibo,*/ codigoCliente=:codigoCliente, cuotaCable=:cuotaCable, saldoCable=:saldoCable, fechaCobro=:fechaCobro, fechaVencimiento=:fechaVencimiento, fechaAbonado=:fechaAbonado, /*fechaFactura=:fechaFactura,*/ mesCargo=:mesCargo, tipoServicio=:tipoServicio, estado=:estado, cargoImpuesto=:cargoImpuesto, totalImpuesto=:totalImpuesto WHERE idFactura=:idFactura";
 
                        $stmt = $this->dbConnect->prepare($qry);
                        $stmt->execute(
                            array(':tipoComprobante' => $tipoComprobante,
-                                 ':numeroRecibo' => $reciboCobx1,
+                                 //':numeroRecibo' => $reciboCobx1,
                                  ':codigoCliente' => $codigoCliente,
                                  ':cuotaCable' => $cuotaCable,
                                  ':saldoCable' => $saldoCable,
                                  ':fechaCobro' => $fechaCobrox1,
-                                 ':fechaFactura' => $fechaFacturax1,
+                                 //':fechaFactura' => $fechaFacturax1,
                                  ':fechaVencimiento' => $fechaVencimientox1,
                                  ':fechaAbonado' => $fechaAbonado,
                                  ':mesCargo' => $mesCargo1,
@@ -478,12 +488,13 @@
                                 ));
 
                         //ACA HACER UN INSERT DEL ABONO EN LA TABLA ABONOS
-                        $qry2 = "INSERT INTO tbl_abonos(tipoFactura, numeroRecibo, codigoCliente, cuotaInternet, saldoInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, fechaAbonado, estado, cargoImpuesto, totalImpuesto, idFactura)VALUES(:tipoComprobante, :numeroRecibo, :codigoCliente, :cuotaInternet, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, fechaAbonado, :estado, :cargoImpuesto, :totalImpuesto, :idFactura)";
+                        $qry2 = "INSERT INTO tbl_abonos(tipoFactura, numeroRecibo, numeroFactura, codigoCliente, cuotaInternet, saldoInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, fechaAbonado, estado, cargoImpuesto, totalImpuesto, idFactura)VALUES(:tipoComprobante, :numeroRecibo, :numeroFactura, :codigoCliente, :cuotaInternet, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, fechaAbonado, :estado, :cargoImpuesto, :totalImpuesto, :idFactura)";
 
                         $stmt2 = $this->dbConnect->prepare($qry2);
                         $stmt2->execute(
                             array(':tipoComprobante' => $tipoComprobante,
                                   ':numeroRecibo' => $reciboCobx1,
+                                  ':numeroFactura' => $nFacturax1,
                                   ':codigoCliente' => $codigoCliente,
                                   ':cuotaInternet' => $cuotaInter,
                                   ':saldoInternet' => $saldoInter,
@@ -514,6 +525,7 @@
                        $tipoServicio = strtoupper($_POST['servicio']);
                        $idFactura2 = $_POST['idFacturax2'];
                        $nRecibox2 = $_POST['nFacturax2'];
+                       $nFacturax2 = $_POST['nFacturax2'];
                        $reciboCobx2 = $_POST['nRecibox2']; //Recibo de cobro
                        //CALCULANDO FECHAS
                        if (isset($_POST['fechaCobrox2'])) {
@@ -541,17 +553,17 @@
                        $saldoCable = $_POST['pendiente']; // Quizá update
                        $estado = "CANCELADA";
 
-                       $qry = "UPDATE tbl_cargos SET tipoFactura=:tipoComprobante, numeroRecibo=:numeroRecibo, codigoCliente=:codigoCliente, cuotaCable=:cuotaCable, saldoCable=:saldoCable, fechaCobro=:fechaCobro, fechaVencimiento=:fechaVencimiento, fechaAbonado=:fechaAbonado, fechaFactura=:fechaFactura, mesCargo=:mesCargo, tipoServicio=:tipoServicio, estado=:estado, cargoImpuesto=:cargoImpuesto, totalImpuesto=:totalImpuesto WHERE idFactura=:idFactura";
+                       $qry = "UPDATE tbl_cargos SET tipoFactura=:tipoComprobante, /*numeroRecibo=:numeroRecibo,*/ codigoCliente=:codigoCliente, cuotaCable=:cuotaCable, saldoCable=:saldoCable, fechaCobro=:fechaCobro, fechaVencimiento=:fechaVencimiento, fechaAbonado=:fechaAbonado, /*fechaFactura=:fechaFactura,*/ mesCargo=:mesCargo, tipoServicio=:tipoServicio, estado=:estado, cargoImpuesto=:cargoImpuesto, totalImpuesto=:totalImpuesto WHERE idFactura=:idFactura";
 
                        $stmt = $this->dbConnect->prepare($qry);
                        $stmt->execute(
                            array(':tipoComprobante' => $tipoComprobante,
-                                 ':numeroRecibo' => $reciboCobx2,
+                                 //':numeroRecibo' => $reciboCobx2,
                                  ':codigoCliente' => $codigoCliente,
                                  ':cuotaCable' => $cuotaCable,
                                  ':saldoCable' => $saldoCable,
                                  ':fechaCobro' => $fechaCobrox2,
-                                 ':fechaFactura' => $fechaFacturax2,
+                                 //':fechaFactura' => $fechaFacturax2,
                                  ':fechaVencimiento' => $fechaVencimientox2,
                                  ':fechaAbonado' => $fechaAbonado,
                                  ':mesCargo' => $mesCargo2,
@@ -563,12 +575,13 @@
                                 ));
 
                         //ACA HACER UN INSERT DEL ABONO EN LA TABLA ABONOS
-                        $qry2 = "INSERT INTO tbl_abonos(tipoFactura, numeroRecibo, codigoCliente, cuotaInternet, saldoInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, fechaAbonado, estado, cargoImpuesto, totalImpuesto, idFactura)VALUES(:tipoComprobante, :numeroRecibo, :codigoCliente, :cuotaInternet, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :fechaAbonado, :estado, :cargoImpuesto, :totalImpuesto, :idFactura)";
+                        $qry2 = "INSERT INTO tbl_abonos(tipoFactura, numeroRecibo, numeroFactura, codigoCliente, cuotaInternet, saldoInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, fechaAbonado, estado, cargoImpuesto, totalImpuesto, idFactura)VALUES(:tipoComprobante, :numeroRecibo, :numeroFactura, :codigoCliente, :cuotaInternet, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :fechaAbonado, :estado, :cargoImpuesto, :totalImpuesto, :idFactura)";
 
                         $stmt2 = $this->dbConnect->prepare($qry2);
                         $stmt2->execute(
                             array(':tipoComprobante' => $tipoComprobante,
                                   ':numeroRecibo' => $reciboCobx2,
+                                  ':numeroFactura' => $nFacturax2,
                                   ':codigoCliente' => $codigoCliente,
                                   ':cuotaInternet' => $cuotaInter,
                                   ':saldoInternet' => $saldoInter,
@@ -615,7 +628,7 @@
                        $cesc = $_POST['porImp'];
                        $cuotaCable = $_POST['valorCuota'];
                        $impSeg = $_POST['impSeg'];
-                       $nRecibo = "***";
+                       $nRecibo = "***"; // Número de recibo por defualt cuando se paga anticipado
 
                        //$saldoCable = $_POST['pendiente']; // Quizá update
                        $estado = "CANCELADA";

@@ -579,7 +579,7 @@
                               <!--<div class="form-row">
                                   <div class="col-md-3">
                                       <label for="diaCobro">Día de cobro</label>
-                                      <input class="form-control input-sm" type="text" name="diaCobro" value="<?php echo $diaCobro; ?>" required>
+                                      <input class="form-control input-sm" type="text" name="diaCobro" value="" required>
                                   </div>
                                   <div class="col-md-9">
                                       <label for="reciboCob">Número/s de recibo</label>
