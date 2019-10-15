@@ -542,13 +542,8 @@
                                       <label for="claseOrden">Fecha del abono</label>
                                       <input class="form-control input-sm input-sm" name="fechaAbono" type="text" value= "<?php date_default_timezone_set('America/El_Salvador'); echo date('d/m/Y'); ?>" >
                                   </div>
-                                  <!--<div class="col-md-2">
-                                      <label for="nRecibo">N° de recibo</label>
-                                      <input class="form-control input-sm" type="text" name="nRecibo" value="<?php echo $nRecibo; ?>">
-                                  </div>-->
                                   <div class="col-md-5">
-
-                                      <label for="numeroOrden">Zona</label>
+                                      <label for="zona">Zona</label>
                                       <select class="form-control input-sm" name="zona" required>
                                           <?php
                                           foreach ($arrCobradores as $key) {
@@ -579,6 +574,16 @@
                                           }
                                            ?>
                                       </select>
+                                  </div>
+                              </div>
+                              <div class="form-row">
+                                  <div class="col-md-3">
+                                      <label for="diaCobro">Día de cobro</label>
+                                      <input class="form-control input-sm" type="text" name="diaCobro" value="<?php echo $diaCobro; ?>">
+                                  </div>
+                                  <div class="col-md-9">
+                                      <label for="reciboCob">Número/s de recibo</label>
+                                      <input class="form-control input-sm" type="text" name="reciboCob">
                                   </div>
                               </div>
                               <div class="form-row">
