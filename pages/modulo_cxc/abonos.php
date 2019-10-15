@@ -576,16 +576,16 @@
                                       </select>
                                   </div>
                               </div>
-                              <div class="form-row">
+                              <!--<div class="form-row">
                                   <div class="col-md-3">
                                       <label for="diaCobro">Día de cobro</label>
-                                      <input class="form-control input-sm" type="text" name="diaCobro" value="<?php echo $diaCobro; ?>">
+                                      <input class="form-control input-sm" type="text" name="diaCobro" value="<?php echo $diaCobro; ?>" required>
                                   </div>
                                   <div class="col-md-9">
                                       <label for="reciboCob">Número/s de recibo</label>
-                                      <input class="form-control input-sm" type="text" name="reciboCob">
+                                      <input class="form-control input-sm" type="text" name="reciboCob" required>
                                   </div>
-                              </div>
+                              </div>-->
                               <div class="form-row">
                                   <div class="col-md-2">
                                     <!-- readonly -->
@@ -701,6 +701,7 @@
                                               <th class="bg-success">Abonar?</th>
                                               <th class="bg-success"></th>
                                               <th class="bg-success"></th>
+                                              <th class="bg-success">N° factura</th>
                                               <th class="bg-success">N° recibo</th>
                                               <th class="bg-success">Mes de servicio</th>
                                               <th class="bg-success">Cuota</th>
@@ -742,7 +743,8 @@
                                               echo "<input type='hidden' name='idFacturax{$counter}' value='".$key["idFactura"] . "' readonly>"."</td><td>";
                                               echo "<input type='hidden' name='fechaCobrox{$counter}' value='".$key["fechaCobro"] . "' readonly>"."</td><td>";
                                               echo "<input type='hidden' name='fechaFacturax{$counter}' value='".$key["fechaFactura"] . "' readonly>"."</td><td>";
-                                              echo "<input class='form-control input-sm' type='text' name='nFacturax{$counter}' value='".$key["numeroRecibo"] . "' readonly>"."</td><td>";
+                                              echo "<input class='form-control input-sm' type='text' name='nFacturax{$counter}' value='".$key["numeroFactura"] . "' readonly>"."</td><td>";
+                                              echo "<input class='form-control input-sm' type='text' name='nRecibox{$counter}' value='".$key["numeroRecibo"] . "' pattern='.{4,}' tittle='Debe ingresar un número de recibo válido'>"."</td><td>";
                                               echo "<input class='form-control input-sm' type='text' id='mesCargo{$counter}' name='mesCargo{$counter}' value='".$key["mesCargo"] . "' readonly>"."</td><td>";
                                               if ($key["tipoServicio"] == 'C') {
                                                   echo "<input class='form-control input-sm' type='text' id='mesx{$counter}value' name='cuotaCable{$counter}' value='".$key["cuotaCable"] . "' readonly>"."</td><td>";

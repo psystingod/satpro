@@ -45,7 +45,7 @@
                        $idFactura1 = $_POST['idFacturax1'];
                        $nRecibox1 = $_POST['nFacturax1'];
                        $impSeg = $_POST['impSeg'];
-                       $reciboCob = $_POST['reciboCob']; //Recibo de cobro
+                       $reciboCobx1 = $_POST['nRecibox1']; //Recibo de cobro
 
                        //CALCULANDO FECHAS
                        if (isset($_POST['fechaCobrox1'])) {
@@ -82,7 +82,7 @@
                        $stmt = $this->dbConnect->prepare($qry);
                        $stmt->execute(
                            array(':tipoComprobante' => $tipoComprobante,
-                                 ':numeroRecibo' => $reciboCob,
+                                 ':numeroRecibo' => $reciboCobx1,
                                  ':codigoCliente' => $codigoCliente,
                                  ':cuotaCable' => $cuotaCable,
                                  ':saldoCable' => $saldoCable,
@@ -105,7 +105,7 @@
                         $stmt2 = $this->dbConnect->prepare($qry2);
                         $stmt2->execute(
                             array(':tipoComprobante' => $tipoComprobante,
-                                  ':numeroRecibo' => $reciboCob,
+                                  ':numeroRecibo' => $reciboCobx1,
                                   ':codigoCliente' => $codigoCliente,
                                   ':cuotaCable' => $cuotaCable,
                                   ':saldoCable' => $saldoCable,
@@ -141,7 +141,7 @@
                        $tipoServicio = strtoupper($_POST['servicio']);
                        $idFactura1 = $_POST['idFacturax1'];
                        $nRecibox1 = $_POST['nFacturax1'];
-                       $reciboCob = $_POST['reciboCob']; //Recibo de cobro
+                       $reciboCobx1 = $_POST['nRecibox1']; //Recibo de cobro
                        //CALCULANDO FECHAS
                        if (isset($_POST['fechaCobrox1'])) {
                            $fechaCobrox1 = date_format(date_create($_POST['fechaCobrox1']), 'Y-m-d');
@@ -177,7 +177,7 @@
                        $stmt = $this->dbConnect->prepare($qry);
                        $stmt->execute(
                            array(':tipoComprobante' => $tipoComprobante,
-                                 ':numeroRecibo' => $reciboCob,
+                                 ':numeroRecibo' => $reciboCobx1,
                                  ':codigoCliente' => $codigoCliente,
                                  ':cuotaInter' => $cuotaInter,
                                  ':saldoInter' => $saldoInter,
@@ -199,7 +199,7 @@
                         $stmt2 = $this->dbConnect->prepare($qry2);
                         $stmt2->execute(
                             array(':tipoComprobante' => $tipoComprobante,
-                                  ':numeroRecibo' => $reciboCob,
+                                  ':numeroRecibo' => $reciboCobx1,
                                   ':codigoCliente' => $codigoCliente,
                                   ':cuotaInternet' => $cuotaInter,
                                   ':saldoInternet' => $saldoInter,
@@ -240,8 +240,7 @@
                        $tipoServicio = strtoupper($_POST['servicio']);
                        $idFactura1 = $_POST['idFacturax1'];
                        $nRecibox1 = $_POST['nFacturax1'];
-                       $string = $_POST['reciboCob'];
-                       $reciboCob = preg_split ("/\-/", $string); //Recibo de cobro con 2 valores separados por -
+                       $reciboCobx1 = $_POST['nRecibox1']; //Recibo de cobro
                        //CALCULANDO FECHAS
                        if (isset($_POST['fechaCobrox1'])) {
                            $fechaCobrox1 = date_format(date_create($_POST['fechaCobrox1']), 'Y-m-d');
@@ -278,7 +277,7 @@
                        $stmt = $this->dbConnect->prepare($qry);
                        $stmt->execute(
                            array(':tipoComprobante' => $tipoComprobante,
-                                 ':numeroRecibo' => $reciboCob[0],
+                                 ':numeroRecibo' => $reciboCobx1,
                                  ':codigoCliente' => $codigoCliente,
                                  ':cuotaCable' => $cuotaCable,
                                  ':saldoCable' => $saldoCable,
@@ -300,7 +299,7 @@
                         $stmt2 = $this->dbConnect->prepare($qry2);
                         $stmt2->execute(
                             array(':tipoComprobante' => $tipoComprobante,
-                                  ':numeroRecibo' => $reciboCob[0],
+                                  ':numeroRecibo' => $reciboCobx1,
                                   ':codigoCliente' => $codigoCliente,
                                   ':cuotaCable' => $cuotaCable,
                                   ':saldoCable' => $saldoCable,
@@ -331,6 +330,7 @@
                        $tipoServicio = strtoupper($_POST['servicio']);
                        $idFactura2 = $_POST['idFacturax2'];
                        $nRecibox2 = $_POST['nFacturax2'];
+                       $reciboCobx2 = $_POST['nRecibox2']; //Recibo de cobro
                        //CALCULANDO FECHAS
                        if (isset($_POST['fechaCobrox2'])) {
                            $fechaCobrox2 = date_format(date_create($_POST['fechaCobrox2']), 'Y-m-d');
@@ -362,7 +362,7 @@
                        $stmt = $this->dbConnect->prepare($qry);
                        $stmt->execute(
                            array(':tipoComprobante' => $tipoComprobante,
-                                 ':numeroRecibo' => $reciboCob[1],
+                                 ':numeroRecibo' => $reciboCobx2,
                                  ':codigoCliente' => $codigoCliente,
                                  ':cuotaCable' => $cuotaCable,
                                  ':saldoCable' => $saldoCable,
@@ -384,7 +384,7 @@
                         $stmt2 = $this->dbConnect->prepare($qry2);
                         $stmt2->execute(
                             array(':tipoComprobante' => $tipoComprobante,
-                                  ':numeroRecibo' => $reciboCob[1],
+                                  ':numeroRecibo' => $reciboCobx2,
                                   ':codigoCliente' => $codigoCliente,
                                   ':cuotaCable' => $cuotaCable,
                                   ':saldoCable' => $saldoCable,
@@ -422,8 +422,7 @@
                        $tipoServicio = strtoupper($_POST['servicio']);
                        $idFactura1 = $_POST['idFacturax1'];
                        $nRecibox1 = $_POST['nFacturax1'];
-                       $string = $_POST['reciboCob'];
-                       $reciboCob = preg_split ("/\-/", $string); //Recibo de cobro con 2 valores separados por -
+                       $reciboCobx1 = $_POST['nRecibox1']; //Recibo de cobro
                        //CALCULANDO FECHAS
                        if (isset($_POST['fechaCobrox1'])) {
                            $fechaCobrox1 = date_format(date_create($_POST['fechaCobrox1']), 'Y-m-d');
@@ -462,7 +461,7 @@
                        $stmt = $this->dbConnect->prepare($qry);
                        $stmt->execute(
                            array(':tipoComprobante' => $tipoComprobante,
-                                 ':numeroRecibo' => $reciboCob[0],
+                                 ':numeroRecibo' => $reciboCobx1,
                                  ':codigoCliente' => $codigoCliente,
                                  ':cuotaCable' => $cuotaCable,
                                  ':saldoCable' => $saldoCable,
@@ -484,7 +483,7 @@
                         $stmt2 = $this->dbConnect->prepare($qry2);
                         $stmt2->execute(
                             array(':tipoComprobante' => $tipoComprobante,
-                                  ':numeroRecibo' => $reciboCob[0],
+                                  ':numeroRecibo' => $reciboCobx1,
                                   ':codigoCliente' => $codigoCliente,
                                   ':cuotaInternet' => $cuotaInter,
                                   ':saldoInternet' => $saldoInter,
@@ -515,6 +514,7 @@
                        $tipoServicio = strtoupper($_POST['servicio']);
                        $idFactura2 = $_POST['idFacturax2'];
                        $nRecibox2 = $_POST['nFacturax2'];
+                       $reciboCobx2 = $_POST['nRecibox2']; //Recibo de cobro
                        //CALCULANDO FECHAS
                        if (isset($_POST['fechaCobrox2'])) {
                            $fechaCobrox2 = date_format(date_create($_POST['fechaCobrox2']), 'Y-m-d');
@@ -546,7 +546,7 @@
                        $stmt = $this->dbConnect->prepare($qry);
                        $stmt->execute(
                            array(':tipoComprobante' => $tipoComprobante,
-                                 ':numeroRecibo' => $reciboCob[1],
+                                 ':numeroRecibo' => $reciboCobx2,
                                  ':codigoCliente' => $codigoCliente,
                                  ':cuotaCable' => $cuotaCable,
                                  ':saldoCable' => $saldoCable,
@@ -568,7 +568,7 @@
                         $stmt2 = $this->dbConnect->prepare($qry2);
                         $stmt2->execute(
                             array(':tipoComprobante' => $tipoComprobante,
-                                  ':numeroRecibo' => $reciboCob[1],
+                                  ':numeroRecibo' => $reciboCobx2,
                                   ':codigoCliente' => $codigoCliente,
                                   ':cuotaInternet' => $cuotaInter,
                                   ':saldoInternet' => $saldoInter,
