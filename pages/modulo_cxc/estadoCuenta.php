@@ -272,7 +272,7 @@
                                                       echo $cargo['tipoServicio']."</td><td class='text-danger danger'>";
                                                       echo $cargo['numeroFactura']."</td><td class='text-danger danger'>";
                                                       echo "<span class='label label-primary'>".$cargo['mesCargo']."</span>"."</td><td class='text-danger danger'>";
-                                                      echo "<span class='label label-success'>".$cargo['fechaAbonado']."</span>"."</td><td class='text-danger danger'>";
+                                                      echo "<span class='label label-success'>".$cargo['fechaFactura']."</span>"."</td><td class='text-danger danger'>";
                                                       echo "<span class='label label-danger'>".$cargo['fechaVencimiento']."</span>"."</td><td class='text-danger danger'>";
                                                       echo $cargo['cuotaCable']."</td><td class='text-danger danger'>";
                                                       echo "0.00"."</td><td class='text-danger danger'>";
@@ -300,7 +300,7 @@
                                                       echo $cargo['tipoServicio']."</td><td class='text-danger danger'>";
                                                       echo $cargo['numeroFactura']."</td><td class='text-danger danger'>";
                                                       echo "<span class='label label-primary'>".$cargo['mesCargo']."</span>"."</td><td class='text-danger danger'>";
-                                                      echo "<span class='label label-success'>".$cargo['fechaAbonado']."</span>"."</td><td class='text-danger danger'>";
+                                                      echo "<span class='label label-success'>".$cargo['fechaFactura']."</span>"."</td><td class='text-danger danger'>";
                                                       echo "<span class='label label-danger'>".$cargo['fechaVencimiento']."</span>"."</td><td class='text-danger danger'>";
                                                       echo $cargo['cuotaCable']."</td><td class='text-danger danger'>";
                                                       echo "0.00"."</td><td class='text-danger danger'>";
@@ -370,7 +370,7 @@
                                                       echo $cargoI['tipoServicio']."</td><td class='text-danger danger'>";
                                                       echo $cargoI['numeroFactura']."</td><td class='text-danger danger'>";
                                                       echo "<span class='label label-primary'>".$cargoI['mesCargo']."</span>"."</td><td class='text-danger danger'>";
-                                                      echo "<span class='label label-success'>".$cargoI['fechaAbonado']."</span>"."</td><td class='text-danger danger'>";
+                                                      echo "<span class='label label-success'>".$cargoI['fechaFactura']."</span>"."</td><td class='text-danger danger'>";
                                                       echo "<span class='label label-danger'>".$cargoI['fechaVencimiento']."</span>"."</td><td class='text-danger danger'>";
                                                       echo $cargoI['cuotaInternet']."</td><td class='text-danger danger'>";
                                                       echo "0.00"."</td><td class='text-danger danger'>";
@@ -398,7 +398,7 @@
                                                       echo $cargoI['tipoServicio']."</td><td class='text-danger danger'>";
                                                       echo $cargoI['numeroFactura']."</td><td class='text-danger danger'>";
                                                       echo "<span class='label label-primary'>".$cargoI['mesCargo']."</span>"."</td><td class='text-danger danger'>";
-                                                      echo "<span class='label label-success'>".$cargoI['fechaAbonado']."</span>"."</td><td class='text-danger danger'>";
+                                                      echo "<span class='label label-success'>".$cargoI['fechaFactura']."</span>"."</td><td class='text-danger danger'>";
                                                       echo "<span class='label label-danger'>".$cargoI['fechaVencimiento']."</span>"."</td><td class='text-danger danger'>";
                                                       echo $cargoI['cuotaInternet']."</td><td class='text-danger danger'>";
                                                       echo "0.00"."</td><td class='text-danger danger'>";

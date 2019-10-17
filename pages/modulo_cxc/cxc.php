@@ -111,7 +111,7 @@
                                 </li>
                                 <li><a href="facturacionGenerada.php" target="_blank">Ver facturas generadas</a>
                                 </li>
-                                <li><a href="consultarAbonos.php" target="_blank">Consultar/Eliminar abonos</a>
+                                <li><a href="#" data-toggle="modal" data-target="#eliminarAbonos">Consultar/Eliminar abonos</a>
                                 </li>
                             </ul>';
                         }
@@ -390,6 +390,42 @@
                 </div>
               </div>
             </div><!-- Fin Modal Facturación diaria -->
+            <!-- Modal Consultar/Eliminar abonos -->
+            <div id="eliminarAbonos" class="modal fade" role="dialog">
+              <div class="modal-dialog modal-lg">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div style="background-color: #00897B; color:white;" class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Consultar abonos</h4>
+                  </div>
+                  <form id="generarFacturas" action="php/generarFacturas.php?" method="POST">
+                  <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <input class="form-control" type="text" id="caja_busqueda" name="caja_busqueda" value="" placeholder="Número de recibo, Código del cliente, Fecha del abono, Código del cobrador">
+                            <br>
+                            <div class="" id="datos">
+                                <table class="table table-striped">
+                            </div>
+                        </div>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                      <div class="row">
+                          <div class="col-md-6">
+                              <input type="submit" class="btn btn-primary btn-lg btn-block" name="submit" value="Generar Facturas">
+                          </div>
+                          <div class="col-md-6">
+                              <button type="button" class="btn btn-default btn-lg btn-block" data-dismiss="modal">Cancelar</button>
+                          </div>
+                      </div>
+                  </form>
+                  </div>
+                </div>
+              </div>
+          </div><!-- Fin Modal ABONOS -->
         </div>
         <!-- /#page-wrapper -->
 
@@ -407,6 +443,7 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="../../dist/js/sb-admin-2.js"></script>
+    <script src="js/searchab.js"></script>
 
     <script type="text/javascript">
         // Get the input field
@@ -440,6 +477,14 @@
         document.getElementById("fechaVencimiento").value = fechaComprobante.toLocaleDateString();
         }
         });
+    </script>
+    <script type="text/javascript">
+        function anularAbono(id){
+            var r = confirm("Realmente desea anular este abono?!");
+            if (r == true) {
+              window.open("php/anularAbono.php?idAbono="+id);
+            }
+        }
     </script>
 
 </body>
