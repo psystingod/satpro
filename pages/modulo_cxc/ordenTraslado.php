@@ -4,7 +4,9 @@
     require("php/getData.php");
     require("php/GetAllInfo.php");
     $dataInfo = new GetAllInfo();
+    $arrayDepartamentos = $dataInfo->getData('tbl_departamentos_cxc');
     $arrMunicipios = $dataInfo->getData('tbl_municipios_cxc');
+    $arrColonias = $dataInfo->getData('tbl_colonias_cxc');
     $data = new OrdersInfo();
     //$client = new GetClient();
     $arrayTecnicos = $data->getTecnicos();
@@ -421,10 +423,10 @@
                                           <option value="">Seleccionar</option>
                                           <?php
                                           foreach ($arrayDepartamentos as $key) {
-                                              if ($key['nombreActividad'] == $idDepartamento) {
-                                                  echo "<option value='".$key['nombreActividad']."' selected>".$key['nombreActividad']."</option>";
+                                              if ($key['idDepartamento'] == $idDepartamento) {
+                                                  echo "<option value='".$key['idDepartamento']."' selected>".$key['nombreDepartamento']."</option>";
                                               }else {
-                                                  echo "<option value='".$key['nombreActividad']."'>".$key['nombreActividad']."</option>";
+                                                  echo "<option value='".$key['idDepartamento']."'>".$key['nombreDepartamento']."</option>";
                                               }
                                           }
                                           ?>
@@ -436,10 +438,10 @@
                                           <option value="">Seleccionar</option>
                                           <?php
                                           foreach ($arrayMunicipios as $key) {
-                                              if ($key['nombreActividad'] == $idMunicipio) {
-                                                  echo "<option value='".$key['nombreActividad']."' selected>".$key['nombreActividad']."</option>";
+                                              if ($key['idMunicipio'] == $idMunicipio) {
+                                                  echo "<option value='".$key['idMunicipio']."' selected>".$key['nombreMunicipio']."</option>";
                                               }else {
-                                                  echo "<option value='".$key['nombreActividad']."'>".$key['nombreActividad']."</option>";
+                                                  echo "<option value='".$key['idMunicipio']."'>".$key['nombreMunicipio']."</option>";
                                               }
                                           }
                                           ?>
@@ -451,10 +453,10 @@
                                           <option value="">Seleccionar</option>
                                           <?php
                                           foreach ($arrayColonias as $key) {
-                                              if ($key['nombreActividad'] == $idColonia) {
-                                                  echo "<option value='".$key['nombreActividad']."' selected>".$key['nombreActividad']."</option>";
+                                              if ($key['idColonia'] == $idColonia) {
+                                                  echo "<option value='".$key['idColonia']."' selected>".$key['nombreColonia']."</option>";
                                               }else {
-                                                  echo "<option value='".$key['nombreActividad']."'>".$key['nombreActividad']."</option>";
+                                                  echo "<option value='".$key['idColonia']."'>".$key['nombreColonia']."</option>";
                                               }
                                           }
                                           ?>
@@ -463,7 +465,7 @@
                               </div>
                               <div class="form-row">
                                   <div id="divCable" class="col-md-12">
-                                      <h4 class="alert alert-info cable"><strong>Cable</strong></h4>
+                                      <!--<h4 class="alert alert-info cable"><strong>Cable</strong></h4>-->
                                       <div class="row">
                                           <div class="col-md-8">
                                               <label for="mactv">MAC TV</label>
@@ -598,13 +600,13 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="../../dist/js/sb-admin-2.js"></script>
-    <script src="js/ordenReconexion.js"></script>
+    <script src="js/ordenTraslado.js"></script>
     <script src="js/searchor.js"></script>
     <script type="text/javascript">
         // Get the input field
         var cod = document.getElementById("codigoCliente");
 
-        $('#ordenReconexion').on('keyup keypress', function(e) {
+        $('#ordenTraslado').on('keyup keypress', function(e) {
           var keyCode = e.keyCode || e.which;
           if (keyCode === 13) {
             e.preventDefault();
@@ -618,9 +620,9 @@
         if (event.keyCode === 13) {
         // Cancel the default action, if needed
         event.preventDefault();
-        var codValue = document.getElementById("codigoCliente").value
+        var codValue = document.getElementById("codigoCliente").value;
         // Trigger the button element with a click
-        window.location="ordenReconexion.php?codigoCliente="+codValue;
+        window.location="ordenTraslado.php?codigoCliente="+codValue;
         }
         });
     </script>
@@ -628,7 +630,7 @@
     if (isset($_GET['codigoCliente'])) {
         echo "<script>
             token = false;
-            document.getElementById('ordenReconexion').action = 'php/nuevaOrdenReconex.php';
+            document.getElementById('ordenTraslado').action = 'php/nuevaOrdenTraslado.php';
             document.getElementById('btn-cable').disabled = false;
             document.getElementById('btn-internet').disabled = false;
             document.getElementById('guardar').disabled = false;

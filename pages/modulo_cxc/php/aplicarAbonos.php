@@ -54,7 +54,7 @@
                        $tipoServicio = strtoupper($_POST['servicio']);
                        $idFactura1 = $_POST['idFacturax1'];
                        $nRecibox1 = $_POST['nFacturax1'];
-                       $nFacturax1 = $prefijoCobro."-".$_POST['nFacturax1'];
+                       $nFacturax1 = $_POST['nFacturax1'];
                        $impSeg = $_POST['impSeg'];
                        $reciboCobx1 = $prefijoCobro."-".$_POST['nRecibox1']; //Recibo de cobro
 

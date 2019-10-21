@@ -8,7 +8,6 @@ $password = DB_PASSWORD;
 $database = DB_NAME;
 
 $mysqli = new mysqli($host, $user, $password, $database);
-
 $salida = "";
 $query = "SELECT idAbono, numeroRecibo, codigoCliente, codigoCobrador, fechaAbonado, anulada FROM tbl_abonos ORDER BY numeroRecibo ASC LIMIT 5";
  if (isset($_POST['consulta'])) {

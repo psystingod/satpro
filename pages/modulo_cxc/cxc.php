@@ -107,7 +107,9 @@
                         if ($_SESSION["rol"] == 'administracion' || $_SESSION["rol"] == 'subgerencia') {
                             echo
                             '<ul class="dropdown-menu dropdown-user">
-                                <li><a href="#" data-toggle="modal" data-target="#facturacionDiaria">Facturación diaria</a>
+                                <li><a href="#" data-toggle="modal" data-target="#facturacionDiaria">Facturación automática</a>
+                                </li>
+                                <li><a href="#" data-toggle="" data-target="">Facturación manual</a>
                                 </li>
                                 <li><a href="facturacionGenerada.php" target="_blank">Ver facturas generadas</a>
                                 </li>
@@ -407,7 +409,7 @@
                             <input class="form-control" type="text" id="caja_busqueda" name="caja_busqueda" value="" placeholder="Número de recibo, Código del cliente, Fecha del abono, Código del cobrador">
                             <br>
                             <div class="" id="datos">
-                                <table class="table table-striped">
+
                             </div>
                         </div>
                     </div>

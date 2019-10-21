@@ -32,7 +32,7 @@
                }
                elseif ($result['tipoServicio'] == "I") {
                    $cuota = $result['cuotaInternet'];
-                   $queryCliente = "UPDATE clientes SET saldoInternet=saldoInternet+:cuota WHERE cod_cliente=:codigoCliente";
+                   $queryCliente = "UPDATE clientes SET saldoInt|ernet=saldoInternet+:cuota WHERE cod_cliente=:codigoCliente";
                }
 
                // SQL query para traer datos del servicio de cable de la tabla clientes
