@@ -40,23 +40,20 @@
                     $direccion = $_POST['direccionCliente'];
                     $direccionTraslado = $_POST['direccionTraslado'];
                     $telefonos = $_POST['telefonos'];
+                    $idDepartamento = $_POST['departamento'];
+                    $idMunicipio = $_POST['municipio'];
+                    $idColonia = $_POST['colonia'];
                     //$municipio = $_POST['municipio'];
                     //$tipoReconexCable = $_POST['tipoReconexCable']; //Motivo
                     $saldoCable = $_POST['saldoCable'];
                     //$ordenaSuspension = $_POST['ordenaSuspensionCable'];
                     $colilla = ucwords($_POST['colilla']);
-                    if (!empty($_POST["fechaTraslado"])) {
-                        $str2 = $_POST["fechaTraslado"];
-                        $date2 = DateTime::createFromFormat('d/m/Y', $str2);
-                        $fechaTraslado = $date2->format('Y-m-d');
-                    }
-                    else {
-                        $fechaTraslado = "";
-                    }
+                    $fechaTraslado = $_POST["fechaTraslado"];
                     //$responsable = $_POST["responsable"];
                     $mactv = $_POST["mactv"];
                     $observaciones = $_POST["observaciones"];
                     $tipoServicio = $_POST["tipoServicio"];
+                    $responsable = $_POST["responsable"];
                     $creadoPor = $_POST['creadoPor'];
 
                     //$Fecha = date('Y/m/d g:i');
@@ -89,18 +86,19 @@
 
                                 ':observaciones' => $observaciones,
                                 ':tipoServicio' => $tipoServicio,
+                                ':idTecnico' => $responsable,
                                 ':creadoPor' => $creadoPor,
                                 ':idOrdenTraslado' => $numeroOrden,
                                 ));
 
-                    header('Location: ../ordenReconexion.php?nOrden='.$numeroOrden);
+                    header('Location: ../ordenTraslado.php?nOrden='.$numeroOrden);
 
                 }
                 catch (Exception $e)
                 {
                     print "Error!: " . $e->getMessage() . "</br>";
                     die();
-                    header('Location: ../ordenReconexion.php?status=failedEdit');
+                    header('Location: ../ordenTraslado.php?status=failedEdit');
                 }
 
             }
@@ -138,27 +136,24 @@
                     $saldoCable = $_POST['saldoCable'];
                     //$ordenaSuspension = $_POST['ordenaSuspensionCable'];
                     $colilla = ucwords($_POST['colilla']);
-                    if (!empty($_POST["fechaTraslado"])) {
-                        $str2 = $_POST["fechaTraslado"];
-                        $date2 = DateTime::createFromFormat('d/m/Y', $str2);
-                        $fechaTraslado = $date2->format('Y-m-d');
-                    }
-                    else {
-                        $fechaTraslado = "";
-                    }
+                    $fechaTraslado = $_POST["fechaTraslado"];
                     //$responsable = $_POST["responsable"];
                     $mactv = $_POST["mactv"];
+                    $idDepartamento = $_POST['departamento'];
+                    $idMunicipio = $_POST['municipio'];
+                    $idColonia = $_POST['colonia'];
                     $macModem = $_POST["macModem"];
                     $serieModem = $_POST["serieModem"];
-                    $velocidad = $_POST["velocidad"];
                     $saldoInter = $_POST['saldoInter'];
+                    //$velocidad = $_POST["velocidad"];
                     $observaciones = $_POST["observaciones"];
                     $tipoServicio = $_POST["tipoServicio"];
+                    $responsable = $_POST["responsable"];
                     $creadoPor = $_POST['creadoPor'];
 
                     //$Fecha = date('Y/m/d g:i');
                     $query = "UPDATE tbl_ordenes_traslado SET codigoCliente=:codigoCliente, fechaOrden=:fechaOrden, tipoOrden=:tipoOrden, saldoInter=:saldoInter, diaCobro=:diaCobro, nombreCliente=:nombreCliente, direccion=:direccion, direccionTraslado=:direccionTraslado, idDepartamento=:idDepartamento, idMunicipio=:idMunicipio, idColonia=:idColonia, telefonos=:telefonos,
-                                     macModem=:macModem,serieModem=:serieModem,velocidad=:velocidad,colilla=:colilla, fechaTraslado=:fechaTraslado, idTecnico=:idTecnico, mactv=:mactv, observaciones=:observaciones, tipoServicio=:tipoServicio, creadoPor=:creadoPor WHERE idOrdenTraslado=:idOrdenTraslado";
+                                     macModem=:macModem,serieModem=:serieModem,colilla=:colilla, fechaTraslado=:fechaTraslado, idTecnico=:idTecnico, mactv=:mactv, observaciones=:observaciones, tipoServicio=:tipoServicio, creadoPor=:creadoPor WHERE idOrdenTraslado=:idOrdenTraslado";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
@@ -176,7 +171,7 @@
                                 ':telefonos' => $telefonos,
                                 ':macModem' => $macModem,
                                 ':serieModem' => $serieModem,
-                                ':velocidad' => $velocidad,
+                                //':velocidad' => $velocidad,
                                 ':colilla' => $colilla,
                                 //':tipoReconexCable' => $tipoReconexCable,
 
@@ -189,11 +184,12 @@
 
                                 ':observaciones' => $observaciones,
                                 ':tipoServicio' => $tipoServicio,
+                                ':idTecnico' => $responsable,
                                 ':creadoPor' => $creadoPor,
                                 ':idOrdenTraslado' => $numeroOrden,
                                 ));
 
-                    header('Location: ../ordenReconexion.php?nOrden='.$numeroOrden);
+                    header('Location: ../ordenTraslado.php?nOrden='.$numeroOrden);
 
                 }
                 catch (Exception $e)

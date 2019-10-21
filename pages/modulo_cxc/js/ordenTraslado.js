@@ -102,13 +102,13 @@ function editarOrden(){
             editInputs[i].disabled = false;
         }
     }
-    document.getElementById("numeroReconexion").readOnly = true;
+    document.getElementById("numeroTraslado").readOnly = true;
     document.getElementById("saldoCable").readOnly = true;
-    document.getElementById("saldoInternet").readOnly = true;
+    document.getElementById("saldoInter").readOnly = true;
     //document.getElementById("nodo").readOnly = true;
     document.getElementById("codigoCliente").readOnly = true;
     document.getElementById("colilla").readOnly = true;
-    //document.getElementById("velocidad").disabled = true;
+    document.getElementById("velocidad").disabled = true;
     document.getElementById("macModem").readOnly = true;
     document.getElementById("serieModem").readOnly = true;
     document.getElementById("fechaOrden").readOnly = true;
@@ -121,8 +121,8 @@ function editarOrden(){
         document.getElementById('btn-cable').style.color="#4CAF50";
         document.getElementById('tipoReconexInter').disabled=true;
         document.getElementById("velocidad").disabled = true;
-        document.getElementById("fechaReconexInter").readOnly = true;
-        document.getElementById("ultSuspInter").readOnly = true;
+        //document.getElementById("fechaReconexInter").readOnly = true;
+        //document.getElementById("ultSuspInter").readOnly = true;
         //document.getElementById('ordenaSuspensionInter').disabled=true;
         //document.getElementById('direccionInternet').readOnly=true;
         //document.getElementById('rx').readOnly=true;
@@ -133,13 +133,13 @@ function editarOrden(){
         document.getElementById('btn-cable').disabled = true;
         document.getElementById('btn-internet').style.color="#039BE5";
 
-        document.getElementById('tipoReconexCable').disabled=true;
+        //document.getElementById('tipoReconexCable').disabled=true;
         //document.getElementById('direccionCable').readOnly=true;
         document.getElementById('saldoCable').readOnly=true;
         //document.getElementById('ordenaSuspensionCable').disabled=true;
         document.getElementById('mactv').readOnly=true;
-        document.getElementById("fechaReconexCable").readOnly = true;
-        document.getElementById("ultSuspCable").readOnly = true;
+        //document.getElementById("fechaReconexCable").readOnly = true;
+        //document.getElementById("ultSuspCable").readOnly = true;
         //document.getElementById('tecnologia').readOnly=true;
     }
     changeAction("editar");
