@@ -23,79 +23,94 @@
                         $fechaOrden = "";
                     }
 
-                    if (!empty($_POST["ultSuspCable"])) {
+                    /*if (!empty($_POST["ultSuspCable"])) {
                         $str1 = $_POST["ultSuspCable"];
                         $date1 = DateTime::createFromFormat('d/m/Y', $str1);
                         $ultSuspCable = $date1->format('Y-m-d');
                     }
                     else {
                         $ultSuspCable = "";
-                    }
+                    }*/
 
-                    $numeroOrden = $_POST["numeroReconexion"];
+                    //$numeroOrden = $_POST["numeroTraslado"];
                     $diaCobro = $_POST["diaCobro"];
+                    $idMunicipio = $_POST["municipio"];
+                    $idColonia = $_POST["colonia"];
+                    $idDepartamento = $_POST["departamento"];
                     $codigoCliente = $_POST["codigoCliente"];
-                    $tipoOrden = "Reconexion";
+                    $tipoOrden = "Traslado";
                     $nombreCliente = $_POST['nombreCliente'];
-                    $telefonos = $_POST['telefonos'];
                     $direccion = $_POST['direccionCliente'];
-                    //$telefonos = $_POST['telefonos'];
+                    $direccionTraslado = $_POST['direccionTraslado'];
+                    $telefonos = $_POST['telefonos'];
                     //$municipio = $_POST['municipio'];
-                    $tipoReconexCable = $_POST['tipoReconexCable']; //Motivo
+                    //$tipoReconexCable = $_POST['tipoReconexCable']; //Motivo
                     $saldoCable = $_POST['saldoCable'];
                     //$ordenaSuspension = $_POST['ordenaSuspensionCable'];
                     $colilla = ucwords($_POST['colilla']);
-                    if (!empty($_POST["fechaReconexCable"])) {
-                        $str2 = $_POST["fechaReconexCable"];
+                    if (!empty($_POST["fechaTraslado"])) {
+                        $str2 = $_POST["fechaTraslado"];
                         $date2 = DateTime::createFromFormat('d/m/Y', $str2);
-                        $fechaReconexCable = $date2->format('Y-m-d');
+                        $fechaTraslado = $date2->format('Y-m-d');
                     }
                     else {
-                        $fechaReconexCable = "";
+                        $fechaTraslado = "";
                     }
-                    $responsable = $_POST["responsable"];
+                    //$responsable = $_POST["responsable"];
                     $mactv = $_POST["mactv"];
+                    $responsable = $_POST["responsable"];
                     $observaciones = $_POST["observaciones"];
                     $tipoServicio = $_POST["tipoServicio"];
                     $creadoPor = $_POST['creadoPor'];
 
                     //$Fecha = date('Y/m/d g:i');
-
-                    $query = "INSERT INTO tbl_ordenes_reconexion(codigoCliente, fechaOrden, tipoOrden, diaCobro, nombreCliente, telefonos, tipoReconexCable, saldoCable, fechaReconexCable, ultSuspCable, direccion, idTecnico, mactv, colilla, observaciones, tipoServicio, creadoPor)
-                              VALUES(:codigoCliente, :fechaOrden, :tipoOrden, :diaCobro, :nombreCliente, :telefonos, :tipoReconexCable, :saldoCable, :fechaReconexCable, :ultSuspCable, :direccion, :idTecnico, :mactv, :colilla, :observaciones, :tipoServicio, :creadoPor)";
+                    $this->dbConnect->beginTransaction();
+                    $query = "INSERT INTO tbl_ordenes_traslado (codigoCliente,fechaOrden,tipoOrden,saldoCable,diaCobro,nombreCliente,direccion,direccionTraslado,idDepartamento,idMunicipio,idColonia,telefonos,colilla,fechaTraslado,idTecnico,mactv,observaciones,tipoServicio,creadoPor)
+                              VALUES (:codigoCliente, :fechaOrden, :tipoOrden, :saldoCable, :diaCobro, :nombreCliente, :direccion, :direccionTraslado, :idDepartamento, :idMunicipio, :idColonia, :telefonos,
+                              :colilla, :fechaTraslado, :idTecnico, :mactv, :observaciones, :tipoServicio, :creadoPor)";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
                                 ':codigoCliente' => $codigoCliente,
                                 ':fechaOrden' => $fechaOrden,
                                 ':tipoOrden' => $tipoOrden,
+                                ':saldoCable' => $saldoCable,
                                 ':diaCobro' => $diaCobro,
                                 ':nombreCliente' => $nombreCliente,
-                                ':telefonos' => $telefonos,
-                                ':tipoReconexCable' => $tipoReconexCable,
-                                ':saldoCable' => $saldoCable,
-                                ':fechaReconexCable' => $fechaReconexCable,
                                 ':direccion' => $direccion,
-                                ':ultSuspCable' => $ultSuspCable,
-                                ':fechaReconexCable' => $fechaReconexCable,
+                                ':direccionTraslado' => $direccionTraslado,
+                                ':idDepartamento' => $idDepartamento,
+                                ':idMunicipio' => $idMunicipio,
+                                ':idColonia' => $idColonia,
+                                ':telefonos' => $telefonos,
+                                ':colilla' => $colilla,
+                                //':tipoReconexCable' => $tipoReconexCable,
+
+                                //':fechaReconexCable' => $fechaReconexCable,
+
+                                //':ultSuspCable' => $ultSuspCable,
+                                ':fechaTraslado' => $fechaTraslado,
                                 ':idTecnico' => $responsable,
                                 ':mactv' => $mactv,
-                                ':colilla' => $colilla,
+
                                 ':observaciones' => $observaciones,
                                 ':tipoServicio' => $tipoServicio,
-                                ':creadoPor' => $creadoPor
+                                ':creadoPor' => $creadoPor,
+                                //':idOrdenTraslado' => $numeroOrden,
                                 ));
+                    sleep(0.5);
                     $numeroOrden = $this->dbConnect->lastInsertId();
-                    header('Location: ../ordenReconexion.php?nOrden='.$numeroOrden);
+                    $this->dbConnect->commit();
+                    header('Location: ../ordenTraslado.php?nOrden='.$numeroOrden);
 
                 }
                 catch (Exception $e)
                 {
                     print "Error!: " . $e->getMessage() . "</br>";
                     die();
-                    header('Location: OrdenReconexion?status=failed.php');
+                    header('Location: ../ordenTraslado.php?status=failedEdit');
                 }
-                //ACÁ IRÍA EL FIN DEL IF
+
             }
             else if ($_POST['tipoServicio'] == 'I') {
                 try {
@@ -109,78 +124,101 @@
                         $fechaOrden = "";
                     }
 
-                    if (!empty($_POST["ultSuspInter"])) {
-                        $str1 = $_POST["ultSuspInter"];
+                    /*if (!empty($_POST["ultSuspCable"])) {
+                        $str1 = $_POST["ultSuspCable"];
                         $date1 = DateTime::createFromFormat('d/m/Y', $str1);
-                        $ultSuspInter = $date1->format('Y-m-d');
+                        $ultSuspCable = $date1->format('Y-m-d');
                     }
                     else {
-                        $ultSuspInter = "";
-                    }
-                    $numeroOrden = $_POST["numeroReconexion"];
+                        $ultSuspCable = "";
+                    }*/
+
+                    //$numeroOrden = $_POST["numeroTraslado"];
                     $diaCobro = $_POST["diaCobro"];
                     $codigoCliente = $_POST["codigoCliente"];
-                    $tipoOrden = "Reconexion";
+                    $tipoOrden = "Traslado";
                     $nombreCliente = $_POST['nombreCliente'];
                     $direccion = $_POST['direccionCliente'];
+                    $direccionTraslado = $_POST['direccionTraslado'];
                     $telefonos = $_POST['telefonos'];
                     //$municipio = $_POST['municipio'];
-                    $tipoReconexInter = $_POST['tipoReconexInter']; //Motivo
-                    $saldoInter = $_POST['saldoInternet'];
+                    //$tipoReconexCable = $_POST['tipoReconexCable']; //Motivo
+                    $saldoInter = $_POST['saldoInter'];
                     //$ordenaSuspension = $_POST['ordenaSuspensionCable'];
                     $colilla = ucwords($_POST['colilla']);
-                    if (!empty($_POST["fechaReconexInter"])) {
-                        $str2 = $_POST["fechaReconexInter"];
+                    if (!empty($_POST["fechaTraslado"])) {
+                        $str2 = $_POST["fechaTraslado"];
                         $date2 = DateTime::createFromFormat('d/m/Y', $str2);
-                        $fechaReconexInter = $date2->format('Y-m-d');
+                        $fechaTraslado = $date2->format('Y-m-d');
                     }
                     else {
-                        $fechaReconexInter = "";
+                        $fechaTraslado = "";
                     }
-                    $responsable = $_POST["responsable"];
+                    //$responsable = $_POST["responsable"];
+                    //$mactv = $_POST["mactv"];
+                    $macModem = $_POST["macModem"];
+                    $serieModem = $_POST["serieModem"];
+                    $velocidad = $_POST["velocidad"];
+                    $saldoInter = $_POST['saldoInter'];
                     $observaciones = $_POST["observaciones"];
                     $tipoServicio = $_POST["tipoServicio"];
+                    $responsable = $_POST["responsable"];
                     $creadoPor = $_POST['creadoPor'];
-                    $serieModem = $_POST['serieModem'];
-                    $macModem = $_POST['macModem'];
-                    $velocidad = $_POST['velocidad'];
+                    $idDepartamento = $_POST['departamento'];
+                    $idMunicipio = $_POST['municipio'];
+                    $idColonia = $_POST['colonia'];
 
                     //$Fecha = date('Y/m/d g:i');
-
-                    $query = "INSERT INTO tbl_ordenes_reconexion(codigoCliente, fechaOrden, tipoOrden, diaCobro, nombreCliente, telefonos, tipoReconexInter, saldoInter, fechaReconexInter, ultSuspInter, macModem, serieModem, velocidad, direccion, idTecnico, colilla, observaciones, tipoServicio, creadoPor)
-                              VALUES(:codigoCliente, :fechaOrden, :tipoOrden, :diaCobro, :nombreCliente, :telefonos, :tipoReconexInter, :saldoInter, :fechaReconexInter, :ultSuspInter, :macModem, :serieModem, :velocidad, :direccion, :idTecnico, :colilla, :observaciones, :tipoServicio, :creadoPor)";
+                    $this->dbConnect->beginTransaction();
+                    $query = "INSERT INTO tbl_ordenes_traslado (codigoCliente,fechaOrden,tipoOrden,saldoInter,diaCobro,nombreCliente,direccion,direccionTraslado,idDepartamento,idMunicipio,idColonia,telefonos,macModem,serieModem,velocidad,colilla,fechaTraslado,idTecnico,observaciones,tipoServicio,creadoPor)
+                              VALUES (:codigoCliente, :fechaOrden, :tipoOrden, :saldoInter, :diaCobro, :nombreCliente, :direccion, :direccionTraslado, :idDepartamento, :idMunicipio, :idColonia, :telefonos, :macModem, :serieModem, :velocidad,
+                              :colilla, :fechaTraslado, :idTecnico, :observaciones, :tipoServicio, :creadoPor)";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
                                 ':codigoCliente' => $codigoCliente,
                                 ':fechaOrden' => $fechaOrden,
                                 ':tipoOrden' => $tipoOrden,
+                                ':saldoInter' => $saldoInter,
                                 ':diaCobro' => $diaCobro,
                                 ':nombreCliente' => $nombreCliente,
-                                ':telefonos' => $telefonos,
-                                ':tipoReconexInter' => $tipoReconexInter,
-                                ':saldoInter' => $saldoInter,
-                                ':fechaReconexInter' => $fechaReconexInter,
-                                ':ultSuspInter' => $ultSuspInter,
                                 ':direccion' => $direccion,
+                                ':direccionTraslado' => $direccionTraslado,
+                                ':idDepartamento' => $idDepartamento,
+                                ':idMunicipio' => $idMunicipio,
+                                ':idColonia' => $idColonia,
+                                ':telefonos' => $telefonos,
                                 ':macModem' => $macModem,
                                 ':serieModem' => $serieModem,
                                 ':velocidad' => $velocidad,
-                                ':idTecnico' => $responsable,
                                 ':colilla' => $colilla,
+                                //':tipoReconexCable' => $tipoReconexCable,
+
+                                //':fechaReconexCable' => $fechaReconexCable,
+
+                                //':ultSuspCable' => $ultSuspCable,
+                                ':fechaTraslado' => $fechaTraslado,
+                                ':idTecnico' => $responsable,
+                                //':mactv' => $mactv,
+
                                 ':observaciones' => $observaciones,
                                 ':tipoServicio' => $tipoServicio,
-                                ':creadoPor' => $creadoPor
+                                ':creadoPor' => $creadoPor,
+                                //':idOrdenTraslado' => $numeroOrden,
                                 ));
+
+                    sleep(0.5);
                     $numeroOrden = $this->dbConnect->lastInsertId();
-                    header('Location: ../ordenReconexion.php?nOrden='.$numeroOrden);
+                    $this->dbConnect->commit();
+
+                    header('Location: ../ordenTraslado.php?nOrden='.$numeroOrden);
 
                 }
                 catch (Exception $e)
                 {
                     print "Error!: " . $e->getMessage() . "</br>";
                     die();
-                    header('Location: OrdenReconexion?status=failed.php');
+                    header('Location: ../ordenTraslado.php?status=failedEdit');
                 }
                 //ACÁ IRÍA EL FIN DEL IF
             }

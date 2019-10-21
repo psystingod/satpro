@@ -29,3 +29,5 @@ CREATE TABLE tbl_ordenes_traslado (
   creadoPor VARCHAR(50) NOT NULL,
   PRIMARY KEY(idOrdenTraslado)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+ALTER TABLE tbl_ordenes_traslado AUTO_INCREMENT = 1;

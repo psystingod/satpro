@@ -87,6 +87,11 @@
             $nodo = "";
             $idVendedor = "";
             $recepcionTv = "";
+            $fechaTraslado = "";
+            $direccionTraslado = "";
+            $idDepartamento = "";
+            $idMunicipio = "";
+            $idColonia = "";
 
         }
 
@@ -102,7 +107,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT idOrdenReconex, codigoCliente, fechaOrden, tipoOrden, tipoReconexCable, tipoReconexInter, diaCobro, telefonos, nombreCliente, direccion, fechaReconexCable, saldoCable, fechaReconexInter, saldoInter, ultSuspCable, ultSuspInter, macModem, serieModem, velocidad, colilla, fechaReconex, idTecnico, mactv, observaciones, tipoServicio, creadoPor  FROM tbl_ordenes_reconexion WHERE idOrdenReconex = ? LIMIT 0,1";
+            $query = "SELECT idOrdenTraslado, codigoCliente, fechaOrden, tipoOrden, diaCobro, telefonos, nombreCliente, direccion, direccionTraslado, idDepartamento, idMunicipio, idColonia, saldoCable, fechaTraslado, saldoInter, macModem, serieModem, velocidad, colilla, idTecnico, mactv, observaciones, tipoServicio, creadoPor  FROM tbl_ordenes_traslado WHERE idOrdenTraslado = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -115,38 +120,43 @@
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
             /****************** DATOS GENERALES ***********************/
-            $idOrdenTraslado = $row["idOrdenReconex"];
+            $idOrdenTraslado = $row["idOrdenTraslado"];
             $fechaOrden = date_format(date_create($row["fechaOrden"]), 'd/m/Y');
             $tipoOrden = $row["tipoOrden"];
-            $tipoReconexCable = $row["tipoReconexCable"];
-            $tipoReconexInter = $row["tipoReconexInter"];
+            //$tipoReconexCable = $row["tipoReconexCable"];
+            //$tipoReconexInter = $row["tipoReconexInter"];
             $diaCobro = $row["diaCobro"];
             $codigoCliente = $row["codigoCliente"];
+            $fechaTraslado = $row['fechaTraslado'];
+            $direccionTraslado = $row['direccionTraslado'];
             if ($codigoCliente === "00000") {
                 $codigoCliente = "SC";
             }
             $nombreCliente = $row['nombreCliente'];
             $telefonos = $row["telefonos"];
             //$idMunicipio = $row["idMunicipio"];
-            if (empty($row["ultSuspCable"])) {
+            /*if (empty($row["ultSuspCable"])) {
                 $ultSuspCable = "";
             }else {
                 $ultSuspCable = date_format(date_create($row["ultSuspCable"]), 'd/m/Y');
-            }
+            }*/
 
             $saldoCable = $row["saldoCable"];
             $direccion = $row["direccion"];
             $saldoInter = $row["saldoInter"];
-            if (empty($row["ultSuspInter"])) {
+            /*if (empty($row["ultSuspInter"])) {
                 $ultSuspInter = "";
             }else {
                 $ultSuspInter = date_format(date_create($row["ultSuspInter"]), 'd/m/Y');
-            }
+            }*/
             $macModem = $row['macModem'];
             $serieModem = $row['serieModem'];
             $velocidad = $row['velocidad'];
             $colilla = $row['colilla'];
-            if (empty($row["fechaReconexCable"])) {
+            $idDepartamento = $row['idDepartamento'];
+            $idMunicipio = $row['idMunicipio'];
+            $idColonia = $row['idColonia'];
+            /*if (empty($row["fechaReconexCable"])) {
                 $fechaReconexCable = "";
             }else {
                 $fechaReconexCable = date_format(date_create($row["fechaReconexCable"]), 'd/m/Y');
@@ -156,7 +166,7 @@
                 $fechaReconexInter = "";
             }else {
                 $fechaReconexInter = date_format(date_create($row["fechaReconexInter"]), 'd/m/Y');
-            }
+            }*/
 
             //$hora = $row['hora'];
             $idTecnico = $row['idTecnico'];
@@ -175,9 +185,11 @@
         $idOrdenTraslado = "";
         $codigoCliente = "";
         $nombreCliente = "";
+        $fechaTraslado = "";
+        $direccionTraslado = "";
         $diaCobro = "";
         $telefonos = "";
-        //$idMunicipio = "";
+        $idMunicipio = "";
         $saldoCable = "";
         $direccion = "";
         $saldoCable = "";
@@ -213,7 +225,7 @@
     <meta name="author" content="">
 
     <title>Cablesat</title>
-<link rel="shortcut icon" href="../../images/cablesat.png" />
+    <link rel="shortcut icon" href="../../images/cablesat.png" />
     <!-- Bootstrap Core CSS -->
     <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -391,12 +403,12 @@
                                   <div class="col-md-2">
                                       <br>
                                       <label for="codigoCliente">Código del cliente</label>
-                                      <input id="codigoCliente" class="form-control input-sm" type="text" name="codigoCliente" value="<?php echo $codigoCliente; ?>" readonly>
+                                      <input id="codigoCliente" class="form-control input-sm" type="text" name="codigoCliente" value="<?php echo $codigoCliente; ?>" readonly required>
                                   </div>
                                   <div class="col-md-5">
                                       <br>
                                       <label for="nombreCliente">Nombre del cliente</label>
-                                      <input id="nombreCliente" class="form-control input-sm" type="text" name="nombreCliente" value="<?php echo $nombreCliente; ?>" readonly>
+                                      <input id="nombreCliente" class="form-control input-sm" type="text" name="nombreCliente" value="<?php echo $nombreCliente; ?>" readonly required>
                                   </div>
                                   <div class="col-md-1">
                                       <br>
@@ -407,19 +419,19 @@
                               <div class="form-row">
                                   <div class="col-md-12">
                                       <label for="direccionCliente">Dirección anterior</label>
-                                      <textarea class="form-control input-sm" name="direccionCliente" rows="2" cols="40" readonly><?php echo $direccion; ?></textarea>
+                                      <textarea class="form-control input-sm" name="direccionCliente" rows="2" cols="40" readonly required><?php echo $direccion; ?></textarea>
                                   </div>
                               </div>
                               <div class="form-row">
                                   <div class="col-md-12">
                                       <label for="direccionTraslado">Dirección de traslado</label>
-                                      <textarea class="form-control input-sm" name="direccionTraslado" rows="2" cols="40" readonly><?php echo $direccionTraslado; ?></textarea>
+                                      <textarea class="form-control input-sm" name="direccionTraslado" rows="2" cols="40" readonly required><?php echo $direccionTraslado; ?></textarea>
                                   </div>
                               </div>
                               <div class="form-row">
                                   <div class="col-md-4">
                                       <label for="departamento">Departamento</label>
-                                      <select id="departamento" class="form-control input-sm" name="departamento" disabled>
+                                      <select id="departamento" class="form-control input-sm" name="departamento" disabled required>
                                           <option value="">Seleccionar</option>
                                           <?php
                                           foreach ($arrayDepartamentos as $key) {
@@ -434,10 +446,10 @@
                                   </div>
                                   <div class="col-md-4">
                                       <label for="municipio">Municipio</label>
-                                      <select id="municipio" class="form-control input-sm" name="municipio" disabled>
+                                      <select id="municipio" class="form-control input-sm" name="municipio" disabled required>
                                           <option value="">Seleccionar</option>
                                           <?php
-                                          foreach ($arrayMunicipios as $key) {
+                                          foreach ($arrMunicipios as $key) {
                                               if ($key['idMunicipio'] == $idMunicipio) {
                                                   echo "<option value='".$key['idMunicipio']."' selected>".$key['nombreMunicipio']."</option>";
                                               }else {
@@ -449,10 +461,10 @@
                                   </div>
                                   <div class="col-md-4">
                                       <label for="colonia">Barrio o colonia</label>
-                                      <select id="colonia" class="form-control input-sm" name="colonia" disabled>
+                                      <select id="colonia" class="form-control input-sm" name="colonia" disabled required>
                                           <option value="">Seleccionar</option>
                                           <?php
-                                          foreach ($arrayColonias as $key) {
+                                          foreach ($arrColonias as $key) {
                                               if ($key['idColonia'] == $idColonia) {
                                                   echo "<option value='".$key['idColonia']."' selected>".$key['nombreColonia']."</option>";
                                               }else {
@@ -472,7 +484,7 @@
                                               <input id="mactv" class="form-control input-sm cable" type="text" name="mactv" value="<?php echo $mactv ?>" readonly>
                                           </div>
                                           <div class="col-md-4">
-                                              <label for="saldoCable">Saldo</label>
+                                              <label for="saldoCable">Saldo TV</label>
                                               <input id="saldoCable" class="form-control input-sm cable" type="text" name="saldoCable" value="<?php echo $saldoCable ?>" readonly>
                                           </div>
                                       </div>
@@ -480,8 +492,8 @@
                               </div>
                               <div class="form-row">
                                   <div class="col-md-2">
-                                      <label for="saldoInternet">Saldo</label>
-                                      <input id="saldoInternet" class="form-control input-sm internet" type="text" name="saldoInternet" value="<?php echo $saldoInter ?>" readonly>
+                                      <label for="saldoInternet">Saldo Internet</label>
+                                      <input id="saldoInter" class="form-control input-sm internet" type="text" name="saldoInter" value="<?php echo $saldoInter ?>" readonly>
                                   </div>
                                   <div class="col-md-3">
                                       <label for="macModem">MAC del modem</label>
@@ -513,15 +525,15 @@
                               <div class="form-row">
                                   <div class="col-md-2">
                                       <label for="fechaTraslado">Fecha traslado</label>
-                                      <input id="fechaTraslado" class="form-control input-sm" type="text" name="fechaTraslado" value="<?php echo $fechaTraslado; ?>" readonly>
+                                      <input id="fechaTraslado" class="form-control input-sm" type="text" name="fechaTraslado" value="<?php echo $fechaTraslado; ?>" readonly required>
                                   </div>
-                                  <div class="col-md-2">
+                                  <div class="col-md-3">
                                       <label for="telefonos">Teléfono reciente</label>
                                       <input id="telefonos" class="form-control input-sm" type="text" name="telefonos" value="<?php echo $telefonos; ?>" readonly>
                                   </div>
                                   <div class="col-md-5">
                                       <label for="tecnico">Técnico</label>
-                                      <select class="form-control input-sm" name="responsable" disabled>
+                                      <select class="form-control input-sm" name="responsable" disabled required>
                                           <option value="" selected>Seleccionar</option>
                                           <?php
                                           foreach ($arrayTecnicos as $key) {
@@ -533,9 +545,9 @@
                                           ?>
                                       </select>
                                   </div>
-                                  <div class="col-md-3">
+                                  <div class="col-md-2">
                                       <label for="colilla">Colilla</label>
-                                      <input id="colilla" class="form-control input-sm" type="text" name="colilla" value="<?php echo $colilla; ?>" readonly>
+                                      <input id="colilla" class="form-control input-sm" type="text" name="colilla" value="<?php echo $colilla; ?>" readonly required>
                                   </div>
                               </div>
                               <div class="form-row">
