@@ -1,8 +1,8 @@
 <?php
 
     session_start();
-    require("php/getData.php");
-    require("php/GetAllInfo.php");
+    require_once "php/getData.php";
+    require_once "php/GetAllInfo.php";
     require($_SERVER['DOCUMENT_ROOT'].'/satpro'.'/php/permissions.php');
     $permisos = new Permissions();
     $permisosUsuario = $permisos->getPermissions($_SESSION['id_usuario']);
@@ -13,7 +13,7 @@
     $arrayTecnicos = $data->getTecnicos();
     $arrayActividadesSusp = $data->getActividadesSusp();
     $arrayVelocidades = $data->getVelocidades();
-
+    $arrCobradores = $dataInfo->getData('tbl_cobradores');
     //include database connection
     require_once('../../php/connection.php');
     $precon = new ConectionDB();
@@ -351,21 +351,22 @@
                         <br>
                         <div class="panel panel-primary">
                           <div class="panel-heading"><b>Gestión de cobro$ </b> <span id="nombreOrden" class="label label-danger"></span></div>
-                          <form id="ordenReconexion" action="" method="POST">
+                          <form id="gestionCobros" action="" method="POST">
                           <div class="panel-body">
                               <div class="col-md-12">
-                                  <button class="btn btn-default btn-sm" id="nuevaOrdenId" onclick="nuevaOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Nueva orden"><i class="far fa-file"></i></button>
-                                  <button class="btn btn-default btn-sm" id="editar" onclick="editarOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Editar orden"><i class="far fa-edit"></i></button>
+                                  <button class="btn btn-default btn-sm" id="nuevaOrdenId" onclick="nuevaOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Nueva gestión"><i class="far fa-file"></i></button>
+                                  <button class="btn btn-default btn-sm" id="editar" onclick="editarOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Editar gestión"><i class="far fa-edit"></i></button>
                                   <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Ver cliente"><i class="far fa-eye"></i></button>
-                                  <button class="btn btn-default btn-sm" type="button" id="guardar" name="btn_nuevo" onclick="guardarOrden()" data-toggle="tooltip" data-placement="bottom" title="Guardar orden" disabled><i class="far fa-save"></i></button>
+                                  <button class="btn btn-default btn-sm" type="button" id="guardar" name="btn_nuevo" onclick="guardarOrden()" data-toggle="tooltip" data-placement="bottom" title="Guardar gestión" disabled><i class="far fa-save"></i></button>
                                   <?php echo '<input style="display: none;" type="submit" id="guardar2" value="">'; ?>
                                   <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-placement="bottom" title="Buscar orden" data-toggle="modal" data-target="#buscarOrden"><i class="fas fa-search"></i></button>
                                   <button class="btn btn-default btn-sm" id="imprimir" onclick="imprimirOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Imprimir orden" ><i class="fas fa-print"></i></button>
                                   <div class="pull-right">
 
-                                      <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Estado de cuenta"><i class="far fa-file-alt"></i></button>
+                                      <!--<button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Estado de cuenta"><i class="far fa-file-alt"></i></button>
                                       <button id="btn-cable" class="btn btn-default btn-sm" onclick="ordenCable()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Orden de cable" disabled><i class="fas fa-tv"></i></button>
-                                      <button id="btn-internet" class="btn btn-default btn-sm" onclick="ordenInternet()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Orden de internet" disabled><i class="fas fa-wifi"></i></button>
+                                      <button id="btn-internet" class="btn btn-default btn-sm" onclick="ordenInternet()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Orden de internet" disabled><i class="fas fa-wifi"></i></button>-->
+                                      <button class="btn btn-success btn-circle btn-md pull-right" type="button" id="agregarGestion" name="agregarGestion" data-toggle="modal" data-target="#agregarGestionForm" disabled><i class="fas fa-plus"></i></button>
                                   </div>
                               </div>
                               <div class="form-row">
@@ -384,72 +385,85 @@
                                       <label for="codigoCliente">Código Cliente</label>
                                       <input id="codigoCliente" class="form-control input-sm" type="text" name="codigoCliente" value="<?php echo $codigoCliente; ?>" readonly>
                                   </div>
-                                  <div class="col-md-2">
+                                  <div class="col-md-2 col-sm-2">
                                       <br>
                                       <label for="fechaElaborada">Día cobro</label>
                                       <input id="diaCobro" class="form-control input-sm" type="text" name="diaCobro" value="<?php echo $diaCobro; ?>" readonly>
                                   </div>
-                                  <div class="col-md-2">
+                                  <div class="col-md-2 col-sm-2">
                                       <br>
                                       <label for="codigoCliente">Saldo</label>
                                       <input id="saldo" class="form-control input-sm" type="text" name="saldo" value="<?php echo $saldo; ?>" readonly>
                                   </div>
-                                  <div class="col-md-6">
+                                  <div class="col-md-6 col-sm-6">
                                       <br>
                                       <label for="nombreCliente">Nombre del cliente</label>
                                       <input id="nombreCliente" class="form-control input-sm" type="text" name="nombreCliente" value="<?php echo $nombreCliente; ?>" readonly>
                                   </div>
                               </div>
                               <div class="form-row">
-                                  <div class="col-md-4">
+                                  <div class="col-md-4 col-sm-4">
                                       <label for="telefonos">Telefonos</label>
                                       <input id="telefonos" class="form-control input-sm" type="text" name="telefonos" value="<?php echo $telefonos; ?>" readonly>
                                   </div>
-                                  <div class="col-md-5">
+                                  <div class="col-md-5 col-sm-5">
                                       <label for="telefonos">Cobrador</label>
-                                      <input id="cobrador" class="form-control input-sm" type="text" name="cobrador" value="<?php echo $cobrador; ?>" readonly>
+                                      <select class="form-control input-sm" name="cobrador" disabled>
+                                          <option value="" selected>Seleccionar</option>
+                                          <?php
+                                          foreach ($arrCobradores as $key) {
+                                              if ($key['codigoCobrador'] == $cobrador) {
+                                                  echo "<option value=".$key['codigoCobrador']." selected>".$key['nombreCobrador']."</option>";
+                                              }
+                                              else {
+                                                  echo "<option value=".$key['codigoCobrador'].">".$key['nombreCobrador']."</option>";
+                                              }
+
+                                          }
+                                           ?>
+                                      </select>
                                   </div>
-                                  <div class="col-md-3">
-                                      <label for="telefonos">Servicio</label>
-                                      <input id="tipoServicio" class="form-control input-sm" type="text" name="tipoServicio" value="<?php echo $tipoServicio; ?>" readonly>
+                                  <div class="col-md-3 col-sm-3">
+                                      <label for="tipoServicio">Servicio</label>
+                                      <select class="form-control input-sm" name="tipoServicio" disabled>
+                                          <option value="" selected>Seleccionar</option>
+                                          <option value="C">Cable</option>
+                                          <option value="I">Internet</option>
+                                      </select>
                                   </div>
                               </div>
                               <div class="form-row">
-                                  <div class="col-md-12">
+                                  <div class="col-md-12 col-sm-12">
                                       <label for="direccionCliente">Dirección</label>
                                       <textarea class="form-control input-sm" name="direccionCliente" rows="2" cols="40" readonly><?php echo $direccion; ?></textarea>
                                   </div>
 
                               </div>
                               <div class="form-row">
-                                  <div class="col-md-12">
+                                  <div class="col-md-12 col-sm-12">
                                       <br>
-                                      <table class="table table-bordered">
+                                      <table class="table table-bordered table-responsive">
                                           <thead>
                                               <th>Fecha</th>
                                               <th>Descripción</th>
-                                              <th>Fecha a pagar</th>
-                                              <th>Fecha suspensión</th>
+                                              <th>Pagará</th>
+                                              <th>suspensión</th>
                                               <th>Usuario</th>
                                               <th>Servicio</th>
                                           </thead>
                                           <tbody>
-                                              <tr>
-                                                  <td><input class="form-control" type="text" value="hola"></td>
-                                                  <td><input class="form-control" type="text" value="Cliente"></td>
-                                                  <td><input class="form-control" type="text" value="hola"></td>
-                                                  <td><input class="form-control" type="text" value="hola"></td>
-                                                  <td><input class="form-control" type="text" value="hola"></td>
-                                                  <td><input class="form-control" type="text" value="hola"></td>
-                                              </tr>
-                                              <tr>
-                                                  <td></td>
-                                                  <td></td>
-                                                  <td></td>
-                                                  <td></td>
-                                                  <td></td>
-                                                  <td></td>
-                                              </tr>
+                                              <?php
+                                              foreach ($arrGestion as $gestion) {
+                                                  echo '<tr>'.
+                                                      '<td width="100px"><input class="form-control input-sm" type="text" value="hola" readOnly></td>'.
+                                                      '<td><textarea cols="40" rows="2" class="form-control input-sm" type="text" value="Cliente" readOnly></textarea></td>'.
+                                                      '<td width="100px"><input class="form-control input-sm" type="text" value="hola" readOnly></td>'.
+                                                      '<td width="100px"><input class="form-control input-sm" type="text" value="hola" readOnly></td>'.
+                                                      '<td width="150px"><input class="form-control input-sm" type="text" value="hola" readOnly></td>'.
+                                                      '<td width="100px"><input class="form-control input-sm" type="text" value="hola" readOnly></td>'.
+                                                  '</tr>';
+                                              }
+                                              ?>
                                           </tbody>
                                       </table>
                                   </div>
@@ -466,31 +480,48 @@
         </div>
         <!-- /#page-wrapper -->
         <!-- Modal -->
-        <div id="buscarOrden" class="modal fade" role="dialog">
+        <div id="agregarGestionForm" class="modal fade" role="dialog">
           <div class="modal-dialog modal-lg">
 
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Buscar orden de suspensión</h4>
+                <h4 class="modal-title">Agregar gestión para este cliente</h4>
               </div>
               <div class="modal-body">
                   <div class="row">
-                      <div class="col-md-12">
-                          <input class="form-control" type="text" name="caja_busqueda" id="caja_busqueda" placeholder="N°Reconexión, Fecha orden, Código cliente, Nombre cliente, Dirección, Observaciones, Mac, Serial">
+                      <div class="col-md-4">
+                          <label for="fechaGestion">Fecha de la gestión</label>
+                          <input class="form-control input-sm" type="text" name="fechaGestion" value="">
+                      </div>
+                      <div class="col-md-4">
+                          <label for="fechaPagara">Fecha en la que pagará</label>
+                          <input class="form-control input-sm" type="text" name="fechaPagara" value="">
+                      </div>
+                      <div class="col-md-4">
+                          <label for="fechaSuspension">Fecha de suspensión</label>
+                          <input class="form-control input-sm" type="text" name="fechaSuspension" value="">
                       </div>
                   </div>
                   <div class="row">
-                      <div class="col-md-12">
-                          <div id="datos">
-
-                          </div>
+                      <div class="col-md-10">
+                          <label for="descripcion">Descripción</label>
+                          <input class="form-control input-sm" type="text" name="descripcion" value="">
+                      </div>
+                      <div class="col-md-2">
+                          <label for="tipoServicio">Tipo servicio</label>
+                          <select class="form-control input-sm" name="tipoServicio">
+                              <option value="" selected>Seleccionar</option>
+                              <option value="C">Cable</option>
+                              <option value="I">Internet</option>
+                          </select>
                       </div>
                   </div>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                <button type="submit" class="btn btn-success" data-dismiss="modal">Agregar</button>
               </div>
             </div>
 
@@ -510,8 +541,8 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="../../dist/js/sb-admin-2.js"></script>
-    <script src="js/ordenReconexion.js"></script>
-    <script src="js/searchor.js"></script>
+    <script src="js/gestionCobros.js"></script>
+    <!--<script src="js/searchges.js"></script>-->
     <script type="text/javascript">
         var permisos = '<?php echo $permisosUsuario;?>'
     </script>
@@ -520,7 +551,7 @@
         // Get the input field
         var cod = document.getElementById("codigoCliente");
 
-        $('#ordenReconexion').on('keyup keypress', function(e) {
+        $('#gestionCobros').on('keyup keypress', function(e) {
           var keyCode = e.keyCode || e.which;
           if (keyCode === 13) {
             e.preventDefault();
