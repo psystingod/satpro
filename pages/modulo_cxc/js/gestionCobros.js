@@ -83,6 +83,7 @@ function nuevaOrden(){
     //document.getElementById("hora").value = time;
     //document.getElementById("tipoOrden").value = "Técnica";
     document.getElementById("editar").disabled = true;
+    document.getElementById("agregarGestion").disabled = false;
     //document.getElementById("nombreOrden").style.display = "none";
     changeAction("nueva");
 }
@@ -106,8 +107,9 @@ function editarOrden(){
     //  document.getElementById("saldoCable").readOnly = true;
     document.getElementById("agregarGestion").disabled = false;
     document.getElementById("saldo").readOnly = true;
+    document.getElementById("diaCobro").readOnly = true;
     //document.getElementById("nodo").readOnly = true;
-    document.getElementById("codigoCliente").readOnly = true;
+    //document.getElementById("codigoCliente").readOnly = true;
     //document.getElementById("colilla").readOnly = true;
     //document.getElementById("velocidad").disabled = true;
     //document.getElementById("macModem").readOnly = true;
@@ -126,7 +128,7 @@ function changeAction(action){
             document.getElementById("gestionCobros").action = "php/nuevaGestionCobros.php";
             break;
         case "editar":
-            document.getElementById("gestionCobros").action = "php/editarGestionC.php";
+            document.getElementById("gestionCobros").action = "php/editarGestionCobros.php";
             break;
         default:
 
@@ -140,12 +142,12 @@ function imprimirOrden(){
 }
 
 function guardarOrden(){
-    var token = document.getElementById("tipoServicio").value;
-    if (token == "C" || token == "I") {
+    //var token = document.getElementById("tipoServicio").value;
+    //if (token == "C" || token == "I") {
         document.getElementById('guardar2').click();
-    }else {
-        alert("Por favor indique si la orden es de cable o de internet");
-    }
+    //}else {
+        //alert("Por favor indique si la orden es de cable o de internet");
+    //}
 }
 
 function estadoCuenta(){

@@ -14,6 +14,7 @@
     $arrayActividadesSusp = $data->getActividadesSusp();
     $arrayVelocidades = $data->getVelocidades();
     $arrCobradores = $dataInfo->getData('tbl_cobradores');
+    $arrGestion = $dataInfo->getData('tbl_gestion_clientes');
     //include database connection
     require_once('../../php/connection.php');
     $precon = new ConectionDB();
@@ -28,7 +29,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT cod_cliente, nombre, telefonos, direccion, saldoCable, mactv, saldoInternet, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, fecha_suspencion, fecha_suspencion_in, mac_modem, serie_modem, id_velocidad, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
+            $query = "SELECT cod_cliente, nombre, telefonos, direccion, saldoCable, mactv, saldoInternet, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, cod_cobrador, dire_internet, mactv, fecha_suspencion, fecha_suspencion_in, mac_modem, serie_modem, id_velocidad, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -43,9 +44,9 @@
             /****************** DATOS GENERALES ***********************/
             date_default_timezone_set('America/El_Salvador');
             $fechaOrden = date_format(date_create(date('Y-m-d')), 'd/m/Y');
-            $idOrdenReconex = "";
             $tipoOrden = "Reconexion";
             $diaCobro = $row["dia_cobro"];
+            $cobrador = $row["cod_cobrador"];
             //$ordenaSuspensionCable = "";
             //$ordenaSuspensionInter = "";
 
@@ -55,18 +56,6 @@
             $telefonos = $row["telefonos"];
             //$idMunicipio = $row["id_municipio"];
             $saldoCable = $row["saldoCable"];
-            if (strlen($row["fecha_suspencion"]) < 10) {
-                $ultSuspCable = "";
-            }else {
-                $ultSuspCable = date_format(date_create($row["fecha_suspencion"]), 'd/m/Y');
-            }
-
-            if (strlen($row["fecha_suspencion_in"]) < 10) {
-                $ultSuspInter = "";
-            }else {
-                $ultSuspInter = date_format(date_create($row["fecha_suspencion_in"]), 'd/m/Y');
-            }
-
             $mactv = $row["mactv"];
             $saldoInter = $row["saldoInternet"];
             $macModem = $row['mac_modem'];
@@ -95,15 +84,15 @@
         catch(PDOException $exception){
             die('ERROR: ' . $exception->getMessage());
         }
-    }else if(isset($_GET['nOrden'])){
+    }else if(isset($_GET['idGestion'])){
         // get passed parameter value, in this case, the record ID
         // isset() is a PHP function used to verify if a value is there or not
-        $id=isset($_GET['nOrden']) ? $_GET['nOrden'] : die('ERROR: Record no encontrado.');
+        $id=isset($_GET['idGestion']) ? $_GET['idGestion'] : die('ERROR: Record no encontrado.');
 
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT idOrdenReconex, codigoCliente, fechaOrden, tipoOrden, tipoReconexCable, tipoReconexInter, diaCobro, telefonos, nombreCliente, direccion, fechaReconexCable, saldoCable, fechaReconexInter, saldoInter, ultSuspCable, ultSuspInter, macModem, serieModem, velocidad, colilla, fechaReconex, idTecnico, mactv, observaciones, tipoServicio, creadoPor  FROM tbl_ordenes_reconexion WHERE idOrdenReconex = ? LIMIT 0,1";
+            $query = "SELECT idGestionGeneral, codigoCliente, saldoCable, saldoInternet, diaCobro, nombreCliente, direccion, telefonos, creadoPor FROM tbl_gestion_general WHERE idGestionGeneral = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -116,11 +105,7 @@
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
             /****************** DATOS GENERALES ***********************/
-            $idOrdenReconex = $row["idOrdenReconex"];
-            $fechaOrden = date_format(date_create($row["fechaOrden"]), 'd/m/Y');
-            $tipoOrden = $row["tipoOrden"];
-            $tipoReconexCable = $row["tipoReconexCable"];
-            $tipoReconexInter = $row["tipoReconexInter"];
+            $idGestion = $row["idGestionGeneral"];
             $diaCobro = $row["diaCobro"];
             $codigoCliente = $row["codigoCliente"];
             if ($codigoCliente === "00000") {
@@ -128,77 +113,28 @@
             }
             $nombreCliente = $row['nombreCliente'];
             $telefonos = $row["telefonos"];
-            //$idMunicipio = $row["idMunicipio"];
-            if (empty($row["ultSuspCable"])) {
-                $ultSuspCable = "";
-            }else {
-                $ultSuspCable = date_format(date_create($row["ultSuspCable"]), 'd/m/Y');
-            }
 
             $saldoCable = $row["saldoCable"];
+            $saldoInter = $row["saldoInternet"];
             $direccion = $row["direccion"];
-            $saldoInter = $row["saldoInter"];
-            if (empty($row["ultSuspInter"])) {
-                $ultSuspInter = "";
-            }else {
-                $ultSuspInter = date_format(date_create($row["ultSuspInter"]), 'd/m/Y');
-            }
-            $macModem = $row['macModem'];
-            $serieModem = $row['serieModem'];
-            $velocidad = $row['velocidad'];
-            $colilla = $row['colilla'];
-            if (empty($row["fechaReconexCable"])) {
-                $fechaReconexCable = "";
-            }else {
-                $fechaReconexCable = date_format(date_create($row["fechaReconexCable"]), 'd/m/Y');
-            }
+            $creadoPor = $row["creadoPor"];
 
-            if (empty($row["fechaReconexInter"])) {
-                $fechaReconexInter = "";
-            }else {
-                $fechaReconexInter = date_format(date_create($row["fechaReconexInter"]), 'd/m/Y');
-            }
-
-            //$hora = $row['hora'];
-            $idTecnico = $row['idTecnico'];
-            $mactv = $row['mactv'];
-            $observaciones = $row['observaciones'];
-            //$nodo = $row['nodo'];
-            $tipoServicio = $row['tipoServicio'];
-            $creadoPor = $row['creadoPor'];
-            //creadoPor
         }
         catch(PDOException $exception){
             die('ERROR: ' . $exception->getMessage());
         }
     }else {
-        $fechaOrden = "";
-        $idOrdenReconex = "";
+        /****************** DATOS GENERALES ***********************/
+        $idGestion = "";
+        $diaCobro = "";
+        $codigoCliente = "";
         $codigoCliente = "";
         $nombreCliente = "";
-        $diaCobro = "";
         $telefonos = "";
-        //$idMunicipio = "";
-        $saldoCable = "";
-        $direccion = "";
+
         $saldoCable = "";
         $saldoInter = "";
-        $mactv = "";
-        $macModem = "";
-        $serieModem = "";
-        $velocidad = "";
-        $colilla = "";
-        $ultSuspCable = "";
-        $ultSuspInter = "";
-        $tipoReconexCable = "";
-        $tipoReconexInter = "";
-        $fechaReconexCable = "";
-        $fechaReconexInter = "";
-        //$hora="";
-        $observaciones="";
-        //$tipoServicio = "";
-        //$creadoPor = "";
-        //$nodo="";
+        $direccion = "";
     }
 
  ?>
@@ -352,7 +288,7 @@
                         <div class="panel panel-primary">
                           <div class="panel-heading"><b>Gestión de cobro$ </b> <span id="nombreOrden" class="label label-danger"></span></div>
                           <form id="gestionCobros" action="" method="POST">
-                          <div class="panel-body">
+                          <div class="panel-body" style="background-color:#FFF9C4;">
                               <div class="col-md-12">
                                   <button class="btn btn-default btn-sm" id="nuevaOrdenId" onclick="nuevaOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Nueva gestión"><i class="far fa-file"></i></button>
                                   <button class="btn btn-default btn-sm" id="editar" onclick="editarOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Editar gestión"><i class="far fa-edit"></i></button>
@@ -373,13 +309,13 @@
                                   <div class="col-md-2">
                                       <br>
                                       <?php
-                                      if (isset($_GET['nOrden'])) {
+                                      if (isset($_GET['idGestion'])) {
                                          echo "<input id='creadoPor' class='form-control input-sm' type='hidden' name='creadoPor' value='{$creadoPor}'>";
-                                         echo "<input id='tipoServicio' class='form-control input-sm' type='hidden' name='tipoServicio' value='{$tipoServicio}' readonly>";
+                                         //echo "<input id='tipoServicio' class='form-control input-sm' type='hidden' name='tipoServicio' value='{$tipoServicio}' readonly>";
                                       }
                                       else{
                                          echo '<input id="creadoPor" class="form-control input-sm" type="hidden" name="creadoPor" value="'.$_SESSION['nombres'] . " " . $_SESSION['apellidos'].'"' . '>';
-                                         echo '<input id="tipoServicio" class="form-control input-sm" type="hidden" name="tipoServicio" value="" readonly>';
+                                         //echo '<input id="tipoServicio" class="form-control input-sm" type="hidden" name="tipoServicio" value="" readonly>';
                                       }
                                       ?>
                                       <label for="codigoCliente">Código Cliente</label>
@@ -392,10 +328,15 @@
                                   </div>
                                   <div class="col-md-2 col-sm-2">
                                       <br>
-                                      <label for="codigoCliente">Saldo</label>
-                                      <input id="saldo" class="form-control input-sm" type="text" name="saldo" value="<?php echo $saldo; ?>" readonly>
+                                      <label for="codigoCliente">Saldo cable</label>
+                                      <input id="saldoCable" class="form-control input-sm" type="text" name="saldoCable" value="<?php echo $saldoCable; ?>" readonly>
                                   </div>
-                                  <div class="col-md-6 col-sm-6">
+                                  <div class="col-md-2 col-sm-2">
+                                      <br>
+                                      <label for="codigoCliente">Saldo internet</label>
+                                      <input id="saldoInter" class="form-control input-sm" type="text" name="saldoInter" value="<?php echo $saldoInter; ?>" readonly>
+                                  </div>
+                                  <div class="col-md-4 col-sm-4">
                                       <br>
                                       <label for="nombreCliente">Nombre del cliente</label>
                                       <input id="nombreCliente" class="form-control input-sm" type="text" name="nombreCliente" value="<?php echo $nombreCliente; ?>" readonly>
@@ -406,7 +347,7 @@
                                       <label for="telefonos">Telefonos</label>
                                       <input id="telefonos" class="form-control input-sm" type="text" name="telefonos" value="<?php echo $telefonos; ?>" readonly>
                                   </div>
-                                  <div class="col-md-5 col-sm-5">
+                                  <div class="col-md-8 col-sm-8">
                                       <label for="telefonos">Cobrador</label>
                                       <select class="form-control input-sm" name="cobrador" disabled>
                                           <option value="" selected>Seleccionar</option>
@@ -423,14 +364,14 @@
                                            ?>
                                       </select>
                                   </div>
-                                  <div class="col-md-3 col-sm-3">
+                                  <!--<div class="col-md-3 col-sm-3">
                                       <label for="tipoServicio">Servicio</label>
                                       <select class="form-control input-sm" name="tipoServicio" disabled>
                                           <option value="" selected>Seleccionar</option>
                                           <option value="C">Cable</option>
                                           <option value="I">Internet</option>
                                       </select>
-                                  </div>
+                                  </div>-->
                               </div>
                               <div class="form-row">
                                   <div class="col-md-12 col-sm-12">
@@ -444,12 +385,12 @@
                                       <br>
                                       <table class="table table-bordered table-responsive">
                                           <thead>
-                                              <th>Fecha</th>
-                                              <th>Descripción</th>
-                                              <th>Pagará</th>
-                                              <th>suspensión</th>
-                                              <th>Usuario</th>
-                                              <th>Servicio</th>
+                                              <th class="active">Fecha</th>
+                                              <th class="active">Descripción</th>
+                                              <th class="active">Pagará</th>
+                                              <th class="active">suspensión</th>
+                                              <th class="active">Usuario</th>
+                                              <th class="active">Servicio</th>
                                           </thead>
                                           <tbody>
                                               <?php
@@ -567,7 +508,7 @@
         event.preventDefault();
         var codValue = document.getElementById("codigoCliente").value
         // Trigger the button element with a click
-        window.location="ordenReconexion.php?codigoCliente="+codValue;
+        window.location="gestionCobros.php?codigoCliente="+codValue;
         }
         });
     </script>
@@ -575,11 +516,11 @@
     if (isset($_GET['codigoCliente'])) {
         echo "<script>
             token = false;
-            document.getElementById('ordenReconexion').action = 'php/nuevaOrdenReconex.php';
-            document.getElementById('btn-cable').disabled = false;
-            document.getElementById('btn-internet').disabled = false;
+            document.getElementById('gestionCobros').action = 'php/nuevaGestionCobros.php';
+
             document.getElementById('guardar').disabled = false;
             document.getElementById('editar').disabled = true;
+            document.getElementById('agregarGestion').disabled = false;
             document.getElementById('imprimir').disabled = true;
             var inputs = document.getElementsByClassName('input-sm');
             for (var i = 0; i < inputs.length; i++) {
@@ -596,10 +537,10 @@
             var minutes = time.getMinutes();
             var hour = time.getHours();
             time = hour + ':' + minutes + ':' + seconds;
-            document.getElementById('hora').value = time;
+
         </script>";
     }
-    if (isset($_GET['nOrden'])) {
+    /*if (isset($_GET['idGestion'])) {
         echo "<script>
         token = true;
         var tipoServicio = document.getElementById('tipoServicio').value
@@ -610,7 +551,7 @@
         }
         </script>";
 
-    }
+    }*/
     ?>
 
 </body>
