@@ -25,6 +25,21 @@ class GetAllInfo extends ConectionDB
         }
     }
 
+    public function getDataGestion($tabla, $idGestion){
+        try {
+                $query = "SELECT * FROM $tabla WHERE idGestionGeneral=:idGestionGeneral";
+                $statement = $this->dbConnect->prepare($query);
+                $statement->bindParam(":idGestionGeneral", $idGestion);
+                $statement->execute();
+                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+                return $result;
+
+        } catch (Exception $e) {
+            print "!Error¡: " . $e->getMessage() . "</br>";
+            die();
+        }
+    }
+
     public function getDataCob($tabla, $codigoCobrador){
         try {
                 $query = "SELECT * FROM $tabla WHERE codigoCobrador = :codigoCobrador";

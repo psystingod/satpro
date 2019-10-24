@@ -14,7 +14,13 @@
     $arrayActividadesSusp = $data->getActividadesSusp();
     $arrayVelocidades = $data->getVelocidades();
     $arrCobradores = $dataInfo->getData('tbl_cobradores');
-    $arrGestion = $dataInfo->getData('tbl_gestion_clientes');
+    if (isset($_GET["idGestion"])) {
+        $idGestion = $_GET["idGestion"];
+    }else {
+        $idGestion = 0;
+    }
+
+    $arrGestion = $dataInfo->getDataGestion('tbl_gestion_clientes', $idGestion);
     //include database connection
     require_once('../../php/connection.php');
     $precon = new ConectionDB();
@@ -92,7 +98,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT idGestionGeneral, codigoCliente, saldoCable, saldoInternet, diaCobro, nombreCliente, direccion, telefonos, creadoPor FROM tbl_gestion_general WHERE idGestionGeneral = ? LIMIT 0,1";
+            $query = "SELECT idGestionGeneral, codigoCliente, saldoCable, saldoInternet, diaCobro, idCobrador, nombreCliente, direccion, telefonos, creadoPor FROM tbl_gestion_general WHERE idGestionGeneral = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -107,6 +113,7 @@
             /****************** DATOS GENERALES ***********************/
             $idGestion = $row["idGestionGeneral"];
             $diaCobro = $row["diaCobro"];
+            $cobrador = $row["idCobrador"];
             $codigoCliente = $row["codigoCliente"];
             if ($codigoCliente === "00000") {
                 $codigoCliente = "SC";
@@ -114,10 +121,22 @@
             $nombreCliente = $row['nombreCliente'];
             $telefonos = $row["telefonos"];
 
-            $saldoCable = $row["saldoCable"];
-            $saldoInter = $row["saldoInternet"];
+            //$saldoCable = $row["saldoCable"];
+            //$saldoInter = $row["saldoInternet"];
             $direccion = $row["direccion"];
             $creadoPor = $row["creadoPor"];
+
+            $query = "SELECT saldoCable,saldoInternet FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
+            $stmt = $con->prepare( $query );
+            // this is the first question mark
+            $stmt->bindParam(1, $codigoCliente);
+            // execute our query
+            $stmt->execute();
+            // store retrieved row to a variable
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            $saldoCable = $row["saldoCable"];
+            $saldoInter = $row["saldoInternet"];
 
         }
         catch(PDOException $exception){
@@ -288,7 +307,7 @@
                         <div class="panel panel-primary">
                           <div class="panel-heading"><b>Gestión de cobro$ </b> <span id="nombreOrden" class="label label-danger"></span></div>
                           <form id="gestionCobros" action="" method="POST">
-                          <div class="panel-body" style="background-color:#FFF9C4;">
+                          <div class="panel-body" style="background-color:#CFD8DC;">
                               <div class="col-md-12">
                                   <button class="btn btn-default btn-sm" id="nuevaOrdenId" onclick="nuevaOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Nueva gestión"><i class="far fa-file"></i></button>
                                   <button class="btn btn-default btn-sm" id="editar" onclick="editarOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Editar gestión"><i class="far fa-edit"></i></button>
@@ -395,14 +414,25 @@
                                           <tbody>
                                               <?php
                                               foreach ($arrGestion as $gestion) {
-                                                  echo '<tr>'.
-                                                      '<td width="100px"><input class="form-control input-sm" type="text" value="hola" readOnly></td>'.
-                                                      '<td><textarea cols="40" rows="2" class="form-control input-sm" type="text" value="Cliente" readOnly></textarea></td>'.
-                                                      '<td width="100px"><input class="form-control input-sm" type="text" value="hola" readOnly></td>'.
-                                                      '<td width="100px"><input class="form-control input-sm" type="text" value="hola" readOnly></td>'.
-                                                      '<td width="150px"><input class="form-control input-sm" type="text" value="hola" readOnly></td>'.
-                                                      '<td width="100px"><input class="form-control input-sm" type="text" value="hola" readOnly></td>'.
-                                                  '</tr>';
+                                                  if ($gestion['tipoServicio'] == "C") {
+                                                      echo '<tr class="success">'.
+                                                          '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['fechaGestion'].'" readOnly></td>'.
+                                                          '<td><textarea cols="40" rows="2" class="form-control input-sm" type="text" readOnly>'.$gestion['descripcion'].'</textarea></td>'.
+                                                          '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['fechaPagara'].'" readOnly></td>'.
+                                                          '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['fechaSuspension'].'" readOnly></td>'.
+                                                          '<td width="150px"><input class="form-control input-sm" type="text" value="'.$gestion['creadoPor'].'" readOnly></td>'.
+                                                          '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['tipoServicio'].'" readOnly></td>'.
+                                                      '</tr>';
+                                                  }else {
+                                                      echo '<tr class="info">'.
+                                                          '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['fechaGestion'].'" readOnly></td>'.
+                                                          '<td><textarea cols="40" rows="2" class="form-control input-sm" type="text" readOnly>'.$gestion['descripcion'].'</textarea></td>'.
+                                                          '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['fechaPagara'].'" readOnly></td>'.
+                                                          '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['fechaSuspension'].'" readOnly></td>'.
+                                                          '<td width="150px"><input class="form-control input-sm" type="text" value="'.$gestion['creadoPor'].'" readOnly></td>'.
+                                                          '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['tipoServicio'].'" readOnly></td>'.
+                                                      '</tr>';
+                                                  }
                                               }
                                               ?>
                                           </tbody>
@@ -431,28 +461,29 @@
                 <h4 class="modal-title">Agregar gestión para este cliente</h4>
               </div>
               <div class="modal-body">
+                  <form class="" action="<?php echo 'php/nuevaGestionCliente.php?idGestion='.$_GET['idGestion'];?>" method="POST">
                   <div class="row">
                       <div class="col-md-4">
                           <label for="fechaGestion">Fecha de la gestión</label>
-                          <input class="form-control input-sm" type="text" name="fechaGestion" value="">
+                          <input class="form-control input-sm" type="text" name="fechaGestion" value="<?php echo date('Y-m-d'); ?>">
                       </div>
                       <div class="col-md-4">
                           <label for="fechaPagara">Fecha en la que pagará</label>
-                          <input class="form-control input-sm" type="text" name="fechaPagara" value="">
+                          <input class="form-control input-sm" type="text" name="fechaPagara" value="" placeholder="Utilice formato año-mes-dia">
                       </div>
                       <div class="col-md-4">
                           <label for="fechaSuspension">Fecha de suspensión</label>
-                          <input class="form-control input-sm" type="text" name="fechaSuspension" value="">
+                          <input class="form-control input-sm" type="text" name="fechaSuspension" value="" placeholder="Utilice formato año-mes-dia">
                       </div>
                   </div>
                   <div class="row">
                       <div class="col-md-10">
                           <label for="descripcion">Descripción</label>
-                          <input class="form-control input-sm" type="text" name="descripcion" value="">
+                          <input class="form-control input-sm" type="text" name="descripcion" value="" required>
                       </div>
                       <div class="col-md-2">
                           <label for="tipoServicio">Tipo servicio</label>
-                          <select class="form-control input-sm" name="tipoServicio">
+                          <select class="form-control input-sm" name="tipoServicio" required>
                               <option value="" selected>Seleccionar</option>
                               <option value="C">Cable</option>
                               <option value="I">Internet</option>
@@ -462,8 +493,9 @@
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                <button type="submit" class="btn btn-success" data-dismiss="modal">Agregar</button>
+                <input type="submit" class="btn btn-success" value="Guardar">
               </div>
+              </form>
             </div>
 
           </div>

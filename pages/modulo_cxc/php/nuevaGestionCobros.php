@@ -31,8 +31,8 @@
                 $creadoPor = $_POST['creadoPor'];
 
                 $this->dbConnect->beginTransaction();
-                $query = "INSERT INTO tbl_gestion_general (codigoCliente,saldoCable,saldoInternet,diaCobro,nombreCliente,direccion,telefonos,creadoPor)
-                          VALUES (:codigoCliente, :saldoCable, :saldoInter, :diaCobro, :nombreCliente, :direccion, :telefonos, :creadoPor)";
+                $query = "INSERT INTO tbl_gestion_general (codigoCliente,saldoCable,saldoInternet,diaCobro,idCobrador,nombreCliente,direccion,telefonos,creadoPor)
+                          VALUES (:codigoCliente, :saldoCable, :saldoInter, :diaCobro, :idCobrador, :nombreCliente, :direccion, :telefonos, :creadoPor)";
 
                 $statement = $this->dbConnect->prepare($query);
                 $statement->execute(array(
@@ -40,6 +40,7 @@
                             ':saldoCable' => $saldoCable,
                             ':saldoInter' => $saldoInter,
                             ':diaCobro' => $diaCobro,
+                            ':idCobrador' => $idCobrador,
                             ':nombreCliente' => $nombreCliente,
                             ':direccion' => $direccion,
                             ':telefonos' => $telefonos,

@@ -115,6 +115,8 @@
                                 </li>
                                 <li><a href="#" data-toggle="modal" data-target="#eliminarAbonos">Consultar/Eliminar abonos</a>
                                 </li>
+                                <li><a href="gestionCobros.php">Gestion de cobros</a>
+                                </li>
                             </ul>';
                         }
                     }

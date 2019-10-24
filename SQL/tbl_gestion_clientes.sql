@@ -8,6 +8,7 @@ CREATE TABLE tbl_gestion_general (
   saldoCable DOUBLE NOT NULL,
   saldoInternet DOUBLE NOT NULL,
   diaCobro int(2) DEFAULT NULL,
+  idCobrador INT(2) NOT NULL,
   nombreCliente VARCHAR(50) NOT NULL,
   direccion VARCHAR(200) DEFAULT NULL,
   telefonos VARCHAR(25) NOT NULL,
@@ -28,7 +29,6 @@ CREATE TABLE tbl_gestion_clientes (
   descripcion varchar(200) DEFAULT NULL,
   fechaPagara varchar(15) DEFAULT NULL,
   fechaSuspension varchar(15) DEFAULT NULL,
-  usuario VARCHAR(30) NOT NULL,
   /*nodo VARCHAR(20) DEFAULT NULL,*/
   tipoServicio CHAR(1) NOT NULL,
   creadoPor VARCHAR(50) NOT NULL,
