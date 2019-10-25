@@ -307,14 +307,14 @@
                         <div class="panel panel-primary">
                           <div class="panel-heading"><b>Gestión de cobro$ </b> <span id="nombreOrden" class="label label-danger"></span></div>
                           <form id="gestionCobros" action="" method="POST">
-                          <div class="panel-body" style="background-color:#CFD8DC;">
+                          <div class="panel-body" style="background-color:#C5CAE9;">
                               <div class="col-md-12">
                                   <button class="btn btn-default btn-sm" id="nuevaOrdenId" onclick="nuevaOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Nueva gestión"><i class="far fa-file"></i></button>
                                   <button class="btn btn-default btn-sm" id="editar" onclick="editarOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Editar gestión"><i class="far fa-edit"></i></button>
                                   <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Ver cliente"><i class="far fa-eye"></i></button>
                                   <button class="btn btn-default btn-sm" type="button" id="guardar" name="btn_nuevo" onclick="guardarOrden()" data-toggle="tooltip" data-placement="bottom" title="Guardar gestión" disabled><i class="far fa-save"></i></button>
                                   <?php echo '<input style="display: none;" type="submit" id="guardar2" value="">'; ?>
-                                  <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-placement="bottom" title="Buscar orden" data-toggle="modal" data-target="#buscarOrden"><i class="fas fa-search"></i></button>
+                                  <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-placement="bottom" title="Buscar orden" data-toggle="modal" data-target="#buscarGestion"><i class="fas fa-search"></i></button>
                                   <button class="btn btn-default btn-sm" id="imprimir" onclick="imprimirOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Imprimir orden" ><i class="fas fa-print"></i></button>
                                   <div class="pull-right">
 
@@ -422,6 +422,7 @@
                                                           '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['fechaSuspension'].'" readOnly></td>'.
                                                           '<td width="150px"><input class="form-control input-sm" type="text" value="'.$gestion['creadoPor'].'" readOnly></td>'.
                                                           '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['tipoServicio'].'" readOnly></td>'.
+
                                                       '</tr>';
                                                   }else {
                                                       echo '<tr class="info">'.
@@ -431,6 +432,7 @@
                                                           '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['fechaSuspension'].'" readOnly></td>'.
                                                           '<td width="150px"><input class="form-control input-sm" type="text" value="'.$gestion['creadoPor'].'" readOnly></td>'.
                                                           '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['tipoServicio'].'" readOnly></td>'.
+
                                                       '</tr>';
                                                   }
                                               }
@@ -500,6 +502,37 @@
 
           </div>
         </div>
+
+        <div id="buscarGestion" class="modal fade" role="dialog">
+          <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Buscar cliente</h4>
+              </div>
+              <div class="modal-body">
+                  <div class="row">
+                      <div class="col-md-12">
+                          <input class="form-control" type="text" name="caja_busqueda" id="caja_busqueda" placeholder="Código, Nombre, direccion, Teléfono">
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-12">
+                          <div id="datos">
+
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
     </div>
     <!-- /#wrapper -->
 
@@ -515,6 +548,7 @@
     <!-- Custom Theme JavaScript -->
     <script src="../../dist/js/sb-admin-2.js"></script>
     <script src="js/gestionCobros.js"></script>
+    <script src="js/searchgb.js"></script>
     <!--<script src="js/searchges.js"></script>-->
     <script type="text/javascript">
         var permisos = '<?php echo $permisosUsuario;?>'
