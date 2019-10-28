@@ -1,4 +1,6 @@
 <?php
+require_once("Dashboard.php");
+$dashboard = new Dashboard();
 const ADMINISTRADOR = 1;
 const CONTABILIDAD = 2;
 const PLANILLA = 4;
@@ -61,7 +63,7 @@ $dashboardAdministracion = "<div id='page-wrapper'>
                         <i class='fas fa-users'></i>
                     </div></a>
                     <div class='stat-values'>
-                        <div class='value'>5160</div>
+                        <div class='value'>".$dashboard->getActiveClients()."</div>
                         <div class='name'>Clientes</div>
                     </div>
                 </div>

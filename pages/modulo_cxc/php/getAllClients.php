@@ -15,7 +15,7 @@
         public function getClients()
         {
             try {
-                    $query = "SELECT cod_cliente, nombre, numero_dui, telefonos, direccion FROM clientes LIMIT 2000";
+                    $query = "SELECT cod_cliente, nombre, numero_dui, telefonos, direccion FROM clientes";
                     $statement = $this->dbConnect->prepare($query);
                     ini_set('memory_limit', '-1');
                     $statement->execute();
