@@ -59,12 +59,12 @@ $dashboardAdministracion = "<div id='page-wrapper'>
             <h6>Vista rápida de las estadísticas de la empresa</h6>
             <div class='row estadistics'>
                 <div class='col-lg-6'>
-                    <a href='#'><div class='stat-icon btn btn-default'>
+                    <a href='#'><div class='stat-icon btn btn-default' style='color:#b71c1c'>
                         <i class='fas fa-users'></i>
                     </div></a>
                     <div class='stat-values'>
-                        <div class='value'>".$dashboard->getActiveClients()."</div>
-                        <div class='name'>Clientes</div>
+                        <div class='value'>".number_format($dashboard->getActiveClients())."</div>
+                        <div class='name'>Clientes activos</div>
                     </div>
                 </div>
                 <div class='col-lg-6'>
@@ -79,11 +79,11 @@ $dashboardAdministracion = "<div id='page-wrapper'>
             </div>
             <div class='row estadistics'>
                 <div class='col-lg-6'>
-                    <a href='#'><div class='stat-icon btn btn-default'>
+                    <a href='#'><div class='stat-icon btn btn-default' style='color:#2E7D32'>
                         <i class='fas fa-dollar-sign'></i>
                     </div></a>
                     <div class='stat-values'>
-                        <div class='value'>$400</div>
+                        <div class='value'>".number_format($dashboard->getDailyIncomes(),2)."</div>
                         <div class='name'>Ingreso diario</div>
                     </div>
                 </div>
@@ -108,11 +108,11 @@ $dashboardAdministracion = "<div id='page-wrapper'>
                     </div>
                 </div>
                 <div class='col-lg-6'>
-                    <a href='#'><div class='stat-icon btn btn-default'>
+                    <a href='#'><div class='stat-icon btn btn-default' style='color:#0097A7'>
                         <i class='fas fa-chart-line'></i>
                     </div></a>
                     <div class='stat-values'>
-                        <div class='value'>$10,000</div>
+                        <div class='value'>".number_format($dashboard->getMonthlyIncomes(),2)."</div>
                         <div class='name'>Ingresos este mes</div>
                     </div>
                 </div>

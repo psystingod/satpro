@@ -31,19 +31,49 @@
         public function getDailyIncomes()
         {
             try {
-                    $query = "SELECT SUM(cuotaCable) FROM clientes WHERE tipoServicio = 'C' AND anulada = 0";
+                    date_default_timezone_set('America/El_Salvador');
+                    $date = date("Y-m-d");
+                    $query = "SELECT SUM(cuotaCable + totalImpuesto) FROM tbl_abonos WHERE tipoServicio = 'C' AND anulada = 0 AND DAY(:fecha) = DAY(fechaAbonado)";
                     $statement = $this->dbConnect->prepare($query);
+                    $statement->bindParam(':fecha', $date);
                     //ini_set('memory_limit', '-1');
                     $statement->execute();
                     $result1 = $statement->fetchColumn();
 
-                    $query = "SELECT SUM(cuotaInternet) FROM clientes WHERE tipoServicio = 'I' AND anulada = 0";
+                    $query = "SELECT SUM(cuotaInternet + totalImpuesto) FROM tbl_abonos WHERE tipoServicio = 'I' AND anulada = 0 AND DAY(:fecha) = DAY(fechaAbonado)";
                     $statement = $this->dbConnect->prepare($query);
+                    $statement->bindParam(':fecha', $date);
+                    //ini_set('memory_limit', '-1');
+                    $statement->execute();
+                    $result2 = $statement->fetchColumn();
+
+                    return doubleval($result1)+doubleval($result2);
+
+            } catch (Exception $e) {
+                print "!Error¡: " . $e->getMessage() . "</br>";
+                die();
+            }
+        }
+        public function getMonthlyIncomes()
+        {
+            try {
+                    date_default_timezone_set('America/El_Salvador');
+                    $date = date("Y-m-d");
+                    $query = "SELECT SUM(cuotaCable + totalImpuesto) FROM tbl_abonos WHERE tipoServicio = 'C' AND anulada = 0 AND MONTH(:fecha) = MONTH(fechaAbonado)";
+                    $statement = $this->dbConnect->prepare($query);
+                    $statement->bindParam(':fecha', $date);
                     //ini_set('memory_limit', '-1');
                     $statement->execute();
                     $result1 = $statement->fetchColumn();
 
-                    return $result;
+                    $query = "SELECT SUM(cuotaInternet + totalImpuesto) FROM tbl_abonos WHERE tipoServicio = 'I' AND anulada = 0 AND MONTH(:fecha) = MONTH(fechaAbonado)";
+                    $statement = $this->dbConnect->prepare($query);
+                    $statement->bindParam(':fecha', $date);
+                    //ini_set('memory_limit', '-1');
+                    $statement->execute();
+                    $result2 = $statement->fetchColumn();
+
+                    return doubleval($result1)+doubleval($result2);
 
             } catch (Exception $e) {
                 print "!Error¡: " . $e->getMessage() . "</br>";
