@@ -42,7 +42,7 @@
                // Preparación de sentencia
                //$query = "UPDATE tbl_cargos SET anulada=1 WHERE idFactura=:id";
                $this->dbConnect->beginTransaction();
-               $query = "UPDATE tbl_cargos SET anulada=1 WHERE idFactura=:id";
+               $query = "UPDATE tbl_cargos SET cuotaCable=0.00, cuotaInternet=0.00, saldoCable=0.00, saldoInternet=0.00, cargoImpuesto=0.00, totalImpuesto=0.00, anulada=1 WHERE idFactura=:id";
                //$query = "UPDATE tbl_cargos SET anulada=1, cuotaCable=0, cuotaInternet=0, saldoCable=0, saldoInternet=0, cargoImpuesto=0, totalImpuesto=0 WHERE idFactura=:id";
                $statement = $this->dbConnect->prepare($query);
                $statement->bindValue(':id', $id, PDO::PARAM_INT);
