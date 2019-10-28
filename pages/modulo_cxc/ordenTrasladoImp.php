@@ -14,7 +14,7 @@ if (isset($_GET['nOrden'])) {
     // read current record's data
     try {
         // prepare select query
-        $query = "SELECT * FROM tbl_ordenes_reconexion WHERE idOrdenReconex = ? LIMIT 0,1";
+        $query = "SELECT * FROM tbl_ordenes_traslado WHERE idOrdenTraslado = ? LIMIT 0,1";
         $stmt = $con->prepare( $query );
 
         // this is the first question mark
@@ -28,19 +28,21 @@ if (isset($_GET['nOrden'])) {
 
         /****************** DATOS GENERALES ***********************/
         date_default_timezone_set('America/El_Salvador');
-        $fechaOrden = $row["fechaOrden"];
-        $idOrdenReconex = $row["idOrdenReconex"];
+        $fecha = $row["fechaOrden"];
+        $fechaOrden = $row["fechaTraslado"];
+        $idOrdenReconex = $row["idOrdenTraslado"];
         $tipoOrden = $row["tipoOrden"];
         $diaCobro = $row["diaCobro"];
+        $tipoOrden = $row["tipoOrden"];
         //$telefonos = $row["telefonos"];
         $codigoCliente = $row["codigoCliente"];
         $nombreCliente = $row['nombreCliente'];
         //$idMunicipio = $row["idMunicipio"];
-        $tipoReconexCable = $row["tipoReconexCable"];
-        $tipoReconexInter = $row["tipoReconexInter"];
+
         $saldoCable = $row["saldoCable"];
         $saldoInter = $row["saldoInter"];
         $direccion = $row["direccion"];
+        $direccionTraslado = $row["direccionTraslado"];
         $mactv = $row['mactv'];
         $macModem = $row['macModem'];
         $serieModem = $row['serieModem'];
@@ -49,8 +51,8 @@ if (isset($_GET['nOrden'])) {
         //$snr = $row['snr'];
         $velocidad = $row['velocidad'];
         $colilla = $row['colilla'];
-        $fechaReconexCable = $row['fechaReconexCable'];
-        $fechaReconexInter = $row['fechaReconexInter'];
+        //$fechaReconexCable = $row['fechaReconexCable'];
+        //$fechaReconexInter = $row['fechaReconexInter'];
         //$hora = $row['hora'];
         //$fechaProgramacion = $row['fechaProgramacion'];
         $idTecnico = $row['idTecnico'];
@@ -76,7 +78,7 @@ if (isset($_GET['nOrden'])) {
 <html lang="es">
     <head>
         <meta charset="utf-8">
-        <title>Ordenes de Reconexion</title>
+        <title>Ordenes de traslado</title>
         <link rel="shortcut icon" href="../../images/Cablesat.png" />
         <!-- Bootstrap Core CSS -->
         <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -117,14 +119,18 @@ if (isset($_GET['nOrden'])) {
                                 </div>
                                 <div class='row'>
                                     <div class='col-md-3 col-xs-3'>
-                                        <label for='fecha'>Fecha</label>
-                                        <input class='form-control' type='text' name='fecha' value='{$fechaOrden}'>
+                                        <label for='fecha'>Fecha elaborada</label>
+                                        <input class='form-control' type='text' name='fecha' value='{$fecha}'>
+                                    </div>
+                                    <div class='col-md-3 col-xs-3'>
+                                        <label for='fechaProgramada'>Fecha elaborada</label>
+                                        <input class='form-control' type='text' name='fechaProgramada' value='{$fechaOrden}'>
                                     </div>
                                     <div class='col-md-2 col-xs-2'>
                                         <label for='fecha'>Código</label>
                                         <input class='form-control' type='text' name='codigo' value='{$codigoCliente}'>
                                     </div>
-                                    <div class='col-md-7 col-xs-7'>
+                                    <div class='col-md-7 col-xs-4'>
                                         <label for='nombre'>Nombre</label>
                                         <input class='form-control' type='text' name='nombre' value='{$nombreCliente}'>
                                     </div>
@@ -136,13 +142,27 @@ if (isset($_GET['nOrden'])) {
                                     </div>
                                 </div>
                                 <div class='row'>
-                                    <div class='col-md-6 col-xs-6'>
-                                        <label for='trabajo'>Ttipo de reconexion</label>
-                                        <input class='form-control' type='text' name='trabajo' value='{$tipoReconexInter}'>
+                                    <div class='col-md-12 col-xs-12'>
+                                        <label for='direccion'>Dirección de traslado</label>
+                                        <input class='form-control' type='text' name='direccionTraslado' value='{$direccionTraslado}'>
                                     </div>
-                                    <div class='col-md-6 col-xs-6'>
+                                </div>
+                                <div class='row'>
+                                    <div class='col-md-4 col-xs-4'>
+                                        <label for='trabajo'>Trabajo a relizar</label>
+                                        <input class='form-control' type='text' name='trabajo' value='{$tipoOrden}'>
+                                    </div>
+                                    <div class='col-md-4 col-xs-4'>
                                         <label for='tecnico'>Técnico</label>
                                         <input class='form-control' type='text' name='tecnico' value='{$data->getTecnicoById($idTecnico)}'>
+                                    </div>
+                                    <div class='col-md-2 col-xs-2'>
+                                        <label for='tecnico'>Saldo Internet</label>
+                                        <input class='form-control' type='text' name='saldoInternet' value='{$saldoInter}'>
+                                    </div>
+                                    <div class='col-md-2 col-xs-2'>
+                                        <label for='hora'>Colilla</label>
+                                        <input class='form-control' type='text' name='colilla' value='{$colilla}'>
                                     </div>
                                 </div>
                                 <div class='row'>
@@ -203,14 +223,18 @@ if (isset($_GET['nOrden'])) {
                               </div>
                               <div class='row'>
                                   <div class='col-md-3 col-xs-3'>
-                                      <label for='fecha'>Fecha</label>
-                                      <input class='form-control' type='text' name='fecha' value='{$fechaOrden}'>
+                                      <label for='fecha'>Fecha elaborada</label>
+                                      <input class='form-control' type='text' name='fecha' value='{$fecha}'>
+                                  </div>
+                                  <div class='col-md-3 col-xs-3'>
+                                      <label for='fechaProgramada'>Fecha traslado</label>
+                                      <input class='form-control' type='text' name='fechaProgramada' value='{$fechaOrden}'>
                                   </div>
                                   <div class='col-md-2 col-xs-2'>
                                       <label for='fecha'>Código</label>
                                       <input class='form-control' type='text' name='codigo' value='{$codigoCliente}'>
                                   </div>
-                                  <div class='col-md-7 col-xs-7'>
+                                  <div class='col-md-4 col-xs-4'>
                                       <label for='nombre'>Nombre</label>
                                       <input class='form-control' type='text' name='nombre' value='{$nombreCliente}'>
                                   </div>
@@ -222,15 +246,25 @@ if (isset($_GET['nOrden'])) {
                                   </div>
                               </div>
                               <div class='row'>
-                                  <div class='col-md-3 col-xs-4'>
-                                      <label for='trabajo'>Trabajo a relizar</label>
-                                      <input class='form-control' type='text' name='trabajo' value='{$tipoReconexCable}'>
+                                  <div class='col-md-12 col-xs-12'>
+                                      <label for='direccion'>Dirección de traslado</label>
+                                      <input class='form-control' type='text' name='direccionTraslado' value='{$direccionTraslado}'>
                                   </div>
-                                  <div class='col-md-4 col-xs-5'>
+                              </div>
+                              <div class='row'>
+                                  <div class='col-md-4 col-xs-4'>
+                                      <label for='trabajo'>Trabajo a relizar</label>
+                                      <input class='form-control' type='text' name='trabajo' value='{$tipoOrden}'>
+                                  </div>
+                                  <div class='col-md-4 col-xs-4'>
                                       <label for='tecnico'>Técnico</label>
                                       <input class='form-control' type='text' name='tecnico' value='{$data->getTecnicoById($idTecnico)}'>
                                   </div>
-                                  <div class='col-md-2 col-xs-3'>
+                                  <div class='col-md-2 col-xs-2'>
+                                      <label for='tecnico'>Saldo cable</label>
+                                      <input class='form-control' type='text' name='saldoCable' value='{$saldoCable}'>
+                                  </div>
+                                  <div class='col-md-2 col-xs-2'>
                                       <label for='hora'>Colilla</label>
                                       <input class='form-control' type='text' name='colilla' value='{$colilla}'>
                                   </div>

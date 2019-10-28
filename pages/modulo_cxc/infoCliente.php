@@ -415,6 +415,8 @@
                         </li>
                         <li><a href="ordenReconexion.php" target="_blank">Ordenes de reconexión</a>
                         </li>
+                        <li><a href="ordenTraslado.php" target="_blank">Ordenes de traslado</a>
+                        </li>
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>

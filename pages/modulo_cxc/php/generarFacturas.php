@@ -48,7 +48,7 @@
                $tipoComprobante = $_POST['tipoComprobante']; // Credito fiscal o consumidor final
                $mesGenerar = $_POST['mesGenerar'];
                $diaGenerar = $_POST['diaGenerar'];
-               var_dump($diaGenerar == 05);
+               //var_dump($diaGenerar == 05);
                $anoGenerar = $_POST['anoGenerar'];
                $fechaGenerar1 = $anoGenerar."-".$mesGenerar."-".$diaGenerar; //FECHA PIVOTE
                $fechaGenerar = date_format(date_create($fechaGenerar1), 'd/m/Y');
@@ -80,7 +80,7 @@
                    $ts = "C";
                    if ($tipoComprobante == 1) {
                        // SQL query para traer datos del servicio de cable de la tabla clientes
-                       $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_departamento, numero_nit, giro, valor_cuota, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento, servicio_cortesia FROM clientes WHERE servicio_suspendido='F' AND servicio_cortesia='F' AND dia_cobro = :diaCobro AND fecha_primer_factura <= :fechaGenerar AND estado_cliente_in=3 AND tipo_comprobante =:tipoComprobante";
+                       $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_departamento, numero_nit, giro, valor_cuota, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento, servicio_cortesia FROM clientes WHERE (servicio_suspendido IS NULL OR servicio_suspendido = 'F') AND (servicio_cortesia IS NULL OR servicio_cortesia = 'F') AND dia_cobro = :diaCobro AND fecha_primer_factura <= :fechaGenerar AND estado_cliente_in=3 AND tipo_comprobante =:tipoComprobante";
                        // Preparación de sentencia
                        $statement = $this->dbConnect->prepare($query);
                        $statement->execute(
@@ -107,7 +107,7 @@
                                         ));
                                $contador = $stmt->fetchColumn();
 
-                               var_dump("vuelta: " . $vuelta++);
+                               //var_dump("vuelta: " . $vuelta++);
                                //var_dump($contador);
                                if ($contador == 0) {
                                    if ($ultimaFiscal <= $rangoHastaFiscal) {
@@ -115,7 +115,7 @@
                                        $numeroFactura = $prefijoFiscal ."-". strval($ultimaFiscal);
                                        //$this->dbConnect->beginTransaction(); $this->dbConnect->exec('LOCK TABLES tbl_cargos, tbl_abonos, clientes, tbl_facturas_config WRITE');
                                        $this->dbConnect->beginTransaction();
-                                       $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto)VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :cuotaInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto)";
+                                       $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto, exento)VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :cuotaInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :exento)";
 
                                        $stmt = $this->dbConnect->prepare($qry);
                                        $stmt->execute(
@@ -133,7 +133,9 @@
                                                  ':tipoServicio' => $ts,
                                                  ':estado' => $estado,
                                                  ':cargoImpuesto' => $cesc,
-                                                 ':totalImpuesto' => substr((($i['valor_cuota']/1.13)*$cesc),0,4)
+                                                 ':exento' => $i['exento'],
+                                                 ':totalImpuesto' => substr((($i['valor_cuota']/1.13)*$cesc),0,4),
+
                                                 ));
 
                                                 //ACA HACER ACTUALIZACION DE SALDO
@@ -169,7 +171,7 @@
 
                                                  sleep(0.5);
                                                  $this->dbConnect->commit();
-                                    header('Location: ../cxc.php?gen=yes');
+                                    //header('Location: ../cxc.php?gen=yes');
                                    }elseif($ultimaFiscal > $rangoHastaFiscal) {
                                        header('Location: ../../modulo_administrar/configFacturas.php?gen=continuecre');
                                    }
@@ -179,12 +181,12 @@
                                }
 
                            }
-                           header('Location: ../cxc.php?gen=yes');
+                           //header('Location: ../cxc.php?gen=yes');
                        }
                    }
                    elseif($tipoComprobante == 2){
                        // SQL query para traer datos del servicio de cable de la tabla clientes
-                       $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_departamento, numero_nit, giro, valor_cuota, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento, servicio_cortesia FROM clientes WHERE servicio_suspendido='F' AND servicio_cortesia='F' AND dia_cobro = :diaCobro AND fecha_primer_factura <= :fechaGenerar AND estado_cliente_in=3 AND tipo_comprobante =:tipoComprobante";
+                       $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_departamento, numero_nit, giro, valor_cuota, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento, servicio_cortesia FROM clientes WHERE (servicio_suspendido IS NULL OR servicio_suspendido = 'F') AND (servicio_cortesia IS NULL OR servicio_cortesia = 'F') AND dia_cobro = :diaCobro AND fecha_primer_factura <= :fechaGenerar AND estado_cliente_in=3 AND tipo_comprobante =:tipoComprobante";
                        // Preparación de sentencia
                        $statement = $this->dbConnect->prepare($query);
                        $statement->execute(
@@ -211,7 +213,7 @@
                                         ));
                                $contador = $stmt->fetchColumn();
 
-                               var_dump("vuelta: " . $vuelta++);
+                               //var_dump("vuelta: " . $vuelta++);
                                //var_dump($contador);
                                if ($contador == 0) {
 
@@ -219,7 +221,7 @@
                                        $ultimaFactura = $ultimaFactura + 1;
                                        $numeroFactura = strval($prefijoFactura) ."-". strval($ultimaFactura);
                                        $this->dbConnect->beginTransaction();
-                                       $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto)VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :cuotaInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto)";
+                                       $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto, exento)VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :cuotaInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :exento)";
 
                                        $stmt = $this->dbConnect->prepare($qry);
                                        $stmt->execute(
@@ -237,7 +239,9 @@
                                                  ':tipoServicio' => $ts,
                                                  ':estado' => $estado,
                                                  ':cargoImpuesto' => $cesc,
-                                                 ':totalImpuesto' => substr((($i['valor_cuota']/1.13)*$cesc),0,4)
+                                                 ':exento' => $i['exento'],
+                                                 ':totalImpuesto' => substr((($i['valor_cuota']/1.13)*$cesc),0,4),
+
                                                 ));
 
                                                 //ACA HACER ACTUALIZACION DE SALDO
@@ -273,7 +277,7 @@
 
                                                  sleep(0.5);
                                                  $this->dbConnect->commit();
-                                    header('Location: ../cxc.php?gen=yes');
+                                    //header('Location: ../cxc.php?gen=yes');
                                    }elseif($ultimaFactura > $rangoHastaFactura) {
                                        header('Location: ../../modulo_administrar/configFacturas.php?gen=continuecon');
                                    }
@@ -283,7 +287,7 @@
                                }
 
                            }
-                           header('Location: ../cxc.php?gen=yes');
+                           //header('Location: ../cxc.php?gen=yes');
                        }
                    }
                }
@@ -318,15 +322,15 @@
                                         ));
                                $contador = $stmt->fetchColumn();
 
-                               var_dump("vuelta: " . $vuelta++);
+                               //var_dump("vuelta: " . $vuelta++);
                                //var_dump($contador);
                                if ($contador == 0) {
                                    if ($ultimaFiscal <= $rangoHastaFiscal) {
                                        $ultimaFiscal = $ultimaFiscal + 1;
                                        $numeroFactura = $prefijoFiscal ."-". strval($ultimaFiscal);
                                        $this->dbConnect->beginTransaction();
-                                       $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto)VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador,
-                                              :cuotaCable, :cuotaInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto)";
+                                       $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto, exento)VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador,
+                                              :cuotaCable, :cuotaInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :exento)";
 
                                        $stmt = $this->dbConnect->prepare($qry);
                                        $stmt->execute(
@@ -344,7 +348,9 @@
                                                  ':tipoServicio' => $ts,
                                                  ':estado' => $estado,
                                                  ':cargoImpuesto' => $cesc,
-                                                 ':totalImpuesto' => substr((($i['cuota_in']/1.13)*$cesc),0,4)
+                                                 ':exento' => $i['exento'],
+                                                 ':totalImpuesto' => substr((($i['cuota_in']/1.13)*$cesc),0,4),
+
                                                 ));
 
                                                 //ACA HACER ACTUALIZACION DE SALDO
@@ -381,7 +387,7 @@
                                                  sleep(0.5);
                                                  $this->dbConnect->commit();
 
-                                    header('Location: ../cxc.php?gen=yes');
+                                    //header('Location: ../cxc.php?gen=yes');
                                    }elseif($ultimaFiscal > $rangoHastaFiscal) {
                                        header('Location: ../../modulo_administrar/configFacturas.php?gen=continuecre');
                                    }
@@ -391,7 +397,7 @@
                                }
 
                            }
-                           header('Location: ../cxc.php?gen=yes');
+                           //header('Location: ../cxc.php?gen=yes');
                        }
                    }
                    elseif($tipoComprobante == 2){
@@ -407,7 +413,7 @@
                        $result = $statement->fetchAll(PDO::FETCH_ASSOC);
 
                        if (count($result) == 0) {
-                           header('Location: ../cxc.php?gen=yes');
+                           header('Location: ../cxc.php?gen=no');
                        }
                        else {
                            $vuelta = 0;
@@ -422,15 +428,15 @@
                                         ));
                                $contador = $stmt->fetchColumn();
 
-                               var_dump("vuelta: " . $vuelta++);
+                               //var_dump("vuelta: " . $vuelta++);
                                //var_dump($contador);
                                if ($contador == 0) {
                                    if ($ultimaFactura <= $rangoHastaFactura) {
                                        $ultimaFactura = $ultimaFactura + 1;
                                        $numeroFactura = $prefijoFactura ."-". strval($ultimaFactura);
                                        $this->dbConnect->beginTransaction();
-                                       $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto)VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :cuotaInternet,
-                                               :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto)";
+                                       $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto, exento)VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :cuotaInternet,
+                                               :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :exento)";
 
                                        $stmt = $this->dbConnect->prepare($qry);
                                        $stmt->execute(
@@ -448,7 +454,9 @@
                                                  ':tipoServicio' => $ts,
                                                  ':estado' => $estado,
                                                  ':cargoImpuesto' => $cesc,
+                                                 ':exento' => $i['exento'],
                                                  ':totalImpuesto' => substr((($i['cuota_in']/1.13)*$cesc),0,4)
+
                                                 ));
 
                                                 //ACA HACER ACTUALIZACION DE SALDO
@@ -485,7 +493,7 @@
                                                  sleep(0.5);
                                                  $this->dbConnect->commit();
 
-                                    header('Location: ../cxc.php?gen=yes');
+                                    //header('Location: ../cxc.php?gen=yes');
                                    }elseif($ultimaFactura > $rangoHastaFactura) {
                                        header('Location: ../../modulo_administrar/configFacturas.php?gen=continuecon');
                                    }
@@ -495,11 +503,11 @@
                                }
 
                            }
-                           header('Location: ../cxc.php?gen=yes');
+                           //header('Location: ../cxc.php?gen=yes');
                        }
                    }
                }
-
+               header('Location: ../cxc.php?gen=yes');
            } catch (Exception $e) {
                print "!Error¡: " . $e->getMessage() . "</br>";
                die();

@@ -580,7 +580,7 @@
               <div class="modal-body">
                   <div class="row">
                       <div class="col-md-12">
-                          <input class="form-control" type="text" name="caja_busqueda" id="caja_busqueda" placeholder="N°Reconexión, Fecha orden, Código cliente, Nombre cliente, Dirección, Observaciones, Mac, Serial">
+                          <input class="form-control" type="text" name="caja_busqueda" id="caja_busqueda" placeholder="N°suspensión, Fecha orden, Código cliente, Nombre cliente, Dirección">
                       </div>
                   </div>
                   <div class="row">
@@ -613,7 +613,7 @@
     <!-- Custom Theme JavaScript -->
     <script src="../../dist/js/sb-admin-2.js"></script>
     <script src="js/ordenTraslado.js"></script>
-    <script src="js/searchor.js"></script>
+    <script src="js/searchtras.js"></script>
     <script type="text/javascript">
         // Get the input field
         var cod = document.getElementById("codigoCliente");

@@ -422,7 +422,6 @@
                                                           '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['fechaSuspension'].'" readOnly></td>'.
                                                           '<td width="150px"><input class="form-control input-sm" type="text" value="'.$gestion['creadoPor'].'" readOnly></td>'.
                                                           '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['tipoServicio'].'" readOnly></td>'.
-
                                                       '</tr>';
                                                   }else {
                                                       echo '<tr class="info">'.
@@ -432,7 +431,6 @@
                                                           '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['fechaSuspension'].'" readOnly></td>'.
                                                           '<td width="150px"><input class="form-control input-sm" type="text" value="'.$gestion['creadoPor'].'" readOnly></td>'.
                                                           '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['tipoServicio'].'" readOnly></td>'.
-
                                                       '</tr>';
                                                   }
                                               }

@@ -24,6 +24,7 @@ CREATE TABLE tbl_cargos (
   /*anticipado TINYINT(1) DEFAULT 0,*/
   cargoImpuesto DOUBLE DEFAULT NULL,
   totalImpuesto DOUBLE DEFAULT NULL,
+  exento VARCHAR(2) DEFAULT NULL,
   anulada TINYINT(1) DEFAULT FALSE,
   PRIMARY KEY(idFactura)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -57,6 +58,7 @@ CREATE TABLE tbl_abonos (
   /*anticipado TINYINT(1) DEFAULT 0,*/
   cargoImpuesto DOUBLE DEFAULT NULL,
   totalImpuesto DOUBLE DEFAULT NULL,
+  exento VARCHAR(2) DEFAULT NULL,
   anulada TINYINT(1) DEFAULT FALSE,
   idFactura INT(11) NOT NULL,
   PRIMARY KEY(idAbono)
