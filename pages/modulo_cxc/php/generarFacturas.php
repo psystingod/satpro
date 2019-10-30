@@ -23,6 +23,15 @@
 
                $cesc = floatval($result['valorImpuesto']);
 
+               // SQL query para traer datos del servicio de cable de la tabla clientes
+               $query = "SELECT valorImpuesto FROM tbl_impuestos WHERE siglasImpuesto = 'IVA'";
+               // Preparación de sentencia
+               $statement = $this->dbConnect->prepare($query);
+               $statement->execute();
+               $result = $statement->fetch(PDO::FETCH_ASSOC);
+
+               $iva = floatval($result['valorImpuesto']);
+
                //NUMERO DE FACTURA Y PREFIJO
                // SQL query para traer datos del servicio de FACTURA de la tabla clientes
                $query = "SELECT * FROM tbl_facturas_config";
@@ -134,7 +143,7 @@
                                                  ':estado' => $estado,
                                                  ':cargoImpuesto' => $cesc,
                                                  ':exento' => $i['exento'],
-                                                 ':totalImpuesto' => substr((($i['valor_cuota']/1.13)*$cesc),0,4),
+                                                 ':totalImpuesto' => substr((($i['valor_cuota']/(1 + floatval($iva)))*$cesc),0,4)
 
                                                 ));
 
@@ -240,7 +249,7 @@
                                                  ':estado' => $estado,
                                                  ':cargoImpuesto' => $cesc,
                                                  ':exento' => $i['exento'],
-                                                 ':totalImpuesto' => substr((($i['valor_cuota']/1.13)*$cesc),0,4),
+                                                 ':totalImpuesto' => substr((($i['valor_cuota']/(1 + floatval($iva)))*$cesc),0,4)
 
                                                 ));
 
@@ -349,7 +358,7 @@
                                                  ':estado' => $estado,
                                                  ':cargoImpuesto' => $cesc,
                                                  ':exento' => $i['exento'],
-                                                 ':totalImpuesto' => substr((($i['cuota_in']/1.13)*$cesc),0,4),
+                                                 ':totalImpuesto' => substr((($i['cuota_in']/(1 + floatval($iva)))*$cesc),0,4)
 
                                                 ));
 
@@ -455,7 +464,7 @@
                                                  ':estado' => $estado,
                                                  ':cargoImpuesto' => $cesc,
                                                  ':exento' => $i['exento'],
-                                                 ':totalImpuesto' => substr((($i['cuota_in']/1.13)*$cesc),0,4)
+                                                 ':totalImpuesto' => substr((($i['cuota_in']/(1 + floatval($iva)))*$cesc),0,4)
 
                                                 ));
 

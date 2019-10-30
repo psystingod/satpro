@@ -58,6 +58,8 @@ CREATE TABLE tbl_abonos (
   /*anticipado TINYINT(1) DEFAULT 0,*/
   cargoImpuesto DOUBLE DEFAULT NULL,
   totalImpuesto DOUBLE DEFAULT NULL,
+  cargoIva DOUBLE DEFAULT NULL,
+  totalIva DOUBLE DEFAULT NULL,
   exento VARCHAR(2) DEFAULT NULL,
   anulada TINYINT(1) DEFAULT FALSE,
   idFactura INT(11) NOT NULL,
