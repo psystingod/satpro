@@ -122,6 +122,7 @@
                                    if ($ultimaFiscal <= $rangoHastaFiscal) {
                                        $ultimaFiscal = $ultimaFiscal + 1;
                                        $numeroFactura = $prefijoFiscal ."-". strval($ultimaFiscal);
+                                       $implus = substr((($i['valor_cuota']/(1 + floatval($iva)))*$cesc),0,4);
                                        //$this->dbConnect->beginTransaction(); $this->dbConnect->exec('LOCK TABLES tbl_cargos, tbl_abonos, clientes, tbl_facturas_config WRITE');
                                        $this->dbConnect->beginTransaction();
                                        $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto, exento)VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :cuotaInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :exento)";
@@ -143,7 +144,7 @@
                                                  ':estado' => $estado,
                                                  ':cargoImpuesto' => $cesc,
                                                  ':exento' => $i['exento'],
-                                                 ':totalImpuesto' => substr((($i['valor_cuota']/(1 + floatval($iva)))*$cesc),0,4)
+                                                 ':totalImpuesto' => $implus
 
                                                 ));
 
@@ -229,6 +230,7 @@
                                    if ($ultimaFactura <= $rangoHastaFactura) {
                                        $ultimaFactura = $ultimaFactura + 1;
                                        $numeroFactura = strval($prefijoFactura) ."-". strval($ultimaFactura);
+                                       $implus = substr((($i['valor_cuota']/(1 + floatval($iva)))*$cesc),0,4);
                                        $this->dbConnect->beginTransaction();
                                        $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto, exento)VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :cuotaInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :exento)";
 
@@ -249,7 +251,7 @@
                                                  ':estado' => $estado,
                                                  ':cargoImpuesto' => $cesc,
                                                  ':exento' => $i['exento'],
-                                                 ':totalImpuesto' => substr((($i['valor_cuota']/(1 + floatval($iva)))*$cesc),0,4)
+                                                 ':totalImpuesto' => $implus
 
                                                 ));
 
@@ -337,6 +339,7 @@
                                    if ($ultimaFiscal <= $rangoHastaFiscal) {
                                        $ultimaFiscal = $ultimaFiscal + 1;
                                        $numeroFactura = $prefijoFiscal ."-". strval($ultimaFiscal);
+                                       $implus = substr((($i['cuota_in']/(1 + floatval($iva)))*$cesc),0,4);
                                        $this->dbConnect->beginTransaction();
                                        $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto, exento)VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador,
                                               :cuotaCable, :cuotaInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :exento)";
@@ -358,7 +361,7 @@
                                                  ':estado' => $estado,
                                                  ':cargoImpuesto' => $cesc,
                                                  ':exento' => $i['exento'],
-                                                 ':totalImpuesto' => substr((($i['cuota_in']/(1 + floatval($iva)))*$cesc),0,4)
+                                                 ':totalImpuesto' => $implus
 
                                                 ));
 
@@ -411,7 +414,7 @@
                    }
                    elseif($tipoComprobante == 2){
                        // SQL query para traer datos del servicio de cable de la tabla clientes
-                       $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_departamento, numero_nit, giro, valor_cuota, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento FROM clientes WHERE estado_cliente_in=1 AND dia_corbo_in = :diaCobro AND fecha_primer_factura_in <= :fechaGenerar AND tipo_comprobante =:tipoComprobante";
+                       $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_departamento, numero_nit, giro, valor_cuota, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento FROM clientes WHERE estado_cliente_in = 1 AND dia_corbo_in = :diaCobro AND fecha_primer_factura_in <= :fechaGenerar AND tipo_comprobante = :tipoComprobante";
                        // Preparación de sentencia
                        $statement = $this->dbConnect->prepare($query);
                        $statement->execute(
@@ -443,6 +446,8 @@
                                    if ($ultimaFactura <= $rangoHastaFactura) {
                                        $ultimaFactura = $ultimaFactura + 1;
                                        $numeroFactura = $prefijoFactura ."-". strval($ultimaFactura);
+                                       $implus = substr((($i['cuota_in']/(1 + floatval($iva)))*$cesc),0,4);
+
                                        $this->dbConnect->beginTransaction();
                                        $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto, exento)VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :cuotaInternet,
                                                :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :exento)";
@@ -464,7 +469,7 @@
                                                  ':estado' => $estado,
                                                  ':cargoImpuesto' => $cesc,
                                                  ':exento' => $i['exento'],
-                                                 ':totalImpuesto' => substr((($i['cuota_in']/(1 + floatval($iva)))*$cesc),0,4)
+                                                 ':totalImpuesto' => $implus
 
                                                 ));
 
@@ -504,7 +509,7 @@
 
                                     //header('Location: ../cxc.php?gen=yes');
                                    }elseif($ultimaFactura > $rangoHastaFactura) {
-                                       header('Location: ../../modulo_administrar/configFacturas.php?gen=continuecon');
+                                       //header('Location: ../../modulo_administrar/configFacturas.php?gen=continuecon');
                                    }
 
                                }elseif ($contador > 0) {

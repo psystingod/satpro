@@ -197,7 +197,7 @@
                        $mesCargo1 = $_POST['mesCargo1'];
                        $cesc = $_POST['porImp'];
                        $cuotaInter = $_POST['valorCuota'];
-                       $separado = substr((floatval($cuotaInter)/(1 + floatval($iva))),0,4);
+                       $separado = substr((floatval($cuotaInter)/(1 + floatval($iva))),0,3);
                        $totalIva = floatval($separado) * floatval($iva);
                        $saldoInter = $_POST['pendiente']; // Quizá update
                        $estado = "CANCELADA";
@@ -206,7 +206,7 @@
 
                        //$this->dbConnect->beginTransaction(); $this->dbConnect->exec('LOCK TABLES tbl_cargos, tbl_abonos, clientes');
                        $this->dbConnect->beginTransaction();
-                       $qry = "UPDATE tbl_cargos SET tipoFactura=:tipoComprobante, /*numeroRecibo=:numeroRecibo,*/ codigoCliente=:codigoCliente, cuotaInter=:cuotaInter, saldoInter=:saldoInter, fechaCobro=:fechaCobro, fechaVencimiento=:fechaVencimiento, fechaAbonado=:fechaAbonado, /*fechaFactura=:fechaFactura,*/ mesCargo=:mesCargo, tipoServicio=:tipoServicio, estado=:estado, cargoImpuesto=:cargoImpuesto, totalImpuesto=:totalImpuesto WHERE idFactura=:idFactura";
+                       $qry = "UPDATE tbl_cargos SET tipoFactura=:tipoComprobante, /*numeroRecibo=:numeroRecibo,*/ codigoCliente=:codigoCliente, cuotaInternet=:cuotaInter, saldoInternet=:saldoInter, fechaCobro=:fechaCobro, fechaVencimiento=:fechaVencimiento, fechaAbonado=:fechaAbonado, /*fechaFactura=:fechaFactura,*/ mesCargo=:mesCargo, tipoServicio=:tipoServicio, estado=:estado, cargoImpuesto=:cargoImpuesto, totalImpuesto=:totalImpuesto WHERE idFactura=:idFactura";
 
                        $stmt = $this->dbConnect->prepare($qry);
                        $stmt->execute(
@@ -505,7 +505,7 @@
                        $saldoCable = $_POST['pendiente']; // Quizá update
 
                        $cuotaInter = $_POST['valorCuota'];
-                       $separado = substr((floatval($cuotaInter)/(1 + floatval($iva))),0,4);
+                       $separado = substr((floatval($cuotaInter)/(1 + floatval($iva))),0,3);
                        $totalIva1 = floatval($separado) * floatval($iva);
                        $saldoInter = $_POST['pendiente']; // Quizá update
                        $estado = "CANCELADA";
@@ -603,7 +603,7 @@
                        $mesCargo2 = $_POST['mesCargo2'];
                        $cesc = $_POST['porImp'];
                        $cuotaCable = $_POST['valorCuota'];
-                       $separado = substr((floatval($cuotaInter)/(1 + floatval($iva))),0,4);
+                       $separado = substr((floatval($cuotaInter)/(1 + floatval($iva))),0,3);
                        $totalIva2 = floatval($separado) * floatval($iva);
                        $saldoCable = $_POST['pendiente']; // Quizá update
                        $estado = "CANCELADA";
@@ -761,7 +761,7 @@
                        $mesCargo1 = $_POST['meses'];
                        $cesc = $_POST['porImp'];
                        $cuotaInter = $_POST['valorCuota'];
-                       $separado = substr((floatval($cuotaInter)/(1 + floatval($iva))),0,4);
+                       $separado = substr((floatval($cuotaInter)/(1 + floatval($iva))),0,3);
                        $totalIva = floatval($separado) * floatval($iva);
                        $impSeg = $_POST['impSeg'];
                        //$saldoCable = $_POST['pendiente']; // Quizá update
