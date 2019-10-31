@@ -94,9 +94,8 @@
                        $mesCargo1 = $_POST['mesCargo1'];
                        $cesc = $_POST['porImp'];
                        $cuotaCable = $_POST['valorCuota'];
-                       $separado = substr((floatval($cuotaCable)/(1 + floatval($iva))),0,3);
-
-                       $totalIva = floatval($separado) * floatval($iva);
+                       $separado = (floatval($cuotaCable)/(1 + floatval($iva)));
+                       $totalIva = substr(floatval($separado) * floatval($iva),0,4);
                        $saldoCable = $_POST['pendiente']; // Quizá update
                        $estado = "CANCELADA";
                        var_dump("Probandollegar hasta acá2");
@@ -197,8 +196,8 @@
                        $mesCargo1 = $_POST['mesCargo1'];
                        $cesc = $_POST['porImp'];
                        $cuotaInter = $_POST['valorCuota'];
-                       $separado = substr((floatval($cuotaInter)/(1 + floatval($iva))),0,3);
-                       $totalIva = floatval($separado) * floatval($iva);
+                       $separado = (floatval($cuotaInter)/(1 + floatval($iva)));
+                       $totalIva = substr(floatval($separado) * floatval($iva),0,4);
                        $saldoInter = $_POST['pendiente']; // Quizá update
                        $estado = "CANCELADA";
                        var_dump("Probandollegar hasta acá");
@@ -304,8 +303,8 @@
                        $mesCargo1 = $_POST['mesCargo1'];
                        $cesc = $_POST['porImp'];
                        $cuotaCable = $_POST['valorCuota'];
-                       $separado = substr((floatval($cuotaCable)/(1 + floatval($iva))),0,3);
-                       $totalIva1 = floatval($separado) * floatval($iva);
+                       $separado = (floatval($cuotaCable)/(1 + floatval($iva)));
+                       $totalIva1 = substr(floatval($separado) * floatval($iva),0,4);
                        $saldoCable = $_POST['pendiente']; // Quizá update
                        $estado = "CANCELADA";
                        $impSeg = $_POST['impSeg'];
@@ -402,8 +401,8 @@
                        $mesCargo2 = $_POST['mesCargo2'];
                        $cesc = $_POST['porImp'];
                        $cuotaCable = $_POST['valorCuota'];
-                       $separado = substr((floatval($cuotaCable)/(1 + floatval($iva))),0,3);
-                       $totalIva2 = floatval($separado) * floatval($iva);
+                       $separado = (floatval($cuotaCable)/(1 + floatval($iva)));
+                       $totalIva2 = substr(floatval($separado) * floatval($iva),0,4);
                        $saldoCable = $_POST['pendiente']; // Quizá update
                        $estado = "CANCELADA";
 
@@ -505,8 +504,8 @@
                        $saldoCable = $_POST['pendiente']; // Quizá update
 
                        $cuotaInter = $_POST['valorCuota'];
-                       $separado = substr((floatval($cuotaInter)/(1 + floatval($iva))),0,3);
-                       $totalIva1 = floatval($separado) * floatval($iva);
+                       $separado = (floatval($cuotaInter)/(1 + floatval($iva)));
+                       $totalIva1 = substr(floatval($separado) * floatval($iva),0,4);
                        $saldoInter = $_POST['pendiente']; // Quizá update
                        $estado = "CANCELADA";
                        $impSeg = $_POST['impSeg'];
@@ -603,8 +602,8 @@
                        $mesCargo2 = $_POST['mesCargo2'];
                        $cesc = $_POST['porImp'];
                        $cuotaCable = $_POST['valorCuota'];
-                       $separado = substr((floatval($cuotaInter)/(1 + floatval($iva))),0,3);
-                       $totalIva2 = floatval($separado) * floatval($iva);
+                       $separado = (floatval($cuotaInter)/(1 + floatval($iva)));
+                       $totalIva2 = substr(floatval($separado) * floatval($iva),0,4);
                        $saldoCable = $_POST['pendiente']; // Quizá update
                        $estado = "CANCELADA";
 
@@ -685,8 +684,8 @@
                        $tipoServicio = strtoupper($_POST['servicio']);
                        $mesCargo1 = $_POST['meses'];
                        $cuotaCable = $_POST['valorCuota'];
-                       $separado = substr((floatval($cuotaCable)/(1 + floatval($iva))),0,3);
-                       $totalIva = floatval($separado) * floatval($iva);
+                       $separado = (floatval($cuotaCable)/(1 + floatval($iva)));
+                       $totalIva = substr(floatval($separado) * floatval($iva),0,4);
                        $cesc = $_POST['porImp'];
 
                        $impSeg = $_POST['impSeg'];
@@ -761,8 +760,8 @@
                        $mesCargo1 = $_POST['meses'];
                        $cesc = $_POST['porImp'];
                        $cuotaInter = $_POST['valorCuota'];
-                       $separado = substr((floatval($cuotaInter)/(1 + floatval($iva))),0,3);
-                       $totalIva = floatval($separado) * floatval($iva);
+                       $separado = (floatval($cuotaInter)/(1 + floatval($iva)));
+                       $totalIva = substr(floatval($separado) * floatval($iva),0,4);
                        $impSeg = $_POST['impSeg'];
                        //$saldoCable = $_POST['pendiente']; // Quizá update
                        $estado = "CANCELADA";
