@@ -117,6 +117,8 @@
                                 </li>
                                 <li><a href="gestionCobros.php">Gestion de cobros</a>
                                 </li>
+                                <li><a href="ventasManuales.php">Ventas manuales</a>
+                                </li>
                             </ul>';
                         }
                     }

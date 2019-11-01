@@ -202,5 +202,39 @@
                die();
            }
        }
+       public function getFormasPago()
+       {
+           try {
+               // SQL query para traer nombre de las categorías
+               /*$query = "SELECT * FROM tbl_formas_pago";
+               // Preparación de sentencia
+               $statement = $this->dbConnect->prepare($query);
+               $statement->execute();
+               $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+               return $result;*/
+
+           } catch (Exception $e) {
+               print "!Error¡: " . $e->getMessage() . "</br>";
+               die();
+           }
+       }
+       public function getTipoVenta()
+       {
+           try {
+               // SQL query para traer nombre de las categorías
+               /*$query = "SELECT * FROM tbl_tipos_venta";
+               // Preparación de sentencia
+               $statement = $this->dbConnect->prepare($query);
+               $statement->execute();
+               $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+               return $result;*/
+
+           } catch (Exception $e) {
+               print "!Error¡: " . $e->getMessage() . "</br>";
+               die();
+           }
+       }
    }
 ?>
