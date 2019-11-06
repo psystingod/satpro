@@ -45,8 +45,12 @@ function nuevaOrden(){
     var hour = time.getHours();
     time = hour + ':' + minutes + ':' + seconds;
 
-    today = dd + '/' + mm + '/' + yyyy;
-    document.getElementById("fechaOrden").value = today;
+    today = yyyy + '-' + mm + '-' + dd;
+    document.getElementById("fechaComprobante").value = today;
+
+    document.getElementById("totalExento").value = '0.00';
+    document.getElementById("totalAfecto").value = '0.00';
+    document.getElementById("total").value = '0.00';
 
     document.getElementById("editar").disabled = true;
     changeAction("nueva");
@@ -70,13 +74,17 @@ function editarOrden(){
     changeAction("editar");
 }
 
+function guardarOrden(){
+    document.getElementById('guardar2').click();
+}
+
 function changeAction(action){
     switch (action) {
         case "nueva":
-            document.getElementById("ordenTraslado").action = "php/nuevaOrdenTraslado.php";
+            document.getElementById("ventaManual").action = "php/nuevaVentaManual.php";
             break;
         case "editar":
-            document.getElementById("ordenTraslado").action = "php/editarOrdenTraslado.php";
+            document.getElementById("ventaManual").action = "php/editarVentaManual.php";
             break;
         default:
 

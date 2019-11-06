@@ -16,7 +16,9 @@
     $arrayFormasPago = $data->getFormasPago(); //Modificar
     $arrayTipoVenta = $data->getTipoVenta(); //Modificar
     $arrComprobantes = $dataInfo->getData('tbl_tipo_comprobante');
-    $arrPuntosVenta = $dataInfo->getData('tbl_tipo_comprobante');
+    $arrPuntosVenta = $dataInfo->getData('tbl_puntos_venta');
+    $arrFormasPago = $dataInfo->getData('tbl_formas_pago');
+    $arrTipoVenta = $dataInfo->getData('tbl_tipo_venta');
 
     //include database connection
     require_once('../../php/connection.php');
@@ -32,7 +34,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT cod_cliente, nombre, telefonos, direccion, saldoCable, mactv, saldoInternet, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, fecha_suspencion, fecha_suspencion_in, mac_modem, serie_modem, id_velocidad, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
+            $query = "SELECT cod_cliente, nombre, num_registro, numero_dui, telefonos, direccion, saldoCable, mactv, saldoInternet, id_departamento, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, fecha_suspencion, fecha_suspencion_in, mac_modem, serie_modem, id_velocidad, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -92,15 +94,15 @@
         catch(PDOException $exception){
             die('ERROR: ' . $exception->getMessage());
         }
-    }else if(isset($_GET['nOrden'])){
+    }else if(isset($_GET['nComprobante'])){
         // get passed parameter value, in this case, the record ID
         // isset() is a PHP function used to verify if a value is there or not
-        $id=isset($_GET['nOrden']) ? $_GET['nOrden'] : die('ERROR: Record no encontrado.');
+        $id=isset($_GET['nComprobante']) ? $_GET['nComprobante'] : die('ERROR: Record no encontrado.');
 
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT idOrdenTraslado, codigoCliente, fechaOrden, tipoOrden, diaCobro, telefonos, nombreCliente, direccion, direccionTraslado, idDepartamento, idMunicipio, idColonia, saldoCable, fechaTraslado, saldoInter, macModem, serieModem, velocidad, colilla, idTecnico, mactv, observaciones, tipoServicio, creadoPor  FROM tbl_ordenes_traslado WHERE idOrdenTraslado = ? LIMIT 0,1";
+            $query = "SELECT * FROM tbl_ventas_manuales WHERE numeroComprobante = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -117,6 +119,8 @@
             $fechaComprobante = date_format(date_create($row["fechaOrden"]), 'd/m/Y');
             $puntoVenta = $row["puntoVenta"];
             $prefijo = $row["prefijo"];
+            $formaPago = $row["formaPago"];
+            $tipoVenta = $row["tipoVenta"];
             $nComprobante = $row["nComprobante"];
             $codigoCliente = $row["codigoCliente"];
             $nombreCliente = $row['nombreCliente'];
@@ -356,7 +360,7 @@
                         <br>
                         <div class="panel panel-primary">
                           <div class="panel-heading"><b>Ventas manuales (factura pequeña)</b> <span id="nombreOrden" class="label label-danger"></span></div>
-                          <form id="ventaManual" action="php/ventaManual.php" method="POST">
+                          <form id="ventaManual" action="" method="POST">
                           <div class="panel-body">
                               <div class="col-md-12">
                                   <button class="btn btn-default btn-sm" id="" onclick="nuevaOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Nueva orden"><i class="far fa-file"></i></button>
@@ -366,26 +370,29 @@
                                   <?php echo '<input style="display: none;" type="submit" id="guardar2" value="">'; ?>
                                   <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-placement="bottom" title="Buscar orden" data-toggle="modal" data-target="#buscarOrden"><i class="fas fa-search"></i></button>
                                   <button class="btn btn-default btn-sm" id="imprimir" onclick="imprimirOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Imprimir orden" ><i class="fas fa-print"></i></button>
+                                  <div class="pull-right">
+                                      <label for="anular">Anular este comprobante</label>
+                                      <input type="checkbox" id="anular" name="anular" value="">
+                                  </div>
                               </div>
+
                               <div class="form-row">
                                   <div class="col-md-3">
                                       <br>
                                       <?php
-                                      if (isset($_GET['nOrden'])) {
+                                      if (isset($_GET['nComprobante'])) {
                                          echo "<input id='creadoPor' class='form-control input-sm' type='hidden' name='creadoPor' value='{$creadoPor}'>";
-                                         echo "<input id='tipoServicio' class='form-control input-sm' type='hidden' name='tipoServicio' value='{$tipoServicio}' readonly>";
                                       }
                                       else{
                                          echo '<input id="creadoPor" class="form-control input-sm" type="hidden" name="creadoPor" value="'.$_SESSION['nombres'] . " " . $_SESSION['apellidos'].'"' . '>';
-                                         echo '<input id="tipoServicio" class="form-control input-sm" type="hidden" name="tipoServicio" value="" readonly>';
                                       }
                                       ?>
                                       <label for="puntoVenta  ">Punto de venta</label>
-                                      <select id="puntoVenta" class="form-control input-sm" name="puntoVenta" disabled>
+                                      <select id="puntoVenta" class="form-control input-sm" name="puntoVenta" disabled required>
                                           <option value="">Seleccionar</option>
                                           <?php
                                           foreach ($arrPuntosVenta as $key) {
-                                              if ($key['idComprobante'] == $puntoVenta) {
+                                              if ($key['idPunto'] == $puntoVenta) {
                                                   echo "<option value=".$key['idPunto']." selected>".$key['nombrePuntoVenta']."</option>";
                                               }
                                               else {
@@ -398,7 +405,7 @@
                                   <div class="col-md-3">
                                       <br>
                                       <label for="tipoComprobante">Tipo comprobante</label>
-                                      <select id="tipoComprobante" class="form-control input-sm" name="tipoComprobante" disabled>
+                                      <select id="tipoComprobante" class="form-control input-sm" name="tipoComprobante" disabled required>
                                           <option value="">Seleccionar</option>
                                           <?php
                                           foreach ($arrComprobantes as $key) {
@@ -415,7 +422,7 @@
                                   <div class="col-md-2">
                                       <br>
                                       <label for="Prefijo">Prefijo</label>
-                                      <input id="Prefijo" class="form-control input-sm" type="text" name="Prefijo" value="<?php echo $prefijo; ?>" readonly required>
+                                      <input id="Prefijo" class="form-control input-sm" type="text" name="Prefijo" value="<?php echo $prefijo; ?>" readonly>
                                   </div>
                                   <div class="col-md-2">
                                       <br>
@@ -425,7 +432,7 @@
                                   <div class="col-md-2">
                                       <br>
                                       <label for="fechaComprobante">Fecha comprob</label>
-                                      <input class="form-control input-sm" type="text" name="fechaComprobante" value="<?php date_default_timezone_set('America/El_Salvador'); echo date('Y-m-d'); ?>" readonly>
+                                      <input class="form-control input-sm" type="text" id="fechaComprobante" name="fechaComprobante" value="<?php date_default_timezone_set('America/El_Salvador'); echo date('Y-m-d'); ?>" readonly>
                                   </div>
                               </div>
                               <div class="form-row">
@@ -484,7 +491,7 @@
                                   </div>
                                   <div class="col-md-3">
                                       <label for="doc">NIT o DUI</label>
-                                      <input id="doc" class="form-control input-sm internet" type="text" name="doc" value="<?php echo $doc ?>" readonly>
+                                      <input id="doc" class="form-control input-sm internet" type="text" name="doc" value="<?php echo $doc ?>" readonly required>
                                   </div>
                                   <div class="col-md-4">
                                       <label for="giro">Giro</label>
@@ -492,14 +499,14 @@
                                   </div>
                                   <div class="col-md-3">
                                       <label for="formaPago">Forma de pago</label>
-                                      <select id="formaPago" class="form-control input-sm internet" name="formaPago" disabled>
+                                      <select id="formaPago" class="form-control input-sm internet" name="formaPago" disabled required>
                                           <option value="" selected>Seleccionar</option>
                                           <?php
-                                          foreach ($arrayFormasPago as $key) {
-                                              if ($key['idVelocidad'] == $velocidad) {
-                                                  echo "<option value=".$key['idVelocidad']." selected>".strtoupper($key['nombreVelocidad'])."</option>";
+                                          foreach ($arrFormasPago as $key) {
+                                              if ($key['idFormaPago'] == $formaPago) {
+                                                  echo "<option value=".$key['idFormaPago']." selected>".strtoupper($key['nombreFormaPago'])."</option>";
                                               }else {
-                                                  echo "<option value=".$key['idVelocidad'].">".strtoupper($key['nombreVelocidad'])."</option>";
+                                                  echo "<option value=".$key['idFormaPago'].">".strtoupper($key['nombreFormaPago'])."</option>";
                                               }
 
                                           }
@@ -527,14 +534,14 @@
                                   </div>
                                   <div class="col-md-3">
                                       <label for="tipoVenta">Tipo venta</label>
-                                      <select id="tipoVenta" class="form-control input-sm" name="tipoVenta" disabled>
+                                      <select id="tipoVenta" class="form-control input-sm" name="tipoVenta" disabled required>
                                           <option value="" selected>Seleccionar</option>
                                           <?php
-                                          foreach ($arrayTipoVenta as $key) {
-                                              if ($key['idVenta'] == $idVenta) {
-                                                  echo "<option value='".$key['idVenta']."' selected>".$key['nombreTipo']." "."</option>";
+                                          foreach ($arrTipoVenta as $key) {
+                                              if ($key['idTipoVenta'] == $tipoVenta) {
+                                                  echo "<option value='".$key['idTipoVenta']."' selected>".$key['nombreTipo']." "."</option>";
                                               }else {
-                                                  echo "<option value='".$key['idVenta']."'>".$key['nombreTipo']." "."</option>";
+                                                  echo "<option value='".$key['idTipoVenta']."'>".$key['nombreTipo']." "."</option>";
                                               }
                                           }
                                           ?>
@@ -542,7 +549,7 @@
                                   </div>
                                   <div class="col-md-4">
                                       <label for="ventaCuentaDe">Venta a cuenta de</label>
-                                      <input id="ventaCuentaDe" class="form-control input-sm" type="text" name="ventaCuentaDe" value="<?php echo $ventaCuentaDe; ?>" readonly>
+                                      <input id="ventaCuentaDe" class="form-control input-sm" type="text" name="ventaCuentaDe" value="<?php echo $ventaCuentaDe; ?>" readonly required>
                                   </div>
                               </div>
                               <div class="form-row">
@@ -608,14 +615,6 @@
                                       <label>Traslados</label><input class="input-sm" type="checkbox" name="traslado" value="T" readonly>
                                       <label>Instalación temporal</label><input class="input-sm" type="checkbox" name="instalacionTemporal" value="T" readonly>
                                       <label>Reconexión traslados</label><input class="input-sm" type="checkbox" name="reconexionTraslado" value="T" readonly>
-                                  </div>
-                              </div>
-                              <div class="form-row">
-                                  <div class="col-md-6">
-                                      <button type="submit" class="btn btn-block btn-success">Aplicar venta</button>
-                                  </div>
-                                  <div class="col-md-6">
-                                      <a href="cxc.php" class="btn btn-block btn-danger">Cancelar</a>
                                   </div>
                               </div>
                           </div>
@@ -701,16 +700,82 @@
         }
         });
     </script>
+    <script type="text/javascript">
+        // Get the input field
+        var montoCable = document.getElementById("montoCable");
+
+        $('#ventaManual').on('keyup keypress', function(e) {
+          var keyCode = e.keyCode || e.which;
+          if (keyCode === 13) {
+            e.preventDefault();
+            return false;
+          }
+        });
+
+        // Execute a function when the user releases a key on the keyboard
+        montoCable.addEventListener("keyup", function(event) {
+        // Number 13 is the "Enter" key on the keyboard
+        if (event.keyCode === 13) {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        var montoCable = document.getElementById("montoCable").value;
+        // Trigger the button element with a click
+        totalSinIva = String(parseFloat(montoCable)/1.13).substring(0, 5);
+
+        document.getElementById("totalExento").value = '0.00';
+        var totalAfecto = document.getElementById("totalAfecto").value;
+        document.getElementById("totalAfecto").value = parseFloat(totalAfecto) + parseFloat(montoCable);
+        var cesc = document.getElementById("impuesto").value;
+        //document.getElementById("total").value = montoCable;
+        var totalImpuesto = String(parseFloat(cesc)*parseFloat(totalSinIva)).substring(0, 4);
+        var total = document.getElementById("total").value;
+        document.getElementById("total").value = String(parseFloat(total) + parseFloat(montoCable) + parseFloat(totalImpuesto)).substring(0, 5);
+        }
+        });
+    </script>
+    <script type="text/javascript">
+        // Get the input field
+        var montoInter = document.getElementById("montoInternet");
+
+        $('#ventaManual').on('keyup keypress', function(e) {
+          var keyCode = e.keyCode || e.which;
+          if (keyCode === 13) {
+            e.preventDefault();
+            return false;
+          }
+        });
+
+        // Execute a function when the user releases a key on the keyboard
+        montoInter.addEventListener("keyup", function(event) {
+        // Number 13 is the "Enter" key on the keyboard
+        if (event.keyCode === 13) {
+        // Cancel the default action, if needed
+        event.preventDefault();
+        var montoInter = document.getElementById("montoInternet").value;
+        // Trigger the button element with a click
+        totalSinIva = String(parseFloat(montoInter)/1.13).substring(0, 5);
+
+        document.getElementById("totalExento").value = '0.00';
+        var totalAfecto = document.getElementById("totalAfecto").value;
+        document.getElementById("totalAfecto").value = parseFloat(totalAfecto) + parseFloat(montoInter);
+        var cesc = document.getElementById("impuesto").value;
+        //document.getElementById("total").value = montoInter;
+        var totalImpuesto = String(parseFloat(cesc)*parseFloat(totalSinIva)).substring(0, 4);
+        var total = document.getElementById("total").value;
+        document.getElementById("total").value = String(parseFloat(total) + parseFloat(montoInter) + parseFloat(totalImpuesto)).substring(0, 5);
+        }
+        });
+    </script>
     <?php
     if (isset($_GET['codigoCliente'])) {
         echo "<script>
             token = false;
-            //document.getElementById('ordenTraslado').action = 'php/nuevaOrdenTraslado.php';
+            document.getElementById('ventaManual').action = 'php/nuevaVentaManual.php';
             //document.getElementById('btn-cable').disabled = false;
             //document.getElementById('btn-internet').disabled = false;
             document.getElementById('guardar').disabled = false;
             document.getElementById('editar').disabled = true;
-            //document.getElementById('imprimir').disabled = true;
+            document.getElementById('imprimir').disabled = true;
             var inputs = document.getElementsByClassName('input-sm');
             for (var i = 0; i < inputs.length; i++) {
                 if (inputs[i].readOnly == true) {
@@ -726,10 +791,13 @@
             var minutes = time.getMinutes();
             var hour = time.getHours();
             time = hour + ':' + minutes + ':' + seconds;
-            document.getElementById('hora').value = time;
+            //document.getElementById('hora').value = time;
+            document.getElementById('totalExento').value = '0.00';
+            document.getElementById('totalAfecto').value = '0.00';
+            document.getElementById('total').value = '0.00';
         </script>";
     }
-    if (isset($_GET['nOrden'])) {
+    /*if (isset($_GET['nOrden'])) {
         echo "<script>
         token = true;
         var tipoServicio = document.getElementById('tipoServicio').value
@@ -739,8 +807,7 @@
             document.getElementById('nombreOrden').innerHTML = 'INTERNET';
         }
         </script>";
-
-    }
+    }*/
     ?>
 
 </body>
