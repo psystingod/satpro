@@ -545,10 +545,11 @@
                                   <div class="col-md-5">
                                       <label for="zona">Zona</label>
                                       <select class="form-control input-sm" name="zona" required>
+
                                           <?php
                                           foreach ($arrCobradores as $key) {
-                                              if ($key['codigoCobrador'] == "000") {
-                                                  echo "<option value=".$key['codigoCobrador'].">".$key['nombreCobrador']."</option>";
+                                              if ($key['codigoCobrador'] == $cobrador) {
+                                                  echo "<option value=".$key['codigoCobrador']." selected>".$key['nombreCobrador']."</option>";
                                               }
                                               else {
                                                   echo "<option value=".$key['codigoCobrador'].">".$key['nombreCobrador']."</option>";
@@ -562,10 +563,11 @@
 
                                       <label for="numeroOrden">Cobrador</label>
                                       <select class="form-control input-sm" name="cobrador" required>
+                                          <option value="">Seleccionar</option>
                                           <?php
                                           foreach ($arrCobradores as $key) {
-                                              if ($key['codigoCobrador'] == $cobrador) {
-                                                  echo "<option value=".$key['codigoCobrador']." selected>".$key['nombreCobrador']."</option>";
+                                              if ($key['codigoCobrador'] == "000") {
+                                                  echo "<option value=".$key['codigoCobrador'].">".$key['nombreCobrador']."</option>";
                                               }
                                               else {
                                                   echo "<option value=".$key['codigoCobrador'].">".$key['nombreCobrador']."</option>";
@@ -642,7 +644,7 @@
                                   </div>
                                   <div class="col-md-2">
                                       <label for="totalPagar">Total a pagar</label>
-                                      <input class="form-control input-sm" type="text" id="totalPagar" name="totalPagar" value="">
+                                      <input class="form-control input-sm" type="text" id="totalPagar" name="totalPagar" value="" required>
                                   </div>
                                   <div class="col-md-2">
                                       <label for="porImp">% CESC</label>
@@ -650,7 +652,7 @@
                                   </div>
                                   <div class="col-md-2">
                                       <label for="impSeg">Impuesto seg</label>
-                                      <input type="text" class="form-control input-sm" id="impSeg" name="impSeg" value="">
+                                      <input type="text" class="form-control input-sm" id="impSeg" name="impSeg" value="" required>
                                   </div>
                                   <!--<div class="col-md-3">
 
@@ -787,7 +789,7 @@
                               <div class="form-row">
                                   <div class="col-md-8">
                                       <label for="meses">Meses</label>
-                                      <textarea id="meses" class="form-control" name="meses" rows="2" cols="40"></textarea>
+                                      <textarea id="meses" class="form-control" name="meses" rows="2" cols="40" required></textarea>
                                   </div>
                                   <div class="col-md-4">
                                       <label for="meses" style="color: brown;"></label>
@@ -844,6 +846,38 @@
         var servicio = document.getElementById("servicio").value;
         // Trigger the button element with a click
         window.location="abonos.php?codigoCliente="+codValue+"&tipoServicio="+servicio;
+        }
+        });
+    </script>
+    <script type="text/javascript">
+        // Get the input field
+        var totalP = document.getElementById("totalPagar");
+
+
+        $('#frAbonos').on('keyup keypress', function(e) {
+          var keyCode = e.keyCode || e.which;
+          if (keyCode === 13) {
+            e.preventDefault();
+            return false;
+          }
+        });
+
+        // Execute a function when the user releases a key on the keyboard
+        totalP.addEventListener("keyup", function(event) {
+        // Number 13 is the "Enter" key on the keyboard
+        if (event.keyCode === 13) {
+        // Cancel the default action, if needed
+        event.preventDefault();
+
+        var totalPagar = document.getElementById("totalPagar").value;
+        var cesc = document.getElementById("cesc").value;
+        totalSinIva = String(parseFloat(totalPagar)/1.13).substring(0, 5);
+        document.getElementById("impSeg").value = String(parseFloat(cesc)*parseFloat(totalSinIva)).substring(0, 4);
+        var impSeg = document.getElementById("impSeg").value;
+        document.getElementById("totalAbonoImpSeg").value = String(parseFloat(totalPagar)+parseFloat(impSeg)).substring(0, 5);
+        cargoTotal = document.getElementById("totalAbonoImpSeg").value = String(parseFloat(totalPagar)+parseFloat(impSeg)).substring(0, 5);
+        // Trigger the button element with a click
+        //window.location="abonos.php?codigoCliente="+codValue+"&tipoServicio="+servicio;
         }
         });
     </script>

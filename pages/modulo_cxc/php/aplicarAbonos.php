@@ -47,7 +47,7 @@
                $result = $statement->fetch(PDO::FETCH_ASSOC);
 
                // SQL query para traer datos
-               $queryCob = "SELECT codigoCobrador, prefijoCobro FROM tbl_cobradores WHERE codigoCobrador=:codigoCobrador";
+               $queryCob = "SELECT codigoCobrador, prefijoCobro, numeroAsignador, hastaNumero FROM tbl_cobradores WHERE codigoCobrador=:codigoCobrador";
                // Preparación de sentencia
                $statementCob = $this->dbConnect->prepare($queryCob);
                $statementCob->bindParam(':codigoCobrador', $cobrador);
@@ -55,6 +55,8 @@
                $resultCob = $statementCob->fetch(PDO::FETCH_ASSOC);
                $prefijoCobro = $resultCob["prefijoCobro"];
                $codigoCobrador = $resultCob["codigoCobrador"];
+               $hastaNumero = $resultCob["hastaNumero"];
+               $ultimoNumero = $resultCob["numeroAsignador"];
 
                $fechaAbonado = $_POST['fechaAbono'];
                $date = str_replace('/', '-', $fechaAbonado);
@@ -63,6 +65,9 @@
 
                if (isset($_POST['mesx1']) && !isset($_POST['mesx2'])) {
                    if ($_POST['servicio'] == "c") {
+                       /*if ($ultimoNumero <= $hastaNumero) {
+                           $ultimoNumero = $ultimoNumero + 1;
+                       }*/
                        $tipoServicio = strtoupper($_POST['servicio']);
                        $idFactura1 = $_POST['idFacturax1'];
                        $nRecibox1 = $_POST['nFacturax1'];
@@ -690,13 +695,14 @@
 
                        $impSeg = $_POST['impSeg'];
                        $nRecibo = "***"; // Número de recibo por defualt cuando se paga anticipado
-
+                       $anticipo = "T";
+                       //PENDIENTE
                        //$saldoCable = $_POST['pendiente']; // Quizá update
                        $estado = "CANCELADA";
 
                        //$this->dbConnect->beginTransaction(); $this->dbConnect->exec('LOCK TABLES tbl_cargos, tbl_abonos, clientes');
                        $this->dbConnect->beginTransaction();
-                       $qry = "INSERT INTO tbl_cargos (tipoFactura, numeroRecibo, codigoCliente, cuotaCable, fechaAbonado, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto) VALUES(:tipoComprobante, :numeroRecibo, :codigoCliente, :cuotaCable, :fechaAbonado, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto)";
+                       /*$qry = "INSERT INTO tbl_cargos (tipoFactura, numeroRecibo, codigoCliente, cuotaCable, fechaAbonado, mesCargo, tipoServicio, estado, cargoImpuesto, totalImpuesto) VALUES(:tipoComprobante, :numeroRecibo, :codigoCliente, :cuotaCable, :fechaAbonado, :mesCargo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto)";
 
                        $stmt = $this->dbConnect->prepare($qry);
                        $stmt->execute(
@@ -711,19 +717,21 @@
                                  ':cargoImpuesto' => $cesc,
                                  ':totalImpuesto' => $impSeg
                                 ));
-                       $lastId = $this->dbConnect->lastInsertId();
+                       $lastId = $this->dbConnect->lastInsertId();*/
 
-                        $qry2 = "INSERT INTO tbl_abonos (tipoFactura, numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, fechaAbonado, mesCargo, formaPago, tipoServicio, estado, cargoImpuesto, totalImpuesto, cargoIva, totalIva, idFactura) VALUES(:tipoComprobante, :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :fechaAbonado, :mesCargo, :formaPago, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva, :idFactura)";
+                        $qry2 = "INSERT INTO tbl_abonos (tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, fechaAbonado, mesCargo, anticipo, formaPago, tipoServicio, estado, cargoImpuesto, totalImpuesto, cargoIva, totalIva/*, idFactura*/) VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :fechaAbonado, :mesCargo, :anticipo, :formaPago, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva/*, :idFactura*/)";
 
                         $stmt2 = $this->dbConnect->prepare($qry2);
                         $stmt2->execute(
                             array(':tipoComprobante' => $tipoComprobante,
+                                  ':numeroFactura' => $mesCargo1,
                                   ':numeroRecibo' => $nRecibo,
                                   ':codigoCliente' => $codigoCliente,
                                   ':codigoCobrador' => $codigoCobrador,
                                   ':cuotaCable' => $cuotaCable,
                                   ':fechaAbonado' => $fechaAbonado,
                                   ':mesCargo' => $mesCargo1,
+                                  ':anticipo' => $anticipo,
                                   ':formaPago' => $formaPago,
                                   ':tipoServicio' => $tipoServicio,
                                   ':estado' => $estado,
@@ -731,7 +739,7 @@
                                   ':totalImpuesto' => $impSeg,
                                   ':cargoIva' => $iva,
                                   ':totalIva' => $totalIva,
-                                  ':idFactura' => $lastId
+                                  /*':idFactura' => $lastId*/
                                  ));
 
                         //ACA HACER ACTUALIZACION DE SALDO EN TABLA CLIENTES
@@ -766,9 +774,10 @@
                        //$saldoCable = $_POST['pendiente']; // Quizá update
                        $estado = "CANCELADA";
                        $nRecibo = "***";
+                       $anticipo = "T";
                        //$this->dbConnect->beginTransaction(); $this->dbConnect->exec('LOCK TABLES tbl_cargos, tbl_abonos, clientes');
                        $this->dbConnect->beginTransaction();
-                       $qry = "INSERT INTO tbl_cargos (tipoFactura, numeroRecibo, codigoCliente, cuotaInternet, fechaAbonado, mesCargo, estado, cargoImpuesto, totalImpuesto) VALUES(:tipoComprobante, :numeroRecibo, :codigoCliente, :cuotaInter, :fechaAbonado, :mesCargo, :estado, :cargoImpuesto, :totalImpuesto)";
+                       /*$qry = "INSERT INTO tbl_cargos (tipoFactura, numeroRecibo, codigoCliente, cuotaInternet, fechaAbonado, mesCargo, estado, cargoImpuesto, totalImpuesto) VALUES(:tipoComprobante, :numeroRecibo, :codigoCliente, :cuotaInter, :fechaAbonado, :mesCargo, :estado, :cargoImpuesto, :totalImpuesto)";
 
                        $stmt = $this->dbConnect->prepare($qry);
                        $stmt->execute(
@@ -783,19 +792,21 @@
                                  ':cargoImpuesto' => $cesc,
                                  ':totalImpuesto' => $impSeg
                                 ));
-                        $lastId = $this->dbConnect->lastInsertId();
+                        $lastId = $this->dbConnect->lastInsertId();*/
 
-                        $qry2 = "INSERT INTO tbl_abonos (tipoFactura, numeroRecibo, codigoCliente, codigoCobrador, cuotaInternet, fechaAbonado, mesCargo, formaPago, estado, cargoImpuesto, totalImpuesto, cargoIva, totalIva, idFactura) VALUES(:tipoComprobante, :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaInter, :fechaAbonado, :mesCargo, :formaPago, :estado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva, :idFactura)";
+                        $qry2 = "INSERT INTO tbl_abonos (tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cuotaInternet, fechaAbonado, mesCargo, anticipo, formaPago, estado, cargoImpuesto, totalImpuesto, cargoIva, totalIva/*, idFactura*/) VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaInter, :fechaAbonado, :mesCargo, :anticipo, :formaPago, :estado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva/*, :idFactura*/)";
 
                         $stmt2 = $this->dbConnect->prepare($qry2);
                         $stmt2->execute(
                             array(':tipoComprobante' => $tipoComprobante,
+                                  ':numeroFactura' => $mesCargo1,
                                   ':numeroRecibo' => $nRecibo,
                                   ':codigoCliente' => $codigoCliente,
                                   ':codigoCobrador' => $codigoCobrador,
                                   ':cuotaInter' => $cuotaInter,
                                   ':fechaAbonado' => $fechaAbonado,
                                   ':mesCargo' => $mesCargo1,
+                                  ':anticipo' => $anticipo,
                                   ':formaPago' => $formaPago,
                                   ':tipoServicio' => $tipoServicio,
                                   ':estado' => $estado,
@@ -803,7 +814,7 @@
                                   ':totalImpuesto' => $impSeg,
                                   ':cargoIva' => $iva,
                                   ':totalIva' => $totalIva,
-                                  ':idFactura' => $lastId
+                                  /*':idFactura' => $lastId*/
                                  ));
 
                         //ACA HACER ACTUALIZACION DE SALDO EN TABLA CLIENTES

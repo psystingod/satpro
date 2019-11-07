@@ -148,16 +148,27 @@
 
                                                 ));
 
+                                                $qry = "SELECT * FROM tbl_abonos WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
+
+                                                $stmt = $this->dbConnect->prepare($qry);
+                                                $stmt->execute(
+                                                    array(':codigoCliente' => $i["cod_cliente"],
+                                                          ':mesCargo' => $mesCargo,
+                                                          ':tipoServicio' => $ts,
+                                                         ));
+                                                $generado = $stmt->fetch(PDO::FETCH_ASSOC);
+
                                                 //ACA HACER ACTUALIZACION DE SALDO
-                                                $qry2 = "UPDATE tbl_cargos SET saldoCable= saldoCable + :cuotaCable WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
+                                                $qry2 = "UPDATE tbl_cargos SET saldoCable= saldoCable + :cuotaCable, estado=:estado WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
 
                                                 $stmt2 = $this->dbConnect->prepare($qry2);
                                                 $stmt2->execute(
                                                     array(
                                                           ':cuotaCable' => floatval($i['valor_cuota']),
-                                                          ':codigoCliente' => $i["cod_cliente"],
-                                                          ':mesCargo' => $mesCargo,
-                                                          ':tipoServicio' => $ts,
+                                                          ':codigoCliente' => $generado['codigoCliente'],
+                                                          ':mesCargo' => $generado['mesCargo'],
+                                                          ':tipoServicio' => $generado['tipoServicio'],
+                                                          ':estado' => $generado['estado']
                                                          ));
 
                                                  //ACA HACER ACTUALIZACION DE SALDO EN TABLA CLIENTES
@@ -255,16 +266,27 @@
 
                                                 ));
 
+                                                $qry = "SELECT * FROM tbl_abonos WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
+
+                                                $stmt = $this->dbConnect->prepare($qry);
+                                                $stmt->execute(
+                                                    array(':codigoCliente' => $i["cod_cliente"],
+                                                          ':mesCargo' => $mesCargo,
+                                                          ':tipoServicio' => $ts,
+                                                         ));
+                                                $generado = $stmt->fetch(PDO::FETCH_ASSOC);
+
                                                 //ACA HACER ACTUALIZACION DE SALDO
-                                                $qry2 = "UPDATE tbl_cargos SET saldoCable= saldoCable + :cuotaCable WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
+                                                $qry2 = "UPDATE tbl_cargos SET saldoCable= saldoCable + :cuotaCable, estado=:estado WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
 
                                                 $stmt2 = $this->dbConnect->prepare($qry2);
                                                 $stmt2->execute(
                                                     array(
                                                           ':cuotaCable' => floatval($i['valor_cuota']),
-                                                          ':codigoCliente' => $i["cod_cliente"],
-                                                          ':mesCargo' => $mesCargo,
-                                                          ':tipoServicio' => $ts,
+                                                          ':codigoCliente' => $generado['codigoCliente'],
+                                                          ':mesCargo' => $generado['mesCargo'],
+                                                          ':tipoServicio' => $generado['tipoServicio'],
+                                                          ':estado' => $generado['estado']
                                                          ));
 
                                                  //ACA HACER ACTUALIZACION DE SALDO EN TABLA CLIENTES
@@ -365,16 +387,27 @@
 
                                                 ));
 
+                                                $qry = "SELECT * FROM tbl_abonos WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
+
+                                                $stmt = $this->dbConnect->prepare($qry);
+                                                $stmt->execute(
+                                                    array(':codigoCliente' => $i["cod_cliente"],
+                                                          ':mesCargo' => $mesCargo,
+                                                          ':tipoServicio' => $ts,
+                                                         ));
+                                                $generado = $stmt->fetch(PDO::FETCH_ASSOC);
+
                                                 //ACA HACER ACTUALIZACION DE SALDO
-                                                $qry2 = "UPDATE tbl_cargos SET saldoInternet= saldoInternet + :cuotaInter WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
+                                                $qry2 = "UPDATE tbl_cargos SET saldoCable= saldoCable + :cuotaCable, estado=:estado WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
 
                                                 $stmt2 = $this->dbConnect->prepare($qry2);
                                                 $stmt2->execute(
                                                     array(
-                                                          ':cuotaInter' => floatval($i['cuota_in']),
-                                                          ':codigoCliente' => $i["cod_cliente"],
-                                                          ':mesCargo' => $mesCargo,
-                                                          ':tipoServicio' => $ts,
+                                                          ':cuotaCable' => floatval($i['valor_cuota']),
+                                                          ':codigoCliente' => $generado['codigoCliente'],
+                                                          ':mesCargo' => $generado['mesCargo'],
+                                                          ':tipoServicio' => $generado['tipoServicio'],
+                                                          ':estado' => $generado['estado']
                                                          ));
 
                                                  //ACA HACER ACTUALIZACION DE SALDO EN TABLA CLIENTES
@@ -473,16 +506,27 @@
 
                                                 ));
 
+                                                $qry = "SELECT * FROM tbl_abonos WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
+
+                                                $stmt = $this->dbConnect->prepare($qry);
+                                                $stmt->execute(
+                                                    array(':codigoCliente' => $i["cod_cliente"],
+                                                          ':mesCargo' => $mesCargo,
+                                                          ':tipoServicio' => $ts,
+                                                         ));
+                                                $generado = $stmt->fetch(PDO::FETCH_ASSOC);
+
                                                 //ACA HACER ACTUALIZACION DE SALDO
-                                                $qry2 = "UPDATE tbl_cargos SET saldoInternet= saldoInternet + :cuotaInter WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
+                                                $qry2 = "UPDATE tbl_cargos SET saldoCable= saldoCable + :cuotaCable, estado=:estado WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
 
                                                 $stmt2 = $this->dbConnect->prepare($qry2);
                                                 $stmt2->execute(
                                                     array(
-                                                          ':cuotaInter' => floatval($i['cuota_in']),
-                                                          ':codigoCliente' => $i["cod_cliente"],
-                                                          ':mesCargo' => $mesCargo,
-                                                          ':tipoServicio' => $ts,
+                                                          ':cuotaCable' => floatval($i['valor_cuota']),
+                                                          ':codigoCliente' => $generado['codigoCliente'],
+                                                          ':mesCargo' => $generado['mesCargo'],
+                                                          ':tipoServicio' => $generado['tipoServicio'],
+                                                          ':estado' => $generado['estado']
                                                          ));
 
                                                  //ACA HACER ACTUALIZACION DE SALDO EN TABLA CLIENTES

@@ -18,6 +18,7 @@ CREATE TABLE tbl_cargos (
   /*montoCancelado DOUBLE DEFAULT 0,*/
   fechaAbonado DATE DEFAULT NULL,
   mesCargo VARCHAR(10) DEFAULT '',
+  anticipo CHAR(1) DEFAULT '',
   formaPago VARCHAR(10) DEFAULT '',
   tipoServicio CHAR NOT NULL,
   estado VARCHAR(9) DEFAULT '',
@@ -52,6 +53,7 @@ CREATE TABLE tbl_abonos (
   /*montoCancelado DOUBLE DEFAULT 0,*/
   fechaAbonado DATE DEFAULT NULL,
   mesCargo VARCHAR(10) DEFAULT '',
+  anticipo CHAR(1) DEFAULT '',
   formaPago VARCHAR(10) DEFAULT '',
   tipoServicio CHAR NOT NULL,
   estado VARCHAR(9) DEFAULT '',
@@ -62,7 +64,7 @@ CREATE TABLE tbl_abonos (
   totalIva DOUBLE DEFAULT NULL,
   exento VARCHAR(2) DEFAULT NULL,
   anulada TINYINT(1) DEFAULT FALSE,
-  idFactura INT(11) NOT NULL,
+  idFactura INT(11) DEFAULT NULL,
   PRIMARY KEY(idAbono)
   /*FOREIGN KEY(idFactura) REFERENCES tbl_cargos(idFactura)*/
   
