@@ -85,8 +85,22 @@
             $observaciones = "";
             $nodo = "";
             $idVendedor = "";
-            $idDepartamento = $row['id_departamento'];
-            $idMunicipio = $row['id_municipio'];
+            $departamento = $row['id_departamento'];
+            $municipio = $row['id_municipio'];
+
+            $exento = "";
+            $cableExtra = "";
+            $decodificador = "";
+            $derivacion = "";
+            $instalacionTemporal = "";
+            $pagoTardio = "";
+            $reconexion = "";
+            $servicioPrestado = "";
+            $traslados = "";
+            $reconexionTraslado = "";
+            $cambioFecha = "";
+            $otros = "";
+            $proporcion = "";
 
         }
 
@@ -94,15 +108,15 @@
         catch(PDOException $exception){
             die('ERROR: ' . $exception->getMessage());
         }
-    }else if(isset($_GET['nComprobante'])){
+    }else if(isset($_GET['idVenta'])){
         // get passed parameter value, in this case, the record ID
         // isset() is a PHP function used to verify if a value is there or not
-        $id=isset($_GET['nComprobante']) ? $_GET['nComprobante'] : die('ERROR: Record no encontrado.');
+        $id=isset($_GET['idVenta']) ? $_GET['idVenta'] : die('ERROR: Record no encontrado.');
 
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT * FROM tbl_ventas_manuales WHERE numeroComprobante = ? LIMIT 0,1";
+            $query = "SELECT * FROM tbl_ventas_manuales WHERE idVenta = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -115,52 +129,54 @@
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
             /****************** DATOS GENERALES ***********************/
-            $idOrdenTraslado = $row["idOrdenTraslado"];
-            $fechaComprobante = date_format(date_create($row["fechaOrden"]), 'd/m/Y');
-            $puntoVenta = $row["puntoVenta"];
+            //$idOrdenTraslado = $row["idOrdenTraslado"];
+            $fechaComprobante = $row["fechaComprobante"];
+            $tipoComprobante = $row["tipoComprobante"];
+            $puntoVenta = $row["idPunto"];
             $prefijo = $row["prefijo"];
             $formaPago = $row["formaPago"];
             $tipoVenta = $row["tipoVenta"];
-            $nComprobante = $row["nComprobante"];
+            $nComprobante = $row["numeroComprobante"];
             $codigoCliente = $row["codigoCliente"];
             $nombreCliente = $row['nombreCliente'];
-            $tipoOrden = $row["tipoOrden"];
-            $nRegistro = $row["nRegistro"];
+            $nRegistro = $row["numeroRegistro"];
             $giro = $row["giro"];
-            $doc = $row["doc"];
+            $doc = $row["nit"];
             $codigoCliente = $row["codigoCliente"];
-            $ventaCuentaDe = $row["ventaCuentaDe"];
+            $ventaCuentaDe = $row["ventaTitulo"];
             $montoCable = $row["montoCable"];
             $montoInternet = $row["montoInternet"];
-            $totalExento = $row["totalExento"];
-            $totalAfecto = $row["totalAfecto"];
-            $iva = $row["iva"];
+            $totalExento = $row["ventaExenta"];
+            $totalAfecto = $row["ventaAfecta"];
+            $iva = $row["valorIva"];
             $impuesto = $row["impuesto"];
-            $percepcion = $row["percepcion"];
-            $total = $row["total"];
+            $total = $row["totalComprobante"];
 
-
-            $direccionTraslado = $row['direccionTraslado'];
             if ($codigoCliente === "00000") {
                 $codigoCliente = "SC";
             }
             $nombreCliente = $row['nombreCliente'];
-            $telefonos = $row["telefonos"];
-
-            $saldoCable = $row["saldoCable"];
-            $direccion = $row["direccion"];
-            $saldoInter = $row["saldoInter"];
-
-            $idDepartamento = $row['idDepartamento'];
-            $idMunicipio = $row['idMunicipio'];
-            $idColonia = $row['idColonia'];
-
-            $idTecnico = $row['idTecnico'];
-            $observaciones = $row['observaciones'];
-
-            $tipoServicio = $row['tipoServicio'];
+            $direccion = $row["direccionCliente"];
+            $departamento = $row['departamento'];
+            $municipio = $row['municipio'];
+            $vendedor = $row['codigoVendedor'];
+            $percepcion = "";
             $creadoPor = $row['creadoPor'];
 
+            /*************************CHECKBOXES*******************************/
+            $exento = $row["exento"];
+            $cableExtra = $row["cableExtra"];
+            $decodificador = $row["decodificador"];
+            $derivacion = $row["derivacion"];
+            $instalacionTemporal = $row["instalacionTemporal"];
+            $pagoTardio = $row["pagoTardio"];
+            $reconexion = $row["reconexion"];
+            $servicioPrestado = $row["servicioPrestado"];
+            $traslados = $row["traslados"];
+            $reconexionTraslado = $row["reconexionTraslado"];
+            $cambioFecha = $row["cambioFecha"];
+            $otros = $row["otros"];
+            $proporcion = $row["proporcion"];
         }
         catch(PDOException $exception){
             die('ERROR: ' . $exception->getMessage());
@@ -192,19 +208,19 @@
         $direccion = "";
         $saldoCable = "";
         $saldoInter = "";
-        $mactv = "";
-        $macModem = "";
-        $serieModem = "";
-        $velocidad = "";
-        $colilla = "";
-        $ultSuspCable = "";
-        $ultSuspInter = "";
-        $tipoReconexCable = "";
-        $tipoReconexInter = "";
-        $fechaReconexCable = "";
-        $fechaReconexInter = "";
-        //$hora="";
-        $observaciones="";
+        $exento = "";
+        $cableExtra = "";
+        $decodificador = "";
+        $derivacion = "";
+        $instalacionTemporal = "";
+        $pagoTardio = "";
+        $reconexion = "";
+        $servicioPrestado = "";
+        $traslados = "";
+        $reconexionTraslado = "";
+        $cambioFecha = "";
+        $otros = "";
+        $proporcion = "";
         //$tipoServicio = "";
         //$creadoPor = "";
         //$nodo="";
@@ -450,7 +466,7 @@
                                           <option value="">Seleccionar</option>
                                           <?php
                                           foreach ($arrayDepartamentos as $key) {
-                                              if ($key['idDepartamento'] == $idDepartamento) {
+                                              if ($key['idDepartamento'] == $departamento) {
                                                   echo "<option value='".$key['idDepartamento']."' selected>".$key['nombreDepartamento']."</option>";
                                               }else {
                                                   echo "<option value='".$key['idDepartamento']."'>".$key['nombreDepartamento']."</option>";
@@ -465,7 +481,7 @@
                                           <option value="">Seleccionar</option>
                                           <?php
                                           foreach ($arrMunicipios as $key) {
-                                              if ($key['idMunicipio'] == $idMunicipio) {
+                                              if ($key['idMunicipio'] == $municipio) {
                                                   echo "<option value='".$key['idMunicipio']."' selected>".$key['nombreMunicipio']."</option>";
                                               }else {
                                                   echo "<option value='".$key['idMunicipio']."'>".$key['nombreMunicipio']."</option>";
@@ -523,7 +539,7 @@
                                           <option value="" selected>Seleccionar</option>
                                           <?php
                                           foreach ($arrayVendedores as $key) {
-                                              if ($key['idVendedor'] == $idVendedor) {
+                                              if ($key['idVendedor'] == $vendedor) {
                                                   echo "<option value='".$key['idVendedor']."' selected>".$key['nombresVendedor']." ".$key['apellidosVendedor']."</option>";
                                               }else {
                                                   echo "<option value='".$key['idVendedor']."'>".$key['nombresVendedor']." ".$key['apellidosVendedor']."</option>";
@@ -602,19 +618,73 @@
                               </div>
                               <div class="form-row">
                                   <div class="col-md-12">
-                                      <label>Exento</label><input class="input-sm" type="checkbox" name="exento" value="T" readonly>
-                                      <label>Pago tardío</label><input class="input-sm" type="checkbox" name="pagoTardio" value="T" readonly>
-                                      <label>Cambios de fechas</label><input class="input-sm" type="checkbox" name="cambioFechas" value="T" readonly>
-                                      <label>Cable extra</label><input class="input-sm" type="checkbox" name="cableExtra" value="T" readonly>
-                                      <label>Reconexion</label><input class="input-sm" type="checkbox" name="reconexion" value="T" readonly>
-                                      <label>Otros</label><input class="input-sm" type="checkbox" name="otros" value="T" readonly>
-                                      <label>Decodificador</label><input class="input-sm" type="checkbox" name="decodificador" value="T" readonly>
-                                      <label>Servicio prestado</label><input class="input-sm" type="checkbox" name="servicioPrestado" value="T" readonly>
-                                      <label>Proporción de cuota</label><input class="input-sm" type="checkbox" name="proporcionCuota" value="T" readonly>
-                                      <label>Derivación</label><input class="input-sm" type="checkbox" name="derivacion" value="T" readonly>
-                                      <label>Traslados</label><input class="input-sm" type="checkbox" name="traslado" value="T" readonly>
-                                      <label>Instalación temporal</label><input class="input-sm" type="checkbox" name="instalacionTemporal" value="T" readonly>
-                                      <label>Reconexión traslados</label><input class="input-sm" type="checkbox" name="reconexionTraslado" value="T" readonly>
+                                      <?php
+                                      if ($exento == "T") {
+                                          echo '<label>Exento</label><input class="input-sm" type="checkbox" name="exento" value="T" readonly checked>';
+                                      }else {
+                                          echo '<label>Exento</label><input class="input-sm" type="checkbox" name="exento" value="T" readonly>';
+                                      }
+                                      if ($cableExtra == "T") {
+                                          echo '<label>Cable extra</label><input class="input-sm" type="checkbox" name="cableExtra" value="T" readonly checked>';
+                                      }else {
+                                          echo '<label>Cable extra</label><input class="input-sm" type="checkbox" name="cableExtra" value="T" readonly>';
+                                      }
+                                      if ($decodificador == "T") {
+                                          echo '<label>Decodificador</label><input class="input-sm" type="checkbox" name="decodificador" value="T" readonly checked>';
+                                      }else {
+                                          echo '<label>Decodificador</label><input class="input-sm" type="checkbox" name="decodificador" value="T" readonly>';
+                                      }
+                                      if ($derivacion == "T") {
+                                          echo '<label>Derivación</label><input class="input-sm" type="checkbox" name="derivacion" value="T" readonly checked>';
+                                      }else {
+                                          echo '<label>Derivación</label><input class="input-sm" type="checkbox" name="derivacion" value="T" readonly>';
+                                      }
+                                      if ($instalacionTemporal == "T") {
+                                          echo '<label>Instalación temporal</label><input class="input-sm" type="checkbox" name="instalacionTemporal" value="T" readonly checked>';
+                                      }else {
+                                          echo '<label>Instalación temporal</label><input class="input-sm" type="checkbox" name="instalacionTemporal" value="T" readonly>';
+                                      }
+                                      if ($pagoTardio == "T") {
+                                          echo '<label>Pago tardío</label><input class="input-sm" type="checkbox" name="pagoTardio" value="T" readonly checked>';
+                                      }else {
+                                          echo '<label>Pago tardío</label><input class="input-sm" type="checkbox" name="pagoTardio" value="T" readonly>';
+                                      }
+                                      if ($reconexion == "T") {
+                                          echo '<label>Reconexion</label><input class="input-sm" type="checkbox" name="reconexion" value="T" readonly checked>';
+                                      }else {
+                                          echo '<label>Reconexion</label><input class="input-sm" type="checkbox" name="reconexion" value="T" readonly>';
+                                      }
+                                      if ($servicioPrestado == "T") {
+                                          echo '<label>Servicio prestado</label><input class="input-sm" type="checkbox" name="servicioPrestado" value="T" readonly checked>';
+                                      }else {
+                                          echo '<label>Servicio prestado</label><input class="input-sm" type="checkbox" name="servicioPrestado" value="T" readonly>';
+                                      }
+                                      if ($traslados == "T") {
+                                          echo '<label>Traslados</label><input class="input-sm" type="checkbox" name="traslado" value="T" readonly checked>';
+                                      }else {
+                                          echo '<label>Traslados</label><input class="input-sm" type="checkbox" name="traslado" value="T" readonly>';
+                                      }
+                                      if ($reconexionTraslado == "T") {
+                                          echo '<label>Reconexión traslados</label><input class="input-sm" type="checkbox" name="reconexionTraslado" value="T" readonly checked>';
+                                      }else {
+                                          echo '<label>Reconexión traslados</label><input class="input-sm" type="checkbox" name="reconexionTraslado" value="T" readonly>';
+                                      }
+                                      if ($cambioFecha == "T") {
+                                          echo '<label>Cambios de fechas</label><input class="input-sm" type="checkbox" name="cambioFechas" value="T" readonly checked>';
+                                      }else {
+                                          echo '<label>Cambios de fechas</label><input class="input-sm" type="checkbox" name="cambioFechas" value="T" readonly>';
+                                      }
+                                      if ($otros == "T") {
+                                          echo '<label>Otros</label><input class="input-sm" type="checkbox" name="otros" value="T" readonly checked>';
+                                      }else {
+                                          echo '<label>Otros</label><input class="input-sm" type="checkbox" name="otros" value="T" readonly>';
+                                      }
+                                      if ($proporcion == "T") {
+                                          echo '<label>Proporción de cuota</label><input class="input-sm" type="checkbox" name="proporcionCuota" value="T" readonly> checked';
+                                      }else {
+                                          echo '<label>Proporción de cuota</label><input class="input-sm" type="checkbox" name="proporcionCuota" value="T" readonly>';
+                                      }
+                                      ?>
                                   </div>
                               </div>
                           </div>

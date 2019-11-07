@@ -36,6 +36,7 @@ CREATE TABLE tbl_tipo_venta (
  INSERT INTO tbl_tipo_venta (idTipoVenta, nombreTipo) VALUES(2, 'Exenta');
  INSERT INTO tbl_tipo_venta (idTipoVenta, nombreTipo) VALUES(3, 'Tasa 0');
  
+ 
   /* ****************************************************************************************** */
  
 DROP TABLE IF EXISTS tbl_ventas_manuales;
@@ -63,6 +64,7 @@ CREATE TABLE tbl_ventas_manuales (
   valorIva DOUBLE DEFAULT NULL,
   totalComprobante DOUBLE NOT NULL,
   anulado CHAR(1) DEFAULT NULL,
+  exento CHAR(1) DEFAULT NULL,
   cableExtra CHAR(1) DEFAULT NULL,
   decodificador CHAR(1) DEFAULT NULL,
   derivacion CHAR(1) DEFAULT NULL,

@@ -45,8 +45,8 @@
                 $montoInter = $_POST["montoInternet"];
                 $totalExento = $_POST["totalExento"];
                 $totalAfecto = $_POST["totalAfecto"];
-                $iva = "";
-                $impuesto = "";
+                $iva = 0.57;
+                $impuesto = 0.57;
                 $total = $_POST["total"];
 
                 if (isset($_POST["exento"])) {
@@ -139,16 +139,10 @@
                     $proporcion = null;
                 }
 
-                if (isset($_POST["puntoVenta"])) {
-                    $puntoVenta = $_POST["puntoVenta"];
-                }else {
-                    $puntoVenta = null;
-                }
-
-
                 /**************************************************************/
 
                 $creadoPor = $_POST["creadoPor"];
+
                 date_default_timezone_set('America/El_Salvador');
                 $fechaHora = date('Y-m-d');
 
@@ -157,8 +151,8 @@
                 $this->dbConnect->beginTransaction();
                 $query = "INSERT INTO tbl_ventas_manuales (prefijo,numeroComprobante,tipoComprobante,fechaComprobante,codigoCliente,nombreCliente,direccionCliente,municipio,departamento,giro,numeroRegistro,nit,formaPago,codigoVendedor,tipoVenta,ventaTitulo,ventaAfecta,ventaExenta,valorIva,
                          totalComprobante,anulado,cableExtra,decodificador,derivacion,instalacionTemporal,pagoTardio,reconexion,servicioPrestado,traslados,reconexionTraslado,cambioFecha,otros,proporcion,idPunto,creadoPor,fechaHora,montoCable,montoInternet,impuesto)
-                          VALUES (:prefijo, :numeroComprobante, :tipoComprobante, :fechaComprobante, :codigoCliente, :nombreCliente, :direccionCliente, :municipio, :departamento, :giro, :numeroRegistro, :nit, :formaPago, :codigoVendedor, :tipoVenta, :ventaTitulo, :ventaAfecta, :ventaExenta,
-                          :valorIva, :totalComprobante, :anulado, :cableExtra, :decodificador, :derivacion, :instalacionTemporal, :pagoTardio, :reconexion, :servicioPrestado, :tralados, :reconexionTraslado, :cambioFecha, :otros, :proporcion, :idPunto, :creadoPor, :fechaHora, :montoCable, :montoInter, :impuesto)";
+                          VALUES (:prefijo,:numeroComprobante,:tipoComprobante,:fechaComprobante,:codigoCliente,:nombreCliente,:direccionCliente,:municipio,:departamento,:giro,:numeroRegistro,:nit,:formaPago,:codigoVendedor,:tipoVenta,:ventaTitulo,:ventaAfecta,:ventaExenta,
+                          :valorIva,:totalComprobante,:anulado,:cableExtra,:decodificador,:derivacion,:instalacionTemporal,:pagoTardio,:reconexion,:servicioPrestado,:traslados,:reconexionTraslado,:cambioFecha,:otros,:proporcion,:idPunto,:creadoPor,:fechaHora,:montoCable,:montoInter,:impuesto)";
 
                 $statement = $this->dbConnect->prepare($query);
                 $statement->execute(array(
@@ -203,9 +197,9 @@
                             ':impuesto' => $impuesto
                             ));
                 sleep(0.5);
-                $numeroComprobante = $this->dbConnect->lastInsertId();
+                $idVenta = $this->dbConnect->lastInsertId();
                 $this->dbConnect->commit();
-                header('Location: ../ventaManual.php?nComprobante='.$numeroComprobante);
+                header('Location: ../ventasManuales.php?idVenta='.$idVenta);
 
             }
             catch (Exception $e)
