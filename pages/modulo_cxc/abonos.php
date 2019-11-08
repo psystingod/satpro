@@ -16,6 +16,8 @@
             $getSaldoReal = new GetSaldoReal();
             $saldoRealCable = $getSaldoReal->getSaldoCable($id);
             $saldoRealInter = $getSaldoReal->getSaldoInter($id);
+            var_dump($saldoRealCable);
+            var_dump($saldoRealInter);
 
             // prepare select query
             $query = "SELECT * FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
