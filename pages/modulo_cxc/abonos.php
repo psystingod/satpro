@@ -704,7 +704,7 @@
                                               <th class="bg-success"></th>
                                               <th class="bg-success"></th>
                                               <th class="bg-success">N° factura</th>
-                                              <th class="bg-success">N° recibo</th>
+                                              <!--<th class="bg-success">N° recibo</th>-->
                                               <th class="bg-success">Mes de servicio</th>
                                               <th class="bg-success">Cuota</th>
                                               <th class="bg-success">Vencimiento</th>
@@ -746,7 +746,7 @@
                                               echo "<input type='hidden' name='fechaCobrox{$counter}' value='".$key["fechaCobro"] . "' readonly>"."</td><td>";
                                               echo "<input type='hidden' name='fechaFacturax{$counter}' value='".$key["fechaFactura"] . "' readonly>"."</td><td>";
                                               echo "<input class='form-control input-sm' type='text' name='nFacturax{$counter}' value='".$key["numeroFactura"] . "' readonly>"."</td><td>";
-                                              echo "<input class='form-control input-sm' type='text' name='nRecibox{$counter}' value='".$key["numeroRecibo"] . "' pattern='.{4,}' tittle='Debe ingresar un número de recibo válido'>"."</td><td>";
+                                              /*echo "<input class='form-control input-sm' type='text' name='nRecibox{$counter}' value='".$key["numeroRecibo"] . "' pattern='.{4,}' tittle='Debe ingresar un número de recibo válido'>"."</td><td>";*/
                                               echo "<input class='form-control input-sm' type='text' id='mesCargo{$counter}' name='mesCargo{$counter}' value='".$key["mesCargo"] . "' readonly>"."</td><td>";
                                               if ($key["tipoServicio"] == 'C') {
                                                   echo "<input class='form-control input-sm' type='text' id='mesx{$counter}value' name='cuotaCable{$counter}' value='".$key["cuotaCable"] . "' readonly>"."</td><td>";
@@ -789,7 +789,7 @@
                               <div class="form-row">
                                   <div class="col-md-8">
                                       <label for="meses">Meses</label>
-                                      <textarea id="meses" class="form-control" name="meses" rows="2" cols="40" required></textarea>
+                                      <input id="meses" class="form-control" name="meses" pattern="([0-9]{2}/[0-9]{4})|([0-9]{2}/[0-9]{4},[0-9]{2}/[0-9]{4})" title="Por favor utiliza el formato mes/año por ejemplo 01/2019" required>
                                   </div>
                                   <div class="col-md-4">
                                       <label for="meses" style="color: brown;"></label>
