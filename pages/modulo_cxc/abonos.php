@@ -16,8 +16,8 @@
             $getSaldoReal = new GetSaldoReal();
             $saldoRealCable = $getSaldoReal->getSaldoCable($id);
             $saldoRealInter = $getSaldoReal->getSaldoInter($id);
-            var_dump($saldoRealCable);
-            var_dump($saldoRealInter);
+            //var_dump($saldoRealCable);
+            //var_dump($saldoRealInter);
 
             // prepare select query
             $query = "SELECT * FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
@@ -634,7 +634,7 @@
                               <div class="form-row">
                                   <div class="col-md-12">
                                       <label for="direccion">Dirección</label>
-                                      <input class="form-control input-sm" type="text" name="direccion" value="<?php echo $direccion; ?>">
+                                      <textarea class="form-control input-sm" type="text" name="direccion" value="<?php echo $direccion; ?>"><?php echo $direccion; ?></textarea>
                                   </div>
                               </div>
                               <div class="form-row">

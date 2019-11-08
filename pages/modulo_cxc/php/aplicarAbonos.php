@@ -167,8 +167,6 @@
                                       ':fechaUltPago' => $fechaAbonado
                                      ));
 
-                            sleep(0.5);
-
                             //ACA HACER ACTUALIZACION DE LA TABLA COBRADORES
                             $qry4 = "UPDATE tbl_cobradores SET numeroAsignador= :ultimoNumero WHERE codigoCobrador=:codigoCobrador";
 
@@ -179,9 +177,12 @@
                                       ':codigoCobrador' => $codigoCobrador
                                      ));
 
+                            sleep(0.5);
                             $this->dbConnect->commit();
                             header('Location: ../abonos.php?abonado=yes');
                             //$this->dbConnect->exec('UNLOCK TABLES');
+                       }else {
+                           header('Location: ../cobradores.php?codigoCobrador='.$cobrador.'&talonario=no');
                        }
 
                    }
@@ -287,8 +288,6 @@
 
                                     var_dump("Probandollegar hasta acá");
 
-                            sleep(0.5);
-
                             //ACA HACER ACTUALIZACION DE LA TABLA COBRADORES
                             $qry4 = "UPDATE tbl_cobradores SET numeroAsignador= :ultimoNumero WHERE codigoCobrador=:codigoCobrador";
 
@@ -299,9 +298,12 @@
                                       ':codigoCobrador' => $codigoCobrador
                                      ));
 
+                            sleep(0.5);
                             $this->dbConnect->commit();
                             header('Location: ../abonos.php?abonado=yes');
                             //$this->dbConnect->exec('UNLOCK TABLES');
+                       }else {
+                           header('Location: ../cobradores.php?codigoCobrador='.$cobrador.'&talonario=no');
                        }
 
                    }
@@ -419,10 +421,13 @@
                                        ':codigoCobrador' => $codigoCobrador
                                       ));
 
+                             sleep(0.5);
                              $this->dbConnect->commit();
                              header('Location: ../abonos.php?abonado=yes');
                              //$this->dbConnect->exec('UNLOCK TABLES');
 
+                       }else {
+                           header('Location: ../cobradores.php?codigoCobrador='.$cobrador.'&talonario=no');
                        }
 
                        if ($ultimoNumero <= $hastaNumero) {
@@ -536,6 +541,8 @@
                             header('Location: ../abonos.php?abonado=yes');
 
                             //$this->dbConnect->exec('UNLOCK TABLES');
+                       }else {
+                           header('Location: ../cobradores.php?codigoCobrador='.$cobrador.'&talonario=no');
                        }
 
                    }
@@ -654,6 +661,9 @@
                                        ':codigoCobrador' => $codigoCobrador
                                       ));
 
+                           }else {
+                               header('Location: ../cobradores.php?codigoCobrador='.$cobrador.'&talonario=no');
+                           }
                            /*************** MENSUALIDAD 2 ********************/
                            if ($ultimoNumero <= $hastaNumero) {
                                $ultimoNumero = $ultimoNumero + 1;
@@ -766,10 +776,9 @@
                                 header('Location: ../abonos.php?abonado=yes');
 
                                 //$this->dbConnect->exec('UNLOCK TABLES');
-
+                           }else {
+                               header('Location: ../cobradores.php?codigoCobrador='.$cobrador.'&talonario=no');
                            }
-
-                       }
                    }
                }
                else { //SIRVE PARA LOS PAGOS DE FACTURAS ANTES DE QUE SE GENEREN*****
@@ -864,6 +873,8 @@
                             header('Location: ../abonos.php?abonado=yes');
 
                             //$this->dbConnect->exec('UNLOCK TABLES');
+                       }else {
+                           header('Location: ../cobradores.php?codigoCobrador='.$cobrador.'&talonario=no');
                        }
 
                    }
@@ -956,6 +967,8 @@
                             header('Location: ../abonos.php?abonado=yes');
 
                             //$this->dbConnect->exec('UNLOCK TABLES');
+                       }else {
+                           header('Location: ../cobradores.php?codigoCobrador='.$cobrador.'&talonario=no');
                        }
 
                    }

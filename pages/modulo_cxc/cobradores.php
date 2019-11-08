@@ -196,6 +196,15 @@
                                   ';
                               }
                           }
+                          if (isset($_GET['talonario'])) {
+                              if ($_GET['talonario'] == "no") {
+                                  echo '
+                                  <script>
+                                  alert("NOTA: El cobrador que ha seleccionado llegó a su límite de comprobantes emitidos, favor asignar un nuevo rango.");
+                                  </script>
+                                  ';
+                              }
+                          }
                           ?>
                       <form id="frmCob" class="" action="" method="POST">
                           <div class="row">
