@@ -871,7 +871,7 @@
 
         var totalPagar = document.getElementById("totalPagar").value;
         var cesc = document.getElementById("cesc").value;
-        totalSinIva = String(parseFloat(totalPagar)/1.13).substring(0, 5);
+        totalSinIva = String(parseFloat(totalPagar)/1.13);//.substring(0, 5);
         document.getElementById("impSeg").value = String(parseFloat(cesc)*parseFloat(totalSinIva)).substring(0, 4);
         var impSeg = document.getElementById("impSeg").value;
         document.getElementById("totalAbonoImpSeg").value = String(parseFloat(totalPagar)+parseFloat(impSeg)).substring(0, 5);
