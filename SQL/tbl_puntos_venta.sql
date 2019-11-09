@@ -63,7 +63,6 @@ CREATE TABLE tbl_ventas_manuales (
   ventaExenta DOUBLE DEFAULT NULL,
   valorIva DOUBLE DEFAULT NULL,
   totalComprobante DOUBLE NOT NULL,
-  anulado CHAR(1) DEFAULT NULL,
   exento CHAR(1) DEFAULT NULL,
   cableExtra CHAR(1) DEFAULT NULL,
   decodificador CHAR(1) DEFAULT NULL,
@@ -83,6 +82,7 @@ CREATE TABLE tbl_ventas_manuales (
   montoCable DOUBLE NOT NULL,
   montoInternet DOUBLE NOT NULL,
   impuesto DOUBLE NOT NULL,
+  anulada TINYINT(1) NOT NULL,
   PRIMARY KEY(idVenta)
   
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

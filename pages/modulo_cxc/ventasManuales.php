@@ -384,7 +384,7 @@
                                   <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Ver cliente"><i class="far fa-eye"></i></button>
                                   <button class="btn btn-default btn-sm" type="button" id="guardar" name="btn_nuevo" onclick="guardarOrden()" data-toggle="tooltip" data-placement="bottom" title="Guardar orden" disabled><i class="far fa-save"></i></button>
                                   <?php echo '<input style="display: none;" type="submit" id="guardar2" value="">'; ?>
-                                  <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-placement="bottom" title="Buscar orden" data-toggle="modal" data-target="#buscarOrden"><i class="fas fa-search"></i></button>
+                                  <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-placement="bottom" title="Buscar orden" data-toggle="modal" data-target="#buscarVentaManual"><i class="fas fa-search"></i></button>
                                   <button class="btn btn-default btn-sm" id="imprimir" onclick="imprimirOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Imprimir orden" ><i class="fas fa-print"></i></button>
                                   <div class="pull-right">
                                       <label for="anular">Anular este comprobante</label>
@@ -699,19 +699,19 @@
         </div>
         <!-- /#page-wrapper -->
         <!-- Modal -->
-        <div id="buscarOrden" class="modal fade" role="dialog">
+        <div id="buscarVentaManual" class="modal fade" role="dialog">
           <div class="modal-dialog modal-lg">
 
             <!-- Modal content-->
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Buscar orden de suspensión</h4>
+                <h4 class="modal-title">Buscar venta manual</h4>
               </div>
               <div class="modal-body">
                   <div class="row">
                       <div class="col-md-12">
-                          <input class="form-control" type="text" name="caja_busqueda" id="caja_busqueda" placeholder="N°suspensión, Fecha orden, Código cliente, Nombre cliente, Dirección">
+                          <input class="form-control" type="text" name="caja_busqueda" id="caja_busqueda" placeholder="N°comprobante, Fecha comprobante, Código cliente, Nombre cliente, Dirección">
                       </div>
                   </div>
                   <div class="row">
@@ -745,7 +745,7 @@
     <script src="../../dist/js/sb-admin-2.js"></script>
     <script src="js/ventasManuales.js"></script>
     <!--<script src="js/ordenTraslado.js"></script>-->
-    <script src="js/searchtras.js"></script>
+    <script src="js/searchvm.js"></script>
     <script type="text/javascript">
         // Get the input field
         var cod = document.getElementById("codigoCliente");

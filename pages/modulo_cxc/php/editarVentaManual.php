@@ -3,27 +3,18 @@
     /**
      * Clase para guardar ventas manuales
      */
-    class GuardarVenta extends ConectionDB
+    class EditarVenta extends ConectionDB
     {
-        public function GuardarVenta()
+        public function EditarVenta()
         {
             parent::__construct ();
         }
-        public function guardar()
+        public function editar()
         {
 
             try {
                 /**************************************************************/
-                // SQL query para traer datos de los empleados
-                $query = "SELECT * FROM tbl_facturas_config";
-                // Preparación de sentencia
-                $statement = $this->dbConnect->prepare($query);
-                $statement->execute();
-                $result = $statement->fetch(PDO::FETCH_ASSOC);
-                /**************************************************************/
 
-                $prefijo = $result['prefijoFacturaPeque'];
-                /**************************************************************/
                 $fechaComprobante = $_POST["fechaComprobante"];
                 $puntoVenta = $_POST["puntoVenta"];
                 $tipoComprobante = $_POST["tipoComprobante"];
@@ -144,15 +135,15 @@
                 $creadoPor = $_POST["creadoPor"];
 
                 date_default_timezone_set('America/El_Salvador');
-                $fechaHora = date('Y-m-d h:i');
+                //$fechaHora = date('Y-m-d h:i');
 
                 /**************************************************************/
 
                 $this->dbConnect->beginTransaction();
-                $query = "INSERT INTO tbl_ventas_manuales (prefijo,numeroComprobante,tipoComprobante,fechaComprobante,codigoCliente,nombreCliente,direccionCliente,municipio,departamento,giro,numeroRegistro,nit,formaPago,codigoVendedor,tipoVenta,ventaTitulo,ventaAfecta,ventaExenta,valorIva,
-                         totalComprobante,anulada,cableExtra,decodificador,derivacion,instalacionTemporal,pagoTardio,reconexion,servicioPrestado,traslados,reconexionTraslado,cambioFecha,otros,proporcion,idPunto,creadoPor,fechaHora,montoCable,montoInternet,impuesto)
-                          VALUES (:prefijo,:numeroComprobante,:tipoComprobante,:fechaComprobante,:codigoCliente,:nombreCliente,:direccionCliente,:municipio,:departamento,:giro,:numeroRegistro,:nit,:formaPago,:codigoVendedor,:tipoVenta,:ventaTitulo,:ventaAfecta,:ventaExenta,
-                          :valorIva,:totalComprobante,:anulada,:cableExtra,:decodificador,:derivacion,:instalacionTemporal,:pagoTardio,:reconexion,:servicioPrestado,:traslados,:reconexionTraslado,:cambioFecha,:otros,:proporcion,:idPunto,:creadoPor,:fechaHora,:montoCable,:montoInter,:impuesto)";
+                $query = "UPDATE tbl_ventas_manuales SET prefijo=:prefijo,numeroComprobante=:numeroComprobante,tipoComprobante=:tipoComprobante,fechaComprobante=:fechaComprobante,codigoCliente=:codigoCliente,nombreCliente=:nombreCliente,direccionCliente=:direccionCliente,municipio=:municipio,departamento=:departamento,giro=:giro,numeroRegistro=:numeroRegistro,
+                nit=:nit,formaPago=:formaPago,codigoVendedor=:codigoVendedor,tipoVenta=:tipoVenta,ventaTitulo=:ventaTitulo,ventaAfecta=:ventaAfecta,ventaExenta=:ventaExenta,
+                totalComprobante=:totalComprobante,anulada=:anulada,cableExtra=:cableExtra,decodificador=:decodificador,derivacion=:derivacion,instalacionTemporal=:instalacionTemporal,
+                pagoTardio=:pagoTardio,reconexion=:reconexion,servicioPrestado=:servicioPrestado,traslados=:traslados,reconexionTraslado=:reconexionTraslado,cambioFecha=:cambioFecha,otros=:otros,proporcion=:proporcion,idPunto=:idPunto,creadoPor=:creadoPor,fechaHora=:fechaHora,montoCable=:montoCable,montoInternet=:montoInter,impuesto=:impuesto)";
 
                 $statement = $this->dbConnect->prepare($query);
                 $statement->execute(array(
@@ -174,7 +165,7 @@
                             ':ventaTitulo' => $ventaCuentaDe,
                             ':ventaAfecta' => $totalAfecto,
                             ':ventaExenta' => $totalExento,
-                            ':valorIva' => $iva,
+                            /*':valorIva' => $iva,*/
                             ':totalComprobante' => $total,
                             ':anulada' => $anulado,
                             ':cableExtra' => $cableExtra,
@@ -210,6 +201,6 @@
             }
         }
     }
-    $save = new GuardarVenta();
-    $save->guardar();
+    $save = new EditarVenta();
+    $save->editar();
 ?>
