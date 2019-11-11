@@ -396,8 +396,9 @@
                                   <div class="col-md-3">
                                       <br>
                                       <?php
-                                      if (isset($_GET['nComprobante'])) {
+                                      if (isset($_GET['idVenta'])) {
                                          echo "<input id='creadoPor' class='form-control input-sm' type='hidden' name='creadoPor' value='{$creadoPor}'>";
+                                         echo "<input id='idVenta' class='form-control input-sm' type='hidden' name='idVenta' value='{$_GET["idVenta"]}'>";
                                       }
                                       else{
                                          echo '<input id="creadoPor" class="form-control input-sm" type="hidden" name="creadoPor" value="'.$_SESSION['nombres'] . " " . $_SESSION['apellidos'].'"' . '>';
@@ -438,7 +439,7 @@
                                   <div class="col-md-2">
                                       <br>
                                       <label for="Prefijo">Prefijo</label>
-                                      <input id="Prefijo" class="form-control input-sm" type="text" name="Prefijo" value="<?php echo $prefijo; ?>" readonly>
+                                      <input id="prefijo" class="form-control input-sm" type="text" name="prefijo" value="<?php echo $prefijo; ?>" readonly>
                                   </div>
                                   <div class="col-md-2">
                                       <br>
@@ -680,7 +681,7 @@
                                           echo '<label>Otros</label><input class="input-sm" type="checkbox" name="otros" value="T" readonly>';
                                       }
                                       if ($proporcion == "T") {
-                                          echo '<label>Proporción de cuota</label><input class="input-sm" type="checkbox" name="proporcionCuota" value="T" readonly> checked';
+                                          echo '<label>Proporción de cuota</label><input class="input-sm" type="checkbox" name="proporcionCuota" value="T" readonly checked>';
                                       }else {
                                           echo '<label>Proporción de cuota</label><input class="input-sm" type="checkbox" name="proporcionCuota" value="T" readonly>';
                                       }

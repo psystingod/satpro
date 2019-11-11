@@ -53,6 +53,14 @@ function nuevaOrden(){
     document.getElementById("total").value = '0.00';
 
     document.getElementById("editar").disabled = true;
+
+    var inputs = document.getElementsByTagName('input');
+
+    for(var i = 0; i < inputs.length; i++) {
+        if(inputs[i].type.toLowerCase() == 'checkbox') {
+            inputs[i].checked = false;
+        }
+    }
     changeAction("nueva");
 }
 

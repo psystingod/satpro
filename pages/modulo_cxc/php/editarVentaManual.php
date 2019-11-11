@@ -15,9 +15,11 @@
             try {
                 /**************************************************************/
 
+                $idVenta = $_POST["idVenta"];
                 $fechaComprobante = $_POST["fechaComprobante"];
                 $puntoVenta = $_POST["puntoVenta"];
                 $tipoComprobante = $_POST["tipoComprobante"];
+                $prefijo = $_POST["prefijo"];
                 $nComprobante = $_POST["nComprobante"];
                 $codigoCliente = $_POST["codigoCliente"];
                 $nombreCliente = $_POST['nombreCliente'];
@@ -77,9 +79,9 @@
                 }
 
                 if (isset($_POST["proporcionCuota"])) {
-                    $proporcionCuota = $_POST["proporcionCuota"];
+                    $proporcion = $_POST["proporcionCuota"];
                 }else {
-                    $proporcionCuota = null;
+                    $proporcion = null;
                 }
 
                 if (isset($_POST["derivacion"])) {
@@ -124,11 +126,11 @@
                     $reconexion = null;
                 }
 
-                if (isset($_POST["proporcion"])) {
+                /*if (isset($_POST["proporcion"])) {
                     $proporcion = $_POST["proporcion"];
                 }else {
                     $proporcion = null;
-                }
+                }*/
 
                 /**************************************************************/
 
@@ -143,7 +145,7 @@
                 $query = "UPDATE tbl_ventas_manuales SET prefijo=:prefijo,numeroComprobante=:numeroComprobante,tipoComprobante=:tipoComprobante,fechaComprobante=:fechaComprobante,codigoCliente=:codigoCliente,nombreCliente=:nombreCliente,direccionCliente=:direccionCliente,municipio=:municipio,departamento=:departamento,giro=:giro,numeroRegistro=:numeroRegistro,
                 nit=:nit,formaPago=:formaPago,codigoVendedor=:codigoVendedor,tipoVenta=:tipoVenta,ventaTitulo=:ventaTitulo,ventaAfecta=:ventaAfecta,ventaExenta=:ventaExenta,
                 totalComprobante=:totalComprobante,anulada=:anulada,cableExtra=:cableExtra,decodificador=:decodificador,derivacion=:derivacion,instalacionTemporal=:instalacionTemporal,
-                pagoTardio=:pagoTardio,reconexion=:reconexion,servicioPrestado=:servicioPrestado,traslados=:traslados,reconexionTraslado=:reconexionTraslado,cambioFecha=:cambioFecha,otros=:otros,proporcion=:proporcion,idPunto=:idPunto,creadoPor=:creadoPor,fechaHora=:fechaHora,montoCable=:montoCable,montoInternet=:montoInter,impuesto=:impuesto)";
+                pagoTardio=:pagoTardio,reconexion=:reconexion,servicioPrestado=:servicioPrestado,traslados=:traslados,reconexionTraslado=:reconexionTraslado,cambioFecha=:cambioFecha,otros=:otros,proporcion=:proporcion,idPunto=:idPunto,creadoPor=:creadoPor,montoCable=:montoCable,montoInternet=:montoInter,impuesto=:impuesto WHERE idVenta=:idVenta";
 
                 $statement = $this->dbConnect->prepare($query);
                 $statement->execute(array(
@@ -182,13 +184,13 @@
                             ':proporcion' => $proporcion,
                             ':idPunto' => $puntoVenta,
                             ':creadoPor' => $creadoPor,
-                            ':fechaHora' => $fechaHora,
                             ':montoCable' => $montoCable,
                             ':montoInter' => $montoInter,
-                            ':impuesto' => $impuesto
+                            ':impuesto' => $impuesto,
+                            ':idVenta' => $idVenta
                             ));
                 sleep(0.5);
-                $idVenta = $this->dbConnect->lastInsertId();
+                //$idVenta = $this->dbConnect->lastInsertId();
                 $this->dbConnect->commit();
                 header('Location: ../ventasManuales.php?idVenta='.$idVenta);
 

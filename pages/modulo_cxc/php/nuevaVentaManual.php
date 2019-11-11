@@ -133,8 +133,8 @@
                     $reconexion = null;
                 }
 
-                if (isset($_POST["proporcion"])) {
-                    $proporcion = $_POST["proporcion"];
+                if (isset($_POST["proporcionCuota"])) {
+                    $proporcion = $_POST["proporcionCuota"];
                 }else {
                     $proporcion = null;
                 }
@@ -150,9 +150,9 @@
 
                 $this->dbConnect->beginTransaction();
                 $query = "INSERT INTO tbl_ventas_manuales (prefijo,numeroComprobante,tipoComprobante,fechaComprobante,codigoCliente,nombreCliente,direccionCliente,municipio,departamento,giro,numeroRegistro,nit,formaPago,codigoVendedor,tipoVenta,ventaTitulo,ventaAfecta,ventaExenta,valorIva,
-                         totalComprobante,anulada,cableExtra,decodificador,derivacion,instalacionTemporal,pagoTardio,reconexion,servicioPrestado,traslados,reconexionTraslado,cambioFecha,otros,proporcion,idPunto,creadoPor,fechaHora,montoCable,montoInternet,impuesto)
+                         totalComprobante,exento,anulada,cableExtra,decodificador,derivacion,instalacionTemporal,pagoTardio,reconexion,servicioPrestado,traslados,reconexionTraslado,cambioFecha,otros,proporcion,idPunto,creadoPor,fechaHora,montoCable,montoInternet,impuesto)
                           VALUES (:prefijo,:numeroComprobante,:tipoComprobante,:fechaComprobante,:codigoCliente,:nombreCliente,:direccionCliente,:municipio,:departamento,:giro,:numeroRegistro,:nit,:formaPago,:codigoVendedor,:tipoVenta,:ventaTitulo,:ventaAfecta,:ventaExenta,
-                          :valorIva,:totalComprobante,:anulada,:cableExtra,:decodificador,:derivacion,:instalacionTemporal,:pagoTardio,:reconexion,:servicioPrestado,:traslados,:reconexionTraslado,:cambioFecha,:otros,:proporcion,:idPunto,:creadoPor,:fechaHora,:montoCable,:montoInter,:impuesto)";
+                          :valorIva,:totalComprobante,:exento,:anulada,:cableExtra,:decodificador,:derivacion,:instalacionTemporal,:pagoTardio,:reconexion,:servicioPrestado,:traslados,:reconexionTraslado,:cambioFecha,:otros,:proporcion,:idPunto,:creadoPor,:fechaHora,:montoCable,:montoInter,:impuesto)";
 
                 $statement = $this->dbConnect->prepare($query);
                 $statement->execute(array(
@@ -176,6 +176,7 @@
                             ':ventaExenta' => $totalExento,
                             ':valorIva' => $iva,
                             ':totalComprobante' => $total,
+                            ':exento' => $exento,
                             ':anulada' => $anulado,
                             ':cableExtra' => $cableExtra,
                             ':decodificador' => $decodificador,

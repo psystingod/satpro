@@ -14,13 +14,13 @@ class EditarCliente extends ConectionDB
             /****************** DATOS GENERALES ***********************/
             $estado_cable = $_POST['cable']; // T o F
             $estado_internet = $_POST['internet']; // 1, 2, 3
-            var_dump($estado_cable);
-            var_dump($estado_internet);
+            //var_dump($estado_cable);
+            //var_dump($estado_internet);
             $codigo = $_POST['codigo'];
             $nContrato = $_POST['contrato'];
             $nFactura = $_POST['factura'];
             $nombre = $_POST['nombre'];
-            $empresa = $_POST["empresa"];
+            /*$empresa = $_POST["empresa"];*/
             $nRegistro = $_POST['nrc'];
             $dui = $_POST['dui'];
             $lugarExp = $_POST['expedicion'];
@@ -37,6 +37,7 @@ class EditarCliente extends ConectionDB
             $cuentaContable = $_POST['cuentaContable'];
             $formaFacturar = $_POST['formaFacturar']; //Contado o al crédito
             $saldoCable = $_POST['saldoCable'];
+            $calidad = $_POST['enCalidad'];
             $saldoInter = $_POST['saldoInternet'];
             $saldoActual = $_POST['saldoActual'];
             if (strlen($saldoActual) < 2) {
@@ -165,11 +166,11 @@ class EditarCliente extends ConectionDB
             $ultUser = $_SESSION['nombres']." ".$_SESSION['apellidos'];
             $fechaHora = date('d/m/Y h:i:s');
 
-            $query = "UPDATE clientes SET servicio_suspendido=:servicioSuspendido, estado_cliente_in=:estadoClienteIn, numero_contrato=:nContrato, num_factura=:nFactura, nombre=:nombre, empresa=:empresa, numero_nit=:nit, numero_dui=:dui, lugar_exp=:lugarExp, num_registro=:nrc, saldoCable=:saldoCable, saldoInternet=:saldoInter, direccion_cobro=:dirCobro, direccion=:dir,
+            $query = "UPDATE clientes SET servicio_suspendido=:servicioSuspendido, estado_cliente_in=:estadoClienteIn, numero_contrato=:nContrato, num_factura=:nFactura, nombre=:nombre, /*empresa=:empresa,*/ numero_nit=:nit, numero_dui=:dui, lugar_exp=:lugarExp, num_registro=:nrc, saldoCable=:saldoCable, saldoInternet=:saldoInter, direccion_cobro=:dirCobro, direccion=:dir,
                       fecha_nacimiento=:fechaNacimiento, id_departamento=:idDepartamento, id_municipio=:idMunicipio, id_colonia=:idColonia, telefonos=:telefonos, tel_trabajo=:telTrabajo, correo_electronico=:email, profesion=:ocupacion, id_cuenta=:cuentaContable, forma_pago=:formaPago, tipo_comprobante=:tipoComprobante, saldo_actual=:saldoActual, facebook=:facebook, contactos=:contactos, contacto2=:contacto2, contacto3=:contacto3,
                       telcon1=:telcon1, telcon2=:telcon2, telcon3=:telcon3, paren1=:paren1, paren2=:paren2, paren3=:paren3, dir1=:dir1, dir2=:dir2, dir3=:dir3,
                       fecha_instalacion=:fechaInstalacionCable, fecha_primer_factura=:fechaPrimerFacturaCable, fecha_suspencion=:fechaSuspensionCable, exento=:exento, dia_cobro=:diaCobro, servicio_cortesia=:servicioCortesia, valor_cuota=:cuotaCable, prepago=:prepago, tipo_servicio=:tipoServicio, mactv=:mactv, periodo_contrato_ca=:periodoContratoCable, vencimiento_ca=:vencimientoCable, fecha_reinstalacion=:fechaReconexCable, id_tecnico=:idTecnico, cod_cobrador=:codigoCobrador, numero_derivaciones=:nDerivaciones, dire_cable=:direCable, fecha_instalacion_in=:fechaInstalacionIn, fecha_primer_factura_in=:fechaPrimerFacturaIn, tipo_servicio_in=:tipoServicioIn, periodo_contrato_int=:periodoContratoIn, dia_corbo_in=:diaCobroIn, id_velocidad=:idVelocidadIn, cuota_in=:cuotaIn, id_tipo_cliente=:tipoClienteIn,
-                      tecnologia=:tecnologia, no_contrato_inter=:noContratoIn,
+                      tecnologia=:tecnologia, entrega_calidad=:enCalidad, no_contrato_inter=:noContratoIn,
                       vencimiento_in=:vencimientoContratoIn, ult_ren_in=:ultRenIn, fecha_suspencion_in=:fechaSuspensionIn, fecha_reconexion_in=:fechaReconexIn, id_promocion=:promoIn, dese_promocion_in=:promoInDesde, hasta_promocion_in=:promoInHasta, cuota_promocion=:cuotaPromoIn, dire_internet=:direInter, id_tecnico_in=:idTecnicoIn, colilla=:colilla, marca_modem=:modelo, recep_modem=:recepcion, wanip=:wanip, mac_modem=:macModem, trans_modem=:trans, coordenadas=:coordenadas, serie_modem=:serieModem, ruido_modem=:ruido, dire_telefonia=:nodo, clave_modem=:claveWifi, ult_usuario=:ultUser WHERE cod_cliente = :codigo";
 
             $stmt = $this->dbConnect->prepare($query);
@@ -179,7 +180,7 @@ class EditarCliente extends ConectionDB
                         ':nContrato' => $nContrato,
                         ':nFactura' => $nFactura,
                         ':nombre' => $nombre,
-                        ':empresa' => $empresa,
+                        /*':empresa' => $empresa,*/
                         ':nit' => $nit,
                         ':dui' => $dui,
                         ':lugarExp' => $lugarExp,
@@ -239,6 +240,7 @@ class EditarCliente extends ConectionDB
                         ':cuotaIn' => $cuotaMensualInter,
                         ':tipoClienteIn' => $tipoClienteInter,
                         ':tecnologia' => $tecnologia,
+                        ':enCalidad' => $calidad,
                         ':noContratoIn' => $nContratoInter,
                         ':vencimientoContratoIn' => $vencimientoInternet,
                         ':ultRenIn' => $ultimaRenovacionInternet,

@@ -59,6 +59,8 @@
             $tipoComprobante = $row['tipo_comprobante']; //Credito fiscal o consumidor final
             $facebook = $row['facebook'];
             $correo = $row['correo_electronico'];
+            $calidad = $row['entrega_calidad'];
+            var_dump($calidad);
 
             /****************** OTROS DATOS ***********************/
             $cobrador = $row['cod_cobrador'];
@@ -326,6 +328,7 @@
  $arrOrdenesTrabajo = $data->getDataOrders('tbl_ordenes_trabajo', $codigo);
  $arrOrdenesSuspension = $data->getDataOrders('tbl_ordenes_suspension', $codigo);
  $arrOrdenesReconex = $data->getDataOrders('tbl_ordenes_reconexion', $codigo);
+ $arrTraslados = $data->getDataOrders('tbl_ordenes_traslado', $codigo);
 
  if (isset($_GET['gen'])) {
      if ($_GET['gen'] == "no") {
@@ -638,20 +641,21 @@
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <div class="col-md-12">
+                                        <div class="col-md-9">
                                             <label for="nombre">Nombre</label>
                                             <input class="form-control input-sm" type="text" name="nombre" value="<?php echo $nombre; ?>" readonly>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col-md-9">
-                                            <label for="empresa">Empresa</label>
-                                            <input class="form-control input-sm" type="text" name="empresa" value="<?php //echo $empresa; ?>" readonly>
                                         </div>
                                         <div class="col-md-3">
                                             <label for="ncr">Número de registro</label>
                                             <input class="form-control input-sm" type="text" name="nrc" value="<?php echo $nRegistro; ?>" readonly>
                                         </div>
+                                    </div>
+                                    <div class="row">
+                                        <!--<div class="col-md-9">
+                                            <label for="empresa">Empresa</label>
+                                            <input class="form-control input-sm" type="text" name="empresa" value="<?php //echo $empresa; ?>" readonly>
+                                        </div>-->
+
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
@@ -666,7 +670,7 @@
                                     <div class="row">
                                         <div class="col-md-2">
                                             <label for="dui">DUI</label>
-                                            <input class="form-control input-sm" type="text" name="dui" value="<?php echo $dui; ?>" readonly>
+                                            <input class="form-control input-sm" type="text" name="dui" pattern="[0-9]{8}-[0-9]{1}" value="<?php echo $dui; ?>" readonly required>
                                         </div>
                                         <div class="col-md-4">
                                             <label for="expedicion">Lugar y fecha de expedición</label>
@@ -1158,6 +1162,12 @@
                                                   </div>
                                               </div>
                                               <div class="row">
+                                                  <div class="col-md-12">
+                                                      <label for="enCalidad">En calidad de</label>
+                                                      <input class="form-control input-sm" type="text" name="enCalidad" value="<?php echo $calidad; ?>" readonly>
+                                                  </div>
+                                              </div>
+                                              <div class="row">
                                                   <div class="col-md-3">
                                                       <label for="nContratoVigente">N° de contrato vigente</label>
                                                       <input class="form-control input-sm" type="text" name="nContratoVigente" value="<?php echo $nContratoInter; ?>" readonly>
@@ -1416,37 +1426,30 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="notificaciones-traslados">
-                                    <h4 class="alert bg-success"><strong>Historial de traslados</strong></h4>
+                                    <h4 class="alert bg-info"><strong>Historial de traslados</strong></h4>
                                     <div class="ordenes">
-                                        <div class="col-md-12">
-                                            <button class="btn btn-danger pull-right" type="button" name="button" data-toggle="modal" data-target="#traslados"><i class="fas fa-search"></i></button>
-                                            <br><br>
-                                        </div>
                                         <table class="table table-bordered table-hover">
-                                                <tr class="info">
+                                            <thead class="info">
+                                                <tr class="bg-success">
                                                     <th>N° de orden</th>
                                                     <th>Tipo de orden</th>
                                                     <th>Fecha de orden</th>
-                                                    <th>Actividad realizada</th>
-                                                    <th>Fecha de trabajo</th>
-                                                    <th>Actividad internet</th>
+                                                    <th>Fecha traslado</th>
+                                                    <th>Tipo servicio</th>
                                                 </tr>
-                                                <tr>
-                                                    <td>99947</td>
-                                                    <td>Técnica</td>
-                                                    <td>12/10/2019</td>
-                                                    <td>Revisión de mala señal</td>
-                                                    <td>25/7/2018</td>
-                                                    <td>Cambio de contraseña de WIFI</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>99947</td>
-                                                    <td>Técnica</td>
-                                                    <td>12/10/2019</td>
-                                                    <td>Revisión de mala señal</td>
-                                                    <td>25/7/2018</td>
-                                                    <td>Cambio de contraseña de WIFI</td>
-                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <?php
+                                                    foreach ($arrTraslados as $key) {
+                                                        echo "<tr><td>";
+                                                        echo "<a href='ordenTraslado.php?nOrden={$key["idOrdenTraslado"]}' target='_blank' class='btn btn-primary btn-xs'>".$key["idOrdenTraslado"] . "</td><td>";
+                                                        echo $key["tipoOrden"] . "</td><td>";
+                                                        echo $key["fechaOrden"] . "</td><td>";
+                                                        echo $key["fechaTraslado"] . "</td><td>";
+                                                        echo $key["tipoServicio"] . "</td><td>";
+                                                    }
+                                                ?>
+                                            </tbody>
                                         </table>
                                     </div>
                                 </div>

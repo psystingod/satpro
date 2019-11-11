@@ -207,7 +207,8 @@
                    }
                    elseif($tipoComprobante == 2){
                        // SQL query para traer datos del servicio de cable de la tabla clientes
-                       $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_departamento, numero_nit, giro, valor_cuota, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento, servicio_cortesia FROM clientes WHERE (servicio_suspendido IS NULL OR servicio_suspendido = 'F') AND (servicio_cortesia IS NULL OR servicio_cortesia = 'F') AND dia_cobro = :diaCobro AND fecha_primer_factura <= :fechaGenerar AND estado_cliente_in=3 AND tipo_comprobante =:tipoComprobante";
+                       $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_departamento, numero_nit, giro, valor_cuota, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento, servicio_cortesia FROM clientes WHERE
+                       (servicio_suspendido IS NULL OR servicio_suspendido = 'F') AND (servicio_cortesia IS NULL OR servicio_cortesia = 'F') AND dia_cobro = :diaCobro AND fecha_primer_factura <= :fechaGenerar AND (estado_cliente_in=3 OR estado_cliente_in=1) AND tipo_comprobante =:tipoComprobante";
                        // Preparación de sentencia
                        $statement = $this->dbConnect->prepare($query);
                        $statement->execute(

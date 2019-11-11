@@ -47,7 +47,14 @@
                     $statement->execute();
                     $result2 = $statement->fetchColumn();
 
-                    return doubleval($result1)+doubleval($result2);
+                    $query = "SELECT SUM(montoCable + montoInternet + impuesto) FROM tbl_ventas_manuales WHERE anulada = 0 AND DAY(:fecha) = DAY(fechaComprobante)";
+                    $statement = $this->dbConnect->prepare($query);
+                    $statement->bindParam(':fecha', $date);
+                    //ini_set('memory_limit', '-1');
+                    $statement->execute();
+                    $result3 = $statement->fetchColumn();
+
+                    return doubleval($result1)+doubleval($result2)+doubleval($result3);
 
             } catch (Exception $e) {
                 print "!Error¡: " . $e->getMessage() . "</br>";
@@ -73,7 +80,14 @@
                     $statement->execute();
                     $result2 = $statement->fetchColumn();
 
-                    return doubleval($result1)+doubleval($result2);
+                    $query = "SELECT SUM(montoCable + montoInternet + impuesto) FROM tbl_ventas_manuales WHERE anulada = 0 AND MONTH(:fecha) = MONTH(fechaComprobante)";
+                    $statement = $this->dbConnect->prepare($query);
+                    $statement->bindParam(':fecha', $date);
+                    //ini_set('memory_limit', '-1');
+                    $statement->execute();
+                    $result3 = $statement->fetchColumn();
+
+                    return doubleval($result1)+doubleval($result2)+doubleval($result3);
 
             } catch (Exception $e) {
                 print "!Error¡: " . $e->getMessage() . "</br>";

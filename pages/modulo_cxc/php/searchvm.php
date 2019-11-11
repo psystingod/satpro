@@ -38,8 +38,8 @@ $query = "SELECT idVenta, numeroComprobante, fechaComprobante, codigoCliente, no
     			<td>".$fila['numeroComprobante']."</td>
                 <td>".$fila['fechaComprobante']."</td>
     			<td>".$fila['codigoCliente']."</td>
-                <td>".$fila['nombre']."</td>
-                <td>".$fila['direccion']."</td>
+                <td>".$fila['nombreCliente']."</td>
+                <td>".$fila['direccionCliente']."</td>
     		</tr>";
         }
 	}

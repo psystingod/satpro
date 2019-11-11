@@ -162,6 +162,54 @@ class GetAllInfo extends ConectionDB
             die();
         }
     }
+
+    public function getTotalCobrarCable($tabla, $codigoCliente, $estado, $anulada){
+        try {
+                $c = "C";
+
+                // Total servicio CABLE
+                $query = "SELECT SUM(cuotaCable) AS sumaCable, SUM(totalImpuesto) AS sumaImpuestosCable FROM $tabla WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado AND anulada=:anulada";
+                $statement = $this->dbConnect->prepare($query);
+                $statement->bindValue(':codigoCliente', $codigoCliente);
+                $statement->bindValue(':tipoServicio', $c);
+                $statement->bindValue(':estado', $estado);
+                $statement->bindValue(':anulada', $anulada);
+                $statement->execute();
+                $result1 = $statement->fetch(PDO::FETCH_ASSOC);
+                $sumaCable = $result1["sumaCable"];
+                $sumaImpuestosCable = $result1["sumaImpuestosCable"];
+
+                return floatval($sumaCable) + floatval($sumaImpuestosCable);
+
+        } catch (Exception $e) {
+            print "!Error¡: " . $e->getMessage() . "</br>";
+            die();
+        }
+    }
+
+    public function getTotalCobrarInter($tabla, $codigoCliente, $estado, $anulada){
+        try {
+            // Total servicio INTERNET
+            $i = "I";
+            $query = "SELECT SUM(cuotaInternet) AS sumaInter, SUM(totalImpuesto) AS sumaImpuestosInter FROM $tabla WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado AND anulada=:anulada";
+            $statement = $this->dbConnect->prepare($query);
+            $statement->bindValue(':codigoCliente', $codigoCliente);
+            $statement->bindValue(':tipoServicio', $i);
+            $statement->bindValue(':estado', $estado);
+            $statement->bindValue(':anulada', $anulada);
+            $statement->execute();
+            $result2 = $statement->fetch(PDO::FETCH_ASSOC);
+            $sumaInter = $result2["sumaInter"];
+            $sumaImpuestosInter = $result2["sumaImpuestosInter"];
+
+            return floatval($sumaInter) + floatval($sumaImpuestosInter);
+
+        } catch (Exception $e) {
+            print "!Error¡: " . $e->getMessage() . "</br>";
+            die();
+        }
+    }
+
     //Acá comienzan las funciones para obtener los datos de clientes
     /*public function getDepartamento($idDepartamento){
         try {
