@@ -19,8 +19,15 @@
                     $statement = $this->dbConnect->prepare($query);
                     //ini_set('memory_limit', '-1');
                     $statement->execute();
-                    $result = $statement->fetchColumn();
-                    return $result;
+                    $result1 = $statement->fetchColumn();
+
+                    $query = "SELECT COUNT(*) FROM clientes WHERE (servicio_suspendido = 'T') AND (estado_cliente_in = 1)";
+                    $statement = $this->dbConnect->prepare($query);
+                    //ini_set('memory_limit', '-1');
+                    $statement->execute();
+                    $result2 = $statement->fetchColumn();
+                    return intval($result1) + intval($result2);
+
 
             } catch (Exception $e) {
                 print "!Error¡: " . $e->getMessage() . "</br>";

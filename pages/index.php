@@ -59,7 +59,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Cablesat</a>
+                <a class="navbar-brand" href="index.html">Csat [<?php echo strtolower($_SESSION["rol"]) ?>]</a>
             </div>
             <!-- /.navbar-header -->
 
