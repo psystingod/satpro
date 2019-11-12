@@ -190,11 +190,10 @@
                                     echo "";
                                 }
                              ?>
-                            <form class="" action="resumenTraslado.php" method="POST">
+                            <!--<form class="" action="resumenTraslado.php" method="POST">-->
                             <button id="btn_agregar" class="btn btn-primary pull-right" type="button" name="button" data-toggle="modal" data-target="#usuarioNuevo"><i class="fas fa-plus-circle"></i> Nuevo usuario</button>
                             <br><br>
-
-                                <table width="100%" class="table table-striped table-hover" id="nuevoUsuario">
+                                <table width="100%" class="table table-striped table-hover" id="tableUsers">
                                     <thead>
                                         <tr>
                                             <th>ID usuario</th>
@@ -229,7 +228,7 @@
                                                 ?>
                                     </tbody>
                                 </table>
-                            </form>
+                            <!--</form>-->
                         </div>
                     </div>
                 </div>
@@ -316,6 +315,36 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="../../dist/js/sb-admin-2.js"></script>
+
+    <script src="../../vendor/datatables/js/dataTables.bootstrap.js"></script>
+    <script src="../../vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="../../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="../../vendor/datatables-responsive/dataTables.responsive.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#tableUsers').DataTable({
+                responsive: true,
+                "paging": true,
+                "language": {
+                "lengthMenu": "Mostrar _MENU_ registros por página",
+                "zeroRecords": "No se encontró ningún registro",
+                "info": "Mostrando _TOTAL_ de _MAX_ Registros",
+                "infoEmpty": "No se encontró ningún registro",
+                "search": "Buscar: ",
+                "searchPlaceholder": "",
+                "infoFiltered": "(de un total de _MAX_ registros)",
+                "paginate": {
+                 "previous": "Anterior",
+                 "next": "Siguiente",
+
+                }
+            }
+
+            });
+
+        });
+    </script>
 
 </body>
 
