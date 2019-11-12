@@ -154,7 +154,7 @@
                     ));
                     /* END INSERT NEW PERMISSIONS */
                 }
-                else if ($rol == "atención al cliente") {
+                else if ($rol == "atencion") {
                     /* INSERT NEW PERMISSIONS BASED ON NEW EMPLOYEE TYPE */
                     $query = "INSERT INTO tbl_permisosglobal(Madmin, Mcont, Mplan, Macti, Minve, Miva, Mbanc, Mcxc, Mcxp, Ag, Ed, El, IdUsuario) VALUES
                                                             (:madmin, :mcont, :mplan, :macti, :minve, :miva, :mbanc, :mcxc, :mcxp, :ag, :ed, :el, :idusuario)";
@@ -179,12 +179,12 @@
                 }
 
                $this->dbConnect = NULL;
-               //header('Location: ../empleados.php?status=success');
+               header('Location: ../empleados.php?status=success');
 
             } catch (Exception $e) {
                 print "!Error¡: " . $e->getMessage() . "</br>";
                 die();
-                //header('Location: ../empleados.php?status=failed');
+                header('Location: ../empleados.php?status=failed');
             }
         }
     }
