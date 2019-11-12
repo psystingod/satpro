@@ -36,8 +36,8 @@
 
     $totalCobrarCable = $dataInfo->getTotalCobrarCable('tbl_cargos', $_GET['codigoCliente'], 'pendiente', 0);
     $totalCobrarInter = $dataInfo->getTotalCobrarInter('tbl_cargos', $_GET['codigoCliente'], 'pendiente', 0);
-    var_dump($totalCobrarCable);
-    var_dump($totalCobrarInter);
+    //var_dump($totalCobrarCable);
+    //var_dump($totalCobrarInter);
 
     $getSaldoReal = new GetSaldoReal();
     $saldoRealCable = $getSaldoReal->getSaldoCable($_GET['codigoCliente']);
@@ -153,10 +153,10 @@
 <body style="background-color:#eeeeee;">
 
     <?php
-         // session_start();
-         if(!isset($_SESSION["user"])) {
-             header('Location: login.php');
-         }
+        // session_start();
+        if(!isset($_SESSION["user"])) {
+            header('Location: ../login.php');
+        }
      ?>
     <div id="wrapper">
 
