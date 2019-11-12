@@ -3,6 +3,9 @@
     session_start();
     require("php/getData.php");
     require("php/GetAllInfo.php");
+    require($_SERVER['DOCUMENT_ROOT'].'/satpro'.'/php/permissions.php');
+    $permisos = new Permissions();
+    $permisosUsuario = $permisos->getPermissions($_SESSION['id_usuario']);
     $dataInfo = new GetAllInfo();
     $arrayDepartamentos = $dataInfo->getData('tbl_departamentos_cxc');
     $arrMunicipios = $dataInfo->getData('tbl_municipios_cxc');
@@ -365,8 +368,8 @@
                           <form id="ordenTraslado" action="" method="POST">
                           <div class="panel-body">
                               <div class="col-md-12">
-                                  <button class="btn btn-default btn-sm" id="nuevaOrdenId" onclick="nuevaOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Nueva orden"><i class="far fa-file"></i></button>
-                                  <button class="btn btn-default btn-sm" id="editar" onclick="editarOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Editar orden"><i class="far fa-edit"></i></button>
+                                  <button class="btn btn-default btn-sm" name="" id="nuevaOrdenId" onclick="nuevaOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Nueva orden"><i class="far fa-file"></i></button>
+                                  <button class="btn btn-default btn-sm" name="" id="editar" onclick="editarOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Editar orden"><i class="far fa-edit"></i></button>
                                   <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Ver cliente"><i class="far fa-eye"></i></button>
                                   <button class="btn btn-default btn-sm" type="button" id="guardar" name="btn_nuevo" onclick="guardarOrden()" data-toggle="tooltip" data-placement="bottom" title="Guardar orden" disabled><i class="far fa-save"></i></button>
                                   <?php echo '<input style="display: none;" type="submit" id="guardar2" value="">'; ?>
@@ -614,6 +617,10 @@
     <script src="../../dist/js/sb-admin-2.js"></script>
     <script src="js/ordenTraslado.js"></script>
     <script src="js/searchtras.js"></script>
+    <script type="text/javascript">
+        var permisos = '<?php echo $permisosUsuario;?>'
+    </script>
+    <script src="../modulo_administrar/js/permisos.js"></script>
     <script type="text/javascript">
         // Get the input field
         var cod = document.getElementById("codigoCliente");

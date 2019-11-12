@@ -60,7 +60,7 @@
             $facebook = $row['facebook'];
             $correo = $row['correo_electronico'];
             $calidad = $row['entrega_calidad'];
-            var_dump($calidad);
+            //var_dump($calidad);
 
             /****************** OTROS DATOS ***********************/
             $cobrador = $row['cod_cobrador'];

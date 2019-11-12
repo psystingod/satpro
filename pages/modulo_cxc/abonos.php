@@ -1,6 +1,9 @@
 <?php
+session_start();
+    require($_SERVER['DOCUMENT_ROOT'].'/satpro'.'/php/permissions.php');
+    $permisos = new Permissions();
+    $permisosUsuario = $permisos->getPermissions($_SESSION['id_usuario']);
 
-    session_start();
     // get passed parameter value, in this case, the record ID
     // isset() is a PHP function used to verify if a value is there or not
     if (isset($_GET['codigoCliente'])) {
@@ -795,7 +798,7 @@
                                   </div>
                                   <div class="col-md-4">
                                       <label for="meses" style="color: brown;"></label>
-                                      <button class="btn btn-success btn-md btn-block" type="submit" name="button" style="margin-bottom: 6px; margin-top: 0px;"><i class="fas fa-check" style="color: white;"></i> Aplicar abonos</button>
+                                      <button class="btn btn-success btn-md btn-block" type="submit" name="editar" style="margin-bottom: 6px; margin-top: 0px;"><i class="fas fa-check" style="color: white;"></i> Aplicar abonos</button>
                                       <a href="cxc.php" style="text-decoration: none;"><button class="btn btn-danger btn-md btn-block" type="button" name="button"><i class="fas fa-sign-out-alt" style="color: white;"></i> Salir</button></a>
                                   </div>
                               </div>
@@ -825,6 +828,10 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="../../dist/js/sb-admin-2.js"></script>
+    <script type="text/javascript">
+        var permisos = '<?php echo $permisosUsuario;?>'
+    </script>
+    <script src="../modulo_administrar/js/permisos.js"></script>
     <script src="js/abonos.js"></script>
     <script type="text/javascript">
         // Get the input field

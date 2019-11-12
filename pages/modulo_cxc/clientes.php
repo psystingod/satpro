@@ -156,7 +156,7 @@
                             <h1><b>Clientes</b></h1>
                         </div>
                         <a href="cxc.php"><button class="btn btn-success pull-left" type="button" name="button"><i class="fas fa-arrow-left"></i> Atrás</button></a>
-                        <button id="btn_agregar" class="btn btn-success pull-right" type="button" name="button" data-toggle="modal" data-target="#agregarCliente"><i class="fas fa-plus-circle"></i> Nuevo cliente</button>
+                        <!--<button id="btn_agregar" class="btn btn-success pull-right" type="button" name="button" data-toggle="modal" data-target="#agregarCliente"><i class="fas fa-plus-circle"></i> Nuevo cliente</button>-->
                         <br><br><br>
                         <div class="row">
                             <div class="col-md-12">

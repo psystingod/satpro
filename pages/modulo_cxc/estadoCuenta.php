@@ -329,6 +329,7 @@
                                               ?>
                                           </tbody>
                                       </table>
+                                      <?php echo "<div class='well pull-right'><strong>TOTAL A COBRAR: $".$totalCobrarCable."</strong></div>"; ?>
                                   </div>
                               </div>
                           </div>
@@ -409,9 +410,11 @@
                                                       echo "0.00"."</td><td class='text-danger danger'>";
                                                       echo $cargoI['totalImpuesto']."</td><td class='text-danger danger'>";
                                                       echo "0.00"."</td></tr>";
+
                                                     }
 
                                                   }
+
                                                   /*echo "<tr><td class='text-danger danger'>";
                                                   echo $cargo['numeroRecibo']."</td><td class='text-danger danger'>";
                                                   echo $cargo['tipoServicio']."</td><td class='text-danger danger'>";
@@ -428,6 +431,7 @@
 
                                           </tbody>
                                       </table>
+                                      <?php echo "<div class='well pull-right'><strong>TOTAL A COBRAR: $".$totalCobrarInter."</strong></div>"; ?>
                                   </div>
                               </div>
                           </div>

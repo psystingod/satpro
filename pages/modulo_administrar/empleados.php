@@ -1,6 +1,9 @@
 <?php
     require("php/productsInfo.php");
     require("php/getEmployees.php");
+    require_once '../modulo_cxc/php/GetAllInfo.php';
+    $data = new GetAllInfo();
+    $arrRoles = $data->getData('tbl_roles');
     $allEmployees = new GetEmployees();
     $allEmployeesRecords = $allEmployees->getEmployeesRecords();
 
@@ -250,106 +253,42 @@
                     <div class="modal-content">
                           <div class="modal-header">
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title">Nuevo empleado</h4>
+                                <h4 class="modal-title">Nuevo usuario</h4>
                           </div>
                     <form action="php/newEmployee.php" method="POST">
                           <div class="modal-body">
                               <div class="form-row">
                                   <div class="form-group col-md-12 col-xs-12">
-                                      <label for="codigo">Código de empleado:</label>
-                                      <input type="text" class="form-control" name="codigo"  placeholder="Escriba el código del empleado" required>
+                                      <label for="nombre">Nombre completo:</label>
+                                      <!-- pattern="[a-zA-Záéíóú]+\s[a-zA-Záéíóú]+\s?[a-zA-Záéíóú]+\s?[a-zA-Záéíóú]+?" -->
+                                      <input type="text" class="form-control" name="nombre"  placeholder="Nombre completo del empleado" title="Escriba ambos nombres" required>
                                   </div>
-                              </div>
                               <div class="form-row">
                                   <div class="form-group col-md-6 col-xs-6">
-                                      <label for="usuario">Nombres:</label>
-                                      <input type="text" class="form-control" name="nombres"  placeholder="Escriba los nombres del empleado" pattern="[a-zA-Záéíóú]+\s[a-zA-Záéíóú]+\s?[a-zA-Záéíóú]+\s?[a-zA-Záéíóú]+?" title="Escriba ambos nombres" required>
+                                      <label for="pass1">Contraseña:</label>
+                                      <input type="text" class="form-control" id="pass1" name="pass1" required>
                                   </div>
                                   <div class="form-group col-md-6 col-xs-6">
-                                      <label for="usuario">Apellidos:</label>
-                                      <input type="text" class="form-control" name="apellidos"  placeholder="Escriba los apellidos del empleado" pattern="[a-zA-Záéíóú]+\s[a-zA-Záéíóú]+\s?[a-zA-Záéíóú]+\s?[a-zA-Záéíóú]+?" title="Escria ambos apellidos" required>
+                                      <label for="pass2">Confirmar contraseña:</label>
+                                      <input type="text" class="form-control" id="pass2" name="pass2" required>
                                   </div>
-                              </div>
-
-                              <div class="form-row">
-                                  <div class="form-group col-md-4 col-xs-4">
-                                      <label for="usuario">Teléfono:</label>
-                                      <input type="text" class="form-control" name="telefono"  placeholder="Número telefónico" pattern="[0-9]{4}-[0-9]{4}" title="Escria el número telefónico con el formato XXXX-XXXX" required>
-                                  </div>
-                                  <div class="form-group col-md-4 col-xs-4">
-                                      <label for="usuario">DUI:</label>
-                                      <input type="text" class="form-control" name="dui"  placeholder="Número de DUI" pattern="[0-9]{8}-[0-9]{1}" title="Escriba el número de DUI en el formato XXXXXXXX-X" required>
-                                  </div>
-                                  <div class="form-group col-md-4 col-xs-4">
-                                      <label for="usuario">NIT:</label>
-                                      <input type="text" class="form-control" name="nit"  placeholder="Número de NIT" pattern="[0-9]{4}-[0-9]{6}-[0-9]{3}-[0-9]{1}" title="Escribir solamente letras" required>
-                                  </div>
-                              </div>
-                              <div class="form-row">
-                                  <div class="form-group col-md-6 col-xs-6">
-                                      <label for="usuario">ISSS:</label>
-                                      <input type="text" class="form-control" name="isss"  placeholder="Número de ISSS" required>
-                                  </div>
-                                  <div class="form-group col-md-6 col-xs-6">
-                                      <label for="usuario">AFP:</label>
-                                      <input type="text" class="form-control" name="afp"  placeholder="Número de AFP" required>
-                                  </div>
-                              </div>
-                              <div class="form-row">
-                                  <div class="form-group col-md-4 col-xs-4">
-                                      <label for="usuario">Estado familiar:</label>
-                                      <select class="form-control" name="estadoFamiliar">
-                                          <option value="" selected>...</option>
-                                          <option value="soltero/a">Soltero/a</option>
-                                          <option value="casado/a">Casado/a</option>
-                                          <option value="divorciado/a">Divorciado/a</option>
-                                          <option value="viudo/a">Viudo/a</option>
-                                      </select>
-                                  </div>
-                                  <div class="form-group col-md-4 col-xs-4">
-                                      <label for="usuario">Grado Académico:</label>
-                                      <select class="form-control" name="gradoAcademico">
-                                          <option value="" selected>...</option>
-                                          <option value="Universidad">Universidad</option>
-                                          <option value="Bachillerato">Bachillerato</option>
-                                          <option value="Básica">Educación básica</option>
-                                          <option value="Ninguno">Ninguno</option>
-                                      </select>
-                                  </div>
-                                  <div class="form-group col-md-4 col-xs-4">
-                                      <label for="nacimiento">Fecha de nacimiento:</label>
-                                      <input type="date" class="form-control" name="nacimiento" required>
-                                  </div>
-                              </div>
-                              <div class="form-row">
-                                <div class="form-group col-md-6 col-xs-6">
-                                    <label for="departamento">Departamento asignado:</label>
-                                    <select class="form-control" name="departamento" required>
-                                        <option value="" selected="selected">...</option>
-                                        <?php
-                                          foreach ($departmentsRecords as $key) {
-                                              echo "<option value='".strtolower($key['NombreDepartamento'])."'>".$key['NombreDepartamento']."</option>";
-                                          }
-                                        ?>
-                                    </select>
-                                </div>
-                                <div class="form-group col-md-6 col-xs-6">
-                                    <label for="rol">Tipo de usuario en el sistema:</label>
-                                    <select class="form-control" name="rol" required>
-                                        <option value="" selected>...</option>
-                                        <option value="administracion">Administración</option>
-                                        <option value="subgerencia">Subgerencia</option>
-                                        <option value="jefatura">Jefatura</option>
-                                        <option value="contabilidad">Contabilidad</option>
-                                        <option value="atencion">Atención al cliente</option>
-                                        <option value="practicante">Practicante</option>
-                                    </select>
-                                </div>
                               </div>
                               <div class="form-row">
                                 <div class="form-group col-md-12 col-xs-12">
-                                    <label for="rol">Dirección:</label>
-                                    <textarea class="form-control" name="direccion" rows="3" cols="40"></textarea>
+                                    <label for="cargoPlaza">Rol a desempeñar</label>
+                                    <select class="form-control input-sm" type="text" name="rol">
+                                        <?php
+                                        foreach ($arrRoles as $key) {
+                                            if ($key['idRol'] == $rol) {
+                                                echo "<option value=".$key['idRol']." selected>".$key['nombreRol']."</option>";
+                                            }
+                                            else {
+                                                echo "<option value=".$key['idRol'].">".$key['nombreRol']."</option>";
+                                            }
+
+                                        }
+                                         ?>
+                                    </select>
                                 </div>
                               </div>
                           </div>

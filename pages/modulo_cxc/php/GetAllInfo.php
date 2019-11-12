@@ -179,7 +179,9 @@ class GetAllInfo extends ConectionDB
                 $sumaCable = $result1["sumaCable"];
                 $sumaImpuestosCable = $result1["sumaImpuestosCable"];
 
-                return floatval($sumaCable) + floatval($sumaImpuestosCable);
+                $number = floatval($sumaCable) + floatval($sumaImpuestosCable);
+                $total = number_format($number, 2);
+                return $total;
 
         } catch (Exception $e) {
             print "!Error¡: " . $e->getMessage() . "</br>";
@@ -202,7 +204,9 @@ class GetAllInfo extends ConectionDB
             $sumaInter = $result2["sumaInter"];
             $sumaImpuestosInter = $result2["sumaImpuestosInter"];
 
-            return floatval($sumaInter) + floatval($sumaImpuestosInter);
+            $number = floatval($sumaInter) + floatval($sumaImpuestosInter);
+            $total = number_format($number, 2);
+            return $total;
 
         } catch (Exception $e) {
             print "!Error¡: " . $e->getMessage() . "</br>";
