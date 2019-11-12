@@ -160,12 +160,11 @@
             // read current record's data
             try {
                 // prepare select query
-                $query = "SELECT * FROM tbl_usuario, tbl_empleados WHERE tbl_usuario.IdUsuario = ? AND tbl_empleados.id_empleado = ?";
+                $query = "SELECT * FROM tbl_usuario WHERE idUsuario = ?";
                 $stmt = $con->prepare( $query );
 
                 // this is the first question mark
                 $stmt->bindParam(1, $id);
-                $stmt->bindParam(2, $id);
 
                 // execute our query
                 $stmt->execute();
@@ -174,11 +173,10 @@
                 $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
                 // values to fill up our form
-                $nombres = $row['nombres'];
-                $apellidos = $row['apellidos'];
-                $usuario = $row['Usuario'];
-                $clave = $row['Clave'];
-                $rol = $row['Rol'];
+                $nombre = $row['nombre'];
+                $usuario = $row['usuario'];
+                $clave = $row['clave'];
+                $rol = $row['rol'];
 
                 // VERIFICANDO LOS PERMISOS DE ACCESO A MODULOS
                 $modulesAccess = new ModulePermissions();
@@ -230,8 +228,8 @@
                         $rol0 = $_POST['rol'];
 
                         $query0 = "UPDATE tbl_usuario
-                                    SET Usuario=:usuario, Clave=:clave, Rol=:rol
-                                    WHERE IdUsuario = $id";
+                                    SET usuario=:usuario, clave=:clave, rol=:rol
+                                    WHERE idUsuario = $id";
 
                         $stmt0 = $con->prepare($query0);
 
@@ -371,12 +369,8 @@
                 <div class="row">
                     <table class='table table-hover table-responsive'>
                         <tr>
-                            <th width="200px">Nombres</th>
-                            <?php echo "<td><input class='form-control' type='text' id='nombres' name='nombres' value='".htmlspecialchars($nombres, ENT_QUOTES)."' readonly></td>";?>
-                        </tr>
-                        <tr>
-                            <th width="200px">Apellidos</th>
-                            <?php echo "<td><input class='form-control' type='text' id='nombres' name='apellidos' value='".htmlspecialchars($apellidos, ENT_QUOTES)."' readonly></td>";?>
+                            <th width="200px">Nombre</th>
+                            <?php echo "<td><input class='form-control' type='text' id='nombres' name='nombres' value='".htmlspecialchars($nombre, ENT_QUOTES)."' readonly></td>";?>
                         </tr>
                         <tr>
                             <th width="200px">Usuario</th>

@@ -58,7 +58,7 @@
     <?php
          // session_start();
          if(isset($_SESSION["user"])) {
-             if ($_SESSION["rol"] != "administracion") {
+             if ($_SESSION["rol"] != "administracion" && $_SESSION["rol"] != "subgerencia" && $_SESSION["rol"] != "jefatura") {
                  echo "<script>
                             alert('No tienes permisos para ingresar a esta área');
                             window.location.href='../index.php';

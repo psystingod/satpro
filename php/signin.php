@@ -19,7 +19,7 @@
                 $user = $_POST['user'];
                 $pass = $_POST['pass'];
 
-                $query1 = "SELECT * FROM tbl_usuario WHERE Usuario = :user";
+                $query1 = "SELECT * FROM tbl_usuario WHERE usuario = :user";
                 // prepare query for excecution
                 $stmt = $this->dbConnect->prepare($query1);
                 // Execute the query
@@ -29,10 +29,10 @@
 
                 $result = $stmt->fetch();
 
-                if (password_verify($pass, $result['Clave'])) {
+                if (password_verify($pass, $result['clave'])) {
 
                     // SQL query para obtener datos del usuario
-                    $query = "SELECT * FROM tbl_empleados, tbl_usuario WHERE Usuario=:user AND tbl_empleados.id_empleado = tbl_usuario.IdUsuario";
+                    $query = "SELECT * FROM tbl_usuario WHERE usuario=:user";
                     // Prepare statement
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
@@ -45,12 +45,12 @@
                         // Inicia sesión solo si el usuario existe en la base de datos
                         session_start();
                         // Almacenamos los datos del usuario en la sesión
-                        $_SESSION['id_usuario'] = $loginRow['IdUsuario'];
-                        $_SESSION['nombres'] = $loginRow['nombres'];
-                        $_SESSION['apellidos'] = $loginRow['apellidos'];
-                        $_SESSION['user'] = $loginRow['Usuario'];
-                        $_SESSION['pass'] = $loginRow['Clave'];
-                        $_SESSION['rol'] = $loginRow['Rol'];
+                        $_SESSION['id_usuario'] = $loginRow['idUsuario'];
+                        $_SESSION['nombres'] = $loginRow['nombre'];
+                        $_SESSION['apellidos'] = "";
+                        $_SESSION['user'] = $loginRow['usuario'];
+                        $_SESSION['pass'] = $loginRow['clave'];
+                        $_SESSION['rol'] = $loginRow['rol'];
 
                         $totalPermissionsCheck = new Permissions();
                         $totalModulePermissionsCheck = new ModulePermissions();

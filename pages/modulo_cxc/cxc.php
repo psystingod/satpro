@@ -120,6 +120,16 @@
                                 <li><a href="ventasManuales.php">Ventas manuales</a>
                                 </li>
                             </ul>';
+                        }elseif ($_SESSION["rol"] == 'informatica' || $_SESSION["rol"] == 'atención al cliente' || $_SESSION["rol"] == 'jefatura') {
+                            echo
+                            '<ul class="dropdown-menu dropdown-user">
+                                <li><a href="#" data-toggle="modal" data-target="#eliminarAbonos">Consultar/Eliminar abonos</a>
+                                </li>
+                                <li><a href="gestionCobros.php">Gestion de cobros</a>
+                                </li>
+                                <li><a href="ventasManuales.php">Ventas manuales</a>
+                                </li>
+                            </ul>';
                         }
                     }
                     ?>

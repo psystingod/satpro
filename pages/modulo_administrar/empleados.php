@@ -1,11 +1,11 @@
 <?php
     require("php/productsInfo.php");
-    require("php/getEmployees.php");
+    require("php/getUsers2.php");
     require_once '../modulo_cxc/php/GetAllInfo.php';
     $data = new GetAllInfo();
     $arrRoles = $data->getData('tbl_roles');
-    $allEmployees = new GetEmployees();
-    $allEmployeesRecords = $allEmployees->getEmployeesRecords();
+    $allUsers = new GetUsers();
+    $allUsersRecords = $allUsers->getUsersRecords();
 
     $departments = new ProductsInfo();
     $departmentsRecords = $departments->getDepartments();
@@ -191,31 +191,25 @@
                                 }
                              ?>
                             <form class="" action="resumenTraslado.php" method="POST">
-                            <button id="btn_agregar" class="btn btn-primary pull-right" type="button" name="button" data-toggle="modal" data-target="#usuarioNuevo"><i class="fas fa-plus-circle"></i> Empleado nuevo</button>
+                            <button id="btn_agregar" class="btn btn-primary pull-right" type="button" name="button" data-toggle="modal" data-target="#usuarioNuevo"><i class="fas fa-plus-circle"></i> Nuevo usuario</button>
                             <br><br>
 
                                 <table width="100%" class="table table-striped table-hover" id="nuevoUsuario">
                                     <thead>
                                         <tr>
-                                            <th>Codigo</th>
-                                            <th>Nombres</th>
-                                            <th>Apellidos</th>
-                                            <th>DUI</th>
-                                            <th>NIT</th>
-                                            <th>Teléfono</th>
+                                            <th>ID usuario</th>
+                                            <th>Nombre</th>
+                                            <th>Usuario</th>
                                             <th></th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         <?php
-                                            foreach ($allEmployeesRecords as $key) {
+                                            foreach ($allUsersRecords as $key) {
                                                 echo "<tr><td>";
-                                                echo $key["id_empleado"] . "</td><td>";
-                                                echo $key["nombres"] . "</td><td>";
-                                                echo $key["apellidos"] . "</td><td>";
-                                                echo $key["no_documento"] . "</td><td>";
-                                                echo $key["numero_nit"] . "</td><td>";
-                                                echo $key["telefonos"] . "</td><td>";
+                                                echo $key["idUsuario"] . "</td><td>";
+                                                echo $key["nombre"] . "</td><td>";
+                                                echo $key["usuario"] . "</td><td>";
                                                 echo "<div class='btn-group pull-right'>
                                                             <button type='button' class='btn btn-default'>Opciones</button>
                                                             <button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
@@ -223,9 +217,9 @@
                                                               <span class='sr-only'>Toggle Dropdown</span>
                                                             </button>
                                                             <ul class='dropdown-menu'>
-                                                                <li><a href='verUsuario.php?id={$key['IdUsuario']}'><i class='fas fa-eye'></i> Ver</a>
-                                                                </li>
-                                                                <li class='editar'><a href='editarUsuario.php?id={$key['IdUsuario']}'><i class='fas fa-edit'></i> Editar</a>
+                                                                <!--<li><a href='verUsuario.php?id={$key['idUsuario']}'><i class='fas fa-eye'></i> Ver</a>
+                                                                </li>-->
+                                                                <li class='editar'><a href='editarUsuario.php?id={$key['idUsuario']}'><i class='fas fa-edit'></i> Editar</a>
                                                                 </li>
                                                                 <li class='eliminar'><a href='#' onclick='eliminarUsuario()'><i class='fas fa-trash-alt'></i> Eliminar</a>
                                                                 </li>
@@ -255,22 +249,26 @@
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                                 <h4 class="modal-title">Nuevo usuario</h4>
                           </div>
-                    <form action="php/newEmployee.php" method="POST">
+                    <form action="php/newUser.php" method="POST">
                           <div class="modal-body">
                               <div class="form-row">
-                                  <div class="form-group col-md-12 col-xs-12">
+                                  <div class="form-group col-md-8 col-xs-8">
                                       <label for="nombre">Nombre completo:</label>
                                       <!-- pattern="[a-zA-Záéíóú]+\s[a-zA-Záéíóú]+\s?[a-zA-Záéíóú]+\s?[a-zA-Záéíóú]+?" -->
                                       <input type="text" class="form-control" name="nombre"  placeholder="Nombre completo del empleado" title="Escriba ambos nombres" required>
                                   </div>
+                                  <div class="form-group col-md-4 col-xs-4">
+                                      <label for="user">Nombre de usuario:</label>
+                                      <input type="text" class="form-control" name="user"  placeholder="Nombre de usuario" required>
+                                  </div>
                               <div class="form-row">
                                   <div class="form-group col-md-6 col-xs-6">
                                       <label for="pass1">Contraseña:</label>
-                                      <input type="text" class="form-control" id="pass1" name="pass1" required>
+                                      <input type="password" class="form-control" id="pass1" name="pass1" required>
                                   </div>
                                   <div class="form-group col-md-6 col-xs-6">
                                       <label for="pass2">Confirmar contraseña:</label>
-                                      <input type="text" class="form-control" id="pass2" name="pass2" required>
+                                      <input type="password" class="form-control" id="pass2" name="pass2" required>
                                   </div>
                               </div>
                               <div class="form-row">
@@ -280,12 +278,11 @@
                                         <?php
                                         foreach ($arrRoles as $key) {
                                             if ($key['idRol'] == $rol) {
-                                                echo "<option value=".$key['idRol']." selected>".$key['nombreRol']."</option>";
+                                                echo "<option value=".strtolower($key['nombreRol'])." selected>".$key['nombreRol']."</option>";
                                             }
                                             else {
-                                                echo "<option value=".$key['idRol'].">".$key['nombreRol']."</option>";
+                                                echo "<option value=".strtolower($key['nombreRol']).">".$key['nombreRol']."</option>";
                                             }
-
                                         }
                                          ?>
                                     </select>

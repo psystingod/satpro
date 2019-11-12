@@ -158,7 +158,7 @@
                             </div>
                             <div class="stat-values">
                                 <br>
-                                <div class="name">Empleados y seguridad</div>
+                                <div class="name">Usuarios y seguridad</div>
                             </div>
                         </div></a>
                         <a href="configuracion.php"><div class="col-lg-6 btn btn-default">

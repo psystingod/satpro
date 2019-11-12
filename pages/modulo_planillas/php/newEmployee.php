@@ -188,9 +188,7 @@
                 $statement = $this->dbConnect->prepare($query);
 
                 $statement->execute();
-                /* /UPDATE IDUSUARIO */
-
-                /* INSERT NEW USER BASED ON NEW EMPLOYEE */
+                /*
                 $query = "INSERT INTO tbl_usuario(IdUsuario, Usuario, Clave, Rol, State) VALUES (:idUsuario, :usuario, :clave, :rol, :state)";
                 $statement = $this->dbConnect->prepare($query);
 
@@ -201,9 +199,9 @@
                 ':rol' => $rol,
                 ':state' => 1
                 ));
-                /* END INSERT NEW USER */
+                //END INSERT NEW USER
                 if ($rol == "1") {
-                    /* INSERT NEW PERMISSIONS BASED ON NEW EMPLOYEE TYPE */
+                    //INSERT NEW PERMISSIONS BASED ON NEW EMPLOYEE TYPE
                     $query = "INSERT INTO tbl_permisosglobal(Madmin, Mcont, Mplan, Macti, Minve, Miva, Mbanc, Mcxc, Mcxp, Ag, Ed, El, IdUsuario) VALUES
                                                             (:madmin, :mcont, :mplan, :macti, :minve, :miva, :mbanc, :mcxc, :mcxp, :ag, :ed, :el, :idusuario)";
                     $statement = $this->dbConnect->prepare($query);
@@ -223,10 +221,10 @@
                     ':el' => 4,
                     ':idusuario' => $lastId
                     ));
-                    /* END INSERT NEW PERMISSIONS */
+                    //END INSERT NEW PERMISSIONS
                 }
                 else if ($rol == "2") {
-                    /* INSERT NEW PERMISSIONS BASED ON NEW EMPLOYEE TYPE */
+                    //INSERT NEW PERMISSIONS BASED ON NEW EMPLOYEE TYPE
                     $query = "INSERT INTO tbl_permisosglobal(Madmin, Mcont, Mplan, Macti, Minve, Miva, Mbanc, Mcxc, Mcxp, Ag, Ed, El, IdUsuario) VALUES
                                                             (:madmin, :mcont, :mplan, :macti, :minve, :miva, :mbanc, :mcxc, :mcxp, :ag, :ed, :el, :idusuario)";
                     $statement = $this->dbConnect->prepare($query);
@@ -246,10 +244,10 @@
                     ':el' => 0,
                     ':idusuario' => $lastId
                     ));
-                    /* END INSERT NEW PERMISSIONS */
+                    //END INSERT NEW PERMISSIONS
                 }
                 else if ($rol == "3") {
-                    /* INSERT NEW PERMISSIONS BASED ON NEW EMPLOYEE TYPE */
+                    //INSERT NEW PERMISSIONS BASED ON NEW EMPLOYEE TYPE
                     $query = "INSERT INTO tbl_permisosglobal(Madmin, Mcont, Mplan, Macti, Minve, Miva, Mbanc, Mcxc, Mcxp, Ag, Ed, El, IdUsuario) VALUES
                                                             (:madmin, :mcont, :mplan, :macti, :minve, :miva, :mbanc, :mcxc, :mcxp, :ag, :ed, :el, :idusuario)";
                     $statement = $this->dbConnect->prepare($query);
@@ -269,11 +267,11 @@
                     ':el' => 0,
                     ':idusuario' => $lastId
                     ));
-                    /* END INSERT NEW PERMISSIONS */
+                    //END INSERT NEW PERMISSIONS
                 }
 
                 else if ($rol == "4") {
-                    /* INSERT NEW PERMISSIONS BASED ON NEW EMPLOYEE TYPE */
+                    //INSERT NEW PERMISSIONS BASED ON NEW EMPLOYEE TYPE
                     $query = "INSERT INTO tbl_permisosglobal(Madmin, Mcont, Mplan, Macti, Minve, Miva, Mbanc, Mcxc, Mcxp, Ag, Ed, El, IdUsuario) VALUES
                                                             (:madmin, :mcont, :mplan, :macti, :minve, :miva, :mbanc, :mcxc, :mcxp, :ag, :ed, :el, :idusuario)";
                     $statement = $this->dbConnect->prepare($query);
@@ -293,11 +291,11 @@
                     ':el' => 0,
                     ':idusuario' => $lastId
                     ));
-                    /* END INSERT NEW PERMISSIONS */
+                    //END INSERT NEW PERMISSIONS
                 }
 
                 else if ($rol == "5") {
-                    /* INSERT NEW PERMISSIONS BASED ON NEW EMPLOYEE TYPE */
+                    //INSERT NEW PERMISSIONS BASED ON NEW EMPLOYEE TYPE
                     $query = "INSERT INTO tbl_permisosglobal(Madmin, Mcont, Mplan, Macti, Minve, Miva, Mbanc, Mcxc, Mcxp, Ag, Ed, El, IdUsuario) VALUES
                                                             (:madmin, :mcont, :mplan, :macti, :minve, :miva, :mbanc, :mcxc, :mcxp, :ag, :ed, :el, :idusuario)";
                     $statement = $this->dbConnect->prepare($query);
@@ -317,10 +315,10 @@
                     ':el' => 0,
                     ':idusuario' => $lastId
                     ));
-                    /* END INSERT NEW PERMISSIONS */
+                    //END INSERT NEW PERMISSIONS
                 }
                 else if ($rol == "6") {
-                    /* INSERT NEW PERMISSIONS BASED ON NEW EMPLOYEE TYPE */
+                    //INSERT NEW PERMISSIONS BASED ON NEW EMPLOYEE TYPE
                     $query = "INSERT INTO tbl_permisosglobal(Madmin, Mcont, Mplan, Macti, Minve, Miva, Mbanc, Mcxc, Mcxp, Ag, Ed, El, IdUsuario) VALUES
                                                             (:madmin, :mcont, :mplan, :macti, :minve, :miva, :mbanc, :mcxc, :mcxp, :ag, :ed, :el, :idusuario)";
                     $statement = $this->dbConnect->prepare($query);
@@ -340,9 +338,9 @@
                     ':el' => 0,
                     ':idusuario' => $lastId
                     ));
-                    /* END INSERT NEW PERMISSIONS */
+                    //END INSERT NEW PERMISSIONS
                 }
-
+                */
                $this->dbConnect = NULL;
                header('Location: ../empleados.php?status=success');
 
