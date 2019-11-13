@@ -949,7 +949,7 @@
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="diaGenerarFacturaCable">Día cobro</label>
-                                                      <input class="form-control input-sm" type="text" name="diaGenerarFacturaCable" value="<?php echo $diaCobro; ?>" readonly>
+                                                      <input class="form-control input-sm" type="text" name="diaGenerarFacturaCable" value="<?php echo $diaCobro; ?>" readonly required>
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="cortesia">Cortesía</label>
@@ -968,11 +968,11 @@
                                               <div class="row">
                                                   <div class="col-md-2">
                                                       <label for="cuotaMensualCable">Cuota mensual</label>
-                                                      <input class="form-control input-sm" type="text" name="cuotaMensualCable" value="<?php echo $cuotaMensualCable; ?>" readonly>
+                                                      <input class="form-control input-sm" type="text" name="cuotaMensualCable" value="<?php echo $cuotaMensualCable; ?>" readonly required>
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="prepago">Prepago</label>
-                                                      <input class="form-control input-sm" type="text" name="prepago" value="<?php echo $prepago; ?>" readonly>
+                                                      <input class="form-control input-sm" type="text" name="prepago" value="<?php echo $prepago; ?>" readonly required>
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="tipoServicio">Tipo de servicio</label>
@@ -1101,7 +1101,7 @@
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="diaGenerarFacturaInternet">Día para generar factura</label>
-                                                      <input class="form-control input-sm" type="text" name="diaGenerarFacturaInternet" value="<?php echo $diaCobroInter; ?>" readonly>
+                                                      <input class="form-control input-sm" type="text" name="diaGenerarFacturaInternet" value="<?php echo $diaCobroInter; ?>" readonly required>
                                                   </div>
                                               </div>
                                               <div class="row">

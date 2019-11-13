@@ -1,6 +1,6 @@
 $(function() {
 
-    Morris.Area({
+    /*Morris.Area({
         element: 'morris-area-chart',
         data: [{
             period: '2010 Q1',
@@ -59,7 +59,7 @@ $(function() {
         pointSize: 2,
         hideHover: 'auto',
         resize: true
-    });
+    });*/
 
     Morris.Donut({
         element: 'morris-donut-chart',

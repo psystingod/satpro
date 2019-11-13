@@ -18,7 +18,7 @@ CREATE TABLE tbl_cargos (
   /*montoCancelado DOUBLE DEFAULT 0,*/
   fechaAbonado DATE DEFAULT NULL,
   mesCargo VARCHAR(10) DEFAULT '',
-  anticipo CHAR(1) DEFAULT '',
+  anticipo DOUBLE NOT NULL,
   formaPago VARCHAR(10) DEFAULT '',
   tipoServicio CHAR NOT NULL,
   estado VARCHAR(9) DEFAULT '',
@@ -53,7 +53,7 @@ CREATE TABLE tbl_abonos (
   /*montoCancelado DOUBLE DEFAULT 0,*/
   fechaAbonado DATE DEFAULT NULL,
   mesCargo VARCHAR(10) DEFAULT '',
-  anticipo CHAR(1) DEFAULT '',
+  anticipo DOUBLE NOT NULL,
   formaPago VARCHAR(10) DEFAULT '',
   tipoServicio CHAR NOT NULL,
   estado VARCHAR(9) DEFAULT '',

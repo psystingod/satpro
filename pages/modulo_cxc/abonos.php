@@ -1,6 +1,9 @@
 <?php
 session_start();
     require($_SERVER['DOCUMENT_ROOT'].'/satpro'.'/php/permissions.php');
+    if(!isset($_SESSION["user"])) {
+        header('Location: ../login.php');
+    }
     $permisos = new Permissions();
     $permisosUsuario = $permisos->getPermissions($_SESSION['id_usuario']);
 
@@ -10,7 +13,7 @@ session_start();
         $id=isset($_GET['codigoCliente']) ? $_GET['codigoCliente'] : die('ERROR: Record no encontrado.');
 
         //include database connection
-        include '../../php/connection.php';
+        require_once '../../php/connection.php';
         require_once 'php/getSaldoReal.php';
         $precon = new ConectionDB();
         $con = $precon->ConectionDB();
@@ -371,12 +374,6 @@ session_start();
 
 <body>
 
-    <?php
-         // session_start();
-         if(!isset($_SESSION["user"])) {
-             header('Location: ../login.php');
-         }
-     ?>
     <div id="wrapper">
 
         <!-- Navigation -->

@@ -101,5 +101,50 @@
                 die();
             }
         }
+
+        public function getTotalEmp()
+        {
+            try {
+                    $query = "SELECT COUNT(*) FROM tbl_empleados";
+                    $statement = $this->dbConnect->prepare($query);
+                    $statement->execute();
+                    $result1 = $statement->fetchColumn();
+                    return $result1;
+
+            } catch (Exception $e) {
+                print "!Error¡: " . $e->getMessage() . "</br>";
+                die();
+            }
+        }
+
+        public function getTotalOrders()
+        {
+            try {
+                    $query = "SELECT COUNT(*) FROM tbl_ordenes_trabajo";
+                    $statement = $this->dbConnect->prepare($query);
+                    $statement->execute();
+                    $result1 = $statement->fetchColumn();
+                    return $result1;
+
+            } catch (Exception $e) {
+                print "!Error¡: " . $e->getMessage() . "</br>";
+                die();
+            }
+        }
+
+        public function getTotalCableModems()
+        {
+            try {
+                    $query = "SELECT COUNT(*) FROM tbl_articulointernet";
+                    $statement = $this->dbConnect->prepare($query);
+                    $statement->execute();
+                    $result1 = $statement->fetchColumn();
+                    return $result1;
+
+            } catch (Exception $e) {
+                print "!Error¡: " . $e->getMessage() . "</br>";
+                die();
+            }
+        }
     }
 ?>

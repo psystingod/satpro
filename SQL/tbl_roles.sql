@@ -39,13 +39,13 @@ CREATE TABLE `tbl_roles` (
 --
 
 INSERT INTO `tbl_roles` (`idRol`, `nombreRol`, `descripcion`) VALUES
-(1, 'Administración', NULL),
+(1, 'Administracion', NULL),
 (2, 'Subgerencia', NULL),
 (3, 'Jefatura', NULL),
-(4, 'Informática', NULL),
+(4, 'Informatica', NULL),
 (5, 'Contabilidad', NULL),
 (6, 'Atencion', NULL),
-(7, 'Técnico', NULL),
+(7, 'Tecnico', NULL),
 (8, 'Vendedor', NULL),
 (9, 'Cobrador', NULL),
 (10, 'Mantenimiento', NULL),

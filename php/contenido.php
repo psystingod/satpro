@@ -59,7 +59,7 @@ $dashboardAdministracion = "<div id='page-wrapper'>
             <h6>Vista rápida de las estadísticas de la empresa</h6>
             <div class='row estadistics'>
                 <div class='col-lg-6'>
-                    <a href='#'><div class='stat-icon btn btn-default' style='color:#b71c1c'>
+                    <a href='#'><div class='stat-icon btn btn-default' style='color:#3498db'>
                         <i class='fas fa-users'></i>
                     </div></a>
                     <div class='stat-values'>
@@ -68,12 +68,12 @@ $dashboardAdministracion = "<div id='page-wrapper'>
                     </div>
                 </div>
                 <div class='col-lg-6'>
-                    <a href='#'><div class='stat-icon btn btn-default'>
+                    <a href='#'><div class='stat-icon btn btn-default' style='color:#8e44ad'>
                         <i class='fas fa-warehouse'></i>
                     </div></a>
                     <div class='stat-values'>
-                        <div class='value'>2500</div>
-                        <div class='name'>Productos</div>
+                        <div class='value'>".$dashboard->getTotalCableModems()."</div>
+                        <div class='name'>Cable modems</div>
                     </div>
                 </div>
             </div>
@@ -88,22 +88,22 @@ $dashboardAdministracion = "<div id='page-wrapper'>
                     </div>
                 </div>
                 <div class='col-lg-6'>
-                    <a href='#'><div class='stat-icon btn btn-default'>
+                    <a href='#'><div class='stat-icon btn btn-default' style='color:#b71c1c'>
                         <i class='fas fa-user-tie'></i>
                     </div></a>
                     <div class='stat-values'>
-                        <div class='value'>150</div>
+                        <div class='value'>".$dashboard->getTotalEmp()."</div>
                         <div class='name'>Empleados</div>
                     </div>
                 </div>
             </div>
             <div class='row estadistics'>
                 <div class='col-lg-6'>
-                    <a href='#'><div class='stat-icon btn btn-default'>
+                    <a href='#'><div class='stat-icon btn btn-default' style='color: #3b5999'>
                         <i class='fas fa-file-alt'></i>
                     </div></a>
                     <div class='stat-values'>
-                        <div class='value'>50</div>
+                        <div class='value'>".$dashboard->getTotalOrders()."</div>
                         <div class='name'>Ordenes de trabajo</div>
                     </div>
                 </div>
@@ -129,8 +129,8 @@ $dashboardAdministracion = "<div id='page-wrapper'>
     <!-- /.row -->
     <div class='row'>
         <div class='col-lg-8'>
-            <h4>Comparativa</h4>
-            <h6>Comparativa con el año anterior</h6>
+            <!--<h4>Comparativa</h4>-->
+            <!--<h6>Comparativa con el año anterior</h6>-->
             <div class='row comparative'>
                 <div id='morris-area-chart'></div>
             </div>
