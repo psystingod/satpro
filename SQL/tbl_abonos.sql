@@ -22,7 +22,7 @@ CREATE TABLE tbl_cargos (
   formaPago VARCHAR(10) DEFAULT '',
   tipoServicio CHAR NOT NULL,
   estado VARCHAR(9) DEFAULT '',
-  /*anticipado TINYINT(1) DEFAULT 0,*/
+  anticipado TINYINT(1) NOT NULL,
   cargoImpuesto DOUBLE DEFAULT NULL,
   totalImpuesto DOUBLE DEFAULT NULL,
   exento VARCHAR(2) DEFAULT NULL,
@@ -57,7 +57,7 @@ CREATE TABLE tbl_abonos (
   formaPago VARCHAR(10) DEFAULT '',
   tipoServicio CHAR NOT NULL,
   estado VARCHAR(9) DEFAULT '',
-  /*anticipado TINYINT(1) DEFAULT 0,*/
+  anticipado TINYINT(1) NOT NULL,
   cargoImpuesto DOUBLE DEFAULT NULL,
   totalImpuesto DOUBLE DEFAULT NULL,
   cargoIva DOUBLE DEFAULT NULL,

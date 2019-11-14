@@ -34,14 +34,17 @@
         $arrAbonosI = $dataInfo->getDataAbonos('tbl_abonos', $_GET['codigoCliente'], 'I', 'CANCELADA');
     }
 
-    $totalCobrarCable = $dataInfo->getTotalCobrarCable('tbl_cargos', $_GET['codigoCliente'], 'pendiente', 0);
-    $totalCobrarInter = $dataInfo->getTotalCobrarInter('tbl_cargos', $_GET['codigoCliente'], 'pendiente', 0);
+    //$totalCobrarCable = $dataInfo->getTotalCobrarCable('tbl_cargos', $_GET['codigoCliente'], 'pendiente', 0);
+    //$totalCobrarInter = $dataInfo->getTotalCobrarInter('tbl_cargos', $_GET['codigoCliente'], 'pendiente', 0);
     //var_dump($totalCobrarCable);
     //var_dump($totalCobrarInter);
 
     $getSaldoReal = new GetSaldoReal();
     $saldoRealCable = $getSaldoReal->getSaldoCable($_GET['codigoCliente']);
     $saldoRealInter = $getSaldoReal->getSaldoInter($_GET['codigoCliente']);
+
+    $totalCobrarCable = $getSaldoReal->getTotalCobrarCable($_GET['codigoCliente']);
+    $totalCobrarInter = $getSaldoReal->getTotalCobrarInter($_GET['codigoCliente']);
 
     //include database connection
     require_once('../../php/connection.php');
@@ -311,6 +314,7 @@
                                                       echo "0.00"."</td><td class='text-danger danger'>";
                                                       echo $cargo['totalImpuesto']."</td><td class='text-danger danger'>";
                                                       echo "0.00"."</td></tr>";
+
                                                     }
 
                                                   }

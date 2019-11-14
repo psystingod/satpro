@@ -150,6 +150,8 @@
 
                                                 ));
 
+                                                $lastId = $this->dbConnect->lastInsertId();
+
                                                 $qry = "SELECT * FROM tbl_abonos WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
 
                                                 $stmt = $this->dbConnect->prepare($qry);
@@ -172,6 +174,20 @@
                                                           ':tipoServicio' => $generado['tipoServicio'],
                                                           ':estado' => $generado['estado']
                                                          ));
+
+                                                //ACA HACER ACTUALIZACION DE TABLA ABONO ADELANTADO
+                                                /*$qry11 = "UPDATE tbl_abonos SET numeroFactura=:numeroFactura, idFactura=:idFactura, WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
+
+                                                $stmt11 = $this->dbConnect->prepare($qry11);
+                                                $stmt11->execute(
+                                                    array(
+                                                          ':numeroFactura' => $numeroFactura,
+                                                          ':idFactura' => $lastId,
+                                                          ':codigoCliente' => $i['cod_cliente'],
+                                                          ':mesCargo' => $mesCargo,
+                                                          ':tipoServicio' => $ts
+                                                      ));*/
+
 
                                                  //ACA HACER ACTUALIZACION DE SALDO EN TABLA CLIENTES
                                                  $qry3 = "UPDATE clientes SET saldoCable= saldoCable + :cuotaCable WHERE cod_cliente=:codigoCliente";
@@ -270,6 +286,8 @@
 
                                                 ));
 
+                                                $lastId = $this->dbConnect->lastInsertId();
+
                                                 $qry = "SELECT * FROM tbl_abonos WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
 
                                                 $stmt = $this->dbConnect->prepare($qry);
@@ -292,6 +310,19 @@
                                                           ':tipoServicio' => $generado['tipoServicio'],
                                                           ':estado' => $generado['estado']
                                                          ));
+
+                                                 //ACA HACER ACTUALIZACION DE TABLA ABONO ADELANTADO
+                                                 /*$qry11 = "UPDATE tbl_abonos SET numeroFactura=:numeroFactura, idFactura=:idFactura, WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
+
+                                                 $stmt11 = $this->dbConnect->prepare($qry11);
+                                                 $stmt11->execute(
+                                                     array(
+                                                           ':numeroFactura' => $numeroFactura,
+                                                           ':idFactura' => $lastId,
+                                                           ':codigoCliente' => $i['cod_cliente'],
+                                                           ':mesCargo' => $mesCargo,
+                                                           ':tipoServicio' => $ts
+                                                       ));*/
 
                                                  //ACA HACER ACTUALIZACION DE SALDO EN TABLA CLIENTES
                                                  $qry3 = "UPDATE clientes SET saldoCable= saldoCable + :cuotaCable WHERE cod_cliente=:codigoCliente";
@@ -392,6 +423,8 @@
 
                                                 ));
 
+                                                $lastId = $this->dbConnect->lastInsertId();
+
                                                 $qry = "SELECT * FROM tbl_abonos WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
 
                                                 $stmt = $this->dbConnect->prepare($qry);
@@ -414,6 +447,19 @@
                                                           ':tipoServicio' => $generado['tipoServicio'],
                                                           ':estado' => $generado['estado']
                                                          ));
+
+                                                 //ACA HACER ACTUALIZACION DE TABLA ABONO ADELANTADO
+                                                 /*$qry11 = "UPDATE tbl_abonos SET numeroFactura=:numeroFactura, idFactura=:idFactura, WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
+
+                                                 $stmt11 = $this->dbConnect->prepare($qry11);
+                                                 $stmt11->execute(
+                                                     array(
+                                                           ':numeroFactura' => $numeroFactura,
+                                                           ':idFactura' => $lastId,
+                                                           ':codigoCliente' => $i['cod_cliente'],
+                                                           ':mesCargo' => $mesCargo,
+                                                           ':tipoServicio' => $ts
+                                                       ));*/
 
                                                  //ACA HACER ACTUALIZACION DE SALDO EN TABLA CLIENTES
                                                  $qry3 = "UPDATE clientes SET saldoInternet= saldoInternet + :cuotaInter WHERE cod_cliente=:codigoCliente";
@@ -512,6 +558,8 @@
 
                                                 ));
 
+                                                $lastId = $this->dbConnect->lastInsertId();
+
                                                 $qry = "SELECT * FROM tbl_abonos WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
 
                                                 $stmt = $this->dbConnect->prepare($qry);
@@ -534,6 +582,19 @@
                                                           ':tipoServicio' => $generado['tipoServicio'],
                                                           ':estado' => $generado['estado']
                                                          ));
+
+                                                 //ACA HACER ACTUALIZACION DE TABLA ABONO ADELANTADO
+                                                 /*$qry11 = "UPDATE tbl_abonos SET numeroFactura=:numeroFactura, idFactura=:idFactura, WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
+
+                                                 $stmt11 = $this->dbConnect->prepare($qry11);
+                                                 $stmt11->execute(
+                                                     array(
+                                                           ':numeroFactura' => $numeroFactura,
+                                                           ':idFactura' => $lastId,
+                                                           ':codigoCliente' => $i['cod_cliente'],
+                                                           ':mesCargo' => $mesCargo,
+                                                           ':tipoServicio' => $ts
+                                                       ));*/
 
                                                  //ACA HACER ACTUALIZACION DE SALDO EN TABLA CLIENTES
                                                  $qry3 = "UPDATE clientes SET saldoInternet= saldoInternet + :cuotaInter WHERE cod_cliente=:codigoCliente";
