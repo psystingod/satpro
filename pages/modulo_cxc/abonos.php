@@ -210,6 +210,53 @@ session_start();
             $ruido = $row['ruido_modem'];
             $nodo = $row['dire_telefonia'];
             $wifiClave = $row['clave_modem'];
+
+            if ($_GET['tipoServicio'] == "c") {
+                $diaC = $row['dia_cobro'];
+                $fechapf = $row['fecha_primer_factura'];
+                //SACAR ÚLTIMO MES PAGADO DEL CLIENTE
+                $query = "SELECT mesCargo FROM tbl_abonos WHERE codigoCliente=:codigoCliente AND estado=:estado AND tipoServicio=:tipoServicio ORDER BY idAbono DESC LIMIT 1";
+                $stmt = $con->prepare($query);
+                $estado = "CANCELADA";
+                // this is the first question mark
+                $stmt->bindParam(':codigoCliente', $id);
+                $stmt->bindParam(':estado', $estado);
+                $stmt->bindParam(':tipoServicio', $_GET['tipoServicio']);
+
+            }elseif ($_GET['tipoServicio'] == "i") {
+                $diaC = $row['dia_corbo_in'];
+                $fechapf = $row['fecha_primer_factura_in'];
+                //SACAR ÚLTIMO MES PAGADO DEL CLIENTE
+                $query = "SELECT mesCargo FROM tbl_abonos WHERE codigoCliente=:codigoCliente AND estado=:estado AND tipoServicio=:tipoServicio ORDER BY idAbono DESC LIMIT 1";
+                $stmt = $con->prepare($query);
+                $estado = "CANCELADA";
+                // this is the first question mark
+                $stmt->bindParam(':codigoCliente', $id);
+                $stmt->bindParam(':estado', $estado);
+                $stmt->bindParam(':tipoServicio', $_GET['tipoServicio']);
+            }
+
+            // execute our query
+            $stmt->execute();
+            // store retrieved row to a variable
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            //var_dump($row["mesCargo"]);
+            if($row["mesCargo"]){
+                $mesPendiente = $row['mesCargo'];
+                $mesPendiente = $diaC."/".$mesPendiente;
+                $date = str_replace('/', '-', $mesPendiente);
+                $date = date('Y-m-d', strtotime($date));
+                $mesPendiente = date('Y-m-d', strtotime("+1 month", strtotime($date)));
+                $mesPendiente = date_format(date_create($mesPendiente),'d/m/Y');
+
+            }elseif($row["mesCargo"] == NULL){
+                $mesPendiente = $fechapf;
+                $mesPendiente = date_format(date_create($mesPendiente),'d/m/Y');
+            }
+            //$mesPendiente = date('Y-m-d', strtotime("+1 month", strtotime($row['fechaCobro'])));
+            //$mesPendiente = date_format(date_create($mesPendiente),'d/m/Y');
+            //var_dump($mesPendiente);
+            //$mesPendiente = date('m-Y', strtotime("+1 months", strtotime($mesPendiente)));
         }
 
         // show error
@@ -367,13 +414,10 @@ session_start();
         color: #01579B;
         font-size: 15px;
         font-weight: bold;
-
     }
     </style>
 </head>
-
 <body>
-
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -702,7 +746,7 @@ session_start();
                                   <div class="col-md-12">
                                       <table class="table table-bordered table-hover table-striped">
                                           <tr class="">
-                                              <th class="bg-success">Abonar?</th>
+                                              <th class="bg-success">Abonar <i class="fas fa-check-square"></i></th>
                                               <th class="bg-success"></th>
                                               <th class="bg-success"></th>
                                               <th class="bg-success">N° factura</th>
@@ -792,6 +836,7 @@ session_start();
                                   <div class="col-md-8">
                                       <label for="meses">Meses</label>
                                       <input id="meses" class="form-control" name="meses" pattern="([0-9]{2}/[0-9]{4})|([0-9]{2}/[0-9]{4},[0-9]{2}/[0-9]{4})" title="Por favor utiliza el formato mes/año por ejemplo 01/2019" required>
+                                      <input type="hidden" id="mesPendiente" value="<?php echo $mesPendiente; ?>">
                                   </div>
                                   <div class="col-md-4">
                                       <label for="meses" style="color: brown;"></label>
@@ -882,6 +927,9 @@ session_start();
         var impSeg = document.getElementById("impSeg").value;
         document.getElementById("totalAbonoImpSeg").value = String(parseFloat(totalPagar)+parseFloat(impSeg)).substring(0, 5);
         cargoTotal = document.getElementById("totalAbonoImpSeg").value = String(parseFloat(totalPagar)+parseFloat(impSeg)).substring(0, 5);
+        var mesPendiente = document.getElementById("mesPendiente").value;
+        var mesPendienteFinal = String(mesPendiente).substring(3, 10);
+        document.getElementById("meses").value = mesPendienteFinal;
         // Trigger the button element with a click
         //window.location="abonos.php?codigoCliente="+codValue+"&tipoServicio="+servicio;
         }

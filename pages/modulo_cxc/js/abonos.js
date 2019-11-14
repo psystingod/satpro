@@ -123,7 +123,7 @@ function getMesesPagar(){
             document.getElementById("total").value = cargoTotal;
             //CAMBIOS ACÁ
             var pendiente = document.getElementById("pendiente").value;
-            document.getElementById("pendiente").value = parseFloat(pendiente) - parseFloat(total);
+            document.getElementById("pendiente").value = parseFloat(pendiente) - parseFloat(total) + parseFloat(mes2);
 
         }else {
             document.getElementById("totalPagar").value = "0.0";

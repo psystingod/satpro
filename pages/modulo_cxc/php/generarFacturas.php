@@ -403,12 +403,12 @@
                                                 $generado = $stmt->fetch(PDO::FETCH_ASSOC);
 
                                                 //ACA HACER ACTUALIZACION DE SALDO
-                                                $qry2 = "UPDATE tbl_cargos SET saldoCable= saldoCable + :cuotaCable, estado=:estado WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
+                                                $qry2 = "UPDATE tbl_cargos SET saldoInternet= saldoInternet + :cuotaInter, estado=:estado WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
 
                                                 $stmt2 = $this->dbConnect->prepare($qry2);
                                                 $stmt2->execute(
                                                     array(
-                                                          ':cuotaCable' => floatval($i['valor_cuota']),
+                                                          ':cuotaInter' => floatval($i['cuota_in']),
                                                           ':codigoCliente' => $generado['codigoCliente'],
                                                           ':mesCargo' => $generado['mesCargo'],
                                                           ':tipoServicio' => $generado['tipoServicio'],
@@ -523,12 +523,12 @@
                                                 $generado = $stmt->fetch(PDO::FETCH_ASSOC);
 
                                                 //ACA HACER ACTUALIZACION DE SALDO
-                                                $qry2 = "UPDATE tbl_cargos SET saldoCable= saldoCable + :cuotaCable, estado=:estado WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
+                                                $qry2 = "UPDATE tbl_cargos SET saldoCable= saldoInternet + :cuotaInter, estado=:estado WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
 
                                                 $stmt2 = $this->dbConnect->prepare($qry2);
                                                 $stmt2->execute(
                                                     array(
-                                                          ':cuotaCable' => floatval($i['valor_cuota']),
+                                                          ':cuotaInter' => floatval($i['cuota_in']),
                                                           ':codigoCliente' => $generado['codigoCliente'],
                                                           ':mesCargo' => $generado['mesCargo'],
                                                           ':tipoServicio' => $generado['tipoServicio'],
