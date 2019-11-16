@@ -214,6 +214,40 @@ class GetAllInfo extends ConectionDB
         }
     }
 
+    public function getDataUanC($codigoCliente){
+        try {
+            $anulada = 0;
+            $query = "SELECT * FROM tbl_abonos WHERE codigoCliente = :codigoCliente AND anulada=:anulada AND tipoServicio = 'C' ORDER BY idAbono DESC LIMIT 0, 6";
+            $statement = $this->dbConnect->prepare($query);
+            $statement->bindValue(':codigoCliente', $codigoCliente);
+            $statement->bindValue(':anulada', $anulada);
+            $statement->execute();
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+
+        } catch (Exception $e) {
+            print "!Error¡: " . $e->getMessage() . "</br>";
+            die();
+        }
+    }
+
+    public function getDataUanI($codigoCliente){
+        try {
+            $anulada = 0;
+            $query = "SELECT * FROM tbl_abonos WHERE codigoCliente = :codigoCliente AND anulada=:anulada AND tipoServicio = 'I' ORDER BY idAbono DESC LIMIT 0, 6";
+            $statement = $this->dbConnect->prepare($query);
+            $statement->bindValue(':codigoCliente', $codigoCliente);
+            $statement->bindValue(':anulada', $anulada);
+            $statement->execute();
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+
+        } catch (Exception $e) {
+            print "!Error¡: " . $e->getMessage() . "</br>";
+            die();
+        }
+    }
+
     //Acá comienzan las funciones para obtener los datos de clientes
     /*public function getDepartamento($idDepartamento){
         try {

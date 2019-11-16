@@ -94,6 +94,7 @@
              /*******INICIO DE INSTRUCCIONES PARA SACAR EL SALDO REAL DEL CLIENTE**********/
              // prepare select query
              $anulada = 0;
+             $estado = "pendiente";
              $this->dbConnect->beginTransaction();
              $query = "SELECT SUM(cuotaCable + totalImpuesto) FROM tbl_cargos WHERE codigoCliente=:codigo AND anulada=:anulada";
              $stmt = $this->dbConnect->prepare( $query );

@@ -14,6 +14,8 @@
     $arrayActividadesC = $data->getActividadesCable();
     $arrayActividadesI = $data->getActividadesInter();
     $arrayVelocidades = $data->getVelocidades();
+    $arrUanC = $dataInfo->getDataUanC($_GET['codigoCliente']);
+    $arrUanI = $dataInfo->getDataUanI($_GET['codigoCliente']);
 
     if (isset($_POST['submit'])) {
         $desde = $_POST["desde"];
@@ -259,7 +261,9 @@
                                               <div class="row">
                                               <form class="" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'].'?codigoCliente='.$_GET['codigoCliente']); ?>" method="POST">
                                                   <div class="col-md-7">
-
+                                                      <div class="col-md-3">
+                                                          <button class="btn btn-success btn-block" data-toggle="modal" data-target="#uanC" type="button" name="uan">Últimos abonos</button>
+                                                      </div>
                                                   </div>
                                                   <div class="col-md-2">
                                                       <input class="form-control" type="text" name="desde" placeholder="Desde mes/año">
@@ -359,7 +363,9 @@
                                               <div class="row">
                                               <form class="" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF'].'?codigoCliente='.$_GET['codigoCliente']); ?>" method="POST">
                                                   <div class="col-md-7">
-
+                                                      <div class="col-md-3">
+                                                          <button class="btn btn-success btn-block" data-toggle="modal" data-target="#uanI" type="button" name="uan">Últimos abonos</button>
+                                                      </div>
                                                   </div>
                                                   <div class="col-md-2">
                                                       <input class="form-control" type="text" name="desde" placeholder="Desde mes/año">
@@ -438,6 +444,119 @@
                                       <?php echo "<div class='well pull-right'><strong>TOTAL A COBRAR: $".$totalCobrarInter."</strong></div>"; ?>
                                   </div>
                               </div>
+                          </div>
+                        </div>
+                        <!-- Modal -->
+                        <div id="uanC" class="modal fade" role="dialog">
+                          <div class="modal-dialog modal-lg">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">últimos abonos</h4>
+                              </div>
+                              <div class="modal-body">
+                                  <div class="row">
+                                      <div class="col-md-12">
+                                          <div id="datos">
+                                              <table class="table table-striped table-hover">
+                                                  <thead>
+                                                      <th>N° recibo</th>
+                                                      <th>Tipo servicio</th>
+                                                      <th>N° comprobante</th>
+                                                      <th>Mes de servicio</th>
+                                                      <th>Aplicación</th>
+                                                      <th>Vencimiento</th>
+                                                      <th>Cargo</th>
+                                                      <th>Abono</th>
+                                                      <th>CESC cargo</th>
+                                                      <th>CESC abono</th>
+                                                  </thead>
+                                                  <tbody>
+                                                      <?php
+                                                      foreach ($arrUanC as $key) {
+                                                          echo "<tr><td class='text-success success'>";
+                                                          echo $key['numeroRecibo']."</td><td class='text-success success'>";
+                                                          echo $key['tipoServicio']."</td><td class='text-success success'>";
+                                                          echo $key['numeroFactura']."</td><td class='text-success success'>";
+                                                          echo "<span class='label label-primary'>".$key['mesCargo']."</span>"."</td><td class='text-success success'>";
+                                                          echo "<span class='label label-success'>".$key['fechaAbonado']."</span>"."</td><td class='text-success success'>";
+                                                          echo "<span class='label label-danger'>".$key['fechaVencimiento']."</span>"."</td><td class='text-success success'>";
+                                                          echo "0.00"."</td><td class='text-success success'>";
+                                                          echo $key['cuotaCable']."</td><td class='text-success success'>";
+                                                          echo "0.00"."</td><td class='text-success success'>";
+                                                          echo $key['totalImpuesto']."</td></tr>";
+                                                      }
+                                                      ?>
+                                                  <tbody>
+                                              </table>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+
+                        <!-- Modal -->
+                        <div id="uanI" class="modal fade" role="dialog">
+                          <div class="modal-dialog modal-lg">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">últimos abonos</h4>
+                              </div>
+                              <div class="modal-body">
+                                  <div class="row">
+                                      <div class="col-md-12">
+                                          <div id="datos">
+                                              <table class="table table-striped table-hover">
+                                                  <thead>
+                                                      <th>N° recibo</th>
+                                                      <th>Tipo servicio</th>
+                                                      <th>N° comprobante</th>
+                                                      <th>Mes de servicio</th>
+                                                      <th>Aplicación</th>
+                                                      <th>Vencimiento</th>
+                                                      <th>Cargo</th>
+                                                      <th>Abono</th>
+                                                      <th>CESC cargo</th>
+                                                      <th>CESC abono</th>
+                                                  </thead>
+                                                  <tbody>
+                                                      <?php
+                                                      foreach ($arrUanI as $key) {
+                                                          echo "<tr><td class='text-success success'>";
+                                                          echo $key['numeroRecibo']."</td><td class='text-success success'>";
+                                                          echo $key['tipoServicio']."</td><td class='text-success success'>";
+                                                          echo $key['numeroFactura']."</td><td class='text-success success'>";
+                                                          echo "<span class='label label-primary'>".$key['mesCargo']."</span>"."</td><td class='text-success success'>";
+                                                          echo "<span class='label label-success'>".$key['fechaAbonado']."</span>"."</td><td class='text-success success'>";
+                                                          echo "<span class='label label-danger'>".$key['fechaVencimiento']."</span>"."</td><td class='text-success success'>";
+                                                          echo "0.00"."</td><td class='text-success success'>";
+                                                          echo $key['cuotaCable']."</td><td class='text-success success'>";
+                                                          echo "0.00"."</td><td class='text-success success'>";
+                                                          echo $key['totalImpuesto']."</td></tr>";
+                                                      }
+                                                      ?>
+                                                  <tbody>
+                                              </table>
+                                          </div>
+                                      </div>
+                                  </div>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                              </div>
+                            </div>
+
                           </div>
                         </div>
                     </div>
