@@ -424,6 +424,25 @@
                     <!-- /.dropdown-user -->
                 </li>
                 <!-- /.dropdown -->
+                <li class="dropdown procesos">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        Documentación <i class="fas fa-caret-down"></i>
+                    </a>
+                    <ul class="dropdown-menu dropdown-user">
+                        <li><a href="php/f3.php<?php echo "?id=".$id; ?>" target="_blank">Documento F-3</a>
+                        </li>
+                        <li><a href="php/f4.php<?php echo "?id=".$id; ?>" target="_blank">Documento F-4</a>
+                        </li>
+                        <li><a href="php/f5.php<?php echo "?id=".$id; ?>" target="_blank">Documento F-5</a>
+                        </li>
+                        <li><a href="php/f9.php<?php echo "?id=".$id; ?>" target="_blank">Documento F-9</a>
+                        </li>
+                        <li><a href="php/allDoc.php<?php echo "?id=".$id; ?>" target="_blank">Documentación completa</a>
+                        </li>
+                    </ul>
+                    <!-- /.dropdown-user -->
+                </li>
+                <!-- /.dropdown -->
             </ul>
             <!-- /.navbar-top-links -->
 
@@ -517,7 +536,7 @@
                         <tr>
                             <td><button class="btn btn-danger btn-block"><i class="fas fa-sign-out-alt fa-2x"></i></button></td>
                             <td><button class="btn btn-success btn-block"><i class="fas fa-print fa-2x"></i></button></td>
-                            <td><button class="btn btn-warning btn-block"><i class="far fa-edit fa-2x"></i></button></td>
+                            <td><button class="btn btn-warning btn-block" id="btn-editar" name="editar" onclick="editarCliente();" title="Editar"><i class="far fa-edit fa-2x"></i></button></td>
                             <td><button id="btn-nuevo" name="agregar" onclick="nuevoCliente();" class="btn btn-primary btn-block" title="Nuevo"><i class="fas fa-user-plus fa-2x"></i></button></td>
                         </tr>
 
@@ -525,14 +544,14 @@
                             <td><button class="btn btn-primary btn-block" style="font-size: 16px;"><i class="far fa-file-alt"></i> Contrato de cable</button></td>
                             <td><button class="btn btn-primary btn-block" style="font-size: 16px;"><i class="far fa-file-alt"></i> Contrato de internet</button></td>
                             <td><a href="estadoCuenta.php?codigoCliente=<?php echo $codigo; ?>" target="_blank"><button class="btn btn-primary btn-block" style="font-size: 16px;"><i class="fas fa-dollar"></i> Estado de cuenta</button></a></td>
-                            <td><button id="btn-editar" name="editar" onclick="editarCliente();" class="btn btn-success btn-block" title="Editar"><i class="fas fa-user-edit fa-2x"></i></button></td>
-                        </tr>
-               <form id="formClientes" class="" action="#" method="POST">
-                        <tr>
-                            <td><button class="btn btn-info btn-block" style="font-size: 16px; ;">Reporte</button></td>
-                            <td colspan="2"><button class="btn btn-info btn-block" style="font-size: 16px; ;">Compromiso de internet</button></td>
+                <form id="formClientes" class="" action="#" method="POST">
                             <td><button id="btn-guardar" class="btn btn-danger btn-block" title="Guardar" disabled><i class="fas fa-save fa-2x"></i></button></td>
                         </tr>
+                        <!--<tr>
+                            <td><button class="btn btn-info btn-block" style="font-size: 16px; ;">Reporte</button></td>
+                            <td colspan="2"><button class="btn btn-info btn-block" style="font-size: 16px; ;">Compromiso de internet</button></td>
+
+                        </tr>-->
                     </table>
                 </div>
                 <div class="col-md-4">
@@ -1101,7 +1120,7 @@
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="diaGenerarFacturaInternet">Día para generar factura</label>
-                                                      <input class="form-control input-sm" type="text" name="diaGenerarFacturaInternet" value="<?php echo $diaCobroInter; ?>" readonly required>
+                                                      <input class="form-control input-sm" type="text" name="diaGenerarFacturaInternet" value="<?php echo $diaCobroInter; ?>" readonly>
                                                   </div>
                                               </div>
                                               <div class="row">
