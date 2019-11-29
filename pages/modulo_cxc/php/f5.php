@@ -19,7 +19,7 @@
 	$pdf->AliasNbPages();
 	$pdf->AddPage('P','Letter');
 
-  $pdf->Ln(35);
+  $pdf->Ln(25);
 	$pdf->SetFont('Arial','B',13);
   $pdf->Cell(190,6,utf8_decode('F-5'),0,1,'R');
   $pdf->Ln();
@@ -41,16 +41,30 @@
     $pdf->SetFont('Arial','',12);
     $pdf->MultiCell(190,6,utf8_decode('Hace constar que hace entrega del equipo de marca '.$row['marca_modem'].' con número de serie '.$row['serie_modem'].' y MAC '.$row['mac_modem'].' en perfecto funcionamiento; al firmar esta constancia, yo, '.strtoupper($row['nombre']).' me manifiesto en conformidad con el estado del equipo que se me ha entregado, y me hago responsable de la integridad física del equipo. CableSat pierde toda responsabilidad por cualquier daño ocasionado al mismo. '),0,'L',0);
     $pdf->Ln();
-    $pdf->MultiCell(190,6,utf8_decode('La cantidad antes mencionada se pagará en esta ciudad, en las oficinas administrativas de la sociedad acreedora, el día _____ de ______________________ del año ___________ En caso de acción judicial, señalo la ciudad de Usulután como domicilio especial en caso de ejecución; siendo a mi cargo, cualquier gasto que la sociedad acreedora antes mencionada hiciere en el cobro de la presente obligación, inclusive los llamados personales, y faculto a la sociedad acreedora para que designe al depositario judicial de los bienes que se embarguen, a quien relevo de la obligación de rendir fianza.'),0,'L',0);
-    $pdf->Ln(3);
 
-    $pdf->Cell(190,6,utf8_decode('Nombre del cliente: '.strtoupper($row['nombre'])),0,1,'L');
+	$pdf->Image('../../../images/CUADROINTER.png',70,111, 77, 50);
+	$pdf->Ln(48);
 
-    $pdf->Ln(20);
+	$pdf->Cell(190,6,utf8_decode('¿Recibió la contraseña e instrucciones para el uso de la contraseña del modem?'),0,1,'L');
+	$pdf->Ln();
+	$pdf->Cell(40,6,utf8_decode('SÍ:__________'),0,0,'L');
+	$pdf->Cell(40,6,utf8_decode('NO:__________'),0,1,'L');
 
-    $pdf->Cell(190,6,utf8_decode('Firma: _______________________________'),0,1,'L');
-    $pdf->Cell(190,6,utf8_decode('NIT: '.$row['numero_nit']),0,1,'L');
-    $pdf->Cell(190,6,utf8_decode('DUI: '.$row['numero_dui']),0,1,'L');
+	$pdf->Ln();
+	$pdf->Cell(190,6,utf8_decode('¿Se realizó prueba en su equipo del funcionamiento del servicio de internet?'),0,1,'L');
+	$pdf->Ln();
+	$pdf->Cell(40,6,utf8_decode('SÍ:__________'),0,0,'L');
+	$pdf->Cell(40,6,utf8_decode('NO:__________'),0,1,'L');
+
+    $pdf->Ln(23);
+
+    $pdf->Cell(95,6,utf8_decode('Firma: ______________________'),0,0,'L');
+	$pdf->Cell(95,6,utf8_decode('Firma: ______________________'),0,1,'L');
+	$pdf->Ln();
+	$pdf->Cell(95,6,utf8_decode('Nombre: '.strtoupper($row['nombre'])),0,0,'L');
+	$pdf->Cell(95,6,utf8_decode('Nombre del técnico:'),0,1,'L');
+    $pdf->Cell(95,6,utf8_decode('DUI: '.$row['numero_dui']),0,0,'L');
+
 	}
 	$pdf->Output();
 ?>
