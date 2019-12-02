@@ -71,10 +71,14 @@
         $pdf->Cell(95,6,utf8_decode('CABLE:'),1,1,'L');
         $totalCable = 0;
         $totalInter = 0;
+		$fechaVencimiento = "";
         while (($pendientesInter = $facturasInter->fetch_assoc() && $pendientesCable = $facturasCable->fetch_assoc()) || ($pendientesInter = $facturasInter->fetch_assoc() || $pendientesCable = $facturasCable->fetch_assoc())) {
             $totalCable += doubleval($pendientesCable['cuotaCable'] + doubleval($pendientesCable['totalImpuesto']));
             $totalInter += doubleval($pendientesInter['cuotaInternet'] + doubleval($pendientesInter['totalImpuesto']));
-            $fechaVencimiento = $pendientesCable['fechaVencimiento'];
+			if (isset($pendientesCable['fechaVencimiento'])) {
+				$fechaVencimiento = $pendientesCable['fechaVencimiento'];
+			}
+
             $pdf->Cell(95,6,utf8_decode('$'.$pendientesInter['cuotaInternet']),1,0,'L');
             $pdf->Cell(95,6,utf8_decode('$'.$pendientesCable['cuotaCable']),1,1,'L');
         }
