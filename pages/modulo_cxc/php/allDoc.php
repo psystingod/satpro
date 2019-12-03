@@ -57,6 +57,8 @@ $codigo = $_GET['id'];
   while($row = $resultado->fetch_assoc())
   {
     $imp = substr((($row['cuota_in']/(1 + floatval($iva)))*$cesc),0,4);
+    $imp = str_replace(',','.', $imp);
+    //var_dump($imp);
 
     $cantidad = (doubleval($row['cuota_in']) + doubleval($imp));
     $pdf->SetFont('Arial','',12);
@@ -173,6 +175,7 @@ $pdf->Ln();
   $pdf->Cell(95,6,utf8_decode('DUI: '.$row['numero_dui']),0,0,'L');
 
   }
-
+  /* close connection */
+  mysqli_close($mysqli);
   $pdf->Output();
 ?>

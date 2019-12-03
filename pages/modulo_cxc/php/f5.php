@@ -67,6 +67,8 @@
 	    $pdf->Cell(95,6,utf8_decode('DUI: '.$row['numero_dui']),0,0,'L');
 
 		}
+		/* close connection */
+  	  	mysqli_close($mysqli);
 		$pdf->Output();
   }
   f5();

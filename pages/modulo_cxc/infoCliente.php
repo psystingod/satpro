@@ -201,6 +201,7 @@
             $ruido = $row['ruido_modem'];
             $nodo = $row['dire_telefonia'];
             $wifiClave = $row['clave_modem'];
+            $costoInstalacionIn = $row['costo_instalacion_in'];
         }
 
         // show error
@@ -541,8 +542,8 @@
                         </tr>
 
                         <tr>
-                            <td><button class="btn btn-primary btn-block" style="font-size: 16px;"><i class="far fa-file-alt"></i> Contrato de cable</button></td>
-                            <td><button class="btn btn-primary btn-block" style="font-size: 16px;"><i class="far fa-file-alt"></i> Contrato de internet</button></td>
+                            <td><a href="php/contratoCable.php<?php echo "?id=".$id; ?>" target="_blank" class="btn btn-primary btn-block" style="font-size: 16px;"><i class="far fa-file-alt"></i> Contrato de cable</a></td>
+                            <td><a href="php/contratoInter.php<?php echo "?id=".$id; ?>" target="_blank" class="btn btn-primary btn-block" style="font-size: 16px;"><i class="far fa-file-alt"></i> Contrato de internet</a></td>
                             <td><a href="estadoCuenta.php?codigoCliente=<?php echo $codigo; ?>" target="_blank"><button class="btn btn-primary btn-block" style="font-size: 16px;"><i class="fas fa-dollar"></i> Estado de cuenta</button></a></td>
                 <form id="formClientes" class="" action="#" method="POST">
                             <td><button id="btn-guardar" class="btn btn-danger btn-block" title="Guardar" disabled><i class="fas fa-save fa-2x"></i></button></td>
@@ -1227,7 +1228,7 @@
                                                   </div>
                                               </div>
                                               <div class="row">
-                                                  <div class="col-md-12">
+                                                  <div class="col-md-9">
                                                       <label for="encargadoInstalacionInter">Técnico que realizó la instalación</label>
                                                       <select class="form-control input-sm" name="encargadoInstalacionInter" disabled>
                                                           <option value="" selected>Seleccionar</option>
@@ -1243,6 +1244,10 @@
                                                           }
                                                            ?>
                                                       </select>
+                                                  </div>
+                                                  <div class="col-md-3">
+                                                      <label for="costoInstalacionIn">Costo de instalación</label>
+                                                      <input class="form-control input-sm" type="text" name="costoInstalacionIn" value="<?php echo $costoInstalacionIn; ?>" readonly required>
                                                   </div>
                                               </div>
                                               <div class="row">

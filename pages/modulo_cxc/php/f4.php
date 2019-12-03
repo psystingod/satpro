@@ -56,6 +56,8 @@
 	    $pdf->Cell(190,6,utf8_decode('NIT: '.$row['numero_nit']),0,1,'L');
 	    $pdf->Cell(190,6,utf8_decode('DUI: '.$row['numero_dui']),0,1,'L');
 		}
+		/* close connection */
+	  	  mysqli_close($mysqli);
 		$pdf->Output();
   }
   f4();

@@ -116,6 +116,9 @@
         $pdf->Cell(95,6,utf8_decode('Departamento de cobro de mora, CableSat.'),0,1,'L');
         //$pdf->Cell(95,6,utf8_decode('TOTAL: $'.$totalInter),1,0,'L');
         //$pdf->Cell(95,6,utf8_decode('TOTAL: $'.$totalCable),1,1,'L');
+
+		/* close connection */
+  	  	mysqli_close($mysqli);
     	$pdf->Output();
   }
 

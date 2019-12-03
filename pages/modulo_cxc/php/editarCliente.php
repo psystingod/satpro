@@ -186,6 +186,7 @@ class EditarCliente extends ConectionDB
             $cuotaPromocion = $_POST['cuotaPromocion'];
             $direccionInternet = $_POST['direccionInternet'];
             $colilla = $_POST['colilla'];
+            $costoInstalacionIn = $_POST['costoInstalacionIn'];
             $nodo = $_POST['nodo'];
             $modelo = $_POST['modelo'];
             $recepcion = $_POST['recepcion'];
@@ -204,7 +205,7 @@ class EditarCliente extends ConectionDB
                       telcon1=:telcon1, telcon2=:telcon2, telcon3=:telcon3, paren1=:paren1, paren2=:paren2, paren3=:paren3, dir1=:dir1, dir2=:dir2, dir3=:dir3,
                       fecha_instalacion=:fechaInstalacionCable, fecha_primer_factura=:fechaPrimerFacturaCable, fecha_suspencion=:fechaSuspensionCable, exento=:exento, dia_cobro=:diaCobro, servicio_cortesia=:servicioCortesia, valor_cuota=:cuotaCable, prepago=:prepago, tipo_servicio=:tipoServicio, mactv=:mactv, periodo_contrato_ca=:periodoContratoCable, vencimiento_ca=:vencimientoCable, fecha_reinstalacion=:fechaReconexCable, id_tecnico=:idTecnico, cod_cobrador=:codigoCobrador, numero_derivaciones=:nDerivaciones, dire_cable=:direCable, fecha_instalacion_in=:fechaInstalacionIn, fecha_primer_factura_in=:fechaPrimerFacturaIn, tipo_servicio_in=:tipoServicioIn, periodo_contrato_int=:periodoContratoIn, dia_corbo_in=:diaCobroIn, id_velocidad=:idVelocidadIn, cuota_in=:cuotaIn, id_tipo_cliente=:tipoClienteIn,
                       tecnologia=:tecnologia, entrega_calidad=:enCalidad, no_contrato_inter=:noContratoIn,
-                      vencimiento_in=:vencimientoContratoIn, ult_ren_in=:ultRenIn, fecha_suspencion_in=:fechaSuspensionIn, fecha_reconexion_in=:fechaReconexIn, id_promocion=:promoIn, dese_promocion_in=:promoInDesde, hasta_promocion_in=:promoInHasta, cuota_promocion=:cuotaPromoIn, dire_internet=:direInter, id_tecnico_in=:idTecnicoIn, colilla=:colilla, marca_modem=:modelo, recep_modem=:recepcion, wanip=:wanip, mac_modem=:macModem, trans_modem=:trans, coordenadas=:coordenadas, serie_modem=:serieModem, ruido_modem=:ruido, dire_telefonia=:nodo, clave_modem=:claveWifi, ult_usuario=:ultUser WHERE cod_cliente = :codigo";
+                      vencimiento_in=:vencimientoContratoIn, ult_ren_in=:ultRenIn, fecha_suspencion_in=:fechaSuspensionIn, fecha_reconexion_in=:fechaReconexIn, id_promocion=:promoIn, dese_promocion_in=:promoInDesde, hasta_promocion_in=:promoInHasta, cuota_promocion=:cuotaPromoIn, dire_internet=:direInter, id_tecnico_in=:idTecnicoIn, costo_instalacion_in=:costoInstalacionIn, colilla=:colilla, marca_modem=:modelo, recep_modem=:recepcion, wanip=:wanip, mac_modem=:macModem, trans_modem=:trans, coordenadas=:coordenadas, serie_modem=:serieModem, ruido_modem=:ruido, dire_telefonia=:nodo, clave_modem=:claveWifi, ult_usuario=:ultUser WHERE cod_cliente = :codigo";
 
             $stmt = $this->dbConnect->prepare($query);
             $stmt->execute(array(
@@ -285,6 +286,7 @@ class EditarCliente extends ConectionDB
                         ':cuotaPromoIn' => $cuotaPromocion,
                         ':direInter' => $direccionInternet,
                         ':idTecnicoIn' => $tecnicoInternet,
+                        ':costoInstalacionIn' => $costoInstalacionIn,
                         ':colilla' => $colilla,
                         ':modelo' => $modelo,
                         ':recepcion' => $recepcion,
