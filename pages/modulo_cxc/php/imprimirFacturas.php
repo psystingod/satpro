@@ -23,7 +23,8 @@ if (isset($_POST['desdeImp']) && isset($_POST['hastaImp'])) {
     }else {
         $query = "SELECT * FROM tbl_cargos WHERE SUBSTRING(fechaCobro, 9, 10) = '".$diaCobro."' AND codigoCobrador = '".$cobrador."' AND fechaFactura = '".$fechaGenerada."' AND tipoServicio = '".$tipoServicio."'";
     }
-}else {
+}
+else {
     if ($cobrador == "todos") {
         $query = "SELECT * FROM tbl_cargos WHERE SUBSTRING(fechaCobro, 9, 10) = '".$diaCobro."' AND fechaFactura = '".$fechaGenerada."' AND tipoServicio = '".$tipoServicio."'";
     }else {
