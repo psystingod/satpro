@@ -447,7 +447,7 @@
               </div>
           </div><!-- Fin Modal ABONOS -->
 
-          <!-- Modal Consultar/Eliminar abonos -->
+          <!-- Modal imprimir facturas -->
           <div id="imprimirFacturas" class="modal fade" role="dialog">
             <div class="modal-dialog">
 
@@ -457,7 +457,7 @@
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
                   <h4 class="modal-title">Imprimir facturas</h4>
                 </div>
-                <form id="generarFacturas" action="php/imprimirFacturas.php?" method="POST">
+                <form id="frmImprimirFacturas" action="php/imprimirFacturas.php?" method="POST">
                 <div class="modal-body">
                   <div class="row">
                       <div class="col-md-12">
@@ -516,7 +516,7 @@
                   <div class="row">
                       <div class="col-md-8">
                           <label for="fechaImp"></label>
-                          <input class="form-control" type="text" id="fechaImp" name="fechaImp" placeholder="Fecha en que se generaron las facturas" pattern="[1-9]{4}[\-][1-9]{2}[\-][1-9]{2}" required>
+                          <input class="form-control" type="text" id="fechaImp" name="fechaImp" placeholder="Fecha en que se generaron las facturas" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))" value="<?php echo date('Y-m-d'); ?>" required>
                       </div>
                       <div class="col-md-4">
                           <label for="tipoServicioImp"></label>
@@ -529,11 +529,11 @@
                   <div class="row">
                       <div class="col-md-6">
                           <label for="desdeImp"></label>
-                          <input class="form-control" type="text" id="desdeImp" name="desdeImp" placeholder="Número de factura inicial">
+                          <input class="form-control" onchange="desdeImpFunc()" type="text" id="desdeImp" name="desdeImp" pattern="[0-9]+" placeholder="Número de factura inicial">
                       </div>
                       <div class="col-md-6">
                           <label for="hastaImp"></label>
-                          <input class="form-control" onchange="hastaImpFunc()" type="text" id="hastaImp" name="hastaImp" placeholder="Número de factura terminal">
+                          <input class="form-control" onchange="hastaImpFunc()" type="text" id="hastaImp" name="hastaImp" pattern="[0-9]+" placeholder="Número de factura terminal">
                       </div>
                   </div>
                 </div>
@@ -550,7 +550,7 @@
                 </div>
               </div>
             </div>
-        </div><!-- Fin Modal ABONOS -->
+        </div><!-- Fin Modal IMPRIMIR FACTURAS -->
         </div>
         <!-- /#page-wrapper -->
 
@@ -614,6 +614,10 @@
 
     <script type="text/javascript">
         function hastaImpFunc(){
+            document.getElementById('hastaImp').required = true;
+            document.getElementById('desdeImp').required = true;
+        }
+        function desdeImpFunc(){
             document.getElementById('hastaImp').required = true;
             document.getElementById('desdeImp').required = true;
         }
