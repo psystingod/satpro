@@ -449,33 +449,101 @@
 
           <!-- Modal Consultar/Eliminar abonos -->
           <div id="imprimirFacturas" class="modal fade" role="dialog">
-            <div class="modal-dialog modal-lg">
+            <div class="modal-dialog">
 
               <!-- Modal content-->
               <div class="modal-content">
-                <div style="background-color: #00897B; color:white;" class="modal-header">
+                <div style="background-color: #546E7A; color:white;" class="modal-header">
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
                   <h4 class="modal-title">Imprimir facturas</h4>
                 </div>
-                <form id="generarFacturas" action="php/generarFacturas.php?" method="POST">
+                <form id="generarFacturas" action="php/imprimirFacturas.php?" method="POST">
                 <div class="modal-body">
                   <div class="row">
                       <div class="col-md-12">
-                          <input class="form-control" type="text" id="caja_busqueda" name="caja_busqueda" value="" placeholder="Número de recibo, Código del cliente, Fecha del abono, Código del cobrador">
-                          <br>
-                          <div class="" id="datos">
-
-                          </div>
+                          <label for="tipoComprobanteImp"></label>
+                          <select class="form-control" type="text" id="tipoComprobanteImp" name="tipoComprobanteImp" required>
+                              <option value="1" selected>Crédito fiscal</option>
+                              <option value="2">Factura</option>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-8">
+                          <label for="cobradorImp"></label>
+                          <select class="form-control" type="text" id="cobradorImp" name="cobradorImp" required>
+                              <option value="todos" selected>Todos</option>
+                          </select>
+                      </div>
+                      <div class="col-md-4">
+                          <label for="diaImp"></label>
+                          <select id="diaImp" class="form-control" id="diaImp" name="diaImp" required>
+                              <option value="">Día de cobro</option>
+                              <option value="01">1</option>
+                              <option value="02">2</option>
+                              <option value="03">3</option>
+                              <option value="04">4</option>
+                              <option value="05">5</option>
+                              <option value="06">6</option>
+                              <option value="07">7</option>
+                              <option value="08">8</option>
+                              <option value="09">9</option>
+                              <option value="10">10</option>
+                              <option value="11">11</option>
+                              <option value="12">12</option>
+                              <option value="13">13</option>
+                              <option value="14">14</option>
+                              <option value="15">15</option>
+                              <option value="16">16</option>
+                              <option value="17">17</option>
+                              <option value="18">18</option>
+                              <option value="19">19</option>
+                              <option value="20">20</option>
+                              <option value="21">21</option>
+                              <option value="22">22</option>
+                              <option value="23">23</option>
+                              <option value="24">24</option>
+                              <option value="25">25</option>
+                              <option value="26">26</option>
+                              <option value="27">27</option>
+                              <option value="28">28</option>
+                              <option value="29">29</option>
+                              <option value="30">30</option>
+                              <option value="31">31</option>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-8">
+                          <label for="fechaImp"></label>
+                          <input class="form-control" type="text" id="fechaImp" name="fechaImp" placeholder="Fecha en que se generaron las facturas" pattern="[1-9]{4}[\-][1-9]{2}[\-][1-9]{2}" required>
+                      </div>
+                      <div class="col-md-4">
+                          <label for="tipoServicioImp"></label>
+                          <select class="form-control" type="text" id="tipoServicioImp" name="tipoServicioImp" required>
+                              <option value="C" selected>Cable</option>
+                              <option value="I">Internet</option>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-6">
+                          <label for="desdeImp"></label>
+                          <input class="form-control" type="text" id="desdeImp" name="desdeImp" placeholder="Número de factura inicial">
+                      </div>
+                      <div class="col-md-6">
+                          <label for="hastaImp"></label>
+                          <input class="form-control" onchange="hastaImpFunc()" type="text" id="hastaImp" name="hastaImp" placeholder="Número de factura terminal">
                       </div>
                   </div>
                 </div>
                 <div class="modal-footer">
                     <div class="row">
                         <div class="col-md-6">
-                            <input type="submit" class="btn btn-primary btn-lg btn-block" name="submit" value="Generar Facturas">
+                            <input type="submit" class="btn btn-danger btn-md btn-block" name="submit" value="Imprimir facturas">
                         </div>
                         <div class="col-md-6">
-                            <button type="button" class="btn btn-default btn-lg btn-block" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>
                         </div>
                     </div>
                 </form>
@@ -541,6 +609,13 @@
             if (r == true) {
               window.open("php/anularAbono.php?idAbono="+id);
             }
+        }
+    </script>
+
+    <script type="text/javascript">
+        function hastaImpFunc(){
+            document.getElementById('hastaImp').required = true;
+            document.getElementById('desdeImp').required = true;
         }
     </script>
 
