@@ -21,10 +21,14 @@ if (isset($_POST['desdeImp']) && isset($_POST['hastaImp'])) {
     if ($cobrador == "todos") {
         $query = "SELECT * FROM tbl_cargos WHERE SUBSTRING(fechaCobro, 9, 10) = '".$diaCobro."' AND fechaFactura = '".$fechaGenerada."' AND tipoServicio = '".$tipoServicio."'";
     }else {
-        $query = "SELECT * FROM tbl_cargos WHERE codigoCobrador = ".$cobrador." AND diaCobro = ".$diaCobro." AND fechaFactura = ".$fechaGenerada." AND tipoServicio = ".$tipoServicio;
+        $query = "SELECT * FROM tbl_cargos WHERE SUBSTRING(fechaCobro, 9, 10) = '".$diaCobro."' AND codigoCobrador = '".$cobrador."' AND fechaFactura = '".$fechaGenerada."' AND tipoServicio = '".$tipoServicio."'";
     }
 }else {
-    $query = "SELECT * FROM tbl_cargos WHERE codigoCobrador = ".$codigo;
+    if ($cobrador == "todos") {
+        $query = "SELECT * FROM tbl_cargos WHERE SUBSTRING(fechaCobro, 9, 10) = '".$diaCobro."' AND fechaFactura = '".$fechaGenerada."' AND tipoServicio = '".$tipoServicio."'";
+    }else {
+        $query = "SELECT * FROM tbl_cargos WHERE SUBSTRING(fechaCobro, 9, 10) = '".$diaCobro."' AND codigoCobrador = '".$cobrador."' AND fechaFactura = '".$fechaGenerada."' AND tipoServicio = '".$tipoServicio."'";
+    }
 }
   $resultado = $mysqli->query($query);
   //var_dump($query);
