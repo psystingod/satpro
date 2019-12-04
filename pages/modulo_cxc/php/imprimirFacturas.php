@@ -40,7 +40,7 @@ else {
   while($row = $resultado->fetch_assoc())
   {
     $pdf->AliasNbPages();
-    $pdf->AddPage('P','Letter');
+    $pdf->AddPage('L','Legal');
     setlocale(LC_ALL,"es_ES");
     $pdf->SetFont('Arial','',11);
 
