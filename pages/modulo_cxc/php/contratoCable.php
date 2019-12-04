@@ -43,12 +43,12 @@
 	  while($row = $resultado->fetch_assoc())
 	  {
 
-          $pdf->Ln(5);
+          //$pdf->Ln(-2);
     	  $pdf->SetFont('Courier','',10);
     	  $pdf->Cell(190,6,utf8_decode($row['cod_cliente']),0,1,'R');
     	  $pdf->Ln();
 
-    	  $pdf->Ln(8);
+    	  $pdf->Ln(4);
 
     	  $pdf->SetFont('Courier','B',12);
 
@@ -67,21 +67,21 @@
 
           $pdf->Cell(40,6,utf8_decode(''),0,0,'L');
           $pdf->Cell(65,6,utf8_decode(''),0,0,'L');
-          $pdf->Cell(48,6,utf8_decode($row['num_registro']),0,0,'L');
+          $pdf->Cell(62,6,utf8_decode($row['num_registro']),0,0,'L');
           $pdf->Cell(40,6,utf8_decode($row['telefonos']),0,1,'L');
 
           $pdf->Cell(40,6,utf8_decode(''),0,0,'L');
           $pdf->Cell(65,6,utf8_decode($row['lugar_trabajo']),0,0,'L');
           $pdf->Cell(48,6,utf8_decode(''),0,0,'L');
           $pdf->Cell(40,6,utf8_decode($row['tel_trabajo']),0,1,'R');
-    	  $pdf->Ln(5);
-
+    	  $pdf->Ln(1);
+/////////////////////////////////////////////////////////////////////////////////////////
           $pdf->Cell(55,6,utf8_decode(''),0,0,'L');
           $pdf->Cell(70,6,utf8_decode(strtoupper($row['nombre'])),0,1,'L');
           $pdf->Cell(68,6,utf8_decode(''),0,0,'L');
           $pdf->MultiCell(130,6,utf8_decode(strtoupper($row['direccion'])),0,'L',0);
 
-          $pdf->Ln(1);
+          $pdf->Ln(4);
           if ($row['tipo_servicio'] == 1) {
               $tipoServicio = "CABLE TV";
           }
