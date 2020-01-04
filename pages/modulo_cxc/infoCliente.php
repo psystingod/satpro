@@ -1,9 +1,9 @@
 <?php
-
-    session_start();
+session_start();
     require($_SERVER['DOCUMENT_ROOT'].'/satpro'.'/php/permissions.php');
     $permisos = new Permissions();
     $permisosUsuario = $permisos->getPermissions($_SESSION['id_usuario']);
+
     // get passed parameter value, in this case, the record ID
     // isset() is a PHP function used to verify if a value is there or not
     if (isset($_GET['id'])) {
@@ -11,8 +11,10 @@
 
         //include database connection
         require_once '../../php/connection.php';
-        $precon = new ConectionDB();
-        $con = $precon->ConectionDB();
+
+        $precon = new ConectionDB($_SESSION['db']);
+        $con = $precon->ConectionDB($_SESSION['db']);
+
         // read current record's data
         try {
             // prepare select query
@@ -1440,7 +1442,7 @@
                                                             echo "<a href='ordenReconexion.php?nOrden={$key["idOrdenReconex"]}' target='_blank' class='btn btn-primary btn-xs'>".$key["idOrdenReconex"] . "</td><td>";
                                                             echo $key["tipoOrden"] . "</td><td>";
                                                             echo $key["fechaOrden"] . "</td><td>";
-                                                            echo $key["fechaSuspension"] . "</td><td>";
+                                                            //echo $key["fechaSuspension"] . "</td><td>";
                                                             echo $key["fechaReconexCable"] . "</td><td>";
                                                             echo $key["fechaReconexInter"] . "</td><tr>";
                                                         }

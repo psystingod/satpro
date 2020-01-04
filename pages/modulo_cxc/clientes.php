@@ -2,7 +2,10 @@
     require_once 'php/getAllClients.php';
     $allClients = new GetAllClients();
     $allClientsArray = $allClients->getClients();
-    session_start();
+    if(!isset($_SESSION))
+    {
+  	  session_start();
+    }
     header('Content-Type: text/html; charset=utf-8');
  ?>
 <!DOCTYPE html>

@@ -59,7 +59,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Csat [<?php echo strtolower($_SESSION["rol"]) ?>]</a>
+                <?php
+                if ($_SESSION["db"] == "satpro") {
+                    $sucursal = "usulután";
+                }elseif ($_SESSION["db"] == "satpro_sm") {
+                    $sucursal = "san miguel";
+                }
+                ?>
+                <a style="" class="navbar-brand" href="index.html">Cablesat [<?php echo ucwords($sucursal) ?>]</a>
             </div>
             <!-- /.navbar-header -->
 

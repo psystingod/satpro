@@ -1,11 +1,15 @@
 <?php
- session_start();
+
     require('../../../php/connection.php');
     class SetCobrador extends ConectionDB
     {
         public function SetCobrador()
         {
-            parent::__construct ();
+            if(!isset($_SESSION))
+            {
+          	  session_start();
+            }
+            parent::__construct ($_SESSION['db']);
         }
         public function set()
         {

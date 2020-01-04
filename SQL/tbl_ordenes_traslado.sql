@@ -1,4 +1,4 @@
-USE satpro;
+/*USE satpro;*/
 DROP TABLE IF EXISTS tbl_ordenes_traslado;
 CREATE TABLE tbl_ordenes_traslado (
   idOrdenTraslado INT(6) ZEROFILL NOT NULL AUTO_INCREMENT,

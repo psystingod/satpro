@@ -1,15 +1,19 @@
 <?php
-	require '../../../pdfs/fpdf.php';
+  require '../../../pdfs/fpdf.php';
   require_once("../../../php/config.php");
-
+  require '../../../numLe/src/NumerosEnLetras.php';
+  if(!isset($_SESSION))
+  {
+  	session_start();
+  }
   $host = DB_HOST;
   $user = DB_USER;
   $password = DB_PASSWORD;
-  $database = DB_NAME;
+  $database = $_SESSION['db'];
   $mysqli = new mysqli($host, $user, $password, $database);
 
-  session_start();
   $codigo = $_GET['id'];
+  $codigoCobrador = $_POST['codigoCobrador'];
 
   function f3(){
 	  global $codigo, $mysqli;
@@ -62,10 +66,12 @@
   	    $imp = str_replace(',','.', $imp);
   	    //var_dump($imp);
 
-  	    $cantidad = (doubleval($row['cuota_in']) + doubleval($imp));
-
+  	    $cantidad = doubleval((doubleval($row['cuota_in']) + doubleval($imp))*doubleval($row['periodo_contrato_int']));
+		$pdf->SetFont('Arial','B',12);
+		$pdf->MultiCell(190,6,utf8_decode('TOTAL: $'.number_format($cantidad,2)),0,'L',0);
+		$numeroALetras = NumerosEnLetras::convertir(number_format($cantidad,2), 'dólares', false, 'centavos');
 		$pdf->SetFont('Arial','',12);
-		$pdf->MultiCell(190,6,utf8_decode('Por este PAGARÉ me obligo a pagar incondicionalmente a la sociedad CABLE SAT, S.A. DE C.V., la cantidad de '.number_format($cantidad,2).' Dólares de Estados Unidos de América, reconociendo en caso de mora el interés del 4% anual'),0,'L',0);
+		$pdf->MultiCell(190,6,utf8_decode('Por este PAGARÉ me obligo a pagar incondicionalmente a la sociedad CABLE SAT, S.A. DE C.V., la cantidad de '.$numeroALetras.' Dólares de Estados Unidos de América, reconociendo en caso de mora el interés del 4% anual'),0,'L',0);
 		$pdf->Ln();
 		$pdf->MultiCell(190,6,utf8_decode('La cantidad antes mencionada se pagará en esta ciudad, en las oficinas administrativas de la sociedad acreedora, el día _____ de ______________________ del año ___________ En caso de acción judicial, señalo la ciudad de Usulután como domicilio especial en caso de ejecución; siendo a mi cargo, cualquier gasto que la sociedad acreedora antes mencionada hiciere en el cobro de la presente obligación, inclusive los llamados personales, y faculto a la sociedad acreedora para que designe al depositario judicial de los bienes que se embarguen, a quien relevo de la obligación de rendir fianza.'),0,'L',0);
 		$pdf->Ln(3);

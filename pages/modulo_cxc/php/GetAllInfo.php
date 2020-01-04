@@ -9,7 +9,11 @@ class GetAllInfo extends ConectionDB
 
     function GetAllInfo()
     {
-        parent::__construct ();
+        if(!isset($_SESSION))
+        {
+            session_start();
+        }
+        parent::__construct ($_SESSION['db']);
     }
     public function getData($tabla){
         try {
@@ -153,6 +157,26 @@ class GetAllInfo extends ConectionDB
                 $statement->bindValue(':estado', $estado);
                 $statement->bindValue(':desde', $desde);
                 $statement->bindValue(':hasta', $hasta);
+                $statement->execute();
+                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+                return $result;
+
+        } catch (Exception $e) {
+            print "!Error¡: " . $e->getMessage() . "</br>";
+            die();
+        }
+    }
+
+    public function getDataCargosImp($tabla, $codigoCliente, $tipoServicio, $fechaCobro){
+        try {
+
+                $query = "SELECT * FROM $tabla WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND mesCargo <= :hasta AND anulada=:anulada ORDER BY mesCargo DESC";
+                $statement = $this->dbConnect->prepare($query);
+                $statement->bindValue(':codigoCliente', $codigoCliente);
+                $statement->bindValue(':tipoServicio', $tipoServicio);
+                $statement->bindValue(':desde', $desde);
+                $statement->bindValue(':hasta', $hasta);
+                $statement->bindValue(':anulada', 0);
                 $statement->execute();
                 $result = $statement->fetchAll(PDO::FETCH_ASSOC);
                 return $result;
@@ -404,6 +428,59 @@ class GetAllInfo extends ConectionDB
             die();
         }
     }*/
+
+    public function getTotalCobrarCableImp($tabla, $codigoCliente, $estado, $anulada, $hasta){
+        try {
+                $c = "C";
+
+                // Total servicio CABLE
+                $query = "SELECT SUM(cuotaCable) AS sumaCable, SUM(totalImpuesto) AS sumaImpuestosCable FROM $tabla WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado AND anulada=:anulada AND fechaCobro <= :hasta";
+                $statement = $this->dbConnect->prepare($query);
+                $statement->bindValue(':codigoCliente', $codigoCliente);
+                $statement->bindValue(':tipoServicio', $c);
+                $statement->bindValue(':estado', $estado);
+                $statement->bindValue(':anulada', $anulada);
+                $statement->bindValue(':hasta', $hasta);
+                $statement->execute();
+                $result1 = $statement->fetch(PDO::FETCH_ASSOC);
+                $sumaCable = $result1["sumaCable"];
+                $sumaImpuestosCable = $result1["sumaImpuestosCable"];
+
+                $number = floatval($sumaCable) + floatval($sumaImpuestosCable);
+                $total = number_format($number, 2);
+                return $total;
+
+        } catch (Exception $e) {
+            print "!Error¡: " . $e->getMessage() . "</br>";
+            die();
+        }
+    }
+
+    public function getTotalCobrarInterImp($tabla, $codigoCliente, $estado, $anulada, $hasta){
+        try {
+            // Total servicio INTERNET
+            $i = "I";
+            $query = "SELECT SUM(cuotaInternet) AS sumaInter, SUM(totalImpuesto) AS sumaImpuestosInter FROM $tabla WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado AND anulada=:anulada AND fechaCobro <= :hasta";
+            $statement = $this->dbConnect->prepare($query);
+            $statement->bindValue(':codigoCliente', $codigoCliente);
+            $statement->bindValue(':tipoServicio', $i);
+            $statement->bindValue(':estado', $estado);
+            $statement->bindValue(':anulada', $anulada);
+            $statement->bindValue(':hasta', $hasta);
+            $statement->execute();
+            $result2 = $statement->fetch(PDO::FETCH_ASSOC);
+            $sumaInter = $result2["sumaInter"];
+            $sumaImpuestosInter = $result2["sumaImpuestosInter"];
+
+            $number = floatval($sumaInter) + floatval($sumaImpuestosInter);
+            $total = number_format($number, 2);
+            return $total;
+
+        } catch (Exception $e) {
+            print "!Error¡: " . $e->getMessage() . "</br>";
+            die();
+        }
+    }
 }
 
 ?>

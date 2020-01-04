@@ -39,28 +39,37 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
-                <img class="img img-responsive center-block" src="../images/logo.png" alt="" width="150px" height="130px">
+                <img class="img img-responsive center-block" src="../images/logo2.png" alt="" width="150px" height="130px">
                 <div class="login-panel panel panel-default">
                     <div class="panel-heading">
-                        <h3 class="panel-title text-center">Autenticación de usuario</h3>
+                        <h3 class="panel-title text-center"><strong>Inicio de sesión</strong></h3>
                     </div>
                     <div class="panel-body">
                         <form action="../php/signin.php" method="POST" role="form">
                             <fieldset>
                                 <div class="input-group">
                                     <input class="form-control" placeholder="Usuario" name="user" type="text" autofocus>
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                    <span class="input-group-addon danger"><i class="glyphicon glyphicon-user"></i></span>
                                 </div>
                                 <br>
                                 <div class="input-group">
                                     <input class="form-control" placeholder="Contraseña" name="pass" type="password">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                    <span class="input-group-addon danger"><i class="glyphicon glyphicon-lock"></i></span>
                                 </div>
-                                <div class="checkbox">
+                                <br>
+                                <div class="input-group">
+                                    <select class="form-control" name="sucursal" required>
+                                        <option value="satpro" selected>Sucursal Usulután</option>
+                                        <option value="satpro_sm">Sucursal San Miguel</option>
+                                    </select>
+                                    <span class="input-group-addon danger"><i class="glyphicon glyphicon-home"></i></span>
+                                </div>
+                                <br>
+                                <!--<div class="checkbox">
                                     <label>
                                         <input name="remember" type="checkbox" value="Remember Me">Recuerdame
                                     </label>
-                                </div>
+                                </div>-->
                                 <!-- Change this to a button or input when using this as a form -->
                                 <button type="submit" class="btn btn-lg btn-danger btn-block" name="submit">Ingresar</button>
                             </fieldset>

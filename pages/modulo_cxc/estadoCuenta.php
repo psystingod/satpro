@@ -42,16 +42,16 @@
     //var_dump($totalCobrarInter);
 
     $getSaldoReal = new GetSaldoReal();
-    $saldoRealCable = $getSaldoReal->getSaldoCable($_GET['codigoCliente']);
-    $saldoRealInter = $getSaldoReal->getSaldoInter($_GET['codigoCliente']);
+    $saldoRealCable = number_format(($getSaldoReal->getSaldoCable($_GET['codigoCliente'])),2);
+    $saldoRealInter = number_format(($getSaldoReal->getSaldoInter($_GET['codigoCliente'])),2);
 
-    $totalCobrarCable = $getSaldoReal->getTotalCobrarCable($_GET['codigoCliente']);
-    $totalCobrarInter = $getSaldoReal->getTotalCobrarInter($_GET['codigoCliente']);
+    $totalCobrarCable = number_format(($getSaldoReal->getTotalCobrarCable($_GET['codigoCliente'])),2);
+    $totalCobrarInter = number_format(($getSaldoReal->getTotalCobrarInter($_GET['codigoCliente'])),2);
 
     //include database connection
     require_once('../../php/connection.php');
-    $precon = new ConectionDB();
-    $con = $precon->ConectionDB();
+    $precon = new ConectionDB($_SESSION['db']);
+    $con = $precon->ConectionDB($_SESSION['db']);
     /**************************************************/
     if (isset($_GET['codigoCliente'])) {
 
@@ -225,7 +225,7 @@
                                     <th>Teléfonos</th>
                                     <td><?php echo $telefonos?></td>
                                     <th>última fecha de pago</th>
-                                    <td><?php echo $fechaUltPago ?></td>
+                                    <td><span class="label label-danger" style="font-size:12px;"><?php echo $fechaUltPago ?></span></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -256,6 +256,7 @@
                                               <th>Abono</th>
                                               <th>CESC cargo</th>
                                               <th>CESC abono</th>
+                                              <th>TOTAL</th>
                                           </thead>
                                           <tbody>
                                               <div class="row">
@@ -289,7 +290,9 @@
                                                       echo $cargo['cuotaCable']."</td><td class='text-danger danger'>";
                                                       echo "0.00"."</td><td class='text-danger danger'>";
                                                       echo $cargo['totalImpuesto']."</td><td class='text-danger danger'>";
-                                                      echo "0.00"."</td></tr>";
+
+                                                      echo "0.00"."</td><td class='text-danger danger'>";
+                                                      echo number_format((doubleval($cargo['cuotaCable'])+doubleval($cargo['totalImpuesto'])),2)."</td></tr>";
                                                           foreach ($arrAbonos as $abono) {
                                                               if ($cargo['mesCargo'] == $abono['mesCargo']) {
                                                                   echo "<tr><td class='text-success success'>";
@@ -302,7 +305,8 @@
                                                                   echo "0.00"."</td><td class='text-success success'>";
                                                                   echo $abono['cuotaCable']."</td><td class='text-success success'>";
                                                                   echo "0.00"."</td><td class='text-success success'>";
-                                                                  echo $abono['totalImpuesto']."</td></tr>";
+                                                                  echo $abono['totalImpuesto']."</td><td class='text-success success'>";
+                                                                  echo number_format((doubleval($abono['cuotaCable'])+doubleval($abono['totalImpuesto'])),2)."</td></tr>";
                                                               }
 
                                                           }
@@ -317,7 +321,8 @@
                                                       echo $cargo['cuotaCable']."</td><td class='text-danger danger'>";
                                                       echo "0.00"."</td><td class='text-danger danger'>";
                                                       echo $cargo['totalImpuesto']."</td><td class='text-danger danger'>";
-                                                      echo "0.00"."</td></tr>";
+                                                      echo "0.00"."</td><td class='text-danger danger'>";
+                                                      echo number_format((doubleval($cargo['cuotaCable'])+doubleval($cargo['totalImpuesto'])),2)."</td></tr>";
 
                                                     }
 
@@ -358,6 +363,7 @@
                                               <th>Abono</th>
                                               <th>CESC cargo</th>
                                               <th>CESC abono</th>
+                                              <th>TOTAL</th>
                                           </thead>
                                           <tbody>
                                               <div class="row">
@@ -391,7 +397,8 @@
                                                       echo $cargoI['cuotaInternet']."</td><td class='text-danger danger'>";
                                                       echo "0.00"."</td><td class='text-danger danger'>";
                                                       echo $cargoI['totalImpuesto']."</td><td class='text-danger danger'>";
-                                                      echo "0.00"."</td></tr>";
+                                                      echo "0.00"."</td><td class='text-danger danger'>";
+                                                      echo doubleval($cargoI['cuotaInternet'])+doubleval($cargoI['totalImpuesto'])."</td></tr>";
                                                           foreach ($arrAbonosI as $abonoI) {
                                                               if ($cargoI['mesCargo'] == $abonoI['mesCargo']) {
                                                                   echo "<tr><td class='text-success success'>";
@@ -404,7 +411,8 @@
                                                                   echo "0.00"."</td><td class='text-success success'>";
                                                                   echo $abonoI['cuotaInternet']."</td><td class='text-success success'>";
                                                                   echo "0.00"."</td><td class='text-success success'>";
-                                                                  echo $abonoI['totalImpuesto']."</td></tr>";
+                                                                  echo $abonoI['totalImpuesto']."</td><td class='text-success success'>";
+                                                                  echo doubleval($abonoI['cuotaInternet'])+doubleval($abonoI['totalImpuesto'])."</td></tr>";
                                                               }
 
                                                           }
@@ -419,7 +427,9 @@
                                                       echo $cargoI['cuotaInternet']."</td><td class='text-danger danger'>";
                                                       echo "0.00"."</td><td class='text-danger danger'>";
                                                       echo $cargoI['totalImpuesto']."</td><td class='text-danger danger'>";
-                                                      echo "0.00"."</td></tr>";
+                                                      echo "0.00"."</td><td class='text-danger danger'>";
+                                                      echo $cargoI['totalImpuesto']."</td><td class='text-danger danger'>";
+                                                      echo doubleval($cargoI['cuotaInternet'])+doubleval($cargoI['totalImpuesto'])."</td></tr>";
 
                                                     }
 
@@ -486,7 +496,8 @@
                                                           echo "0.00"."</td><td class='text-success success'>";
                                                           echo $key['cuotaCable']."</td><td class='text-success success'>";
                                                           echo "0.00"."</td><td class='text-success success'>";
-                                                          echo $key['totalImpuesto']."</td></tr>";
+                                                          echo $key['totalImpuesto']."</td><td class='text-success success'>";
+                                                          echo doubleval($key['cuotaCable'])+doubleval($key['totalImpuesto'])."</td></tr>";
                                                       }
                                                       ?>
                                                   <tbody>
@@ -541,9 +552,10 @@
                                                           echo "<span class='label label-success'>".$key['fechaAbonado']."</span>"."</td><td class='text-success success'>";
                                                           echo "<span class='label label-danger'>".$key['fechaVencimiento']."</span>"."</td><td class='text-success success'>";
                                                           echo "0.00"."</td><td class='text-success success'>";
-                                                          echo $key['cuotaCable']."</td><td class='text-success success'>";
+                                                          echo $key['cuotaInternet']."</td><td class='text-success success'>";
                                                           echo "0.00"."</td><td class='text-success success'>";
-                                                          echo $key['totalImpuesto']."</td></tr>";
+                                                          echo $key['totalImpuesto']."</td><td class='text-success success'>";
+                                                          echo doubleval($key['cuotaInternet'])+doubleval($key['totalImpuesto'])."</td></tr>";
                                                       }
                                                       ?>
                                                   <tbody>

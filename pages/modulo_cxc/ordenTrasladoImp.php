@@ -1,7 +1,7 @@
 <?php
 require_once('../../php/connection.php');
-$precon = new ConectionDB();
-$con = $precon->ConectionDB();
+$precon = new ConectionDB($_SESSION['db']);
+$con = $precon->ConectionDB($_SESSION['db']);
 require("php/getData.php");
 $data = new OrdersInfo();
 /**************************************************/

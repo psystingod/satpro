@@ -1,14 +1,17 @@
 <?php
 	require '../../../pdfs/fpdf.php';
   require_once("../../../php/config.php");
-
+  if(!isset($_SESSION))
+  {
+  	session_start();
+  }
   $host = DB_HOST;
   $user = DB_USER;
   $password = DB_PASSWORD;
-  $database = DB_NAME;
+  $database = $_SESSION['db'];
   $mysqli = new mysqli($host, $user, $password, $database);
 
-  session_start();
+
   $codigo = $_GET['id'];
 
   function contratoCable(){

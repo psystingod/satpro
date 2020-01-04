@@ -7,7 +7,11 @@
    {
        public function GetSaldoReal()
        {
-           parent::__construct ();
+           if(!isset($_SESSION))
+           {
+               session_start();
+           }
+           parent::__construct ($_SESSION['db']);
        }
 
         public function getSaldoCable($id)
@@ -17,7 +21,7 @@
                // prepare select query
                $anulada = 0;
                $this->dbConnect->beginTransaction();
-               $query = "SELECT SUM(cuotaCable) FROM tbl_cargos WHERE codigoCliente=:codigo AND anulada=:anulada";
+               $query = "SELECT SUM(cuotaCable) FROM tbl_cargos WHERE codigoCliente=:codigo AND anulada=:anulada AND tipoServicio='C'";
                $stmt = $this->dbConnect->prepare( $query );
                // this is the first question mark
                $stmt->bindParam(':codigo', $id);
@@ -28,7 +32,7 @@
                $totalCargosCable = $stmt->fetchColumn();
                /***  ABONOS  ***/
                // prepare select query
-               $query = "SELECT SUM(cuotaCable) FROM tbl_abonos WHERE codigoCliente=:codigo AND anulada=:anulada";
+               $query = "SELECT SUM(cuotaCable) FROM tbl_abonos WHERE codigoCliente=:codigo AND anulada=:anulada AND tipoServicio='C'";
                $stmt = $this->dbConnect->prepare( $query );
 
                $stmt->bindParam(':codigo', $id);
@@ -55,7 +59,7 @@
               $anulada = 0;
               $this->dbConnect->beginTransaction();
               // prepare select query
-              $query = "SELECT SUM(cuotaInternet) FROM tbl_cargos WHERE codigoCliente=:codigo AND anulada=:anulada";
+              $query = "SELECT SUM(cuotaInternet) FROM tbl_cargos WHERE codigoCliente=:codigo AND anulada=:anulada AND tipoServicio='I'";
               $stmt = $this->dbConnect->prepare( $query );
               // this is the first question mark
               $stmt->bindParam(':codigo', $id);
@@ -66,7 +70,7 @@
               $totalCargosInter = $stmt->fetchColumn();
               /***  ABONOS  ***/
               // prepare select query
-              $query = "SELECT SUM(cuotaInternet) FROM tbl_abonos WHERE codigoCliente=:codigo AND anulada=:anulada";
+              $query = "SELECT SUM(cuotaInternet) FROM tbl_abonos WHERE codigoCliente=:codigo AND anulada=:anulada AND tipoServicio='I'";
               $stmt = $this->dbConnect->prepare( $query );
               // this is the first question mark
               $stmt->bindParam(':codigo', $id);
@@ -96,7 +100,7 @@
              $anulada = 0;
              $estado = "pendiente";
              $this->dbConnect->beginTransaction();
-             $query = "SELECT SUM(cuotaCable + totalImpuesto) FROM tbl_cargos WHERE codigoCliente=:codigo AND anulada=:anulada";
+             $query = "SELECT SUM(cuotaCable + totalImpuesto) FROM tbl_cargos WHERE codigoCliente=:codigo AND anulada=:anulada AND tipoServicio='C'";
              $stmt = $this->dbConnect->prepare( $query );
              // this is the first question mark
              $stmt->bindParam(':codigo', $id);
@@ -107,7 +111,7 @@
              $totalCargosCable = $stmt->fetchColumn();
              /***  ABONOS  ***/
              // prepare select query
-             $query = "SELECT SUM(cuotaCable + totalImpuesto) FROM tbl_abonos WHERE codigoCliente=:codigo AND anulada=:anulada";
+             $query = "SELECT SUM(cuotaCable + totalImpuesto) FROM tbl_abonos WHERE codigoCliente=:codigo AND anulada=:anulada AND tipoServicio='C'";
              $stmt = $this->dbConnect->prepare( $query );
 
              $stmt->bindParam(':codigo', $id);
@@ -134,7 +138,7 @@
             $anulada = 0;
             $this->dbConnect->beginTransaction();
             // prepare select query
-            $query = "SELECT SUM(cuotaInternet + totalImpuesto) FROM tbl_cargos WHERE codigoCliente=:codigo AND anulada=:anulada";
+            $query = "SELECT SUM(cuotaInternet + totalImpuesto) FROM tbl_cargos WHERE codigoCliente=:codigo AND anulada=:anulada AND tipoServicio='I'";
             $stmt = $this->dbConnect->prepare( $query );
             // this is the first question mark
             $stmt->bindParam(':codigo', $id);
@@ -145,7 +149,7 @@
             $totalCargosInter = $stmt->fetchColumn();
             /***  ABONOS  ***/
             // prepare select query
-            $query = "SELECT SUM(cuotaInternet + totalImpuesto) FROM tbl_abonos WHERE codigoCliente=:codigo AND anulada=:anulada";
+            $query = "SELECT SUM(cuotaInternet + totalImpuesto) FROM tbl_abonos WHERE codigoCliente=:codigo AND anulada=:anulada AND tipoServicio='I'";
             $stmt = $this->dbConnect->prepare( $query );
             // this is the first question mark
             $stmt->bindParam(':codigo', $id);

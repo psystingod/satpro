@@ -7,7 +7,8 @@
     {
         public function Reporte()
         {
-            parent::__construct ();
+            session_start();
+            parent::__construct ($_SESSION['db']);
         }
         public function enter()
         {

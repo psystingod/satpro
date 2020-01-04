@@ -9,7 +9,10 @@
 
     $departments = new ProductsInfo();
     $departmentsRecords = $departments->getDepartments();
-    session_start();
+    if(!isset($_SESSION))
+    {
+  	  session_start();
+    }
 
  ?>
 <!DOCTYPE html>

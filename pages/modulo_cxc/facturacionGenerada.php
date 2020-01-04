@@ -78,7 +78,7 @@ $facArray = $fac->verFacturas();
                             if ($key['anulada'] == 1) {
                                 echo "<a class='btn btn-danger'>Anulada</a>"."</td></tr>";
                             }else {
-                                echo "<a onclick='anularFactura({$key['idFactura']});' class='btn btn-warning'>Anular</a>"."</td></tr>";
+                                echo "<a onclick=anularFactura('".$key['numeroFactura']."','".$key['codigoCliente']."','".$key['tipoServicio']."','".$key['mesCargo']."');"." class='btn btn-warning'>Anular</a>"."</td></tr>";
                             }
                         }
                         ?>
@@ -105,11 +105,11 @@ $facArray = $fac->verFacturas();
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script type='text/javascript'>
 
-            function anularFactura(id){
+            function anularFactura(numeroFactura, codigoCliente, tipoServicio, mesCargo){
 
                 var answer = confirm('¿Está seguro de anular esta factura?');
                 if (answer){
-                    window.location = 'php/anularFactura.php?id=' + id;
+                    window.location = 'php/anularFactura.php?numeroFactura=' + numeroFactura+'&codigoCliente=' + codigoCliente+'&tipoServicio=' + tipoServicio+'&mesCargo=' + mesCargo;
                 }
             }
         </script>

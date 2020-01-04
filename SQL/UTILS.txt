@@ -5,3 +5,10 @@ https://mx.godaddy.com/help/exportar-la-base-de-datos-mysql-en-ssh-26367
 http://190.120.18.204:7637/satpro/pages/index.php
 
 mysql -u satprouser -p satpro < satpro13-11-2019.sql
+
+mysqldump -u satprouser -p satpro> satpro5-12-2019.sql
+
+Xhce57K7xgsTZhKX
+
+juana ercilia cruz lopez
+CABLE Hormigoso

@@ -2,8 +2,8 @@
 require_once('../../php/connection.php');
 require("php/getData.php");
 $data = new OrdersInfo();
-$precon = new ConectionDB();
-$con = $precon->ConectionDB();
+$precon = new ConectionDB($_SESSION['db']);
+$con = $precon->ConectionDB($_SESSION['db']);
 /**************************************************/
 if (isset($_GET['nOrden'])) {
 

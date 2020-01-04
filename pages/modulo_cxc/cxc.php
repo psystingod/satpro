@@ -89,6 +89,27 @@
                             '<ul class="dropdown-menu dropdown-user">
                                 <li><a href="cobradores.php">Cobradores</a>
                                 </li>
+                                <li><a href="#" data-toggle="modal" data-target="#abonosAplicados">Lista de abonos aplicados</a>
+                                </li>
+                            </ul>';
+                        }
+                    }
+                    ?>
+                    <!-- /.dropdown-user -->
+                </li>
+                <li class="dropdown procesos">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                        Procesos <i class="fas fa-caret-down"></i>
+                    </a>
+                    <?php
+                    if(!isset($_SESSION["user"])) {
+                        header('Location: ../login.php');
+                    }elseif (isset($_SESSION["user"])) {
+                        if ($_SESSION["rol"] == 'administracion' || $_SESSION["rol"] == 'subgerencia' || $_SESSION["rol"] == 'jefatura' || $_SESSION["rol"] == 'informatica') {
+                            echo
+                            '<ul class="dropdown-menu dropdown-user">
+                                <li><a href="impagos.php" target="_blank">Gestión de impagos</a>
+                                </li>
                             </ul>';
                         }
                     }
@@ -107,7 +128,7 @@
                         if ($_SESSION["rol"] == 'administracion' || $_SESSION["rol"] == 'subgerencia') {
                             echo
                             '<ul class="dropdown-menu dropdown-user">
-                                <li><a href="#" data-toggle="modal" data-target="#facturacionDiaria">Facturación automática</a>
+                                <li><a href="#" data-toggle="modal" data-target="#facturacionDiaria" accesskey="a">Facturación automática (Alt+A)</a>
                                 </li>
                                 <li><a href="#" data-toggle="" data-target="">Facturación manual</a>
                                 </li>
@@ -119,7 +140,7 @@
                                 </li>
                                 <li><a href="ventasManuales.php">Ventas manuales</a>
                                 </li>
-                                <li><a href="imprimirFacturas.php" data-toggle="modal" data-target="#imprimirFacturas">Imprimir facturas</a>
+                                <li><a href="imprimirFacturas.php" data-toggle="modal" data-target="#imprimirFacturas" accesskey="i">Imprimir facturas (Alt+I)</a>
                                 </li>
                             </ul>';
                         }elseif ($_SESSION["rol"] == 'informatica' || $_SESSION["rol"] == 'atención al cliente' || $_SESSION["rol"] == 'jefatura') {
@@ -420,7 +441,7 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Consultar abonos</h4>
                   </div>
-                  <form id="generarFacturas" action="php/generarFacturas.php?" method="POST">
+                  <form id="eliminarAbonos" action="php/eliminarAbonos.php?" method="POST">
                   <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
@@ -457,26 +478,27 @@
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
                   <h4 class="modal-title">Imprimir facturas</h4>
                 </div>
-                <form id="frmImprimirFacturas" action="php/imprimirFacturas.php?" method="POST">
+                <form id="frmImprimirFacturas" action="php/imprimirFacturas.php" method="POST">
                 <div class="modal-body">
                   <div class="row">
                       <div class="col-md-12">
-                          <label for="tipoComprobanteImp"></label>
+                          <label for="tipoComprobanteImp">Tipo de factura</label>
                           <select class="form-control" type="text" id="tipoComprobanteImp" name="tipoComprobanteImp" required>
-                              <option value="1" selected>Crédito fiscal</option>
-                              <option value="2">Factura</option>
+                              <option value="">Seleccione tipo de factura</option>
+                              <option value="2">Factura normal</option>
+                              <option value="1">Crédito fiscal</option>
                           </select>
                       </div>
                   </div>
                   <div class="row">
                       <div class="col-md-8">
-                          <label for="cobradorImp"></label>
+                          <label for="cobradorImp">Cobrador</label>
                           <select class="form-control" type="text" id="cobradorImp" name="cobradorImp" required>
                               <option value="todos" selected>Todos</option>
                           </select>
                       </div>
                       <div class="col-md-4">
-                          <label for="diaImp"></label>
+                          <label for="diaImp">Día de cobro</label>
                           <select id="diaImp" class="form-control" id="diaImp" name="diaImp" required>
                               <option value="">Día de cobro</option>
                               <option value="01">1</option>
@@ -515,11 +537,11 @@
                   </div>
                   <div class="row">
                       <div class="col-md-8">
-                          <label for="fechaImp"></label>
+                          <label for="fechaImp">Fecha en que se generó</label>
                           <input class="form-control" type="text" id="fechaImp" name="fechaImp" placeholder="Fecha en que se generaron las facturas" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))" value="<?php echo date('Y-m-d'); ?>" required>
                       </div>
                       <div class="col-md-4">
-                          <label for="tipoServicioImp"></label>
+                          <label for="tipoServicioImp">Tipo de servicio</label>
                           <select class="form-control" type="text" id="tipoServicioImp" name="tipoServicioImp" required>
                               <option value="C" selected>Cable</option>
                               <option value="I">Internet</option>
@@ -551,6 +573,81 @@
               </div>
             </div>
         </div><!-- Fin Modal IMPRIMIR FACTURAS -->
+
+        <!-- Modal abonos Aplicados -->
+        <div id="abonosAplicados" class="modal fade" role="dialog">
+          <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div style="background-color: #1565C0; color:white;" class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Lista de Abonos ingresados</h4>
+              </div>
+              <form id="frmAbonosAplicados" action="php/abonosAplicados.php" method="POST">
+              <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="lCobrador">Cobrador</label>
+                        <select class="form-control" type="text" id="lCobrador" name="lCobrador" required>
+                            <option value="">Seleccione cobrador</option>
+                            <option value="todos" selected>Todos los cobradores</option>
+                            <?php
+                            require_once 'php/GetAllInfo.php';
+                            $data = new GetAllInfo();
+                            $arrCobradores = $data->getData('tbl_cobradores');
+                            foreach ($arrCobradores as $key) {
+                                echo '<option value="'.$key['codigoCobrador'].'">'.$key['nombreCobrador'].'</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="lColonia">Brarrio/Colonia</label>
+                        <select class="form-control" type="text" id="lColonia" name="lColonia" required>
+                            <option value="todas" selected>Todas las zonas</option>
+                            <?php
+                            $arrColonias = $data->getData('tbl_colonias_cxc');
+                            foreach ($arrColonias as $key) {
+                                echo '<option value="'.$key['idColonia'].'">'.$key['nombreColonia'].'</option>';
+                            }
+                            ?>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="lServicio">Tipo de servicio</label>
+                        <select class="form-control" type="text" id="lServicio" name="lServicio" required>
+                            <option value="">Seleccione tipo de servicio</option>
+                            <option value="C" selected>Cable</option>
+                            <option value="I">Internet</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label for="lDesde">Fecha en que se generó</label>
+                        <input class="form-control" type="text" id="lDesde" name="lDesde" placeholder="Fecha en que se generaron las facturas" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))" value="<?php echo date('Y-m-d'); ?>" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label for="lHasta">Tipo de servicio</label>
+                        <input class="form-control" type="text" id="lHasta" name="lHasta" placeholder="Fecha en que se generaron las facturas" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))" value="<?php echo date('Y-m-d'); ?>" required>
+                    </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                  <div class="row">
+                      <div class="col-md-6">
+                          <input type="submit" class="btn btn-success btn-md btn-block" name="submit" value="Ver abonos">
+                      </div>
+                      <div class="col-md-6">
+                          <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>
+                      </div>
+                  </div>
+              </form>
+              </div>
+            </div>
+          </div>
+      </div><!-- Fin Modal ABONOS APLICADOS -->
         </div>
         <!-- /#page-wrapper -->
 

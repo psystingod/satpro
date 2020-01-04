@@ -3,12 +3,18 @@
     session_start();
     require_once "php/getData.php";
     require_once "php/GetAllInfo.php";
+    require_once "php/getSaldoReal.php";
+
     require($_SERVER['DOCUMENT_ROOT'].'/satpro'.'/php/permissions.php');
     $permisos = new Permissions();
     $permisosUsuario = $permisos->getPermissions($_SESSION['id_usuario']);
     $dataInfo = new GetAllInfo();
     $arrMunicipios = $dataInfo->getData('tbl_municipios_cxc');
     $data = new OrdersInfo();
+
+    $saldos = new GetSaldoReal();
+
+    //var_dump($getSaldoCable);
     //$client = new GetClient();
     $arrayTecnicos = $data->getTecnicos();
     $arrayActividadesSusp = $data->getActividadesSusp();
@@ -23,11 +29,12 @@
     $arrGestion = $dataInfo->getDataGestion('tbl_gestion_clientes', $idGestion);
     //include database connection
     require_once('../../php/connection.php');
-    $precon = new ConectionDB();
-    $con = $precon->ConectionDB();
+    $precon = new ConectionDB($_SESSION['db']);
+    $con = $precon->ConectionDB($_SESSION['db']);
     /**************************************************/
     if (isset($_GET['codigoCliente'])) {
-
+        $getSaldoCable = $saldos->getSaldoCable($_GET['codigoCliente']);
+        $getSaldoInter = $saldos->getSaldoInter($_GET['codigoCliente']);
         // get passed parameter value, in this case, the record ID
         // isset() is a PHP function used to verify if a value is there or not
         $id=isset($_GET['codigoCliente']) ? $_GET['codigoCliente'] : die('ERROR: Record no encontrado.');
@@ -134,6 +141,10 @@
             $stmt->execute();
             // store retrieved row to a variable
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            var_dump($codigoCliente);
+            $saldos = new GetSaldoReal();
+            $getSaldoCable = $saldos->getSaldoCable($codigoCliente);
+            $getSaldoInter = $saldos->getSaldoInter($codigoCliente);
 
             $saldoCable = $row["saldoCable"];
             $saldoInter = $row["saldoInternet"];
@@ -348,12 +359,12 @@
                                   <div class="col-md-2 col-sm-2">
                                       <br>
                                       <label for="codigoCliente">Saldo cable</label>
-                                      <input id="saldoCable" class="form-control input-sm" type="text" name="saldoCable" value="<?php echo $saldoCable; ?>" readonly>
+                                      <input id="saldoCable" class="form-control input-sm" type="text" name="saldoCable" value="<?php echo $getSaldoCable; ?>" readonly>
                                   </div>
                                   <div class="col-md-2 col-sm-2">
                                       <br>
                                       <label for="codigoCliente">Saldo internet</label>
-                                      <input id="saldoInter" class="form-control input-sm" type="text" name="saldoInter" value="<?php echo $saldoInter; ?>" readonly>
+                                      <input id="saldoInter" class="form-control input-sm" type="text" name="saldoInter" value="<?php echo $getSaldoInter; ?>" readonly>
                                   </div>
                                   <div class="col-md-4 col-sm-4">
                                       <br>

@@ -15,8 +15,8 @@ session_start();
         //include database connection
         require_once '../../php/connection.php';
         require_once 'php/getSaldoReal.php';
-        $precon = new ConectionDB();
-        $con = $precon->ConectionDB();
+        $precon = new ConectionDB($_SESSION['db']);
+        $con = $precon->ConectionDB($_SESSION['db']);
         // read current record's data
         try {
             $getSaldoReal = new GetSaldoReal();
@@ -71,7 +71,6 @@ session_start();
             $tipoComprobante = $row['tipo_comprobante']; //Credito fiscal o consumidor final
             $facebook = $row['facebook'];
             $correo = $row['correo_electronico'];
-
             /****************** OTROS DATOS ***********************/
             $cobrador = $row['cod_cobrador'];
             $contacto1 = $row['contactos'];
@@ -673,6 +672,42 @@ session_start();
                                       <input id="cuotaCable" type="hidden" name="cuotaCable" value="<?php echo $cuotaCable; ?>">
                                       <input id="cuotaInter" type="hidden" name="cuotaInter" value="<?php echo $cuotaInter; ?>">
                                       <input id="valorCuota" class="form-control input-sm alert-info" type="text" name="valorCuota" value="0.00" style="font-weight: bold;">
+                                  </div>
+                              </div>
+                              <div class="form-row">
+                                  <div class="col-md-6">
+                                      <label for="municipio">Municipio</label>
+                                      <select class="form-control input-sm" name="municipio">
+                                          <option value="">Seleccionar</option>
+                                          <?php
+                                          foreach ($arrMunicipios as $key) {
+                                              if ($key['idMunicipio'] == $municipio) {
+                                                  echo "<option value=".$key['idMunicipio']." selected>".$key['nombreMunicipio']."</option>";
+                                              }
+                                              else {
+                                                  echo "<option value=".$key['idMunicipio'].">".$key['nombreMunicipio']."</option>";
+                                              }
+
+                                          }
+                                           ?>
+                                      </select>
+                                  </div>
+                                  <div class="col-md-6">
+                                      <label for="colonia">Colonia</label>
+                                      <select class="form-control input-sm" name="colonia">
+                                          <option value="">Seleccionar</option>
+                                          <?php
+                                          foreach ($arrColonias as $key) {
+                                              if ($key['idColonia'] == $colonia) {
+                                                  echo "<option value=".$key['idColonia']." selected>".$key['nombreColonia']."</option>";
+                                              }
+                                              else {
+                                                  echo "<option value=".$key['idColonia'].">".$key['nombreColonia']."</option>";
+                                              }
+
+                                          }
+                                           ?>
+                                      </select>
                                   </div>
                               </div>
                               <div class="form-row">

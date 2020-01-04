@@ -5,17 +5,20 @@
     /**
      * Clase para iniciar sesión de los usuarios
      */
+     $db = $_POST['sucursal'];
     class Login extends ConectionDB
     {
         public function Login()
         {
-            parent::__construct ();
+            global $db;
+            parent::__construct ($db);
         }
         public function startSession()
         {
                 /**
                  * Datos del usuario
                  */
+                global $db;
                 $user = $_POST['user'];
                 $pass = $_POST['pass'];
 
@@ -51,6 +54,7 @@
                         $_SESSION['user'] = $loginRow['usuario'];
                         $_SESSION['pass'] = $loginRow['clave'];
                         $_SESSION['rol'] = $loginRow['rol'];
+                        $_SESSION['db'] = $db;
 
                         $totalPermissionsCheck = new Permissions();
                         $totalModulePermissionsCheck = new ModulePermissions();

@@ -2,14 +2,17 @@
 
 	require '../../../pdfs/fpdf.php';
   require_once("../../../php/config.php");
-
+  require '../../../numLe/src/NumerosEnLetras.php';
+  if(!isset($_SESSION))
+  {
+  	session_start();
+  }
   $host = DB_HOST;
   $user = DB_USER;
   $password = DB_PASSWORD;
-  $database = DB_NAME;
+  $database = $_SESSION['db'];
   $mysqli = new mysqli($host, $user, $password, $database);
 
-  session_start();
   $codigo = $_GET['id'];
 
   function getVelocidadById($idVelocidad)
@@ -60,7 +63,7 @@
 	  $pdf->AliasNbPages();
 	  $pdf->AddPage('P','Letter');
       $pdf->Ln(5);
-
+	  $tecnologia = "";
 	  while($row = $resultado->fetch_assoc())
 	  {
           if ($row['tipo_comprobante'] == 2) {

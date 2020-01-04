@@ -7,7 +7,11 @@
    {
        public function GenerarFacturas()
        {
-           parent::__construct ();
+           if(!isset($_SESSION))
+           {
+         	  session_start();
+           }
+           parent::__construct ($_SESSION['db']);
        }
 
         public function generar()
@@ -89,7 +93,7 @@
                    $ts = "C";
                    if ($tipoComprobante == 1) {
                        // SQL query para traer datos del servicio de cable de la tabla clientes
-                       $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_departamento, numero_nit, giro, valor_cuota, prepago, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento, servicio_cortesia FROM clientes WHERE
+                       $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_colonia, id_departamento, numero_nit, giro, valor_cuota, prepago, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento, servicio_cortesia FROM clientes WHERE
                        (servicio_suspendido IS NULL OR servicio_suspendido = 'F') AND (servicio_cortesia IS NULL OR servicio_cortesia = 'F') AND dia_cobro = :diaCobro AND fecha_primer_factura <= :fechaGenerar AND (estado_cliente_in=3 OR estado_cliente_in=1) AND tipo_comprobante =:tipoComprobante";
                        // Preparación de sentencia
                        $statement = $this->dbConnect->prepare($query);
@@ -120,18 +124,24 @@
                                //var_dump("vuelta: " . $vuelta++);
                                //var_dump($contador);
                                if ($contador == 0) {
-                                   if ($ultimaFiscal <= $rangoHastaFiscal) {
+                                   if ($ultimaFiscal < $rangoHastaFiscal) {
                                        $ultimaFiscal = $ultimaFiscal + 1;
                                        $numeroFactura = $prefijoFiscal ."-". strval($ultimaFiscal);
                                        $implus = substr((($i['valor_cuota']/(1 + floatval($iva)))*$cesc),0,4);
                                        //$this->dbConnect->beginTransaction(); $this->dbConnect->exec('LOCK TABLES tbl_cargos, tbl_abonos, clientes, tbl_facturas_config WRITE');
                                        $this->dbConnect->beginTransaction();
-                                       $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, anticipo, tipoServicio, estado, cargoImpuesto, totalImpuesto, exento)VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :anticipo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :exento)";
+                                       $qry = "INSERT INTO tbl_cargos(nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroFactura, /*prefijo,*/ numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, anticipo, tipoServicio, estado, cargoImpuesto, totalImpuesto, exento)VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroFactura, /*:prefijo,*/ :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :anticipo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :exento)";
 
                                        $stmt = $this->dbConnect->prepare($qry);
                                        $stmt->execute(
-                                           array(':tipoComprobante' => $tipoComprobante,
+                                           array(
+                                                 ':nombre' => $i['nombre'],
+                                                 ':direccion' => $i['direccion'],
+                                                 ':idMunicipio' => $i['id_municipio'],
+                                                 ':idColonia' => $i['id_colonia'],
+                                                 ':tipoComprobante' => $tipoComprobante,
                                                  ':numeroFactura' => $numeroFactura,
+                                                 //':prefijo' => $prefijoFiscal,
                                                  ':numeroRecibo' => $correlativo,
                                                  ':codigoCliente' => $i["cod_cliente"],
                                                  ':codigoCobrador' => $i["cod_cobrador"],
@@ -225,7 +235,7 @@
                    }
                    elseif($tipoComprobante == 2){
                        // SQL query para traer datos del servicio de cable de la tabla clientes
-                       $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_departamento, numero_nit, giro, valor_cuota, prepago, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento, servicio_cortesia FROM clientes WHERE
+                       $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_colonia, id_departamento, numero_nit, giro, valor_cuota, prepago, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento, servicio_cortesia FROM clientes WHERE
                        (servicio_suspendido IS NULL OR servicio_suspendido = 'F') AND (servicio_cortesia IS NULL OR servicio_cortesia = 'F') AND dia_cobro = :diaCobro AND fecha_primer_factura <= :fechaGenerar AND (estado_cliente_in=3 OR estado_cliente_in=1) AND tipo_comprobante =:tipoComprobante";
                        // Preparación de sentencia
                        $statement = $this->dbConnect->prepare($query);
@@ -257,17 +267,23 @@
                                //var_dump($contador);
                                if ($contador == 0) {
 
-                                   if ($ultimaFactura <= $rangoHastaFactura) {
+                                   if ($ultimaFactura < $rangoHastaFactura) {
                                        $ultimaFactura = $ultimaFactura + 1;
                                        $numeroFactura = strval($prefijoFactura) ."-". strval($ultimaFactura);
                                        $implus = substr((($i['valor_cuota']/(1 + floatval($iva)))*$cesc),0,4);
                                        $this->dbConnect->beginTransaction();
-                                       $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, anticipo, tipoServicio, estado, cargoImpuesto, totalImpuesto, exento)VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :anticipo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :exento)";
+                                       $qry = "INSERT INTO tbl_cargos(nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroFactura, /*prefijo,*/ numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, anticipo, tipoServicio, estado, cargoImpuesto, totalImpuesto, exento)VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroFactura, /*:prefijo,*/ :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :anticipo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :exento)";
 
                                        $stmt = $this->dbConnect->prepare($qry);
                                        $stmt->execute(
-                                           array(':tipoComprobante' => $tipoComprobante,
+                                           array(
+                                                 ':nombre' => $i['nombre'],
+                                                 ':direccion' => $i['direccion'],
+                                                 ':idMunicipio' => $i['id_municipio'],
+                                                 ':idColonia' => $i['id_colonia'],
+                                                 ':tipoComprobante' => $tipoComprobante,
                                                  ':numeroFactura' => $numeroFactura,
+                                                 //':prefijo' => $prefijoFactura,
                                                  ':numeroRecibo' => $correlativo,
                                                  ':codigoCliente' => $i["cod_cliente"],
                                                  ':codigoCobrador' => $i["cod_cobrador"],
@@ -364,7 +380,7 @@
                    $ts = "I";
                    if ($tipoComprobante == 1) {
                        // SQL query para traer datos del servicio de cable de la tabla clientes
-                       $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_departamento, numero_nit, giro, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento FROM clientes WHERE estado_cliente_in=1 AND dia_corbo_in = :diaCobro AND fecha_primer_factura_in <= :fechaGenerar AND tipo_comprobante =:tipoComprobante";
+                       $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_colonia, id_departamento, numero_nit, giro, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento FROM clientes WHERE estado_cliente_in=1 AND dia_corbo_in = :diaCobro AND fecha_primer_factura_in <= :fechaGenerar AND tipo_comprobante =:tipoComprobante";
                        // Preparación de sentencia
                        $statement = $this->dbConnect->prepare($query);
                        $statement->execute(
@@ -393,18 +409,24 @@
                                //var_dump("vuelta: " . $vuelta++);
                                //var_dump($contador);
                                if ($contador == 0) {
-                                   if ($ultimaFiscal <= $rangoHastaFiscal) {
+                                   if ($ultimaFiscal < $rangoHastaFiscal) {
                                        $ultimaFiscal = $ultimaFiscal + 1;
                                        $numeroFactura = $prefijoFiscal ."-". strval($ultimaFiscal);
                                        $implus = substr((($i['cuota_in']/(1 + floatval($iva)))*$cesc),0,4);
                                        $this->dbConnect->beginTransaction();
-                                       $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, anticipo, tipoServicio, estado, cargoImpuesto, totalImpuesto, exento)VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador,
+                                       $qry = "INSERT INTO tbl_cargos(nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroFactura, /*prefijo,*/ numeroRecibo, codigoCliente, codigoCobrador, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, anticipo, tipoServicio, estado, cargoImpuesto, totalImpuesto, exento)VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroFactura, /*:prefijo,*/ :numeroRecibo, :codigoCliente, :codigoCobrador,
                                               :cuotaInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :anticipo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :exento)";
 
                                        $stmt = $this->dbConnect->prepare($qry);
                                        $stmt->execute(
-                                           array(':tipoComprobante' => $tipoComprobante,
+                                           array(
+                                                 ':nombre' => $i['nombre'],
+                                                 ':direccion' => $i['direccion'],
+                                                 ':idMunicipio' => $i['id_municipio'],
+                                                 ':idColonia' => $i['id_colonia'],
+                                                 ':tipoComprobante' => $tipoComprobante,
                                                  ':numeroFactura' => $numeroFactura,
+                                                 //':prefijo' => $prefijoFiscal,
                                                  ':numeroRecibo' => $correlativo,
                                                  ':codigoCliente' => $i["cod_cliente"],
                                                  ':codigoCobrador' => $i["cod_cobrador"],
@@ -498,7 +520,7 @@
                    }
                    elseif($tipoComprobante == 2){
                        // SQL query para traer datos del servicio de cable de la tabla clientes
-                       $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_departamento, numero_nit, giro, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento FROM clientes WHERE estado_cliente_in = 1 AND dia_corbo_in = :diaCobro AND fecha_primer_factura_in <= :fechaGenerar AND tipo_comprobante = :tipoComprobante";
+                       $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_colonia, id_departamento, numero_nit, giro, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento FROM clientes WHERE estado_cliente_in = 1 AND dia_corbo_in = :diaCobro AND fecha_primer_factura_in <= :fechaGenerar AND tipo_comprobante = :tipoComprobante";
                        // Preparación de sentencia
                        $statement = $this->dbConnect->prepare($query);
                        $statement->execute(
@@ -527,19 +549,25 @@
                                //var_dump("vuelta: " . $vuelta++);
                                //var_dump($contador);
                                if ($contador == 0) {
-                                   if ($ultimaFactura <= $rangoHastaFactura) {
+                                   if ($ultimaFactura < $rangoHastaFactura) {
                                        $ultimaFactura = $ultimaFactura + 1;
                                        $numeroFactura = $prefijoFactura ."-". strval($ultimaFactura);
                                        $implus = substr((($i['cuota_in']/(1 + floatval($iva)))*$cesc),0,4);
 
                                        $this->dbConnect->beginTransaction();
-                                       $qry = "INSERT INTO tbl_cargos(tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, anticipo, tipoServicio, estado, cargoImpuesto, totalImpuesto, exento)VALUES(:tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaInternet,
+                                       $qry = "INSERT INTO tbl_cargos(nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroFactura, /*prefijo,*/ numeroRecibo, codigoCliente, codigoCobrador, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, anticipo, tipoServicio, estado, cargoImpuesto, totalImpuesto, exento)VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroFactura, /*:prefijo,*/ :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaInternet,
                                                :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :anticipo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :exento)";
 
                                        $stmt = $this->dbConnect->prepare($qry);
                                        $stmt->execute(
-                                           array(':tipoComprobante' => $tipoComprobante,
+                                           array(
+                                                 ':nombre' => $i['nombre'],
+                                                 ':direccion' => $i['direccion'],
+                                                 ':idMunicipio' => $i['id_municipio'],
+                                                 ':idColonia' => $i['id_colonia'],
+                                                 ':tipoComprobante' => $tipoComprobante,
                                                  ':numeroFactura' => $numeroFactura,
+                                                 //':prefijo' => $prefijoFactura,
                                                  ':numeroRecibo' => $correlativo,
                                                  ':codigoCliente' => $i["cod_cliente"],
                                                  ':codigoCobrador' => $i["cod_cobrador"],

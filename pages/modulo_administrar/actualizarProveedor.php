@@ -158,7 +158,7 @@
     // isset() is a PHP function used to verify if a value is there or not
     $id=isset($_GET['Id']) ? $_GET['Id'] : die('ERROR: Registro no encontrado.');
 
-    $obj = new ConectionDB();
+    $obj = new ConectionDB($_SESSION['db']);
     $con = $obj->dbConnect;
 
     // read current record's data

@@ -5,7 +5,11 @@
     {
         public function updateInfo()
         {
-            parent::__construct ();
+            if(!isset($_SESSION))
+            {
+                session_start();
+            }
+            parent::__construct ($_SESSION['db']);
         }
         public function Actualizar()
         {
