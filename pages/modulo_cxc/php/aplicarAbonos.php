@@ -882,7 +882,7 @@
                            $lastId = $this->dbConnect->lastInsertId();*/
 
                             $qry2 = "INSERT INTO tbl_abonos (nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cobradoPor, cuotaCable, fechaAbonado, mesCargo, anticipo, formaPago, tipoServicio, estado, anticipado, cargoImpuesto, totalImpuesto, cargoIva, totalIva/*, idFactura*/)
-                                     VALUES(:nombre, :direccion, idMunicipio, :idColonia, :tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador, :cobradoPor, :cuotaCable, :fechaAbonado, :mesCargo, :anticipo, :formaPago, :tipoServicio, :estado, :anticipado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva/*, :idFactura*/)";
+                                     VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador, :cobradoPor, :cuotaCable, :fechaAbonado, :mesCargo, :anticipo, :formaPago, :tipoServicio, :estado, :anticipado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva/*, :idFactura*/)";
 
                             $stmt2 = $this->dbConnect->prepare($qry2);
                             $stmt2->execute(
@@ -908,7 +908,7 @@
                                       ':cargoImpuesto' => $cesc,
                                       ':totalImpuesto' => $impSeg,
                                       ':cargoIva' => $iva,
-                                      ':totalIva' => $totalIva,
+                                      ':totalIva' => $totalIva
                                       /*':idFactura' => $lastId*/
                                      ));
 
@@ -981,8 +981,8 @@
                                     ));
                             $lastId = $this->dbConnect->lastInsertId();*/
 
-                            $qry2 = "INSERT INTO tbl_abonos (nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cobradoPor, cuotaInternet, fechaAbonado, mesCargo, anticipo, formaPago, estado, anticipado, cargoImpuesto, totalImpuesto, cargoIva, totalIva/*, idFactura*/)
-                                     VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador, :cobradoPor, :cuotaInter, :fechaAbonado, :mesCargo, :anticipo, :formaPago, :estado, :anticipado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva/*, :idFactura*/)";
+                            $qry2 = "INSERT INTO tbl_abonos (nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroFactura, numeroRecibo, codigoCliente, codigoCobrador, cobradoPor, cuotaInternet, fechaAbonado, mesCargo, anticipo, formaPago, tipoServicio, estado, anticipado, cargoImpuesto, totalImpuesto, cargoIva, totalIva/*, idFactura*/)
+                                     VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroFactura, :numeroRecibo, :codigoCliente, :codigoCobrador, :cobradoPor, :cuotaInter, :fechaAbonado, :mesCargo, :anticipo, :formaPago, :tipoServicio, :estado, :anticipado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva/*, :idFactura*/)";
 
                             $stmt2 = $this->dbConnect->prepare($qry2);
                             $stmt2->execute(
@@ -1008,7 +1008,7 @@
                                       ':cargoImpuesto' => $cesc,
                                       ':totalImpuesto' => $impSeg,
                                       ':cargoIva' => $iva,
-                                      ':totalIva' => $totalIva,
+                                      ':totalIva' => $totalIva
                                       /*':idFactura' => $lastId*/
                                      ));
 

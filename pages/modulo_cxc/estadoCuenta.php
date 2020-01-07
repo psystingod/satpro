@@ -428,7 +428,6 @@
                                                       echo "0.00"."</td><td class='text-danger danger'>";
                                                       echo $cargoI['totalImpuesto']."</td><td class='text-danger danger'>";
                                                       echo "0.00"."</td><td class='text-danger danger'>";
-                                                      echo $cargoI['totalImpuesto']."</td><td class='text-danger danger'>";
                                                       echo doubleval($cargoI['cuotaInternet'])+doubleval($cargoI['totalImpuesto'])."</td></tr>";
 
                                                     }

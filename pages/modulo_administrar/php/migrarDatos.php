@@ -236,7 +236,7 @@
         {
             try {
                 // SQL query para traer datos de los productos
-                $query = "SELECT t1.numeroRecibo, t1.codigoCliente, t1.fechaRecibo, t1.codigoCobrador, t1.tipoServicio, t1.impuesto, t2.tipoComprobante, t2.numMes, t2.montoAbonado, t2.anticipo, c1.nombre, c1.direccion, c1.id_municipio, c1.id_colonia
+                $query = "SELECT t1.numeroRecibo, t1.codigoCliente, t1.fechaRecibo, t1.codigoCobrador, t1.tipoServicio, /*t1.impuesto,*/t2.tipoComprobante, t2.numMes, t2.montoAbonado, t2.anticipo, t2.impuesto, c1.nombre, c1.direccion, c1.id_municipio, c1.id_colonia
                           FROM abonos_cxc1 as t1 INNER JOIN detalle_abonos_cxc as t2 INNER JOIN clientes as c1 on t1.numeroRecibo = t2.numeroRecibo AND c1.cod_cliente = t1.codigoCliente";
                 // Preparación de sentencia
                 $statement = $this->dbConnect->prepare($query);

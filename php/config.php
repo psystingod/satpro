@@ -1,8 +1,8 @@
 <?php
 
   define ('DB_HOST', 'localhost');
-  define ('DB_USER', 'root');
-  define ('DB_PASSWORD', '');
+  define ('DB_USER', 'satprouser');
+  define ('DB_PASSWORD', 'Xhce57K7xgsTZhKX');
   define ('DB_NAME', 'satpro');
   define ('DB_CHARSET', 'utf8');
 

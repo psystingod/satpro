@@ -44,21 +44,24 @@
             try {
                     date_default_timezone_set('America/El_Salvador');
                     $date = date("Y-m-d");
-                    $query = "SELECT SUM(cuotaCable + totalImpuesto) FROM tbl_abonos WHERE tipoServicio = 'C' AND anulada = 0 AND DAY(:fecha) = DAY(fechaAbonado)";
+                    //$query = "SELECT SUM(cuotaCable + totalImpuesto) FROM tbl_abonos WHERE tipoServicio = 'C' AND anulada = 0 AND DAY(:fecha) = DAY(fechaAbonado)";
+                    $query = "SELECT SUM(cuotaCable + totalImpuesto) FROM tbl_abonos WHERE tipoServicio = 'C' AND anulada = 0 AND DAY(:fecha) = DAY(fechaAbonado) AND MONTH(:fecha) = MONTH(fechaAbonado) AND YEAR(:fecha) = YEAR(fechaAbonado)";
                     $statement = $this->dbConnect->prepare($query);
                     $statement->bindParam(':fecha', $date);
                     //ini_set('memory_limit', '-1');
                     $statement->execute();
                     $result1 = $statement->fetchColumn();
 
-                    $query = "SELECT SUM(cuotaInternet + totalImpuesto) FROM tbl_abonos WHERE tipoServicio = 'I' AND anulada = 0 AND DAY(:fecha) = DAY(fechaAbonado)";
+                    //$query = "SELECT SUM(cuotaInternet + totalImpuesto) FROM tbl_abonos WHERE tipoServicio = 'I' AND anulada = 0 AND DAY(:fecha) = DAY(fechaAbonado)";
+                    $query = "SELECT SUM(cuotaInternet + totalImpuesto) FROM tbl_abonos WHERE tipoServicio = 'I' AND anulada = 0 AND DAY(:fecha) = DAY(fechaAbonado) AND MONTH(:fecha) = MONTH(fechaAbonado) AND YEAR(:fecha) = YEAR(fechaAbonado)";
                     $statement = $this->dbConnect->prepare($query);
                     $statement->bindParam(':fecha', $date);
                     //ini_set('memory_limit', '-1');
                     $statement->execute();
                     $result2 = $statement->fetchColumn();
 
-                    $query = "SELECT SUM(montoCable + montoInternet + impuesto) FROM tbl_ventas_manuales WHERE anulada = 0 AND DAY(:fecha) = DAY(fechaComprobante)";
+                    //$query = "SELECT SUM(montoCable + montoInternet + impuesto) FROM tbl_ventas_manuales WHERE anulada = 0 AND DAY(:fecha) = DAY(fechaComprobante)";
+                    $query = "SELECT SUM(montoCable + montoInternet + impuesto) FROM tbl_ventas_manuales WHERE anulada = 0 AND DAY(:fecha) = DAY(fechaComprobante) AND MONTH(:fecha) = MONTH(fechaComprobante) AND YEAR(:fecha) = YEAR(fechaComprobante)";
                     $statement = $this->dbConnect->prepare($query);
                     $statement->bindParam(':fecha', $date);
                     //ini_set('memory_limit', '-1');
@@ -77,21 +80,21 @@
             try {
                     date_default_timezone_set('America/El_Salvador');
                     $date = date("Y-m-d");
-                    $query = "SELECT SUM(cuotaCable + totalImpuesto) FROM tbl_abonos WHERE tipoServicio = 'C' AND anulada = 0 AND MONTH(:fecha) = MONTH(fechaAbonado)";
+                    $query = "SELECT SUM(cuotaCable + totalImpuesto) FROM tbl_abonos WHERE tipoServicio = 'C' AND anulada = 0 AND MONTH(:fecha) = MONTH(fechaAbonado) AND YEAR(:fecha) = YEAR(fechaAbonado)";
                     $statement = $this->dbConnect->prepare($query);
                     $statement->bindParam(':fecha', $date);
                     //ini_set('memory_limit', '-1');
                     $statement->execute();
                     $result1 = $statement->fetchColumn();
 
-                    $query = "SELECT SUM(cuotaInternet + totalImpuesto) FROM tbl_abonos WHERE tipoServicio = 'I' AND anulada = 0 AND MONTH(:fecha) = MONTH(fechaAbonado)";
+                    $query = "SELECT SUM(cuotaInternet + totalImpuesto) FROM tbl_abonos WHERE tipoServicio = 'I' AND anulada = 0 AND MONTH(:fecha) = MONTH(fechaAbonado) AND YEAR(:fecha) = YEAR(fechaAbonado)";
                     $statement = $this->dbConnect->prepare($query);
                     $statement->bindParam(':fecha', $date);
                     //ini_set('memory_limit', '-1');
                     $statement->execute();
                     $result2 = $statement->fetchColumn();
 
-                    $query = "SELECT SUM(montoCable + montoInternet + impuesto) FROM tbl_ventas_manuales WHERE anulada = 0 AND MONTH(:fecha) = MONTH(fechaComprobante)";
+                    $query = "SELECT SUM(montoCable + montoInternet + impuesto) FROM tbl_ventas_manuales WHERE anulada = 0 AND MONTH(:fecha) = MONTH(fechaComprobante) AND YEAR(:fecha) = YEAR(fechaComprobante)";
                     $statement = $this->dbConnect->prepare($query);
                     $statement->bindParam(':fecha', $date);
                     //ini_set('memory_limit', '-1');

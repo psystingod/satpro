@@ -112,7 +112,7 @@ function editarCliente(){
     //CABLE
     document.getElementById("activoCable").value = "F";
     document.getElementById("suspendidoCable").value = "T";
-    document.getElementById("sinCable").value = "";
+    document.getElementById("sinCable").value = "S";
 
     //INTERNET
     document.getElementById("activoInter").value = "1";

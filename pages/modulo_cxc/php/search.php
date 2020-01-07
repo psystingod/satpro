@@ -1,5 +1,4 @@
 <?php
-
 require_once("../../../php/config.php");
 if(!isset($_SESSION))
 {

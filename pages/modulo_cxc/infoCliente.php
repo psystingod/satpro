@@ -32,6 +32,7 @@ session_start();
 
             /****************** DATOS GENERALES ***********************/
             $estado_cable = $row['servicio_suspendido']; // 0 o 1 SIN Servicio
+            $sinServicio = $row['sin_servicio']; // T o F
             $estado_internet = $row['estado_cliente_in']; // 1, 2, 3
             $codigo = $row["cod_cliente"];
             $nContrato = $row["numero_contrato"];
@@ -42,7 +43,14 @@ session_start();
             $dui = trim(ucwords(strtolower($row['numero_dui'])));
             $lugarExp = trim(ucwords(strtolower($row['lugar_exp'])));
             $nit = trim(ucwords(strtolower($row['numero_nit'])));
-            $fechaNacimiento = $row['fecha_nacimiento'];
+
+            if (strlen($row['fecha_nacimiento']) < 8) {
+                $fechaNacimiento = "";
+            }else {
+                $fechaNacimiento = DateTime::createFromFormat('Y-m-d', trim($row['fecha_nacimiento']));
+                $fechaNacimiento = $fechaNacimiento->format('d/m/Y');
+            }
+
             $direccion = $row["direccion"];
             $departamento = $row["id_departamento"];
             $municipio = $row["id_municipio"];
@@ -81,6 +89,7 @@ session_start();
 
             /****************** DATOS CABLE ***********************/
             $fechaInstalacion = date_format(date_create($row['fecha_instalacion']), "d/m/Y");
+            //var_dump($fechaInstalacion);
             $fechaPrimerFactura = date_format(date_create($row['fecha_primer_factura']), "d/m/Y");
             $exento = $row['exento'];
             $diaCobro = $row['dia_cobro'];
@@ -90,34 +99,40 @@ session_start();
             $tipoComprobante = $row['tipo_comprobante'];
             $tipoServicio = $row['tipo_servicio'];
             $mactv = $row['mactv'];
-            $periodoContratoCable = $row['periodo_contrato_ca'];
+            $periodoContratoCable = trim($row['periodo_contrato_ca']);
             $vencimientoCable = $row['vencimiento_ca'];
+            if (strlen($row['vencimiento_ca']) < 8) {
+                $vencimientoCable = "";
+            }else {
+                $vencimientoCable = DateTime::createFromFormat('Y-m-d', trim($row['vencimiento_ca']));
+                $vencimientoCable = $vencimientoCable->format('d/m/Y');
+            }
             //var_dump($row['fecha_instalacion']);
             if (strlen($row['fecha_instalacion']) < 8) {
                 $fechaInstalacion = "";
             }else {
-                $fechaInstalacion = DateTime::createFromFormat('Y-m-d', $row['fecha_instalacion']);
+                $fechaInstalacion = DateTime::createFromFormat('Y-m-d', trim($row['fecha_instalacion']));
                 $fechaInstalacion = $fechaInstalacion->format('d/m/Y');
             }
 
             if (strlen($row['fecha_primer_factura']) < 8) {
                 $fechaPrimerFactura = "";
             }else {
-                $fechaPrimerFactura = DateTime::createFromFormat('Y-m-d', $row['fecha_primer_factura']);
+                $fechaPrimerFactura = DateTime::createFromFormat('Y-m-d', trim($row['fecha_primer_factura']));
                 $fechaPrimerFactura = $fechaPrimerFactura->format('d/m/Y');
             }
 
             if (strlen($row['fecha_suspencion']) < 8) {
                 $fechaSuspensionCable = "";
             }else {
-                $fechaSuspensionCable = DateTime::createFromFormat('Y-m-d', $row['fecha_suspencion']);
+                $fechaSuspensionCable = DateTime::createFromFormat('Y-m-d', trim($row['fecha_suspencion']));
                 $fechaSuspensionCable = $fechaSuspensionCable->format('d/m/Y');
             }
 
             if (strlen($row['fecha_reinstalacion']) < 8) {
                 $fechaReinstalacionCable = "";
             }else {
-                $fechaReinstalacionCable = DateTime::createFromFormat('Y-m-d', $row['fecha_reinstalacion']);
+                $fechaReinstalacionCable = DateTime::createFromFormat('Y-m-d', trim($row['fecha_reinstalacion']));
                 $fechaReinstalacionCable = $fechaReinstalacionCable->format('d/m/Y');
             }
             $tecnicoCable = $row['id_tecnico'];
@@ -128,19 +143,19 @@ session_start();
             if (strlen($row['fecha_instalacion_in']) < 8) {
                 $fechaInstalacionInter = "";
             }else {
-                $fechaInstalacionInter = DateTime::createFromFormat('Y-m-d', $row['fecha_instalacion_in']);
+                $fechaInstalacionInter = DateTime::createFromFormat('Y-m-d', trim($row['fecha_instalacion_in']));
                 $fechaInstalacionInter = $fechaInstalacionInter->format('d/m/Y');
             }
 
             if (strlen($row['fecha_primer_factura_in']) < 8) {
                 $fechaPrimerFacturaInter = "";
             }else {
-                $fechaPrimerFacturaInter = DateTime::createFromFormat('Y-m-d', $row['fecha_primer_factura_in']);
+                $fechaPrimerFacturaInter = DateTime::createFromFormat('Y-m-d', trim($row['fecha_primer_factura_in']));
                 $fechaPrimerFacturaInter = $fechaPrimerFacturaInter->format('d/m/Y');
             }
 
             $tipoServicioInternet = $row['tipo_servicio_in'];
-            $periodoContratoInternet = $row['periodo_contrato_int'];
+            $periodoContratoInternet = trim($row['periodo_contrato_int']);
             $diaCobroInter = $row['dia_corbo_in'];
             $velocidadInter = $row['id_velocidad'];
             $cuotaMensualInter = $row['cuota_in'];
@@ -150,28 +165,28 @@ session_start();
             if (strlen($row['vencimiento_in']) < 8) {
                 $vencimientoInternet = "";
             }else {
-                $vencimientoInternet = DateTime::createFromFormat('Y-m-d', $row['vencimiento_in']);
+                $vencimientoInternet = DateTime::createFromFormat('Y-m-d', trim($row['vencimiento_in']));
                 $vencimientoInternet = $vencimientoInternet->format('d/m/Y');
             }
 
             if (strlen($row['ult_ren_in']) < 8) {
                 $ultimaRenovacionInternet = "";
             }else {
-                $ultimaRenovacionInternet = DateTime::createFromFormat('Y-m-d', $row['ult_ren_in']);
+                $ultimaRenovacionInternet = DateTime::createFromFormat('Y-m-d', trim($row['ult_ren_in']));
                 $ultimaRenovacionInternet = $ultimaRenovacionInternet->format('d/m/Y');
             }
 
             if (strlen($row['fecha_suspencion_in']) < 8) {
                 $fechaSuspencionInternet = "";
             }else {
-                $fechaSuspencionInternet = DateTime::createFromFormat('Y-m-d', $row['fecha_suspencion_in']);
+                $fechaSuspencionInternet = DateTime::createFromFormat('Y-m-d', trim($row['fecha_suspencion_in']));
                 $fechaSuspencionInternet = $fechaSuspencionInternet->format('d/m/Y');
             }
 
             if (strlen($row['fecha_reconexion_in']) < 8) {
                 $fechaReconexionInternet = "";
             }else {
-                $fechaReconexionInternet = DateTime::createFromFormat('Y-m-d', $row['fecha_reconexion_in']);
+                $fechaReconexionInternet = DateTime::createFromFormat('Y-m-d', trim($row['fecha_reconexion_in']));
                 $fechaReconexionInternet = $fechaReconexionInternet->format('d/m/Y');
             }
 
@@ -179,14 +194,14 @@ session_start();
             if (strlen($row['dese_promocion_in']) < 8) {
                 $promocionDesde = "";
             }else {
-                $promocionDesde = DateTime::createFromFormat('Y-m-d', $row['dese_promocion_in']);
+                $promocionDesde = DateTime::createFromFormat('Y-m-d', trim($row['dese_promocion_in']));
                 $promocionDesde = $promocionDesde->format('d/m/Y');
             }
 
             if (strlen($row['hasta_promocion_in']) < 8) {
                 $promocionHasta = "";
             }else {
-                $promocionHasta = DateTime::createFromFormat('Y-m-d', $row['hasta_promocion_in']);
+                $promocionHasta = DateTime::createFromFormat('Y-m-d', trim($row['hasta_promocion_in']));
                 $promocionHasta = $promocionHasta->format('d/m/Y');
             }
             $cuotaPromocion = $row['cuota_promocion'];
@@ -214,6 +229,7 @@ session_start();
     elseif (isset($_GET['action'])) {
         /****************** DATOS GENERALES ***********************/
         $estado_cable = ""; // 0 o 1
+        $sinServicio = ""; // 0 o 1
         $estado_internet = ""; // 1, 2, 3
         $codigo = "";
         $nContrato = "";
@@ -565,7 +581,7 @@ session_start();
                         <th>Sin serv</th>
                         <?php
 
-                        if ($estado_cable == "F" OR $estado_cable == "") {
+                        if (($estado_cable == "F" || $estado_cable == "") && $sinServicio == "F") {
                             echo "<tr class='info'>
                                 <th>TV</th>
                                 <td><label class='switch'><input id='activoCable' class='switch' type='radio' name ='cable' value='activo' checked disabled><span class='slider round'></span></label></td>
@@ -573,12 +589,20 @@ session_start();
                                 <td><label class='switch'><input id='sinCable' class='switch' type='radio' name ='cable' value='sin' disabled><span class='slider round'></span></label></td>
                             </tr>";
                         }
-                        else if ($estado_cable == "T") {
+                        else if ($estado_cable == "T" && $sinServicio == "F") {
                             echo "<tr class='info'>
                                 <th>TV</th>
                                 <td><label class='switch'><input id='activoCable' class='switch' type='radio' name ='cable' value='activo' disabled><span class='slider round'></span></label></td>
                                 <td><label class='switch'><input id='suspendidoCable' class='switch' type='radio' name ='cable' value='suspendido' checked disabled><span class='slider round'></span></label></td>
                                 <td><label class='switch'><input id='sinCable' class='switch' type='radio' name ='cable' value='sin' disabled><span class='slider round'></span></label></td>
+                            </tr>";
+                        }
+                        elseif (($estado_cable == "F" || $estado_cable == "") && $sinServicio == "T") {
+                            echo "<tr class='info'>
+                                <th>TV</th>
+                                <td><label class='switch'><input id='activoCable' class='switch' type='radio' name ='cable' value='activo' disabled required><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input id='suspendidoCable' class='switch' type='radio' name ='cable' value='suspendido' disabled required><span class='slider round'></span></label></td>
+                                <td><label class='switch'><input id='sinCable' class='switch' type='radio' name ='cable' value='sin' checked disabled required><span class='slider round'></span></label></td>
                             </tr>";
                         }
                         else {
@@ -875,13 +899,14 @@ session_start();
                                     </div>
                                     <br><br>
                                     <div class="row">
+                                        <div class="row">
                                         <div class="col-md-4">
                                             <label for="rp1_nombre">Referencia personal #1</label>
                                             <input class="form-control input-sm" type="text" name="rf1_nombre" value="<?php echo $contacto1; ?>" readonly>
                                         </div>
                                         <div class="col-md-2">
                                             <label for="rp1_telefono">Teléfono</label>
-                                            <input class="form-control input-sm" type="text" name="rp1_telefono" value="<?php echo $telCon1; ?>" readonly>
+                                            <input class="form-control input-sm" type="text" name="rp1_telefono" value="<?php echo $contacto2; ?>" readonly>
                                         </div>
                                         <div class="col-md-4">
                                             <label for="rp1_direccion">Dirección</label>
@@ -889,17 +914,17 @@ session_start();
                                         </div>
                                         <div class="col-md-2">
                                             <label for="rp1_parentezco">Parentezco</label>
-                                            <input class="form-control input-sm" type="text" name="rp1_parentezco" value="<?php echo $paren1; ?>" readonly>
+                                            <input class="form-control input-sm" type="text" name="rp1_parentezco" value="<?php echo $telCon1; ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-4">
                                             <label for="rp2_nombre">Referencia personal #2</label>
-                                            <input class="form-control input-sm" type="text" name="rf2_nombre" value="<?php echo $contacto2; ?>" readonly>
+                                            <input class="form-control input-sm" type="text" name="rf2_nombre" value="<?php echo $telCon2; ?>" readonly>
                                         </div>
                                         <div class="col-md-2">
                                             <label for="rp2_telefono">Teléfono</label>
-                                            <input class="form-control input-sm" type="text" name="rp2_telefono" value="<?php echo $telCon2; ?>" readonly>
+                                            <input class="form-control input-sm" type="text" name="rp2_telefono" value="<?php echo $telCon3; ?>" readonly>
                                         </div>
                                         <div class="col-md-4">
                                             <label for="rp2_direccion">Dirección</label>
@@ -917,7 +942,7 @@ session_start();
                                         </div>
                                         <div class="col-md-2">
                                             <label for="rp3_telefono">Teléfono</label>
-                                            <input class="form-control input-sm" type="text" name="rp3_telefono" value="<?php echo $telCon3; ?>" readonly>
+                                            <input class="form-control input-sm" type="text" name="rp3_telefono" value="<?php ?>" readonly>
                                         </div>
                                         <div class="col-md-4">
                                             <label for="rp3_direccion">Dirección</label>
@@ -1019,13 +1044,13 @@ session_start();
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="mesesContratoCable">Meses de contrato</label>
-                                                      <input class="form-control input-sm" type="text" name="mesesContratoCable" value="<?php echo $periodoContratoCable; ?>" readonly>
+                                                      <input class="form-control input-sm" type="text" id="mesesContratoCable" name="mesesContratoCable" value="<?php echo $periodoContratoCable; ?>" readonly>
                                                   </div>
                                               </div>
                                               <div class="row">
                                                   <div class="col-md-3">
                                                       <label for="inicioContratoCable">Inicio de contrato</label>
-                                                      <input class="form-control input-sm" type="text" name="inicioContratoCable" value="<?php echo $fechaInstalacion; ?>" readonly>
+                                                      <input class="form-control input-sm" type="text" id="inicioContratoCable" name="inicioContratoCable" value="<?php echo $fechaInstalacion; ?>" readonly>
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="vencimientoContratoCable">Vence contrato</label>
@@ -1635,7 +1660,7 @@ session_start();
         //CABLE
         document.getElementById("activoCable").value = "F";
         document.getElementById("suspendidoCable").value = "T";
-        document.getElementById("sinCable").value = "";
+        document.getElementById("sinCable").value = "S";
 
         //INTERNET
         document.getElementById("activoInter").value = "1";
