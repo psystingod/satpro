@@ -899,7 +899,6 @@ session_start();
                                     </div>
                                     <br><br>
                                     <div class="row">
-                                        <div class="row">
                                         <div class="col-md-4">
                                             <label for="rp1_nombre">Referencia personal #1</label>
                                             <input class="form-control input-sm" type="text" name="rf1_nombre" value="<?php echo $contacto1; ?>" readonly>
@@ -977,11 +976,11 @@ session_start();
                                               <div class="row">
                                                   <div class="col-md-3">
                                                       <label for="fechaInstalacionCable">Fecha de instalación</label>
-                                                      <input class="form-control input-sm" type="text" name="fechaInstalacionCable" value="<?php echo $fechaInstalacion; ?>" readonly>
+                                                      <input class="form-control input-sm" type="text" id="fechaInstalacionCable" name="fechaInstalacionCable" value="<?php echo $fechaInstalacion; ?>" readonly>
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="fechaPrimerFacturaCable">Fecha primer factura</label>
-                                                      <input class="form-control input-sm" type="text" name="fechaPrimerFacturaCable" value="<?php echo $fechaPrimerFactura; ?>" readonly>
+                                                      <input class="form-control input-sm" type="text" id="fechaPrimerFacturaCable" name="fechaPrimerFacturaCable" value="<?php echo $fechaPrimerFactura; ?>" readonly>
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="exento">Exento</label>
@@ -1044,7 +1043,7 @@ session_start();
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="mesesContratoCable">Meses de contrato</label>
-                                                      <input class="form-control input-sm" type="text" id="mesesContratoCable" name="mesesContratoCable" value="<?php echo $periodoContratoCable; ?>" readonly>
+                                                      <input class="form-control input-sm" type="text" id="mesesContratoCable" name="mesesContratoCable" onchange="setVencimientoCable()" value="<?php echo $periodoContratoCable; ?>" readonly>
                                                   </div>
                                               </div>
                                               <div class="row">
@@ -1054,7 +1053,7 @@ session_start();
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="vencimientoContratoCable">Vence contrato</label>
-                                                      <input class="form-control input-sm" type="text" name="vencimientoContratoCable" value="<?php echo $vencimientoCable; ?>" readonly>
+                                                      <input class="form-control input-sm" type="text" id="vencimientoContratoCable" name="vencimientoContratoCable" value="<?php echo $vencimientoCable; ?>" readonly>
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="fechaSuspensionCable">Fecha suspension</label>
@@ -1119,11 +1118,11 @@ session_start();
                                               <div class="row">
                                                   <div class="col-md-2">
                                                       <label for="fechaInstalacionInternet">Fecha de instalación</label>
-                                                      <input class="form-control input-sm" type="text" name="fechaInstalacionInternet" value="<?php echo $fechaInstalacionInter; ?>" readonly>
+                                                      <input class="form-control input-sm" type="text" id="fechaInstalacionInternet" name="fechaInstalacionInternet" value="<?php echo $fechaInstalacionInter; ?>" readonly>
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="fechaPrimerFacturaInternet">Fecha primer factura</label>
-                                                      <input class="form-control input-sm" type="text" name="fechaPrimerFacturaInternet" value="<?php echo $fechaPrimerFacturaInter; ?>" readonly>
+                                                      <input class="form-control input-sm" type="text" id="fechaPrimerFacturaInternet" name="fechaPrimerFacturaInternet" value="<?php echo $fechaPrimerFacturaInter; ?>" readonly>
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="tipoServicioInternet">Tipo de servicio</label>
@@ -1144,7 +1143,7 @@ session_start();
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="mesesContratoInternet">Meses de contrato</label>
-                                                      <input class="form-control input-sm" type="text" name="mesesContratoInternet" value="<?php echo $periodoContratoInternet; ?>" readonly>
+                                                      <input class="form-control input-sm" type="text" id="mesesContratoInternet" name="mesesContratoInternet" onchange="setVencimientoInternet()" value="<?php echo $periodoContratoInternet; ?>" readonly>
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="diaGenerarFacturaInternet">Día para generar factura</label>
@@ -1221,7 +1220,7 @@ session_start();
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="vencimientoContratoInternet">Vencimiento de contrato</label>
-                                                      <input class="form-control input-sm" type="text" name="vencimientoContratoInternet" value="<?php echo $vencimientoInternet; ?>" readonly>
+                                                      <input class="form-control input-sm" type="text" id="vencimientoContratoInternet" name="vencimientoContratoInternet" value="<?php echo $vencimientoInternet; ?>" readonly>
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="ultimaRenovacionInternet">Última renovación</label>
@@ -1701,6 +1700,14 @@ session_start();
 
     }
     ?>
+    <script type="text/javascript">
+        document.getElementById("fechaInstalacionCable").style.color = "BlueViolet";
+        document.getElementById("fechaPrimerFacturaCable").style.color = "green";
+        document.getElementById("vencimientoContratoCable").style.color = "red";
+        document.getElementById("fechaInstalacionInternet").style.color = "BlueViolet";
+        document.getElementById("fechaPrimerFacturaInternet").style.color = "green";
+        document.getElementById("vencimientoContratoInternet").style.color = "red";
+    </script>
 
 </body>
 

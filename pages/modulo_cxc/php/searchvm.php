@@ -12,11 +12,11 @@ $database = $_SESSION['db'];
 
 $mysqli = new mysqli($host, $user, $password, $database);
 $salida = "";
-$query = "SELECT idVenta, numeroComprobante, fechaComprobante, codigoCliente, nombreCliente, direccionCliente, anulada FROM tbl_ventas_manuales ORDER BY idVenta ASC LIMIT 5";
+$query = "SELECT idVenta, numeroComprobante, fechaComprobante, codigoCliente, nombreCliente, direccionCliente, impuesto, anulada FROM tbl_ventas_manuales ORDER BY idVenta ASC LIMIT 5";
  if (isset($_POST['consulta'])) {
  	$q = $mysqli->real_escape_string($_POST['consulta']);
-	$query = "SELECT idVenta, numeroComprobante, fechaComprobante, codigoCliente, nombreCliente, direccionCliente, anulada FROM tbl_ventas_manuales
-	WHERE numeroComprobante LIKE '%".$q."%' OR fechaComprobante LIKE '%".$q."%' OR codigoCliente LIKE '%".$q."%' OR nombreCliente LIKE '%".$q."%' OR direccionCliente LIKE '%".$q."%' ORDER BY idVenta ASC LIMIT 10";
+	$query = "SELECT idVenta, numeroComprobante, fechaComprobante, codigoCliente, nombreCliente, direccionCliente, impuesto, anulada FROM tbl_ventas_manuales
+	WHERE numeroComprobante LIKE '%".$q."%' OR fechaComprobante LIKE '%".$q."%' OR codigoCliente LIKE '%".$q."%' OR nombreCliente LIKE '%".$q."%' OR direccionCliente LIKE '%".$q."%' OR impuesto LIKE '%".$q."%' ORDER BY idVenta ASC LIMIT 10";
  }
 
  $resultado = $mysqli->query($query);
@@ -31,6 +31,7 @@ $query = "SELECT idVenta, numeroComprobante, fechaComprobante, codigoCliente, no
 						<th>CODIGO CLIENTE</th>
                         <th>NOMBRE</th>
                         <th>DIRECCIÓN</th>
+                        <th>IMPUESTO</th>
 					</tr>
 				</thead>
 				<tbody>";
@@ -43,6 +44,7 @@ $query = "SELECT idVenta, numeroComprobante, fechaComprobante, codigoCliente, no
     			<td>".$fila['codigoCliente']."</td>
                 <td>".$fila['nombreCliente']."</td>
                 <td>".$fila['direccionCliente']."</td>
+                <td>"."$".number_format($fila['impuesto'],2)."</td>
     		</tr>";
         }
 	}

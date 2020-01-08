@@ -1,0 +1,9 @@
+USE satpro_sm;
+DROP TABLE IF EXISTS tbl_facturas_config;
+
+CREATE TABLE tbl_company_info (
+  nombre VARCHAR(70) DEFAULT NULL,
+  nrc VARCHAR(20) DEFAULT NULL,
+  nit VARCHAR(20) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+

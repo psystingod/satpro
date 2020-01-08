@@ -244,7 +244,7 @@
                               <div class="panel panel-primary">
                                   <div class="panel-heading">Resumen estado de cuenta cable, <b>saldo actual: <?php echo $saldoRealCable; ?></b></div>
                                   <div class="panel-body">
-                                      <table class="table table-striped table-hover">
+                                      <table id="tablaecc" class="table table-striped table-hover">
                                           <thead>
                                               <th>N° recibo</th>
                                               <th>Tipo servicio</th>
@@ -264,6 +264,7 @@
                                                   <div class="col-md-7">
                                                       <div class="col-md-3">
                                                           <button class="btn btn-success btn-block" data-toggle="modal" data-target="#uanC" type="button" name="uan">Últimos abonos</button>
+                                                          <br>
                                                       </div>
                                                   </div>
                                                   <div class="col-md-2">
@@ -351,7 +352,7 @@
                               <div class="panel panel-primary">
                                   <div class="panel-heading">Resumen estado de cuenta internet, <b>saldo actual: <?php echo $saldoRealInter; ?></b></div>
                                   <div class="panel-body">
-                                      <table class="table table-striped">
+                                      <table id="tablaeci" class="table table-striped">
                                           <thead>
                                               <th>N° recibo</th>
                                               <th>Tipo servicio</th>
@@ -364,6 +365,7 @@
                                               <th>CESC cargo</th>
                                               <th>CESC abono</th>
                                               <th>TOTAL</th>
+
                                           </thead>
                                           <tbody>
                                               <div class="row">
@@ -371,6 +373,7 @@
                                                   <div class="col-md-7">
                                                       <div class="col-md-3">
                                                           <button class="btn btn-success btn-block" data-toggle="modal" data-target="#uanI" type="button" name="uan">Últimos abonos</button>
+                                                          <br>
                                                       </div>
                                                   </div>
                                                   <div class="col-md-2">
@@ -428,7 +431,7 @@
                                                       echo "0.00"."</td><td class='text-danger danger'>";
                                                       echo $cargoI['totalImpuesto']."</td><td class='text-danger danger'>";
                                                       echo "0.00"."</td><td class='text-danger danger'>";
-                                                      echo doubleval($cargoI['cuotaInternet'])+doubleval($cargoI['totalImpuesto'])."</td></tr>";
+                                                      echo number_format((doubleval($cargoI['cuotaInternet'])+doubleval($cargoI['totalImpuesto'])),2)."</td></tr>";
 
                                                     }
 
@@ -593,6 +596,69 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="../../dist/js/sb-admin-2.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="../../vendor/datatables/js/dataTables.bootstrap.js"></script>
+    <script src="../../vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="../../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="../../vendor/datatables-responsive/dataTables.responsive.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            $('#tablaecc').DataTable({
+                pageLength : 6,
+                lengthMenu: [[6, 10, 20, -1], [6, 10, 20, 'Todos']],
+                "searching": false,
+                "ordering": false,
+                responsive: false,
+                "paging": true,
+                "language": {
+                "lengthMenu": "Mostrar _MENU_ registros por página",
+                "zeroRecords": "No se encontró ningún registro",
+                "info": "Mostrando _TOTAL_ de _MAX_ Registros",
+                "infoEmpty": "No se encontró ningún registro",
+                "search": "Buscar: ",
+                "searchPlaceholder": "",
+                "infoFiltered": "(de un total de _MAX_ registros)",
+                "paginate": {
+                 "previous": "Anterior",
+                 "next": "Siguiente",
+
+                }
+            }
+
+            });
+
+        });
+    </script>
+    <script>
+        $(document).ready(function() {
+            $('#tablaeci').DataTable({
+                pageLength : 6,
+                lengthMenu: [[6, 10, 20, -1], [6, 10, 20, 'Todos']],
+                "searching": false,
+                "ordering": false,
+                responsive: false,
+                "paging": true,
+                "language": {
+                "lengthMenu": "Mostrar _MENU_ registros por página",
+                "zeroRecords": "No se encontró ningún registro",
+                "info": "Mostrando _TOTAL_ de _MAX_ Registros",
+                "infoEmpty": "No se encontró ningún registro",
+                "search": "Buscar: ",
+                "searchPlaceholder": "",
+                "infoFiltered": "(de un total de _MAX_ registros)",
+                "paginate": {
+                 "previous": "Anterior",
+                 "next": "Siguiente",
+
+                }
+            }
+
+            });
+
+        });
+    </script>
 
 </body>
 

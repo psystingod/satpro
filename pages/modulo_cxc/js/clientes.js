@@ -182,3 +182,37 @@ function getCortesia(){
         document.getElementById("cortesia").value = "F";
     }
 }
+
+function setVencimientoCable(){
+    var fechaCable = document.getElementById("fechaPrimerFacturaCable").value;
+    var mesesCable = parseInt(document.getElementById("mesesContratoCable").value);
+
+    var nuevaFechaCable = fechaCable.split("/").reverse().join("-");
+
+    var date = new Date(nuevaFechaCable);
+    date.setMonth(date.getMonth() + mesesCable);
+    var dia = date.getDate();
+    var mes = ("0" + (date.getMonth() + 1)).slice(-2);
+    var ano = date.getFullYear();
+    var vencimiento = dia + "/" + mes + "/" + ano;
+    document.getElementById("vencimientoContratoCable").value = vencimiento;
+    document.getElementById("vencimientoContratoCable").style.color = "red";
+
+}
+
+function setVencimientoInternet(){
+    var fechaInter = document.getElementById("fechaPrimerFacturaInternet").value;
+    var mesesInter = parseInt(document.getElementById("mesesContratoInternet").value);
+
+    var nuevaFechaInter = fechaInter.split("/").reverse().join("-");
+
+    var date = new Date(nuevaFechaInter);
+    date.setMonth(date.getMonth() + mesesInter);
+    var dia = date.getDate();
+    var mes = ("0" + (date.getMonth() + 1)).slice(-2);
+    var ano = date.getFullYear();
+    var vencimiento = dia + "/" + mes + "/" + ano;
+    document.getElementById("vencimientoContratoInternet").value = vencimiento;
+    document.getElementById("vencimientoContratoInternet").style.color = "red";
+
+}
