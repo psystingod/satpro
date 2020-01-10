@@ -127,10 +127,14 @@
                                    if ($ultimaFiscal < $rangoHastaFiscal) {
                                        $ultimaFiscal = $ultimaFiscal + 1;
                                        $numeroFactura = $prefijoFiscal ."-". strval($ultimaFiscal);
+                                       //CESC
                                        $implus = substr((($i['valor_cuota']/(1 + floatval($iva)))*$cesc),0,4);
+                                       //IVA
+                                       $separado = (floatval($i['valor_cuota'])/(1 + floatval($iva)));
+                                       $totalIva = substr(floatval($separado) * floatval($iva),0,4);
                                        //$this->dbConnect->beginTransaction(); $this->dbConnect->exec('LOCK TABLES tbl_cargos, tbl_abonos, clientes, tbl_facturas_config WRITE');
                                        $this->dbConnect->beginTransaction();
-                                       $qry = "INSERT INTO tbl_cargos(nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroFactura, /*prefijo,*/ numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, anticipo, tipoServicio, estado, cargoImpuesto, totalImpuesto, exento)VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroFactura, /*:prefijo,*/ :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :anticipo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :exento)";
+                                       $qry = "INSERT INTO tbl_cargos(nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroFactura, /*prefijo,*/ numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, anticipo, tipoServicio, estado, cargoImpuesto, totalImpuesto, cargoIva, totalIva, exento)VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroFactura, /*:prefijo,*/ :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :anticipo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva, :exento)";
 
                                        $stmt = $this->dbConnect->prepare($qry);
                                        $stmt->execute(
@@ -156,7 +160,9 @@
                                                  ':estado' => $estado,
                                                  ':cargoImpuesto' => $cesc,
                                                  ':exento' => $i['exento'],
-                                                 ':totalImpuesto' => $implus
+                                                 ':totalImpuesto' => $implus,
+                                                 ':cargoIva' => $iva,
+                                                 ':totalIva' => $totalIva
 
                                                 ));
 
@@ -270,9 +276,14 @@
                                    if ($ultimaFactura < $rangoHastaFactura) {
                                        $ultimaFactura = $ultimaFactura + 1;
                                        $numeroFactura = strval($prefijoFactura) ."-". strval($ultimaFactura);
+                                       //CESC
                                        $implus = substr((($i['valor_cuota']/(1 + floatval($iva)))*$cesc),0,4);
+                                       //IVA
+                                       $separado = (floatval($i['valor_cuota'])/(1 + floatval($iva)));
+                                       $totalIva = substr(floatval($separado) * floatval($iva),0,4);
+
                                        $this->dbConnect->beginTransaction();
-                                       $qry = "INSERT INTO tbl_cargos(nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroFactura, /*prefijo,*/ numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, anticipo, tipoServicio, estado, cargoImpuesto, totalImpuesto, exento)VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroFactura, /*:prefijo,*/ :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :anticipo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :exento)";
+                                       $qry = "INSERT INTO tbl_cargos(nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroFactura, /*prefijo,*/ numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, anticipo, tipoServicio, estado, cargoImpuesto, totalImpuesto, cargoIva, totalIva, exento)VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroFactura, /*:prefijo,*/ :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :anticipo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva, :exento)";
 
                                        $stmt = $this->dbConnect->prepare($qry);
                                        $stmt->execute(
@@ -298,7 +309,9 @@
                                                  ':estado' => $estado,
                                                  ':cargoImpuesto' => $cesc,
                                                  ':exento' => $i['exento'],
-                                                 ':totalImpuesto' => $implus
+                                                 ':totalImpuesto' => $implus,
+                                                 ':cargoIva' => $iva,
+                                                 ':totalIva' => $totalIva
 
                                                 ));
 
@@ -413,9 +426,12 @@
                                        $ultimaFiscal = $ultimaFiscal + 1;
                                        $numeroFactura = $prefijoFiscal ."-". strval($ultimaFiscal);
                                        $implus = substr((($i['cuota_in']/(1 + floatval($iva)))*$cesc),0,4);
+                                       //IVA
+                                       $separado = (floatval($i['cuota_in'])/(1 + floatval($iva)));
+                                       $totalIva = substr(floatval($separado) * floatval($iva),0,4);
                                        $this->dbConnect->beginTransaction();
-                                       $qry = "INSERT INTO tbl_cargos(nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroFactura, /*prefijo,*/ numeroRecibo, codigoCliente, codigoCobrador, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, anticipo, tipoServicio, estado, cargoImpuesto, totalImpuesto, exento)VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroFactura, /*:prefijo,*/ :numeroRecibo, :codigoCliente, :codigoCobrador,
-                                              :cuotaInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :anticipo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :exento)";
+                                       $qry = "INSERT INTO tbl_cargos(nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroFactura, /*prefijo,*/ numeroRecibo, codigoCliente, codigoCobrador, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, anticipo, tipoServicio, estado, cargoImpuesto, totalImpuesto, cargoIva, totalIva, exento)VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroFactura, /*:prefijo,*/ :numeroRecibo, :codigoCliente, :codigoCobrador,
+                                              :cuotaInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :anticipo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva, :exento)";
 
                                        $stmt = $this->dbConnect->prepare($qry);
                                        $stmt->execute(
@@ -441,7 +457,9 @@
                                                  ':estado' => $estado,
                                                  ':cargoImpuesto' => $cesc,
                                                  ':exento' => $i['exento'],
-                                                 ':totalImpuesto' => $implus
+                                                 ':totalImpuesto' => $implus,
+                                                 ':cargoIva' => $iva,
+                                                 ':totalIva' => $totalIva,
 
                                                 ));
 
@@ -553,10 +571,13 @@
                                        $ultimaFactura = $ultimaFactura + 1;
                                        $numeroFactura = $prefijoFactura ."-". strval($ultimaFactura);
                                        $implus = substr((($i['cuota_in']/(1 + floatval($iva)))*$cesc),0,4);
+                                       //IVA
+                                       $separado = (floatval($i['cuota_in'])/(1 + floatval($iva)));
+                                       $totalIva = substr(floatval($separado) * floatval($iva),0,4);
 
                                        $this->dbConnect->beginTransaction();
-                                       $qry = "INSERT INTO tbl_cargos(nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroFactura, /*prefijo,*/ numeroRecibo, codigoCliente, codigoCobrador, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, anticipo, tipoServicio, estado, cargoImpuesto, totalImpuesto, exento)VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroFactura, /*:prefijo,*/ :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaInternet,
-                                               :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :anticipo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :exento)";
+                                       $qry = "INSERT INTO tbl_cargos(nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroFactura, /*prefijo,*/ numeroRecibo, codigoCliente, codigoCobrador, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, anticipo, tipoServicio, estado, cargoImpuesto, totalImpuesto, cargoIva, totalIva, exento)VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroFactura, /*:prefijo,*/ :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaInternet,
+                                               :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :anticipo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva, :exento)";
 
                                        $stmt = $this->dbConnect->prepare($qry);
                                        $stmt->execute(
@@ -582,7 +603,9 @@
                                                  ':estado' => $estado,
                                                  ':cargoImpuesto' => $cesc,
                                                  ':exento' => $i['exento'],
-                                                 ':totalImpuesto' => $implus
+                                                 ':totalImpuesto' => $implus,
+                                                 ':cargoIva' => $iva,
+                                                 ':totalIva' => $totalIva
 
                                                 ));
 

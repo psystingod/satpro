@@ -30,6 +30,8 @@ CREATE TABLE tbl_cargos (
   anticipado CHAR(2) DEFAULT NULL,
   cargoImpuesto DOUBLE DEFAULT NULL,
   totalImpuesto DOUBLE DEFAULT NULL,
+  cargoIva DOUBLE DEFAULT NULL,
+  totalIva DOUBLE DEFAULT NULL,
   recargo DOUBLE DEFAULT 0,
   exento VARCHAR(2) DEFAULT NULL,
   anulada TINYINT(1) DEFAULT FALSE,

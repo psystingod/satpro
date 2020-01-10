@@ -339,8 +339,8 @@
                         $anulada = 1;
                     }else {
                         $anulada = 0;
-
                     }
+
                     if ($key['tipoServicio'] == "C") {
                         $nFactura = $key['prefijo']."-".$key['numeroComprobante'];
                         $query2 = "INSERT INTO tbl_cargos (/*prefijo,*/nombre, direccion, municipio, idColonia, numeroFactura, tipoFactura, codigoCliente, codigoCobrador, cuotaCable, cuotaInternet, fechaFactura, fechaVencimiento, mesCargo, tipoServicio, estado, anticipado, /*cargoImpuesto,*/ totalImpuesto, /*totalIva,*/ anulada)

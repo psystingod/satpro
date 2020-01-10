@@ -179,95 +179,14 @@
 
 
     <!-- Add modal -->
-
     <div class="modal fade" id="VerLibroContri" tabindex="-1" role="dialog" aria-labelledby="VerLibroContri">
           <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
-                      <div class="modal-header">
+                      <div class="modal-header" style="background-color: DodgerBlue; color: white;">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="Balance Comprobación">Imprimir el libro de ventas a Contribuyentes</h4>
+                            <h4 class="modal-title" id="Balance Comprobación">Generación de libro de ventas a contribuyentes</h4>
                       </div>
-                      <form action="libroContriPDF.php" method="POST">
-                      <div class="modal-body">
-                                  <div class="form-row">
-
-                                      <div class="form-group col-md-4 col-xs-4">
-                                          <label for="codigo">Punto de Venta:</label>
-                                          <select class="form-control form-control-lg" name="PuntoImprimir" required>
-                                             <option value="" selected="selected">Seleccionar...</option>
-                                              <option value="1">Cablesat</option>;
-                                              <option value="2">Otro...</option>;
-                                         </select>
-                                      </div>
-
-                                      <div class="form-group col-md-4 col-xs-4">
-                                          <label for="nombre">Mes a Imprimir</label>
-                                          <select class="form-control form-control-lg" name="MesImprimir" required>
-                                             <option value="" selected="selected">Seleccionar...</option>
-                                              <option value="1" >Enero</option>;
-                                              <option value="2" >Febrero</option>;
-                                              <option value="3" >Marzo</option>;
-                                              <option value="4" >Abril</option>;
-                                              <option value="5" >Mayo</option>;
-                                              <option value="6" >Junio</option>;
-                                              <option value="7" >Julio</option>;
-                                              <option value="8" >Agosto</option>;
-                                              <option value="9" >Septiembre</option>;
-                                              <option value="10" >Octubre</option>;
-                                              <option value="11" >Noviembre</option>;
-                                              <option value="12" >Diciembre</option>;
-                                         </select>
-                                      </div>
-
-                                      <div class="form-group col-md-4 col-xs-4">
-                                          <label for="nombre">Año:</label>
-                                          <select class="form-control form-control-lg" name="AñoImprimir" required>
-                                             <option value="" selected="selected">Seleccionar...</option>
-                                              <option value="1" >2017</option>;
-                                              <option value="2" >2018</option>;
-                                              <option value="3" >2019</option>;
-                                         </select>
-                                      </div>
-                                  </div>
-
-                                  <div class="form-row">
-
-                                      <div class="form-group col-md-6 col-xs-6">
-                                        <input type='checkbox' class='' name="" value="">
-                                          <label for="codigo">Encabezados en el libro</label>
-                                      </div>
-                                      <div class="form-group col-md-6 col-xs-6">
-                                        <input class="" type="radio" name="1" value="1">
-                                        <label for="5">Normal</label>
-                                        &nbsp
-                                          &nbsp
-                                            &nbsp
-                                              &nbsp
-                                         <input class="" type="radio" name="0" value="5">
-                                        <label for="5">Impuesto</label>
-                                      </div>
-                                  </div>
-                      </div>
-                      <div class="modal-footer">
-                            <button type="button" name="Action1" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                            <input type="submit" name="Action2" class="btn btn-primary" value="Agregar">
-                      </div>
-                           </form>
-                </div>
-          </div>
-    </div><!-- /Add modal -->
-
-
-    <!-- Add modal -->
-
-    <div class="modal fade" id="VerLibroConsuFinal" tabindex="-1" role="dialog" aria-labelledby="VerLibroConsuFinal">
-          <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                      <div class="modal-header" style="background-color: ForestGreen; color: white;">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                            <h4 class="modal-title" id="Balance Comprobación">Generación de libro de ventas a consumidor final</h4>
-                      </div>
-                      <form action="pdfconsumidorFinal.php" method="POST">
+                      <form action="php/pdfContribuyente.php" method="POST">
                       <div class="modal-body">
                                   <div class="row">
                                       <div class="form-group col-md-4 col-xs-4">
@@ -277,7 +196,6 @@
                                               <option value="1" selected>CABLESAT</option>;
                                          </select>
                                       </div>
-
                                       <div class="form-group col-md-4 col-xs-4">
                                           <label for="nombre">Mes a generar</label>
                                           <select class="form-control form-control-lg" name="MesImprimir" required>
@@ -302,12 +220,14 @@
                                           <input type="number" class="form-control form-control-lg" name="anoGenerar" min="1" max="2500" value="<?php echo date("Y"); ?>" required>
                                       </div>
                                   </div>
-
                                   <div class="row">
-
                                       <div class="form-group col-md-6 col-xs-6">
-                                        <input type='checkbox' class='' name="" value="">
-                                          <label for="codigo">Encabezados en el libro</label>
+                                        <input type='checkbox' class='' name="encabezados" value="">
+                                          <label for="encabezados">Encabezados en el libro</label><br>
+                                        <input type='checkbox' class='' name="numPag" value="">
+                                          <label for="codigo">Incluir números de página</label><br>
+                                        <input type='checkbox' class='' name="libroDetallado" value="">
+                                          <label for="libroDetallado">Imprimir libro detallado</label>
                                       </div>
                                       <div class="form-group col-md-6 col-xs-6">
                                         <input class="" type="radio" name="facturas" value="1">
@@ -316,21 +236,95 @@
                                         <label for="facturas">Factura pequeña</label>
                                         <input class="" type="radio" name="facturas" value="3">
                                        <label for="facturas">Anuladas</label>
-                                       <input class="" type="radio" name="facturas" value="4">
+                                       <input class="" type="radio" name="facturas" value="4" checked>
                                       <label for="facturas">Todas</label>
                                       </div>
                                   </div>
 
                       </div>
                       <div class="modal-footer">
+                            <button type="submit" name="excel" class="btn btn-default" data-dismiss="modal"><i class="fas fa-file-excel" style="color: green;"></i></button>
                             <button type="button" name="cancelar" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                             <input type="submit" name="generar" class="btn btn-primary" value="Generar">
                       </div>
-                           </form>
+                      </form>
                 </div>
           </div>
     </div><!-- /Add modal -->
 
+
+    <!-- Add modal -->
+    <div class="modal fade" id="VerLibroConsuFinal" tabindex="-1" role="dialog" aria-labelledby="VerLibroConsuFinal">
+          <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                      <div class="modal-header" style="background-color: ForestGreen; color: white;">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                            <h4 class="modal-title" id="Balance Comprobación">Generación de libro de ventas a consumidor final</h4>
+                      </div>
+                      <form action="php/pdfConsumidorFinal.php" method="POST">
+                      <div class="modal-body">
+                                  <div class="row">
+                                      <div class="form-group col-md-4 col-xs-4">
+                                          <label for="codigo">Punto de Venta:</label>
+                                          <select class="form-control form-control-lg" name="puntoVentaGenerar" required>
+                                             <option value="">Seleccionar...</option>
+                                              <option value="1" selected>CABLESAT</option>;
+                                         </select>
+                                      </div>
+                                      <div class="form-group col-md-4 col-xs-4">
+                                          <label for="nombre">Mes a generar</label>
+                                          <select class="form-control form-control-lg" name="mesGenerar" required>
+                                             <option value="">Seleccionar...</option>
+                                              <option value="1" >Enero</option>;
+                                              <option value="2" >Febrero</option>;
+                                              <option value="3" >Marzo</option>;
+                                              <option value="4" >Abril</option>;
+                                              <option value="5" >Mayo</option>;
+                                              <option value="6" >Junio</option>;
+                                              <option value="7" >Julio</option>;
+                                              <option value="8" >Agosto</option>;
+                                              <option value="9" >Septiembre</option>;
+                                              <option value="10" >Octubre</option>;
+                                              <option value="11" >Noviembre</option>;
+                                              <option value="12" >Diciembre</option>;
+                                         </select>
+                                      </div>
+                                      <div class="form-group col-md-4 col-xs-4">
+                                          <label for="nombre">Año:</label>
+                                          <input type="number" class="form-control form-control-lg" name="anoGenerar" min="1" max="2500" value="<?php echo date("Y"); ?>" required>
+                                      </div>
+                                  </div>
+                                  <div class="row">
+                                      <div class="form-group col-md-6 col-xs-6">
+                                        <input type='checkbox' class='' name="encabezados" value="1">
+                                          <label for="encabezados">Encabezados en el libro</label><br>
+                                        <input type='checkbox' class='' name="numPag" value="1">
+                                          <label for="codigo">Incluir números de página</label><br>
+                                        <input type='checkbox' class='' name="libroDetallado" value="1">
+                                          <label for="libroDetallado">Imprimir libro detallado</label>
+                                      </div>
+                                      <div class="form-group col-md-6 col-xs-6">
+                                        <input class="" type="radio" name="facturas" value="1">
+                                        <label for="facturas">Factura normal</label>
+                                         <input class="" type="radio" name="facturas" value="2">
+                                        <label for="facturas">Factura pequeña</label>
+                                        <input class="" type="radio" name="facturas" value="3">
+                                       <label for="facturas">Anuladas</label>
+                                       <input class="" type="radio" name="facturas" value="4" checked>
+                                      <label for="facturas">Todas</label>
+                                      </div>
+                                  </div>
+
+                      </div>
+                      <div class="modal-footer">
+                            <button type="submit" name="excel" class="btn btn-default" data-dismiss="modal"><i class="fas fa-file-excel" style="color: green;"></i></button>
+                            <button type="button" name="cancelar" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                            <input type="submit" name="generar" class="btn btn-success" value="Generar">
+                      </div>
+                      </form>
+                </div>
+          </div>
+    </div><!-- /Add modal -->
 
     <!-- jQuery -->
     <script src="../../vendor/jquery/jquery.min.js"></script>
