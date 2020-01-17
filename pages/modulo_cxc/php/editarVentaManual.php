@@ -46,11 +46,11 @@
                 $total = $_POST["total"];
                 $impuesto = $total - $totalAfecto;
 
-                if (isset($_POST["exento"])) {
+                /*if (isset($_POST["exento"])) {
                     $exento = $_POST["exento"];
                 }else {
                     $exento = null;
-                }
+                }*/
 
                 if (isset($_POST["pagoTardio"])) {
                     $pagoTardio = $_POST["pagoTardio"];

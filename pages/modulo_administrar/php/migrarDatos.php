@@ -188,7 +188,7 @@
         {
             try {
                 // SQL query para traer datos de los productos
-                $queryCargos = "SELECT tipoFactura, mesCargo,codigoCliente,fechaFactura,tipoServicio FROM tbl_cargos";
+                $queryCargos = "SELECT numeroFactura, tipoFactura, mesCargo,codigoCliente,fechaFactura,tipoServicio FROM tbl_cargos";
                 // Preparación de sentencia
                 $statement = $this->dbConnect->prepare($queryCargos);
                 $statement->execute();
@@ -209,10 +209,10 @@
                         if ($key['tipoFactura'] == $key2['tipoFactura'] && $key['mesCargo'] == $key2['mesCargo'] && $key['codigoCliente'] == $key2['codigoCliente'] /*&& $key['fechaFactura'] == $key2['fechaFactura']*/ && $key['tipoServicio'] == $key2['tipoServicio']) {
                             //var_dump($key['mesCargo']);
                             //var_dump($key2['mesCargo']);
-                            $query = "UPDATE tbl_cargos SET numeroFactura=:numeroFactura, estado=:estado WHERE codigoCliente=:codigoCliente /*AND fechaFactura=:fechaFactura*/ AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
+                            $query = "UPDATE tbl_cargos SET estado=:estado WHERE codigoCliente=:codigoCliente /*AND fechaFactura=:fechaFactura*/ AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
 
                             $statement3 = $this->dbConnect->prepare($query);
-                            $statement3->bindParam(':numeroFactura', $key2['numeroFactura']);
+                            //$statement3->bindParam(':numeroFactura', $key2['numeroFactura']);
                             $statement3->bindParam(':estado', $cancelada);
                             $statement3->bindParam(':codigoCliente', $key['codigoCliente']);
                             //$statement3->bindParam(':fechaFactura', $key['fechaFactura']);
@@ -220,6 +220,16 @@
                             $statement3->bindParam(':tipoServicio', $key['tipoServicio']);
 
                             $statement3->execute();
+
+                            $query2 = "UPDATE tbl_abonos SET numeroFactura=:numeroFactura WHERE codigoCliente=:codigoCliente /*AND fechaFactura=:fechaFactura*/ AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
+
+                            $statement4 = $this->dbConnect->prepare($query2);
+                            $statement4->bindParam(':numeroFactura', $key['numeroFactura']);
+                            $statement4->bindParam(':codigoCliente', $key2['codigoCliente']);
+                            $statement4->bindParam(':mesCargo', $key2['mesCargo']);
+                            $statement4->bindParam(':tipoServicio', $key2['tipoServicio']);
+
+                            $statement4->execute();
                         }
                     }
                 }

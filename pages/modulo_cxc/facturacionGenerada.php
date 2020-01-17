@@ -4,8 +4,15 @@ session_start();
 if ($_SESSION['rol'] != "administracion") {
     header("Location:../../../php/logut.php");
 }
+
+$tipoFactura = $_POST["tipoComprobanteGen"];
+//$cobrador = $_POST["cobradorGen"];
+//$diaCobro = $_POST["diaGen"];
+$fechaGeneracion = $_POST["fechaGen"];
+$tipoServicio = $_POST["tipoServicioGen"];
+
 $fac = new FacturasGeneradas();
-$facArray = $fac->verFacturas();
+$facArray = $fac->verFacturas($tipoFactura, /*$cobrador, $diaCobro,*/ $fechaGeneracion, $tipoServicio);
 ?>
 <!DOCTYPE html>
 <html lang="es" dir="ltr">
@@ -52,6 +59,7 @@ $facArray = $fac->verFacturas();
                         <th>Tipo servicio</th>
                         <th>Estado</th>
                         <th></th>
+                        <th></th>
                     </thead>
                     <tbody>
                         <?php
@@ -78,8 +86,9 @@ $facArray = $fac->verFacturas();
                             if ($key['anulada'] == 1) {
                                 echo "<a class='btn btn-danger'>Anulada</a>"."</td></tr>";
                             }else {
-                                echo "<a onclick=anularFactura('".$key['numeroFactura']."','".$key['codigoCliente']."','".$key['tipoServicio']."','".$key['mesCargo']."');"." class='btn btn-warning'>Anular</a>"."</td></tr>";
+                                echo "<a onclick=anularFactura('".$key['numeroFactura']."','".$key['codigoCliente']."','".$key['tipoServicio']."','".$key['mesCargo']."');"." class='btn btn-warning'>Anular</a>"."</td><td>";
                             }
+                            echo "<a onclick=eliminarFactura('".$key['numeroFactura']."','".$key['codigoCliente']."','".$key['tipoServicio']."','".$key['mesCargo']."');"." class='btn btn-danger'>Eliminar</a>"."</td></tr>";
                         }
                         ?>
                     </tbody>
@@ -109,7 +118,19 @@ $facArray = $fac->verFacturas();
 
                 var answer = confirm('¿Está seguro de anular esta factura?');
                 if (answer){
-                    window.location = 'php/anularFactura.php?numeroFactura=' + numeroFactura+'&codigoCliente=' + codigoCliente+'&tipoServicio=' + tipoServicio+'&mesCargo=' + mesCargo;
+                    //window.location = 'php/anularFactura.php?numeroFactura=' + numeroFactura+'&codigoCliente=' + codigoCliente+'&tipoServicio=' + tipoServicio+'&mesCargo=' + mesCargo;
+                    window.open('php/anularFactura.php?numeroFactura=' + numeroFactura+'&codigoCliente=' + codigoCliente+'&tipoServicio=' + tipoServicio+'&mesCargo=' + mesCargo, '_blank');
+                }
+            }
+        </script>
+        <script type='text/javascript'>
+
+            function eliminarFactura(numeroFactura, codigoCliente, tipoServicio, mesCargo){
+
+                var answer = confirm('¿Está seguro de ELIMINAR esta factura?');
+                if (answer){
+                    //window.location = 'php/eliminarFactura.php?numeroFactura=' + numeroFactura+'&codigoCliente=' + codigoCliente+'&tipoServicio=' + tipoServicio+'&mesCargo=' + mesCargo;
+                    window.open('php/eliminarFactura.php?numeroFactura=' + numeroFactura+'&codigoCliente=' + codigoCliente+'&tipoServicio=' + tipoServicio+'&mesCargo=' + mesCargo, '_blank');
                 }
             }
         </script>

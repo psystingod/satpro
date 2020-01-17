@@ -3,7 +3,8 @@
     require_once("php/getImpagos.php");
 
     $impagos = new Impagos();
-    $clientesImpagos = $impagos->getImpagos();
+    $clientesImpagosI = $impagos->getImpagosI();
+    $clientesImpagosC = $impagos->getImpagosC();
 
  ?>
 <!DOCTYPE html>
@@ -175,15 +176,24 @@
                                     <tr>
                                         <th>Código</th>
                                         <th>Nombre</th>
+                                        <th>Servicio con 2 meses</th>
                                         <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
-                                    foreach ($clientesImpagos as $key) {
+                                    foreach ($clientesImpagosI as $key) {
                                         echo "<tr><td>".
                                         $key['codigoCliente']."</td><td>".
                                         $key['nombre']."</td><td>".
+                                        "<span class='label label-primary'>".$key['tipoServicio']."</span></td><td>".
+                                        "<a href='gestionCobros.php?codigoCliente=".$key['codigoCliente']."' target='_blank'"." class='btn btn-primary pull-right'>Gestionar</a>"."</td></tr>";
+                                    }
+                                    foreach ($clientesImpagosC as $key) {
+                                        echo "<tr><td>".
+                                        $key['codigoCliente']."</td><td>".
+                                        $key['nombre']."</td><td>".
+                                        "<span class='label label-success'>".$key['tipoServicio']."</span></td><td>".
                                         "<a href='gestionCobros.php?codigoCliente=".$key['codigoCliente']."' target='_blank'"." class='btn btn-primary pull-right'>Gestionar</a>"."</td></tr>";
                                     }
                                     ?>

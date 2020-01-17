@@ -1,6 +1,5 @@
 <?php
     session_start();
-
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -132,13 +131,15 @@
                                 </li>
                                 <li><a href="#" data-toggle="" data-target="">Facturación manual</a>
                                 </li>
-                                <li><a href="facturacionGenerada.php" target="_blank">Ver facturas generadas</a>
+                                <li><a href="#" data-toggle="modal" data-target="#verFacturasGeneradas">Ver facturas generadas</a>
                                 </li>
                                 <li><a href="#" data-toggle="modal" data-target="#eliminarAbonos">Consultar/Eliminar abonos</a>
                                 </li>
                                 <li><a href="gestionCobros.php">Gestion de cobros</a>
                                 </li>
                                 <li><a href="ventasManuales.php">Ventas manuales</a>
+                                </li>
+                                <li><a href="ventasAnuladas.php">Ventas anuladas</a>
                                 </li>
                                 <li><a href="imprimirFacturas.php" data-toggle="modal" data-target="#imprimirFacturas" accesskey="i">Imprimir facturas (Alt+I)</a>
                                 </li>
@@ -153,6 +154,17 @@
                                 <li><a href="ventasManuales.php">Ventas manuales</a>
                                 </li>
                                 <li><a href="imprimirFacturas.php">Imprimir facturas</a>
+                                </li>
+                            </ul>';
+                        }
+                        elseif ($_SESSION["rol"] == 'contabilidad') {
+                            echo
+                            '<ul class="dropdown-menu dropdown-user">
+                                <li><a href="#" data-toggle="modal" data-target="#eliminarAbonos">Consultar/Eliminar abonos</a>
+                                </li>
+                                <li><a href="ventasManuales.php">Ventas manuales</a>
+                                </li>
+                                <li><a href="ventasAnuladas.php">Ventas anuladas</a>
                                 </li>
                             </ul>';
                         }
@@ -468,6 +480,102 @@
               </div>
           </div><!-- Fin Modal ABONOS -->
 
+          <!-- Modal VERFACTURAS GENERADAS -->
+          <div id="verFacturasGeneradas" class="modal fade" role="dialog">
+            <div class="modal-dialog">
+
+              <!-- Modal content-->
+              <div class="modal-content">
+                <div style="background-color: #283593; color:white;" class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">&times;</button>
+                  <h4 class="modal-title">Ver facturas generadas</h4>
+                </div>
+                <form id="frmVerFacturas" action="facturacionGenerada.php" method="POST">
+                <div class="modal-body">
+                  <div class="row">
+                      <div class="col-md-12">
+                          <label for="tipoComprobanteImp">Tipo de factura</label>
+                          <select class="form-control" type="text" id="tipoComprobanteGen" name="tipoComprobanteGen" required>
+                              <option value="">Seleccione tipo de factura</option>
+                              <option value="2">Factura normal</option>
+                              <option value="1">Crédito fiscal</option>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-8">
+                          <label for="cobradorImp">Cobrador</label>
+                          <select class="form-control" type="text" id="cobradorGen" name="cobradorGen" required>
+                              <option value="todos" selected>Todos</option>
+                          </select>
+                      </div>
+                      <div class="col-md-4">
+                          <label for="diaImp">Día de cobro</label>
+                          <select id="diaImp" class="form-control" id="diaGen" name="diaGen" required>
+                              <option value="">Día de cobro</option>
+                              <option value="01">1</option>
+                              <option value="02">2</option>
+                              <option value="03">3</option>
+                              <option value="04">4</option>
+                              <option value="05">5</option>
+                              <option value="06">6</option>
+                              <option value="07">7</option>
+                              <option value="08">8</option>
+                              <option value="09">9</option>
+                              <option value="10">10</option>
+                              <option value="11">11</option>
+                              <option value="12">12</option>
+                              <option value="13">13</option>
+                              <option value="14">14</option>
+                              <option value="15">15</option>
+                              <option value="16">16</option>
+                              <option value="17">17</option>
+                              <option value="18">18</option>
+                              <option value="19">19</option>
+                              <option value="20">20</option>
+                              <option value="21">21</option>
+                              <option value="22">22</option>
+                              <option value="23">23</option>
+                              <option value="24">24</option>
+                              <option value="25">25</option>
+                              <option value="26">26</option>
+                              <option value="27">27</option>
+                              <option value="28">28</option>
+                              <option value="29">29</option>
+                              <option value="30">30</option>
+                              <option value="31">31</option>
+                          </select>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-8">
+                          <label for="fechaImp">Fecha en que se generó</label>
+                          <input class="form-control" type="text" id="fechaGen" name="fechaGen" placeholder="Fecha en que se generaron las facturas" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))" value="<?php echo date('Y-m-d'); ?>" required>
+                      </div>
+                      <div class="col-md-4">
+                          <label for="tipoServicioImp">Tipo de servicio</label>
+                          <select class="form-control" type="text" id="tipoServicioGen" name="tipoServicioGen" required>
+                              <option value="C" selected>Cable</option>
+                              <option value="I">Internet</option>
+                          </select>
+                      </div>
+                  </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input type="submit" class="btn btn-info btn-md btn-block" name="submit" value="Ver facturas">
+                        </div>
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </div>
+                </form>
+                </div>
+              </div>
+            </div>
+        </div><!-- Fin Modal VER FACTURAS GENERADAS-->
+
           <!-- Modal imprimir facturas -->
           <div id="imprimirFacturas" class="modal fade" role="dialog">
             <div class="modal-dialog">
@@ -650,7 +758,6 @@
       </div><!-- Fin Modal ABONOS APLICADOS -->
         </div>
         <!-- /#page-wrapper -->
-
     </div>
     <!-- /#wrapper -->
 

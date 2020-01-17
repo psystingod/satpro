@@ -73,6 +73,20 @@ class GetAllInfo extends ConectionDB
         }
     }
 
+    public function getDataOrdersAlert($tabla){
+        try {
+                $query = "SELECT nodo, COUNT(nodo) FROM $tabla GROUP BY nodo HAVING COUNT(nodo) >= 3";
+                $statement = $this->dbConnect->prepare($query);
+                //$statement->bindValue(':codigoCliente', $codigoCliente);
+                $statement->execute();
+                $result = $statement->fetch(PDO::FETCH_ASSOC);
+                return $result["nodo"];
+        } catch (Exception $e) {
+            print "!Error¡: " . $e->getMessage() . "</br>";
+            die();
+        }
+    }
+
     public function getDataCargos($tabla, $codigoCliente, $tipoServicio){
         try {
                 //$estado = "pendiente";

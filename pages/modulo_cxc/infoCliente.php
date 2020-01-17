@@ -349,12 +349,10 @@ session_start();
  $arrOrdenesReconex = $data->getDataOrders('tbl_ordenes_reconexion', $codigo);
  $arrTraslados = $data->getDataOrders('tbl_ordenes_traslado', $codigo);
 
- if (isset($_GET['gen'])) {
-     if ($_GET['gen'] == "no") {
-         echo "<script>alert('No se encontraron datos para generar facturación')</script>";
-     }elseif ($_GET['gen'] == "yes") {
-         echo "<script>alert('Facturación generada con exito')</script>";
-     }
+ $alert = $data->getDataOrdersAlert('tbl_ordenes_trabajo');
+
+ if (strlen($alert) > 3) {
+     echo "<script>alert('ADVERTENCIA PARA EL NODO/ANTENA ".strtoupper($alert)."')</script>";
  }
  ?>
 <!DOCTYPE html>

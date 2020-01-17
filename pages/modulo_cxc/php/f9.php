@@ -40,37 +40,37 @@
       //echo strftime("El año es %Y y el mes es %B");
       setlocale(LC_ALL,"es_ES");
       $pdf->SetFont('Arial','B',11);
-      $pdf->Cell(190,6,utf8_decode(strftime('Ciudad de Usulután, %A %e de %B de %G')),0,1,'L');
+      $pdf->Cell(190,6,strftime('Ciudad de Usulután, %A %e de %B de %G'),0,1,'L');
       $pdf->Ln();
-      $pdf->Cell(190,6,utf8_decode('Cable Visión por Satélite S.A. DE C.V.'),0,1,'L');
+      $pdf->Cell(190,6,'Cable Visión por Satélite S.A. DE C.V.',0,1,'L');
       $pdf->Ln();
     	while($row = $resultado->fetch_assoc())
     	{
         $pdf->SetFont('Arial','',11);
-        $pdf->Cell(190,6,utf8_decode('Estimado(a) Sr(a)(ita): '.$row['nombre'].' ('.$row['cod_cliente'].')'),0,1,'L');
+        $pdf->Cell(190,6,'Estimado(a) Sr(a)(ita): '.$row['nombre'].' ('.$row['cod_cliente'].')',0,1,'L');
         $pdf->Ln();
 
-        $pdf->MultiCell(190,6,utf8_decode('Mediante la presente se le informa sobre el retraso en el pago de su facturación sobre los servicios contratados con la empresa Cable Sat. De acuerdo a las clausulas de contratación de servicio, debe realizar las cancelaciones en nuestras oficinas.'),0,'L',0);
+        $pdf->MultiCell(190,6,'Mediante la presente se le informa sobre el retraso en el pago de su facturación sobre los servicios contratados con la empresa Cable Sat. De acuerdo a las clausulas de contratación de servicio, debe realizar las cancelaciones en nuestras oficinas.',0,'L',0);
         $pdf->Ln();
-        $pdf->MultiCell(190,6,utf8_decode('Se recomienda a nuestros clientes en su condición, realizar la reconexión de su respectivo servicio, para que su pago sea por el beneficio de su consumo.'),0,'L',0);
+        $pdf->MultiCell(190,6,'Se recomienda a nuestros clientes en su condición, realizar la reconexión de su respectivo servicio, para que su pago sea por el beneficio de su consumo.',0,'L',0);
         $pdf->Ln();
-        $pdf->MultiCell(190,6,utf8_decode('De hacer caso omiso a las notificaciones, se hará uso de los documentos y garantías como lo establece:'),0,'L',0);
+        $pdf->MultiCell(190,6,'De hacer caso omiso a las notificaciones, se hará uso de los documentos y garantías como lo establece:',0,'L',0);
         $pdf->Ln();
-        $pdf->MultiCell(190,6,utf8_decode('Clausula 8:'),0,'L',0);
+        $pdf->MultiCell(190,6,'Clausula 8:',0,'L',0);
 
         $pdf->Ln(3);
         $pdf->SetFont('Arial','B',11);
-        $pdf->MultiCell(190,6,utf8_decode('Suscribe un pagaré por el valor del servicio, durante el plazo contratado. Este valor será utilizado como garantía de los compromisos económicos que adquiero mediante la suscripción del presente contrato, el cuál será utilizado en caso de acción judicial.'),0,'L',0);
+        $pdf->MultiCell(190,6,'Suscribe un pagaré por el valor del servicio, durante el plazo contratado. Este valor será utilizado como garantía de los compromisos económicos que adquiero mediante la suscripción del presente contrato, el cuál será utilizado en caso de acción judicial.',0,'L',0);
 
         $pdf->Ln();
         $pdf->SetFont('Arial','',11);
-        $pdf->MultiCell(190,6,utf8_decode('Además de hacer valer la autorización firmada para compartir la información crediticia, afectando su récord como cliente de otras entidades.'),0,'L',0);
+        $pdf->MultiCell(190,6,'Además de hacer valer la autorización firmada para compartir la información crediticia, afectando su récord como cliente de otras entidades.',0,'L',0);
 
         $pdf->Ln();
 
     	}
-        $pdf->Cell(95,6,utf8_decode('INTERNET:'),1,0,'L');
-        $pdf->Cell(95,6,utf8_decode('CABLE:'),1,1,'L');
+        $pdf->Cell(95,6,'INTERNET:',1,0,'L');
+        $pdf->Cell(95,6,'CABLE:',1,1,'L');
         $totalCable = 0;
         $totalInter = 0;
 		$fechaVencimiento = "";
@@ -81,41 +81,41 @@
 				$fechaVencimiento = $pendientesCable['fechaVencimiento'];
 			}
 
-            $pdf->Cell(95,6,utf8_decode('$'.$pendientesInter['cuotaInternet']),1,0,'L');
-            $pdf->Cell(95,6,utf8_decode('$'.$pendientesCable['cuotaCable']),1,1,'L');
+            $pdf->Cell(95,6,'$'.$pendientesInter['cuotaInternet'],1,0,'L');
+            $pdf->Cell(95,6,'$'.$pendientesCable['cuotaCable'],1,1,'L');
         }
 
-        $pdf->Cell(95,6,utf8_decode('$5.00 por mora'),1,0,'L');
-        $pdf->Cell(95,6,utf8_decode('$3.00 por mora'),1,1,'L');
-        $pdf->Cell(95,6,utf8_decode('$5.22 de reconexión'),1,0,'L');
-        $pdf->Cell(95,6,utf8_decode('$3.13 de reconexión'),1,1,'L');
+        $pdf->Cell(95,6,'$5.00 por mora',1,0,'L');
+        $pdf->Cell(95,6,'$3.00 por mora',1,1,'L');
+        $pdf->Cell(95,6,'$5.22 de reconexión',1,0,'L');
+        $pdf->Cell(95,6,'$3.13 de reconexión',1,1,'L');
         $pdf->SetFont('Arial','B',11);
         //var_dump($totalCable);
         //var_dump($totalInter);
         if ($totalInter == 0) {
             $totalInter = number_format($totalInter,2);
-            $pdf->Cell(95,6,utf8_decode('TOTAL: $'.$totalInter),1,0,'L');
+            $pdf->Cell(95,6,'TOTAL: $'.$totalInter,1,0,'L');
         }else {
             $totalInter = number_format($totalInter + 5.00 + 5.22, 2);
-            $pdf->Cell(95,6,utf8_decode('TOTAL: $'.$totalInter),1,0,'L');
+            $pdf->Cell(95,6,'TOTAL: $'.$totalInter,1,0,'L');
         }
 
         if ($totalCable == 0) {
             $totalCable = number_format($totalCable,2);
-            $pdf->Cell(95,6,utf8_decode('TOTAL: $'.$totalCable),1,1,'L');
+            $pdf->Cell(95,6,'TOTAL: $'.$totalCable,1,1,'L');
         }else {
             $totalCable = number_format($totalCable + 3.00 + 3.13, 2);
-            $pdf->Cell(95,6,utf8_decode('TOTAL: $'.$totalCable),1,1,'L');
+            $pdf->Cell(95,6,'TOTAL: $'.$totalCable,1,1,'L');
         }
-        $pdf->Cell(95,6,utf8_decode('MONTO TOTAL: $'.(number_format(doubleval($totalCable) + doubleval($totalInter),2))),0,0,'L');
+        $pdf->Cell(95,6,'MONTO TOTAL: $'.(number_format(doubleval($totalCable) + doubleval($totalInter),2)),0,0,'L');
         $pdf->Ln(10);
-        $pdf->Cell(95,6,utf8_decode('Un saludo afectuoso, atentamente'),0,0,'L');
-    	$pdf->Cell(95,6,utf8_decode('Válido hasta '.$fechaVencimiento),0,1,'R');
+        $pdf->Cell(95,6,'Un saludo afectuoso, atentamente',0,0,'L');
+    	$pdf->Cell(95,6,'Válido hasta '.$fechaVencimiento,0,1,'R');
         $pdf->Ln(3);
 
-    	$pdf->Cell(120,6,utf8_decode('____________________________________'),0,0,'L');
-    	$pdf->Cell(70,6,utf8_decode(''),0,1,'L');
-        $pdf->Cell(95,6,utf8_decode('Departamento de cobro de mora, CableSat.'),0,1,'L');
+    	$pdf->Cell(120,6,'____________________________________',0,0,'L');
+    	$pdf->Cell(70,6,'',0,1,'L');
+        $pdf->Cell(95,6,'Departamento de cobro de mora, CableSat.',0,1,'L');
         //$pdf->Cell(95,6,utf8_decode('TOTAL: $'.$totalInter),1,0,'L');
         //$pdf->Cell(95,6,utf8_decode('TOTAL: $'.$totalCable),1,1,'L');
 

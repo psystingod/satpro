@@ -83,8 +83,8 @@
     	  $pdf->SetFont('Courier','',10);
 
 		  $pdf->Ln(-2);
-          $pdf->Cell(130,6,utf8_decode(''),0,0,'L');
-    	  $pdf->Cell(80,6,utf8_decode($row['cod_cliente']),0,1,'L');
+          $pdf->Cell(130,6,'',0,0,'L');
+    	  $pdf->Cell(80,6,$row['cod_cliente'],0,1,'L');
     	  $pdf->Ln(-2);
 
     	  date_default_timezone_set('America/El_Salvador');
@@ -92,19 +92,19 @@
     	  //echo strftime("El año es %Y y el mes es %B");
     	  setlocale(LC_ALL,"es_ES");
     	  $pdf->SetFont('Courier','',10);
-    	  $pdf->Cell(25,6,utf8_decode(''),0,0,'L');
-          $pdf->Cell(70,6,utf8_decode(strtoupper($row['nombre'])),0,1,'L');
-          $pdf->Cell(23,6,utf8_decode(''),0,0,'L');
-          $pdf->Cell(150,6,utf8_decode(''),0,0,'L');
-          $pdf->Cell(40,6,utf8_decode(strtoupper($row['num_registro'])),0,1,'L');
+    	  $pdf->Cell(25,6,'',0,0,'L');
+          $pdf->Cell(70,6,strtoupper($row['nombre']),0,1,'L');
+          $pdf->Cell(23,6,'',0,0,'L');
+          $pdf->Cell(150,6,'',0,0,'L');
+          $pdf->Cell(40,6,strtoupper($row['num_registro']),0,1,'L');
 
-          $pdf->Cell(80,6,utf8_decode(''),0,0,'L');
-          $pdf->Cell(78,6,utf8_decode($row['numero_dui']),0,0,'L');
-          $pdf->Cell(70,6,utf8_decode($row['lugar_exp']),0,1,'L');
-          $pdf->Cell(12,6,utf8_decode(''),0,0,'L');
-          $pdf->Cell(63,6,utf8_decode($row['numero_nit']),0,0,'L');
-          $pdf->Cell(84,6,utf8_decode($row['telefonos']),0,0,'L');
-          $pdf->Cell(40,6,utf8_decode($row['nacionalidad']),0,1,'L');
+          $pdf->Cell(80,6,'',0,0,'L');
+          $pdf->Cell(78,6,$row['numero_dui'],0,0,'L');
+          $pdf->Cell(70,6,$row['lugar_exp'],0,1,'L');
+          $pdf->Cell(12,6,'',0,0,'L');
+          $pdf->Cell(63,6,$row['numero_nit'],0,0,'L');
+          $pdf->Cell(84,6,$row['telefonos'],0,0,'L');
+          $pdf->Cell(40,6,$row['nacionalidad'],0,1,'L');
           //$pdf->Cell(75,6,utf8_decode($row['lugar_exp']),0,0,'L');
           //$pdf->Cell(30,6,utf8_decode($row['fecha_nacimiento']),0,1,'R');
 
@@ -119,14 +119,14 @@
           $pdf->Cell(40,6,utf8_decode($row['tel_trabajo']),0,1,'R');
     	  $pdf->Ln(5);*/
 
-          $pdf->Cell(94,6,utf8_decode(''),0,0,'L');
-          $pdf->Cell(70,6,utf8_decode(strtoupper($row['nombre_conyuge'])),0,1,'L');
+          $pdf->Cell(94,6,'',0,0,'L');
+          $pdf->Cell(70,6,strtoupper($row['nombre_conyuge']),0,1,'L');
           $pdf->Ln(15);
-          $pdf->Cell(30,6,utf8_decode(''),0,0,'L');
-          $pdf->MultiCell(150,6,utf8_decode(strtoupper($row['direccion'])),0,'L',0);
+          $pdf->Cell(30,6,'',0,0,'L');
+          $pdf->MultiCell(150,6,strtoupper($row['direccion']),0,'L',0);
           $pdf->Ln(1);
-          $pdf->Cell(30,6,utf8_decode(''),0,0,'L');
-          $pdf->MultiCell(150,6,utf8_decode(strtoupper($row['direccion'])),0,'L',0);
+          $pdf->Cell(30,6,'',0,0,'L');
+          $pdf->MultiCell(150,6,strtoupper($row['direccion']),0,'L',0);
 
 
           $pdf->Ln(6);
@@ -140,17 +140,17 @@
           }
 
           $pdf->Ln(8);
-          $pdf->Cell(22,6,utf8_decode(''),0,0,'L');
-          $pdf->Cell(70,6,utf8_decode(strtoupper('INTERNET')),0,0,'L');
-          $pdf->Cell(68,6,utf8_decode(strtoupper(getVelocidadById($row['id_velocidad']))),0,0,'L');
-          $pdf->Cell(70,6,utf8_decode(strtoupper($tecnologia)),0,1,'L');
+          $pdf->Cell(22,6,'',0,0,'L');
+          $pdf->Cell(70,6,strtoupper('INTERNET'),0,0,'L');
+          $pdf->Cell(68,6,strtoupper(getVelocidadById($row['id_velocidad'])),0,0,'L');
+          $pdf->Cell(70,6,strtoupper($tecnologia),0,1,'L');
 
-          $pdf->Cell(22,6,utf8_decode(''),0,0,'L');
-          $pdf->Cell(75,6,utf8_decode(strtoupper($row['mac_modem'])),0,0,'L');
-          $pdf->Cell(70,6,utf8_decode(strtoupper($row['serie_modem'])),0,0,'L');
-          $pdf->Cell(70,6,utf8_decode(strtoupper($row['entrega_calidad'])),0,0,'L');
+          $pdf->Cell(22,6,'',0,0,'L');
+          $pdf->Cell(75,6,strtoupper($row['mac_modem']),0,0,'L');
+          $pdf->Cell(70,6,strtoupper($row['serie_modem']),0,0,'L');
+          $pdf->Cell(70,6,strtoupper($row['entrega_calidad']),0,0,'L');
           $pdf->Ln(3);
-          $pdf->Cell(49,6,utf8_decode(''),0,0,'L');
+          $pdf->Cell(49,6,'',0,0,'L');
           //$pdf->Cell(115,6,utf8_decode($tipoServicio),0,0,'L');
 
 
@@ -164,9 +164,9 @@
         $pdf->Cell(74,6,utf8_decode($row['periodo_contrato_int']." MESES"),0,0,'L');
         $pdf->Cell(20,6,utf8_decode("$".$row['costo_instalacion_in']),0,1,'L');
 
-        $pdf->Cell(60,6,utf8_decode(''),0,0,'L');
-        $pdf->Cell(78,6,utf8_decode('$'.number_format($cantidad,2)),0,0,'L');
-        $pdf->Cell(20,6,utf8_decode('INTERNET ILIMITADO'),0,1,'L');
+        $pdf->Cell(60,6,'',0,0,'L');
+        $pdf->Cell(78,6,'$'.number_format($cantidad,2),0,0,'L');
+        $pdf->Cell(20,6,'INTERNET ILIMITADO',0,1,'L');
 
 	  }
 	  /* close connection */

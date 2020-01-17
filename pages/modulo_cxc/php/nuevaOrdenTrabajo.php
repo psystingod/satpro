@@ -54,12 +54,13 @@
                     $recepcionTv = $_POST["recepcionTv"];
                     $tecnologia = $_POST["tecnologia"];
                     $tipoServicio = $_POST["tipoServicio"];
+                    $nodo = $_POST["nodo"];
                     $creadoPor = $_POST['creadoPor'];
 
                     //$Fecha = date('Y/m/d g:i');
 
-                    $query = "INSERT INTO tbl_ordenes_trabajo(codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, diaCobro, nombreCliente, telefonos, idMunicipio, actividadCable, saldoCable, direccionCable, fechaTrabajo, hora, fechaProgramacion, idTecnico, mactv, observaciones, idVendedor, tecnologia, recepcionTv, tipoServicio, creadoPor                                                                                              )
-                              VALUES(:codigoCliente, :fechaOrdenTrabajo, :tipoOrdenTrabajo, :diaCobro, :nombreCliente, :telefonos, :idMunicipio, :idActividadCable, :saldoCable, :direccionCable, :fechaTrabajo, :hora, :fechaProgramacion, :idTecnico, :mactv, :observaciones, :idVendedor, :tecnologia, :recepcionTv, :tipoServicio, :creadoPor)";
+                    $query = "INSERT INTO tbl_ordenes_trabajo(codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, diaCobro, nombreCliente, telefonos, idMunicipio, actividadCable, saldoCable, direccionCable, fechaTrabajo, hora, fechaProgramacion, idTecnico, mactv, observaciones, idVendedor, tecnologia, recepcionTv, tipoServicio, nodo, creadoPor                                                                                              )
+                              VALUES(:codigoCliente, :fechaOrdenTrabajo, :tipoOrdenTrabajo, :diaCobro, :nombreCliente, :telefonos, :idMunicipio, :idActividadCable, :saldoCable, :direccionCable, :fechaTrabajo, :hora, :fechaProgramacion, :idTecnico, :mactv, :observaciones, :idVendedor, :tecnologia, :recepcionTv, :tipoServicio, :nodo, :creadoPor)";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
@@ -83,6 +84,7 @@
                                 ':tecnologia' => $tecnologia,
                                 ':recepcionTv' => $recepcionTv,
                                 ':tipoServicio' => $tipoServicio,
+                                ':nodo' => $nodo,
                                 ':creadoPor' => $creadoPor
                                 ));
                     $numeroOrden = $this->dbConnect->lastInsertId();
@@ -144,12 +146,13 @@
                     $nodo = $_POST["nodo"];
                     $vendedor = $_POST["vendedor"];
                     $tipoServicio = $_POST["tipoServicio"];
+                    $nodo = $_POST["nodo"];
                     $creadoPor = $_POST['creadoPor'];
 
                     //$Fecha = date('Y/m/d g:i');
 
-                    $query = "INSERT INTO tbl_ordenes_trabajo(codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, diaCobro, nombreCliente, telefonos, idMunicipio, actividadInter, saldoInter, direccionInter, macModem, serieModem, velocidad, rx, tx, snr, colilla, fechaTrabajo, hora, fechaProgramacion, idTecnico, coordenadas, observaciones, marcaModelo, tecnologia, nodo, idVendedor, tipoServicio, creadoPor                                                                                              )
-                              VALUES(:codigoCliente, :fechaOrdenTrabajo, :tipoOrdenTrabajo, :diaCobro, :nombreCliente, :telefonos, :idMunicipio, :idActividadInter, :saldoInter, :direccionInter, :macModem, :serieModem, :velocidad, :rx, :tx, :snr, :colilla, :fechaTrabajo, :hora, :fechaProgramacion, :idTecnico, :coordenadas, :observaciones, :marcaModelo, :tecnologia, :nodo, :idVendedor, :tipoServicio, :creadoPor)";
+                    $query = "INSERT INTO tbl_ordenes_trabajo(codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, diaCobro, nombreCliente, telefonos, idMunicipio, actividadInter, saldoInter, direccionInter, macModem, serieModem, velocidad, rx, tx, snr, colilla, fechaTrabajo, hora, fechaProgramacion, idTecnico, coordenadas, observaciones, marcaModelo, tecnologia, idVendedor, tipoServicio, nodo, creadoPor)
+                              VALUES(:codigoCliente, :fechaOrdenTrabajo, :tipoOrdenTrabajo, :diaCobro, :nombreCliente, :telefonos, :idMunicipio, :idActividadInter, :saldoInter, :direccionInter, :macModem, :serieModem, :velocidad, :rx, :tx, :snr, :colilla, :fechaTrabajo, :hora, :fechaProgramacion, :idTecnico, :coordenadas, :observaciones, :marcaModelo, :tecnologia, :idVendedor, :tipoServicio, :nodo, :creadoPor)";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
@@ -181,6 +184,7 @@
                                 ':nodo' => $nodo,
                                 ':idVendedor' => $vendedor,
                                 ':tipoServicio' => $tipoServicio,
+                                ':nodo' => $nodo,
                                 ':creadoPor' => $creadoPor
                                 ));
 

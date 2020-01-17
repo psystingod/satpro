@@ -116,7 +116,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT * FROM tbl_ventas_manuales WHERE idVenta = ? LIMIT 0,1";
+            $query = "SELECT * FROM tbl_ventas_anuladas WHERE idVenta = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -164,19 +164,7 @@
             $creadoPor = $row['creadoPor'];
 
             /*************************CHECKBOXES*******************************/
-            //$exento = $row["exento"];
-            $cableExtra = $row["cableExtra"];
-            $decodificador = $row["decodificador"];
-            $derivacion = $row["derivacion"];
-            $instalacionTemporal = $row["instalacionTemporal"];
-            $pagoTardio = $row["pagoTardio"];
-            $reconexion = $row["reconexion"];
-            $servicioPrestado = $row["servicioPrestado"];
-            $traslados = $row["traslados"];
-            $reconexionTraslado = $row["reconexionTraslado"];
-            $cambioFecha = $row["cambioFecha"];
-            $otros = $row["otros"];
-            $proporcion = $row["proporcion"];
+
         }
         catch(PDOException $exception){
             die('ERROR: ' . $exception->getMessage());
@@ -375,7 +363,7 @@
                     <div class="col-lg-12">
                         <br>
                         <div class="panel panel-primary">
-                          <div class="panel-heading"><b>Ventas manuales (factura pequeña)</b> <span id="nombreOrden" class="label label-danger"></span></div>
+                          <div class="panel-heading"><b>Ingresar facturas anuladas</b> <span id="nombreOrden" class="label label-danger"></span></div>
                           <form id="ventaManual" action="" method="POST">
                           <div class="panel-body">
                               <div class="col-md-12">
@@ -386,10 +374,6 @@
                                   <?php echo '<input style="display: none;" type="submit" id="guardar2" value="">'; ?>
                                   <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-placement="bottom" title="Buscar orden" data-toggle="modal" data-target="#buscarVentaManual"><i class="fas fa-search"></i></button>
                                   <button class="btn btn-default btn-sm" id="imprimir" onclick="imprimirOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Imprimir orden" ><i class="fas fa-print"></i></button>
-                                  <div class="pull-right">
-                                      <label for="anular">Anular este comprobante</label>
-                                      <input type="checkbox" id="anular" name="anular" value="">
-                                  </div>
                               </div>
 
                               <div class="form-row">
@@ -566,7 +550,7 @@
                                   </div>
                                   <div class="col-md-4">
                                       <label for="ventaCuentaDe">Venta a cuenta de</label>
-                                      <input id="ventaCuentaDe" class="form-control input-sm" type="text" name="ventaCuentaDe" value="<?php echo $ventaCuentaDe; ?>" readonly required>
+                                      <input id="ventaCuentaDe" class="form-control input-sm" type="text" name="ventaCuentaDe" value="<?php echo $ventaCuentaDe; ?>" readonly>
                                   </div>
                               </div>
                               <div class="form-row">
@@ -617,77 +601,6 @@
                                       <input id="total" class="form-control input-sm" type="text" name="total" value="<?php echo $total; ?>" readonly>
                                   </div>
                               </div>
-                              <div class="form-row">
-                                  <div class="col-md-12">
-                                      <?php
-                                      /*if ($exento == "T") {
-                                          echo '<label>Exento</label><input class="input-sm" type="checkbox" name="exento" value="T" readonly checked>';
-                                      }else {
-                                          echo '<label>Exento</label><input class="input-sm" type="checkbox" name="exento" value="T" readonly>';
-                                      }*/
-                                      if ($cableExtra == "T") {
-                                          echo '<label>Cable extra</label><input class="input-sm" type="checkbox" name="cableExtra" value="T" readonly checked>';
-                                      }else {
-                                          echo '<label>Cable extra</label><input class="input-sm" type="checkbox" name="cableExtra" value="T" readonly>';
-                                      }
-                                      if ($decodificador == "T") {
-                                          echo '<label>Decodificador</label><input class="input-sm" type="checkbox" name="decodificador" value="T" readonly checked>';
-                                      }else {
-                                          echo '<label>Decodificador</label><input class="input-sm" type="checkbox" name="decodificador" value="T" readonly>';
-                                      }
-                                      if ($derivacion == "T") {
-                                          echo '<label>Derivación</label><input class="input-sm" type="checkbox" name="derivacion" value="T" readonly checked>';
-                                      }else {
-                                          echo '<label>Derivación</label><input class="input-sm" type="checkbox" name="derivacion" value="T" readonly>';
-                                      }
-                                      if ($instalacionTemporal == "T") {
-                                          echo '<label>Instalación temporal</label><input class="input-sm" type="checkbox" name="instalacionTemporal" value="T" readonly checked>';
-                                      }else {
-                                          echo '<label>Instalación temporal</label><input class="input-sm" type="checkbox" name="instalacionTemporal" value="T" readonly>';
-                                      }
-                                      if ($pagoTardio == "T") {
-                                          echo '<label>Pago tardío</label><input class="input-sm" type="checkbox" name="pagoTardio" value="T" readonly checked>';
-                                      }else {
-                                          echo '<label>Pago tardío</label><input class="input-sm" type="checkbox" name="pagoTardio" value="T" readonly>';
-                                      }
-                                      if ($reconexion == "T") {
-                                          echo '<label>Reconexion</label><input class="input-sm" type="checkbox" name="reconexion" value="T" readonly checked>';
-                                      }else {
-                                          echo '<label>Reconexion</label><input class="input-sm" type="checkbox" name="reconexion" value="T" readonly>';
-                                      }
-                                      if ($servicioPrestado == "T") {
-                                          echo '<label>Servicio prestado</label><input class="input-sm" type="checkbox" name="servicioPrestado" value="T" readonly checked>';
-                                      }else {
-                                          echo '<label>Servicio prestado</label><input class="input-sm" type="checkbox" name="servicioPrestado" value="T" readonly>';
-                                      }
-                                      if ($traslados == "T") {
-                                          echo '<label>Traslados</label><input class="input-sm" type="checkbox" name="traslado" value="T" readonly checked>';
-                                      }else {
-                                          echo '<label>Traslados</label><input class="input-sm" type="checkbox" name="traslado" value="T" readonly>';
-                                      }
-                                      if ($reconexionTraslado == "T") {
-                                          echo '<label>Reconexión traslados</label><input class="input-sm" type="checkbox" name="reconexionTraslado" value="T" readonly checked>';
-                                      }else {
-                                          echo '<label>Reconexión traslados</label><input class="input-sm" type="checkbox" name="reconexionTraslado" value="T" readonly>';
-                                      }
-                                      if ($cambioFecha == "T") {
-                                          echo '<label>Cambios de fechas</label><input class="input-sm" type="checkbox" name="cambioFechas" value="T" readonly checked>';
-                                      }else {
-                                          echo '<label>Cambios de fechas</label><input class="input-sm" type="checkbox" name="cambioFechas" value="T" readonly>';
-                                      }
-                                      if ($otros == "T") {
-                                          echo '<label>Otros</label><input class="input-sm" type="checkbox" name="otros" value="T" readonly checked>';
-                                      }else {
-                                          echo '<label>Otros</label><input class="input-sm" type="checkbox" name="otros" value="T" readonly>';
-                                      }
-                                      if ($proporcion == "T") {
-                                          echo '<label>Proporción de cuota</label><input class="input-sm" type="checkbox" name="proporcionCuota" value="T" readonly checked>';
-                                      }else {
-                                          echo '<label>Proporción de cuota</label><input class="input-sm" type="checkbox" name="proporcionCuota" value="T" readonly>';
-                                      }
-                                      ?>
-                                  </div>
-                              </div>
                           </div>
                           </form>
                         </div>
@@ -707,7 +620,7 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Buscar venta manual</h4>
+                <h4 class="modal-title">Buscar venta anulada</h4>
               </div>
               <div class="modal-body">
                   <div class="row">
@@ -744,7 +657,7 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="../../dist/js/sb-admin-2.js"></script>
-    <script src="js/ventasManuales.js"></script>
+    <script src="js/ventasAnuladas.js"></script>
     <!--<script src="js/ordenTraslado.js"></script>-->
     <script src="js/searchvm.js"></script>
     <script type="text/javascript">
@@ -767,7 +680,7 @@
         event.preventDefault();
         var codValue = document.getElementById("codigoCliente").value;
         // Trigger the button element with a click
-        window.location="ventasManuales.php?codigoCliente="+codValue;
+        window.location="ventasAnuladas.php?codigoCliente="+codValue;
         }
         });
     </script>
@@ -841,7 +754,7 @@
     if (isset($_GET['codigoCliente'])) {
         echo "<script>
             token = false;
-            document.getElementById('ventaManual').action = 'php/nuevaVentaManual.php';
+            document.getElementById('ventaManual').action = 'php/nuevaVentaAnulada.php';
             //document.getElementById('btn-cable').disabled = false;
             //document.getElementById('btn-internet').disabled = false;
             document.getElementById('guardar').disabled = false;

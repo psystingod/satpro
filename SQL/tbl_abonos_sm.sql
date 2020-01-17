@@ -8,9 +8,9 @@ CREATE TABLE tbl_cargos (
   municipio VARCHAR(40) DEFAULT NULL,
   idColonia VARCHAR(20) DEFAULT NULL,
   /*prefijo VARCHAR(20) DEFAULT NULL,*/
-  numeroFactura VARCHAR(30) DEFAULT NULL,
+  numeroFactura VARCHAR(50) DEFAULT NULL,
   tipoFactura TINYINT(1) DEFAULT NULL,
-  numeroRecibo VARCHAR(30) DEFAULT NULL,
+  numeroRecibo VARCHAR(50) DEFAULT NULL,
   codigoCliente VARCHAR(6) NOT NULL,
   codigoCobrador VARCHAR(6) NOT NULL,
   cuotaCable DOUBLE DEFAULT NULL,
@@ -51,9 +51,9 @@ CREATE TABLE tbl_abonos (
   idMunicipio VARCHAR(40) DEFAULT NULL,
   idColonia VARCHAR(20) DEFAULT NULL,
   /*prefijo VARCHAR(20) NOT NULL,*/
-  numeroFactura VARCHAR(30) DEFAULT NULL,
+  numeroFactura VARCHAR(50) DEFAULT NULL,
   tipoFactura TINYINT(1) NOT NULL,
-  numeroRecibo VARCHAR(30) DEFAULT NULL,
+  numeroRecibo VARCHAR(50) DEFAULT NULL,
   codigoCliente VARCHAR(6) NOT NULL,
   codigoCobrador VARCHAR(6) NOT NULL,
   cobradoPor VARCHAR(6) NOT NULL,
