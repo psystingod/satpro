@@ -156,7 +156,7 @@
             $counter = 1;
             while ($counter <= 31) {
                 if ($tipoFacturaGenerar == 1) {
-                    $sql = "SELECT * FROM tbl_cargos WHERE DAY(fechaFactura) =".$counter." AND MONTH(fechaFactura)=".$mesGenerar." AND YEAR(fechaFactura)=".$anoGenerar." AND tipoFactura = 2 AND anulada=0";
+                    $sql = "SELECT * FROM tbl_cargos WHERE DAY(fechaFactura) =".$counter." AND MONTH(fechaFactura)=".$mesGenerar." AND YEAR(fechaFactura)=".$anoGenerar." AND tipoFactura = 1 AND anulada=0";
 
                     $stmt = $mysqli->query($sql);
 
@@ -202,7 +202,7 @@
                     }
                 }
                 elseif ($tipoFacturaGenerar == 2) {
-                    $sql = "SELECT * FROM tbl_ventas_manuales WHERE DAY(fechaComprobante) =".$counter." AND MONTH(fechaComprobante)=".$mesGenerar." AND YEAR(fechaComprobante)=".$anoGenerar." AND tipoComprobante = 2 ORDER BY idVenta ASC";
+                    $sql = "SELECT * FROM tbl_ventas_manuales WHERE DAY(fechaComprobante) =".$counter." AND MONTH(fechaComprobante)=".$mesGenerar." AND YEAR(fechaComprobante)=".$anoGenerar." AND tipoComprobante = 1 ORDER BY idVenta ASC";
 
                     $stmt = $mysqli->query($sql);
 
@@ -251,7 +251,7 @@
                 }
                 elseif ($tipoFacturaGenerar == 3) {
 
-                    $sql = "SELECT * FROM tbl_ventas_anuladas WHERE DAY(fechaComprobante) =".$counter." AND MONTH(fechaComprobante)=".$mesGenerar." AND YEAR(fechaComprobante)=".$anoGenerar." AND tipoComprobante = 2 ORDER BY idVenta ASC";
+                    $sql = "SELECT * FROM tbl_ventas_anuladas WHERE DAY(fechaComprobante) =".$counter." AND MONTH(fechaComprobante)=".$mesGenerar." AND YEAR(fechaComprobante)=".$anoGenerar." AND tipoComprobante = 1 ORDER BY idVenta ASC";
 
                     $stmt = $mysqli->query($sql);
 
@@ -299,7 +299,7 @@
 
                 }
                 elseif ($tipoFacturaGenerar == 4) {
-                    $sql = "SELECT * FROM tbl_cargos WHERE DAY(fechaFactura) =".$counter." AND MONTH(fechaFactura)=".$mesGenerar." AND YEAR(fechaFactura)=".$anoGenerar." AND tipoFactura = 2 AND anulada=0";
+                    $sql = "SELECT * FROM tbl_cargos WHERE DAY(fechaFactura) =".$counter." AND MONTH(fechaFactura)=".$mesGenerar." AND YEAR(fechaFactura)=".$anoGenerar." AND tipoFactura = 1 AND anulada=0";
 
                     $stmt = $mysqli->query($sql);
 
@@ -344,7 +344,7 @@
                         $pdf->Ln(4);
                     }
 
-                    $sql = "SELECT * FROM tbl_ventas_manuales WHERE DAY(fechaComprobante) =".$counter." AND MONTH(fechaComprobante)=".$mesGenerar." AND YEAR(fechaComprobante)=".$anoGenerar." AND tipoComprobante = 2 ORDER BY idVenta ASC";
+                    $sql = "SELECT * FROM tbl_ventas_manuales WHERE DAY(fechaComprobante) =".$counter." AND MONTH(fechaComprobante)=".$mesGenerar." AND YEAR(fechaComprobante)=".$anoGenerar." AND tipoComprobante = 1 ORDER BY idVenta ASC";
 
                     $stmt = $mysqli->query($sql);
 
@@ -391,7 +391,7 @@
                         $pdf->Ln(4);
                     }
 
-                    $sql = "SELECT * FROM tbl_ventas_anuladas WHERE DAY(fechaComprobante) =".$counter." AND MONTH(fechaComprobante)=".$mesGenerar." AND YEAR(fechaComprobante)=".$anoGenerar." AND tipoComprobante = 2 ORDER BY idVenta ASC";
+                    $sql = "SELECT * FROM tbl_ventas_anuladas WHERE DAY(fechaComprobante) =".$counter." AND MONTH(fechaComprobante)=".$mesGenerar." AND YEAR(fechaComprobante)=".$anoGenerar." AND tipoComprobante = 1 ORDER BY idVenta ASC";
 
                     $stmt = $mysqli->query($sql);
 
@@ -677,7 +677,7 @@
             while ($counter <= 31) {
                 if ($tipoFacturaGenerar == 1) {
                     $sql = "SELECT SUM(cuotaCable) as totalCuotaCable, SUM(cuotaInternet) as totalCuotaInter, SUM(totalImpuesto) as totalImp, MIN(numeroFactura) as inFact, MAX(numeroFactura) as finFact, DAY(fechaFactura) as dia FROM tbl_cargos
-                            WHERE DAY(fechaFactura) =".$counter." AND MONTH(fechaFactura)=".$mesGenerar." AND YEAR(fechaFactura)=".$anoGenerar." AND tipoFactura = 2 AND anulada=0";
+                            WHERE DAY(fechaFactura) =".$counter." AND MONTH(fechaFactura)=".$mesGenerar." AND YEAR(fechaFactura)=".$anoGenerar." AND tipoFactura = 1 AND anulada=0";
 
                             $stmt = $mysqli->query($sql);
                             //var_dump($stmt);
@@ -721,7 +721,7 @@
                 }
                 elseif ($tipoFacturaGenerar == 2) {
                     $sql = "SELECT SUM(montoCable) as totalCable, SUM(montoInternet) as totalInter, SUM(impuesto) as totalImp, MIN(numeroComprobante) as inFact, MAX(numeroComprobante) as finFact, DAY(fechaComprobante) as dia FROM tbl_ventas_manuales
-                            WHERE DAY(fechaComprobante) =".$counter." AND MONTH(fechaComprobante)=".$mesGenerar." AND YEAR(fechaComprobante)=".$anoGenerar." AND tipoComprobante = 2";
+                            WHERE DAY(fechaComprobante) =".$counter." AND MONTH(fechaComprobante)=".$mesGenerar." AND YEAR(fechaComprobante)=".$anoGenerar." AND tipoComprobante = 1";
 
                     $stmt = $mysqli->query($sql);
 
@@ -764,7 +764,7 @@
                 }
                 elseif ($tipoFacturaGenerar == 3) {
                     $sql = "SELECT SUM(totalComprobante) as totalComprobante, MIN(numeroComprobante) as inFact, MAX(numeroComprobante) as finFact, DAY(fechaComprobante) as dia FROM tbl_ventas_anuladas
-                            WHERE DAY(fechaComprobante) =".$counter." AND MONTH(fechaComprobante)=".$mesGenerar." AND YEAR(fechaComprobante)=".$anoGenerar." AND tipoComprobante = 2";
+                            WHERE DAY(fechaComprobante) =".$counter." AND MONTH(fechaComprobante)=".$mesGenerar." AND YEAR(fechaComprobante)=".$anoGenerar." AND tipoComprobante = 1";
 
                     $stmt = $mysqli->query($sql);
 
@@ -813,7 +813,7 @@
                 }
                 elseif ($tipoFacturaGenerar == 4) {
                     $sql = "SELECT SUM(cuotaCable) as totalCuotaCable, SUM(cuotaInternet) as totalCuotaInter, SUM(totalImpuesto) as totalImp, MIN(numeroFactura) as inFact, MAX(numeroFactura) as finFact, DAY(fechaFactura) as dia FROM tbl_cargos
-                            WHERE DAY(fechaFactura) =".$counter." AND MONTH(fechaFactura)=".$mesGenerar." AND YEAR(fechaFactura)=".$anoGenerar." AND tipoFactura = 2 AND anulada=0";
+                            WHERE DAY(fechaFactura) =".$counter." AND MONTH(fechaFactura)=".$mesGenerar." AND YEAR(fechaFactura)=".$anoGenerar." AND tipoFactura = 1 AND anulada=0";
 
                             $stmt = $mysqli->query($sql);
                             //var_dump($stmt);
@@ -857,7 +857,7 @@
 
                             //ACÁ COMIENZA EL NUMERO 2
                             $sql = "SELECT SUM(montoCable) as totalCable, SUM(montoInternet) as totalInter, SUM(impuesto) as totalImp, MIN(numeroComprobante) as inFact, MAX(numeroComprobante) as finFact, DAY(fechaComprobante) as dia FROM tbl_ventas_manuales
-                                    WHERE DAY(fechaComprobante) =".$counter." AND MONTH(fechaComprobante)=".$mesGenerar." AND YEAR(fechaComprobante)=".$anoGenerar." AND tipoComprobante = 2";
+                                    WHERE DAY(fechaComprobante) =".$counter." AND MONTH(fechaComprobante)=".$mesGenerar." AND YEAR(fechaComprobante)=".$anoGenerar." AND tipoComprobante = 1";
 
                             $stmt = $mysqli->query($sql);
 
@@ -900,7 +900,7 @@
 
                             //COMIENZO NUMERO 3
                             $sql = "SELECT SUM(totalComprobante) as totalComprobante, MIN(numeroComprobante) as inFact, MAX(numeroComprobante) as finFact, DAY(fechaComprobante) as dia FROM tbl_ventas_anuladas
-                                    WHERE DAY(fechaComprobante) =".$counter." AND MONTH(fechaComprobante)=".$mesGenerar." AND YEAR(fechaComprobante)=".$anoGenerar." AND tipoComprobante = 2";
+                                    WHERE DAY(fechaComprobante) =".$counter." AND MONTH(fechaComprobante)=".$mesGenerar." AND YEAR(fechaComprobante)=".$anoGenerar." AND tipoComprobante = 1";
 
                             $stmt = $mysqli->query($sql);
 
@@ -1052,7 +1052,6 @@
                 $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
                 $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
                 $pdf->Cell(40,6,utf8_decode(number_format(($totalConIvaEx + $totalSinIva + $totalSoloIva + $totalSoloCesc),2)),0,1,'L');
-
                 $pdf->Ln(30);
                 $pdf->Cell(70,3,utf8_decode(''),"T",1,'C');
                 $pdf->Cell(40,1,utf8_decode("Nombre y firma del contador o contribuyente:"),"",0,'L');

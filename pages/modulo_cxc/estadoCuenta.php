@@ -62,7 +62,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT cod_cliente, nombre, direccion, telefonos, dia_cobro, fecha_ult_pago, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, mac_modem, serie_modem, id_velocidad, dire_telefonia, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia, saldoCable, saldoInternet FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
+            $query = "SELECT cod_cliente, nombre, direccion, telefonos, dia_cobro, fecha_ult_pago, id_municipio, prepago, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, mac_modem, serie_modem, id_velocidad, dire_telefonia, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia, saldoCable, saldoInternet FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark

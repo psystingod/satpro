@@ -170,7 +170,7 @@
                                <div class="name">Empleados</b></div>
                            </div>
                        </div></a>
-                       <a href="afps.php"><div class="col-lg-6 btn btn-default">
+                       <!--<a href="afps.php"><div class="col-lg-6 btn btn-default">
                            <div class="stat-icon">
                                <i class="far fa-address-card fa-3x"></i>
                            </div>
@@ -178,10 +178,10 @@
                                <br>
                                <div class="name">AFPS</b></div>
                            </div>
-                       </div></a>
+                       </div></a>-->
                    </div>
                    <div class="row">
-                     <a class="" href="categorias.php"><div class="col-lg-6 btn btn-default">
+                     <!--<a class="" href="categorias.php"><div class="col-lg-6 btn btn-default">
                          <div class="stat-icon">
                              <i class="far fa-check-square fa-3x"></i>
                          </div>
@@ -189,8 +189,8 @@
                              <br>
                              <div class="name">Categorias</b></div>
                          </div>
-                     </div></a>
-                     <a href="tipoProductos.php"><div class="col-lg-6 btn btn-default">
+                     </div></a>-->
+                     <!--<a href="tipoProductos.php"><div class="col-lg-6 btn btn-default">
                          <div class="stat-icon">
                             <i class="fas fa-align-left fa-3x"></i>
                          </div>
@@ -198,7 +198,7 @@
                            <br>
                              <div class="name">Tipo de Productos</div>
                          </div>
-                     </div></a>
+                     </div></a>-->
                    </div>
                </div>
            </div>

@@ -353,8 +353,9 @@
 
                     if ($key['tipoServicio'] == "C") {
                         $nFactura = $key['prefijo']."-".$key['numeroComprobante'];
-                        $query2 = "INSERT INTO tbl_cargos (/*prefijo,*/nombre, direccion, municipio, idColonia, numeroFactura, tipoFactura, codigoCliente, codigoCobrador, cuotaCable, cuotaInternet, fechaFactura, fechaVencimiento, mesCargo, tipoServicio, estado, anticipado, /*cargoImpuesto,*/ totalImpuesto, /*totalIva,*/ anulada)
-                                   VALUES (/*:prefijo,*/:nombre, :direccion, :municipio, :idColonia, :numeroFactura, :tipoFactura, :codigoCliente, :codigoCobrador, :cuotaCable, :cuotaInternet, :fechaFactura, :fechaVencimiento, :mesCargo, :tipoServicio, :estado, :anticipado, /*:cargoImpuesto,*/ :totalImpuesto, /*:totalIva,*/ :anulada)";
+                        $nRecibo = "---";
+                        $query2 = "INSERT INTO tbl_cargos (/*prefijo,*/nombre, direccion, idMunicipio, idColonia, numeroRecibo, numeroFactura, tipoFactura, codigoCliente, codigoCobrador, cuotaCable, cuotaInternet, fechaFactura, fechaVencimiento, mesCargo, tipoServicio, estado, anticipado, /*cargoImpuesto,*/ totalImpuesto, /*totalIva,*/ anulada)
+                                   VALUES (/*:prefijo,*/:nombre, :direccion, :municipio, :idColonia, :numeroRecibo, :numeroFactura, :tipoFactura, :codigoCliente, :codigoCobrador, :cuotaCable, :cuotaInternet, :fechaFactura, :fechaVencimiento, :mesCargo, :tipoServicio, :estado, :anticipado, /*:cargoImpuesto,*/ :totalImpuesto, /*:totalIva,*/ :anulada)";
 
                         $statement = $this->dbConnect->prepare($query2);
                         //$statement->bindParam(':prefijo', $key['prefijo']);
@@ -362,6 +363,7 @@
                         $statement->bindParam(':direccion', $key['direccion']);
                         $statement->bindParam(':municipio', $key['municipio']);
                         $statement->bindParam(':idColonia', $key['idColonia']);
+                        $statement->bindParam(':numeroRecibo', $nRecibo);
                         $statement->bindParam(':numeroFactura', $nFactura);
                         $statement->bindParam(':tipoFactura', $key['tipoComprobante']);
                         $statement->bindParam(':codigoCliente', $key['codigoCliente']);
@@ -382,8 +384,9 @@
                     }
                     elseif ($key['tipoServicio'] == "I") {
                         $nFactura = $key['prefijo']."-".$key['numeroComprobante'];
-                        $query2 = "INSERT INTO tbl_cargos (/*prefijo,*/nombre, direccion, municipio, idColonia, numeroFactura, tipoFactura, codigoCliente, codigoCobrador, cuotaCable, cuotaInternet, fechaFactura, fechaVencimiento, mesCargo, tipoServicio, estado, anticipado, /*cargoImpuesto,*/ totalImpuesto, /*totalIva,*/ anulada)
-                                   VALUES (/*:prefijo,*/:nombre, :direccion, :municipio, :idColonia, :numeroFactura, :tipoFactura, :codigoCliente, :codigoCobrador, :cuotaCable, :cuotaInternet, :fechaFactura, :fechaVencimiento, :mesCargo, :tipoServicio, :estado, :anticipado, /*:cargoImpuesto,*/ :totalImpuesto, /*:totalIva,*/ :anulada)";
+                        $nRecibo = "---";
+                        $query2 = "INSERT INTO tbl_cargos (/*prefijo,*/nombre, direccion, idMunicipio, idColonia, numeroRecibo, numeroFactura, tipoFactura, codigoCliente, codigoCobrador, cuotaCable, cuotaInternet, fechaFactura, fechaVencimiento, mesCargo, tipoServicio, estado, anticipado, /*cargoImpuesto,*/ totalImpuesto, /*totalIva,*/ anulada)
+                                   VALUES (/*:prefijo,*/:nombre, :direccion, :municipio, :idColonia, :numeroRecibo, :numeroFactura, :tipoFactura, :codigoCliente, :codigoCobrador, :cuotaCable, :cuotaInternet, :fechaFactura, :fechaVencimiento, :mesCargo, :tipoServicio, :estado, :anticipado, /*:cargoImpuesto,*/ :totalImpuesto, /*:totalIva,*/ :anulada)";
 
                         $statement = $this->dbConnect->prepare($query2);
                         //$statement->bindParam(':prefijo', $key['prefijo']);
@@ -391,6 +394,7 @@
                         $statement->bindParam(':direccion', $key['direccion']);
                         $statement->bindParam(':municipio', $key['municipio']);
                         $statement->bindParam(':idColonia', $key['idColonia']);
+                        $statement->bindParam(':numeroRecibo', $nRecibo);
                         $statement->bindParam(':numeroFactura', $nFactura);
                         $statement->bindParam(':tipoFactura', $key['tipoComprobante']);
                         $statement->bindParam(':codigoCliente', $key['codigoCliente']);

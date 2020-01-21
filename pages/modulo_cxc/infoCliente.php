@@ -1055,7 +1055,7 @@ session_start();
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="fechaSuspensionCable">Fecha suspension</label>
-                                                      <input class="form-control input-sm" type="text" name="fechaSuspensionCable" value="<?php echo $fechaSuspensionCable; ?>" readonly>
+                                                      <input class="form-control input-sm" style="color: #b71c1c;" type="text" name="fechaSuspensionCable" value="<?php echo $fechaSuspensionCable; ?>" readonly>
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="fechaReconexionCable">Fecha de reconexión</label>
@@ -1226,7 +1226,7 @@ session_start();
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="fechaSuspencionInternet">Fecha de suspención</label>
-                                                      <input class="form-control input-sm" type="text" name="fechaSuspencionInternet" value="<?php echo $fechaSuspencionInternet; ?>" readonly>
+                                                      <input class="form-control input-sm" style="color: #b71c1c;" type="text" name="fechaSuspencionInternet" value="<?php echo $fechaSuspencionInternet; ?>" readonly>
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="fechaReconexionInternet">Fecha de reconexión</label>
@@ -1271,7 +1271,7 @@ session_start();
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="costoInstalacionIn">Costo de instalación</label>
-                                                      <input class="form-control input-sm" type="text" name="costoInstalacionIn" value="<?php echo $costoInstalacionIn; ?>" readonly required>
+                                                      <input class="form-control input-sm" type="text" name="costoInstalacionIn" value="<?php echo $costoInstalacionIn; ?>" readonly>
                                                   </div>
                                               </div>
                                               <div class="row">

@@ -5,7 +5,7 @@ CREATE TABLE tbl_cargos (
   idFactura INT(11) NOT NULL AUTO_INCREMENT,
   nombre VARCHAR(70) DEFAULT NULL,
   direccion VARCHAR(100) DEFAULT NULL,
-  municipio VARCHAR(40) DEFAULT NULL,
+  idMunicipio VARCHAR(40) DEFAULT NULL,
   idColonia VARCHAR(20) DEFAULT NULL,
   /*prefijo VARCHAR(20) DEFAULT NULL,*/
   numeroFactura VARCHAR(50) DEFAULT NULL,
@@ -23,7 +23,7 @@ CREATE TABLE tbl_cargos (
   /*montoCancelado DOUBLE DEFAULT 0,*/
   fechaAbonado DATE DEFAULT NULL,
   mesCargo VARCHAR(10) DEFAULT '',
-  anticipo DOUBLE NOT NULL,
+  anticipo DOUBLE DEFAULT NULL,
   formaPago VARCHAR(10) DEFAULT '',
   tipoServicio CHAR NOT NULL,
   estado VARCHAR(9) DEFAULT '',

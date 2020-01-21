@@ -395,7 +395,7 @@
                         </div>
                         <div class="col-md-3">
                             <label for=""></label>
-                            <input id="anoGenerar" class="form-control" type="text" name="anoGenerar" placeholder="Año a generar" value="<?php echo date('Y') ?>" required>
+                            <input id="anoGenerar" class="form-control" type="number" name="anoGenerar" placeholder="Año a generar" value="<?php echo date('Y') ?>" required>
                         </div>
                     </div>
                     <div class="row">

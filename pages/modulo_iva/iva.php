@@ -186,7 +186,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title" id="Balance Comprobación">Generación de libro de ventas a contribuyentes</h4>
                       </div>
-                      <form action="php/pdfContribuyente.php" method="POST">
+                      <form action="php/pdfCreditoFiscal.php" method="POST">
                       <div class="modal-body">
                                   <div class="row">
                                       <div class="form-group col-md-4 col-xs-4">
@@ -198,7 +198,7 @@
                                       </div>
                                       <div class="form-group col-md-4 col-xs-4">
                                           <label for="nombre">Mes a generar</label>
-                                          <select class="form-control form-control-lg" name="MesImprimir" required>
+                                          <select class="form-control form-control-lg" name="mesGenerar" required>
                                              <option value="">Seleccionar...</option>
                                               <option value="1" >Enero</option>;
                                               <option value="2" >Febrero</option>;
