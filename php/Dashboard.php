@@ -41,7 +41,7 @@
 
         public function getDailyIncomes()
         {
-            try {
+            try {   
                     date_default_timezone_set('America/El_Salvador');
                     $date = date("Y-m-d");
                     //$query = "SELECT SUM(cuotaCable + totalImpuesto) FROM tbl_abonos WHERE tipoServicio = 'C' AND anulada = 0 AND DAY(:fecha) = DAY(fechaAbonado)";

@@ -35,7 +35,7 @@
                     $str2 = $_POST["fechaTrabajo"];
                     if (strlen($str2) >= 7) {
                         $date2 = DateTime::createFromFormat('d/m/Y', $str2);
-                        $fechaTrabajo = $date2->format('d/m/Y');
+                        $fechaTrabajo = $date2->format('Y-m-d');
                     }else {
                         $fechaTrabajo = "";
                     }
@@ -43,7 +43,7 @@
                     $str3 = $_POST["fechaProgramacion"];
                     if (strlen($str3) >= 7) {
                         $date3 = DateTime::createFromFormat('d/m/Y', $str3);
-                        $fechaProgramacion = $date3->format('d/m/Y');
+                        $fechaProgramacion = $date3->format('Y-m-d');
                     }else {
                         $fechaProgramacion = "";
                     }
@@ -126,7 +126,7 @@
                     $str2 = $_POST["fechaTrabajo"];
                     if (strlen($str2) >= 7) {
                         $date2 = DateTime::createFromFormat('d/m/Y', $str2);
-                        $fechaTrabajo = $date2->format('d/m/Y');
+                        $fechaTrabajo = $date2->format('Y-m-d');
                     }else {
                         $fechaTrabajo = "";
                     }
@@ -134,7 +134,7 @@
                     $str3 = $_POST["fechaProgramacion"];
                     if (strlen($str3) >= 7) {
                         $date3 = DateTime::createFromFormat('d/m/Y', $str3);
-                        $fechaProgramacion = $date3->format('d/m/Y');
+                        $fechaProgramacion = $date3->format('Y-m-d');
                     }else {
                         $fechaProgramacion = "";
                     }

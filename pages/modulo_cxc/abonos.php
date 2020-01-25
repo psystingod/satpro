@@ -542,7 +542,7 @@ session_start();
                                   }
                                   ?>
                                   <div class="pull-right">
-                                      <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Estado de cuenta">Estado de cuenta</button>
+                                      <a href="estadoCuenta.php?codigoCliente=<?php if(isset($_GET['codigoCliente'])) echo $_GET['codigoCliente']; ?>"><button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Estado de cuenta">Estado de cuenta</button></a>
                                   </div>
                               </div>
                               <div class="form-row">
@@ -834,7 +834,7 @@ session_start();
                                               }elseif ($key["tipoServicio"] == 'I') {
                                                   echo "<input class='form-control input-sm' type='text' id='mesx{$counter}value' name='cuotaInternet{$counter}' value='".$key["cuotaInternet"] . "' readonly>"."</td><td>";
                                               }
-                                              echo "<input class='form-control type='text' name='vencimientox{$counter}' value='".date_format(date_create($key["fechaVencimiento"]), "d/m/Y") . "' readonly>"."</td><tr>";
+                                              echo "<input class='form-control type='text' id='vencimientox{$counter}' name='vencimientox{$counter}' value='".date_format(date_create($key["fechaVencimiento"]), "d/m/Y") . "' readonly>"."</td><tr>";
                                               $counter++;
                                           }
                                           ?>
@@ -875,7 +875,7 @@ session_start();
                                   </div>
                                   <div class="col-md-4">
                                       <label for="meses" style="color: brown;"></label>
-                                      <button class="btn btn-success btn-md btn-block" type="submit" name="editar" style="margin-bottom: 6px; margin-top: 0px;"><i class="fas fa-check" style="color: white;"></i> Aplicar abonos</button>
+                                      <button id="aplicarAbono" class="btn btn-success btn-md btn-block" type="submit" name="editar" style="margin-bottom: 6px; margin-top: 0px;"><i class="fas fa-check" style="color: white;"></i> Aplicar abonos e imprimir</button>
                                       <a href="cxc.php" style="text-decoration: none;"><button class="btn btn-danger btn-md btn-block" type="button" name="button"><i class="fas fa-sign-out-alt" style="color: white;"></i> Salir</button></a>
                                   </div>
                               </div>
@@ -971,6 +971,22 @@ session_start();
         });
     </script>
 
+    <script>
+    var vencimiento1 = document.getElementById('vencimientox1');
+    if (typeof vencimiento1.value != 'undefined') {
+        vencimiento1 = document.write(vencimiento1.value);
+    }else{
+        vencimiento1 = document.write(0);
+    }
+
+    var vencimiento2 = document.getElementById('vencimientox2');
+    if (typeof vencimiento2.value != 'undefined') {
+        vencimiento2 = document.write(vencimiento2.value);
+    }else{
+        vencimiento2 = document.write(0);
+    }
+    </script>
+
     <?php
     if (isset($_GET['codigoCliente'])) {
         echo "<script>
@@ -981,6 +997,28 @@ session_start();
             //var inputs = document.getElementsByClassName('input-sm');
         </script>";
     }
+
+    $fechaHoy = date("Y-m-d");
+
+    if ($vencimiento1 != 0) {
+        $date2 = DateTime::createFromFormat('d/m/Y', $vencimiento1);
+        $vencimiento1 = $date2->format('Y-m-d');
+    }
+    if ($vencimiento2 != 0) {
+        $date3 = DateTime::createFromFormat('d/m/Y', $vencimiento2);
+        $vencimiento2 = $date3->format('Y-m-d');
+    }
+
+    if ($vencimiento1 != 0  && $vencimiento2 != 0) {
+        if ($fechaHoy > $vencimiento1 && $fechaHoy > $vencimiento2) {
+            echo '<script>
+            document.getElementById("aplicarAbono").disabled=true;
+            </script>';
+        }
+    }
+    var_dump($vencimiento1);
+    var_dump($vencimiento2);
+
     ?>
 
 </body>

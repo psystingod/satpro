@@ -16,6 +16,30 @@ session_start();
         $con = $precon->ConectionDB($_SESSION['db']);
 
         // read current record's data
+
+        try {
+            // prepare select query
+            $query = "SELECT * FROM tbl_tv_box WHERE clientCode = ?";
+            $stmt = $con->prepare( $query );
+            // this is the first question mark
+            $stmt->bindParam(1, $id);
+            // execute our query
+            $stmt->execute();
+            // store retrieved row to a variable
+            $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $counter = 1;
+            foreach ($row as $key) {
+                ${"caja".$counter} = $key['boxNum'];
+                ${"cas".$counter} = $key['cast'];
+                ${"sn".$counter} = $key['serialBox'];
+                $counter++;
+            }
+
+        }
+        catch(PDOException $exception){
+            die('ERROR: ' . $exception->getMessage());
+        }
+
         try {
             // prepare select query
             $query = "SELECT * FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
@@ -686,8 +710,8 @@ session_start();
                                     </div>
                                     <div class="row">
                                         <div class="col-md-9">
-                                            <label for="nombre">Nombre</label>
-                                            <input class="form-control input-sm" type="text" name="nombre" value="<?php echo $nombre; ?>" readonly>
+                                            <label for="nombre"><span style="color:red;font-size:18px;">**</span>Nombre</label>
+                                            <input class="form-control input-sm" type="text" name="nombre" value="<?php echo $nombre; ?>" readonly required>
                                         </div>
                                         <div class="col-md-3">
                                             <label for="ncr">Número de registro</label>
@@ -713,7 +737,7 @@ session_start();
                                     </div>
                                     <div class="row">
                                         <div class="col-md-2">
-                                            <label for="dui">DUI</label>
+                                            <label for="dui"><span style="color:red;font-size:18px;">**</span>DUI</label>
                                             <input class="form-control input-sm" type="text" name="dui" pattern="[0-9]{8}-[0-9]{1}" value="<?php echo $dui; ?>" readonly required>
                                         </div>
                                         <div class="col-md-4">
@@ -796,8 +820,8 @@ session_start();
                                     </div>
                                     <div class="row">
                                         <div class="col-md-4">
-                                            <label for="telefono">Teléfono</label>
-                                            <input class="form-control input-sm" type="text" name="telefono" value="<?php echo $telefonos; ?>" readonly>
+                                            <label for="telefono"><span style="color:red;font-size:18px;">**</span>Teléfono</label>
+                                            <input class="form-control input-sm" type="text" name="telefono" value="<?php echo $telefonos; ?>" readonly required>
                                         </div>
                                         <div class="col-md-4">
                                             <label for="telefonoTrabajo">Teléfono de trabajo</label>
@@ -831,8 +855,8 @@ session_start();
                                             </select>
                                         </div>
                                         <div class="col-md-4">
-                                            <label for="tipoComprobante">Tipo de comprobante</label>
-                                            <select class="form-control input-sm" name="tipoComprobante" disabled>
+                                            <label for="tipoComprobante"><span style="color:red;font-size:18px;">**</span>Tipo de comprobante</label>
+                                            <select class="form-control input-sm" name="tipoComprobante" disabled required>
                                                 <option value="" selected>Seleccionar</option>
                                                 <?php
 
@@ -878,9 +902,9 @@ session_start();
                                     <br>
                                     <div class="row">
                                         <div class="col-md-12">
-                                            <label for="cobrador">Cobrador que lo atiende</label>
-                                            <select class="form-control input-sm" name="cobrador" disabled>
-                                                <option value="" selected>Seleccionar</option>
+                                            <label for="cobrador"><span style="color:red;font-size:18px;">**</span>Cobrador que lo atiende</label>
+                                            <select class="form-control input-sm" name="cobrador" disabled required>
+                                                <option value="">Seleccionar</option>
                                                 <?php
                                                 foreach ($arrCobradores as $key) {
                                                     if ($key['codigoCobrador'] == $cobrador) {
@@ -903,7 +927,7 @@ session_start();
                                         </div>
                                         <div class="col-md-2">
                                             <label for="rp1_telefono">Teléfono</label>
-                                            <input class="form-control input-sm" type="text" name="rp1_telefono" value="<?php echo $contacto2; ?>" readonly>
+                                            <input class="form-control input-sm" type="text" name="rp1_telefono" value="<?php echo $telCon1; /*$contacto2;*/ ?>" readonly>
                                         </div>
                                         <div class="col-md-4">
                                             <label for="rp1_direccion">Dirección</label>
@@ -911,17 +935,17 @@ session_start();
                                         </div>
                                         <div class="col-md-2">
                                             <label for="rp1_parentezco">Parentezco</label>
-                                            <input class="form-control input-sm" type="text" name="rp1_parentezco" value="<?php echo $telCon1; ?>" readonly>
+                                            <input class="form-control input-sm" type="text" name="rp1_parentezco" value="<?php echo $paren1;/*$telCon1;*/ ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-4">
                                             <label for="rp2_nombre">Referencia personal #2</label>
-                                            <input class="form-control input-sm" type="text" name="rf2_nombre" value="<?php echo $telCon2; ?>" readonly>
+                                            <input class="form-control input-sm" type="text" name="rf2_nombre" value="<?php echo $contacto2; ?>" readonly>
                                         </div>
                                         <div class="col-md-2">
                                             <label for="rp2_telefono">Teléfono</label>
-                                            <input class="form-control input-sm" type="text" name="rp2_telefono" value="<?php echo $telCon3; ?>" readonly>
+                                            <input class="form-control input-sm" type="text" name="rp2_telefono" value="<?php echo $telCon2; ?>" readonly>
                                         </div>
                                         <div class="col-md-4">
                                             <label for="rp2_direccion">Dirección</label>
@@ -939,7 +963,7 @@ session_start();
                                         </div>
                                         <div class="col-md-2">
                                             <label for="rp3_telefono">Teléfono</label>
-                                            <input class="form-control input-sm" type="text" name="rp3_telefono" value="<?php ?>" readonly>
+                                            <input class="form-control input-sm" type="text" name="rp3_telefono" value="<?php echo $telCon3; ?>" readonly>
                                         </div>
                                         <div class="col-md-4">
                                             <label for="rp3_direccion">Dirección</label>
@@ -992,7 +1016,7 @@ session_start();
 
                                                   </div>
                                                   <div class="col-md-2">
-                                                      <label for="diaGenerarFacturaCable">Día cobro</label>
+                                                      <label for="diaGenerarFacturaCable"><span style="color:red;font-size:18px;">**</span>Día cobro</label>
                                                       <input class="form-control input-sm" type="text" name="diaGenerarFacturaCable" value="<?php echo $diaCobro; ?>" readonly required>
                                                   </div>
                                                   <div class="col-md-2">
@@ -1011,16 +1035,16 @@ session_start();
                                               </div>
                                               <div class="row">
                                                   <div class="col-md-2">
-                                                      <label for="cuotaMensualCable">Cuota mensual</label>
+                                                      <label for="cuotaMensualCable"><span style="color:red;font-size:18px;">**</span>Cuota mensual</label>
                                                       <input class="form-control input-sm" type="text" name="cuotaMensualCable" value="<?php echo $cuotaMensualCable; ?>" readonly required>
                                                   </div>
                                                   <div class="col-md-2">
-                                                      <label for="prepago">Prepago</label>
+                                                      <label for="prepago"><span style="color:red;font-size:18px;">**</span>Prepago</label>
                                                       <input class="form-control input-sm" type="text" name="prepago" value="<?php echo $prepago; ?>" readonly required>
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="tipoServicio">Tipo de servicio</label>
-                                                      <select class="form-control input-sm" name="tipoServicioCable" disabled>
+                                                      <select class="form-control input-sm" id="tipoServicioCable" name="tipoServicioCable" onchange="tipoServicioCabletv()" disabled>
                                                           <option value="" selected>Seleccionar</option>
                                                           <?php
                                                           foreach ($arrServicioCable as $key) {
@@ -1036,8 +1060,9 @@ session_start();
                                                       </select>
                                                   </div>
                                                   <div class="col-md-3">
-                                                      <label for="mactv">MAC TV</label>
-                                                      <input class="form-control input-sm" type="text" name="mactv" value="<?php echo $mactv; ?>" readonly>
+                                                      <label for="mactv">TV DIGITAL</label>
+                                                      <!--<input class="form-control input-sm" type="text" name="mactv" value="<?php //echo $mactv; ?>" readonly>-->
+                                                      <button type="button" class="btn btn-primary btn-block btn-xl" data-toggle="modal" data-target="#cas" name="button"><i class="fas fa-tv"></i> Datos de caja digital</button>
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="mesesContratoCable">Meses de contrato</label>
@@ -1068,9 +1093,9 @@ session_start();
                                               </div>
                                               <div class="row">
                                                   <div class="col-md-12">
-                                                      <label for="encargadoInstalacionCable">Técnico que realizó la instalación</label>
-                                                      <select class="form-control input-sm" name="encargadoInstalacionCable" disabled>
-                                                          <option value="" selected>Seleccionar</option>
+                                                      <label for="encargadoInstalacionCable"><span style="color:red;font-size:18px;">**</span>Técnico que realizó la instalación</label>
+                                                      <select class="form-control input-sm" name="encargadoInstalacionCable" disabled required>
+                                                          <option value="">Seleccionar</option>
                                                           <?php
                                                           foreach ($arrTecnicos as $key) {
                                                               if ($key['idTecnico'] == $tecnicoCable) {
@@ -1144,8 +1169,8 @@ session_start();
                                                       <input class="form-control input-sm" type="text" id="mesesContratoInternet" name="mesesContratoInternet" onchange="setVencimientoInternet()" value="<?php echo $periodoContratoInternet; ?>" readonly>
                                                   </div>
                                                   <div class="col-md-3">
-                                                      <label for="diaGenerarFacturaInternet">Día para generar factura</label>
-                                                      <input class="form-control input-sm" type="text" name="diaGenerarFacturaInternet" value="<?php echo $diaCobroInter; ?>" readonly>
+                                                      <label for="diaGenerarFacturaInternet"><span style="color:red;font-size:18px;">**</span>Día para generar factura</label>
+                                                      <input class="form-control input-sm" type="text" name="diaGenerarFacturaInternet" value="<?php echo $diaCobroInter; ?>" readonly required>
                                                   </div>
                                               </div>
                                               <div class="row">
@@ -1207,8 +1232,8 @@ session_start();
                                               </div>
                                               <div class="row">
                                                   <div class="col-md-12">
-                                                      <label for="enCalidad">En calidad de</label>
-                                                      <input class="form-control input-sm" type="text" name="enCalidad" value="<?php echo $calidad; ?>" readonly>
+                                                      <label for="enCalidad"><span style="color:red;font-size:18px;">**</span>En calidad de</label>
+                                                      <input class="form-control input-sm" type="text" name="enCalidad" value="<?php echo $calidad; ?>" readonly required>
                                                   </div>
                                               </div>
                                               <div class="row">
@@ -1253,9 +1278,9 @@ session_start();
                                               </div>
                                               <div class="row">
                                                   <div class="col-md-9">
-                                                      <label for="encargadoInstalacionInter">Técnico que realizó la instalación</label>
-                                                      <select class="form-control input-sm" name="encargadoInstalacionInter" disabled>
-                                                          <option value="" selected>Seleccionar</option>
+                                                      <label for="encargadoInstalacionInter"><span style="color:red;font-size:18px;">**</span>Técnico que realizó la instalación</label>
+                                                      <select class="form-control input-sm" name="encargadoInstalacionInter" disabled required>
+                                                          <option value="">Seleccionar</option>
                                                           <?php
                                                           foreach ($arrTecnicos as $key) {
                                                               if ($key['idTecnico'] == $tecnicoInternet) {
@@ -1374,6 +1399,163 @@ session_start();
                                       <!-- Accordion card -->
 
                                     </div>
+                                    <!-- Modal TV DIGITAL -->
+                                    <div id="cas" class="modal fade" role="dialog">
+                                      <div class="modal-dialog modal-lg">
+
+                                        <!-- Modal content-->
+                                        <div class="modal-content">
+                                          <div style="background-color: #1565C0; color:white; font-size: 8px;" class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">Datos de servicio digital de TV</h4>
+                                          </div>
+                                          <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-md-1">
+                                                    <input type="checkbox" id="check1" name="check1" class="form-control">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                        # CAJA
+                                                        </span>
+                                                        </span>
+                                                        <input type="hidden" id="id1" name="id1" class="form-control" required="false" placeholder="">
+                                                        <input type="text" id="caja1" name="caja1" class="form-control" value="<?php echo $caja1; ?>" required="false" placeholder="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                        CAS
+                                                        </span>
+                                                        </span>
+                                                        <input type="text" id="cas1" name="cas1" class="form-control" value="<?php echo $cas1; ?>" required="false" placeholder="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                        SN
+                                                        </span>
+                                                        </span>
+                                                        <input type="text" id="sn1" name="sn1" class="form-control" value="<?php echo $sn1; ?>" required="false" placeholder="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-md-1">
+                                                    <input type="checkbox" id="check2" name="check2" class="form-control">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                        # CAJA
+                                                        </span>
+                                                        </span>
+                                                        <input type="hidden" id="id2" name="id2" class="form-control" required="false" placeholder="">
+                                                        <input type="text" id="caja2" name="caja2" class="form-control" value="<?php echo $caja2; ?>" aria-label="Phone Number" placeholder="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                        CAS
+                                                        </span>
+                                                        </span>
+                                                        <input type="text" id="cas2" name="cas2" class="form-control" value="<?php echo $cas2; ?>" placeholder="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                        SN
+                                                        </span>
+                                                        </span>
+                                                        <input type="text" id="sn2" name="sn2" class="form-control" value="<?php echo $sn2; ?>" placeholder="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-md-1">
+                                                    <input type="checkbox" id="check3" name="check3" class="form-control">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                        # CAJA
+                                                        </span>
+                                                        </span>
+                                                        <input type="hidden" id="id3" name="id3" class="form-control" required="false" placeholder="">
+                                                        <input type="text" id="caja3" name="caja3" class="form-control" value="<?php echo $caja3; ?>" placeholder="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                        CAS
+                                                        </span>
+                                                        </span>
+                                                        <input type="text" id="cas3" name="cas3" class="form-control" value="<?php echo $cas3; ?>" placeholder="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                        SN
+                                                        </span>
+                                                        </span>
+                                                        <input type="text" id="sn3" name="sn3" class="form-control" value="<?php echo $sn3; ?>" placeholder="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <br>
+                                            <div class="row">
+                                                <div class="col-md-1">
+                                                    <input type="checkbox" id="check4" name="check4" class="form-control">
+                                                </div>
+                                                <div class="col-md-3">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                        # CAJA
+                                                        </span>
+                                                        </span>
+                                                        <input type="hidden" id="id4" name="id4" class="form-control" required="false" placeholder="">
+                                                        <input type="text" id="caja4" name="caja4" class="form-control" value="<?php echo $caja4; ?>" placeholder="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                        CAS
+                                                        </span>
+                                                        </span>
+                                                        <input type="text" id="cas4" name="cas4" class="form-control" value="<?php echo $cas4; ?>" placeholder="">
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon">
+                                                        SN
+                                                        </span>
+                                                        </span>
+                                                        <input type="text" id="sn4" name="sn4" class="form-control" value="<?php echo $sn4; ?>" placeholder="">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                          </div>
+                                          <div class="modal-footer">
+                                              <div class="row">
+                                                  <div class="col-md-12">
+                                                      <button type="button" class="btn btn-success btn-md btn-block" data-dismiss="modal">Aceptar</button>
+                                                  </div>
+                                              </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                  </div><!-- Fin Modal TV DIGITAL -->
                 </form>             <!-- Accordion wrapper -->
                                 </div>
                                 <div class="tab-pane fade" id="ordenes-tecnicas">
@@ -1602,6 +1784,7 @@ session_start();
         </div><!-- /.row -->
         <!-- /#page-wrapper -->
     </div>
+
     <!-- /#wrapper -->
 
     <!-- jQuery -->

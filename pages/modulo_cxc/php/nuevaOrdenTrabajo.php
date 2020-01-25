@@ -184,7 +184,6 @@
                                 ':nodo' => $nodo,
                                 ':idVendedor' => $vendedor,
                                 ':tipoServicio' => $tipoServicio,
-                                ':nodo' => $nodo,
                                 ':creadoPor' => $creadoPor
                                 ));
 

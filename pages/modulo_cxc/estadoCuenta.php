@@ -210,6 +210,10 @@
                         <table class="table table-responsive table-condensed" style="border: none; font-size:12px;">
                             <tbody class="">
                                 <tr>
+                                    <th>Código</th>
+                                    <td><span class="label label-primary" style="font-size: 12px;"><?php echo $_GET['codigoCliente']; ?></span></td>
+                                </tr>
+                                <tr>
                                     <th>Nombre</th>
                                     <td><?php echo $nombreCliente; ?></td>
                                     <th>Fecha</th>

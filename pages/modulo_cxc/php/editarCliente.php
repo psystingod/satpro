@@ -14,7 +14,7 @@ class EditarCliente extends ConectionDB
 
     public function editar(){
         try {
-
+            date_default_timezone_set('America/El_Salvador');
             /****************** DATOS GENERALES ***********************/
             $sinServicio = "";
             $estado_cable = $_POST['cable']; //OSEA SI ESTA SUSPENDIDO O NO // F,T,S
@@ -379,6 +379,68 @@ class EditarCliente extends ConectionDB
                         ':codigo' => $codigo
                         ));
             //$codigoClienteNuevo = $this->dbConnect->lastInsertId();
+
+            if (isset($_POST['check1'])) {
+                $caja1 = $_POST['caja1'];
+                $cas1 = $_POST['cas1'];
+                $sn1 = $_POST['sn1'];
+                $sql1 = "UPDATE tbl_tv_box SET boxNum=:caja1, cast=:cas1, serialBox=:sn1, clientCode=:clientCode, activeDate=:activeDate, user=:user)";
+                $stmt = $this->dbConnect->prepare($sql1);
+                $stmt->bindValue(':caja1', $caja1);
+                $stmt->bindValue(':cas1', $cas1);
+                $stmt->bindValue(':sn1', $sn1);
+                $stmt->bindValue(':clientCode', $codigo);
+                $stmt->bindValue(':activeDate', $fechaHora);
+                $stmt->bindValue(':user', $ultUser);
+
+                $stmt->execute();
+            }
+            if (isset($_POST['check2'])) {
+                $caja2 = $_POST['caja2'];
+                $cas2 = $_POST['cas2'];
+                $sn2 = $_POST['sn2'];
+                $sql2 = "UPDATE tbl_tv_box SET boxNum=:caja2, cast=:cas2, serialBox=:sn2, clientCode=:clientCode, activeDate=:activeDate, user=:user)";
+                $stmt = $this->dbConnect->prepare($sql2);
+                $stmt->bindValue(':caja2', $caja2);
+                $stmt->bindValue(':cas2', $cas2);
+                $stmt->bindValue(':sn2', $sn2);
+                $stmt->bindValue(':clientCode', $codigo);
+                $stmt->bindValue(':activeDate', $fechaHora);
+                $stmt->bindValue(':user', $ultUser);
+
+                $stmt->execute();
+            }
+            if (isset($_POST['check3'])) {
+                $caja3 = $_POST['caja3'];
+                $cas3 = $_POST['cas3'];
+                $sn3 = $_POST['sn3'];
+                $sql3 = "UPDATE tbl_tv_box SET boxNum=:caja3, cast=:cas3, serialBox=:sn3, clientCode=:clientCode, activeDate=:activeDate, user=:user)";
+                $stmt = $this->dbConnect->prepare($sql3);
+                $stmt->bindValue(':caja3', $caja3);
+                $stmt->bindValue(':cas3', $cas3);
+                $stmt->bindValue(':sn3', $sn3);
+                $stmt->bindValue(':clientCode', $codigo);
+                $stmt->bindValue(':activeDate', $fechaHora);
+                $stmt->bindValue(':user', $ultUser);
+
+                $stmt->execute();
+            }
+            if (isset($_POST['check4'])) {
+                $caja4 = $_POST['caja4'];
+                $cas4 = $_POST['cas4'];
+                $sn4 = $_POST['sn4'];
+                $sql4 = "UPDATE tbl_tv_box SET boxNum=:caja4, cast=:cas4, serialBox=:sn4, clientCode=:clientCode, activeDate=:activeDate, user=:user)";
+                $stmt = $this->dbConnect->prepare($sql3);
+                $stmt->bindValue(':caja4', $caja4);
+                $stmt->bindValue(':cas4', $cas4);
+                $stmt->bindValue(':sn4', $sn4);
+                $stmt->bindValue(':clientCode', $codigo);
+                $stmt->bindValue(':activeDate', $fechaHora);
+                $stmt->bindValue(':user', $ultUser);
+
+                $stmt->execute();
+            }
+
             header('Location: ../infoCliente.php?id='.$codigo);
 
         } catch (Exception $e) {

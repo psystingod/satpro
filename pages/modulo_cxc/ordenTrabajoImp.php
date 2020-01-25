@@ -103,7 +103,7 @@ if (isset($_GET['nOrden'])) {
         <div class="row-fluid">
             <div class="col-md-12">
                 <div class="panel panel-danger">
-                  <div class="panel-heading"><h4 style="padding:0; margin:0;" class="text-center"><b>Orden de trabajo</b></h4><h5 style="padding:0; margin:0;" class="text-center"><b>Usulután centro</b></h5></div>
+                  <div class="panel-heading"><h4 style="padding:0; margin:0;" class="text-center"><b>Orden de trabajo</b></h4><h5 style="padding:0; margin:0;" class="text-center"><b><?php echo $nodo; ?></b></h5></div>
                   <div class="panel-body">
                       <?php
                       if (isset($_GET['nOrden'])) {

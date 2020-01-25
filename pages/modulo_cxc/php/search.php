@@ -38,8 +38,8 @@ $query = "SELECT cod_cliente, nombre, direccion, telefonos, Mac_modem, Serie_mod
 	while ($fila = $resultado->fetch_assoc()) {
 		$salida.= "<tr>
 			<td>"."<a class='btn btn-primary btn-sm' href=infoCliente.php?id={$fila['cod_cliente']} target='_blank'>".$fila['cod_cliente']."<a></td>
-			<td>".utf8_decode($fila['nombre'])."</td>
-			<td>".utf8_decode($fila['direccion'])."</td>
+			<td>".$fila['nombre']."</td>
+			<td>".$fila['direccion']."</td>
             <td>".$fila['telefonos']."</td>
             <td>".$fila['Mac_modem']."</td>
             <td>".$fila['Serie_modem']."</td>

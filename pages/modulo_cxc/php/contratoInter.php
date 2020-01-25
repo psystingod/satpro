@@ -90,7 +90,8 @@
     	  date_default_timezone_set('America/El_Salvador');
 
     	  //echo strftime("El año es %Y y el mes es %B");
-    	  setlocale(LC_ALL,"es_ES");
+		  putenv("LANG='es_ES.UTF-8'");
+	      setlocale(LC_ALL, 'es_ES.UTF-8');
     	  $pdf->SetFont('Courier','',10);
     	  $pdf->Cell(25,6,'',0,0,'L');
           $pdf->Cell(70,6,strtoupper($row['nombre']),0,1,'L');
@@ -160,9 +161,9 @@
 
   	    $cantidad = (doubleval($row['cuota_in']) + doubleval($imp));
         $pdf->Ln(3);
-        $pdf->Cell(68,6,utf8_decode(''),0,0,'L');
-        $pdf->Cell(74,6,utf8_decode($row['periodo_contrato_int']." MESES"),0,0,'L');
-        $pdf->Cell(20,6,utf8_decode("$".$row['costo_instalacion_in']),0,1,'L');
+        $pdf->Cell(68,6,'',0,0,'L');
+        $pdf->Cell(74,6,$row['periodo_contrato_int']." MESES",0,0,'L');
+        $pdf->Cell(20,6,"$".$row['costo_instalacion_in'],0,1,'L');
 
         $pdf->Cell(60,6,'',0,0,'L');
         $pdf->Cell(78,6,'$'.number_format($cantidad,2),0,0,'L');

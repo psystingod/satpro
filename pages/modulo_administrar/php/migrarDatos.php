@@ -424,12 +424,387 @@
                 die();
             }
         }
+
+        public function migrarOrdenesTrabajo()
+        {
+            try {
+                // SQL query para traer datos de los productos
+                $query = "SELECT * FROM ordenes";
+                // Preparación de sentencia
+                $statement = $this->dbConnect->prepare($query);
+                $statement->execute();
+                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+                foreach ($result as $key) {
+
+                    if ($key['cable'] == "T") {
+                        $tipoServicio = "C";
+                        $query = "INSERT IGNORE INTO tbl_ordenes_trabajo(idOrdenTrabajo, codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, /*diaCobro,*/ nombreCliente, telefonos, /*idMunicipio,*/ actividadCable, saldoCable, direccionCable, fechaTrabajo, hora, fechaProgramacion, idTecnico, /*mactv,*/ observaciones, /*idVendedor, tecnologia, recepcionTv,*/ tipoServicio, nodo, creadoPor                                                                                              )
+                                  VALUES(:idOrdenTrabajo, :codigoCliente, :fechaOrdenTrabajo, :tipoOrdenTrabajo, /*:diaCobro,*/ :nombreCliente, :telefonos, /*:idMunicipio,*/ :idActividadCable, :saldoCable, :direccionCable, :fechaTrabajo, :hora, :fechaProgramacion, :idTecnico, /*:mactv,*/ :observaciones, /*:idVendedor, :tecnologia, :recepcionTv,*/ :tipoServicio, :nodo, :creadoPor)";
+
+                        $statement = $this->dbConnect->prepare($query);
+                        $statement->execute(array(
+                                    ':idOrdenTrabajo' => $key['numeroOrden'],
+                                    ':codigoCliente' => $key['codigoCiente'],
+                                    ':fechaOrdenTrabajo' => $key['fechaOrden'],
+                                    ':tipoOrdenTrabajo' => $key['tipoOrden'],
+                                    //':diaCobro' => $diaCobro,
+                                    ':nombreCliente' => $key['nombre'],
+                                    ':telefonos' => $key['telefonos'],
+                                    //':idMunicipio' => $municipio,
+                                    ':idActividadCable' => $key['tipoActividad'],
+                                    ':saldoCable' => $key['saldo'],
+                                    ':direccionCable' => $key['direccion'],
+                                    ':fechaTrabajo' => $key['fechaEntrega'],
+                                    ':hora' => $key['hora'],
+                                    ':fechaProgramacion' => $key['fechaProgra'],
+                                    ':idTecnico' => $key['idTecnico'],
+                                    //':mactv' => $mactv,
+                                    ':observaciones' => $key['onservaciones'],
+                                    //':idVendedor' => $vendedor,
+                                    //':tecnologia' => $tecnologia,
+                                    //':recepcionTv' => $recepcionTv,
+                                    ':tipoServicio' => $tipoServicio,
+                                    ':nodo' => $key['nodo'],
+                                    ':creadoPor' => $key['creadaPor']
+                                    ));
+
+                        $statement->execute();
+                    }
+                    elseif ($key['internet'] == "T") {
+                        $tipoServicio = "I";
+                        $query = "INSERT IGNORE INTO tbl_ordenes_trabajo(idOrdenTrabajo, codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, /*diaCobro,*/ nombreCliente, telefonos, /*idMunicipio,*/ actividadInter, saldoInter, direccionInter, macModem, serieModem, velocidad, rx, tx, snr, colilla, fechaTrabajo, hora, fechaProgramacion, idTecnico, /*coordenadas,*/ observaciones, /*marcaModelo, tecnologia, idVendedor,*/ tipoServicio, nodo, creadoPor)
+                                  VALUES(:idOrdenTrabajo, :codigoCliente, :fechaOrdenTrabajo, :tipoOrdenTrabajo, /*:diaCobro,*/ :nombreCliente, :telefonos, /*:idMunicipio,*/ :idActividadInter, :saldoInter, :direccionInter, :macModem, :serieModem, :velocidad, :rx, :tx, :snr, :colilla, :fechaTrabajo, :hora, :fechaProgramacion, :idTecnico, /*:coordenadas,*/ :observaciones, /*:marcaModelo, :tecnologia, :idVendedor,*/ :tipoServicio, :nodo, :creadoPor)";
+
+                        $statement = $this->dbConnect->prepare($query);
+                        $statement->execute(array(
+                                    ':idOrdenTrabajo' => $key['numeroOrden'],
+                                    ':codigoCliente' => $key['codigoCiente'],
+                                    ':fechaOrdenTrabajo' => $key['fechaOrden'],
+                                    ':tipoOrdenTrabajo' => $key['tipoOrden'],
+                                    //':diaCobro' => $diaCobro,
+                                    ':nombreCliente' => $key['nombre'],
+                                    ':telefonos' => $key['telefonos'],
+                                    //':idMunicipio' => $municipio,
+                                    ':idActividadInter' => $key['tipoActividadInter'],
+                                    ':saldoInter' => $key['saldoInter'],
+                                    ':direccionInter' => $key['direccionInter'],
+                                    ':macModem' => $key['mac'],
+                                    ':serieModem' => $key['serie'],
+                                    ':velocidad' => $key['idVelocidad'],
+                                    ':rx' => $key['recibe'],
+                                    ':tx' => $key['transmite'],
+                                    ':snr' => $key['ruido'],
+                                    ':colilla' => $key['colilla'],
+                                    ':fechaTrabajo' => $key['fechaEntrega'],
+                                    ':hora' => $key['hora'],
+                                    ':fechaProgramacion' => $key['fechaProgra'],
+                                    ':idTecnico' => $key['idTecnico'],
+                                    //':coordenadas' => $coordenadas,
+                                    ':observaciones' => $key['onservaciones'],
+                                    //':marcaModelo' => $marcaModelo,
+                                    //':tecnologia' => $tecnologia,
+                                    ':nodo' => $key['nodo'],
+                                    //':idVendedor' => $vendedor,
+                                    ':tipoServicio' => $tipoServicio,
+                                    ':creadoPor' => $key['creadaPor']
+                                    ));
+
+                        $statement->execute();
+                    }
+
+                }
+
+                $this->dbConnect = NULL;
+                //return $result;
+
+            } catch (Exception $e) {
+                print "!Error¡: " . $e->getMessage() . "</br>";
+                die();
+            }
+        }
+
+        public function migrarOrdenesSuspension()
+        {
+            try {
+                // SQL query para traer datos de los productos
+                $query = "SELECT * FROM suspenciones";
+                // Preparación de sentencia
+                $statement = $this->dbConnect->prepare($query);
+                $statement->execute();
+                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+                foreach ($result as $key) {
+
+                    if ($key['cable'] == "T") {
+                        $tipoServicio = "C";
+                        $tipoOrden = "suspension";
+                        $query = "INSERT IGNORE INTO tbl_ordenes_suspension(idOrdenSuspension, codigoCliente, fechaOrden, tipoOrden, /*diaCobro, nombreCliente,*/ actividadCable, saldoCable, ordenaSuspension, /*direccion,*/ fechaSuspension, idTecnico, /*mactv,*/ colilla, observaciones, tipoServicio, creadoPor)
+                                  VALUES(:numeroSuspension, :codigoCliente, :fechaOrden, :tipoOrden, /*:diaCobro, :nombreCliente,*/ :idActividadCable, :saldoCable, :ordenaSuspension, /*:direccion,*/ :fechaSuspension, :idTecnico, /*:mactv,*/ :colilla, :observaciones, :tipoServicio, :creadoPor)";
+
+                        $statement = $this->dbConnect->prepare($query);
+                        $statement->execute(array(
+                                    ':numeroSuspension' => $key['numeroSuspension'],
+                                    ':codigoCliente' => $key['codigoCliente'],
+                                    ':fechaOrden' => $key['fechaElaborada'],
+                                    ':tipoOrden' => $tipoOrden,
+                                    //':diaCobro' => $diaCobro,
+                                    //':nombreCliente' => $nombreCliente,
+                                    ':idActividadCable' => $key['tipoActividad'],
+                                    ':saldoCable' => $key['saldo'],
+                                    //':direccion' => $direccion,
+                                    ':ordenaSuspension' => $key['ordenaSuspension'],
+                                    ':fechaSuspension' => $key['fechaSuspension'],
+                                    ':idTecnico' => $key['idTecnico'],
+                                    //':mactv' => $mactv,
+                                    ':colilla' => $key['colilla'],
+                                    ':observaciones' => $key['motivoCancelacion'],
+                                    ':tipoServicio' => $tipoServicio,
+                                    ':creadoPor' => $key['hechoPor']
+                                    ));
+
+                        $statement->execute();
+                    }
+                    elseif ($key['cable'] == null || $key['cable'] == "F") {
+                        $tipoServicio = "I";
+                        $tipoOrden = "suspension";
+                        $query = "INSERT IGNORE INTO tbl_ordenes_suspension(idOrdenSuspension, codigoCliente, fechaOrden, tipoOrden, /*diaCobro, nombreCliente,*/ actividadInter, saldoInter, ordenaSuspension, macModem, serieModem, velocidad, /*direccion,*/ fechaSuspension, idTecnico, colilla, observaciones, tipoServicio, creadoPor)
+                                  VALUES(:numeroSuspension, :codigoCliente, :fechaOrden, :tipoOrden, /*:diaCobro, :nombreCliente,*/ :idActividadInter, :saldoInter, :ordenaSuspension, :macModem, :serieModem, :velocidad, /*:direccion,*/ :fechaSuspension, :idTecnico, :colilla, :observaciones, :tipoServicio, :creadoPor)";
+
+                        $statement = $this->dbConnect->prepare($query);
+                        $statement->execute(array(
+                                    ':numeroSuspension' => $key['numeroSuspension'],
+                                    ':codigoCliente' => $key['codigoCliente'],
+                                    ':fechaOrden' => $key['fechaElaborada'],
+                                    ':tipoOrden' => $tipoOrden,
+                                    //':diaCobro' => $diaCobro,
+                                    //':nombreCliente' => $nombreCliente,
+                                    ':idActividadInter' => $key['actividadInter'],
+                                    ':saldoInter' => $key['saldoInter'],
+                                    //':direccion' => $direccion,
+                                    ':ordenaSuspension' => $key['ordenaSuspension'],
+                                    ':macModem' => $key['mac'],
+                                    ':serieModem' => $key['serie'],
+                                    ':velocidad' => $key['idVelocidad'],
+                                    ':fechaSuspension' => $key['fechaSuspension'],
+                                    ':idTecnico' => $key['idTecnico'],
+                                    ':colilla' => $key['colilla'],
+                                    ':observaciones' => $key['motivoCancelacion'],
+                                    ':tipoServicio' => $tipoServicio,
+                                    ':creadoPor' => $key['hechoPor']
+                                    ));
+
+                        $statement->execute();
+                    }
+
+                }
+
+                $this->dbConnect = NULL;
+                //return $result;
+
+            } catch (Exception $e) {
+                print "!Error¡: " . $e->getMessage() . "</br>";
+                die();
+            }
+        }
+
+        public function migrarReconexiones()
+        {
+            try {
+                // SQL query para traer datos de los productos
+                $query = "SELECT * FROM reconexiones";
+                // Preparación de sentencia
+                $statement = $this->dbConnect->prepare($query);
+                $statement->execute();
+                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+                foreach ($result as $key) {
+
+                    if ($key['cable'] == "T") {
+                        $tipoServicio = "C";
+                        $tipoOrden = "reconexion";
+                        $query = "INSERT IGNORE INTO tbl_ordenes_reconexion(idOrdenReconex, codigoCliente, fechaOrden, tipoOrden, /*diaCobro, nombreCliente,*/ telefonos, tipoReconexCable, saldoCable, fechaReconexCable, ultSuspCable, /*direccion,*/ idTecnico, /*mactv,*/ colilla, observaciones, tipoServicio, creadoPor)
+                                  VALUES(:idOrdenReconex, :codigoCliente, :fechaOrden, :tipoOrden, /*:diaCobro, :nombreCliente,*/ :telefonos, :tipoReconexCable, :saldoCable, :fechaReconexCable, :ultSuspCable, /*:direccion,*/ :idTecnico, /*:mactv,*/ :colilla, :observaciones, :tipoServicio, :creadoPor)";
+
+                        $statement = $this->dbConnect->prepare($query);
+                        $statement->execute(array(
+                                    ':idOrdenReconex' => $key['idReconexion'],
+                                    ':codigoCliente' => $key['codigoCliente'],
+                                    ':fechaOrden' => $key['fechaElaborada'],
+                                    ':tipoOrden' => $tipoOrden,
+                                    //':diaCobro' => $diaCobro,
+                                    //':nombreCliente' => $nombreCliente,
+                                    ':telefonos' => $key['telefono'],
+                                    ':tipoReconexCable' => $key['tipo'],
+                                    ':saldoCable' => $key['saldo'],
+                                    ':fechaReconexCable' => $key['fechaEjecutada'],
+                                    /*':direccion' => $direccion,*/
+                                    ':ultSuspCable' => $key['fechaSuspension'],
+                                    ':idTecnico' => $key['idTecnico'],
+                                    //':mactv' => $mactv,
+                                    ':colilla' => $key['colilla'],
+                                    ':observaciones' => $key['observaciones'],
+                                    ':tipoServicio' => $tipoServicio,
+                                    ':creadoPor' => $key['creadoPor']
+                                    ));
+
+                        $statement->execute();
+                    }
+                    elseif ($key['internet'] == "T") {
+                        $tipoServicio = "I";
+                        $tipoOrden = "reconexion";
+                        $query = "INSERT IGNORE INTO tbl_ordenes_reconexion(idOrdenReconex, codigoCliente, fechaOrden, tipoOrden, /*diaCobro, nombreCliente,*/ telefonos, tipoReconexInter, /*saldoInter,*/ fechaReconexInter, ultSuspInter, macModem, serieModem, velocidad, /*direccion,*/ idTecnico, colilla, observaciones, tipoServicio, creadoPor)
+                                  VALUES(:idOrdenReconex, :codigoCliente, :fechaOrden, :tipoOrden, /*:diaCobro, :nombreCliente,*/ :telefonos, :tipoReconexInter, /*:saldoInter,*/ :fechaReconexInter, :ultSuspInter, :macModem, :serieModem, :velocidad, /*:direccion,*/ :idTecnico, :colilla, :observaciones, :tipoServicio, :creadoPor)";
+
+                        $statement = $this->dbConnect->prepare($query);
+                        $statement->execute(array(
+                                    ':idOrdenReconex' => $key['idReconexion'],
+                                    ':codigoCliente' => $key['codigoCliente'],
+                                    ':fechaOrden' => $key['fechaElaborada'],
+                                    ':tipoOrden' => $tipoOrden,
+                                    //':diaCobro' => $diaCobro,
+                                    //':nombreCliente' => $nombreCliente,
+                                    ':telefonos' => $key['telefono'],
+                                    ':tipoReconexInter' => $key['tipo'],
+                                    //':saldoInter' => $saldoInter,
+                                    ':fechaReconexInter' => $key['fechaEjecutada'],
+                                    ':ultSuspInter' => $key['fechaSuspensionIn'],
+                                    //':direccion' => $direccion,
+                                    ':macModem' => $key['mac'],
+                                    ':serieModem' => $key['serie'],
+                                    ':velocidad' => $key['idVelocidad'],
+                                    ':idTecnico' => $key['idTecnico'],
+                                    ':colilla' => $key['colilla'],
+                                    ':observaciones' => $key['observaciones'],
+                                    ':tipoServicio' => $tipoServicio,
+                                    ':creadoPor' => $key['creadoPor']
+                                    ));
+
+                        $statement->execute();
+                    }
+
+                }
+
+                $this->dbConnect = NULL;
+                //return $result;
+
+            } catch (Exception $e) {
+                print "!Error¡: " . $e->getMessage() . "</br>";
+                die();
+            }
+        }
+
+        public function migrarTraslados()
+        {
+            try {
+                // SQL query para traer datos de los productos
+                $query = "SELECT * FROM Traslado_servicio";
+                // Preparación de sentencia
+                $statement = $this->dbConnect->prepare($query);
+                $statement->execute();
+                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+                foreach ($result as $key) {
+
+                    if ($key['internet'] == "F" || $key['internet'] == null) {
+                        $tipoServicio = "C";
+                        $tipoOrden = "traslado";
+                        $this->dbConnect->beginTransaction();
+                        $query = "INSERT IGNORE INTO tbl_ordenes_traslado (idOrdenTraslado, codigoCliente,fechaOrden,tipoOrden,saldoCable,/*diaCobro,nombreCliente,*/direccion,direccionTraslado,idDepartamento,idMunicipio,idColonia,telefonos,colilla,fechaTraslado,idTecnico,/*mactv,*/observaciones,tipoServicio,creadoPor)
+                                  VALUES (:idOrdenTraslado, :codigoCliente, :fechaOrden, :tipoOrden, :saldoCable, /*:diaCobro, :nombreCliente,*/ :direccion, :direccionTraslado, :idDepartamento, :idMunicipio, :idColonia, :telefonos,
+                                  :colilla, :fechaTraslado, :idTecnico, /*:mactv,*/ :observaciones, :tipoServicio, :creadoPor)";
+
+                        $statement = $this->dbConnect->prepare($query);
+                        $statement->execute(array(
+                                    ':idOrdenTraslado' => $key['idTraslado'],
+                                    ':codigoCliente' => $key['codigoCliente'],
+                                    ':fechaOrden' => $key['fechaOrdenoTraslado'],
+                                    ':tipoOrden' => $tipoOrden,
+                                    ':saldoCable' => $key['saldo'],
+                                    //':diaCobro' => $diaCobro,
+                                    //':nombreCliente' => $nombreCliente,
+                                    ':direccion' => $key['direccion'],
+                                    ':direccionTraslado' => $key['direccion2'],
+                                    ':idDepartamento' => $key['idDepartamento'],
+                                    ':idMunicipio' => $key['idMunicipio'],
+                                    ':idColonia' => $key['idColonia'],
+                                    ':telefonos' => $key['telefono'],
+                                    ':colilla' => $key['colilla'],
+                                    ':fechaTraslado' => $key['fechaTraslado'],
+                                    ':idTecnico' => $key['idTecnico'],
+                                    //':mactv' => $mactv,
+                                    ':observaciones' => $key['observaciones'],
+                                    ':tipoServicio' => $tipoServicio,
+                                    ':creadoPor' => $key['hechoPor'],
+                                    //':idOrdenTraslado' => $numeroOrden,
+                                    ));
+                        sleep(0.5);
+                        $statement->execute();
+                        $this->dbConnect->commit();
+                    }
+                    elseif ($key['internet'] == "T") {
+                        $tipoServicio = "I";
+                        $tipoOrden = "traslado";
+                        $this->dbConnect->beginTransaction();
+                        $query = "INSERT IGNORE INTO tbl_ordenes_traslado (idOrdenTraslado, codigoCliente,fechaOrden,tipoOrden,saldoInter,/*diaCobro,nombreCliente,*/direccion,direccionTraslado,idDepartamento,idMunicipio,idColonia,telefonos,macModem,serieModem,velocidad,colilla,fechaTraslado,idTecnico,observaciones,tipoServicio,creadoPor)
+                                  VALUES (:idOrdenTraslado, :codigoCliente, :fechaOrden, :tipoOrden, :saldoInter, /*:diaCobro, :nombreCliente,*/ :direccion, :direccionTraslado, :idDepartamento, :idMunicipio, :idColonia, :telefonos, :macModem, :serieModem, :velocidad,
+                                  :colilla, :fechaTraslado, :idTecnico, :observaciones, :tipoServicio, :creadoPor)";
+
+                        $statement = $this->dbConnect->prepare($query);
+                        $statement->execute(array(
+                                    ':idOrdenTraslado' => $key['idTraslado'],
+                                    ':codigoCliente' => $key['codigoCliente'],
+                                    ':fechaOrden' => $key['fechaOrdenoTraslado'],
+                                    ':tipoOrden' => $tipoOrden,
+                                    ':saldoInter' => $key['saldoInter'],
+                                    //':diaCobro' => $diaCobro,
+                                    //':nombreCliente' => $nombreCliente,
+                                    ':direccion' => $key['direccion'],
+                                    ':direccionTraslado' => $key['direccion2'],
+                                    ':idDepartamento' => $key['idDepartamento'],
+                                    ':idMunicipio' => $key['idMunicipio'],
+                                    ':idColonia' => $key['idColonia'],
+                                    ':macModem' => $key['mac'],
+                                    ':serieModem' => $key['serie'],
+                                    ':velocidad' => $key['idVelocidad'],
+                                    ':telefonos' => $key['telefono'],
+                                    ':colilla' => $key['colilla'],
+                                    ':fechaTraslado' => $key['fechaTraslado'],
+                                    ':idTecnico' => $key['idTecnico'],
+                                    ':observaciones' => $key['observaciones'],
+                                    ':tipoServicio' => $tipoServicio,
+                                    ':creadoPor' => $key['hechoPor'],
+                                    //':idOrdenTraslado' => $numeroOrden,
+                                    ));
+
+                        sleep(0.5);
+                        $statement->execute();
+                        $this->dbConnect->commit();
+                    }
+
+                }
+
+                $this->dbConnect = NULL;
+                //return $result;
+
+            } catch (Exception $e) {
+                print "!Error¡: " . $e->getMessage() . "</br>";
+                die();
+            }
+        }
+
     }
 
     $md = new MigrarDatos();
     //$md->migrarAbonos();
     //$md->migrarCargos();
-    $md->matchCargosAbonos();
+    //$md->matchCargosAbonos();
     //$md->migrarCargos_cxc();
     //$md->migrarAbonos_cxc();
+
+
+    //$md->migrarOrdenesTrabajo();
+    //$md->migrarOrdenesSuspension();
+    //$md->migrarReconexiones();
+    //$md->migrarTraslados();
 ?>

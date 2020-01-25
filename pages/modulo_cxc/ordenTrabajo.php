@@ -128,7 +128,8 @@
             $snr = $row['snr'];
             $colilla = $row['colilla'];
             if ($row["fechaTrabajo"] >= 7) {
-                $fechaTrabajo = date_format(date_create($row["fechaTrabajo"]), 'd/m/Y');
+                $date2 = DateTime::createFromFormat('Y-m-d', $row["fechaTrabajo"]);
+                $fechaTrabajo = $date2->format('d/m/Y');
             }else {
                 $fechaTrabajo = "";
             }

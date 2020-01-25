@@ -130,7 +130,7 @@
             //$tipoReconexInter = $row["tipoReconexInter"];
             $diaCobro = $row["diaCobro"];
             $codigoCliente = $row["codigoCliente"];
-            $fechaTraslado = $row['fechaTraslado'];
+            $fechaTraslado = date_format(date_create($row["fechaTraslado"]), 'd/m/Y');
             $direccionTraslado = $row['direccionTraslado'];
             if ($codigoCliente === "00000") {
                 $codigoCliente = "SC";

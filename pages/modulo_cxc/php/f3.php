@@ -45,9 +45,9 @@
 	  $pdf->Image('../../../images/logo.png',10,10, 26, 24);
 	  $pdf->Ln(35);
 	  $pdf->SetFont('Arial','B',13);
-	  $pdf->Cell(190,6,utf8_decode('F-3'),0,1,'R');
+	  $pdf->Cell(190,6,'F-3',0,1,'R');
 	  $pdf->Ln();
-	  $pdf->Cell(190,6,utf8_decode('PAGARÉ SIN PROTESTO'),0,1,'C');
+	  $pdf->Cell(190,6,'PAGARÉ SIN PROTESTO',0,1,'C');
 	  $pdf->Ln(10);
 
 	  $pdf->SetFont('Arial','B',12);
@@ -55,9 +55,10 @@
 	  date_default_timezone_set('America/El_Salvador');
 
 	  //echo strftime("El año es %Y y el mes es %B");
-	  setlocale(LC_ALL,"es_ES");
+      putenv("LANG='es_ES.UTF-8'");
+      setlocale(LC_ALL, 'es_ES.UTF-8');
 	  $pdf->SetFont('Arial','B',12);
-	  $pdf->Cell(190,6,utf8_decode(strftime('Ciudad de Usulután, %A %e de %B de %G')),0,1,'L');
+	  $pdf->Cell(190,6,"Ciudad de Usulután, ".utf8_decode(strftime('%A %e de %B de %G')),0,1,'L');
 	  $pdf->Ln();
 	  while($row = $resultado->fetch_assoc())
 	  {

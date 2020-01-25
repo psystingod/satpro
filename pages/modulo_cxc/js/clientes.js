@@ -216,3 +216,21 @@ function setVencimientoInternet(){
     document.getElementById("vencimientoContratoInternet").style.color = "red";
 
 }
+
+function tipoServicioCabletv(){
+    var tipoServicio = document.getElementById("tipoServicioCable").value;
+
+    if (tipoServicio == 2) {
+        document.getElementById('caja1').required = true;
+        document.getElementById('cas1').required = true;
+        document.getElementById('sn1').required = true;
+        document.getElementById('check1').checked = true;
+        alert("POR FAVOR ASEGURATE DE RELLENAR LOS DATOS DE LA CAJA DIGITAL");
+        alert("PRESIONA EL BOTÓN DE TU DERECHA PARA DESPLEGAR LOS DATOS (EL BOTÓN AZÚL ( ͡° ͜ʖ ͡°))");
+    }else {
+        document.getElementById('caja1').required = false;
+        document.getElementById('cas1').required = false;
+        document.getElementById('sn1').required = false;
+    }
+
+}

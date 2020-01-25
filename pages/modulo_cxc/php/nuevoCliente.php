@@ -14,7 +14,7 @@ class NuevoCliente extends ConectionDB
 
     public function guardar(){
         try {
-
+            date_default_timezone_set('America/El_Salvador');
             /****************** DATOS GENERALES ***********************/
             $sinServicio = "";
             $estado_cable = $_POST['cable']; //OSEA SI ESTA SUSPENDIDO O NO // F,T,S
@@ -410,8 +410,147 @@ class NuevoCliente extends ConectionDB
                         ':fechaHoraCreado' => $fechaHora
                         ));
             $codigoClienteNuevo = $this->dbConnect->lastInsertId();
+            //AQUI IBA
+
+            if (isset($_POST['check1'])) {
+                $caja1 = $_POST['caja1'];
+                $cas1 = $_POST['cas1'];
+                $sn1 = $_POST['sn1'];
+                $sql1 = "INSERT INTO tbl_tv_box (boxNum, cast, serialBox, clientCode, activeDate, user) VALUES (:caja1, :cas1, :sn1, :clientCode, :activeDate, :user)";
+                $stmt = $this->dbConnect->prepare($sql1);
+                $stmt->bindValue(':caja1', $caja1);
+                $stmt->bindValue(':cas1', $cas1);
+                $stmt->bindValue(':sn1', $sn1);
+                $stmt->bindValue(':clientCode', $codigoClienteNuevo);
+                $stmt->bindValue(':activeDate', $fechaHora);
+                $stmt->bindValue(':user', $creadoPor);
+
+                $stmt->execute();
+
+                $caja1 = 0;
+                $cas1 = 0;
+                $sn1 = 0;
+                $sql1 = "INSERT INTO tbl_tv_box (boxNum, cast, serialBox, clientCode, activeDate, user) VALUES (:caja1, :cas1, :sn1, :clientCode, :activeDate, :user)";
+                $stmt = $this->dbConnect->prepare($sql1);
+                $stmt->bindValue(':caja1', $caja1);
+                $stmt->bindValue(':cas1', $cas1);
+                $stmt->bindValue(':sn1', $sn1);
+                $stmt->bindValue(':clientCode', $codigoClienteNuevo);
+                $stmt->bindValue(':activeDate', $fechaHora);
+                $stmt->bindValue(':user', $creadoPor);
+
+                $stmt->execute();
+
+                $sql1 = "INSERT INTO tbl_tv_box (boxNum, cast, serialBox, clientCode, activeDate, user) VALUES (:caja1, :cas1, :sn1, :clientCode, :activeDate, :user)";
+                $stmt = $this->dbConnect->prepare($sql1);
+                $stmt->bindValue(':caja1', $caja1);
+                $stmt->bindValue(':cas1', $cas1);
+                $stmt->bindValue(':sn1', $sn1);
+                $stmt->bindValue(':clientCode', $codigoClienteNuevo);
+                $stmt->bindValue(':activeDate', $fechaHora);
+                $stmt->bindValue(':user', $creadoPor);
+
+                $stmt->execute();
+
+                $sql1 = "INSERT INTO tbl_tv_box (boxNum, cast, serialBox, clientCode, activeDate, user) VALUES (:caja1, :cas1, :sn1, :clientCode, :activeDate, :user)";
+                $stmt = $this->dbConnect->prepare($sql1);
+                $stmt->bindValue(':caja1', $caja1);
+                $stmt->bindValue(':cas1', $cas1);
+                $stmt->bindValue(':sn1', $sn1);
+                $stmt->bindValue(':clientCode', $codigoClienteNuevo);
+                $stmt->bindValue(':activeDate', $fechaHora);
+                $stmt->bindValue(':user', $creadoPor);
+
+                $stmt->execute();
+            }
+            if (isset($_POST['check2'])) {
+                $caja2 = $_POST['caja2'];
+                $cas2 = $_POST['cas2'];
+                $sn2 = $_POST['sn2'];
+                $sql2 = "INSERT INTO tbl_tv_box (boxNum, cast, serialBox, clientCode, activeDate, user) VALUES (:caja2, :cas2, :sn2, :clientCode, :activeDate, :user)";
+                $stmt = $this->dbConnect->prepare($sql2);
+                $stmt->bindValue(':caja2', $caja2);
+                $stmt->bindValue(':cas2', $cas2);
+                $stmt->bindValue(':sn2', $sn2);
+                $stmt->bindValue(':clientCode', $codigoClienteNuevo);
+                $stmt->bindValue(':activeDate', $fechaHora);
+                $stmt->bindValue(':user', $creadoPor);
+
+                $stmt->execute();
+
+                $caja2 = 0;
+                $cas2 = 0;
+                $sn2 = 0;
+                $sql2 = "INSERT INTO tbl_tv_box (boxNum, cast, serialBox, clientCode, activeDate, user) VALUES (:caja2, :cas2, :sn2, :clientCode, :activeDate, :user)";
+                $stmt = $this->dbConnect->prepare($sql2);
+                $stmt->bindValue(':caja2', $caja2);
+                $stmt->bindValue(':cas2', $cas2);
+                $stmt->bindValue(':sn2', $sn2);
+                $stmt->bindValue(':clientCode', $codigoClienteNuevo);
+                $stmt->bindValue(':activeDate', $fechaHora);
+                $stmt->bindValue(':user', $creadoPor);
+
+                $stmt->execute();
+
+                $sql2 = "INSERT INTO tbl_tv_box (boxNum, cast, serialBox, clientCode, activeDate, user) VALUES (:caja2, :cas2, :sn2, :clientCode, :activeDate, :user)";
+                $stmt = $this->dbConnect->prepare($sql2);
+                $stmt->bindValue(':caja2', $caja2);
+                $stmt->bindValue(':cas2', $cas2);
+                $stmt->bindValue(':sn2', $sn2);
+                $stmt->bindValue(':clientCode', $codigoClienteNuevo);
+                $stmt->bindValue(':activeDate', $fechaHora);
+                $stmt->bindValue(':user', $creadoPor);
+
+                $stmt->execute();
+            }
+            if (isset($_POST['check3'])) {
+                $caja3 = $_POST['caja3'];
+                $cas3 = $_POST['cas3'];
+                $sn3 = $_POST['sn3'];
+                $sql3 = "INSERT INTO tbl_tv_box (boxNum, cast, serialBox, clientCode, activeDate, user) VALUES (:caja3, :cas3, :sn3, :clientCode, :activeDate, :user)";
+                $stmt = $this->dbConnect->prepare($sql3);
+                $stmt->bindValue(':caja3', $caja3);
+                $stmt->bindValue(':cas3', $cas3);
+                $stmt->bindValue(':sn3', $sn3);
+                $stmt->bindValue(':clientCode', $codigoClienteNuevo);
+                $stmt->bindValue(':activeDate', $fechaHora);
+                $stmt->bindValue(':user', $creadoPor);
+
+                $stmt->execute();
+
+                $caja3 = 0;
+                $cas3 = 0;
+                $sn3 = 0;
+                $sql3 = "INSERT INTO tbl_tv_box (boxNum, cast, serialBox, clientCode, activeDate, user) VALUES (:caja3, :cas3, :sn3, :clientCode, :activeDate, :user)";
+                $stmt = $this->dbConnect->prepare($sql3);
+                $stmt->bindValue(':caja3', $caja3);
+                $stmt->bindValue(':cas3', $cas3);
+                $stmt->bindValue(':sn3', $sn3);
+                $stmt->bindValue(':clientCode', $codigoClienteNuevo);
+                $stmt->bindValue(':activeDate', $fechaHora);
+                $stmt->bindValue(':user', $creadoPor);
+
+                $stmt->execute();
+            }
+            if (isset($_POST['check4'])) {
+                $caja4 = $_POST['caja4'];
+                $cas4 = $_POST['cas4'];
+                $sn4 = $_POST['sn4'];
+                $sql4 = "INSERT INTO tbl_tv_box (boxNum, cast, serialBox, clientCode, activeDate, user) VALUES (:caja4, :cas4, :sn4, :clientCode, :activeDate, :user)";
+                $stmt = $this->dbConnect->prepare($sql3);
+                $stmt->bindValue(':caja4', $caja4);
+                $stmt->bindValue(':cas4', $cas4);
+                $stmt->bindValue(':sn4', $sn4);
+                $stmt->bindValue(':clientCode', $codigoClienteNuevo);
+                $stmt->bindValue(':activeDate', $fechaHora);
+                $stmt->bindValue(':user', $creadoPor);
+
+                $stmt->execute();
+            }
+
             sleep(0.5);
             $this->dbConnect->commit();
+
             header('Location: ../infoCliente.php?id='.$codigoClienteNuevo);
 
         } catch (Exception $e) {

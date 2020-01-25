@@ -81,7 +81,6 @@
                                 ':fechaReconexCable' => $fechaReconexCable,
                                 ':direccion' => $direccion,
                                 ':ultSuspCable' => $ultSuspCable,
-                                ':fechaReconexCable' => $fechaReconexCable,
                                 ':idTecnico' => $responsable,
                                 ':mactv' => $mactv,
                                 ':colilla' => $colilla,
