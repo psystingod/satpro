@@ -133,7 +133,7 @@ function editarOrden(){
 function imprimirOrden(){
     var nOrden = document.getElementById("numeroOrden").value
     // Trigger the button element with a click
-    window.open("ordenTrabajoImp.php?nOrden="+nOrden, '_blank');
+    window.open("php/ordenTrabajoImp.php?nOrden="+nOrden, '_blank');
 }
 
 function changeAction(action){

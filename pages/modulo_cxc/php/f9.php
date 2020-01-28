@@ -41,9 +41,9 @@
 	  putenv("LANG='es_ES.UTF-8'");
 	  setlocale(LC_ALL, 'es_ES.UTF-8');
       $pdf->SetFont('Arial','B',11);
-      $pdf->Cell(190,6,"Ciudad de Usulután, ".utf8_decode(strftime('%A %e de %B de %G')),0,1,'L');
+      $pdf->Cell(190,6,utf8_decode("Ciudad de Usulután, ").utf8_decode(strftime('%A %e de %B de %G')),0,1,'L');
       $pdf->Ln();
-      $pdf->Cell(190,6,'Cable Visión por Satélite S.A. DE C.V.',0,1,'L');
+      $pdf->Cell(190,6,utf8_decode('Cable Visión por Satélite S.A. DE C.V.'),0,1,'L');
       $pdf->Ln();
     	while($row = $resultado->fetch_assoc())
     	{
@@ -51,21 +51,21 @@
         $pdf->Cell(190,6,'Estimado(a) Sr(a)(ita): '.$row['nombre'].' ('.$row['cod_cliente'].')',0,1,'L');
         $pdf->Ln();
 
-        $pdf->MultiCell(190,6,'Mediante la presente se le informa sobre el retraso en el pago de su facturación sobre los servicios contratados con la empresa Cable Sat. De acuerdo a las clausulas de contratación de servicio, debe realizar las cancelaciones en nuestras oficinas.',0,'L',0);
+        $pdf->MultiCell(190,6,utf8_decode('Mediante la presente se le informa sobre el retraso en el pago de su facturación sobre los servicios contratados con la empresa Cable Sat. De acuerdo a las clausulas de contratación de servicio, debe realizar las cancelaciones en nuestras oficinas.'),0,'L',0);
         $pdf->Ln();
-        $pdf->MultiCell(190,6,'Se recomienda a nuestros clientes en su condición, realizar la reconexión de su respectivo servicio, para que su pago sea por el beneficio de su consumo.',0,'L',0);
+        $pdf->MultiCell(190,6,utf8_decode('Se recomienda a nuestros clientes en su condición, realizar la reconexión de su respectivo servicio, para que su pago sea por el beneficio de su consumo.'),0,'L',0);
         $pdf->Ln();
-        $pdf->MultiCell(190,6,'De hacer caso omiso a las notificaciones, se hará uso de los documentos y garantías como lo establece:',0,'L',0);
+        $pdf->MultiCell(190,6,utf8_decode('De hacer caso omiso a las notificaciones, se hará uso de los documentos y garantías como lo establece:'),0,'L',0);
         $pdf->Ln();
         $pdf->MultiCell(190,6,'Clausula 8:',0,'L',0);
 
         $pdf->Ln(3);
         $pdf->SetFont('Arial','B',11);
-        $pdf->MultiCell(190,6,'Suscribe un pagaré por el valor del servicio, durante el plazo contratado. Este valor será utilizado como garantía de los compromisos económicos que adquiero mediante la suscripción del presente contrato, el cuál será utilizado en caso de acción judicial.',0,'L',0);
+        $pdf->MultiCell(190,6,utf8_decode('Suscribe un pagaré por el valor del servicio, durante el plazo contratado. Este valor será utilizado como garantía de los compromisos económicos que adquiero mediante la suscripción del presente contrato, el cuál será utilizado en caso de acción judicial.'),0,'L',0);
 
         $pdf->Ln();
         $pdf->SetFont('Arial','',11);
-        $pdf->MultiCell(190,6,'Además de hacer valer la autorización firmada para compartir la información crediticia, afectando su récord como cliente de otras entidades.',0,'L',0);
+        $pdf->MultiCell(190,6,utf8_decode('Además de hacer valer la autorización firmada para compartir la información crediticia, afectando su récord como cliente de otras entidades.'),0,'L',0);
 
         $pdf->Ln();
 
@@ -88,8 +88,8 @@
 
         $pdf->Cell(95,6,'$5.00 por mora',1,0,'L');
         $pdf->Cell(95,6,'$3.00 por mora',1,1,'L');
-        $pdf->Cell(95,6,'$5.22 de reconexión',1,0,'L');
-        $pdf->Cell(95,6,'$3.13 de reconexión',1,1,'L');
+        $pdf->Cell(95,6,utf8_decode('$5.22 de reconexión'),1,0,'L');
+        $pdf->Cell(95,6,utf8_decode('$3.13 de reconexión'),1,1,'L');
         $pdf->SetFont('Arial','B',11);
         //var_dump($totalCable);
         //var_dump($totalInter);
@@ -111,7 +111,7 @@
         $pdf->Cell(95,6,'MONTO TOTAL: $'.(number_format(doubleval($totalCable) + doubleval($totalInter),2)),0,0,'L');
         $pdf->Ln(10);
         $pdf->Cell(95,6,'Un saludo afectuoso, atentamente',0,0,'L');
-    	$pdf->Cell(95,6,'Válido hasta '.$fechaVencimiento,0,1,'R');
+    	$pdf->Cell(95,6,utf8_decode('Válido hasta '.$fechaVencimiento),0,1,'R');
         $pdf->Ln(3);
 
     	$pdf->Cell(120,6,'____________________________________',0,0,'L');

@@ -224,8 +224,8 @@ function tipoServicioCabletv(){
         document.getElementById('caja1').required = true;
         document.getElementById('cas1').required = true;
         document.getElementById('sn1').required = true;
-        document.getElementById('check1').checked = true;
-        alert("POR FAVOR ASEGURATE DE RELLENAR LOS DATOS DE LA CAJA DIGITAL");
+        //document.getElementById('check1').checked = true;
+        alert("POR FAVOR ASEGURATE DE LLENAR LOS DATOS DE LA CAJA DIGITAL");
         alert("PRESIONA EL BOTÓN DE TU DERECHA PARA DESPLEGAR LOS DATOS (EL BOTÓN AZÚL ( ͡° ͜ʖ ͡°))");
     }else {
         document.getElementById('caja1').required = false;

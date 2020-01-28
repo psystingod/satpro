@@ -21,7 +21,7 @@
 
 	  // SQL query para traer datos del servicio de cable de la tabla clientes
 	  $query = "SELECT valorImpuesto FROM tbl_impuestos WHERE siglasImpuesto = 'CESC'";
-	  // Preparación de sentencia
+	  // PreparaciÃ³n de sentencia
 	  $statement = $mysqli->query($query);
 	  //$statement->execute();
 	  while ($result = $statement->fetch_assoc()) {
@@ -30,7 +30,7 @@
 
 	  // SQL query para traer datos del servicio de cable de la tabla clientes
 	  $query = "SELECT valorImpuesto FROM tbl_impuestos WHERE siglasImpuesto = 'IVA'";
-	  // Preparación de sentencia
+	  // PreparaciÃ³n de sentencia
 	  $statement = $mysqli->query($query);
 	  //$statement->execute();
 	  while ($result = $statement->fetch_assoc()) {
@@ -48,16 +48,17 @@
 
           //$pdf->Ln(-2);
     	  $pdf->SetFont('Courier','',10);
+	  $pdf->Ln(4);
     	  $pdf->Cell(190,6,$row['cod_cliente'],0,1,'R');
     	  $pdf->Ln();
 
-    	  $pdf->Ln(4);
+    	  $pdf->Ln(5);
 
     	  $pdf->SetFont('Courier','B',12);
 
     	  date_default_timezone_set('America/El_Salvador');
 
-    	  //echo strftime("El año es %Y y el mes es %B");
+    	  //echo strftime("El aÃ±o es %Y y el mes es %B");
     	  setlocale(LC_ALL,"es_ES");
     	  $pdf->SetFont('Courier','',10);
     	  $pdf->Cell(29,6,'',0,0,'L');

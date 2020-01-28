@@ -59,6 +59,21 @@ class GetAllInfo extends ConectionDB
         }
     }
 
+    public function getDataVen($tabla, $idVendedor){
+        try {
+                $query = "SELECT * FROM $tabla WHERE idVendedor = :idVendedor";
+                $statement = $this->dbConnect->prepare($query);
+                $statement->bindParam(':idVendedor', $idVendedor);
+                $statement->execute();
+                $result = $statement->fetch(PDO::FETCH_ASSOC);
+                return $result;
+
+        } catch (Exception $e) {
+            print "!Error¡: " . $e->getMessage() . "</br>";
+            die();
+        }
+    }
+
     public function getDataOrders($tabla, $codigoCliente){
         try {
                 $query = "SELECT * FROM $tabla WHERE codigoCliente = :codigoCliente";

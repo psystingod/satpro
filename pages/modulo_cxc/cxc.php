@@ -88,6 +88,10 @@
                             '<ul class="dropdown-menu dropdown-user">
                                 <li><a href="cobradores.php">Cobradores</a>
                                 </li>
+                                <li><a href="vendedores.php">Vendedores</a>
+                                </li>
+                                <li><a href="zonas.php">Zonas</a>
+                                </li>
                                 <li><a href="#" data-toggle="modal" data-target="#abonosAplicados">Lista de abonos aplicados</a>
                                 </li>
                             </ul>';
@@ -265,29 +269,46 @@
             <div class="container-fluid">
                 <!-- /.row -->
                 <div class="row">
-                    <div class="col-lg-12">
-                        <h1 class="page-header"><b>Módulo de cuentas por cobrar</b></h1>
-                        <div class="row">
-                            <a class="" href="clientes.php"><div class="col-lg-6 btn btn-default">
-                                <div class="stat-icon">
-                                    <i class="fas fa-users fa-3x"></i>
-                                </div>
-                                <div class="stat-values">
-                                    <br>
-                                    <div class="name">Clientes</div>
-                                </div>
-                            </div></a>
+                    <?php
+                    if ($_SESSION["rol"] != "jefatura" && $_SESSION["rol"] != "administracion" && $_SESSION["rol"] != "subgerencia" && $_SESSION["rol"] != "atencion") {
+                        echo '<div class="col-lg-12">
+                            <h1 class="page-header"><b>Módulo de cuentas por cobrar</b></h1>
+                            <div class="row">
+                                <a class="" href="clientes.php"><div class="col-lg-6 btn btn-default">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-users fa-3x"></i>
+                                    </div>
+                                    <div class="stat-values">
+                                        <br>
+                                        <div class="name">Clientes</div>
+                                    </div>
+                                </div></a>';
+                    }else if ($_SESSION["rol"] == "administracion" || $_SESSION["rol"] == "subgerencia" || $_SESSION["rol"] == "jefatura" || $_SESSION["rol"] == "atencion") {
 
-                            <a class="" href="abonos.php"><div class="col-lg-6 btn btn-default">
-                                <div class="stat-icon">
-                                    <i class="fas fa-money-bill-alt fa-3x"></i>
-                                </div>
-                                <div class="stat-values">
-                                    <br>
-                                    <div class="name">Abonos</div>
-                                </div>
-                            </div></a>
-                        </div>
+                        echo '<div class="col-lg-12">
+                            <h1 class="page-header"><b>Módulo de cuentas por cobrar</b></h1>
+                            <div class="row">
+                                <a class="" href="clientes.php"><div class="col-lg-6 btn btn-default">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-users fa-3x"></i>
+                                    </div>
+                                    <div class="stat-values">
+                                        <br>
+                                        <div class="name">Clientes</div>
+                                    </div>
+                                </div></a>
+                                <a class="" href="abonos.php"><div class="col-lg-6 btn btn-default">
+                                    <div class="stat-icon">
+                                        <i class="fas fa-money-bill-alt fa-3x"></i>
+                                    </div>
+                                    <div class="stat-values">
+                                        <br>
+                                        <div class="name">Abonos</div>
+                                    </div>
+                                </div></a>';
+                    }
+                    ?>
+
                         <!--<div class="row">
                             <a href="reportes.php"><div class="col-lg-6 btn btn-default">
                                 <div class="stat-icon">

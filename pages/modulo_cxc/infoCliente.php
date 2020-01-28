@@ -18,22 +18,32 @@ session_start();
         // read current record's data
 
         try {
-            // prepare select query
-            $query = "SELECT * FROM tbl_tv_box WHERE clientCode = ?";
-            $stmt = $con->prepare( $query );
-            // this is the first question mark
-            $stmt->bindParam(1, $id);
-            // execute our query
-            $stmt->execute();
-            // store retrieved row to a variable
-            $row = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            $counter = 1;
-            foreach ($row as $key) {
-                ${"caja".$counter} = $key['boxNum'];
-                ${"cas".$counter} = $key['cast'];
-                ${"sn".$counter} = $key['serialBox'];
-                $counter++;
+            if (!isset($_GET['action'])) {
+                // prepare select query
+                $query = "SELECT * FROM tbl_tv_box WHERE clientCode = ?";
+                $stmt = $con->prepare( $query );
+                // this is the first question mark
+                $stmt->bindParam(1, $id);
+                // execute our query
+                $stmt->execute();
+                // store retrieved row to a variable
+                $arrTvBox = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                $counter = $stmt->rowCount($arrTvBox);
+                
+                if ($counter > 0) {
+                    echo "<script>alert('Caja digital ingresada con exito');</script>";
+                }
+                /*foreach ($row as $key) {
+                    ${"caja".$counter} = $key['boxNum'];
+                    ${"cas".$counter} = $key['cast'];
+                    ${"sn".$counter} = $key['serialBox'];
+                    $counter++;
+                }*/
+                $counter = intval($counter)+1;
+            }else {
+                $counter = 1;
             }
+
 
         }
         catch(PDOException $exception){
@@ -348,6 +358,7 @@ session_start();
         $serie = "";
         $ruido = "";
         $wifiClave = "";
+        $counter = 1;
     }
  ?>
  <?php
@@ -1399,163 +1410,7 @@ session_start();
                                       <!-- Accordion card -->
 
                                     </div>
-                                    <!-- Modal TV DIGITAL -->
-                                    <div id="cas" class="modal fade" role="dialog">
-                                      <div class="modal-dialog modal-lg">
 
-                                        <!-- Modal content-->
-                                        <div class="modal-content">
-                                          <div style="background-color: #1565C0; color:white; font-size: 8px;" class="modal-header">
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Datos de servicio digital de TV</h4>
-                                          </div>
-                                          <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col-md-1">
-                                                    <input type="checkbox" id="check1" name="check1" class="form-control">
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                        # CAJA
-                                                        </span>
-                                                        </span>
-                                                        <input type="hidden" id="id1" name="id1" class="form-control" required="false" placeholder="">
-                                                        <input type="text" id="caja1" name="caja1" class="form-control" value="<?php echo $caja1; ?>" required="false" placeholder="">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                        CAS
-                                                        </span>
-                                                        </span>
-                                                        <input type="text" id="cas1" name="cas1" class="form-control" value="<?php echo $cas1; ?>" required="false" placeholder="">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                        SN
-                                                        </span>
-                                                        </span>
-                                                        <input type="text" id="sn1" name="sn1" class="form-control" value="<?php echo $sn1; ?>" required="false" placeholder="">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-md-1">
-                                                    <input type="checkbox" id="check2" name="check2" class="form-control">
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                        # CAJA
-                                                        </span>
-                                                        </span>
-                                                        <input type="hidden" id="id2" name="id2" class="form-control" required="false" placeholder="">
-                                                        <input type="text" id="caja2" name="caja2" class="form-control" value="<?php echo $caja2; ?>" aria-label="Phone Number" placeholder="">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                        CAS
-                                                        </span>
-                                                        </span>
-                                                        <input type="text" id="cas2" name="cas2" class="form-control" value="<?php echo $cas2; ?>" placeholder="">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                        SN
-                                                        </span>
-                                                        </span>
-                                                        <input type="text" id="sn2" name="sn2" class="form-control" value="<?php echo $sn2; ?>" placeholder="">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-md-1">
-                                                    <input type="checkbox" id="check3" name="check3" class="form-control">
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                        # CAJA
-                                                        </span>
-                                                        </span>
-                                                        <input type="hidden" id="id3" name="id3" class="form-control" required="false" placeholder="">
-                                                        <input type="text" id="caja3" name="caja3" class="form-control" value="<?php echo $caja3; ?>" placeholder="">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                        CAS
-                                                        </span>
-                                                        </span>
-                                                        <input type="text" id="cas3" name="cas3" class="form-control" value="<?php echo $cas3; ?>" placeholder="">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                        SN
-                                                        </span>
-                                                        </span>
-                                                        <input type="text" id="sn3" name="sn3" class="form-control" value="<?php echo $sn3; ?>" placeholder="">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <br>
-                                            <div class="row">
-                                                <div class="col-md-1">
-                                                    <input type="checkbox" id="check4" name="check4" class="form-control">
-                                                </div>
-                                                <div class="col-md-3">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                        # CAJA
-                                                        </span>
-                                                        </span>
-                                                        <input type="hidden" id="id4" name="id4" class="form-control" required="false" placeholder="">
-                                                        <input type="text" id="caja4" name="caja4" class="form-control" value="<?php echo $caja4; ?>" placeholder="">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                        CAS
-                                                        </span>
-                                                        </span>
-                                                        <input type="text" id="cas4" name="cas4" class="form-control" value="<?php echo $cas4; ?>" placeholder="">
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-4">
-                                                    <div class="input-group">
-                                                        <span class="input-group-addon">
-                                                        SN
-                                                        </span>
-                                                        </span>
-                                                        <input type="text" id="sn4" name="sn4" class="form-control" value="<?php echo $sn4; ?>" placeholder="">
-                                                    </div>
-                                                </div>
-                                            </div>
-                                          </div>
-                                          <div class="modal-footer">
-                                              <div class="row">
-                                                  <div class="col-md-12">
-                                                      <button type="button" class="btn btn-success btn-md btn-block" data-dismiss="modal">Aceptar</button>
-                                                  </div>
-                                              </div>
-                                          </div>
-                                        </div>
-                                      </div>
-                                  </div><!-- Fin Modal TV DIGITAL -->
                 </form>             <!-- Accordion wrapper -->
                                 </div>
                                 <div class="tab-pane fade" id="ordenes-tecnicas">
@@ -1689,6 +1544,242 @@ session_start();
                     </div>
                     <!-- /.panel -->
                 </div>
+                <!-- Modal TV DIGITAL -->
+                <div id="cas" class="modal fade" role="dialog">
+                  <div class="modal-dialog modal-lg">
+
+                    <!-- Modal content-->
+                    <div class="modal-content">
+                      <div style="background-color: #1565C0; color:white; font-size: 8px;" class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Datos de servicio digital de TV</h4>
+                      </div>
+                      <div class="modal-body">
+                          <?php
+                          $count = 1;
+                          if (!isset($_GET['action'])){
+                              foreach ($arrTvBox as $key) {
+                                      echo "<div class='row'>
+                                          <form action='php/updateTvBox.php?count={$count}&id={$key['idBox']}' method='POST' target='_blank'>
+                                          <div class='col-md-3'>
+                                              <div class='input-group'>
+                                                  <span class='input-group-addon'>
+                                                  # CAJA
+                                                  </span>
+                                                  </span>
+                                                  <input type='text' id='caja{$count}' name='caja{$count}' class='form-control' value='{$key['boxNum']}' required='false' placeholder=''>
+                                              </div>
+                                          </div>
+                                          <div class='col-md-4'>
+                                              <div class='input-group'>
+                                                  <span class='input-group-addon'>
+                                                  CAS
+                                                  </span>
+                                                  </span>
+                                                  <input type='text' id='cas{$count}' name='cas{$count}' class='form-control' value='{$key['cast']}' required='false' placeholder=''>
+                                              </div>
+                                          </div>
+                                          <div class='col-md-4'>
+                                              <div class='input-group'>
+                                                  <span class='input-group-addon'>
+                                                  SN
+                                                  </span>
+                                                  </span>
+                                                  <input type='text' id='sn{$count}' name='sn{$count}' class='form-control' value='{$key['serialBox']}' required='false' placeholder=''>
+                                              </div>
+                                          </div>
+                                          <div class='col-md-1'>
+                                            <button type='submit' id='btn{$count}' name='btn{$count}' class='btn btn-danger btn-md'><i class='fas fa-save'></i></button>
+                                          </div>
+                                          </form>
+                                      </div>
+                                      <br>";
+                                      $count++;
+                              }
+                          }
+
+                          if (isset($_GET['action'])) {
+                              echo "<div class='row' style=''>
+                                  <div class='col-md-3'>
+                                      <div class='input-group'>
+                                          <span class='input-group-addon'>
+                                          # CAJA
+                                          </span>
+                                          </span>
+                                          <input type='hidden' id='z1' name='z1' class='form-control' value='z1'>
+                                          <input type='text' id='caja{$counter}' name='caja{$counter}' class='form-control' value='' required='false'>
+                                      </div>
+                                  </div>
+                                  <div class='col-md-5'>
+                                      <div class='input-group'>
+                                          <span class='input-group-addon'>
+                                          CAS
+                                          </span>
+                                          </span>
+                                          <input type='text' id='cas{$counter}' name='cas{$counter}' class='form-control' value='' required='false'>
+                                      </div>
+                                  </div>
+                                  <div class='col-md-4'>
+                                      <div class='input-group'>
+                                          <span class='input-group-addon'>
+                                          SN
+                                          </span>
+                                          </span>
+                                          <input type='text' id='sn{$counter}' name='sn{$counter}' class='form-control' value='' required='false'>
+                                      </div>
+                                  </div>
+                              </div>";
+                          }else {
+                              echo "<div class='row' style=''>
+                                  <form action='php/newTvBox.php?codigoCiente={$_GET['id']}&counter={$counter}' method='POST' target='_blank'>
+                                  <div class='col-md-3'>
+                                      <div class='input-group'>
+                                          <span class='input-group-addon'>
+                                          # CAJA
+                                          </span>
+                                          </span>
+                                          <input type='text' id='caja{$counter}' name='caja{$counter}' class='form-control' value='' required='false' placeholder=''>
+                                      </div>
+                                  </div>
+                                  <div class='col-md-4'>
+                                      <div class='input-group'>
+                                          <span class='input-group-addon'>
+                                          CAS
+                                          </span>
+                                          </span>
+                                          <input type='text' id='cas{$counter}' name='cas{$counter}' class='form-control' value='' required='false' placeholder=''>
+                                      </div>
+                                  </div>
+                                  <div class='col-md-4'>
+                                      <div class='input-group'>
+                                          <span class='input-group-addon'>
+                                          SN
+                                          </span>
+                                          </span>
+                                          <input type='text' id='sn{$counter}' name='sn{$counter}' class='form-control' value='' required='false' placeholder=''>
+                                      </div>
+                                  </div>
+                                  <div class='col-md-1'>
+                                    <button type='submit' id='btn{$counter}' name='btn{$counter}' class='btn btn-danger btn-md'><i class='fas fa-save'></i></button>
+                                  </div>
+                                  </form>
+                              </div>";
+                          }
+
+                          ?>
+
+                        <!--<div class="row">
+                            <div class="col-md-1">
+                                <input type="checkbox" id="check2" name="check2" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                    # CAJA
+                                    </span>
+                                    </span>
+                                    <input type="hidden" id="id2" name="id2" class="form-control" required="false" placeholder="">
+                                    <input type="text" id="caja2" name="caja2" class="form-control" value="<?php //echo $caja2; ?>" aria-label="Phone Number" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                    CAS
+                                    </span>
+                                    </span>
+                                    <input type="text" id="cas2" name="cas2" class="form-control" value="<?php //echo $cas2; ?>" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                    SN
+                                    </span>
+                                    </span>
+                                    <input type="text" id="sn2" name="sn2" class="form-control" value="<?php //echo $sn2; ?>" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <input type="checkbox" id="check3" name="check3" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                    # CAJA
+                                    </span>
+                                    </span>
+                                    <input type="hidden" id="id3" name="id3" class="form-control" required="false" placeholder="">
+                                    <input type="text" id="caja3" name="caja3" class="form-control" value="<?php //echo $caja3; ?>" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                    CAS
+                                    </span>
+                                    </span>
+                                    <input type="text" id="cas3" name="cas3" class="form-control" value="<?php //echo $cas3; ?>" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                    SN
+                                    </span>
+                                    </span>
+                                    <input type="text" id="sn3" name="sn3" class="form-control" value="<?php //echo $sn3; ?>" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+                        <br>
+                        <div class="row">
+                            <div class="col-md-1">
+                                <input type="checkbox" id="check4" name="check4" class="form-control">
+                            </div>
+                            <div class="col-md-3">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                    # CAJA
+                                    </span>
+                                    </span>
+                                    <input type="hidden" id="id4" name="id4" class="form-control" required="false" placeholder="">
+                                    <input type="text" id="caja4" name="caja4" class="form-control" value="<?php //echo $caja4; ?>" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                    CAS
+                                    </span>
+                                    </span>
+                                    <input type="text" id="cas4" name="cas4" class="form-control" value="<?php //echo $cas4; ?>" placeholder="">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="input-group">
+                                    <span class="input-group-addon">
+                                    SN
+                                    </span>
+                                    </span>
+                                    <input type="text" id="sn4" name="sn4" class="form-control" value="<?php //echo $sn4; ?>" placeholder="">
+                                </div>
+                            </div>
+                        </div>-->
+                      </div>
+                      <div class="modal-footer">
+                          <div class="row">
+                              <div class="col-md-12">
+                                  <button type="button" class="btn btn-success btn-md btn-block" data-dismiss="modal">Aceptar</button>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+              </div><!-- Fin Modal TV DIGITAL -->
                 <!-- Modal Ordenes de Trabajo -->
                 <div id="ordenesTrabajo" class="modal fade" role="dialog">
                   <div class="modal-dialog modal-sm">

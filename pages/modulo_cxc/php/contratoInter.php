@@ -19,9 +19,9 @@
   {
       try {
           global $mysqli;
-          // SQL query para traer nombre de las categorías
+          // SQL query para traer nombre de las categorÃ­as
           $query = "SELECT nombreVelocidad FROM tbl_velocidades WHERE idVelocidad=".$idVelocidad;
-          // Preparación de sentencia
+          // PreparaciÃ³n de sentencia
           $statement = $mysqli->query($query);
           while ($result = $statement->fetch_assoc()) {
     		  $velocidad = $result['nombreVelocidad'];
@@ -30,7 +30,7 @@
           return $velocidad;
 
       } catch (Exception $e) {
-          print "!Error¡: " . $e->getMessage() . "</br>";
+          print "!ErrorÂ¡: " . $e->getMessage() . "</br>";
           die();
       }
   }
@@ -42,7 +42,7 @@
 
 	  // SQL query para traer datos del servicio de cable de la tabla clientes
 	  $query = "SELECT valorImpuesto FROM tbl_impuestos WHERE siglasImpuesto = 'CESC'";
-	  // Preparación de sentencia
+	  // PreparaciÃ³n de sentencia
 	  $statement = $mysqli->query($query);
 	  //$statement->execute();
 	  while ($result = $statement->fetch_assoc()) {
@@ -51,7 +51,7 @@
 
 	  // SQL query para traer datos del servicio de cable de la tabla clientes
 	  $query = "SELECT valorImpuesto FROM tbl_impuestos WHERE siglasImpuesto = 'IVA'";
-	  // Preparación de sentencia
+	  // PreparaciÃ³n de sentencia
 	  $statement = $mysqli->query($query);
 	  //$statement->execute();
 	  while ($result = $statement->fetch_assoc()) {
@@ -62,12 +62,12 @@
 	  $pdf = new FPDF();
 	  $pdf->AliasNbPages();
 	  $pdf->AddPage('P','Letter');
-      $pdf->Ln(5);
+      $pdf->Ln(12);
 	  $tecnologia = "";
 	  while($row = $resultado->fetch_assoc())
 	  {
           if ($row['tipo_comprobante'] == 2) {
-              $pdf->Image('../../../images/check.png',33,15, 5, 5);
+              $pdf->Image('../../../images/check.png',33,20, 5, 5);
           }
 
           if ($row['tecnologia'] == 1) {
@@ -89,7 +89,7 @@
 
     	  date_default_timezone_set('America/El_Salvador');
 
-    	  //echo strftime("El año es %Y y el mes es %B");
+    	  //echo strftime("El aÃ±o es %Y y el mes es %B");
 		  putenv("LANG='es_ES.UTF-8'");
 	      setlocale(LC_ALL, 'es_ES.UTF-8');
     	  $pdf->SetFont('Courier','',10);
@@ -131,13 +131,13 @@
 
 
           $pdf->Ln(6);
-          $pdf->Image('../../../images/check.png',58,91, 5, 5);
+          $pdf->Image('../../../images/check.png',58,96, 5, 5);
 
           if ($row['id_tipo_cliente'] == 0001 || $row['id_tipo_cliente'] == 0002) {
-              $pdf->Image('../../../images/check.png',58,96, 5, 5);
+              $pdf->Image('../../../images/check.png',58,101, 5, 5);
           }
           elseif ($row['id_tipo_cliente'] == 0003){
-              $pdf->Image('../../../images/check.png',155,96, 5, 5);
+              $pdf->Image('../../../images/check.png',155,101, 5, 5);
           }
 
           $pdf->Ln(8);

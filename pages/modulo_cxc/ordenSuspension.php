@@ -422,12 +422,19 @@
                                                   if ($ordenaSuspensionCable == 'oficina') {
                                                       echo '<option value="oficina" selected>Oficina</option>';
                                                       echo '<option value="administracion">La administración</option>';
+                                                      echo '<option value="cliente">El cliente</option>';
                                                   }else if ($ordenaSuspensionCable == 'administracion') {
                                                       echo '<option value="oficina">Oficina</option>';
                                                       echo '<option value="administracion" selected>La administración</option>';
+                                                      echo '<option value="cliente">El cliente</option>';
+                                                  }else if ($ordenaSuspensionCable == 'cliente') {
+                                                      echo '<option value="oficina">Oficina</option>';
+                                                      echo '<option value="administracion">La administración</option>';
+                                                      echo '<option value="cliente" selected>El cliente</option>';
                                                   }else {
                                                       echo '<option value="oficina">Oficina</option>';
                                                       echo '<option value="administracion">La administración</option>';
+                                                      echo '<option value="cliente">El cliente</option>';
                                                   }
                                                   ?>
                                               </select>
