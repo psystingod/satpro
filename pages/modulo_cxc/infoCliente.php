@@ -29,7 +29,7 @@ session_start();
                 // store retrieved row to a variable
                 $arrTvBox = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 $counter = $stmt->rowCount($arrTvBox);
-                
+
                 if ($counter > 0) {
                     echo "<script>alert('Caja digital ingresada con exito');</script>";
                 }
@@ -1230,10 +1230,10 @@ session_start();
                                                           <?php
                                                           foreach ($arrTecnologias as $key) {
                                                               if ($key['idTecnologia'] == $tecnologia || strtolower($key['nombreTecnologia']) == strtolower($tecnologia)) {
-                                                                  echo "<option value=".$key['idTecnologia']." selected>".$key['nombreTecnologia']."</option>";
+                                                                  echo "<option value=".$key['nombreTecnologia']." selected>".$key['nombreTecnologia']."</option>";
                                                               }
                                                               else {
-                                                                  echo "<option value=".$key['idTecnologia'].">".$key['nombreTecnologia']."</option>";
+                                                                  echo "<option value=".$key['nombreTecnologia'].">".$key['nombreTecnologia']."</option>";
                                                               }
 
                                                           }
@@ -1894,6 +1894,8 @@ session_start();
     <script src="../../vendor/datatables-responsive/dataTables.responsive.js"></script>
     <!-- Custom Theme JavaScript -->
     <script src="js/clientes.js"></script>
+    <script src="js/searchmun.js"></script>
+    <script src="js/searchcol.js"></script>
     <script src="../../dist/js/sb-admin-2.js"></script>
     <script type="text/javascript">
         var permisos = '<?php echo $permisosUsuario;?>'

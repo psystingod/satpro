@@ -75,17 +75,17 @@ class EditarCliente extends ConectionDB
             /****************** OTROS DATOS ***********************/
             $cobrador = $_POST['cobrador'];
             $contacto1 = $_POST['rf1_nombre'];
-            $contacto2 = $_POST['rp1_telefono'];
-            $contacto3 = $_POST['rp1_direccion'];
-            $telCon1 = $_POST['rp1_parentezco'];
-            $telCon2 = $_POST['rf2_nombre'];
-            $telCon3 = $_POST['rp2_telefono'];
-            $paren1 = $_POST['rp2_direccion'];
+            $contacto2 = $_POST['rf2_nombre'];
+            $contacto3 = $_POST['rf3_nombre'];
+            $telCon1 = $_POST['rp1_telefono'];
+            $telCon2 = $_POST['rp2_telefono'];
+            $telCon3 = $_POST['rp3_telefono'];
+            $paren1 = $_POST['rp1_parentezco'];
             $paren2 = $_POST['rp2_parentezco'];
-            $paren3 = $_POST['rf3_nombre'];
-            $dir1 = $_POST['rp3_telefono'];
-            $dir2 = $_POST['rp3_direccion'];
-            $dir3 = $_POST['rp3_parentezco'];
+            $paren3 = $_POST['rp3_parentezco'];
+            $dir1 = $_POST['rp1_direccion'];
+            $dir2 = $_POST['rp2_direccion'];
+            $dir3 = $_POST['rp3_direccion'];
             /****************** DATOS CABLE ***********************/
             if ($estado_cable == "F" || $estado_cable == "T" || $estado_cable == "") {
 

@@ -39,7 +39,7 @@
 	  //echo strftime("El año es %Y y el mes es %B");
       putenv("LANG='es_ES.UTF-8'");
       setlocale(LC_ALL, 'es_ES.UTF-8');
-      $pdf->Ln(16);
+      $pdf->Ln(14);
 	  while($row = $resultado->fetch_assoc())
 	  {
 
@@ -67,7 +67,7 @@
             $pdf->SetFont('Arial','B',9);
             $pdf->Cell(95,1,'Dia de cobro: '.$row["diaCobro"],0,0,'L');
             $pdf->Cell(90,6,utf8_decode('N° ').$row["idOrdenTraslado"],0,1,'R');
-            $pdf->Ln(12);
+            $pdf->Ln(10);
             $pdf->SetFont('Arial','UB',9);
             $pdf->Cell(40,3,'Fecha: '.$row["fechaOrden"],0,0,'L');
             $pdf->Cell(50,3,'Codigo de cliente: '.$row["codigoCliente"],0,0,'L');
@@ -79,9 +79,9 @@
             //$pdf->Cell(190,3,'Direccion: '.$row["direccionCable"],0,1,'L');
             $pdf->MultiCell(190,6,'Direccion a trasladar: '.utf8_decode($row["direccionTraslado"]),0,'L',0);
             $pdf->Ln(3);
-            $pdf->Cell(50,3,'Telefono: '.$row["telefonos"],0,0,'L');
+            $pdf->Cell(95,3,'Telefono: '.$row["telefonos"],0,0,'L');
 
-            $pdf->Cell(70,3,'Tecnico: '.utf8_decode($tecnico),0,1,'L');
+            $pdf->Cell(95,3,'Tecnico: '.utf8_decode($tecnico),0,1,'R');
             $pdf->Ln(3);
 
             $pdf->Cell(40,3,'MAC: '.$row["macModem"],0,0,'L');
@@ -114,25 +114,27 @@
             $pdf->SetFont('Arial','B',12);
             $pdf->Cell(190,6,'TRASLADO DE SERVICIO',0,1,'C');
             $pdf->SetFont('Arial','B',9);
-            $pdf->Cell(95,6,'Dia de cobro: '.$row["diaCobro"],0,0,'L');
-            $pdf->Cell(95,6,utf8_decode('N° ').$row["idOrdenTrabajo"],0,1,'R');
-            $pdf->Ln(12);
+            $pdf->Cell(170,6,'Dia de cobro: '.$row["diaCobro"],0,0,'L');
+            $pdf->Cell(20,6,utf8_decode('N° ').$row["idOrdenTraslado"],1,1,'R');
+            $pdf->Ln(10);
             $pdf->SetFont('Arial','UB',9);
-            $pdf->Cell(40,3,'Fecha: '.$row["fechaOrdenTrabajo"],0,0,'L');
+            $pdf->Cell(40,3,'Fecha: '.$row["fechaOrden"],0,0,'L');
             $pdf->Cell(50,3,'Codigo de cliente: '.$row["codigoCliente"],0,0,'L');
             $pdf->Cell(120,3,'Nombre: '.utf8_decode($row["nombreCliente"]),0,1,'L');
             $pdf->Ln(3);
             //$pdf->Cell(190,3,'Direccion: '.$row["direccionCable"],0,1,'L');
-            $pdf->MultiCell(190,6,'Direccion: '.utf8_decode($row["direccionCable"]),0,'L',0);
+            $pdf->MultiCell(190,6,'Direccion: '.utf8_decode($row["direccion"]),0,'L',0);
             $pdf->Ln(3);
-            $pdf->Cell(30,3,'Hora: '.$row["hora"],0,0,'L');
-            $pdf->Cell(50,3,'Telefono: '.$row["telefonos"],0,0,'L');
-            $pdf->Cell(60,3,'Trabajo a realizar: '.utf8_decode($row["actividadCable"]),0,0,'L');
-            $pdf->Cell(70,3,'Tecnico: '.$tecnico,0,1,'L');
+            //$pdf->Cell(190,3,'Direccion: '.$row["direccionCable"],0,1,'L');
+            $pdf->MultiCell(190,6,'Direccion a trasladar: '.utf8_decode($row["direccionTraslado"]),0,'L',0);
+            $pdf->Ln(3);
+
+            $pdf->Cell(95,3,'Telefono: '.$row["telefonos"],0,0,'L');
+
+            $pdf->Cell(95,3,'Tecnico: '.utf8_decode($tecnico),0,1,'R');
             $pdf->Ln(3);
             $pdf->Cell(50,3,'MACTV: '.$row["mactv"],0,0,'L');
-            $pdf->Cell(50,3,'Colilla: '.$row["colilla"],0,0,'L');
-            $pdf->Cell(50,3,'Tecnologia: '.$row["tecnologia"],0,1,'L');
+            $pdf->Cell(50,3,'Colilla: '.$row["colilla"],0,1,'L');
             $pdf->Ln(3);
 
             $pdf->MultiCell(190,6,'Observaciones: '.utf8_decode($row["observaciones"]),0,'L',0);
@@ -142,11 +144,11 @@
             $pdf->Ln(3);
             $pdf->SetFont('Arial','B',9);
             $pdf->Cell(60,6,'Cliente: '.$row["mactv"],1,0,'L');
-            $pdf->Cell(70,6,'Tecnico: '.$row["colilla"],1,0,'L');
+            $pdf->Cell(70,6,'Tecnico: ',1,0,'L');
             $pdf->Cell(65,6,'Autorizacion: '.$row["tecnologia"],1,1,'L');
 
             $pdf->SetFont('Arial','B',9);
-            $pdf->Cell(95,8,'Creado por: '.$row["creadoPor"],0,0,'L');
+            $pdf->Cell(95,8,'Creado por: '.utf8_decode($row["creadoPor"]),0,0,'L');
             $pdf->Cell(95,8,'Tipo de servicio: '.$row["tipoServicio"],0,1,'R');
         }
 

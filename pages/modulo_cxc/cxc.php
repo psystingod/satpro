@@ -58,6 +58,7 @@
                  echo "<script>alert('Facturación generada con exito.')</script>";
              }
          }
+
      ?>
     <div id="wrapper">
 
@@ -489,9 +490,6 @@
                   <div class="modal-footer">
                       <div class="row">
                           <div class="col-md-6">
-                              <input type="submit" class="btn btn-primary btn-lg btn-block" name="submit" value="Generar Facturas">
-                          </div>
-                          <div class="col-md-6">
                               <button type="button" class="btn btn-default btn-lg btn-block" data-dismiss="modal">Cancelar</button>
                           </div>
                       </div>
@@ -749,6 +747,7 @@
                             <option value="">Seleccione tipo de servicio</option>
                             <option value="C" selected>Cable</option>
                             <option value="I">Internet</option>
+                            <option value="A">Ambos</option>
                         </select>
                     </div>
                 </div>

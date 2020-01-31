@@ -74,6 +74,21 @@ class GetAllInfo extends ConectionDB
         }
     }
 
+    public function getDataCol($tabla, $idColonia){
+        try {
+                $query = "SELECT * FROM $tabla WHERE idColonia = :idColonia";
+                $statement = $this->dbConnect->prepare($query);
+                $statement->bindParam(':idColonia', $idColonia);
+                $statement->execute();
+                $result = $statement->fetch(PDO::FETCH_ASSOC);
+                return $result["nombreColonia"];
+
+        } catch (Exception $e) {
+            print "!Error¡: " . $e->getMessage() . "</br>";
+            die();
+        }
+    }
+
     public function getDataOrders($tabla, $codigoCliente){
         try {
                 $query = "SELECT * FROM $tabla WHERE codigoCliente = :codigoCliente";
@@ -142,11 +157,12 @@ class GetAllInfo extends ConectionDB
     public function getDataAbonos($tabla, $codigoCliente, $tipoServicio, $estado){
         try {
                 //$estado = "pendiente";
-                $query = "SELECT * FROM $tabla WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado ORDER BY mesCargo ASC";
+                $query = "SELECT * FROM $tabla WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado AND anulada=:anulada ORDER BY mesCargo ASC";
                 $statement = $this->dbConnect->prepare($query);
                 $statement->bindValue(':codigoCliente', $codigoCliente);
                 $statement->bindValue(':tipoServicio', $tipoServicio);
                 $statement->bindValue(':estado', $estado);
+                $statement->bindValue(':anulada', 0);
                 $statement->execute();
                 $result = $statement->fetchAll(PDO::FETCH_ASSOC);
                 return $result;
@@ -179,13 +195,14 @@ class GetAllInfo extends ConectionDB
     public function getDataAbonosBy($tabla, $codigoCliente, $tipoServicio, $estado, $desde, $hasta){
         try {
 
-                $query = "SELECT * FROM $tabla WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado AND mesCargo >= :desde AND mesCargo <= :hasta ORDER BY mesCargo DESC";
+                $query = "SELECT * FROM $tabla WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado AND mesCargo >= :desde AND mesCargo <= :hasta AND anulada=:anulada ORDER BY mesCargo DESC";
                 $statement = $this->dbConnect->prepare($query);
                 $statement->bindValue(':codigoCliente', $codigoCliente);
                 $statement->bindValue(':tipoServicio', $tipoServicio);
                 $statement->bindValue(':estado', $estado);
                 $statement->bindValue(':desde', $desde);
                 $statement->bindValue(':hasta', $hasta);
+                $statement->bindValue(':anulada', 0);
                 $statement->execute();
                 $result = $statement->fetchAll(PDO::FETCH_ASSOC);
                 return $result;

@@ -12,10 +12,10 @@ $database = $_SESSION['db'];
 
 $mysqli = new mysqli($host, $user, $password, $database);
 $salida = "";
-$query = "SELECT idAbono, numeroRecibo, codigoCliente, codigoCobrador, fechaAbonado, anulada FROM tbl_abonos ORDER BY numeroRecibo ASC LIMIT 5";
+$query = "SELECT idAbono, numeroRecibo, codigoCliente, codigoCobrador, fechaAbonado, tipoServicio, anulada FROM tbl_abonos ORDER BY numeroRecibo ASC LIMIT 5";
  if (isset($_POST['consulta'])) {
  	$q = $mysqli->real_escape_string($_POST['consulta']);
-	$query = "SELECT idAbono, numeroRecibo, codigoCliente, codigoCobrador, fechaAbonado, anulada FROM tbl_abonos
+	$query = "SELECT idAbono, numeroRecibo, codigoCliente, codigoCobrador, fechaAbonado, tipoServicio, anulada FROM tbl_abonos
 	WHERE numeroRecibo LIKE '%".$q."%' OR codigoCliente LIKE '%".$q."%' OR codigoCobrador LIKE '%".$q."%' OR fechaAbonado LIKE '%".$q."%' ORDER BY numeroRecibo ASC LIMIT 10";
  }
 
@@ -29,6 +29,7 @@ $query = "SELECT idAbono, numeroRecibo, codigoCliente, codigoCobrador, fechaAbon
 						<th>CODIGO CLIENTE</th>
 						<th>CODIGO COBRADOR</th>
                         <th>FECHA ABONADO</th>
+                        <th>SERVICIO</th>
                         <th>PROCEDIMIENTO</th>
 					</tr>
 				</thead>
@@ -36,19 +37,21 @@ $query = "SELECT idAbono, numeroRecibo, codigoCliente, codigoCobrador, fechaAbon
 	while ($fila = $resultado->fetch_assoc()) {
         if ($fila['anulada'] == 0) {
             $salida.= "<tr>
-    			<td>"."<a class='btn btn-primary btn-sm' href=consultarAbonos.php?numeroRecibo={$fila['numeroRecibo']}>".$fila['numeroRecibo']."<a></td>
+    			<td>"."<a class='btn btn-primary btn-sm' href=consultarAbonos.php?idAbono={$fila['idAbono']}>".$fila['numeroRecibo']."<a></td>
     			<td>".$fila['codigoCliente']."</td>
     			<td>".$fila['codigoCobrador']."</td>
                 <td>".$fila['fechaAbonado']."</td>
-                <td>"."<a class='btn btn-warning' onclick='anularAbono({$fila["idAbono"]});' href='#'>Anular<a></td>
+                <td>".$fila['tipoServicio']."</td>
+                <td>".""."</td>
     		</tr>";
         }
         elseif ($fila['anulada'] == 1) {
             $salida.= "<tr>
-    			<td>"."<a class='btn btn-primary btn-sm' href=consultarAbonos.php?numeroRecibo={$fila['numeroRecibo']}>".$fila['numeroRecibo']."<a></td>
+    			<td>"."<a class='btn btn-primary btn-sm' href=consultarAbonos.php?idAbono={$fila['idAbono']}>".$fila['numeroRecibo']."<a></td>
     			<td>".$fila['codigoCliente']."</td>
     			<td>".$fila['codigoCobrador']."</td>
                 <td>".$fila['fechaAbonado']."</td>
+                <td>".$fila['tipoServicio']."</td>
                 <td>"."<a class='btn btn-danger' href='#'>Anulada<a></td>
     		</tr>";
         }

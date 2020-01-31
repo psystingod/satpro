@@ -528,7 +528,7 @@
                               <div class="form-row">
                                   <div class="col-md-2">
                                       <label for="fechaTraslado">Fecha traslado</label>
-                                      <input id="fechaTraslado" class="form-control input-sm" type="text" name="fechaTraslado" value="<?php echo $fechaTraslado; ?>" readonly required>
+                                      <input id="fechaTraslado" class="form-control input-sm" type="text" name="fechaTraslado" value="<?php echo $fechaTraslado; ?>" readonly>
                                   </div>
                                   <div class="col-md-3">
                                       <label for="telefonos">Teléfono reciente</label>

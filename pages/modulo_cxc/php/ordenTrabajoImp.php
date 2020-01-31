@@ -31,17 +31,15 @@
 	  $pdf->AliasNbPages();
 	  $pdf->AddPage('P','Letter');
 	  //$pdf->Image('../../../images/logo.png',10,10, 26, 24);
+      date_default_timezone_set('America/El_Salvador');
 
-
-
-	  date_default_timezone_set('America/El_Salvador');
-
-	  //echo strftime("El año es %Y y el mes es %B");
       putenv("LANG='es_ES.UTF-8'");
       setlocale(LC_ALL, 'es_ES.UTF-8');
+
       $pdf->Ln(16);
 	  while($row = $resultado->fetch_assoc())
 	  {
+          //$codigoCliente = "nada";
 
 
         if ($row["tipoServicio"] == "I") {
@@ -63,17 +61,29 @@
     		  $velocidad = $result2['nombreVelocidad'];
     	  }
 
+          if ($row["codigoCliente"] === "00000") {
+              $codigoCliente = "SC";
+          }else {
+              $codigoCliente = $row["codigoCliente"];
+          }
+
+          if ($row["diaCobro"] === "0") {
+              $diaCobro = "";
+          }else {
+              $diaCobro = $row["diaCobro"];
+          }
+
             $pdf->SetFont('Arial','B',12);
             $pdf->Cell(190,6,'ORDEN DE TRABAJO',0,1,'C');
             $pdf->SetFont('Arial','B',10);
             $pdf->Cell(190,1,$row["nodo"],0,1,'C');
             $pdf->SetFont('Arial','B',9);
-            $pdf->Cell(95,6,'Dia de cobro: '.$row["diaCobro"],0,0,'L');
-            $pdf->Cell(90,6,utf8_decode('N° ').$row["idOrdenTrabajo"],0,1,'R');
+            $pdf->Cell(170,6,'Dia de cobro: '.$diaCobro,0,0,'L');
+            $pdf->Cell(20,6,utf8_decode('N° ').$row["idOrdenTrabajo"],1,1,'C');
             $pdf->Ln(12);
             $pdf->SetFont('Arial','UB',9);
             $pdf->Cell(40,3,'Fecha: '.$row["fechaOrdenTrabajo"],0,0,'L');
-            $pdf->Cell(50,3,'Codigo de cliente: '.$row["codigoCliente"],0,0,'L');
+            $pdf->Cell(50,3,'Codigo de cliente: '.$codigoCliente,0,0,'L');
             $pdf->Cell(120,3,'Nombre: '.utf8_decode($row["nombreCliente"]),0,1,'L');
             $pdf->Ln(3);
             //$pdf->Cell(190,3,'Direccion: '.$row["direccionCable"],0,1,'L');
@@ -120,17 +130,29 @@
       	  while ($result1 = $statement1->fetch_assoc()) {
       		  $tecnico = $result1['nombreTecnico'];
       	  }
+          if ($row["codigoCliente"] === "00000") {
+              $codigoCliente = "SC";
+          }else {
+              $codigoCliente = $row["codigoCliente"];
+          }
+
+          if ($row["diaCobro"] == "0") {
+              $diaCobro = "";
+          }else {
+              $diaCobro = $row["diaCobro"];
+          }
+
             $pdf->SetFont('Arial','B',12);
             $pdf->Cell(190,6,'ORDEN DE TRABAJO',0,1,'C');
             $pdf->SetFont('Arial','B',10);
             $pdf->Cell(190,6,$row["nodo"],0,1,'C');
             $pdf->SetFont('Arial','B',9);
-            $pdf->Cell(95,6,'Dia de cobro: '.$row["diaCobro"],0,0,'L');
-            $pdf->Cell(95,6,utf8_decode('N° ').$row["idOrdenTrabajo"],0,1,'R');
+            $pdf->Cell(170,6,'Dia de cobro: '.$diaCobro,0,0,'L');
+            $pdf->Cell(20,6,utf8_decode('N° ').$row["idOrdenTrabajo"],1,1,'C');
             $pdf->Ln(12);
             $pdf->SetFont('Arial','UB',9);
             $pdf->Cell(40,3,'Fecha: '.$row["fechaOrdenTrabajo"],0,0,'L');
-            $pdf->Cell(50,3,'Codigo de cliente: '.$row["codigoCliente"],0,0,'L');
+            $pdf->Cell(50,3,'Codigo de cliente: '.$codigoCliente,0,0,'L');
             $pdf->Cell(120,3,'Nombre: '.utf8_decode($row["nombreCliente"]),0,1,'L');
             $pdf->Ln(3);
             //$pdf->Cell(190,3,'Direccion: '.$row["direccionCable"],0,1,'L');

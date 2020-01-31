@@ -5,16 +5,19 @@
     $arrDepartamentos = $cobradores->getData('tbl_departamentos_cxc');
     $arrMunicipios = $cobradores->getData('tbl_municipios_cxc');
 
-    if (isset($_GET["codigoVendedor"])) {
-        $arrCob = $cobradores->getDataVen('tbl_vendedores', $_GET['codigoVendedor']);
-        $codigoCobrador = $arrCob['idVendedor'];
-        $nombresVendedor = $arrCob['nombresVendedor'];
-        $apellidosVendedor = $arrCob['apellidosVendedor'];
+    if (isset($_GET["codigoZona"])) {
+        $depto = substr($_GET['codigoZona'], 0, 2);
+        $mun = substr($_GET['codigoZona'], 0, 4);
+        $col = $_GET['codigoZona'];
+
     }else {
-        $codigoCobrador = "";
-        $nombresVendedor = "";
-        $apellidosVendedor = "";
+        $depto = "";
+        $mun = "";
+        $col = "";
     }
+
+    $nombreCol = $cobradores->getDataCol('tbl_colonias_cxc', $col);
+
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -206,16 +209,16 @@
                           <div class="row">
                               <div class="col-md-2">
                                   <label for="codigoCobrador">Código</label>
-                                  <input class="form-control" type="text" id="codigoCobrador" value="<?php echo $codigoCobrador; ?>" readonly>
-                                  <input class="form-control" type="hidden" name="codigoCobrador" value="<?php echo $codigoCobrador; ?>" >
+                                  <input class="form-control" type="text" id="codigoCobrador" value="<?php echo $col; ?>" readonly>
+                                  <input class="form-control" type="hidden" name="codigoCobrador" value="<?php echo $col; ?>" >
                               </div>
                               <div class="col-md-5">
                                   <label for="departamento">Departamento</label>
-                                  <select class="form-control input-sm" name="departamento" disabled required>
+                                  <select class="form-control input-sm" id="departamento" name="departamento" disabled required>
                                       <option value="" selected>Seleccionar</option>
                                       <?php
                                       foreach ($arrDepartamentos as $key) {
-                                          if ($key['idDepartamento'] == $departamento) {
+                                          if ($key['idDepartamento'] == $depto) {
                                               echo "<option value=".$key['idDepartamento']." selected>".$key['nombreDepartamento']."</option>";
                                           }
                                           else {
@@ -228,17 +231,16 @@
                               </div>
                               <div class="col-md-5">
                                   <label for="municipio">Municipio</label>
-                                  <select class="form-control input-sm" name="municipio" disabled required>
+                                  <select class="form-control input-sm" id="municipio" name="municipio" disabled required>
                                       <option value="" selected>Seleccionar</option>
                                       <?php
                                       foreach ($arrMunicipios as $key) {
-                                          if ($key['idMunicipio'] == $municipio) {
+                                          if ($key['idMunicipio'] == $mun) {
                                               echo "<option value=".$key['idMunicipio']." selected>".$key['nombreMunicipio']."</option>";
                                           }
                                           else {
                                               echo "<option value=".$key['idMunicipio'].">".$key['nombreMunicipio']."</option>";
                                           }
-
                                       }
                                        ?>
                                   </select>
@@ -248,7 +250,7 @@
                           <div class="row">
                               <div class="col-md-12">
                                   <label for="colonia">Nombre de Colonia/Barrio/Cantón</label>
-                                  <input type="text" class="form-control" name="colonia" value="<?php $municipio; ?>" readonly required>
+                                  <input type="text" class="form-control" id="colonia" name="colonia" value="<?php echo $nombreCol; ?>" readonly required>
                               </div>
                           </div>
                           <br>
@@ -292,7 +294,13 @@
            </div>
         </div>
 
-
+        <?php
+        if (isset($_GET["codigoZona"])) {
+            echo "<script>document.getElementById('municipio').id='nada';</script>";
+        }else {
+            echo "<script>document.getElementById('municipio').id='municipio';</script>";
+        }
+        ?>
     </div>
     <!-- /#wrapper -->
 
@@ -309,8 +317,8 @@
     <script src="../../dist/js/sb-admin-2.js"></script>
 
     <!-- Custom Theme JavaScript -->
-    <script src="js/searchven.js"></script>
-    <script src="js/vendedores.js"></script>
+    <script src="js/searchmun.js"></script>
+    <script src="js/zonas.js"></script>
 
 </body>
 
