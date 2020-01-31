@@ -161,9 +161,12 @@
       $pdf->Cell(20,6,utf8_decode('Total recibo'),1,1,'L');
       $pdf->Ln(3);
       while ($cobradores = $statement1->fetch_assoc()) {//RECORRIDO DE TODOS LOS COBRADORES
-          
+
           while($row = $resultado->fetch_assoc())
     	  {
+              /*if (condition) {
+                  // code...
+              }*/
 
               if ($row["tipoServicio"] == "C") {
                   $query1 = "SELECT dia_cobro FROM clientes WHERE cod_cliente= ".$row['codigoCliente'];
