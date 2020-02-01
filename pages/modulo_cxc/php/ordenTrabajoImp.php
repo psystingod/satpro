@@ -101,7 +101,7 @@
             $pdf->Ln(3);
             $pdf->Cell(40,3,'MAC: '.$row["macModem"],0,0,'L');
             $pdf->Cell(40,3,'Colilla: '.$row["colilla"],0,0,'L');
-            $pdf->Cell(40,3,'Tecnologia: '.$row["tecnologia"],0,0,'L');
+            $pdf->Cell(60,3,'Tecnologia: '.$row["tecnologia"],0,0,'L');
             $pdf->Cell(60,3,'Marca/Modelo: '.$row["marcaModelo"],0,1,'L');
             $pdf->Ln(3);
             $pdf->Cell(190,3,'Coordenadas: '.$row["coordenadas"],0,1,'L');

@@ -256,6 +256,7 @@ session_start();
             //$mesPendiente = date_format(date_create($mesPendiente),'d/m/Y');
             //var_dump($mesPendiente);
             //$mesPendiente = date('m-Y', strtotime("+1 months", strtotime($mesPendiente)));
+
         }
 
         // show error
@@ -297,6 +298,7 @@ session_start();
         $correo = "";
         /****************** OTROS DATOS ***********************/
         $cobrador = "";
+        $ultimoRecibo = "";
 
         /****************** DATOS CABLE ***********************/
         $fechaInstalacion = "";
@@ -580,7 +582,6 @@ session_start();
                                   }
                                   ?>
                               </div>
-
                               <div class="form-row">
                                   <div class="col-md-2">
                                     <!-- readonly -->
@@ -606,8 +607,8 @@ session_start();
                                   </div>
                                   <div class="col-md-5">
 
-                                      <label for="numeroOrden">Cobrador</label>
-                                      <select class="form-control input-sm" name="cobrador" required>
+                                      <label for="cobrador">Cobrador</label>
+                                      <select class="form-control input-sm" id="cobrador" name="cobrador" required>
                                           <option value="">Seleccionar</option>
                                           <?php
                                           foreach ($arrCobradores as $key) {
@@ -675,7 +676,7 @@ session_start();
                                   </div>
                               </div>
                               <div class="form-row">
-                                  <div class="col-md-6">
+                                  <div class="col-md-4">
                                       <label for="municipio">Municipio</label>
                                       <select class="form-control input-sm" name="municipio">
                                           <option value="">Seleccionar</option>
@@ -692,7 +693,7 @@ session_start();
                                            ?>
                                       </select>
                                   </div>
-                                  <div class="col-md-6">
+                                  <div class="col-md-5">
                                       <label for="colonia">Colonia</label>
                                       <select class="form-control input-sm" name="colonia">
                                           <option value="">Seleccionar</option>
@@ -708,6 +709,10 @@ session_start();
                                           }
                                            ?>
                                       </select>
+                                  </div>
+                                  <div class="col-md-3">
+                                      <label for="ultimoRecibo">N° recibo a ingresar</label>
+                                      <input style="color:#000;" id="ultimoRecibo" class="form-control input-sm input-sm alert-warning" type="text" name="ultimoRecibo" value="" required>
                                   </div>
                               </div>
                               <div class="form-row">

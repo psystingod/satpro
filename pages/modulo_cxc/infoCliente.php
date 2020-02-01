@@ -685,6 +685,11 @@ session_start();
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <span style="font-size:15px;" class="label label-danger"><?php echo $codigo; ?></span> <span><?php echo strtoupper($nombre); ?></span>
+                            <span class="pull-right"><button class="btn btn-info btn-xs" type="button" id="todoAtras" name="todoAtras"><i class="fas fa-fast-backward"></i></button>&nbsp;
+                            <span class="pull-right"><button class="btn btn-info btn-xs" type="button" id="atras" name="atras"><i class="fas fa-step-backward"></i></button>&nbsp;
+                                <span class="pull-right"><button class="btn btn-info btn-xs" type="button" id="adelante" name="adelante"><i class="fas fa-step-forward"></i></button>&nbsp;
+                                <span class="pull-right"><button class="btn btn-info btn-xs" type="button" id="todoAdelante" name="todoAdelante"><i class="fas fa-fast-forward"></i></button>
+                            </span>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
