@@ -45,5 +45,19 @@
                 die();
             }
         }
+        public function getFirst()
+        {
+            try {
+                    $query = "SELECT cod_cliente FROM clientes ORDER BY cod_cliente ASC LIMIT 1";
+                    $statement = $this->dbConnect->prepare($query);
+                    $statement->execute();
+                    $result = $statement->fetch(PDO::FETCH_ASSOC);
+                    return $result["cod_cliente"];
+
+            } catch (Exception $e) {
+                print "!Error¡: " . $e->getMessage() . "</br>";
+                die();
+            }
+        }
     }
 ?>

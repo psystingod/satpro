@@ -364,6 +364,8 @@ session_start();
  <?php
  require_once 'php/GetAllInfo.php';
  require_once 'php/getData.php';
+ require_once 'php/getAllClients.php';
+ $allClients = new GetAllClients();
  $data = new GetAllInfo();
  $data2 = new OrdersInfo();
  $arrDepartamentos = $data->getData('tbl_departamentos_cxc');
@@ -685,10 +687,10 @@ session_start();
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <span style="font-size:15px;" class="label label-danger"><?php echo $codigo; ?></span> <span><?php echo strtoupper($nombre); ?></span>
-                            <span class="pull-right"><button class="btn btn-info btn-xs" type="button" id="todoAtras" name="todoAtras"><i class="fas fa-fast-backward"></i></button>&nbsp;
-                            <span class="pull-right"><button class="btn btn-info btn-xs" type="button" id="atras" name="atras"><i class="fas fa-step-backward"></i></button>&nbsp;
-                                <span class="pull-right"><button class="btn btn-info btn-xs" type="button" id="adelante" name="adelante"><i class="fas fa-step-forward"></i></button>&nbsp;
-                                <span class="pull-right"><button class="btn btn-info btn-xs" type="button" id="todoAdelante" name="todoAdelante"><i class="fas fa-fast-forward"></i></button>
+                            <span class="pull-right"><button class="btn btn-info btn-xs" type="button" id="todoAtras" name="todoAtras" onclick="<?php echo 'todoAtras1('.$allClients->getFirst().')' ?>"><i class="fas fa-fast-backward"></i></button>&nbsp;
+                            <span class="pull-right"><button class="btn btn-info btn-xs" type="button" id="atras" name="atras" onclick="<?php echo 'atras1('.$_GET["id"].')' ?>"><i class="fas fa-step-backward"></i></button>&nbsp;
+                                <span class="pull-right"><button class="btn btn-info btn-xs" type="button" id="adelante" name="adelante" onclick="<?php echo 'adelante1('.$_GET["id"].')' ?>"><i class="fas fa-step-forward"></i></button>&nbsp;
+                                <span class="pull-right"><button class="btn btn-info btn-xs" type="button" id="todoAdelante" name="todoAdelante" onclick="<?php echo 'todoAdelante1('.$allClients->getLast().')' ?>"><i class="fas fa-fast-forward"></i></button>
                             </span>
                         </div>
                         <!-- /.panel-heading -->
@@ -1900,7 +1902,7 @@ session_start();
     <!-- Custom Theme JavaScript -->
     <script src="js/clientes.js"></script>
     <script src="js/searchmun.js"></script>
-    <script src="js/searchcol.js"></script>
+
     <script src="../../dist/js/sb-admin-2.js"></script>
     <script type="text/javascript">
         var permisos = '<?php echo $permisosUsuario;?>'
