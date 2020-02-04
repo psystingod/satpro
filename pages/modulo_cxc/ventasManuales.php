@@ -48,7 +48,13 @@
 
             /****************** DATOS GENERALES ***********************/
             date_default_timezone_set('America/El_Salvador');
-            $fechaComprobante = date_format(date_create(date('Y-m-d')), 'd/m/Y');
+            $fechaComprobante = date("Y-m-d");
+            if (strlen($fechaComprobante) < 8) {
+                $fechaComprobante = "";
+            }else {
+                $fechaComprobante = DateTime::createFromFormat('Y-m-d', trim($fechaComprobante));
+                $fechaComprobante = $fechaComprobante->format('d/m/Y');
+            }
             $puntoVenta = "";
             $prefijo = "";
             $nComprobante = "";
@@ -131,6 +137,12 @@
             /****************** DATOS GENERALES ***********************/
             //$idOrdenTraslado = $row["idOrdenTraslado"];
             $fechaComprobante = $row["fechaComprobante"];
+            if (strlen($fechaComprobante) < 8) {
+                $fechaComprobante = "";
+            }else {
+                $fechaComprobante = DateTime::createFromFormat('Y-m-d', trim($fechaComprobante));
+                $fechaComprobante = $fechaComprobante->format('d/m/Y');
+            }
             $tipoComprobante = $row["tipoComprobante"];
             $puntoVenta = $row["idPunto"];
             $prefijo = $row["prefijo"];
@@ -152,9 +164,6 @@
             $impuesto = $row["impuesto"];
             $total = $row["totalComprobante"];
 
-            if ($codigoCliente === "00000") {
-                $codigoCliente = "SC";
-            }
             $nombreCliente = $row['nombreCliente'];
             $direccion = $row["direccionCliente"];
             $departamento = $row['departamento'];
@@ -388,7 +397,7 @@
                                   <button class="btn btn-default btn-sm" id="imprimir" onclick="imprimirOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Imprimir orden" ><i class="fas fa-print"></i></button>
                                   <div class="pull-right">
                                       <label for="anular">Anular este comprobante</label>
-                                      <input type="checkbox" id="anular" name="anular" value="">
+                                      <input type="checkbox" id="anular" name="anular" value="1">
                                   </div>
                               </div>
 
@@ -449,7 +458,7 @@
                                   <div class="col-md-2">
                                       <br>
                                       <label for="fechaComprobante">Fecha comprob</label>
-                                      <input class="form-control input-sm" type="text" id="fechaComprobante" name="fechaComprobante" value="<?php date_default_timezone_set('America/El_Salvador'); echo date('Y-m-d'); ?>" readonly>
+                                      <input class="form-control input-sm" type="text" id="fechaComprobante" name="fechaComprobante" value="<?php date_default_timezone_set('America/El_Salvador'); echo $fechaComprobante; ?>" readonly>
                                   </div>
                               </div>
                               <div class="form-row">
@@ -495,7 +504,7 @@
                               <div class="form-row">
                                   <div class="col-md-12">
                                       <label for="direccion">Dirección</label>
-                                      <textarea class="form-control input-sm" name="direccion" rows="2" cols="40" readonly required><?php echo $direccion; ?></textarea>
+                                      <textarea class="form-control input-sm" name="direccion" rows="2" cols="40" readonly><?php echo $direccion; ?></textarea>
                                   </div>
                               </div>
                               <div class="form-row">
@@ -508,7 +517,7 @@
                                   </div>
                                   <div class="col-md-3">
                                       <label for="doc">NIT o DUI</label>
-                                      <input id="doc" class="form-control input-sm internet" type="text" name="doc" value="<?php echo $doc ?>" readonly required>
+                                      <input id="doc" class="form-control input-sm internet" type="text" name="doc" value="<?php echo $doc ?>" readonly>
                                   </div>
                                   <div class="col-md-4">
                                       <label for="giro">Giro</label>

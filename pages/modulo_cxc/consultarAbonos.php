@@ -60,6 +60,7 @@ $recArray = $rec->verRecibo($idAbono);
                     <tbody>
                         <?php
                         foreach ($recArray as $key) {
+
                             echo "<tr><td>";
                             echo "<span style='font-size:13px;' class='label label-info'>".$key['numeroRecibo']."</span></td><td>";
                             echo "<span style='font-size:13px;' class='label label-primary'>".$key['codigoCliente']."</span></td><td>";

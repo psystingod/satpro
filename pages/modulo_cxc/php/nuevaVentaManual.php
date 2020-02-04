@@ -29,6 +29,12 @@
                 $prefijo = $result['prefijoFacturaPeque'];
                 /**************************************************************/
                 $fechaComprobante = $_POST["fechaComprobante"];
+                if (strlen($fechaComprobante) < 8) {
+                    $fechaComprobante = "";
+                }else {
+                    $fechaComprobante = DateTime::createFromFormat('d/m/Y', trim($fechaComprobante));
+                    $fechaComprobante = $fechaComprobante->format('Y-m-d');
+                }
                 $puntoVenta = $_POST["puntoVenta"];
                 $tipoComprobante = $_POST["tipoComprobante"];
                 $nComprobante = $_POST["nComprobante"];
@@ -119,8 +125,8 @@
                     $reconexionTraslado = null;
                 }
 
-                if (isset($_POST["anulado"])) {
-                    $anulado = $_POST["anulado"];
+                if (isset($_POST["anular"])) {
+                    $anulado = $_POST["anular"];
                 }else {
                     $anulado = 0;
                 }

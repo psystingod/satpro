@@ -39,11 +39,11 @@
                }
                // Fin de verificación del tipo de comprobante del cliente
                var_dump("Probandollegar hasta acá1");
-               $nombreCliente = $_POST['nombreCliente'];
+               $nombreCliente = utf8_decode($_POST['nombreCliente']);
                $codigoCliente = $_POST['codigoCliente'];
                $zona = $_POST['zona'];
                $cobrador = $_POST['cobrador'];
-               $direccion = $_POST['direccion'];
+               $direccion = utf8_decode($_POST['direccion']);
                $municipio = $_POST['municipio'];
                $colonia = $_POST['colonia'];
                //INICIO DE EXTRAER DATOS DEL COBRADOR
@@ -70,11 +70,11 @@
                $date = str_replace('/', '-', $fechaAbonado);
                $fechaAbonado = date('Y-m-d', strtotime($date));
                $formaPago = $_POST['formaPago'];
-
+               $ultimoRecibo = $_POST['ultimoRecibo'];
                if (isset($_POST['mesx1']) && !isset($_POST['mesx2'])) {
                    if ($_POST['servicio'] == "c") {
                        if ($ultimoNumero <= $hastaNumero) {
-                           $ultimoNumero = $ultimoNumero + 1;
+                           $ultimoNumero = $ultimoRecibo;
 
                            $tipoServicio = strtoupper($_POST['servicio']);
                            $idFactura1 = $_POST['idFacturax1'];
@@ -106,7 +106,12 @@
 
                            $mesCargo1 = $_POST['mesCargo1'];
                            $cesc = $_POST['porImp'];
-                           $cuotaCable = $_POST['valorCuota'];
+                           if (isset($_POST['anularComp'])) {
+                               $cuotaCable = "0.00";
+                           }else {
+                               $cuotaCable = $_POST['valorCuota'];
+                           }
+
                            $separado = (floatval($cuotaCable)/(1 + floatval($iva)));
                            $totalIva = substr(floatval($separado) * floatval($iva),0,4);
                            $saldoCable = $_POST['pendiente']; // Quizá update
@@ -172,6 +177,7 @@
                                       ':cargoImpuesto' => $cesc
                                      ));
 
+                            $uaid1 = $this->dbConnect->lastInsertId();
                             //ACA HACER ACTUALIZACION DE SALDO EN TABLA CLIENTES
                             $qry3 = "UPDATE clientes SET saldoCable= saldoCable - :cuotaCable, fecha_ult_pago=:fechaUltPago WHERE cod_cliente=:codigoCliente";
 
@@ -195,6 +201,8 @@
 
                             sleep(0.5);
                             $this->dbConnect->commit();
+                            echo '<script>window.open("comprobantePago.php?uaid1='.$uaid1.'","_blank");</script>';
+                            sleep(0.5);
                             header('Location: ../abonos.php?abonado=yes');
                             //$this->dbConnect->exec('UNLOCK TABLES');
                        }else {
@@ -204,7 +212,7 @@
                    }
                    elseif ($_POST['servicio'] == "i") {
                        if ($ultimoNumero <= $hastaNumero) {
-                           $ultimoNumero = $ultimoNumero + 1;
+                           $ultimoNumero = $ultimoRecibo;
 
                            $tipoServicio = strtoupper($_POST['servicio']);
                            $idFactura1 = $_POST['idFacturax1'];
@@ -233,7 +241,12 @@
                            }
                            $mesCargo1 = $_POST['mesCargo1'];
                            $cesc = $_POST['porImp'];
-                           $cuotaInter = $_POST['valorCuota'];
+                           if (isset($_POST['anularComp'])) {
+                               $cuotaInter = "0.00";
+                           }else {
+                               $cuotaInter = $_POST['valorCuota'];
+                           }
+
                            $separado = (floatval($cuotaInter)/(1 + floatval($iva)));
                            $totalIva = substr(floatval($separado) * floatval($iva),0,4);
                            $saldoInter = $_POST['pendiente']; // Quizá update
@@ -299,6 +312,7 @@
                                       ':cargoImpuesto' => $cesc
                                      ));
 
+                            $uaid1 = $this->dbConnect->lastInsertId();
                             //ACA HACER ACTUALIZACION DE SALDO EN TABLA CLIENTES
                             $qry3 = "UPDATE clientes SET saldoInternet= saldoInternet - :cuotaInter, fecha_ult_pago=:fechaUltPago WHERE cod_cliente=:codigoCliente";
 
@@ -324,6 +338,9 @@
 
                             sleep(0.5);
                             $this->dbConnect->commit();
+                            var_dump($uaid1);
+                            echo '<script>window.open("comprobantePago.php?uaid1='.$uaid1.'","_blank");</script>';
+                            sleep(0.5);
                             header('Location: ../abonos.php?abonado=yes');
                             //$this->dbConnect->exec('UNLOCK TABLES');
                        }else {
@@ -336,7 +353,7 @@
                    //Comprobamos el tipo de comprobante del cliente
                    if ($_POST['servicio'] == "c") {
                        if ($ultimoNumero <= $hastaNumero) {
-                           $ultimoNumero = $ultimoNumero + 1;
+                           $ultimoNumero = $ultimoRecibo;
 
                            $tipoServicio = strtoupper($_POST['servicio']);
                            $idFactura1 = $_POST['idFacturax1'];
@@ -432,6 +449,8 @@
                                       ':cargoImpuesto' => $cesc
                                      ));
 
+                            $uaid1 = $this->dbConnect->lastInsertId();
+
                             //ACA HACER ACTUALIZACION DE SALDO EN TABLA CLIENTES
                             $qry3 = "UPDATE clientes SET saldoCable= saldoCable - :cuotaCable, fecha_ult_pago=:fechaUltPago WHERE cod_cliente=:codigoCliente";
 
@@ -455,7 +474,7 @@
 
                              sleep(0.5);
                              $this->dbConnect->commit();
-                             header('Location: ../abonos.php?abonado=yes');
+                             //header('Location: ../abonos.php?abonado=yes'); //ESTABA SIN COMENTAR
                              //$this->dbConnect->exec('UNLOCK TABLES');
 
                        }else {
@@ -463,7 +482,7 @@
                        }
 
                        if ($ultimoNumero <= $hastaNumero) {
-                           $ultimoNumero = $ultimoNumero + 1;
+                           $ultimoNumero = $ultimoRecibo;
 
                            // ************************MENSUALIDAD 2********************************
                            $tipoServicio = strtoupper($_POST['servicio']);
@@ -499,6 +518,7 @@
                            $saldoCable = $_POST['pendiente']; // Quizá update
                            $estado = "CANCELADA";
 
+                           $this->dbConnect->beginTransaction();
                            $qry = "UPDATE tbl_cargos SET tipoFactura=:tipoComprobante, /*numeroRecibo=:numeroRecibo,*/ codigoCliente=:codigoCliente, cuotaCable=:cuotaCable, saldoCable=:saldoCable, fechaCobro=:fechaCobro, fechaVencimiento=:fechaVencimiento, fechaAbonado=:fechaAbonado, /*fechaFactura=:fechaFactura,*/ mesCargo=:mesCargo, tipoServicio=:tipoServicio, estado=:estado, cargoImpuesto=:cargoImpuesto, totalImpuesto=:totalImpuesto WHERE idFactura=:idFactura";
 
                            $stmt = $this->dbConnect->prepare($qry);
@@ -555,6 +575,7 @@
                                       ':cargoImpuesto' => $cesc
                                      ));
 
+                            $uaid2 = $this->dbConnect->lastInsertId();
                             //ACA HACER ACTUALIZACION DE SALDO EN TABLA CLIENTES
                             $qry3 = "UPDATE clientes SET saldoCable= saldoCable - :cuotaCable, fecha_ult_pago=:fechaUltPago WHERE cod_cliente=:codigoCliente";
 
@@ -578,7 +599,11 @@
 
                             sleep(0.5);
                             $this->dbConnect->commit();
-                            header('Location: ../abonos.php?abonado=yes');
+
+                            echo '<script>window.open("comprobantePago.php?uaid1='.$uaid1.'&uaid2='.$uaid2.'");</script>';
+                            echo '<script>window.history.back();</script>';
+                            //sleep(0.5);
+                            //header('Location: ../abonos.php?abonado=yes');
 
                             //$this->dbConnect->exec('UNLOCK TABLES');
                        }else {
@@ -589,7 +614,7 @@
                    //LUEGO DE LAS 2 MENSUALIDADES EN CABLE
                    elseif ($_POST['servicio'] == "i") {
                        if ($ultimoNumero <= $hastaNumero) {
-                           $ultimoNumero = $ultimoNumero + 1;
+                           $ultimoNumero = $ultimoRecibo;
 
                            $tipoServicio = strtoupper($_POST['servicio']);
                            $idFactura1 = $_POST['idFacturax1'];
@@ -655,7 +680,7 @@
 
                             //ACA HACER UN INSERT DEL ABONO EN LA TABLA ABONOS
                             $qry2 = "INSERT INTO tbl_abonos(nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroRecibo, numeroFactura, codigoCliente, codigoCobrador, cobradoPor, cuotaInternet, saldoInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, formaPago, tipoServicio, fechaAbonado, estado, anticipado, cargoImpuesto, totalImpuesto, cargoIva, totalIva, idFactura)
-                                     VALUES(:nombre, :direccion, :idMunicipio, :idFactura, :tipoComprobante, :numeroRecibo, :numeroFactura, :codigoCliente, :codigoCobrador, :cobradoPor, :cuotaInternet, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :formaPago, :tipoServicio, fechaAbonado, :estado, :anticipado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva, :idFactura)";
+                                     VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroRecibo, :numeroFactura, :codigoCliente, :codigoCobrador, :cobradoPor, :cuotaInternet, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :formaPago, :tipoServicio, :fechaAbonado, :estado, :anticipado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva, :idFactura)";
 
                             $stmt2 = $this->dbConnect->prepare($qry2);
                             $stmt2->execute(
@@ -688,6 +713,8 @@
                                       ':cargoImpuesto' => $cesc
                                      ));
 
+                            $uaid1 = $this->dbConnect->lastInsertId();
+
                             //ACA HACER ACTUALIZACION DE SALDO EN TABLA CLIENTES
                             $qry3 = "UPDATE clientes SET saldoInternet= saldoInternet - :cuotaInter, fecha_ult_pago=:fechaUltPago WHERE cod_cliente=:codigoCliente";
 
@@ -714,7 +741,7 @@
                            }
                            /*************** MENSUALIDAD 2 ********************/
                            if ($ultimoNumero <= $hastaNumero) {
-                               $ultimoNumero = $ultimoNumero + 1;
+                               $ultimoNumero = $ultimoRecibo;
 
                                $tipoServicio = strtoupper($_POST['servicio']);
                                $idFactura2 = $_POST['idFacturax2'];
@@ -772,7 +799,7 @@
 
                                 //ACA HACER UN INSERT DEL ABONO EN LA TABLA ABONOS
                                 $qry2 = "INSERT INTO tbl_abonos(nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroRecibo, numeroFactura, codigoCliente, codigoCobrador, cobradoPor, cuotaInternet, saldoInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, formaPago, tipoServicio, fechaAbonado, estado, anticipado, cargoImpuesto, totalImpuesto, cargoIva, totalIva, idFactura)
-                                         VALUES(:nombre, :direccion, :idMunicipio, :idFactura, :tipoComprobante, :numeroRecibo, :numeroFactura, :codigoCliente, :codigoCobrador, :cobradoPor, :cuotaInternet, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :formaPago, :tipoServicio, :fechaAbonado, :estado, :anticipado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva, :idFactura)";
+                                         VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroRecibo, :numeroFactura, :codigoCliente, :codigoCobrador, :cobradoPor, :cuotaInternet, :saldoInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :formaPago, :tipoServicio, :fechaAbonado, :estado, :anticipado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva, :idFactura)";
 
                                 $stmt2 = $this->dbConnect->prepare($qry2);
                                 $stmt2->execute(
@@ -805,6 +832,7 @@
                                           ':cargoImpuesto' => $cesc
                                          ));
 
+                                $uaid2 = $this->dbConnect->lastInsertId();
                                 //ACA HACER ACTUALIZACION DE SALDO EN TABLA CLIENTES
                                 $qry3 = "UPDATE clientes SET saldoInternet= saldoInternet - :cuotaInter, fecha_ult_pago=:fechaUltPago WHERE cod_cliente=:codigoCliente";
 
@@ -829,7 +857,12 @@
 
                                 sleep(0.5);
                                 $this->dbConnect->commit();
-                                header('Location: ../abonos.php?abonado=yes');
+
+                                echo '<script>window.open("comprobantePago.php?uaid1='.$uaid1.'&uaid2='.$uaid2.'");</script>';
+                                //sleep(0.5);
+                                echo '<script>window.history.back();</script>';
+
+                                //header('Location: ../abonos.php?abonado=yes');
 
                                 //$this->dbConnect->exec('UNLOCK TABLES');
                            }else {
@@ -840,7 +873,7 @@
                else { //SIRVE PARA LOS PAGOS DE FACTURAS ANTES DE QUE SE GENEREN*****
                    if ($_POST['servicio'] == "c") {
                        if ($ultimoNumero <= $hastaNumero) {
-                           $ultimoNumero = $ultimoNumero + 1;
+                           $ultimoNumero = $ultimoRecibo;
 
                            $tipoServicio = strtoupper($_POST['servicio']);
                            //$idFactura1 = $_POST['idFacturax1'];
@@ -850,7 +883,12 @@
                            //$fechaVencimientox1 = date_format(date_create($_POST['fechaVencimientox1']), 'Y-m-d');
                            $tipoServicio = strtoupper($_POST['servicio']);
                            $mesCargo1 = $_POST['meses'];
-                           $cuotaCable = $_POST['valorCuota'];
+                           if (isset($_POST['anularComp'])) {
+                               $cuotaCable = "0.00";
+                           }else {
+                               $cuotaCable = $_POST['valorCuota'];
+                           }
+
                            $separado = (floatval($cuotaCable)/(1 + floatval($iva)));
                            $totalIva = substr(floatval($separado) * floatval($iva),0,4);
                            $cesc = $_POST['porImp'];
@@ -912,6 +950,8 @@
                                       /*':idFactura' => $lastId*/
                                      ));
 
+                            $uaid1 = $this->dbConnect->lastInsertId();
+
                             //ACA HACER ACTUALIZACION DE SALDO EN TABLA CLIENTES
                             $qry3 = "UPDATE clientes SET saldoCable= saldoCable - :cuotaCable WHERE cod_cliente=:codigoCliente";
 
@@ -934,6 +974,7 @@
 
                             sleep(0.5);
                             $this->dbConnect->commit();
+                            echo '<script>window.open("comprobantePago.php?uaid1="'.$uaid1.',"_blank");</script>';
                             header('Location: ../abonos.php?abonado=yes');
 
                             //$this->dbConnect->exec('UNLOCK TABLES');
@@ -944,7 +985,7 @@
                    }
                    elseif ($_POST['servicio'] == "i") {
                        if ($ultimoNumero <= $hastaNumero) {
-                           $ultimoNumero = $ultimoNumero + 1;
+                           $ultimoNumero = $ultimoRecibo;
 
                            $tipoServicio = strtoupper($_POST['servicio']);
                            //$idFactura1 = $_POST['idFacturax1'];
@@ -954,6 +995,11 @@
                            //$fechaVencimientox1 = date_format(date_create($_POST['fechaVencimientox1']), 'Y-m-d');
                            $mesCargo1 = $_POST['meses'];
                            $cesc = $_POST['porImp'];
+                           if (isset($_POST['anularComp'])) {
+                               $cuotaInter = "0.00";
+                           }else {
+                               $cuotaInter = $_POST['valorCuota'];
+                           }
                            $cuotaInter = $_POST['valorCuota'];
                            $separado = (floatval($cuotaInter)/(1 + floatval($iva)));
                            $totalIva = substr(floatval($separado) * floatval($iva),0,4);
@@ -1012,6 +1058,7 @@
                                       /*':idFactura' => $lastId*/
                                      ));
 
+                            $uaid1 = $this->dbConnect->lastInsertId();
                             //ACA HACER ACTUALIZACION DE SALDO EN TABLA CLIENTES
                             $qry3 = "UPDATE clientes SET saldoInternet= saldoInternet - :cuotaInter, fecha_ult_pago=:fechaUltPago WHERE cod_cliente=:codigoCliente";
 
@@ -1036,6 +1083,7 @@
                             var_dump("Probandollegar hasta acá");
                             sleep(0.5);
                             $this->dbConnect->commit();
+                            echo '<script>window.open("comprobantePago.php?uaid1="'.$uaid1.',"_blank");</script>';
                             header('Location: ../abonos.php?abonado=yes');
 
                             //$this->dbConnect->exec('UNLOCK TABLES');

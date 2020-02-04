@@ -257,7 +257,13 @@ class EditarCliente extends ConectionDB
             $nContratoInter = $_POST['nContratoVigente'];
 
             $promocion = $_POST['promocion'];
-            $promocionDesde = $_POST['promocionDesde'];
+            //$promocionDesde = $_POST['promocionDesde'];
+            if (strlen($_POST['promocionDesde']) < 8) {
+                $promocionDesde = "";
+            }else {
+                $promocionDesde = DateTime::createFromFormat('d/m/Y', trim($_POST['promocionDesde']));
+                $promocionDesde = $promocionDesde->format('Y-m-d');
+            }
             $promocionHasta = $_POST['promocionHasta'];
             $cuotaPromocion = $_POST['cuotaPromocion'];
             $direccionInternet = $_POST['direccionInternet'];

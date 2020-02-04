@@ -214,7 +214,7 @@ session_start();
                 $diaC = $row['dia_cobro'];
                 $fechapf = $row['fecha_primer_factura'];
                 //SACAR ÚLTIMO MES PAGADO DEL CLIENTE
-                $query = "SELECT mesCargo FROM tbl_abonos WHERE codigoCliente=:codigoCliente AND estado=:estado AND tipoServicio=:tipoServicio ORDER BY idAbono DESC LIMIT 1";
+                $query = "SELECT mesCargo FROM tbl_abonos WHERE codigoCliente=:codigoCliente AND estado=:estado AND tipoServicio=:tipoServicio AND anulada=0 ORDER BY idAbono DESC LIMIT 1";
                 $stmt = $con->prepare($query);
                 $estado = "CANCELADA";
                 // this is the first question mark
@@ -226,7 +226,7 @@ session_start();
                 $diaC = $row['dia_corbo_in'];
                 $fechapf = $row['fecha_primer_factura_in'];
                 //SACAR ÚLTIMO MES PAGADO DEL CLIENTE
-                $query = "SELECT mesCargo FROM tbl_abonos WHERE codigoCliente=:codigoCliente AND estado=:estado AND tipoServicio=:tipoServicio ORDER BY idAbono DESC LIMIT 1";
+                $query = "SELECT mesCargo FROM tbl_abonos WHERE codigoCliente=:codigoCliente AND estado=:estado AND tipoServicio=:tipoServicio AND anulada=0 ORDER BY idAbono DESC LIMIT 1";
                 $stmt = $con->prepare($query);
                 $estado = "CANCELADA";
                 // this is the first question mark
@@ -710,9 +710,8 @@ session_start();
                                            ?>
                                       </select>
                                   </div>
-                                  <div class="col-md-3">
-                                      <label for="ultimoRecibo">N° recibo a ingresar</label>
-                                      <input style="color:#000;" id="ultimoRecibo" class="form-control input-sm input-sm alert-warning" type="text" name="ultimoRecibo" value="" required>
+                                  <div class="col-md-3" id="ultimoRecibo">
+
                                   </div>
                               </div>
                               <div class="form-row">
@@ -915,6 +914,7 @@ session_start();
     </script>
     <script src="../modulo_administrar/js/permisos.js"></script>
     <script src="js/abonos.js"></script>
+    <script src="js/ultimoRecibo.js"></script>
     <script type="text/javascript">
         // Get the input field
         var cod = document.getElementById("codigoCliente");
@@ -977,19 +977,19 @@ session_start();
     </script>
 
     <script>
-    var vencimiento1 = document.getElementById('vencimientox1');
-    if (typeof vencimiento1.value != 'undefined') {
+    /*var vencimiento1 = document.getElementById('vencimientox1');
+    if (vencimiento1.value != null) {
         vencimiento1 = document.write(vencimiento1.value);
     }else{
         vencimiento1 = document.write(0);
     }
 
     var vencimiento2 = document.getElementById('vencimientox2');
-    if (typeof vencimiento2.value != 'undefined') {
+    if (vencimiento2.value != null) {
         vencimiento2 = document.write(vencimiento2.value);
     }else{
         vencimiento2 = document.write(0);
-    }
+    }*/
     </script>
 
     <?php
@@ -1002,7 +1002,7 @@ session_start();
             //var inputs = document.getElementsByClassName('input-sm');
         </script>";
     }
-
+    /*
     $fechaHoy = date("Y-m-d");
 
     if ($vencimiento1 != 0) {
@@ -1023,7 +1023,7 @@ session_start();
     }
     var_dump($vencimiento1);
     var_dump($vencimiento2);
-
+    */
     ?>
 
 </body>
