@@ -32,6 +32,7 @@
   $totalSoloInter = 0;
   $totalInter = 0;
   $totalImpuestoI = 0;
+  $anulada = 0;
 
   if ($codigoCobrador === "todos") {
       $query1 = "SELECT codigoCobrador, nombreCobrador FROM tbl_cobradores";
@@ -55,7 +56,7 @@
   function abonos(){
 	  global $desde, $hasta, $codigoCobrador, $colonia, $tipoServicio, $mysqli, $statement1;
       global $totalAnticipoSoloCable,$totalAnticipoCable,$totalAnticipoImpuestoC,$totalAnticipoSoloInter,$totalAnticipoInter,$totalAnticipoImpuestoI;
-      global $totalSoloCable,$totalCable,$totalImpuestoC,$totalSoloInter,$totalInter,$totalImpuestoI;
+      global $totalSoloCable,$totalCable,$totalImpuestoC,$totalSoloInter,$totalInter,$totalImpuestoI,$anulada;
 
       if ($tipoServicio == "C") {
           //SQL para todas las zonas de cobro
@@ -241,9 +242,9 @@
 
 
       $pdf->Cell(185,5,utf8_decode(''),0,0,'R');
-      $pdf->Cell(75,5,utf8_decode(''),"T",0,'R');
+      $pdf->Cell(75,5,utf8_decode(''),"",1,'R');
 
-      $pdf->AddPage('L','Letter');
+      //$pdf->AddPage('L','Letter');
       $pdf->SetFont('Arial','',8);
 
       //TOTAL INTERNET

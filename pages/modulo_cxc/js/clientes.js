@@ -153,19 +153,20 @@ function changeAction(action){
 }
 //FUNCIONES PARA BOTONES
 function todoAtras1(codigo){
-    window.open("infocliente.php?id="+codigo,"_self");
+    window.open("infoCliente.php?id="+codigo,"_self");
 }
 
 function atras1(codigo){
-    window.open("infocliente.php?id="+(parseInt(codigo)-1),"_self");
+    window.open("infoCliente.php?id="+(parseInt(codigo)-1),"_self");
 }
 
 function adelante1(codigo){
-    window.open("infocliente.php?id="+(parseInt(codigo)+1),"_self");
+    window.open("infoCliente.php?id="+(parseInt(codigo)+1),"_self");
 }
 
 function todoAdelante1(codigo){
-    window.open("infocliente.php?id="+codigo,"_self");
+    console.log(codigo);
+    window.open("infoCliente.php?id="+codigo,"_self");
 }
 /*function imprimirOrden(){
     var nOrden = document.getElementById("numeroSuspension").value

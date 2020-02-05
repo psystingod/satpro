@@ -49,8 +49,8 @@
                 $giro = $_POST['giro'];
                 $formaPago = $_POST['formaPago']; //Motivo
                 $vendedor = $_POST['vendedor'];
-                $tipoVenta = $_POST["tipoVenta"];
-                $ventaCuentaDe = $_POST["ventaCuentaDe"];
+                $tipoVenta = strtoupper($_POST["tipoVenta"]);
+                $ventaCuentaDe = strtoupper($_POST["ventaCuentaDe"]);
                 $montoCable = $_POST["montoCable"];
                 $montoInter = $_POST["montoInternet"];
                 $totalExento = $_POST["totalExento"];

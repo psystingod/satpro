@@ -38,7 +38,7 @@
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute();
                     $result = $statement->fetch(PDO::FETCH_ASSOC);
-                    return $result["cod_cliente"];
+                    return intval($result["cod_cliente"]);
 
             } catch (Exception $e) {
                 print "!Error¡: " . $e->getMessage() . "</br>";
@@ -52,7 +52,7 @@
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute();
                     $result = $statement->fetch(PDO::FETCH_ASSOC);
-                    return $result["cod_cliente"];
+                    return intval($result["cod_cliente"]);
 
             } catch (Exception $e) {
                 print "!Error¡: " . $e->getMessage() . "</br>";

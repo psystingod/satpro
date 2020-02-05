@@ -84,7 +84,7 @@
                     if(!isset($_SESSION["user"])) {
                         header('Location: ../login.php');
                     }elseif (isset($_SESSION["user"])) {
-                        if ($_SESSION["rol"] == 'administracion' || $_SESSION["rol"] == 'subgerencia' || $_SESSION["rol"] == 'jefatura') {
+                        if ($_SESSION["rol"] == 'administracion' || $_SESSION["rol"] == 'subgerencia' || $_SESSION["rol"] == 'jefatura' || $_SESSION["rol"] == 'contabilidad') {
                             echo
                             '<ul class="dropdown-menu dropdown-user">
                                 <li><a href="cobradores.php">Cobradores</a>
@@ -93,7 +93,9 @@
                                 </li>
                                 <li><a href="zonas.php">Zonas</a>
                                 </li>
-                                <li><a href="#" data-toggle="modal" data-target="#abonosAplicados">Lista de abonos aplicados</a>
+                                <li><a href="#" data-toggle="modal" data-target="#abonosAplicados">Abonos aplicados</a>
+                                </li>
+                                <li><a href="#" data-toggle="modal" data-target="#reporteVentasManuales">Ventas manuales</a>
                                 </li>
                             </ul>';
                         }
@@ -149,7 +151,7 @@
                                 <li><a href="imprimirFacturas.php" data-toggle="modal" data-target="#imprimirFacturas" accesskey="i">Imprimir facturas (Alt+I)</a>
                                 </li>
                             </ul>';
-                        }elseif ($_SESSION["rol"] == 'informatica' || $_SESSION["rol"] == 'atención al cliente' || $_SESSION["rol"] == 'jefatura') {
+                        }elseif ($_SESSION["rol"] == 'informatica' || $_SESSION["rol"] == 'atencion al cliente' || $_SESSION["rol"] == 'jefatura') {
                             echo
                             '<ul class="dropdown-menu dropdown-user">
                                 <li><a href="#" data-toggle="modal" data-target="#eliminarAbonos">Consultar/Eliminar abonos</a>
@@ -753,11 +755,11 @@
                 </div>
                 <div class="row">
                     <div class="col-md-6">
-                        <label for="lDesde">Fecha en que se generó</label>
+                        <label for="lDesde">Desde fecha</label>
                         <input class="form-control" type="text" id="lDesde" name="lDesde" placeholder="Fecha en que se generaron las facturas" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))" value="<?php echo date('Y-m-d'); ?>" required>
                     </div>
                     <div class="col-md-6">
-                        <label for="lHasta">Tipo de servicio</label>
+                        <label for="lHasta">Hasta fecha</label>
                         <input class="form-control" type="text" id="lHasta" name="lHasta" placeholder="Fecha en que se generaron las facturas" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))" value="<?php echo date('Y-m-d'); ?>" required>
                     </div>
                 </div>
@@ -776,6 +778,85 @@
             </div>
           </div>
       </div><!-- Fin Modal ABONOS APLICADOS -->
+      <!-- Modal VENTAS MANUALES -->
+      <div id="reporteVentasManuales" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div style="background-color: #1565C0; color:white;" class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Reporte de ventas manuales</h4>
+            </div>
+            <form id="frmVentasManuales" action="php/reporteVentasManuales.php" method="POST">
+            <div class="modal-body">
+              <div class="row">
+                  <div class="col-md-7">
+                      <label for="idPunto">Punto de venta</label>
+                      <select class="form-control" type="text" id="idPunto" name="idPunto" required>
+                          <option value="1" selected>CABLESAT</option>
+                      </select>
+                  </div>
+                  <div class="col-md-5">
+                      <label for="lServicio">Tipo de servicio</label>
+                      <select class="form-control" type="text" id="lServicio" name="lServicio" required>
+                          <option value="">Seleccione tipo de servicio</option>
+                          <option value="C" selected>Cable</option>
+                          <option value="I">Internet</option>
+                          <option value="A">Todo</option>
+                      </select>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-6">
+                      <label for="lDesde">Desde fecha</label>
+                      <input class="form-control" type="text" id="lDesde" name="lDesde" placeholder="Fecha en que se generaron las facturas" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))" value="<?php echo date('Y-m-d'); ?>" required>
+                  </div>
+                  <div class="col-md-6">
+                      <label for="lHasta">Hasta fecha</label>
+                      <input class="form-control" type="text" id="lHasta" name="lHasta" placeholder="Fecha en que se generaron las facturas" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))" value="<?php echo date('Y-m-d'); ?>" required>
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-6">
+                      <label for="ordenamiento">Ordenar por fecha</label>
+                      <input type="radio" id="ordenamiento" name="ordenamiento" value="fecha">
+                  </div>
+                  <div class="col-md-6">
+                      <label for="ordenamiento">Ordenar por correlativo</label>
+                      <input type="radio" id="ordenamiento" name="ordenamiento" value="correlativo" checked="checked">
+                  </div>
+              </div>
+              <div class="row">
+                  <div class="col-md-12">
+                      <label for="tipoVenta">Tipo de venta</label>
+                      <select class="form-control" type="text" id="tipoVenta" name="tipoVenta" required>
+                          <option value="0" selected>Todas</option>
+                          <option value="1">Anulada</option>
+                          <option value="2">Cable extra</option>
+                          <option value="3">Decodificador</option>
+                          <option value="4">Derivacion</option>
+                          <option value="5">Instalación temporal</option>
+                          <option value="6">Pagotardío</option>
+                          <option value="7">Reconexión</option>
+                      </select>
+                  </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-6">
+                        <input type="submit" class="btn btn-success btn-md btn-block" name="submit" value="Ver reporte">
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </form>
+            </div>
+          </div>
+        </div>
+    </div><!-- Fin Modal VENTAS MANUALES -->
         </div>
         <!-- /#page-wrapper -->
     </div>
