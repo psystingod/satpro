@@ -273,7 +273,8 @@
                 <!-- /.row -->
                 <div class="row">
                     <?php
-                    if ($_SESSION["rol"] != "jefatura" && $_SESSION["rol"] != "administracion" && $_SESSION["rol"] != "subgerencia" && $_SESSION["rol"] != "atencion") {
+                    //var_dump($_SESSION["rol"]);
+                    if ($_SESSION["rol"] != "jefatura" && $_SESSION["rol"] != "administracion" && $_SESSION["rol"] != "subgerencia" && $_SESSION["rol"] != "atencion" && $_SESSION["rol"] != "informatica") {
                         echo '<div class="col-lg-12">
                             <h1 class="page-header"><b>Módulo de cuentas por cobrar</b></h1>
                             <div class="row">
@@ -286,7 +287,7 @@
                                         <div class="name">Clientes</div>
                                     </div>
                                 </div></a>';
-                    }else if ($_SESSION["rol"] == "administracion" || $_SESSION["rol"] == "subgerencia" || $_SESSION["rol"] == "jefatura" || $_SESSION["rol"] == "atencion") {
+                    }else if ($_SESSION["rol"] == "administracion" || $_SESSION["rol"] == "subgerencia" || $_SESSION["rol"] == "jefatura" || $_SESSION["rol"] == "atencion" || $_SESSION["rol"] == "informatica") {
 
                         echo '<div class="col-lg-12">
                             <h1 class="page-header"><b>Módulo de cuentas por cobrar</b></h1>

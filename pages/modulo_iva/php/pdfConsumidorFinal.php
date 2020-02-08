@@ -167,9 +167,13 @@
                             $montoCancelado1 = doubleval($result["cuotaInternet"]);
                         }
                         //IVA
-                        $separado1 = (floatval($montoCancelado1)/(1 + floatval($iva)));
+                        //$separado1 = (floatval($montoCancelado1)/(1 + floatval($iva)));
                         //var_dump($separado);
-                        $totalIva1 = round((floatval($separado1) * floatval($iva)),2);
+                        //$totalIva1 = round((floatval($separado1) * floatval($iva)),2);
+
+                        //IVA
+                        $separado1 = (floatval($montoCancelado1)/(1 + floatval($iva)));
+                        $totalIva1 = substr(floatval($separado1) * floatval($iva),0,4);
 
                         $pdf->Cell(5,1,utf8_decode(date("d", strtotime($result['fechaFactura']))),0,0,'L');
                         $pdf->Cell(20,1,utf8_decode($result['numeroFactura']),0,0,'L');
@@ -215,9 +219,13 @@
                             $montoCancelado2 = 0;
                         }
                         //IVA
-                        $separado2 = (floatval($montoCancelado2)/(1 + floatval($iva)));
+                        //$separado2 = (floatval($montoCancelado2)/(1 + floatval($iva)));
                         //var_dump($separado);
-                        $totalIva2 = round((floatval($separado2) * floatval($iva)),2);
+                        //$totalIva2 = round((floatval($separado2) * floatval($iva)),2);
+
+                        //IVA
+                        $separado2 = (floatval($montoCancelado2)/(1 + floatval($iva)));
+                        $totalIva2 = substr(floatval($separado2) * floatval($iva),0,4);
 
                         $pdf->Cell(5,1,utf8_decode(date("d", strtotime($result['fechaComprobante']))),0,0,'L');
                         $pdf->Cell(20,1,utf8_decode($result['prefijo'] . $result['numeroComprobante']),0,0,'L');
@@ -262,10 +270,16 @@
                             $montoCancelado3 = 0;
                         }
                         //IVA
-                        $separado3 = (floatval($montoCancelado3)/(1 + floatval($iva)));
+                        //$separado3 = (floatval($montoCancelado3)/(1 + floatval($iva)));
                         //var_dump($separado);
-                        $totalIva3 = round((floatval($separado3) * floatval($iva)),2);
-                        $totalCesc3 = round((floatval($separado3) * floatval($cesc)),2);
+                        //$totalIva3 = (floatval($separado3) * floatval($iva));
+                        //$totalCesc3 = round((floatval($separado3) * floatval($cesc)),2);
+
+                        $totalCesc3 = substr((($montoCancelado3/(1 + floatval($iva)))*$cesc),0,4);
+                        //IVA
+                        $separado3 = (floatval($montoCancelado3)/(1 + floatval($iva)));
+                        $totalIva3 = substr(floatval($separado3) * floatval($iva),0,4);
+
 
                         $pdf->Cell(5,1,utf8_decode(date("d", strtotime($result['fechaComprobante']))),0,0,'L');
                         $pdf->Cell(20,1,utf8_decode($result['prefijo'] . $result['numeroComprobante']),0,0,'L');
@@ -310,9 +324,13 @@
                             $montoCancelado1 = doubleval($result["cuotaInternet"]);
                         }
                         //IVA
-                        $separado1 = (floatval($montoCancelado1)/(1 + floatval($iva)));
+                        //$separado1 = (floatval($montoCancelado1)/(1 + floatval($iva)));
                         //var_dump($separado);
-                        $totalIva1 = round((floatval($separado1) * floatval($iva)),2);
+                        //$totalIva1 = round((floatval($separado1) * floatval($iva)),2);
+
+
+                        $separado1 = (floatval($montoCancelado1)/(1 + floatval($iva)));
+                        $totalIva1 = substr(floatval($separado1) * floatval($iva),0,4);
 
                         $pdf->Cell(5,1,utf8_decode(date("d", strtotime($result['fechaFactura']))),0,0,'L');
                         $pdf->Cell(20,1,utf8_decode($result['numeroFactura']),0,0,'L');
@@ -357,9 +375,12 @@
                             $montoCancelado2 = 0;
                         }
                         //IVA
-                        $separado2 = (floatval($montoCancelado2)/(1 + floatval($iva)));
+                        //$separado2 = (floatval($montoCancelado2)/(1 + floatval($iva)));
                         //var_dump($separado);
-                        $totalIva2 = round((floatval($separado2) * floatval($iva)),2);
+                        //$totalIva2 = round((floatval($separado2) * floatval($iva)),2);
+                        $separado2 = (floatval($montoCancelado2)/(1 + floatval($iva)));
+                        $totalIva2 = substr(floatval($separado2) * floatval($iva),0,4);
+
 
                         $pdf->Cell(5,1,utf8_decode(date("d", strtotime($result['fechaComprobante']))),0,0,'L');
                         $pdf->Cell(20,1,utf8_decode($result['prefijo'] . $result['numeroComprobante']),0,0,'L');
@@ -402,10 +423,15 @@
                             $montoCancelado3 = 0;
                         }
                         //IVA
-                        $separado3 = (floatval($montoCancelado3)/(1 + floatval($iva)));
+                        //$separado3 = (floatval($montoCancelado3)/(1 + floatval($iva)));
                         //var_dump($separado);
-                        $totalIva3 = round((floatval($separado3) * floatval($iva)),2);
-                        $totalCesc3 = round((floatval($separado3) * floatval($cesc)),2);
+                        //$totalIva3 = round((floatval($separado3) * floatval($iva)),2);
+                        //$totalCesc3 = round((floatval($separado3) * floatval($cesc)),2);
+
+                        $totalCesc3 = substr((($montoCancelado3/(1 + floatval($iva)))*$cesc),0,4);
+                        //IVA
+                        $separado3 = (floatval($montoCancelado3)/(1 + floatval($iva)));
+                        $totalIva3 = substr(floatval($separado3) * floatval($iva),0,4);
 
                         $pdf->Cell(5,1,utf8_decode(date("d", strtotime($result['fechaComprobante']))),0,0,'L');
                         $pdf->Cell(20,1,utf8_decode($result['prefijo'] . $result['numeroComprobante']),0,0,'L');

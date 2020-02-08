@@ -168,6 +168,8 @@ function todoAdelante1(codigo){
     console.log(codigo);
     window.open("infoCliente.php?id="+codigo,"_self");
 }
+
+
 /*function imprimirOrden(){
     var nOrden = document.getElementById("numeroSuspension").value
     // Trigger the button element with a click

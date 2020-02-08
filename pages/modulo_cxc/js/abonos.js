@@ -141,3 +141,15 @@ function getMesesPagar(){
         }
     }
 }
+
+/*function imprimirAbono(){
+    var r = confirm("¿Desea imprimir el comprobante de pago?");
+    if (r == true) {
+      document.getElementById("submitAbono").name="imprimirAbono";
+      document.getElementById("submitAbono").value="1";
+      document.getElementById("submitAbono").click();
+    } else {
+      document.getElementById("submitAbono").name="submit";
+      document.getElementById("submitAbono").click();
+    }
+}*/

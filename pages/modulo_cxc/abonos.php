@@ -266,7 +266,7 @@ session_start();
     }
     else {
         /****************** DATOS GENERALES ***********************/
-        $estado_cable = ""; // 0 o 1
+        $estado_cable = "0"; // 0 o 1
         $estado_internet = ""; // 1, 2, 3
         $codigo = "";
         $nContrato = "";
@@ -372,6 +372,12 @@ session_start();
  $arrTiposClientes = $data->getData('tbl_tipos_clientes');
  if (isset($_GET['tipoServicio'])) {
       $tipoServicio = strtoupper($_GET['tipoServicio']);
+ }
+ if (isset($_SESSION["fechaAbono"])) {
+     $fechaAbono = $_SESSION["fechaAbono"];
+ }else {
+     date_default_timezone_set('America/El_Salvador');
+     $fechaAbono = date("d/m/Y");
  }
 
  $arrCargos = $data->getDataCargos2('tbl_cargos', $codigo, $tipoServicio, "pendiente");
@@ -542,6 +548,12 @@ session_start();
                                           echo "<br>";
                                       }
                                   }
+                                  if (isset($_GET['duplicado'])) {
+                                      if ($_GET['duplicado'] == 'si') {
+                                          echo '<script>alert("El recibo que intenta ingresar ya se encuentra en sistema, por favor corroborarlo.")</script>';
+                                          echo "<br>";
+                                      }
+                                  }
                                   ?>
                                   <div class="pull-right">
                                       <a href="estadoCuenta.php?codigoCliente=<?php if(isset($_GET['codigoCliente'])) echo $_GET['codigoCliente']; ?>"><button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Estado de cuenta">Estado de cuenta</button></a>
@@ -574,7 +586,7 @@ session_start();
                                               <label for="servicioSuspendido">Servicio suspendido</label>
                                               <input class="form-control input-sm" type="checkbox" name="servicioSuspendido" value="'.$estado_cable.'" checked readonly>
                                             </div>';
-                                  }elseif ($estado_cable == "F") {
+                                  }elseif ($estado_cable == "F" || $estado_cable == "") {
                                       echo '<div class="col-md-4">
                                               <label for="servicioSuspendido">Servicio suspendido</label>
                                               <input class="form-control input-sm" type="checkbox" name="servicioSuspendido" value="'.$estado_cable.'" readonly>
@@ -586,7 +598,7 @@ session_start();
                                   <div class="col-md-2">
                                     <!-- readonly -->
                                       <label for="claseOrden">Fecha del abono</label>
-                                      <input class="form-control input-sm input-sm" name="fechaAbono" type="text" value= "<?php date_default_timezone_set('America/El_Salvador'); echo date('d/m/Y'); ?>" >
+                                      <input class="form-control input-sm input-sm" name="fechaAbono" type="text" value= "<?php echo $fechaAbono;?>" >
                                   </div>
                                   <div class="col-md-5">
                                       <label for="zona">Zona</label>
@@ -879,7 +891,8 @@ session_start();
                                   </div>
                                   <div class="col-md-4">
                                       <label for="meses" style="color: brown;"></label>
-                                      <button id="aplicarAbono" class="btn btn-success btn-md btn-block" type="submit" name="editar" style="margin-bottom: 6px; margin-top: 0px;"><i class="fas fa-check" style="color: white;"></i> Aplicar abonos e imprimir</button>
+                                      <button id="aplicarAbono" class="btn btn-success btn-md btn-block" type="submit" name="editar" style="margin-bottom: 6px; margin-top: 0px;"><i class="fas fa-check" style="color: white;"></i> Aplicar abonos</button>
+                                      <!--<input id="submitAbono" style="display: none;" type="submit" name="submit" value="">-->
                                       <a href="cxc.php" style="text-decoration: none;"><button class="btn btn-danger btn-md btn-block" type="button" name="button"><i class="fas fa-sign-out-alt" style="color: white;"></i> Salir</button></a>
                                   </div>
                               </div>

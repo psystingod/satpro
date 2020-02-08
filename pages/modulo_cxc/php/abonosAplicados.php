@@ -34,27 +34,8 @@
   $totalImpuestoI = 0;
   $anulada = 0;
 
-  if ($codigoCobrador === "todos") {
-      $query1 = "SELECT codigoCobrador, nombreCobrador FROM tbl_cobradores";
-      // Preparación de sentencia
-      $statement1 = $mysqli->query($query1);
-      //$statement->execute();
-      /*while ($result1 = $statement1->fetch_assoc()) {
-          $arrCobradores = $result1['codigoCobrador'];
-      }*/
-  }
-  elseif ($codigoCobrador  != "todos") {
-      $query1 = "SELECT codigoCobrador, nombreCobrador FROM tbl_cobradores WHERE codigoCobrador= ".$codigoCobrador;
-      // Preparación de sentencia
-      $statement1 = $mysqli->query($query1);
-      //$statement->execute();
-      /*while ($result1 = $statement1->fetch_assoc()) {
-          $diaCobro = $result1['codigoCobrador'];
-      }*/
-  }
-
   function abonos(){
-	  global $desde, $hasta, $codigoCobrador, $colonia, $tipoServicio, $mysqli, $statement1;
+	  global $desde, $hasta, $codigoCobrador, $colonia, $tipoServicio, $mysqli /*$statement1*/;
       global $totalAnticipoSoloCable,$totalAnticipoCable,$totalAnticipoImpuestoC,$totalAnticipoSoloInter,$totalAnticipoInter,$totalAnticipoImpuestoI;
       global $totalSoloCable,$totalCable,$totalImpuestoC,$totalSoloInter,$totalInter,$totalImpuestoI,$anulada;
 
@@ -124,7 +105,6 @@
 		  $iva = floatval($result['valorImpuesto']);
 	  }*/
 
-
 	  $pdf = new FPDF();
 
 	  $pdf->AddPage('L','Letter');
@@ -161,7 +141,187 @@
       $pdf->Cell(15,6,utf8_decode('Impuesto'),1,0,'L');
       $pdf->Cell(20,6,utf8_decode('Total recibo'),1,1,'L');
       $pdf->Ln(3);
+
+      if ($codigoCobrador === "todos") {
+          $query1 = "SELECT codigoCobrador, nombreCobrador FROM tbl_cobradores";
+          // Preparación de sentencia
+          $statement1 = $mysqli->query($query1);
+
+          while ($cobradores = $statement1->fetch_assoc()) {//RECORRIDO DE TODOS LOS COBRADORES
+              $pdf->SetFont('Arial','',8);
+              $pdf->Cell(190,3,utf8_decode($cobradores['nombreCobrador']),0,1,'L');
+              
+              while($row = $resultado->fetch_assoc())
+        	  {
+                  if ($row["codigoCobrador"]==$cobradores["codigoCobrador"]) {
+                      // code...
+                  }
+                  if ($row["tipoServicio"] == "C") {
+                      $query2 = "SELECT dia_cobro FROM clientes WHERE cod_cliente= ".$row['codigoCliente'];
+                  	  // Preparación de sentencia
+                  	  $statement2 = $mysqli->query($query2);
+                  	  //$statement->execute();
+                  	  while ($result2 = $statement2->fetch_assoc()) {
+                  		  $diaCobro = $result2['dia_cobro'];
+                  	  }
+                  }
+                  elseif ($row["tipoServicio"]  == "I") {
+                      $query2 = "SELECT dia_corbo_in FROM clientes WHERE cod_cliente= ".$row['codigoCliente'];
+                  	  // Preparación de sentencia
+                  	  $statement2 = $mysqli->query($query2);
+                  	  //$statement->execute();
+                  	  while ($result2 = $statement2->fetch_assoc()) {
+                  		  $diaCobro = $result2['dia_corbo_in'];
+                  	  }
+                  }
+
+                    $pdf->Ln(3);
+                    $pdf->SetFont('Arial','',6);
+                    $pdf->Cell(10,3,utf8_decode($row['idAbono']),0,0,'L');
+              		$pdf->Cell(20,3,utf8_decode($row['numeroRecibo']),0,0,'L');
+              		$pdf->Cell(30,3,utf8_decode($row['fechaAbonado']),0,0,'L');
+                    $pdf->Cell(80,3,utf8_decode(strtoupper($row['codigoCliente']."  ".$row['nombre'])),0,0,'L');
+              		$pdf->Cell(20,3,utf8_decode($row['mesCargo']),0,0,'L');
+              		$pdf->Cell(10,3,utf8_decode($diaCobro),0,0,'L');
+                    $pdf->Cell(20,3,utf8_decode($row['tipoServicio']),0,0,'L');
+                    if ($row['anticipado'] == "1" || $row['anticipado'] == "T") {
+                        if ($row['tipoServicio'] == "C") {
+                            $pdf->Cell(20,3,utf8_decode('0.00'),0,0,'L');
+                      		$pdf->Cell(20,3,utf8_decode($row['cuotaCable']),0,0,'L');
+                            $pdf->Cell(15,3,utf8_decode($row['totalImpuesto']),0,0,'L');
+                      		$pdf->Cell(20,3,utf8_decode(number_format(doubleval($row['cuotaCable'])+doubleval($row['totalImpuesto']),2)),0,1,'L');
+                            $totalAnticipoSoloCable = doubleval($totalAnticipoSoloCable) + doubleval($row['cuotaCable']);
+                            $totalAnticipoCable = doubleval($totalAnticipoCable) + doubleval($row['cuotaCable'])+doubleval($row['totalImpuesto']);
+                            $totalAnticipoImpuestoC = doubleval($totalAnticipoImpuestoC) + doubleval($row['totalImpuesto']);
+                        }elseif ($row['tipoServicio'] == "I") {
+                            $pdf->Cell(20,3,utf8_decode('0.00'),0,0,'L');
+                      		$pdf->Cell(20,3,utf8_decode($row['cuotaInternet']),0,0,'L');
+                            $pdf->Cell(15,3,utf8_decode($row['totalImpuesto']),0,0,'L');
+                      		$pdf->Cell(20,3,utf8_decode(number_format(doubleval($row['cuotaInternet'])+doubleval($row['totalImpuesto']),2)),0,1,'L');
+                            $totalAnticipoSoloInter = doubleval($totalAnticipoSoloInter) + doubleval($row['cuotaInternet']);
+                            $totalAnticipoInter = doubleval($totalAnticipoInter) + doubleval($row['cuotaInternet'])+doubleval($row['totalImpuesto']);
+                            $totalAnticipoImpuestoI = doubleval($totalAnticipoImpuestoI) + doubleval($row['totalImpuesto']);
+                        }
+
+                    }else {
+                        if ($row['tipoServicio'] == "C") {
+                            $pdf->Cell(20,3,utf8_decode($row['cuotaCable']),0,0,'L');
+                      		$pdf->Cell(20,3,utf8_decode("0.00"),0,0,'L');
+                            $pdf->Cell(15,3,utf8_decode($row['totalImpuesto']),0,0,'L');
+                      		$pdf->Cell(20,3,utf8_decode(number_format(doubleval($row['cuotaCable'])+doubleval($row['totalImpuesto']),2)),0,1,'L');
+                            $totalSoloCable = doubleval($totalSoloCable) + doubleval($row['cuotaCable']);
+                            $totalCable = doubleval($totalCable) + doubleval($row['cuotaCable'])+doubleval($row['totalImpuesto']);
+                            $totalImpuestoC = doubleval($totalImpuestoC) + doubleval($row['totalImpuesto']);
+                        }elseif ($row['tipoServicio'] == "I") {
+                            $pdf->Cell(20,3,utf8_decode($row['cuotaInternet']),0,0,'L');
+                      		$pdf->Cell(20,3,utf8_decode("0.00"),0,0,'L');
+                            $pdf->Cell(15,3,utf8_decode($row['totalImpuesto']),0,0,'L');
+                      		$pdf->Cell(20,3,utf8_decode(number_format(doubleval($row['cuotaInternet'])+doubleval($row['totalImpuesto']),2)),0,1,'L');
+                            $totalSoloInter = doubleval($totalSoloInter) + doubleval($row['cuotaInternet']);
+                            $totalInter = doubleval($totalInter) + doubleval($row['cuotaInternet'])+doubleval($row['totalImpuesto']);
+                            $totalImpuestoI = doubleval($totalImpuestoI) + doubleval($row['totalImpuesto']);
+                        }
+                    }
+
+        	  }
+          }
+      }
+      elseif ($codigoCobrador  != "todos") {
+          $query1 = "SELECT codigoCobrador, nombreCobrador FROM tbl_cobradores WHERE codigoCobrador= ".$codigoCobrador;
+          // Preparación de sentencia
+          $statement1 = $mysqli->query($query1);
+
+          while ($cobradores = $statement1->fetch_assoc()) {//RECORRIDO DE TODOS LOS COBRADORES
+              if ($cobradores['codigoCobrador'] == $codigoCobrador) {
+                  $pdf->SetFont('Arial','B',8);
+                  $pdf->Cell(190,3,utf8_decode($cobradores['nombreCobrador']),0,1,'L');
+                  //$pdf->Ln(2);
+              }
+
+              while($row = $resultado->fetch_assoc())
+        	  {
+                  /*if (condition) {
+                      // code...
+                  }*/
+
+                  if ($row["tipoServicio"] == "C") {
+                      $query1 = "SELECT dia_cobro FROM clientes WHERE cod_cliente= ".$row['codigoCliente'];
+                  	  // Preparación de sentencia
+                  	  $statement1 = $mysqli->query($query1);
+                  	  //$statement->execute();
+                  	  while ($result1 = $statement1->fetch_assoc()) {
+                  		  $diaCobro = $result1['dia_cobro'];
+                  	  }
+                  }
+                  elseif ($row["tipoServicio"]  == "I") {
+                      $query1 = "SELECT dia_corbo_in FROM clientes WHERE cod_cliente= ".$row['codigoCliente'];
+                  	  // Preparación de sentencia
+                  	  $statement1 = $mysqli->query($query1);
+                  	  //$statement->execute();
+                  	  while ($result1 = $statement1->fetch_assoc()) {
+                  		  $diaCobro = $result1['dia_corbo_in'];
+                  	  }
+                  }
+
+                    $pdf->Ln(3);
+                    $pdf->SetFont('Arial','',6);
+                    $pdf->Cell(10,3,utf8_decode($row['idAbono']),0,0,'L');
+              		$pdf->Cell(20,3,utf8_decode($row['numeroRecibo']),0,0,'L');
+              		$pdf->Cell(30,3,utf8_decode($row['fechaAbonado']),0,0,'L');
+                    $pdf->Cell(80,3,utf8_decode(strtoupper($row['codigoCliente']."  ".$row['nombre'])),0,0,'L');
+              		$pdf->Cell(20,3,utf8_decode($row['mesCargo']),0,0,'L');
+              		$pdf->Cell(10,3,utf8_decode($diaCobro),0,0,'L');
+                    $pdf->Cell(20,3,utf8_decode($row['tipoServicio']),0,0,'L');
+                    if ($row['anticipado'] == "1" || $row['anticipado'] == "T") {
+                        if ($row['tipoServicio'] == "C") {
+                            $pdf->Cell(20,3,utf8_decode('0.00'),0,0,'L');
+                      		$pdf->Cell(20,3,utf8_decode($row['cuotaCable']),0,0,'L');
+                            $pdf->Cell(15,3,utf8_decode($row['totalImpuesto']),0,0,'L');
+                      		$pdf->Cell(20,3,utf8_decode(number_format(doubleval($row['cuotaCable'])+doubleval($row['totalImpuesto']),2)),0,1,'L');
+                            $totalAnticipoSoloCable = doubleval($totalAnticipoSoloCable) + doubleval($row['cuotaCable']);
+                            $totalAnticipoCable = doubleval($totalAnticipoCable) + doubleval($row['cuotaCable'])+doubleval($row['totalImpuesto']);
+                            $totalAnticipoImpuestoC = doubleval($totalAnticipoImpuestoC) + doubleval($row['totalImpuesto']);
+                        }elseif ($row['tipoServicio'] == "I") {
+                            $pdf->Cell(20,3,utf8_decode('0.00'),0,0,'L');
+                      		$pdf->Cell(20,3,utf8_decode($row['cuotaInternet']),0,0,'L');
+                            $pdf->Cell(15,3,utf8_decode($row['totalImpuesto']),0,0,'L');
+                      		$pdf->Cell(20,3,utf8_decode(number_format(doubleval($row['cuotaInternet'])+doubleval($row['totalImpuesto']),2)),0,1,'L');
+                            $totalAnticipoSoloInter = doubleval($totalAnticipoSoloInter) + doubleval($row['cuotaInternet']);
+                            $totalAnticipoInter = doubleval($totalAnticipoInter) + doubleval($row['cuotaInternet'])+doubleval($row['totalImpuesto']);
+                            $totalAnticipoImpuestoI = doubleval($totalAnticipoImpuestoI) + doubleval($row['totalImpuesto']);
+                        }
+
+                    }else {
+                        if ($row['tipoServicio'] == "C") {
+                            $pdf->Cell(20,3,utf8_decode($row['cuotaCable']),0,0,'L');
+                      		$pdf->Cell(20,3,utf8_decode("0.00"),0,0,'L');
+                            $pdf->Cell(15,3,utf8_decode($row['totalImpuesto']),0,0,'L');
+                      		$pdf->Cell(20,3,utf8_decode(number_format(doubleval($row['cuotaCable'])+doubleval($row['totalImpuesto']),2)),0,1,'L');
+                            $totalSoloCable = doubleval($totalSoloCable) + doubleval($row['cuotaCable']);
+                            $totalCable = doubleval($totalCable) + doubleval($row['cuotaCable'])+doubleval($row['totalImpuesto']);
+                            $totalImpuestoC = doubleval($totalImpuestoC) + doubleval($row['totalImpuesto']);
+                        }elseif ($row['tipoServicio'] == "I") {
+                            $pdf->Cell(20,3,utf8_decode($row['cuotaInternet']),0,0,'L');
+                      		$pdf->Cell(20,3,utf8_decode("0.00"),0,0,'L');
+                            $pdf->Cell(15,3,utf8_decode($row['totalImpuesto']),0,0,'L');
+                      		$pdf->Cell(20,3,utf8_decode(number_format(doubleval($row['cuotaInternet'])+doubleval($row['totalImpuesto']),2)),0,1,'L');
+                            $totalSoloInter = doubleval($totalSoloInter) + doubleval($row['cuotaInternet']);
+                            $totalInter = doubleval($totalInter) + doubleval($row['cuotaInternet'])+doubleval($row['totalImpuesto']);
+                            $totalImpuestoI = doubleval($totalImpuestoI) + doubleval($row['totalImpuesto']);
+                        }
+                    }
+
+
+        	  }
+          }
+      }
+
       while ($cobradores = $statement1->fetch_assoc()) {//RECORRIDO DE TODOS LOS COBRADORES
+          if ($cobradores['codigoCobrador'] == $_POST["lCobrador"]) {
+              $pdf->SetFont('Arial','B',8);
+              $pdf->Cell(190,3,utf8_decode($cobradores['nombreCobrador']),0,0,'L');
+              $pdf->Ln(2);
+          }
 
           while($row = $resultado->fetch_assoc())
     	  {
