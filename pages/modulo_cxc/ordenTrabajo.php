@@ -30,7 +30,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT cod_cliente, nombre, telefonos, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, mac_modem, serie_modem, id_velocidad, dire_telefonia, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia, saldoCable, saldoInternet FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
+            $query = "SELECT cod_cliente, nombre, telefonos, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, mac_modem, serie_modem, id_velocidad, dire_telefonia, recep_modem, trans_modem, ruido_modem, wanip, coordenadas, colilla, marca_modem, tecnologia, saldoCable, saldoInternet FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -69,8 +69,8 @@
             $tecnologia = $row['tecnologia'];
             $fechaTrabajo = "";
             $hora = "";
-            $fechaProgramacion = "";
-            $coordenadas = "";
+            $fechaProgramacion = $row['wanip']; //SE MODIFICO
+            $coordenadas = $row['coordenadas']; //SE MODIFICO
             $observaciones = "";
             $nodo = $row['dire_telefonia'];
             $idVendedor = "";
@@ -135,12 +135,12 @@
             }
 
             $hora = $row['hora'];
-            if ($row["fechaProgramacion"] >= 7) {
+            /*if ($row["fechaProgramacion"] >= 7) {
                 $fechaProgramacion = date_format(date_create($row["fechaProgramacion"]), 'd/m/Y');
             }else {
                 $fechaProgramacion = "";
-            }
-
+            }*/
+            $fechaProgramacion = $row["fechaProgramacion"];
             $idTecnico = $row['idTecnico'];
             $mactv = $row['mactv'];
             $coordenadas = $row['coordenadas'];
@@ -552,13 +552,13 @@
                                   </div>
                                   <div class="col-md-3">
                                       <br>
-                                      <label for="fechaProgramacion">Fecha de programación</label>
+                                      <label for="fechaProgramacion">WAN IP</label>
                                       <input class="form-control input-sm" type="text" name="fechaProgramacion" value="<?php echo $fechaProgramacion; ?>" readonly>
                                   </div>
                                   <div class="col-md-5">
                                       <br>
                                       <label for="responsable">Responsable</label>
-                                      <select class="form-control input-sm" name="responsable" disabled>
+                                      <select class="form-control input-sm" name="responsable" disabled required>
                                           <option value="" selected>Seleccionar</option>
                                           <?php
                                           foreach ($arrayTecnicos as $key) {

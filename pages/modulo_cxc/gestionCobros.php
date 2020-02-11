@@ -141,7 +141,7 @@
             $stmt->execute();
             // store retrieved row to a variable
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
-            var_dump($codigoCliente);
+            //var_dump($codigoCliente);
             $saldos = new GetSaldoReal();
             $getSaldoCable = $saldos->getSaldoCable($codigoCliente);
             $getSaldoInter = $saldos->getSaldoInter($codigoCliente);

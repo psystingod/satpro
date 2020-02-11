@@ -116,6 +116,10 @@
                             '<ul class="dropdown-menu dropdown-user">
                                 <li><a href="impagos.php" target="_blank">Gestión de impagos</a>
                                 </li>
+                                <li><a href="#" data-toggle="modal" data-target="#listaSuspensiones">Listado de suspensiones</a>
+                                </li>
+                                <li><a href="#" data-toggle="modal" data-target="#suspensionesAutomaticas">Suspensiones automáticas</a>
+                                </li>
                             </ul>';
                         }
                     }
@@ -779,6 +783,114 @@
             </div>
           </div>
       </div><!-- Fin Modal ABONOS APLICADOS -->
+      <!-- Modal LISTA SUSPENSIONES -->
+      <div id="listaSuspensiones" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div style="background-color: #1565C0; color:white;" class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Lista de clientes a suspender</h4>
+            </div>
+            <form id="frmListaSuspendidos" action="php/listaSuspensiones.php" method="POST">
+            <div class="modal-body">
+              <div class="row">
+                  <div class="col-md-6">
+                      <label for="susCobrador">Cobrador</label>
+                      <select class="form-control" type="text" id="susCobrador" name="susCobrador" required>
+                          <option value="">Seleccione cobrador</option>
+                          <option value="todos" selected>Todos los cobradores</option>
+                          <?php
+                          require_once 'php/GetAllInfo.php';
+                          $data = new GetAllInfo();
+                          $arrCobradores = $data->getData('tbl_cobradores');
+                          foreach ($arrCobradores as $key) {
+                              echo '<option value="'.$key['codigoCobrador'].'">'.$key['nombreCobrador'].'</option>';
+                          }
+                          ?>
+                      </select>
+                  </div>
+                  <div class="col-md-6">
+                      <label for="susServicio">Tipo de servicio</label>
+                      <select class="form-control" type="text" id="susServicio" name="susServicio" required>
+                          <option value="">Seleccione tipo de servicio</option>
+                          <option value="C" selected>Cable</option>
+                          <option value="I">Internet</option>
+                          <option value="P">Paquete</option>
+                          <option value="A">Todos</option>
+                      </select>
+                  </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-6">
+                        <input type="submit" class="btn btn-info btn-md btn-block" name="submit" value="Ver listado">
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </form>
+            </div>
+          </div>
+        </div>
+    </div><!-- Fin Modal LISTA DE SUSPENSIONES -->
+    <!-- Modal SUSPENSIONES AUTOMATICAS -->
+    <div id="suspensionesAutomaticas" class="modal fade" role="dialog">
+      <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div style="background-color: #b71c1c; color:white;" class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Lista de clientes a suspender</h4>
+          </div>
+          <form id="frmSuspensionesAutomaticas" action="php/suspensionesAutomaticas.php" method="POST">
+          <div class="modal-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <label for="susCobrador">Cobrador</label>
+                    <select class="form-control" type="text" id="susCobrador" name="susCobrador" required>
+                        <option value="">Seleccione cobrador</option>
+                        <option value="todos" selected>Todos los cobradores</option>
+                        <?php
+                        require_once 'php/GetAllInfo.php';
+                        $data = new GetAllInfo();
+                        $arrCobradores = $data->getData('tbl_cobradores');
+                        foreach ($arrCobradores as $key) {
+                            echo '<option value="'.$key['codigoCobrador'].'">'.$key['nombreCobrador'].'</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="susServicio">Tipo de servicio</label>
+                    <select class="form-control" type="text" id="susServicio" name="susServicio" required>
+                        <option value="">Seleccione tipo de servicio</option>
+                        <option value="C" selected>Cable</option>
+                        <option value="I">Internet</option>
+                        <option value="P">Paquete</option>
+                        <option value="A">Todos</option>
+                    </select>
+                </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+              <div class="row">
+                  <div class="col-md-6">
+                      <input type="submit" class="btn btn-danger btn-md btn-block" name="submit" value="Ver suspensiones">
+                  </div>
+                  <div class="col-md-6">
+                      <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>
+                  </div>
+              </div>
+          </form>
+          </div>
+        </div>
+      </div>
+  </div><!-- Fin Modal SUSPENSIONES AUTOMATICAS -->
       <!-- Modal VENTAS MANUALES -->
       <div id="reporteVentasManuales" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
@@ -801,10 +913,10 @@
                   <div class="col-md-5">
                       <label for="lServicio">Tipo de servicio</label>
                       <select class="form-control" type="text" id="lServicio" name="lServicio" required>
-                          <option value="">Seleccione tipo de servicio</option>
+                          <option value="A">Todo</option>
                           <option value="C" selected>Cable</option>
                           <option value="I">Internet</option>
-                          <option value="A">Todo</option>
+
                       </select>
                   </div>
               </div>
@@ -821,11 +933,11 @@
               <div class="row">
                   <div class="col-md-6">
                       <label for="ordenamiento">Ordenar por fecha</label>
-                      <input type="radio" id="ordenamiento" name="ordenamiento" value="fecha">
+                      <input type="radio" id="ordenamiento" name="ordenamiento" value="fechaComprobante">
                   </div>
                   <div class="col-md-6">
                       <label for="ordenamiento">Ordenar por correlativo</label>
-                      <input type="radio" id="ordenamiento" name="ordenamiento" value="correlativo" checked="checked">
+                      <input type="radio" id="ordenamiento" name="ordenamiento" value="numeroComprobante" checked="checked">
                   </div>
               </div>
               <div class="row">

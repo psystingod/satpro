@@ -40,13 +40,14 @@
                         $fechaTrabajo = "";
                     }
                     $hora = $_POST["hora"];
-                    $str3 = $_POST["fechaProgramacion"];
+                    /*$str3 = $_POST["fechaProgramacion"];
                     if (strlen($str3) >= 7) {
                         $date3 = DateTime::createFromFormat('d/m/Y', $str3);
                         $fechaProgramacion = $date3->format('Y-m-d');
                     }else {
                         $fechaProgramacion = "";
-                    }
+                    }*/
+                    $fechaProgramacion = $_POST["fechaProgramacion"];
                     $responsable = $_POST["responsable"];
                     $mactv = $_POST["mactv"];
                     $observaciones = $_POST["observaciones"];
@@ -131,13 +132,14 @@
                         $fechaTrabajo = "";
                     }
                     $hora = $_POST["hora"];
-                    $str3 = $_POST["fechaProgramacion"];
+                    /*$str3 = $_POST["fechaProgramacion"];
                     if (strlen($str3) >= 7) {
                         $date3 = DateTime::createFromFormat('d/m/Y', $str3);
                         $fechaProgramacion = $date3->format('Y-m-d');
                     }else {
                         $fechaProgramacion = "";
-                    }
+                    }*/
+                    $fechaProgramacion = $_POST["fechaProgramacion"];
                     $responsable = $_POST["responsable"];
                     $coordenadas = $_POST["coordenadas"];
                     $observaciones = $_POST["observaciones"];

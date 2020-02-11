@@ -41,7 +41,7 @@
 
         public function getDailyIncomes()
         {
-            try {   
+            try {
                     date_default_timezone_set('America/El_Salvador');
                     $date = date("Y-m-d");
                     //$query = "SELECT SUM(cuotaCable + totalImpuesto) FROM tbl_abonos WHERE tipoServicio = 'C' AND anulada = 0 AND DAY(:fecha) = DAY(fechaAbonado)";
@@ -143,6 +143,48 @@
         {
             try {
                     $query = "SELECT COUNT(*) FROM tbl_articulointernet";
+                    $statement = $this->dbConnect->prepare($query);
+                    $statement->execute();
+                    $result1 = $statement->fetchColumn();
+                    return $result1;
+
+            } catch (Exception $e) {
+                print "!Error¡: " . $e->getMessage() . "</br>";
+                die();
+            }
+        }
+        public function getTotalClientsC()
+        {
+            try {
+                    $query = "SELECT count(*) FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) AND estado_cliente_in = 3";
+                    $statement = $this->dbConnect->prepare($query);
+                    $statement->execute();
+                    $result1 = $statement->fetchColumn();
+                    return $result1;
+
+            } catch (Exception $e) {
+                print "!Error¡: " . $e->getMessage() . "</br>";
+                die();
+            }
+        }
+        public function getTotalClientsI()
+        {
+            try {
+                    $query = "SELECT count(*) FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='T' AND estado_cliente_in = 1";
+                    $statement = $this->dbConnect->prepare($query);
+                    $statement->execute();
+                    $result1 = $statement->fetchColumn();
+                    return $result1;
+
+            } catch (Exception $e) {
+                print "!Error¡: " . $e->getMessage() . "</br>";
+                die();
+            }
+        }
+        public function getTotalClientsCI()
+        {
+            try {
+                    $query = "SELECT count(*) FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='F' AND estado_cliente_in = 1";
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute();
                     $result1 = $statement->fetchColumn();

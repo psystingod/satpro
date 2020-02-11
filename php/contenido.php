@@ -66,6 +66,9 @@ $dashboardAdministracion = "<div id='page-wrapper'>
                         <div class='value'>".number_format($dashboard->getActiveClients())."</div>
                         <div class='name'>Clientes activos</div>
                     </div>
+                    <div class=''>CABLE: ".number_format($dashboard->getTotalClientsC())."</div>
+                    <div class=''>INTERNET: ".number_format($dashboard->getTotalClientsI())."</div>
+                    <div class=''>PAQUETE: ".number_format($dashboard->getTotalClientsCI())."</div>
                 </div>
                 <div class='col-lg-6'>
                     <a href='#'><div class='stat-icon btn btn-default' style='color:#8e44ad'>

@@ -104,7 +104,8 @@
             $pdf->Cell(60,3,'Tecnologia: '.$row["tecnologia"],0,0,'L');
             $pdf->Cell(60,3,'Marca/Modelo: '.$row["marcaModelo"],0,1,'L');
             $pdf->Ln(3);
-            $pdf->Cell(190,3,'Coordenadas: '.$row["coordenadas"],0,1,'L');
+            $pdf->Cell(80,3,'Coordenadas: '.$row["coordenadas"],0,0,'L');
+            $pdf->Cell(95,3,'WAN IP: '.$row["fechaProgramacion"],0,1,'L');
             $pdf->Ln(3);
 
             $pdf->MultiCell(190,6,'Observaciones: '.utf8_decode($row["observaciones"]),0,'L',0);
