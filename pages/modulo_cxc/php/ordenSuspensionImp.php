@@ -74,8 +74,8 @@
             $pdf->SetFont('Arial','B',12);
             $pdf->Cell(190,6,'SUSPENSION DE SERVICIO',0,1,'C');
             $pdf->SetFont('Arial','B',9);
-            $pdf->Cell(95,1,'Dia de cobro: '.$row["diaCobro"],0,0,'L');
-            $pdf->Cell(90,6,utf8_decode('N° ').$row["idOrdenSuspension"],0,1,'R');
+            $pdf->Cell(175,6,'Dia de cobro: '.$row["diaCobro"],0,0,'L');
+            $pdf->Cell(20,6,utf8_decode('N° ').$row["idOrdenSuspension"],1,1,'C');
             $pdf->Ln(12);
             $pdf->SetFont('Arial','UB',9);
             $pdf->Cell(40,3,'Fecha: '.$row["fechaOrden"],0,0,'L');
@@ -159,8 +159,8 @@
             $pdf->SetFont('Arial','B',12);
             $pdf->Cell(190,6,'SUSPENSION DE SERVICIO',0,1,'C');
             $pdf->SetFont('Arial','B',9);
-            $pdf->Cell(95,6,'Dia de cobro: '.$row["diaCobro"],0,0,'L');
-            $pdf->Cell(95,6,utf8_decode('N° ').$row["idOrdenSuspension"],0,1,'R');
+            $pdf->Cell(175,6,'Dia de cobro: '.$row["diaCobro"],0,0,'L');
+            $pdf->Cell(20,6,utf8_decode('N° ').$row["idOrdenSuspension"],1,1,'C');
             $pdf->Ln(12);
             $pdf->SetFont('Arial','UB',9);
             $pdf->Cell(40,3,'Fecha: '.$row["fechaOrden"],0,0,'L');
@@ -173,7 +173,7 @@
             $pdf->Cell(70,3,'Tecnico: '.$tecnico,0,1,'L');
             $pdf->Ln(5);
             $pdf->Cell(50,3,'MACTV: '.$row["mactv"],0,0,'L');
-            $pdf->Cell(50,3,'Colilla: '.$row["colilla"],0,0,'L');
+            $pdf->Cell(50,3,'Colilla: '.$row["colilla"],0,1,'L');
 
             $pdf->Ln(3);
             $pdf->Cell(190,3,'Motivo de la suspension: '.$actividadCable,0,1,'L');

@@ -59,6 +59,11 @@
              }
          }
 
+         if (isset($_GET['ordenes'])) {
+             $ordenes = unserialize(stripslashes($_GET["ordenes"]));
+             echo "<script>alert('ORDENES DE SUSPENSION GENERADAS: ".str_pad($ordenes[0],5,"0", STR_PAD_LEFT)."-".str_pad(end($ordenes),5,"0", STR_PAD_LEFT)."')</script>";
+         }
+
      ?>
     <div id="wrapper">
 
@@ -116,7 +121,9 @@
                             '<ul class="dropdown-menu dropdown-user">
                                 <li><a href="impagos.php" target="_blank">Gestión de impagos</a>
                                 </li>
-                                <li><a href="#" data-toggle="modal" data-target="#listaSuspensiones">Listado de suspensiones</a>
+                                <li><a href="#" data-toggle="modal" data-target="#listaSuspensiones1">Listado de suspensiones(1 mes)</a>
+                                </li>
+                                <li><a href="#" data-toggle="modal" data-target="#listaSuspensiones">Listado de suspensiones(2 meses)</a>
                                 </li>
                                 <li><a href="#" data-toggle="modal" data-target="#suspensionesAutomaticas">Suspensiones automáticas</a>
                                 </li>
@@ -783,6 +790,60 @@
             </div>
           </div>
       </div><!-- Fin Modal ABONOS APLICADOS -->
+      <!-- Modal LISTA SUSPENSIONES 1 mes-->
+      <div id="listaSuspensiones1" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+          <!-- Modal content-->
+          <div class="modal-content">
+            <div style="background-color: #1B5E20; color:white;" class="modal-header">
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <h4 class="modal-title">Lista de clientes de 1 factura generada</h4>
+            </div>
+            <form id="frmListaSuspendidos" action="php/listaSuspensiones1.php" method="POST">
+            <div class="modal-body">
+              <div class="row">
+                  <div class="col-md-6">
+                      <label for="susCobrador">Cobrador</label>
+                      <select class="form-control" type="text" id="susCobrador" name="susCobrador" required>
+                          <option value="">Seleccione cobrador</option>
+                          <option value="todos" selected>Todos los cobradores</option>
+                          <?php
+                          require_once 'php/GetAllInfo.php';
+                          $data = new GetAllInfo();
+                          $arrCobradores = $data->getData('tbl_cobradores');
+                          foreach ($arrCobradores as $key) {
+                              echo '<option value="'.$key['codigoCobrador'].'">'.$key['nombreCobrador'].'</option>';
+                          }
+                          ?>
+                      </select>
+                  </div>
+                  <div class="col-md-6">
+                      <label for="susServicio">Tipo de servicio</label>
+                      <select class="form-control" type="text" id="susServicio" name="susServicio" required>
+                          <option value="">Seleccione tipo de servicio</option>
+                          <option value="C" selected>Cable</option>
+                          <option value="I">Internet</option>
+                          <option value="P">Paquete</option>
+                          <option value="A">Todos</option>
+                      </select>
+                  </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-6">
+                        <input type="submit" class="btn btn-success btn-md btn-block" name="submit" value="Ver listado">
+                    </div>
+                    <div class="col-md-6">
+                        <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>
+                    </div>
+                </div>
+            </form>
+            </div>
+          </div>
+        </div>
+    </div><!-- Fin Modal LISTA DE SUSPENSIONES 1 mes -->
       <!-- Modal LISTA SUSPENSIONES -->
       <div id="listaSuspensiones" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
