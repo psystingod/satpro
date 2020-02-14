@@ -172,8 +172,8 @@
                         //$totalIva1 = round((floatval($separado1) * floatval($iva)),2);
 
                         //IVA
-                        $separado1 = (floatval($montoCancelado1)/(1 + floatval($iva)));
-                        $totalIva1 = substr(floatval($separado1) * floatval($iva),0,4);
+                        $separado1 = (doubleval($montoCancelado1)/(1 + doubleval($iva)));
+                        $totalIva1 = substr(doubleval($separado1) * doubleval($iva),0,7);
 
                         $pdf->Cell(5,1,utf8_decode(date("d", strtotime($result['fechaFactura']))),0,0,'L');
                         $pdf->Cell(20,1,utf8_decode($result['numeroFactura']),0,0,'L');
@@ -259,7 +259,7 @@
                 }
                 elseif ($tipoFacturaGenerar == 3) {
 
-                    $sql = "SELECT * FROM tbl_ventas_anuladas WHERE DAY(fechaComprobante) =".$counter." AND MONTH(fechaComprobante)=".$mesGenerar." AND YEAR(fechaComprobante)=".$anoGenerar." AND tipoComprobante = 2 ORDER BY idVenta ASC";
+                    $sql = "SELECT * FROM tbl_ventas_anuladas WHERE DAY(fechaComprobante) =".$counter." AND MONTH(fechaComprobante)=".$mesGenerar." AND YEAR(fechaComprobante)=".$anoGenerar." AND tipoComprobante = 2 ORDER BY numeroComprobante ASC";
 
                     $stmt = $mysqli->query($sql);
 
@@ -278,7 +278,7 @@
                         $totalCesc3 = substr((($montoCancelado3/(1 + floatval($iva)))*$cesc),0,4);
                         //IVA
                         $separado3 = (floatval($montoCancelado3)/(1 + floatval($iva)));
-                        $totalIva3 = substr(floatval($separado3) * floatval($iva),0,4);
+                        $totalIva3 = (doubleval($separado3) * doubleval($iva));
 
 
                         $pdf->Cell(5,1,utf8_decode(date("d", strtotime($result['fechaComprobante']))),0,0,'L');
@@ -330,7 +330,7 @@
 
 
                         $separado1 = (floatval($montoCancelado1)/(1 + floatval($iva)));
-                        $totalIva1 = substr(floatval($separado1) * floatval($iva),0,4);
+                        $totalIva1 = substr(doubleval($separado1) * doubleval($iva),0,7);
 
                         $pdf->Cell(5,1,utf8_decode(date("d", strtotime($result['fechaFactura']))),0,0,'L');
                         $pdf->Cell(20,1,utf8_decode($result['numeroFactura']),0,0,'L');
@@ -347,7 +347,7 @@
 
                         else {
                             $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
-                            $pdf->Cell(20,1,utf8_decode($sinIva1),0,0,'L');
+                            $pdf->Cell(20,1,utf8_decode(number_format($sinIva1,2)),0,0,'L');//APARENTEMENTE TIENE IVA Y FALTA CESC
                             $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
                             $totalSinIva1 = $totalSinIva1 +$sinIva1;
                             $totalConIva1 = $totalConIva1 + $montoCancelado1;
@@ -431,7 +431,7 @@
                         $totalCesc3 = substr((($montoCancelado3/(1 + floatval($iva)))*$cesc),0,4);
                         //IVA
                         $separado3 = (floatval($montoCancelado3)/(1 + floatval($iva)));
-                        $totalIva3 = substr(floatval($separado3) * floatval($iva),0,4);
+                        $totalIva3 = (doubleval($separado3) * doubleval($iva));
 
                         $pdf->Cell(5,1,utf8_decode(date("d", strtotime($result['fechaComprobante']))),0,0,'L');
                         $pdf->Cell(20,1,utf8_decode($result['prefijo'] . $result['numeroComprobante']),0,0,'L');
@@ -616,10 +616,10 @@
                 $pdf->Cell(40,6,utf8_decode(number_format(($totalConIvaEx1+$totalConIvaEx2+$totalConIvaEx3),2)),0,1,'L');
                 $pdf->Cell(40,6,utf8_decode('Ventas netas gravadas'),0,0,'L');
                 $pdf->Cell(40,6,utf8_decode(number_format(($totalSinIva1+$totalSinIva2+$totalSinIva3),2)),0,0,'L');
-                $pdf->Cell(40,6,utf8_decode("- ".($totalSinIva3)." (anuladas)"),0,1,'L');
+                $pdf->Cell(40,6,utf8_decode("- ".(number_format($totalSinIva3,2))." (anuladas)"),0,1,'L');
                 $pdf->Cell(40,6,utf8_decode('13% de IVA'),0,0,'L');
                 $pdf->Cell(40,6,utf8_decode(number_format(($totalSoloIva1+$totalSoloIva2+$totalSoloIva3),2)),0,0,'L');
-                $pdf->Cell(40,6,utf8_decode("- ".($totalSoloIva3)." (anuladas)"),0,1,'L');
+                $pdf->Cell(40,6,utf8_decode("- ".(number_format($totalSoloIva3,2))." (anuladas)"),0,1,'L');
                 $pdf->Cell(40,6,utf8_decode('5% CESC'),0,0,'L');
                 $pdf->Cell(40,6,utf8_decode(number_format(($totalSoloCesc1+$totalSoloCesc2+$totalSoloCesc3),2)),0,0,'L');
                 $pdf->Cell(40,6,utf8_decode("- ".($totalSoloCesc3)." (anuladas)"),0,1,'L');
@@ -636,7 +636,7 @@
 
 
         }
-        elseif ($libroDetallado == null) {
+        elseif ($libroDetallado == null) { // GENERAL
             $pdf->AddPage('P','Letter');
 
             $pdf->SetFont('Times','B',10);
@@ -702,7 +702,9 @@
             $counter = 1;
             while ($counter <= 31) {
                 if ($tipoFacturaGenerar == 1) {
-                    $sql = "SELECT SUM(cuotaCable) as totalCuotaCable, SUM(cuotaInternet) as totalCuotaInter, SUM(totalImpuesto) as totalImp, MIN(numeroFactura) as inFact, MAX(numeroFactura) as finFact, DAY(fechaFactura) as dia FROM tbl_cargos
+                    $sql = "SELECT
+                            (SELECT SUM(cuotaCable) from tbl_cargos where tipoServicio='C' and DAY(fechaFactura) =".$counter." AND MONTH(fechaFactura)=".$mesGenerar." AND YEAR(fechaFactura)=".$anoGenerar." AND tipoFactura = 2 AND anulada=0) as totalCuotaCable,
+                            (SELECT SUM(cuotaInternet) from tbl_cargos where tipoServicio='I' and DAY(fechaFactura) =".$counter." AND MONTH(fechaFactura)=".$mesGenerar." AND YEAR(fechaFactura)=".$anoGenerar." AND tipoFactura = 2 AND anulada=0) as totalCuotaInter, SUM(totalImpuesto) as totalImp, MIN(numeroFactura) as inFact, MAX(numeroFactura) as finFact, DAY(fechaFactura) as dia FROM tbl_cargos
                             WHERE DAY(fechaFactura) =".$counter." AND MONTH(fechaFactura)=".$mesGenerar." AND YEAR(fechaFactura)=".$anoGenerar." AND tipoFactura = 2 AND anulada=0";
 
                             $stmt = $mysqli->query($sql);
@@ -713,9 +715,11 @@
                                 //IVA
                                 $separado = (floatval($montoCancelado)/(1 + floatval($iva)));
                                 //var_dump($separado);
-                                $totalIva = round((floatval($separado) * floatval($iva)),2);
+                                $totalIva = substr(floatval($separado) * floatval($iva),0,7);
+
 
                                 $pdf->Cell(5,1,utf8_decode($counter),0,0,'L');
+                                //$pdf->Cell(30,1,utf8_decode($montoCancelado),0,0,'L');
                                 $pdf->Cell(30,1,utf8_decode($result["inFact"]),0,0,'L');
                                 $pdf->Cell(30,1,utf8_decode($result["finFact"]),0,0,'L');
                                 $pdf->Cell(35,1,utf8_decode(""),0,0,'L');
@@ -756,7 +760,7 @@
                         //IVA
                         $separado = (floatval($montoCancelado)/(1 + floatval($iva)));
                         //var_dump($separado);
-                        $totalIva = round((floatval($separado) * floatval($iva)),2);
+                        $totalIva = substr(floatval($separado) * floatval($iva),0,7);
 
                         $pdf->Cell(5,1,utf8_decode($counter),0,0,'L');
                         $pdf->Cell(30,1,utf8_decode($result["inFact"]),0,0,'L');
@@ -802,10 +806,11 @@
                         }
 
                         //IVA
-                        $separado = (floatval($montoCancelado)/(1 + floatval($iva)));
-                        //var_dump($separado);
-                        $totalIva = round((floatval($separado) * floatval($iva)),2);
-                        $totalCesc = round((floatval($separado) * floatval($cesc)),2);
+                        $totalCesc = substr(((doubleval($montoCancelado)/(1 + doubleval($iva)))*$cesc),0,7);
+                        //IVA
+                        $separado = (doubleval($montoCancelado)/(1 + doubleval($iva)));
+                        $totalIva = (doubleval($separado) * doubleval($iva));
+
 
                         $pdf->Cell(5,1,utf8_decode($counter),0,0,'L');
                         $pdf->Cell(30,1,utf8_decode($result["inFact"]),0,0,'L');
@@ -838,7 +843,9 @@
                     }
                 }
                 elseif ($tipoFacturaGenerar == 4) {
-                    $sql = "SELECT SUM(cuotaCable) as totalCuotaCable, SUM(cuotaInternet) as totalCuotaInter, SUM(totalImpuesto) as totalImp, MIN(numeroFactura) as inFact, MAX(numeroFactura) as finFact, DAY(fechaFactura) as dia FROM tbl_cargos
+                    $sql = "SELECT
+                            (SELECT SUM(cuotaCable) from tbl_cargos where tipoServicio='C' and DAY(fechaFactura) =".$counter." AND MONTH(fechaFactura)=".$mesGenerar." AND YEAR(fechaFactura)=".$anoGenerar." AND tipoFactura = 2 AND anulada=0) as totalCuotaCable,
+                            (SELECT SUM(cuotaInternet) from tbl_cargos where tipoServicio='I' and DAY(fechaFactura) =".$counter." AND MONTH(fechaFactura)=".$mesGenerar." AND YEAR(fechaFactura)=".$anoGenerar." AND tipoFactura = 2 AND anulada=0) as totalCuotaInter, SUM(totalImpuesto) as totalImp, MIN(numeroFactura) as inFact, MAX(numeroFactura) as finFact, DAY(fechaFactura) as dia FROM tbl_cargos
                             WHERE DAY(fechaFactura) =".$counter." AND MONTH(fechaFactura)=".$mesGenerar." AND YEAR(fechaFactura)=".$anoGenerar." AND tipoFactura = 2 AND anulada=0";
 
                             $stmt = $mysqli->query($sql);
@@ -849,7 +856,7 @@
                                 //IVA
                                 $separado1 = (floatval($montoCancelado1)/(1 + floatval($iva)));
                                 //var_dump($separado);
-                                $totalIva1 = round((floatval($separado1) * floatval($iva)),2);
+                                $totalIva1 = substr(floatval($separado1) * floatval($iva),0,4);
 
                                 $pdf->Cell(5,1,utf8_decode($counter),0,0,'L');
                                 $pdf->Cell(30,1,utf8_decode($result["inFact"]),0,0,'L');
@@ -892,7 +899,7 @@
                                 //IVA
                                 $separado2 = (floatval($montoCancelado2)/(1 + floatval($iva)));
                                 //var_dump($separado);
-                                $totalIva2 = round((floatval($separado2) * floatval($iva)),2);
+                                $totalIva2 = substr(floatval($separado2) * floatval($iva),0,4);
 
                                 $pdf->Cell(5,1,utf8_decode($counter),0,0,'L');
                                 $pdf->Cell(30,1,utf8_decode($result["inFact"]),0,0,'L');
@@ -940,8 +947,8 @@
                                 //IVA
                                 $separado3 = (floatval($montoCancelado3)/(1 + floatval($iva)));
                                 //var_dump($separado);
-                                $totalIva3 = round((floatval($separado3) * floatval($iva)),2);
-                                $totalCesc3 = round((floatval($separado3) * floatval($cesc)),2);
+                                $totalIva3 = (doubleval($separado3) * doubleval($iva));
+                                $totalCesc3 = substr((($montoCancelado3/(1 + floatval($iva)))*$cesc),0,4);
 
                                 $pdf->Cell(5,1,utf8_decode($counter),0,0,'L');
                                 $pdf->Cell(30,1,utf8_decode($result["inFact"]),0,0,'L');

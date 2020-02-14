@@ -113,7 +113,7 @@
                                  $statement->bindValue(':municipio', $municipio);
                                  $statement->bindValue(':fechaVencimiento', $fechaVencimiento);
                                  $statement->bindValue(':ventaExenta', $cuotaInternet);
-                                 $statement->bindValue(':totalComprobante', $cuotaCable);
+                                 $statement->bindValue(':totalComprobante', $cuotaInternet);
                                  $statement->bindValue(':idPunto', $puntoVenta);
                                  $statement->bindValue(':fechaVencimiento', $fechaVencimiento);
                                  $statement->bindValue(':creadoPor', $creadoPor);
@@ -132,7 +132,7 @@
                                  $statement->bindValue(':municipio', $municipio);
                                  $statement->bindValue(':fechaVencimiento', $fechaVencimiento);
                                  $statement->bindValue(':ventaAfecta', $cuotaInternet);
-                                 $statement->bindValue(':totalComprobante', $cuotaCable);
+                                 $statement->bindValue(':totalComprobante', $cuotaInternet);
                                  $statement->bindValue(':idPunto', $puntoVenta);
                                  $statement->bindValue(':fechaVencimiento', $fechaVencimiento);
                                  $statement->bindValue(':creadoPor', $creadoPor);

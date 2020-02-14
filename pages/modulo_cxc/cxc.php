@@ -171,7 +171,7 @@
                                 </li>
                                 <li><a href="ventasManuales.php">Ventas manuales</a>
                                 </li>
-                                <li><a href="imprimirFacturas.php">Imprimir facturas</a>
+                                <li><a href="imprimirFacturas.php" data-toggle="modal" data-target="#imprimirFacturas" accesskey="i">Imprimir facturas (Alt+I)</a>
                                 </li>
                             </ul>';
                         }
@@ -800,7 +800,7 @@
               <button type="button" class="close" data-dismiss="modal">&times;</button>
               <h4 class="modal-title">Lista de clientes de 1 factura generada</h4>
             </div>
-            <form id="frmListaSuspendidos" action="php/listaSuspensiones1.php" method="POST">
+            <form id="frmListaSuspendidos1" action="php/listaDeClientesConFacturasVencidas.php" method="POST">
             <div class="modal-body">
               <div class="row">
                   <div class="col-md-6">

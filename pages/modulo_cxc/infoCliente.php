@@ -779,8 +779,8 @@ session_start();
                                     </div>
                                     <div class="row">
                                         <div class="col-md-3">
-                                            <label for="departamento">Departamento</label>
-                                            <select class="form-control input-sm" name="departamento" disabled>
+                                            <label for="departamento"><span style="color:red;font-size:18px;">**</span>Departamento</label>
+                                            <select class="form-control input-sm" name="departamento" disabled required>
                                                 <option value="" selected>Seleccionar</option>
                                                 <?php
                                                 foreach ($arrDepartamentos as $key) {
@@ -796,8 +796,8 @@ session_start();
                                             </select>
                                         </div>
                                         <div class="col-md-3">
-                                            <label for="municipio">Municipio</label>
-                                            <select class="form-control input-sm" name="municipio" disabled>
+                                            <label for="municipio"><span style="color:red;font-size:18px;">**</span>Municipio</label>
+                                            <select class="form-control input-sm" name="municipio" disabled required>
                                                 <option value="" selected>Seleccionar</option>
                                                 <?php
                                                 foreach ($arrMunicipios as $key) {
@@ -813,8 +813,8 @@ session_start();
                                             </select>
                                         </div>
                                         <div class="col-md-6">
-                                            <label for="colonia">Barrio o colonia</label>
-                                            <select class="form-control input-sm" name="colonia" disabled>
+                                            <label for="colonia"><span style="color:red;font-size:18px;">**</span>Barrio o colonia</label>
+                                            <select class="form-control input-sm" name="colonia" disabled required>
                                                 <option value="" selected>Seleccionar</option>
                                                 <?php
                                                 foreach ($arrColonias as $key) {

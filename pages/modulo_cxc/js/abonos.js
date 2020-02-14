@@ -30,6 +30,10 @@ function getValorCuota(){
     }else if (document.getElementById("servicio").value == "c") {
         document.getElementById("valorCuota").value = cuotaCable;
     }
+    var codValue = document.getElementById("codigoCliente").value;
+    var servicio = document.getElementById("servicio").value;
+    // Trigger the button element with a click
+    window.location="abonos.php?codigoCliente="+codValue+"&tipoServicio="+servicio;
 }
 
 function getMesesPagar(){

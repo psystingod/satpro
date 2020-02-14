@@ -157,6 +157,44 @@ class GetAllInfo extends ConectionDB
             }
     }
 
+    public function getBeforeSM($tabla, $codigoCliente, $tipoServicio, $anulada, $fechaCobro){
+        try {
+
+                $query = "SELECT estado, cuotaCable,cuotaInternet, tipoServicio, totalImpuesto FROM $tabla WHERE codigoCliente=:codigoCliente AND tipoServicio=:tipoServicio AND anulada=:anulada AND fechaFactura=SUBDATE(:fechaCobro, INTERVAL 1 MONTH)";
+                $statement = $this->dbConnect->prepare($query);
+                $statement->bindValue(':codigoCliente', $codigoCliente);
+                $statement->bindValue(':tipoServicio', $tipoServicio);
+                $statement->bindValue(':anulada', $anulada);
+                $statement->bindValue(':fechaCobro', $fechaCobro);
+                $statement->execute();
+
+                $result2 = $statement->fetch(PDO::FETCH_ASSOC);
+                    if (!empty($result2)) {
+                        if ($result2['estado'] == "pendiente") {
+                            if ($result2['tipoServicio'] == "C") {
+                                $anticipo = (doubleval($result2['cuotaCable']) + doubleval($result2['totalImpuesto']));
+                            }elseif ($result2['tipoServicio'] == "I") {
+                                $anticipo = (doubleval($result2['cuotaInternet']) + doubleval($result2['totalImpuesto']));
+                            }
+
+                        }
+                        elseif ($result2['estado'] == "CANCELADA") {
+                            $anticipo = number_format(0,2);
+                        }
+                    }
+                    else {
+                        $anticipo = "VACIA";
+                    }
+
+                //global $anticipo;
+                return $anticipo;
+
+            } catch (Exception $e) {
+                print "!Error¡: " . $e->getMessage() . "</br>";
+                die();
+            }
+    }
+
     public function getCobrador($tabla, $codigoCobrador){
         try {
 

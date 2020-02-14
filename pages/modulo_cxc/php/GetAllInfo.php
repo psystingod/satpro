@@ -120,7 +120,7 @@ class GetAllInfo extends ConectionDB
     public function getDataCargos($tabla, $codigoCliente, $tipoServicio){
         try {
                 //$estado = "pendiente";
-                $query = "SELECT * FROM $tabla WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND anulada=:anulada ORDER BY mesCargo DESC";
+                $query = "SELECT * FROM $tabla WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND anulada=:anulada ORDER BY numeroFactura DESC";
                 $statement = $this->dbConnect->prepare($query);
                 $statement->bindValue(':codigoCliente', $codigoCliente);
                 $statement->bindValue(':tipoServicio', $tipoServicio);
@@ -138,7 +138,7 @@ class GetAllInfo extends ConectionDB
     public function getDataCargos2($tabla, $codigoCliente, $tipoServicio, $estado){
         try {
                 //$estado = "pendiente";
-                $query = "SELECT * FROM $tabla WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado AND anulada=:anulada ORDER BY mesCargo ASC";
+                $query = "SELECT * FROM $tabla WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado AND anulada=:anulada ORDER BY numeroFactura DESC";
                 $statement = $this->dbConnect->prepare($query);
                 $statement->bindValue(':codigoCliente', $codigoCliente);
                 $statement->bindValue(':tipoServicio', $tipoServicio);
@@ -157,7 +157,7 @@ class GetAllInfo extends ConectionDB
     public function getDataAbonos($tabla, $codigoCliente, $tipoServicio, $estado){
         try {
                 //$estado = "pendiente";
-                $query = "SELECT * FROM $tabla WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado AND anulada=:anulada ORDER BY mesCargo ASC";
+                $query = "SELECT * FROM $tabla WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado AND anulada=:anulada ORDER BY numeroFactura DESC";
                 $statement = $this->dbConnect->prepare($query);
                 $statement->bindValue(':codigoCliente', $codigoCliente);
                 $statement->bindValue(':tipoServicio', $tipoServicio);
@@ -175,7 +175,7 @@ class GetAllInfo extends ConectionDB
     public function getDataCargosBy($tabla, $codigoCliente, $tipoServicio, $desde, $hasta){
         try {
 
-                $query = "SELECT * FROM $tabla WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND mesCargo >= :desde AND mesCargo <= :hasta AND anulada=:anulada ORDER BY mesCargo DESC";
+                $query = "SELECT * FROM $tabla WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND mesCargo >= :desde AND mesCargo <= :hasta AND anulada=:anulada ORDER BY numeroFactura DESC";
                 $statement = $this->dbConnect->prepare($query);
                 $statement->bindValue(':codigoCliente', $codigoCliente);
                 $statement->bindValue(':tipoServicio', $tipoServicio);
@@ -195,7 +195,7 @@ class GetAllInfo extends ConectionDB
     public function getDataAbonosBy($tabla, $codigoCliente, $tipoServicio, $estado, $desde, $hasta){
         try {
 
-                $query = "SELECT * FROM $tabla WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado AND mesCargo >= :desde AND mesCargo <= :hasta AND anulada=:anulada ORDER BY mesCargo DESC";
+                $query = "SELECT * FROM $tabla WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado AND mesCargo >= :desde AND mesCargo <= :hasta AND anulada=:anulada ORDER BY numeroFactura DESC";
                 $statement = $this->dbConnect->prepare($query);
                 $statement->bindValue(':codigoCliente', $codigoCliente);
                 $statement->bindValue(':tipoServicio', $tipoServicio);
@@ -216,7 +216,7 @@ class GetAllInfo extends ConectionDB
     public function getDataCargosImp($tabla, $codigoCliente, $tipoServicio, $fechaCobro){
         try {
 
-                $query = "SELECT * FROM $tabla WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND mesCargo <= :hasta AND anulada=:anulada ORDER BY mesCargo DESC";
+                $query = "SELECT * FROM $tabla WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND mesCargo <= :hasta AND anulada=:anulada ORDER BY numeroFactura DESC";
                 $statement = $this->dbConnect->prepare($query);
                 $statement->bindValue(':codigoCliente', $codigoCliente);
                 $statement->bindValue(':tipoServicio', $tipoServicio);

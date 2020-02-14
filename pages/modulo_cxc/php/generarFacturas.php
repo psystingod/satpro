@@ -126,7 +126,7 @@
                                if ($contador == 0) {
                                    if ($ultimaFiscal < $rangoHastaFiscal) {
                                        $ultimaFiscal = $ultimaFiscal + 1;
-                                       $numeroFactura = $prefijoFiscal ."-". strval($ultimaFiscal);
+                                       $numeroFactura = $prefijoFiscal ."-". strval(str_pad($ultimaFiscal, 7, "0", STR_PAD_LEFT));
                                        //CESC
                                        $implus = substr((($i['valor_cuota']/(1 + floatval($iva)))*$cesc),0,4);
                                        //IVA
@@ -275,7 +275,7 @@
 
                                    if ($ultimaFactura < $rangoHastaFactura) {
                                        $ultimaFactura = $ultimaFactura + 1;
-                                       $numeroFactura = strval($prefijoFactura) ."-". strval($ultimaFactura);
+                                       $numeroFactura = strval($prefijoFactura) ."-". strval(str_pad($ultimaFactura, 7, "0", STR_PAD_LEFT));
                                        //CESC
                                        $implus = substr((($i['valor_cuota']/(1 + floatval($iva)))*$cesc),0,4);
                                        //IVA
@@ -424,7 +424,7 @@
                                if ($contador == 0) {
                                    if ($ultimaFiscal < $rangoHastaFiscal) {
                                        $ultimaFiscal = $ultimaFiscal + 1;
-                                       $numeroFactura = $prefijoFiscal ."-". strval($ultimaFiscal);
+                                       $numeroFactura = $prefijoFiscal ."-". strval(str_pad($ultimaFiscal, 7, "0", STR_PAD_LEFT));
                                        $implus = substr((($i['cuota_in']/(1 + floatval($iva)))*$cesc),0,4);
                                        //IVA
                                        $separado = (floatval($i['cuota_in'])/(1 + floatval($iva)));
@@ -569,7 +569,7 @@
                                if ($contador == 0) {
                                    if ($ultimaFactura < $rangoHastaFactura) {
                                        $ultimaFactura = $ultimaFactura + 1;
-                                       $numeroFactura = $prefijoFactura ."-". strval($ultimaFactura);
+                                       $numeroFactura = $prefijoFactura ."-". strval(str_pad($ultimaFactura, 7, "0", STR_PAD_LEFT));
                                        $implus = substr((($i['cuota_in']/(1 + floatval($iva)))*$cesc),0,4);
                                        //IVA
                                        $separado = (floatval($i['cuota_in'])/(1 + floatval($iva)));

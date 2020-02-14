@@ -67,11 +67,13 @@
                $hastaNumero = $resultCob["hastaNumero"];
                $ultimoNumero = $resultCob["numeroAsignador"];
 
-               $queryRec = "SELECT numeroRecibo FROM tbl_abonos WHERE numeroRecibo=:ultimoRecibo0";
+               $queryRec = "SELECT numeroRecibo FROM tbl_abonos WHERE numeroRecibo=:ultimoRecibo0 AND anulada=:anulada";
                // Preparación de sentencia
                $urc = $prefijoCobro."-".$_POST['ultimoRecibo'];
+               $anulada0 = 0;
                $statementRec = $this->dbConnect->prepare($queryRec);
                $statementRec->bindValue(':ultimoRecibo0', $urc);
+               $statementRec->bindValue(':anulada', $anulada0);
                $statementRec->execute();
                $resultRec = $statementRec->fetchColumn();
 

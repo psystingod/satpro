@@ -55,16 +55,17 @@ $resultado = $mysqli->query($query);
 if ($tipoComprobante == 2) {
     //INICIO IMPRESIÓN DE FACTURACIÓN NORMAL
     //*******************************FACTURA NORMAL**********************************
-      $pdf = new FPDF();
+      //$pdf = new FPDF();
+      $pdf = new FPDF('L','mm',array(215,330));
       date_default_timezone_set('America/El_Salvador');
 
       setlocale(LC_ALL,"es_ES");
-      $pdf->SetFont('Arial','',6);
+      $pdf->SetFont('Arial','',7);
       while($row = $resultado->fetch_assoc())
       {
 
         // SQL query para traer nombre del municipio
-        $query = "SELECT nombreMunicipio FROM tbl_municipios_cxc WHERE idMunicipio =".$row['idMunicipio'];
+        $query = "SELECT nombreMunicipio FROM tbl_municipios_cxc WHERE idMunicipio=".$row['idMunicipio'];
         // Preparación de sentencia
         $statement = $mysqli->query($query);
         //$statement->execute();
@@ -73,12 +74,12 @@ if ($tipoComprobante == 2) {
         }
 
         $pdf->AliasNbPages();
-        $pdf->AddPage('L','Legal');
-        $pdf->Image('../../../images/comp.png',180,120, 45, 10);
+        $pdf->AddPage();
+        $pdf->Image('../../../images/comp.png',155,120, 45, 10);
         if ($tipoServicio == "C") {
-            $pdf->Image('../../../images/cable.png',70,100, 15, 17);
-            $pdf->Image('../../../images/cable.png',185,100, 15, 17);
-            $pdf->Image('../../../images/cable.png',315,100, 15, 17);
+            $pdf->Image('../../../images/cable.png',45,100, 15, 17);
+            $pdf->Image('../../../images/cable.png',160,100, 15, 17);
+            $pdf->Image('../../../images/cable.png',290,100, 15, 17);
             $unitario = $row['cuotaCable'];
             $monto = $dataInfo->getTotalCobrarCableImp('tbl_cargos', $row['codigoCliente'], 'pendiente', 0, $row['fechaCobro'], 'i');
             $montoSinImpuestos = $dataInfo->getTotalCobrarCableImp('tbl_cargos', $row['codigoCliente'], 'pendiente', 0, $row['fechaCobro'], 's');
@@ -97,12 +98,12 @@ if ($tipoComprobante == 2) {
             }
         }
         elseif ($tipoServicio == "I") {
-            $pdf->Image('../../../images/inter.png',70,100, 15, 17);
-            $pdf->Image('../../../images/inter.png',70,185, 15, 17);
-            $pdf->Image('../../../images/inter.png',70,315, 15, 17);
+            $pdf->Image('../../../images/inter.png',45,100, 15, 17);
+            $pdf->Image('../../../images/inter.png',160,100, 15, 17);
+            $pdf->Image('../../../images/inter.png',290,100, 15, 17);
             $unitario = $row['cuotaInternet'];
-            $monto = $dataInfo->getTotalCobrarInterImp('tbl_cargos', $row['codigoCliente'], 'pendiente', 0, $row['fechaCobro'], 'i');
-            $montoSinImpuestos = $dataInfo->getTotalCobrarInterImp('tbl_cargos', $row['codigoCliente'], 'pendiente', 0, $row['fechaCobro'], 's');
+            $monto = $dataInfo->getTotalCobrarInterImp('tbl_cargos', $row['codigoCliente'], 'pendiente', 0, $row['fechaFactura'], 'i');
+            $montoSinImpuestos = $dataInfo->getTotalCobrarInterImp('tbl_cargos', $row['codigoCliente'], 'pendiente', 0, $row['fechaFactura'], 's');
             $montoSoloImpuestos = $dataInfo->getTotalCobrarInterImp('tbl_cargos', $row['codigoCliente'], 'pendiente', 0, $row['fechaCobro'], 'si');
             $cantidadMeses = $dataInfo->getDeudaUnitariaI('tbl_cargos', $row['codigoCliente'], 'pendiente', 0, $row['fechaCobro']);
             if ($monto <= 0) {
@@ -117,16 +118,17 @@ if ($tipoComprobante == 2) {
             $direccion = $row['direccion'];
         }
     ///////////////////////////////////////////////////////////////////////////////////////////
-        $pdf->Ln(5);
-        $pdf->Cell(95,6,utf8_decode(''),0,0,'L');
+        $pdf->Ln(4);
+        $pdf->Cell(70,6,utf8_decode(''),0,0,'L');
         $pdf->Cell(70,6,utf8_decode(strtoupper($row['numeroFactura'])),0,0,'L');
         $pdf->Cell(50,6,utf8_decode(''),0,0,'L');
         $pdf->Cell(70,6,utf8_decode(strtoupper($row['numeroFactura'])),0,0,'L');
         $pdf->Cell(25,6,utf8_decode(''),0,0,'L');
         $pdf->Cell(70,-5,utf8_decode(strtoupper($row['numeroFactura'])),0,1,'L');
+
         //DATOS DEL CLIENTE
-        $pdf->Ln(30);
-        $pdf->Cell(35,6,utf8_decode(''),0,0,'L');
+        $pdf->Ln(29.5);
+        $pdf->Cell(10,6,utf8_decode(''),0,0,'L');
         $pdf->Cell(70,6,utf8_decode($row['codigoCliente']),0,0,'L');
         $pdf->Cell(70,6,utf8_decode(strftime('%d', strtotime($row['fechaFactura']))." de ".strftime('%B', strtotime($row['fechaFactura'])). " de ".strftime('%G', strtotime($row['fechaFactura']))),0,0,'L');
 
@@ -138,21 +140,21 @@ if ($tipoComprobante == 2) {
         $pdf->Cell(5,6,utf8_decode(''),0,0,'L');
         $pdf->Cell(70,15,utf8_decode(strftime('%d', strtotime($row['fechaFactura']))." de ".strftime('%B', strtotime($row['fechaFactura'])). " de ".strftime('%G', strtotime($row['fechaFactura']))),0,1,'L');
         $pdf->Ln(-10);
-        $pdf->Cell(35,6,utf8_decode(''),0,0,'L');
+        $pdf->Cell(10,6,utf8_decode(''),0,0,'L');
         $pdf->Cell(70,6,utf8_decode($row['nombre']),0,0,'L');
         $pdf->Cell(55,6,utf8_decode(''),0,0,'L');
         $pdf->Cell(70,6,utf8_decode($row['nombre']),0,1,'L');
-        $pdf->Cell(40,6,utf8_decode(''),0,0,'L');
+        $pdf->Cell(10,6,utf8_decode(''),0,0,'L');
         $pdf->Cell(30,6,utf8_decode($direccion),0,0,'L');
         $pdf->Cell(95,6,utf8_decode(''),0,0,'L');
         $pdf->Cell(70,6,utf8_decode($direccion),0,1,'L');
 
         $pdf->Ln(-10);
-        $pdf->Cell(275,6,utf8_decode(''),0,0,'L');
+        $pdf->Cell(265,6,utf8_decode(''),0,0,'L');
         //COD CLIENTE 3RA COLUMNA
         $pdf->Cell(70,12,utf8_decode($row['codigoCliente']),0,1,'L');
         $pdf->Ln(10);
-        $pdf->Cell(35,6,utf8_decode(''),0,0,'L');
+        $pdf->Cell(15,6,utf8_decode(''),0,0,'L');
         $pdf->Cell(70,-20,utf8_decode($municipio),0,0,'L');
         $pdf->Cell(55,6,utf8_decode(''),0,0,'L');
         $pdf->Cell(70,-20,utf8_decode($municipio),0,0,'L');
@@ -161,13 +163,13 @@ if ($tipoComprobante == 2) {
         $pdf->Cell(70,-20,utf8_decode($row['nombre']),0,1,'L');
         $pdf->Ln(10);
         //TELEFONO
-        $pdf->Cell(95,6,utf8_decode(''),0,0,'L');
+        $pdf->Cell(60,6,utf8_decode(''),0,0,'L');
         $pdf->Cell(70,6,utf8_decode(''),0,0,'L');
         $pdf->Cell(110,6,utf8_decode(''),0,0,'L');
         $pdf->Cell(70,20,utf8_decode($direccion),0,1,'L');
         $pdf->Ln(15);
     //////////////////////////////FIN FRANJA 1///////////////////////////////////
-        $pdf->Cell(55,6,utf8_decode('1'),0,0,'R');
+        $pdf->Cell(30,6,utf8_decode('1'),0,0,'R');
         $pdf->Cell(35,6,utf8_decode("Pendiente ".strftime('%B', strtotime($row['fechaCobro'])). " de ".strftime('%Y', strtotime($row['fechaCobro']))),0,0,'L');
 
         if ($row['exento'] != "T") {
@@ -191,18 +193,18 @@ if ($tipoComprobante == 2) {
             $pdf->Cell(70,6,utf8_decode("$".number_format($unitario,2)),0,1,'L');
         }
 
-        $pdf->Cell(285,6,utf8_decode(''),0,0,'L');
+        $pdf->Cell(260,6,utf8_decode(''),0,0,'L');
         $pdf->Cell(70,-30,utf8_decode($municipio),0,1,'L');
         $pdf->Ln(10);
     //////////////////////////////INICIO FRANJA 2 ///////////////////////////////
-        $pdf->SetFont('Arial','B',6);
-        $pdf->Cell(30,6,utf8_decode(''),0,0,'L');
+        $pdf->SetFont('Arial','B',7);
+        $pdf->Cell(5,6,utf8_decode(''),0,0,'L');
         $pdf->Cell(70,6,utf8_decode(strtoupper(strftime('%B', strtotime($row['fechaCobro'])))),0,0,'L');
         $pdf->Cell(45,6,utf8_decode(''),0,0,'L');
         $pdf->Cell(70,6,utf8_decode(strtoupper(strftime('%B', strtotime($row['fechaCobro'])))),0,1,'L');
 
         //var_dump($monto, $row['codigoCliente']);
-        $pdf->Cell(30,6,utf8_decode(''),0,0,'L');
+        $pdf->Cell(5,6,utf8_decode(''),0,0,'L');
         $pdf->Cell(70,6,utf8_decode("$".number_format($unitario + $row['totalImpuesto'],2)),0,0,'L');
         $pdf->Cell(45,6,utf8_decode(''),0,0,'L');
         $pdf->Cell(70,6,utf8_decode("$".number_format($unitario + $row['totalImpuesto'],2)),0,1,'L');
@@ -210,8 +212,8 @@ if ($tipoComprobante == 2) {
         $pdf->Cell(70,-20,utf8_decode(strtoupper("Hasta: ".strftime('%B', strtotime($row['fechaCobro'])))),0,1,'L');
 
         $pdf->Ln(25);
-        $pdf->SetFont('Arial','B',6);
-        $pdf->Cell(30,6,utf8_decode(''),0,0,'L');
+        $pdf->SetFont('Arial','B',7);
+        $pdf->Cell(5,6,utf8_decode(''),0,0,'L');
         $thisMonth=date_create($row['fechaCobro']);
         date_sub($thisMonth,date_interval_create_from_date_string("1 month"));
         $earlierMonth = date_format($thisMonth,"Y-m-d");
@@ -219,54 +221,54 @@ if ($tipoComprobante == 2) {
         $pdf->Cell(45,6,utf8_decode(''),0,0,'L');
         $pdf->Cell(70,6,utf8_decode(strtoupper(strftime('%B', strtotime($earlierMonth)))),0,1,'L'); //MES ANTERIOR / ANTICIPO
 
-        $pdf->Cell(30,6,utf8_decode(''),0,0,'L');
-        if ($dataInfo->getBefore('tbl_cargos', $row['codigoCliente'], $row['tipoServicio'], 0, $row['fechaCobro']) == "VACIA") {
+        $pdf->Cell(5,6,utf8_decode(''),0,0,'L');
+        if ($dataInfo->getBeforeSM('tbl_cargos', $row['codigoCliente'], $row['tipoServicio'], 0, $row['fechaFactura']) == "VACIA") {
             $ant = doubleval(0.00) + doubleval(0.00);
             $pdf->Cell(70,6,utf8_decode("$".number_format($ant,2)),0,0,'L');
         }else {
-            $ant = $dataInfo->getBefore('tbl_cargos', $row['codigoCliente'], $row['tipoServicio'], 0, $row['fechaCobro']);
+            $ant = $dataInfo->getBeforeSM('tbl_cargos', $row['codigoCliente'], $row['tipoServicio'], 0, $row['fechaFactura']);
             $pdf->Cell(70,6,utf8_decode("$".number_format($ant,2)),0,0,'L');
         }
 
         $pdf->Cell(45,6,utf8_decode(''),0,0,'L');
-        if ($dataInfo->getBefore('tbl_cargos', $row['codigoCliente'], $row['tipoServicio'], 0, $row['fechaCobro']) == "VACIA") {
+        if ($dataInfo->getBeforeSM('tbl_cargos', $row['codigoCliente'], $row['tipoServicio'], 0, $row['fechaFactura']) == "VACIA") {
             $ant = doubleval(0.00) + doubleval(0.00);
             $pdf->Cell(60,6,utf8_decode("$".number_format($ant,2)),0,1,'L');
         }else {
-            $ant = $dataInfo->getBefore('tbl_cargos', $row['codigoCliente'], $row['tipoServicio'], 0, $row['fechaCobro']);
+            $ant = $dataInfo->getBeforeSM('tbl_cargos', $row['codigoCliente'], $row['tipoServicio'], 0, $row['fechaFactura']);
             $pdf->Cell(60,6,utf8_decode("$".number_format($ant,2)),0,1,'L');
         }
 
         $pdf->SetFont('Arial','B',10);
-        $totalFactura = number_format($monto,2);//(doubleval($unitario) + doubleval($row['totalImpuesto']) + doubleval($ant)),2); // ACA SE CALCULA MONTO TOTAL
-        $pdf->Cell(310,6,utf8_decode(''),0,0,'L');
+        $totalFactura = number_format((doubleval($monto)+doubleval($ant)),2);//(doubleval($unitario) + doubleval($row['totalImpuesto']) + doubleval($ant)),2); // ACA SE CALCULA MONTO TOTAL
+        $pdf->Cell(285,6,utf8_decode(''),0,0,'L');
         $pdf->Cell(70,-45,utf8_decode($totalFactura),0,1,'L'); // MONTO TOTAL QUE APARECE EN COLUMNA 3
-        $pdf->Cell(310,6,utf8_decode(''),0,0,'L');
-        $pdf->SetFont('Arial','',6);
+        $pdf->Cell(285,6,utf8_decode(''),0,0,'L');
+        $pdf->SetFont('Arial','',7);
         $pdf->Cell(70,60,utf8_decode('VENCE: '.date_format(date_create($row['fechaVencimiento']), 'd/m/Y')),0,1,'L');
         //$pdf->Ln(55);
         $pdf->SetFont('Arial','B',10);
 
-        $pdf->Cell(30,6,utf8_decode(''),0,0,'L');
+        $pdf->Cell(5,6,utf8_decode(''),0,0,'L');
         $pdf->Cell(70,6,utf8_decode("$".$totalFactura),0,0,'L'); //MONTO TOTAL GRANDE
         $pdf->Cell(45,6,utf8_decode(''),0,0,'L');
         $pdf->Cell(70,6,utf8_decode("$".$totalFactura),0,1,'L'); //MONTO TOTAL GRANDE
-        $pdf->SetFont('Arial','',6);
+        $pdf->SetFont('Arial','',7);
 
         //$pdf->Ln();
         if ($row['exento'] != "T") {
-            $pdf->Cell(121,6,utf8_decode(''),0,0,'L');
+            $pdf->Cell(96,6,utf8_decode(''),0,0,'L');
             $pdf->Cell(70,6,utf8_decode("$".number_format($unitario,2)),0,0,'L');
             $pdf->Cell(50,6,utf8_decode(''),0,0,'L');
             $pdf->Cell(70,6,utf8_decode("$".number_format($unitario,2)),0,1,'L');
             $pdf->Ln(-2);
-            $pdf->Cell(121,6,utf8_decode(''),0,0,'L');
+            $pdf->Cell(96,6,utf8_decode(''),0,0,'L');
             $pdf->Cell(70,6,utf8_decode("$".'0.00'),0,0,'L');
             $pdf->Cell(50,6,utf8_decode(''),0,0,'L');
             $pdf->Cell(70,6,utf8_decode("$".'0.00'),0,1,'L');
             $pdf->Ln(-2);
-            $pdf->Cell(46,6,utf8_decode(''),0,0,'L');
-            $numeroALetras = NumerosEnLetras::convertir(number_format($unitario,2), 'dólares', false, 'centavos');
+            $pdf->Cell(21,6,utf8_decode(''),0,0,'L');
+            $numeroALetras = NumerosEnLetras::convertir(number_format($monto,2), 'dólares', false, 'centavos');
             $pdf->Cell(45,6,utf8_decode($numeroALetras),0,0,'C');
             $pdf->Cell(30,6,utf8_decode(""),0,0,'L'); //IMPUESTO SEGURIDAD
             $pdf->Cell(70,6,utf8_decode("$".number_format($row['totalImpuesto'],2)),0,0,'L');
@@ -276,46 +278,46 @@ if ($tipoComprobante == 2) {
             $pdf->Cell(30,6,utf8_decode(""),0,0,'L'); //IMPUESTO SEGURIDAD
             $pdf->Cell(70,6,utf8_decode("$".number_format($row['totalImpuesto'],2)),0,1,'L');
             $pdf->Ln(-2);
-            $pdf->Cell(121,6,utf8_decode(''),0,0,'L');
+            $pdf->Cell(96,6,utf8_decode(''),0,0,'L');
             $pdf->Cell(70,6,utf8_decode("$".'0.00'),0,0,'L');
             $pdf->Cell(50,6,utf8_decode(''),0,0,'L');
             $pdf->Cell(70,6,utf8_decode("$".'0.00'),0,1,'L');
             $pdf->Ln(-2);
-            $pdf->Cell(121,6,utf8_decode(''),0,0,'L');
+            $pdf->Cell(96,6,utf8_decode(''),0,0,'L');
             $pdf->Cell(70,6,utf8_decode("$".number_format(doubleval($unitario) + doubleval($row['totalImpuesto']),2)),0,0,'L');
             $pdf->Cell(50,6,utf8_decode(''),0,0,'L');
             $pdf->Cell(70,6,utf8_decode("$".number_format(doubleval($unitario) + doubleval($row['totalImpuesto']),2)),0,1,'L');
 
             //COBRADOR
-            $pdf->Cell(60,6,utf8_decode(""),0,0,'L');
+            $pdf->Cell(35,6,utf8_decode(""),0,0,'L');
             $pdf->Cell(40,6,utf8_decode($dataInfo->getCobrador('tbl_cobradores',$row['codigoCobrador'])),0,0,'L');
             $pdf->Cell(80,6,utf8_decode(""),0,0,'L');
             $pdf->Cell(40,6,utf8_decode($dataInfo->getCobrador('tbl_cobradores',$row['codigoCobrador'])),0,1,'L');
 
-            $pdf->Ln(10);
-            $pdf->Cell(25,1,utf8_decode(""),0,0,'L');
+            $pdf->Ln(25);
+            $pdf->Cell(1,1,utf8_decode(""),0,0,'L');
             $pdf->Cell(20,1,utf8_decode("VENCE: ".date_format(date_create($row['fechaVencimiento']), 'd/m/Y')),0,0,'C');
 
             $pdf->MultiCell(80,3,utf8_decode($mensaje),0,'C',0);
 
-            $pdf->Cell(140,1,utf8_decode(""),0,0,'L');
+            $pdf->Cell(120,1,utf8_decode(""),0,0,'L');
             $pdf->Cell(20,1,utf8_decode("VENCE: ".date_format(date_create($row['fechaVencimiento']), 'd/m/Y')),0,0,'C');
 
             $pdf->MultiCell(80,3,utf8_decode($mensaje),0,'C',0);
         }
         else {
-            $pdf->Cell(110,6,utf8_decode(''),0,0,'L');
+            $pdf->Cell(85,6,utf8_decode(''),0,0,'L');
             $pdf->Cell(70,6,utf8_decode("$".number_format($unitario,2)),0,0,'L');
             $pdf->Cell(55,6,utf8_decode(''),0,0,'L');
             $pdf->Cell(70,6,utf8_decode("$".number_format($unitario,2)),0,1,'L');
             $pdf->Ln(-2);
-            $pdf->Cell(110,6,utf8_decode(''),0,0,'L');
+            $pdf->Cell(85,6,utf8_decode(''),0,0,'L');
             $pdf->Cell(70,6,utf8_decode("$".'0.00'),0,0,'L');
             $pdf->Cell(55,6,utf8_decode(''),0,0,'L');
             $pdf->Cell(70,6,utf8_decode("$".'0.00'),0,1,'L');
             $pdf->Ln(-2);
-            $pdf->Cell(45,6,utf8_decode(''),0,0,'L');
-            $numeroALetras = NumerosEnLetras::convertir(number_format(doubleval($unitario) + doubleval($row['totalImpuesto']),2), 'dólares', false, 'centavos');
+            $pdf->Cell(20,6,utf8_decode(''),0,0,'L');
+            $numeroALetras = NumerosEnLetras::convertir(number_format(doubleval($monto) + doubleval($row['totalImpuesto']),2), 'dólares', false, 'centavos');
             $pdf->Cell(45,6,utf8_decode($numeroALetras),0,0,'C');
             $pdf->Cell(20,6,utf8_decode(""),0,0,'L'); //IMPUESTO SEGURIDAD
             $pdf->Cell(70,6,utf8_decode("$".number_format($row['totalImpuesto'],2)),0,0,'L');
@@ -327,30 +329,30 @@ if ($tipoComprobante == 2) {
             $pdf->Cell(70,6,utf8_decode("$".number_format($row['totalImpuesto'],2)),0,1,'L');
 
             $pdf->Ln(-2);
-            $pdf->Cell(110,6,utf8_decode(''),0,0,'L');
+            $pdf->Cell(85,6,utf8_decode(''),0,0,'L');
             $pdf->Cell(70,6,utf8_decode("$".'0.00'),0,0,'L');
             $pdf->Cell(55,6,utf8_decode(''),0,0,'L');
             $pdf->Cell(70,6,utf8_decode("$".'0.00'),0,1,'L');
             $pdf->Ln(-2);
-            $pdf->Cell(110,6,utf8_decode(''),0,0,'L');
+            $pdf->Cell(85,6,utf8_decode(''),0,0,'L');
             $pdf->Cell(70,6,utf8_decode("$".number_format(doubleval($unitario) + doubleval($row['totalImpuesto']),2)),0,0,'L');
             $pdf->Cell(55,6,utf8_decode(''),0,0,'L');
             $pdf->Cell(70,6,utf8_decode("$".number_format(doubleval($unitario) + doubleval($row['totalImpuesto']),2)),0,1,'L');
 
             //COBRADOR
-            $pdf->Cell(60,6,utf8_decode(""),0,0,'L');
+            $pdf->Cell(35,6,utf8_decode(""),0,0,'L');
             $pdf->Cell(40,6,utf8_decode($dataInfo->getCobrador('tbl_cobradores',$row['codigoCobrador'])),0,0,'L');
             $pdf->Cell(85,6,utf8_decode(""),0,0,'L');
             $pdf->Cell(40,6,utf8_decode($dataInfo->getCobrador('tbl_cobradores',$row['codigoCobrador'])),0,1,'L');
 
             $pdf->Ln(10);
-            $pdf->Cell(25,1,utf8_decode(""),0,0,'L');
-            $pdf->Cell(20,1,utf8_decode("VENCIMIENTO: ".date_format(date_create($row['fechaVencimiento']), 'd/m/Y')),0,0,'C');
+            $pdf->Cell(1,1,utf8_decode(""),0,0,'L');
+            $pdf->Cell(20,1,utf8_decode("VENCE: ".date_format(date_create($row['fechaVencimiento']), 'd/m/Y')),0,0,'C');
 
             $pdf->MultiCell(80,3,utf8_decode($mensaje),0,'C',0);
 
-            $pdf->Cell(140,1,utf8_decode(""),0,0,'L');
-            $pdf->Cell(20,1,utf8_decode("VENCIMIENTO: ".date_format(date_create($row['fechaVencimiento']), 'd/m/Y')),0,0,'C');
+            $pdf->Cell(120,1,utf8_decode(""),0,0,'L');
+            $pdf->Cell(20,1,utf8_decode("VENCE: ".date_format(date_create($row['fechaVencimiento']), 'd/m/Y')),0,0,'C');
 
             $pdf->MultiCell(80,3,utf8_decode($mensaje),0,'C',0);
 
@@ -371,7 +373,7 @@ elseif ($tipoComprobante == 1) {
       date_default_timezone_set('America/El_Salvador');
 
       setlocale(LC_ALL,"es_ES");
-      $pdf->SetFont('Arial','',6);
+      $pdf->SetFont('Arial','',7);
       while($row = $resultado->fetch_assoc())
       {
 
@@ -385,7 +387,7 @@ elseif ($tipoComprobante == 1) {
         }
 
         // SQL query para traer nombre del municipio
-        $query = "SELECT nombreMunicipio FROM tbl_municipios_cxc WHERE idMunicipio =".$row['idMunicipio'];
+        $query = "SELECT nombreMunicipio FROM tbl_municipios_cxc WHERE idMunicipio='' OR idMunicipio=".$row['idMunicipio'];
         // Preparación de sentencia
         $statement = $mysqli->query($query);
         //$statement->execute();
@@ -405,7 +407,7 @@ elseif ($tipoComprobante == 1) {
         }
 
         // SQL query para traer nombre del municipio
-        $query = "SELECT nombreDepartamento FROM tbl_departamentos_cxc WHERE idDepartamento =".$idDepartamento;
+        $query = "SELECT nombreDepartamento FROM tbl_departamentos_cxc WHERE idDepartamento='' OR idDepartamento =".$idDepartamento;
         // Preparación de sentencia
         $statement = $mysqli->query($query);
         //$statement->execute();
@@ -443,9 +445,9 @@ elseif ($tipoComprobante == 1) {
             }
         }
         elseif ($tipoServicio == "I") {
-            /*$pdf->Image('../../../images/inter.png',70,100, 15, 17);
-            $pdf->Image('../../../images/inter.png',70,185, 15, 17);
-            $pdf->Image('../../../images/inter.png',70,315, 15, 17);*/
+            $pdf->Image('../../../images/inter.png',40,100, 15, 17);
+            $pdf->Image('../../../images/inter.png',160,100, 15, 17);
+            $pdf->Image('../../../images/inter.png',285,100, 15, 17);
             $unitario = $row['cuotaInternet'];
             $separado = (floatval($unitario)/(1 + floatval($iva)));
             $totalIva = floatval($separado) * floatval($iva);
@@ -466,7 +468,7 @@ elseif ($tipoComprobante == 1) {
             $direccion = $row['direccion'];
         }
     ///////////////////////////////////////////////////////////////////////////////////////////
-        $pdf->Ln(9);
+        $pdf->Ln(5);
         $pdf->Cell(75,0,utf8_decode(''),0,0,'L');
         $pdf->Cell(50,0,utf8_decode(strtoupper($row['numeroFactura'])),0,0,'L');
         $pdf->Cell(70,0,utf8_decode(''),0,0,'L');
@@ -475,7 +477,7 @@ elseif ($tipoComprobante == 1) {
         $pdf->Cell(30,0,utf8_decode(strtoupper($row['numeroFactura'])),0,1,'L');
         //DATOS DEL CLIENTE
         $pdf->Ln(23);
-        $pdf->SetFont('Arial','',5);
+        $pdf->SetFont('Arial','',6);
         $pdf->Cell(10,0,utf8_decode(''),0,0,'L');
         $pdf->Cell(70,0,utf8_decode($row['codigoCliente']),0,0,'L');
         $pdf->Cell(30,0,utf8_decode(strftime('%d', strtotime($row['fechaFactura']))." de ".strftime('%B', strtotime($row['fechaFactura'])). " de ".strftime('%G', strtotime($row['fechaFactura']))),0,0,'L');
@@ -487,7 +489,7 @@ elseif ($tipoComprobante == 1) {
         $pdf->Cell(30,0,utf8_decode(''),0,0,'L');
         $pdf->Cell(55,0,utf8_decode($row['codigoCliente']),0,0,'L');
         $pdf->Cell(30,0,utf8_decode(strftime('%d', strtotime($row['fechaFactura']))." de ".strftime('%B', strtotime($row['fechaFactura'])). " de ".strftime('%G', strtotime($row['fechaFactura']))),0,1,'L');
-        $pdf->SetFont('Arial','',6);
+        $pdf->SetFont('Arial','',7);
         $pdf->Ln(5);
         //NOMBRE DE CLIENTE
 
@@ -503,13 +505,13 @@ elseif ($tipoComprobante == 1) {
         //DIRECCIÓN
 
         $pdf->Cell(20,0,utf8_decode(''),0,0,'L');
-        $pdf->Cell(60,0,utf8_decode($row['direccion']),0,0,'L');
+        $pdf->Cell(60,0,utf8_decode($direccion),0,0,'L');
         //DUPLICADO1
         $pdf->Cell(55,0,utf8_decode(''),0,0,'L');
-        $pdf->Cell(55,0,utf8_decode($row['direccion']),0,0,'L');
+        $pdf->Cell(55,0,utf8_decode($direccion),0,0,'L');
         //DUPLICADO2
         $pdf->Cell(65,0,utf8_decode(''),0,0,'L');
-        $pdf->Cell(55,0,utf8_decode($row['direccion']),0,1,'L');
+        $pdf->Cell(55,0,utf8_decode($direccion),0,1,'L');
         $pdf->Ln(4);
 
         //DEPTO - MUNICIPIO
@@ -572,8 +574,8 @@ elseif ($tipoComprobante == 1) {
 
         $pdf->Ln(24);
     //////////////////////////////FIN FRANJA 1///////////////////////////////////
-    $pdf->SetFont('Arial','',6);
-    $pdf->Cell(2,0,utf8_decode(''),0,0,'L');
+    $pdf->SetFont('Arial','',7);
+    $pdf->Cell(7,0,utf8_decode(''),0,0,'L');
     $pdf->Cell(10,0,utf8_decode('1'),0,0,'R');
     $pdf->Cell(55,0,utf8_decode("Pendiente ".strftime('%B', strtotime($row['fechaCobro'])). " de ".strftime('%Y', strtotime($row['fechaCobro']))),0,0,'L');
 
@@ -587,7 +589,7 @@ elseif ($tipoComprobante == 1) {
     }
 
     $pdf->Cell(28,0,utf8_decode(''),0,0,'L');
-    $pdf->Cell(-52,0,utf8_decode('1'),0,0,'R');
+    $pdf->Cell(-57,0,utf8_decode('1'),0,0,'R');
     $pdf->Cell(55,0,utf8_decode("Pendiente ".strftime('%B', strtotime($row['fechaCobro'])). " de ".strftime('%Y', strtotime($row['fechaCobro']))),0,0,'L');
 
     if ($row['exento'] != "T") {
@@ -600,7 +602,7 @@ elseif ($tipoComprobante == 1) {
     }
 
     $pdf->Cell(21,0,utf8_decode(''),0,0,'L');
-    $pdf->Cell(-46,0,utf8_decode('1'),0,0,'R');
+    $pdf->Cell(-48,0,utf8_decode('1'),0,0,'R');
     $pdf->Cell(55,0,utf8_decode("Pendiente ".strftime('%B', strtotime($row['fechaCobro'])). " de ".strftime('%Y', strtotime($row['fechaCobro']))),0,0,'L');
 
     if ($row['exento'] != "T") {
@@ -614,8 +616,8 @@ elseif ($tipoComprobante == 1) {
     //////////////////////////////INICIO FRANJA 2 DONDE ESTAN LOS MESES ///////////////////////////////
         $pdf->Ln(-3);
 
-        $pdf->SetFont('Arial','B',6);
-        $pdf->Cell(-5,0,utf8_decode(''),0,0,'L');
+        $pdf->SetFont('Arial','B',7);
+        $pdf->Cell(-3,0,utf8_decode(''),0,0,'L');
         $pdf->Cell(70,0,utf8_decode(strtoupper(strftime('%B', strtotime($row['fechaCobro'])))),0,0,'L');
         $pdf->Cell(48,0,utf8_decode(''),0,0,'L');
         $pdf->Cell(65,0,utf8_decode(strtoupper(strftime('%B', strtotime($row['fechaCobro'])))),0,0,'L');
@@ -624,7 +626,7 @@ elseif ($tipoComprobante == 1) {
 
         $pdf->Ln(3);
 
-        $pdf->Cell(-5,0,utf8_decode(''),0,0,'L');
+        $pdf->Cell(-3,0,utf8_decode(''),0,0,'L');
         $pdf->Cell(70,0,utf8_decode("$".number_format($unitario + $row['totalImpuesto'],2)),0,0,'L');
         $pdf->Cell(48,0,utf8_decode(''),0,0,'L');
         $pdf->Cell(65,0,utf8_decode("$".number_format($unitario + $row['totalImpuesto'],2)),0,0,'L');
@@ -633,8 +635,8 @@ elseif ($tipoComprobante == 1) {
 
         $pdf->Ln(8);
 
-        $pdf->SetFont('Arial','B',6);
-        $pdf->Cell(-5,0,utf8_decode(''),0,0,'L');
+        $pdf->SetFont('Arial','B',7);
+        $pdf->Cell(-3,0,utf8_decode(''),0,0,'L');
         $thisMonth=date_create($row['fechaCobro']);
         date_sub($thisMonth,date_interval_create_from_date_string("1 month"));
         $earlierMonth = date_format($thisMonth,"Y-m-d");
@@ -646,30 +648,30 @@ elseif ($tipoComprobante == 1) {
 
         $pdf->Ln(3);
 
-        $pdf->Cell(-5,0,utf8_decode(''),0,0,'L');
-        if ($dataInfo->getBefore('tbl_cargos', $row['codigoCliente'], $row['tipoServicio'], 0, $row['fechaCobro']) == "VACIA") {
+        $pdf->Cell(-3,0,utf8_decode(''),0,0,'L');
+        if ($dataInfo->getBeforeSM('tbl_cargos', $row['codigoCliente'], $row['tipoServicio'], 0, $row['fechaFactura']) == "VACIA") {
             $ant = doubleval(0.00) + doubleval(0.00);
             $pdf->Cell(73,0,utf8_decode("$".number_format($ant,2)),0,0,'L');
         }else {
-            $ant = $dataInfo->getBefore('tbl_cargos', $row['codigoCliente'], $row['tipoServicio'], 0, $row['fechaCobro']);
-            $pdf->Cell(70,0,utf8_decode("$".number_format($ant,2)),0,0,'L');
+            $ant = $dataInfo->getBeforeSM('tbl_cargos', $row['codigoCliente'], $row['tipoServicio'], 0, $row['fechaFactura']);
+            $pdf->Cell(73,0,utf8_decode("$".number_format($ant,2)),0,0,'L');
         }
 
         $pdf->Cell(45,6,utf8_decode(''),0,0,'L');
-        if ($dataInfo->getBefore('tbl_cargos', $row['codigoCliente'], $row['tipoServicio'], 0, $row['fechaCobro']) == "VACIA") {
+        if ($dataInfo->getBeforeSM('tbl_cargos', $row['codigoCliente'], $row['tipoServicio'], 0, $row['fechaFactura']) == "VACIA") {
             $ant = doubleval(0.00) + doubleval(0.00);
             $pdf->Cell(74,0,utf8_decode("$".number_format($ant,2)),0,0,'L');
         }else {
-            $ant = $dataInfo->getBefore('tbl_cargos', $row['codigoCliente'], $row['tipoServicio'], 0, $row['fechaCobro']);
-            $pdf->Cell(64,0,utf8_decode("$".number_format($ant,2)),0,0,'L');
+            $ant = $dataInfo->getBeforeSM('tbl_cargos', $row['codigoCliente'], $row['tipoServicio'], 0, $row['fechaFactura']);
+            $pdf->Cell(74,0,utf8_decode("$".number_format($ant,2)),0,0,'L');
         }
 
         $pdf->Cell(49,0,utf8_decode(''),0,0,'L');
-        if ($dataInfo->getBefore('tbl_cargos', $row['codigoCliente'], $row['tipoServicio'], 0, $row['fechaCobro']) == "VACIA") {
+        if ($dataInfo->getBeforeSM('tbl_cargos', $row['codigoCliente'], $row['tipoServicio'], 0, $row['fechaFactura']) == "VACIA") {
             $ant = doubleval(0.00) + doubleval(0.00);
             $pdf->Cell(60,0,utf8_decode("$".number_format($ant,2)),0,1,'L');
         }else {
-            $ant = $dataInfo->getBefore('tbl_cargos', $row['codigoCliente'], $row['tipoServicio'], 0, $row['fechaCobro']);
+            $ant = $dataInfo->getBeforeSM('tbl_cargos', $row['codigoCliente'], $row['tipoServicio'], 0, $row['fechaFactura']);
             $pdf->Cell(60,0,utf8_decode("$".number_format($ant,2)),0,1,'L');
         }
 
@@ -677,18 +679,18 @@ elseif ($tipoComprobante == 1) {
 
         $pdf->SetFont('Arial','B',8);
         $totalFactura = number_format($monto,2);
-        $pdf->Cell(-5,0,utf8_decode(''),0,0,'L');
+        $pdf->Cell(-3,0,utf8_decode(''),0,0,'L');
         $pdf->Cell(70,0,utf8_decode("$".$totalFactura),0,0,'L'); //MONTO TOTAL GRANDE
         $pdf->Cell(48,0,utf8_decode(''),0,0,'L');
         $pdf->Cell(65,0,utf8_decode("$".$totalFactura),0,0,'L'); //MONTO TOTAL GRANDE
         $pdf->Cell(58,0,utf8_decode(''),0,0,'L');
         $pdf->Cell(70,0,utf8_decode("$".$totalFactura),0,1,'L'); //MONTO TOTAL GRANDE
         /////////////////////MESES EN GRANDE TERMINA ACÁ
-
+        ///CORTE 2 *******************************************************************************
         $pdf->Ln(-2);
     //////////////////////////////INICIO FRANJA 2 DONDE ESTAN LOS MESES ///////////////////////////////
 
-        $pdf->SetFont('Arial','',6);
+        $pdf->SetFont('Arial','',7);
 
         //$pdf->Ln();
         if ($row['exento'] != "T") {
@@ -706,15 +708,15 @@ elseif ($tipoComprobante == 1) {
             $pdf->Cell(70,0,utf8_decode(''),0,0,'L');
             $pdf->Cell(70,0,utf8_decode("$".number_format($totalIva,2)),0,1,'L');
             $pdf->Ln(4);
-            $pdf->Cell(5,0,utf8_decode(''),0,0,'L');
-            $numeroALetras = NumerosEnLetras::convertir(number_format($unitario,2), 'dólares', false, 'centavos');
+            $pdf->Cell(15,0,utf8_decode(''),0,0,'L');
+            $numeroALetras = NumerosEnLetras::convertir(number_format($monto,2), 'dólares', false, 'centavos');
             $pdf->Cell(55,0,utf8_decode($numeroALetras),0,0,'C');
-            $pdf->Cell(30,0,utf8_decode(""),0,0,'L'); //IMPUESTO SEGURIDAD
+            $pdf->Cell(20,0,utf8_decode(""),0,0,'L'); //IMPUESTO SEGURIDAD
             $pdf->Cell(70,0,utf8_decode("$".number_format($row['totalImpuesto'],2)),0,0,'L');
             $pdf->Cell(-20,0,utf8_decode(''),0,0,'L');
             //$numeroALetras = NumerosEnLetras::convertir(number_format($monto,2), 'dólares', false, 'centavos');
-            $pdf->Cell(40,0,utf8_decode($numeroALetras),0,0,'C');
-            $pdf->Cell(33,0,utf8_decode(""),0,0,'L'); //IMPUESTO SEGURIDAD
+            $pdf->Cell(30,0,utf8_decode($numeroALetras),0,0,'C');
+            $pdf->Cell(43,0,utf8_decode(""),0,0,'L'); //IMPUESTO SEGURIDAD
             $pdf->Cell(65,0,utf8_decode("$".number_format($row['totalImpuesto'],2)),0,0,'L');
 
             $pdf->Cell(20,0,utf8_decode($numeroALetras),0,0,'C');
@@ -764,21 +766,21 @@ elseif ($tipoComprobante == 1) {
             $pdf->Cell(40,6,utf8_decode(''/*$dataInfo->getCobrador('tbl_cobradores',$row['codigoCobrador'])*/),0,1,'L');
 
             $pdf->Ln(10);
-            $pdf->SetFont('Arial','',6);
+            $pdf->SetFont('Arial','',7);
             //$pdf->MultiCell(50,3,utf8_decode($mensaje),0,'C',0);
-            $pdf->Cell(-4,1,utf8_decode(""),0,0,'L');
+            $pdf->Cell(-3.5,1,utf8_decode(""),0,0,'L');
             $pdf->Cell(-2,1,utf8_decode(""),0,0,'L');
-            $pdf->Cell(20,1,utf8_decode("VENCE: ".date_format(date_create($row['fechaVencimiento']), 'd/m/Y')),0,0,'C');
+            $pdf->Cell(20,1,utf8_decode(date_format(date_create($row['fechaVencimiento']), 'd/m/Y')),0,0,'C');
             //$pdf->MultiCell(80,3,utf8_decode($mensaje),0,'C',0);
 
             $pdf->Cell(100,1,utf8_decode(""),0,0,'L');
-            $pdf->Cell(20,1,utf8_decode("VENCE: ".date_format(date_create($row['fechaVencimiento']), 'd/m/Y')),0,0,'C');
+            $pdf->Cell(20,1,utf8_decode(date_format(date_create($row['fechaVencimiento']), 'd/m/Y')),0,0,'C');
             //$pdf->MultiCell(80,3,utf8_decode($mensaje),0,'C',0);
 
             $pdf->Cell(100,1,utf8_decode(""),0,0,'L');
-            $pdf->Cell(20,1,utf8_decode("VENCE: ".date_format(date_create($row['fechaVencimiento']), 'd/m/Y')),0,1,'C');
-
-            $pdf->Ln(26);
+            $pdf->Cell(20,1,utf8_decode(date_format(date_create($row['fechaVencimiento']), 'd/m/Y')),0,1,'C');
+            //CORTE 3****************************************************************************************
+            $pdf->Ln(20);
             $pdf->Cell(305,0,utf8_decode(''),0,0,'L');
             $pdf->Cell(70,0,utf8_decode($row['codigoCliente']),0,1,'L');
             $pdf->Ln(10);
@@ -819,7 +821,7 @@ elseif ($tipoComprobante == 1) {
             $pdf->Cell(70,6,utf8_decode("$".'0.00'),0,1,'L');
             $pdf->Ln(-2);
             $pdf->Cell(45,6,utf8_decode(''),0,0,'L');
-            $numeroALetras = NumerosEnLetras::convertir(number_format(doubleval($unitario) + doubleval($row['totalImpuesto']),2), 'dólares', false, 'centavos');
+            $numeroALetras = NumerosEnLetras::convertir(number_format(doubleval($monto) + doubleval($row['totalImpuesto']),2), 'dólares', false, 'centavos');
             $pdf->Cell(45,6,utf8_decode($numeroALetras),0,0,'C');
             $pdf->Cell(20,6,utf8_decode(""),0,0,'L'); //IMPUESTO SEGURIDAD
             $pdf->Cell(70,6,utf8_decode("$".number_format($row['totalImpuesto'],2)),0,0,'L');

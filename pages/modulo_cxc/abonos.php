@@ -10,6 +10,7 @@ session_start();
     // get passed parameter value, in this case, the record ID
     // isset() is a PHP function used to verify if a value is there or not
     if (isset($_GET['codigoCliente'])) {
+
         $id=isset($_GET['codigoCliente']) ? $_GET['codigoCliente'] : die('ERROR: Record no encontrado.');
 
         //include database connection
@@ -625,10 +626,10 @@ session_start();
                                           <?php
                                           foreach ($arrCobradores as $key) {
                                               if ($key['codigoCobrador'] == "000") {
-                                                  echo "<option value=".$key['codigoCobrador'].">".$key['nombreCobrador']."</option>";
+                                                  echo "<option value=".$key['codigoCobrador'].">".utf8_decode($key['nombreCobrador'])."</option>";
                                               }
                                               else {
-                                                  echo "<option value=".$key['codigoCobrador'].">".$key['nombreCobrador']."</option>";
+                                                  echo "<option value=".$key['codigoCobrador'].">".utf8_decode($key['nombreCobrador'])."</option>";
                                               }
 
                                           }
@@ -654,7 +655,7 @@ session_start();
                                   </div>
                                   <div class="col-md-4">
                                       <label for="nombreCliente">Nombre del cliente</label>
-                                      <input class="form-control input-sm input-sm" type="text" name="nombreCliente" value="<?php echo $nombre; ?>">
+                                      <input class="form-control input-sm input-sm" type="text" name="nombreCliente" value="<?php echo utf8_decode($nombre); ?>">
                                   </div>
                                   <div class="col-md-2">
                                       <!-- readonly -->
