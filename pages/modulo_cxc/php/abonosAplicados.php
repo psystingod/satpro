@@ -146,6 +146,22 @@
                       $query = "SELECT * FROM tbl_abonos WHERE idColonia= '".$colonia."' AND codigoCobrador= '".$cobradorR."' AND anulada= '".$anulada."' AND fechaAbonado BETWEEN '".$desde."' AND '".$hasta."' ORDER BY numeroRecibo ASC";
                 	  $resultado = $mysqli->query($query);
                   }
+              }elseif ($tipoServicio == "C") {
+                  if ($_POST["lCobrador"] === "todos" && $_POST["lColonia"] === "todas") {
+                      $query = "SELECT * FROM tbl_abonos WHERE anulada= '".$anulada."' AND tipoServicio= '".$tipoServicio."' AND cobradoPor= '".$cobradorR."' AND fechaAbonado BETWEEN '".$desde."' AND '".$hasta."' ORDER BY numeroRecibo ASC";
+                	  $resultado = $mysqli->query($query);
+                  }elseif ($_POST["lCobrador"] == "todos" && $_POST["lColonia"] != "todas") {
+                      $query = "SELECT * FROM tbl_abonos WHERE idColonia= '".$colonia."' AND cobradoPor= '".$cobradorR."' AND tipoServicio= '".$tipoServicio."' AND anulada= '".$anulada."' AND fechaAbonado BETWEEN '".$desde."' AND '".$hasta."' ORDER BY numeroRecibo ASC";
+                	  $resultado = $mysqli->query($query);
+                  }
+              }elseif ($tipoServicio == "I") {
+                  if ($_POST["lCobrador"] === "todos" && $_POST["lColonia"] === "todas") {
+                      $query = "SELECT * FROM tbl_abonos WHERE anulada= '".$anulada."' AND tipoServicio= '".$tipoServicio."' AND cobradoPor= '".$cobradorR."' AND fechaAbonado BETWEEN '".$desde."' AND '".$hasta."' ORDER BY numeroRecibo ASC";
+                	  $resultado = $mysqli->query($query);
+                  }elseif ($_POST["lCobrador"] === "todos" && $_POST["lColonia"] != "todas") {
+                      $query = "SELECT * FROM tbl_abonos WHERE idColonia= '".$colonia."' AND cobradoPor= '".$cobradorR."' AND tipoServicio= '".$tipoServicio."' AND anulada= '".$anulada."' AND fechaAbonado BETWEEN '".$desde."' AND '".$hasta."' ORDER BY numeroRecibo ASC";
+                	  $resultado = $mysqli->query($query);
+                  }
               }
 
               while($row = $resultado->fetch_assoc())
