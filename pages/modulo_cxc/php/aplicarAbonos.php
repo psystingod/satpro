@@ -217,7 +217,7 @@
                                 sleep(0.5);
                                 $this->dbConnect->commit();
                                 echo '<script>window.open("comprobantePago.php?uaid1='.$uaid1.'","_blank");</script>';
-                                echo '<script>window.history.back();</script>';
+                                echo '<script>window.location = "../abonos.php?abonado=yes";</script>';
                                 /*sleep(0.5);
                                 header('Location: ../abonos.php?abonado=yes');*/
                                 //$this->dbConnect->exec('UNLOCK TABLES');
@@ -356,7 +356,7 @@
                                 $this->dbConnect->commit();
                                 var_dump($uaid1);
                                 echo '<script>window.open("comprobantePago.php?uaid1='.$uaid1.'","_blank");</script>';
-                                echo '<script>window.history.back();</script>';
+                                echo '<script>window.location = "../abonos.php?abonado=yes";</script>';
                                 /*sleep(0.5);
                                 header('Location: ../abonos.php?abonado=yes');*/
                                 //$this->dbConnect->exec('UNLOCK TABLES');
@@ -618,7 +618,7 @@
                                 $this->dbConnect->commit();
 
                                 echo '<script>window.open("comprobantePago.php?uaid1='.$uaid1.'&uaid2='.$uaid2.'");</script>';
-                                echo '<script>window.history.back();</script>';
+                                echo '<script>window.location = "../abonos.php?abonado=yes";</script>';
                                 //sleep(0.5);
                                 //header('Location: ../abonos.php?abonado=yes');
 
@@ -877,7 +877,7 @@
 
                                     echo '<script>window.open("comprobantePago.php?uaid1='.$uaid1.'&uaid2='.$uaid2.'");</script>';
                                     //sleep(0.5);
-                                    echo '<script>window.history.back();</script>';
+                                    echo '<script>window.location = "../abonos.php?abonado=yes";</script>';
 
                                     //header('Location: ../abonos.php?abonado=yes');
 
@@ -991,8 +991,8 @@
 
                                 sleep(0.5);
                                 $this->dbConnect->commit();
-                                echo '<script>window.open("comprobantePago.php?uaid1="'.$uaid1.',"_blank");</script>';
-                                echo '<script>window.history.back();</script>';
+                                echo '<script>window.open("comprobantePago.php?uaid1='.$uaid1.'","_blank");</script>';
+                                echo '<script>window.location = "../abonos.php?abonado=yes";</script>';
                                 //header('Location: ../abonos.php?abonado=yes');
 
                                 //$this->dbConnect->exec('UNLOCK TABLES');
@@ -1101,8 +1101,8 @@
                                 var_dump("Probandollegar hasta acá");
                                 //sleep(0.5);
                                 $this->dbConnect->commit();
-                                echo '<script>window.open("comprobantePago.php?uaid1="'.$uaid1.',"_blank");</script>';
-                                echo '<script>window.history.back();</script>';
+                                echo '<script>window.open("comprobantePago.php?uaid1='.$uaid1.'","_blank");</script>';
+                                echo '<script>window.location = "../abonos.php?abonado=yes";</script>';
                                 //header('Location: ../abonos.php?abonado=yes');
 
                                 //$this->dbConnect->exec('UNLOCK TABLES');

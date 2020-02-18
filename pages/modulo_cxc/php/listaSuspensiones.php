@@ -69,10 +69,10 @@
         $servicioReporte="Cable";
         if($_POST["susCobrador"]=="todos"){//cable y todos los cobradores
           $query = "SELECT codigoCliente, nombre, direccion, tipoServicio,'C' as filtro, COUNT(*) as cantidadDeFacturasVencidas, fechaVencimiento, SUM(cuotaCable + totalImpuesto) as totalDeuda
-FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now()
+FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW())
 AND codigoCliente NOT IN (
 	/*--Internet en general*/
-	SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now()
+	SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW())
     AND codigoCliente NOT IN (
 		/**Todos Los Clientes Suspendidos**/
 		/**clientes de solo cable ya suspendidos*/
@@ -107,10 +107,10 @@ AND codigoCliente NOT IN (
           $resultado = $mysqli->query($query) ;
         }else{//cable y cobrador espercifico
            $query = "SELECT codigoCliente, nombre, direccion, tipoServicio,'C' as filtro, COUNT(*) as cantidadDeFacturasVencidas, fechaVencimiento, SUM(cuotaCable + totalImpuesto) as totalDeuda
-FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
 AND codigoCliente NOT IN (
 	/*--Internet en general*/
-	SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+	SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
     AND codigoCliente NOT IN (
 			/**Todos Los Clientes Suspendidos**/
 			/**clientes de solo cable ya suspendidos*/
@@ -148,10 +148,10 @@ AND codigoCliente NOT IN (
       $servicioReporte="Internet";
         if($_POST["susCobrador"]=="todos"){//internet y todos los cobradores
           $query = "SELECT codigoCliente, nombre, direccion, tipoServicio,'I' as filtro, COUNT(*) as cantidadDeFacturasVencidas, fechaVencimiento, SUM(cuotaInternet + totalImpuesto) as totalDeuda
-FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now()
+FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW())
 AND codigoCliente NOT IN (
 	/*--Cable en general*/
-	SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now()
+	SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW())
     AND codigoCliente  NOT IN(
 			/**Todos Los Clientes Suspendidos**/
 			/**clientes de solo cable ya suspendidos*/
@@ -186,10 +186,10 @@ AND codigoCliente NOT IN (
           $resultado = $mysqli->query($query) ;
         }else{//INTERNET y cobrador espercifico
            $query = "SELECT codigoCliente, nombre, direccion, tipoServicio,'I' as filtro, COUNT(*) as cantidadDeFacturasVencidas, fechaVencimiento, SUM(cuotaInternet + totalImpuesto) as totalDeuda
-FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
 AND codigoCliente NOT IN (
 	/*--Cable en general*/
-	SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+	SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
     AND codigoCliente NOT IN (
 			/**Todos Los Clientes Suspendidos**/
 			/**clientes de solo cable ya suspendidos*/
@@ -228,13 +228,13 @@ AND codigoCliente NOT IN (
       $servicioReporte="Paquete";
        if($_POST["susCobrador"]=="todos"){//paquete y todos los cobradores
           $query = "SELECT codigoCliente, nombre, direccion, tipoServicio,'P' as filtro, COUNT(*) as cantidadDeFacturasVencidas, fechaVencimiento, SUM(cuotaCable + cuotaInternet + totalImpuesto) as totalDeuda
-FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < now()
+FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < DATE(NOW())
 AND codigoCliente NOT IN (
             /*---SOLO CABLE TODOS LOS COBRADORES*/
-				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now()
+				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW())
 				AND codigoCliente NOT IN (
 					/*--Internet en general*/
-					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now()
+					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW())
 					AND codigoCliente NOT IN (
 						/**Todos Los Clientes Suspendidos**/
 						/**clientes de solo cable ya suspendidos*/
@@ -269,10 +269,10 @@ AND codigoCliente NOT IN (
 			/*---FIN SOLO CABLE TODOS LOS COBRADORES*/
               UNION
 			/*---SOLO INTERNET TODOS LOS COBRADORES*/
-						SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now()
+						SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW())
 			AND codigoCliente NOT IN (
 				/*--Cable en general*/
-				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now()
+				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW())
 				AND codigoCliente  NOT IN(
 						/**Todos Los Clientes Suspendidos**/
 						/**clientes de solo cable ya suspendidos*/
@@ -325,16 +325,16 @@ AND codigoCliente NOT IN (
 
      //Contar cuantas facturas de cable hay en los paquetes
       $queryCableDelPaquete="select SUM(cantidadDeFacturasVencidas) as cantidadFacturasCableDePaquete, SUM(totalDeuda) as totalDeudaCableDePaquete FROM(
-SELECT COUNT(*) as cantidadDeFacturasVencidas , SUM(cuotaCable + totalImpuesto) as totalDeuda FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now()
+SELECT COUNT(*) as cantidadDeFacturasVencidas , SUM(cuotaCable + totalImpuesto) as totalDeuda FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW())
 AND codigoCliente IN (
 /*-----PAQUETES*/
-SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < now()
+SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < DATE(NOW())
 AND codigoCliente NOT IN (
             /*---SOLO CABLE TODOS LOS COBRADORES*/
-				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now()
+				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW())
 				AND codigoCliente NOT IN (
 					/*--Internet en general*/
-					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now()
+					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW())
 					AND codigoCliente NOT IN (
 						/**Todos Los Clientes Suspendidos**/
 						/**clientes de solo cable ya suspendidos*/
@@ -369,10 +369,10 @@ AND codigoCliente NOT IN (
 			/*---FIN SOLO CABLE TODOS LOS COBRADORES*/
               UNION
 			/*---SOLO INTERNET TODOS LOS COBRADORES*/
-						SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now()
+						SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW())
 			AND codigoCliente NOT IN (
 				/*--Cable en general*/
-				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now()
+				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW())
 				AND codigoCliente  NOT IN(
 						/**Todos Los Clientes Suspendidos**/
 						/**clientes de solo cable ya suspendidos*/
@@ -431,16 +431,16 @@ AND codigoCliente NOT IN (
 
       //Contar cuantas facturas de Internet hay en los paquetes
       $queryInternetDelPaquete="select SUM(cantidadDeFacturasVencidas) as cantidadFacturasInternetDePaquete, SUM(totalDeuda) as totalDeudaInternetDePaquete FROM(
-SELECT COUNT(*) as cantidadDeFacturasVencidas , SUM(cuotaInternet + totalImpuesto) as totalDeuda FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now()
+SELECT COUNT(*) as cantidadDeFacturasVencidas , SUM(cuotaInternet + totalImpuesto) as totalDeuda FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW())
 AND codigoCliente IN (
 /*-----PAQUETES*/
-SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < now()
+SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < DATE(NOW())
 AND codigoCliente NOT IN (
             /*---SOLO CABLE TODOS LOS COBRADORES*/
-				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now()
+				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW())
 				AND codigoCliente NOT IN (
 					/*--Internet en general*/
-					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now()
+					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW())
 					AND codigoCliente NOT IN (
 						/**Todos Los Clientes Suspendidos**/
 						/**clientes de solo cable ya suspendidos*/
@@ -475,10 +475,10 @@ AND codigoCliente NOT IN (
 			/*---FIN SOLO CABLE TODOS LOS COBRADORES*/
               UNION
 			/*---SOLO INTERNET TODOS LOS COBRADORES*/
-						SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now()
+						SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW())
 			AND codigoCliente NOT IN (
 				/*--Cable en general*/
-				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now()
+				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW())
 				AND codigoCliente  NOT IN(
 						/**Todos Los Clientes Suspendidos**/
 						/**clientes de solo cable ya suspendidos*/
@@ -538,13 +538,13 @@ AND codigoCliente NOT IN (
 
         }else{//paquete y cobrador espercifico
             $query = "SELECT codigoCliente, nombre, direccion, tipoServicio,'P' as filtro, COUNT(*) as cantidadDeFacturasVencidas, fechaVencimiento, SUM(cuotaCable + cuotaInternet + totalImpuesto) as totalDeuda
-FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
             AND codigoCliente NOT IN (
               /*---SOLO CABLE POR COBRADOR ESPECIFICO*/
-				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
 				AND codigoCliente NOT IN (
 					/*--Internet en general*/
-					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
 					AND codigoCliente NOT IN (
 							/**Todos Los Clientes Suspendidos**/
 							/**clientes de solo cable ya suspendidos*/
@@ -579,10 +579,10 @@ FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < n
               /*---FIN SOLO CABLE POR COBRADOR ESPECIFICO*/
               UNION
               /*---SOLO INTERNET POR COBRADOR ESPECIFICO*/
-				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
 				AND codigoCliente NOT IN (
 					/*--Cable en general*/
-					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
 					AND codigoCliente NOT IN (
 							/**Todos Los Clientes Suspendidos**/
 							/**clientes de solo cable ya suspendidos*/
@@ -635,16 +635,16 @@ FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < n
 
      //Contar cuantas facturas de cable hay en los paquetes por cobrador
       $queryCableDelPaquete="select SUM(cantidadDeFacturasVencidas) as cantidadFacturasCableDePaquete, SUM(totalDeuda) as totalDeudaCableDePaquete FROM(
-  SELECT COUNT(*) as cantidadDeFacturasVencidas , SUM(cuotaCable + totalImpuesto) as totalDeuda FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+  SELECT COUNT(*) as cantidadDeFacturasVencidas , SUM(cuotaCable + totalImpuesto) as totalDeuda FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
     AND codigoCliente IN (
     /*todos los clientes que tienen los dos servicios y ya estan vencidas las 4 facturas*/
-		SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+		SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
 					AND codigoCliente NOT IN (
 					  /*---SOLO CABLE POR COBRADOR ESPECIFICO*/
-						SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+						SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
 						AND codigoCliente NOT IN (
 							/*--Internet en general*/
-							SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+							SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
 							AND codigoCliente NOT IN (
 									/**Todos Los Clientes Suspendidos**/
 									/**clientes de solo cable ya suspendidos*/
@@ -679,10 +679,10 @@ FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < n
 					  /*---FIN SOLO CABLE POR COBRADOR ESPECIFICO*/
 					  UNION
 					  /*---SOLO INTERNET POR COBRADOR ESPECIFICO*/
-						SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+						SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
 						AND codigoCliente NOT IN (
 							/*--Cable en general*/
-							SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+							SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
 							AND codigoCliente NOT IN (
 									/**Todos Los Clientes Suspendidos**/
 									/**clientes de solo cable ya suspendidos*/
@@ -741,16 +741,16 @@ FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < n
 
       //Contar cuantas facturas de Internet hay en los paquetes por cobrador
       $queryInternetDelPaquete="select SUM(cantidadDeFacturasVencidas) as cantidadFacturasInternetDePaquete, SUM(totalDeuda) as totalDeudaInternetDePaquete FROM(
-  SELECT COUNT(*) as cantidadDeFacturasVencidas , SUM(cuotaInternet + totalImpuesto) as totalDeuda FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+  SELECT COUNT(*) as cantidadDeFacturasVencidas , SUM(cuotaInternet + totalImpuesto) as totalDeuda FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
     AND codigoCliente IN (
     /*todos los clientes que tienen los dos servicios y ya estan vencidas las 4 facturas*/
-     SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+     SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
             AND codigoCliente NOT IN (
               /*---SOLO CABLE POR COBRADOR ESPECIFICO*/
-				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
 				AND codigoCliente NOT IN (
 					/*--Internet en general*/
-					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
 					AND codigoCliente NOT IN (
 							/**Todos Los Clientes Suspendidos**/
 							/**clientes de solo cable ya suspendidos*/
@@ -785,10 +785,10 @@ FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < n
               /*---FIN SOLO CABLE POR COBRADOR ESPECIFICO*/
               UNION
               /*---SOLO INTERNET POR COBRADOR ESPECIFICO*/
-				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
 				AND codigoCliente NOT IN (
 					/*--Cable en general*/
-					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
 					AND codigoCliente NOT IN (
 							/**Todos Los Clientes Suspendidos**/
 							/**clientes de solo cable ya suspendidos*/
@@ -855,10 +855,10 @@ FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < n
        if($_POST["susCobrador"]=="todos"){//Todos los servicios y todos los cobradores
           $query = "/*----SOLO CABLE*/
 SELECT codigoCliente, nombre, direccion, tipoServicio,'C' as filtro, COUNT(*) as cantidadDeFacturasVencidas, fechaVencimiento, SUM(cuotaCable + totalImpuesto) as totalDeuda
-FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now()
+FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW())
 AND codigoCliente NOT IN (
 	/*--Internet en general*/
-	SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now()
+	SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW())
     AND codigoCliente NOT IN (
 		/**Todos Los Clientes Suspendidos**/
 		/**clientes de solo cable ya suspendidos*/
@@ -894,10 +894,10 @@ AND codigoCliente NOT IN (
 UNION
 /*----SOLO INTERNET*/
 SELECT codigoCliente, nombre, direccion, tipoServicio,'I' as filtro, COUNT(*) as cantidadDeFacturasVencidas, fechaVencimiento, SUM(cuotaInternet + totalImpuesto) as totalDeuda
-FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now()
+FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW())
 AND codigoCliente NOT IN (
 	/*--Cable en general*/
-	SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now()
+	SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW())
     AND codigoCliente  NOT IN(
 			/**Todos Los Clientes Suspendidos**/
 			/**clientes de solo cable ya suspendidos*/
@@ -933,13 +933,13 @@ AND codigoCliente NOT IN (
 UNION
 /*----PAQUETES */
 SELECT codigoCliente, nombre, direccion, tipoServicio,'P' as filtro, COUNT(*) as cantidadDeFacturasVencidas, fechaVencimiento, SUM(cuotaCable + cuotaInternet + totalImpuesto) as totalDeuda
-FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < now()
+FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < DATE(NOW())
 AND codigoCliente NOT IN (
             /*---SOLO CABLE TODOS LOS COBRADORES*/
-				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now()
+				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW())
 				AND codigoCliente NOT IN (
 					/*--Internet en general*/
-					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now()
+					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW())
 					AND codigoCliente NOT IN (
 						/**Todos Los Clientes Suspendidos**/
 						/**clientes de solo cable ya suspendidos*/
@@ -974,10 +974,10 @@ AND codigoCliente NOT IN (
 			/*---FIN SOLO CABLE TODOS LOS COBRADORES*/
               UNION
 			/*---SOLO INTERNET TODOS LOS COBRADORES*/
-						SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now()
+						SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW())
 			AND codigoCliente NOT IN (
 				/*--Cable en general*/
-				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now()
+				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW())
 				AND codigoCliente  NOT IN(
 						/**Todos Los Clientes Suspendidos**/
 						/**clientes de solo cable ya suspendidos*/
@@ -1031,16 +1031,16 @@ AND codigoCliente NOT IN (
 
           //Contar cuantas facturas de cable hay en los paquetes
            $queryCableDelPaquete="select SUM(cantidadDeFacturasVencidas) as cantidadFacturasCableDePaquete, SUM(totalDeuda) as totalDeudaCableDePaquete FROM(
-     SELECT COUNT(*) as cantidadDeFacturasVencidas , SUM(cuotaCable + totalImpuesto) as totalDeuda FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now()
+     SELECT COUNT(*) as cantidadDeFacturasVencidas , SUM(cuotaCable + totalImpuesto) as totalDeuda FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW())
      AND codigoCliente IN (
      /*-----PAQUETES*/
-     SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < now()
+     SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < DATE(NOW())
      AND codigoCliente NOT IN (
                  /*---SOLO CABLE TODOS LOS COBRADORES*/
-     				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now()
+     				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW())
      				AND codigoCliente NOT IN (
      					/*--Internet en general*/
-     					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now()
+     					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW())
      					AND codigoCliente NOT IN (
      						/**Todos Los Clientes Suspendidos**/
      						/**clientes de solo cable ya suspendidos*/
@@ -1075,10 +1075,10 @@ AND codigoCliente NOT IN (
      			/*---FIN SOLO CABLE TODOS LOS COBRADORES*/
                    UNION
      			/*---SOLO INTERNET TODOS LOS COBRADORES*/
-     						SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now()
+     						SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW())
      			AND codigoCliente NOT IN (
      				/*--Cable en general*/
-     				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now()
+     				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW())
      				AND codigoCliente  NOT IN(
      						/**Todos Los Clientes Suspendidos**/
      						/**clientes de solo cable ya suspendidos*/
@@ -1137,16 +1137,16 @@ AND codigoCliente NOT IN (
 
            //Contar cuantas facturas de Internet hay en los paquetes
            $queryInternetDelPaquete="select SUM(cantidadDeFacturasVencidas) as cantidadFacturasInternetDePaquete, SUM(totalDeuda) as totalDeudaInternetDePaquete FROM(
-     SELECT COUNT(*) as cantidadDeFacturasVencidas , SUM(cuotaInternet + totalImpuesto) as totalDeuda FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now()
+     SELECT COUNT(*) as cantidadDeFacturasVencidas , SUM(cuotaInternet + totalImpuesto) as totalDeuda FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW())
      AND codigoCliente IN (
      /*-----PAQUETES*/
-     SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < now()
+     SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < DATE(NOW())
      AND codigoCliente NOT IN (
                  /*---SOLO CABLE TODOS LOS COBRADORES*/
-     				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now()
+     				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW())
      				AND codigoCliente NOT IN (
      					/*--Internet en general*/
-     					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now()
+     					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW())
      					AND codigoCliente NOT IN (
      						/**Todos Los Clientes Suspendidos**/
      						/**clientes de solo cable ya suspendidos*/
@@ -1181,10 +1181,10 @@ AND codigoCliente NOT IN (
      			/*---FIN SOLO CABLE TODOS LOS COBRADORES*/
                    UNION
      			/*---SOLO INTERNET TODOS LOS COBRADORES*/
-     						SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now()
+     						SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW())
      			AND codigoCliente NOT IN (
      				/*--Cable en general*/
-     				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now()
+     				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW())
      				AND codigoCliente  NOT IN(
      						/**Todos Los Clientes Suspendidos**/
      						/**clientes de solo cable ya suspendidos*/
@@ -1246,10 +1246,10 @@ AND codigoCliente NOT IN (
     }else{//todos los servicios y cobrador espercifico
             $query = "/*----CABLE*/
 SELECT codigoCliente, nombre, direccion, tipoServicio,'C' as filtro, COUNT(*) as cantidadDeFacturasVencidas, fechaVencimiento, SUM(cuotaCable + totalImpuesto) as totalDeuda
-FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
 AND codigoCliente NOT IN (
 	/*--Internet en general*/
-	SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+	SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
     AND codigoCliente NOT IN (
 			/**Todos Los Clientes Suspendidos**/
 			/**clientes de solo cable ya suspendidos*/
@@ -1285,10 +1285,10 @@ AND codigoCliente NOT IN (
           UNION
 /*----SOLO INTERNET*/
 SELECT codigoCliente, nombre, direccion, tipoServicio,'I' as filtro, COUNT(*) as cantidadDeFacturasVencidas, fechaVencimiento, SUM(cuotaInternet + totalImpuesto) as totalDeuda
-FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
 AND codigoCliente NOT IN (
 	/*--Cable en general*/
-	SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+	SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
     AND codigoCliente NOT IN (
 			/**Todos Los Clientes Suspendidos**/
 			/**clientes de solo cable ya suspendidos*/
@@ -1324,13 +1324,13 @@ AND codigoCliente NOT IN (
 UNION
 /*----PAQUETES*/
 SELECT codigoCliente, nombre, direccion, tipoServicio,'P' as filtro, COUNT(*) as cantidadDeFacturasVencidas, fechaVencimiento, SUM(cuotaCable + cuotaInternet + totalImpuesto) as totalDeuda
-FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
             AND codigoCliente NOT IN (
               /*---SOLO CABLE POR COBRADOR ESPECIFICO*/
-				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
 				AND codigoCliente NOT IN (
 					/*--Internet en general*/
-					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
 					AND codigoCliente NOT IN (
 							/**Todos Los Clientes Suspendidos**/
 							/**clientes de solo cable ya suspendidos*/
@@ -1365,10 +1365,10 @@ FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < n
               /*---FIN SOLO CABLE POR COBRADOR ESPECIFICO*/
               UNION
               /*---SOLO INTERNET POR COBRADOR ESPECIFICO*/
-				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
 				AND codigoCliente NOT IN (
 					/*--Cable en general*/
-					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
 					AND codigoCliente NOT IN (
 							/**Todos Los Clientes Suspendidos**/
 							/**clientes de solo cable ya suspendidos*/
@@ -1423,16 +1423,16 @@ FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < n
 
           //Contar cuantas facturas de cable hay en los paquetes por cobrador
            $queryCableDelPaquete="select SUM(cantidadDeFacturasVencidas) as cantidadFacturasCableDePaquete, SUM(totalDeuda) as totalDeudaCableDePaquete FROM(
-       SELECT COUNT(*) as cantidadDeFacturasVencidas , SUM(cuotaCable + totalImpuesto) as totalDeuda FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+       SELECT COUNT(*) as cantidadDeFacturasVencidas , SUM(cuotaCable + totalImpuesto) as totalDeuda FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
          AND codigoCliente IN (
          /*todos los clientes que tienen los dos servicios y ya estan vencidas las 4 facturas*/
-     		SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+     		SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
      					AND codigoCliente NOT IN (
      					  /*---SOLO CABLE POR COBRADOR ESPECIFICO*/
-     						SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+     						SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
      						AND codigoCliente NOT IN (
      							/*--Internet en general*/
-     							SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+     							SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
      							AND codigoCliente NOT IN (
      									/**Todos Los Clientes Suspendidos**/
      									/**clientes de solo cable ya suspendidos*/
@@ -1467,10 +1467,10 @@ FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < n
      					  /*---FIN SOLO CABLE POR COBRADOR ESPECIFICO*/
      					  UNION
      					  /*---SOLO INTERNET POR COBRADOR ESPECIFICO*/
-     						SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+     						SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
      						AND codigoCliente NOT IN (
      							/*--Cable en general*/
-     							SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+     							SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
      							AND codigoCliente NOT IN (
      									/**Todos Los Clientes Suspendidos**/
      									/**clientes de solo cable ya suspendidos*/
@@ -1529,16 +1529,16 @@ FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < n
 
            //Contar cuantas facturas de Internet hay en los paquetes por cobrador
            $queryInternetDelPaquete="select SUM(cantidadDeFacturasVencidas) as cantidadFacturasInternetDePaquete, SUM(totalDeuda) as totalDeudaInternetDePaquete FROM(
-       SELECT COUNT(*) as cantidadDeFacturasVencidas , SUM(cuotaInternet + totalImpuesto) as totalDeuda FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+       SELECT COUNT(*) as cantidadDeFacturasVencidas , SUM(cuotaInternet + totalImpuesto) as totalDeuda FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
          AND codigoCliente IN (
          /*todos los clientes que tienen los dos servicios y ya estan vencidas las 4 facturas*/
-          SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+          SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
                  AND codigoCliente NOT IN (
                    /*---SOLO CABLE POR COBRADOR ESPECIFICO*/
-     				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+     				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
      				AND codigoCliente NOT IN (
      					/*--Internet en general*/
-     					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+     					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
      					AND codigoCliente NOT IN (
      							/**Todos Los Clientes Suspendidos**/
      							/**clientes de solo cable ya suspendidos*/
@@ -1573,10 +1573,10 @@ FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < n
                    /*---FIN SOLO CABLE POR COBRADOR ESPECIFICO*/
                    UNION
                    /*---SOLO INTERNET POR COBRADOR ESPECIFICO*/
-     				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+     				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
      				AND codigoCliente NOT IN (
      					/*--Cable en general*/
-     					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < now() AND codigoCobrador=".$_POST["susCobrador"]."
+     					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
      					AND codigoCliente NOT IN (
      							/**Todos Los Clientes Suspendidos**/
      							/**clientes de solo cable ya suspendidos*/

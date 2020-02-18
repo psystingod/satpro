@@ -120,7 +120,7 @@
         {
             try {
 
-                  $query = "SELECT * FROM satpro.tbl_afps";
+                  $query = "SELECT * FROM tbl_afps";
                           $statement = $this->dbConnect->prepare($query);
                           $statement->execute();
                           $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -136,7 +136,7 @@
         {
             try {
 
-                  $query = "SELECT * FROM satpro.tbl_bancos";
+                  $query = "SELECT * FROM tbl_bancos";
                           $statement = $this->dbConnect->prepare($query);
                           $statement->execute();
                           $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -146,5 +146,6 @@
                 die();
             }
         }
+
     }
 ?>

@@ -557,7 +557,7 @@ session_start();
                                   }
                                   ?>
                                   <div class="pull-right">
-                                      <a href="estadoCuenta.php?codigoCliente=<?php if(isset($_GET['codigoCliente'])) echo $_GET['codigoCliente']; ?>"><button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Estado de cuenta">Estado de cuenta</button></a>
+                                      <a href="estadoCuenta.php?codigoCliente=<?php if(isset($_GET['codigoCliente'])) echo $_GET['codigoCliente']; ?>" target="_blank"><button class="btn btn-warning btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Estado de cuenta"><i style="color:#000000" class="fas fa-file-invoice-dollar"></i></button></a>
                                   </div>
                               </div>
                               <div class="form-row">
@@ -859,7 +859,7 @@ session_start();
                                   </div>
                               </div>
                               <div class="form-row">
-                                  <div class="col-md-4">
+                                  <div class="col-md-3">
                                       <label for="meses">TOTAL (INCLUYE IMPUESTOS)</label>
                                   </div>
                                   <div class="col-md-2">
@@ -883,14 +883,32 @@ session_start();
                                   <div class="col-md-2">
                                       <input class="form-control input-sm alert-danger" type="text" id="pendiente" name="pendiente" value="<?php echo $saldoReal ?>" style="color:red; font-weight:bold;">
                                   </div>
+                                  <div class="col-md-2">
+                                      <select class="form-control" id="xmeses" name="xmeses" style="display:none;" onchange="xmesesCancelar();">
+                                          <optgroup label="Meses a pagar">
+                                              <option value="1">1 mes</option>
+                                              <option value="2">2 meses</option>
+                                              <option value="3">3 meses</option>
+                                              <option value="4">4 meses</option>
+                                              <option value="5">5 meses</option>
+                                              <option value="6">6 meses</option>
+                                              <option value="7">7 meses</option>
+                                              <option value="8">8 meses</option>
+                                              <option value="9">9 meses</option>
+                                              <option value="10">10 meses</option>
+                                              <option value="11">11 meses</option>
+                                              <option value="12">12 meses</option>
+                                          </optgroup>
+                                      </select>
+                                  </div>
                               </div>
                               <div class="form-row">
-                                  <div class="col-md-8">
+                                  <div class="col-md-10">
                                       <label for="meses">Meses</label>
                                       <input id="meses" class="form-control" name="meses" pattern="([0-9]{2}/[0-9]{4})|([0-9]{2}/[0-9]{4},[0-9]{2}/[0-9]{4})" title="Por favor utiliza el formato mes/año por ejemplo 01/2019" required>
                                       <input type="hidden" id="mesPendiente" value="<?php echo $mesPendiente; ?>">
                                   </div>
-                                  <div class="col-md-4">
+                                  <div class="col-md-2">
                                       <label for="meses" style="color: brown;"></label>
                                       <button id="aplicarAbono" class="btn btn-success btn-md btn-block" type="submit" name="editar" style="margin-bottom: 6px; margin-top: 0px;"><i class="fas fa-check" style="color: white;"></i> Aplicar abonos</button>
                                       <!--<input id="submitAbono" style="display: none;" type="submit" name="submit" value="">-->

@@ -142,10 +142,31 @@ function getMesesPagar(){
             var impuestoSeg = String(parseFloat(cesc)*parseFloat(totalSinIvaSaldo)).substring(0, 4);
             document.getElementById("pendiente").value = String(parseFloat(saldoActual)).substring(0, 5);
             document.getElementById("meses").value = "";
+
         }
     }
 }
 
+if (document.getElementById("mesx1") == null && document.getElementById("mesx2") == null) {
+    //console.log(document.getElementById("mesx1"));
+    //console.log(document.getElementById("xmeses"));
+    document.getElementById("xmeses").style.display = "";
+}
+
+function xmesesCancelar(){
+    var nextM = Date.parseDate(document.getElementById("meses").value,"mm/YYYY");
+    var xmeses = document.getElementById("xmeses").value;
+
+    for (var i = 1; i < xmeses; i++) {
+        console.log(i);
+        if (i > 1) {
+            var newDate = new Date(nextM.setMonth(nextM.getMonth()+1));
+            console.log(newDate);
+            document.getElementById("xmeses").value = document.getElementById("xmeses").value+","+newDate;
+        }
+
+    }
+}
 /*function imprimirAbono(){
     var r = confirm("¿Desea imprimir el comprobante de pago?");
     if (r == true) {
