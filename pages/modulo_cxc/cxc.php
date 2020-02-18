@@ -123,9 +123,9 @@
                             '<ul class="dropdown-menu dropdown-user">
                                 <li><a href="impagos.php" target="_blank">Gestión de impagos</a>
                                 </li>
-                                <li><a href="#" data-toggle="modal" data-target="#listaSuspensiones1">Listado de suspensiones(1 mes)</a>
+                                <li><a href="#" data-toggle="modal" data-target="#listaSuspensiones1">Listado de vencidos(1 mes)</a>
                                 </li>
-                                <li><a href="#" data-toggle="modal" data-target="#listaSuspensiones">Listado de suspensiones(2 meses)</a>
+                                <li><a href="#" data-toggle="modal" data-target="#listaSuspensiones">Listado de vencidos(2 meses)</a>
                                 </li>
                                 <li><a href="#" data-toggle="modal" data-target="#listaGeneradas">Listado de facturas generadas(1 mes)</a>
                                 </li>

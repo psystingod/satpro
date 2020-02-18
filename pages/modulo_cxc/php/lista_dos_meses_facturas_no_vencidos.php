@@ -3,6 +3,7 @@
   require_once("../../../php/config.php");
   require '../../../numLe/src/NumerosEnLetras.php';
     require_once('../../../php/connection.php');
+    require_once('../../modulo_administrar/php/getInfo2.php');
   if(!isset($_SESSION))
   {
   	session_start();
@@ -15,6 +16,8 @@
   $mysqliCobrador = new mysqli($host, $user, $password, $database);
   $mysqliCableDePaquete = new mysqli($host, $user, $password, $database);
   $mysqliInternetDePaquete = new mysqli($host, $user, $password, $database);
+
+  $colonia = new GetInfo2();
 
   $totalCantidadDeFacturasReporte=0;
   $totalDeudaReporte=0;
@@ -42,7 +45,7 @@
 
   function facturasGeneradasDosMeses(){
     global  $mysqli,$mysqliCobrador,$mysqliCableDePaquete,$mysqliInternetDePaquete;
-    global $totalCantidadDeFacturasReporte,$totalDeudaReporte;
+    global $totalCantidadDeFacturasReporte,$totalDeudaReporte, $colonia;
     global $totalCantidadDeFacturasSoloCable,$totalCantidadDeClientesSoloCable,$totalDeudaSoloCable;
     global $totalCantidadDeFacturasSoloInternet,$totalCantidadDeClientesSoloInternet,$totalDeudaSoloInternet;
     global $totalCantidadDeFacturasPaquete,$totalCantidadDeClientesPaquete;
@@ -68,7 +71,7 @@
       if ($_POST["susServicio"] == "C") {
         $servicioReporte="Cable";
         if($_POST["susCobrador"]=="todos"){//cable y todos los cobradores
-          $query = "SELECT codigoCliente, nombre, direccion, tipoServicio,'C' as filtro, COUNT(*) as cantidadDeFacturasVencidas, MAX(fechaVencimiento) as fechaVencimiento, SUM(cuotaCable + totalImpuesto) as totalDeuda
+          $query = "SELECT codigoCliente, nombre, direccion,(SELECT telefonos from clientes where cod_cliente=codigoCliente) as telefono,idColonia, tipoServicio,'C' as filtro, COUNT(*) as cantidadDeFacturasVencidas, MAX(fechaVencimiento) as fechaVencimiento, SUM(cuotaCable + totalImpuesto) as totalDeuda
 FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C'
 AND codigoCliente NOT IN (
 	/*--Internet en general*/
@@ -92,7 +95,7 @@ AND codigoCliente NOT IN (
 ";
           $resultado = $mysqli->query($query) ;
         }else{//cable y cobrador espercifico
-           $query = "SELECT codigoCliente, nombre, direccion, tipoServicio,'C' as filtro, COUNT(*) as cantidadDeFacturasVencidas,  MAX(fechaVencimiento) as fechaVencimiento, SUM(cuotaCable + totalImpuesto) as totalDeuda
+           $query = "SELECT codigoCliente, nombre, direccion,(SELECT telefonos from clientes where cod_cliente=codigoCliente) as telefono,idColonia, tipoServicio,'C' as filtro, COUNT(*) as cantidadDeFacturasVencidas,  MAX(fechaVencimiento) as fechaVencimiento, SUM(cuotaCable + totalImpuesto) as totalDeuda
 FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C'  AND codigoCobrador=".$_POST["susCobrador"]."
 AND codigoCliente NOT IN (
 	/*--Internet en general*/
@@ -119,7 +122,7 @@ AND codigoCliente NOT IN (
     }elseif ($_POST["susServicio"] == "I") {//internet
       $servicioReporte="Internet";
         if($_POST["susCobrador"]=="todos"){//internet y todos los cobradores
-          $query = "SELECT codigoCliente, nombre, direccion, tipoServicio,'I' as filtro, COUNT(*) as cantidadDeFacturasVencidas, MAX(fechaVencimiento) as fechaVencimiento, SUM(cuotaInternet + totalImpuesto) as totalDeuda
+          $query = "SELECT codigoCliente, nombre, direccion,(SELECT telefonos from clientes where cod_cliente=codigoCliente) as telefono,idColonia, tipoServicio,'I' as filtro, COUNT(*) as cantidadDeFacturasVencidas, MAX(fechaVencimiento) as fechaVencimiento, SUM(cuotaInternet + totalImpuesto) as totalDeuda
 FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I'
 AND codigoCliente NOT IN (
 	/*--Cable en general*/
@@ -142,7 +145,7 @@ AND codigoCliente NOT IN (
 ) group by `codigoCliente` HAVING COUNT(*) = 2";
           $resultado = $mysqli->query($query) ;
         }else{//INTERNET y cobrador espercifico
-           $query = "SELECT codigoCliente, nombre, direccion, tipoServicio,'I' as filtro, COUNT(*) as cantidadDeFacturasVencidas, MAX(fechaVencimiento) as fechaVencimiento, SUM(cuotaInternet + totalImpuesto) as totalDeuda
+           $query = "SELECT codigoCliente, nombre, direccion,(SELECT telefonos from clientes where cod_cliente=codigoCliente) as telefono,idColonia, tipoServicio,'I' as filtro, COUNT(*) as cantidadDeFacturasVencidas, MAX(fechaVencimiento) as fechaVencimiento, SUM(cuotaInternet + totalImpuesto) as totalDeuda
 FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND codigoCobrador=".$_POST["susCobrador"]."
 AND codigoCliente NOT IN (
 	/*--Cable en general*/
@@ -170,7 +173,7 @@ AND codigoCliente NOT IN (
     }else if($_POST["susServicio"]=="P") { //paquete
       $servicioReporte="Paquete";
        if($_POST["susCobrador"]=="todos"){//paquete y todos los cobradores
-          $query = "SELECT codigoCliente, nombre, direccion, tipoServicio,'P' as filtro, COUNT(*) as cantidadDeFacturasVencidas,  MAX(fechaVencimiento) as fechaVencimiento, SUM(cuotaCable + cuotaInternet + totalImpuesto) as totalDeuda
+          $query = "SELECT codigoCliente, nombre, direccion,(SELECT telefonos from clientes where cod_cliente=codigoCliente) as telefono,idColonia, tipoServicio,'P' as filtro, COUNT(*) as cantidadDeFacturasVencidas,  MAX(fechaVencimiento) as fechaVencimiento, SUM(cuotaCable + cuotaInternet + totalImpuesto) as totalDeuda
 FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0
 AND codigoCliente NOT IN (
             /*---SOLO CABLE TODOS LOS COBRADORES con >= 1 facturas pendientes*/
@@ -206,7 +209,7 @@ AND codigoCliente NOT IN (
           $resultado = $mysqli->query($query) ;
 
         }else{//paquete y cobrador espercifico
-            $query = "SELECT codigoCliente, nombre, direccion, tipoServicio,'P' as filtro, COUNT(*) as cantidadDeFacturasVencidas, MAX(fechaVencimiento) as fechaVencimiento, SUM(cuotaCable + cuotaInternet + totalImpuesto) as totalDeuda
+            $query = "SELECT codigoCliente, nombre, direccion,(SELECT telefonos from clientes where cod_cliente=codigoCliente) as telefono,idColonia, tipoServicio,'P' as filtro, COUNT(*) as cantidadDeFacturasVencidas, MAX(fechaVencimiento) as fechaVencimiento, SUM(cuotaCable + cuotaInternet + totalImpuesto) as totalDeuda
 FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND codigoCobrador=".$_POST["susCobrador"]."
             AND codigoCliente NOT IN (
               /*---SOLO CABLE POR COBRADOR ESPECIFICO CON >= 1 facturas generadas*/
@@ -277,15 +280,17 @@ $pdf->AddPage('L','Letter');
       putenv("LANG='es_ES.UTF-8'");
       setlocale(LC_ALL, 'es_ES.UTF-8');
 	  $pdf->SetFont('Arial','B',8);
-$pdf->Ln(6);
-      $pdf->Cell(10,6,utf8_decode('N°'),1,0,'L');
-      $pdf->Cell(78,6,utf8_decode('Cliente'),1,0,'L');
-      $pdf->Cell(90,6,utf8_decode('Direccion'),1,0,'L');
-      $pdf->Cell(21,6,utf8_decode('Tipo Servicio'),1,0,'L');
-      $pdf->Cell(16,6,utf8_decode('Cant. Fact.'),1,0,'L');
-      $pdf->Cell(21,6,utf8_decode('Vencimiento'),1,0,'L');
-      $pdf->Cell(20,6,utf8_decode('Deuda Total'),1,0,'L');
       $pdf->Ln(6);
+          $pdf->Cell(10,6,utf8_decode('N°'),1,0,'L');
+          $pdf->Cell(65,6,utf8_decode('Cliente'),1,0,'L');
+          $pdf->Cell(20,6,utf8_decode('Tipo Servicio'),1,0,'L');
+          $pdf->Cell(10,6,utf8_decode('Cant'),1,0,'L');
+          $pdf->Cell(21,6,utf8_decode('Vencimiento'),1,0,'L');
+          $pdf->Cell(10,6,utf8_decode('Total'),1,0,'L');
+          $pdf->Cell(30,6,utf8_decode('Teléfono'),1,0,'L');
+          $pdf->Cell(30,6,utf8_decode('Colonia'),1,0,'L');
+          $pdf->Cell(70,6,utf8_decode('Direccion'),1,0,'L');
+            $pdf->Ln(6);
 
       $fechaActualParaCondicion=date('Y-m-d');
         while($row = $resultado->fetch_assoc())
@@ -308,17 +313,19 @@ $pdf->Ln(6);
                 $tipoServicioTemp="Paquete";
               }//endPaquete
 
-                $pdf->Ln(3);
-                $pdf->SetFont('Arial','',6);
-                $pdf->Cell(10,3,utf8_decode($contadorDeFilas),0,0,'L');
-                $contadorDeFilas++;
-                $pdf->Cell(78,3,utf8_decode(strtoupper($row['codigoCliente']."  ".$row['nombre'])),0,0,'L');
-                $pdf->Cell(90,3,utf8_decode($row['direccion']),0,0,'L');
-                $pdf->Cell(21,3,utf8_decode($tipoServicioTemp),0,0,'L');
-                $pdf->Cell(16,3,utf8_decode($row['cantidadDeFacturasVencidas']),0,0,'C');
-                $pdf->Cell(21,3,utf8_decode($row['fechaVencimiento']),0,0,'C');
-                $pdf->Cell(20,3,utf8_decode("$ ".number_format($row['totalDeuda'],2)),0,0,'L');
-                 $pdf->Ln(3);
+              $pdf->Ln(3);
+              $pdf->SetFont('Arial','',6);
+              $pdf->Cell(10,3,utf8_decode($contadorDeFilas),0,0,'L');
+              $contadorDeFilas++;
+              $pdf->Cell(65,3,utf8_decode(strtoupper($row['codigoCliente']."  ".$row['nombre'])),0,0,'L');
+              $pdf->Cell(20,3,utf8_decode($tipoServicioTemp),0,0,'L');
+              $pdf->Cell(10,3,utf8_decode($row['cantidadDeFacturasVencidas']),0,0,'C');
+              $pdf->Cell(21,3,utf8_decode($row['fechaVencimiento']),0,0,'C');
+              $pdf->Cell(10,3,utf8_decode("$ ".number_format($row['totalDeuda'],2)),0,0,'L');
+              $pdf->Cell(30,3,utf8_decode($row['telefono']),0,0,'C');
+              $pdf->Cell(30,3,utf8_decode($colonia->getColonia($row['idColonia'])),0,0,'L');
+              $pdf->MultiCell(70,3,utf8_decode($row['direccion']),0,'L',0);
+               $pdf->Ln(3);
                }//endIf de Fecha
     	  }
 
