@@ -26,7 +26,7 @@ class NuevoCliente extends ConectionDB
             }
             elseif ($estado_cable == "S") {
                 $sinServicio = "T";
-                $estado_cable = "";
+                $estado_cable = null;
             }
             $estado_internet = $_POST['internet']; // 1, 2, 3
             //var_dump($estado_cable);

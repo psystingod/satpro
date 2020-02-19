@@ -19,18 +19,8 @@
         public function getActiveClients()
         {
             try {
-                    $query = "SELECT COUNT(*) FROM clientes WHERE (servicio_suspendido IS NULL OR servicio_suspendido = 'F') AND (estado_cliente_in = 1 OR estado_cliente_in = 3)";
-                    $statement = $this->dbConnect->prepare($query);
-                    //ini_set('memory_limit', '-1');
-                    $statement->execute();
-                    $result1 = $statement->fetchColumn();
 
-                    $query = "SELECT COUNT(*) FROM clientes WHERE (servicio_suspendido = 'T') AND (estado_cliente_in = 1)";
-                    $statement = $this->dbConnect->prepare($query);
-                    //ini_set('memory_limit', '-1');
-                    $statement->execute();
-                    $result2 = $statement->fetchColumn();
-                    return intval($result1) + intval($result2);
+                    return $this->getTotalClientsC() + $this->getTotalClientsI() + $this->getTotalClientsCI();
 
 
             } catch (Exception $e) {
@@ -156,7 +146,7 @@
         public function getTotalClientsC()
         {
             try {
-                    $query = "SELECT count(*) FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) AND estado_cliente_in = 3";
+                    $query = "SELECT count(*) FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null or servicio_suspendido='') AND sin_servicio='F' AND estado_cliente_in = 3";
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute();
                     $result1 = $statement->fetchColumn();
@@ -170,7 +160,7 @@
         public function getTotalClientsI()
         {
             try {
-                    $query = "SELECT count(*) FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='T' AND estado_cliente_in = 1";
+                    $query = "SELECT count(*) FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null or servicio_suspendido='') and sin_servicio='T' AND estado_cliente_in = 1";
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute();
                     $result1 = $statement->fetchColumn();
@@ -184,7 +174,7 @@
         public function getTotalClientsCI()
         {
             try {
-                    $query = "SELECT count(*) FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='F' AND estado_cliente_in = 1";
+                    $query = "SELECT count(*) FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null or servicio_suspendido='') and sin_servicio='F' AND estado_cliente_in = 1";
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute();
                     $result1 = $statement->fetchColumn();

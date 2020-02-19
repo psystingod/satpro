@@ -154,15 +154,56 @@ if (document.getElementById("mesx1") == null && document.getElementById("mesx2")
 }
 
 function xmesesCancelar(){
-    var nextM = Date.parseDate(document.getElementById("meses").value,"mm/YYYY");
-    var xmeses = document.getElementById("xmeses").value;
 
+    var nextM = (document.getElementById("meses").value).substring(0,7);
+    //console.log("valor de meses "+nextM);
+    nextM = nextM.replace("/", "-");
+    var joinArray = nextM.split("-").reverse().join("-");
+
+    var d = new Date(joinArray);
+    //console.log("valor de joinArray "+joinArray);
+    //console.log("valor de Date joinArray "+d);
+    var xmeses = document.getElementById("xmeses").value;
+    //d.setMonth(d.getMonth());
+    var newDate = new Date(d.setMonth(d.getMonth()+2));
+    //var month = (newDate.getMonth())+2;
+    //console.log(newDate);
     for (var i = 1; i < xmeses; i++) {
-        console.log(i);
-        if (i > 1) {
-            var newDate = new Date(nextM.setMonth(nextM.getMonth()+1));
-            console.log(newDate);
-            document.getElementById("xmeses").value = document.getElementById("xmeses").value+","+newDate;
+        //var newDate = new Date(d.setMonth(d.getMonth()+2));
+        var mm = String(newDate.getMonth() + i).padStart(2, '0'); //January is 0!
+        console.log("MES antes de comparar "+mm);
+        var yyyy = newDate.getFullYear();
+
+        if (mm >12) {
+            mm = 1; //January is 0!
+            yyyy = newDate2.getFullYear()+1;
+        }
+        console.log("MES despues de comparar "+mm);
+
+        date = mm + '/' + yyyy;
+
+        console.log(date);
+        var beforeDate = "";
+        if (i >= 1) {
+            //console.log("MES SIN SUMAR 1 "+newDate.getMonth());
+
+            if (mm < 10) {
+                newDate2 = yyyy + "-" + "0"+mm;
+            }else {
+                newDate2 = yyyy + "-" + mm;
+            }
+            //console.log("nueva fecha fecha "+newDate.toLocaleDateString());
+            newDate2 = newDate2.split("-").reverse().join("-")
+            //console.log("MES SUMANDO 1 "+newDate2);
+            beforeDate = document.getElementById("meses").value;
+            //console.log(beforeDate);
+            document.getElementById("meses").value = (newDate2 + "," + beforeDate).replace("-", "/");
+
+            var month = month+i;
+            var xxx = newDate2.split("-").reverse().join("-");
+            console.log("PRUEBAAAA "+xxx);
+
+            newDate2 = new Date(xxx);
         }
 
     }
