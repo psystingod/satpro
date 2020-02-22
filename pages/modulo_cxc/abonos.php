@@ -533,7 +533,7 @@ session_start();
                         <br>
                         <div class="panel panel-primary">
                           <div class="panel-heading">Abonos</div>
-                          <form id="frAbonos" action="php/aplicarAbonos.php" method="POST">
+                          <form id="frAbonos" action="php/aplicarAbonosx2.php" method="POST">
                           <div class="panel-body" style="color">
                               <div class="col-md-12">
                                   <?php
@@ -905,7 +905,8 @@ session_start();
                               <div class="form-row">
                                   <div class="col-md-10">
                                       <label for="meses">Meses</label>
-                                      <input id="meses" class="form-control" name="meses" pattern="([0-9]{2}/[0-9]{4})|([0-9]{2}/[0-9]{4},[0-9]{2}/[0-9]{4})" title="Por favor utiliza el formato mes/año por ejemplo 01/2019" required>
+                                      <!--pattern="([0-9]{2}/[0-9]{4})|([0-9]{2}/[0-9]{4},[0-9]{2}/[0-9]{4})"-->
+                                      <input id="meses" class="form-control" name="meses" title="Por favor utiliza el formato mes/año por ejemplo 01/2019" required>
                                       <input type="hidden" id="mesPendiente" value="<?php echo $mesPendiente; ?>">
                                   </div>
                                   <div class="col-md-2">

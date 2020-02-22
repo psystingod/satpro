@@ -15,6 +15,8 @@
       <path value="$PROJECT_DIR$/vendor/datatables/images" />
       <path value="$PROJECT_DIR$/vendor/spipu/html2pdf" />
       <path value="$PROJECT_DIR$/vendor/datatables/js" />
+      <path value="$PROJECT_DIR$/../../php" />
     </include_path>
   </component>
+  <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />
 </project>

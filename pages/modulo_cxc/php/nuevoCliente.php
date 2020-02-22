@@ -71,6 +71,7 @@ class NuevoCliente extends ConectionDB
             $tipoComprobante = $_POST['tipoComprobante']; //Credito fiscal o consumidor final
             $facebook = $_POST['facebook'];
             $correo = $_POST['correo'];
+            $observaciones = $_POST['notas'];
 
             /****************** OTROS DATOS ***********************/
             $cobrador = $_POST['cobrador'];
@@ -307,11 +308,11 @@ class NuevoCliente extends ConectionDB
 
             $this->dbConnect->beginTransaction();
             $query = "INSERT INTO clientes(servicio_suspendido, sin_servicio, estado_cliente_in, numero_contrato, num_factura, nombre, /*empresa,*/ numero_nit, numero_dui, lugar_exp, num_registro, saldoCable, saldoInternet, direccion_cobro, direccion, fecha_nacimiento, id_departamento, id_municipio, id_colonia, telefonos, tel_trabajo, correo_electronico, profesion, id_cuenta, forma_pago, tipo_comprobante, saldo_actual, facebook, contactos, contacto2, contacto3,
-                      telcon1, telcon2, telcon3, paren1, paren2, paren3, dir1, dir2, dir3,
+                      telcon1, telcon2, telcon3, paren1, paren2, paren3, dir1, dir2, dir3,observaciones,
                       fecha_instalacion, fecha_primer_factura, fecha_suspencion, exento, dia_cobro, servicio_cortesia, valor_cuota, prepago, tipo_servicio, mactv, periodo_contrato_ca, vencimiento_ca, fecha_reinstalacion, id_tecnico, cod_cobrador, numero_derivaciones, dire_cable, fecha_instalacion_in, fecha_primer_factura_in, tipo_servicio_in, periodo_contrato_int, dia_corbo_in, id_velocidad, cuota_in, id_tipo_cliente, tecnologia, no_contrato_inter,
                       vencimiento_in, ult_ren_in, fecha_suspencion_in, fecha_reconexion_in, id_promocion, dese_promocion_in, hasta_promocion_in, cuota_promocion, entrega_calidad, dire_internet, id_tecnico_in, costo_instalacion_in, colilla, marca_modem, recep_modem, wanip, mac_modem, trans_modem, coordenadas, serie_modem, ruido_modem, dire_telefonia, clave_modem, creado_por, fecha_hora_creacion)
                       VALUES(:servicioSuspendido, :sinServicio, :estadoClienteIn, :nContrato, :nFactura, :nombre, /*:empresa,*/ :nit, :dui, :lugarExp, :nrc, :saldoCable, :saldoInter, :dirCobro, :dir, :fechaNacimiento, :idDepartamento, :idMunicipio, :idColonia, :telefonos, :telTrabajo, :email, :ocupacion, :cuentaContable, :formaPago, :tipoComprobante, :saldoActual, :facebook, :contactos, :contacto2, :contacto3, :telcon1, :telcon2, :telcon3, :paren1, :paren2, :paren3, :dir1, :dir2, :dir3,
-                      :fechaInstalacionCable, :fechaPrimerFacturaCable, :fechaSuspensionCable, :exento, :diaCobro, :servicioCortesia, :cuotaCable, :prepago, :tipoServicio, :mactv, :periodoContratoCable, :vencimientoCable, :fechaReconexCable, :idTecnico, :codigoCobrador, :nDerivaciones, :direCable, :fechaInstalacionIn, :fechaPrimerFacturaIn, :tipoServicioIn, :periodoContratoIn, :diaCobroIn, :idVelocidadIn, :cuotaIn, :tipoClienteIn, :tecnologia, :noContratoIn,
+                      :observaciones,:fechaInstalacionCable, :fechaPrimerFacturaCable, :fechaSuspensionCable, :exento, :diaCobro, :servicioCortesia, :cuotaCable, :prepago, :tipoServicio, :mactv, :periodoContratoCable, :vencimientoCable, :fechaReconexCable, :idTecnico, :codigoCobrador, :nDerivaciones, :direCable, :fechaInstalacionIn, :fechaPrimerFacturaIn, :tipoServicioIn, :periodoContratoIn, :diaCobroIn, :idVelocidadIn, :cuotaIn, :tipoClienteIn, :tecnologia, :noContratoIn,
                       :vencimientoContratoIn, :ultRenIn, :fechaSuspensionIn, :fechaReconexIn, :promoIn, :promoInDesde, :promoInHasta, :cuotaPromoIn, :enCalidad, :direInter, :idTecnicoIn, :costoInstalacionIn, :colilla, :modelo, :recepcion, :wanip, :macModem, :trans, :coordenadas, :serieModem, :ruido, :nodo, :claveWifi, :creadoPor, :fechaHoraCreado)";
 
             $stmt = $this->dbConnect->prepare($query);
@@ -356,6 +357,7 @@ class NuevoCliente extends ConectionDB
                         ':dir1' => $dir1,
                         ':dir2' => $dir2,
                         ':dir3' => $dir3,
+                        ':observaciones' => $observaciones,
                         ':fechaInstalacionCable' => $fechaInstalacion,
                         ':fechaPrimerFacturaCable' => $fechaPrimerFactura,
                         ':fechaSuspensionCable' => $fechaSuspensionCable,

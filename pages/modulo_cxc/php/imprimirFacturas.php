@@ -417,11 +417,11 @@ elseif ($tipoComprobante == 1) {
 
         $pdf->AliasNbPages();
         $pdf->AddPage();
-        $pdf->Image('../../../images/comp.png',150,95, 45, 10);
+        $pdf->Image('../../../images/comp.png',150,100, 45, 10);
         if ($tipoServicio == "C") {
-            $pdf->Image('../../../images/cable.png',40,100, 15, 17);
-            $pdf->Image('../../../images/cable.png',160,100, 15, 17);
-            $pdf->Image('../../../images/cable.png',285,100, 15, 17);
+            $pdf->Image('../../../images/cable.png',40,90, 15, 17);
+            $pdf->Image('../../../images/cable.png',160,88, 15, 17);
+            $pdf->Image('../../../images/cable.png',285,90, 15, 17);
             $unitario = $row['cuotaCable'];
             $separado = (floatval($unitario)/(1 + floatval($iva)));
             $totalIva = floatval($separado) * floatval($iva);
@@ -445,9 +445,9 @@ elseif ($tipoComprobante == 1) {
             }
         }
         elseif ($tipoServicio == "I") {
-            $pdf->Image('../../../images/inter.png',40,100, 15, 17);
-            $pdf->Image('../../../images/inter.png',160,100, 15, 17);
-            $pdf->Image('../../../images/inter.png',285,100, 15, 17);
+            $pdf->Image('../../../images/inter.png',40,90, 15, 17);
+            $pdf->Image('../../../images/inter.png',160,88, 15, 17);
+            $pdf->Image('../../../images/inter.png',285,90, 15, 17);
             $unitario = $row['cuotaInternet'];
             $separado = (floatval($unitario)/(1 + floatval($iva)));
             $totalIva = floatval($separado) * floatval($iva);
@@ -575,12 +575,12 @@ elseif ($tipoComprobante == 1) {
         $pdf->Ln(24);
     //////////////////////////////FIN FRANJA 1///////////////////////////////////
     $pdf->SetFont('Arial','',7);
-    $pdf->Cell(7,0,utf8_decode(''),0,0,'L');
+    $pdf->Cell(12,0,utf8_decode(''),0,0,'L');
     $pdf->Cell(10,0,utf8_decode('1'),0,0,'R');
     $pdf->Cell(55,0,utf8_decode("Pendiente ".strftime('%B', strtotime($row['fechaCobro'])). " de ".strftime('%Y', strtotime($row['fechaCobro']))),0,0,'L');
 
     if ($row['exento'] != "T") {
-        $pdf->Cell(20,0,utf8_decode("$".number_format($separado,2)),0,0,'L');
+        $pdf->Cell(15,0,utf8_decode("$".number_format($separado,2)),0,0,'L');
         $pdf->Cell(70,0,utf8_decode("$".number_format($separado,2)),0,0,'L');
     }
     else {
@@ -710,8 +710,8 @@ elseif ($tipoComprobante == 1) {
             $pdf->Ln(4);
             $pdf->Cell(15,0,utf8_decode(''),0,0,'L');
             $numeroALetras = NumerosEnLetras::convertir(number_format($monto,2), 'dólares', false, 'centavos');
-            $pdf->Cell(55,0,utf8_decode($numeroALetras),0,0,'C');
-            $pdf->Cell(20,0,utf8_decode(""),0,0,'L'); //IMPUESTO SEGURIDAD
+            $pdf->Cell(60,0,utf8_decode($numeroALetras),0,0,'C');
+            $pdf->Cell(15,0,utf8_decode(""),0,0,'L'); //IMPUESTO SEGURIDAD
             $pdf->Cell(70,0,utf8_decode("$".number_format($row['totalImpuesto'],2)),0,0,'L');
             $pdf->Cell(-20,0,utf8_decode(''),0,0,'L');
             //$numeroALetras = NumerosEnLetras::convertir(number_format($monto,2), 'dólares', false, 'centavos');
@@ -782,7 +782,7 @@ elseif ($tipoComprobante == 1) {
             //CORTE 3****************************************************************************************
             $pdf->Ln(20);
             $pdf->Cell(305,0,utf8_decode(''),0,0,'L');
-            $pdf->Cell(70,0,utf8_decode($row['codigoCliente']),0,1,'L');
+            $pdf->Cell(70,0,utf8_decode($row['numeroFactura']),0,1,'L');
             $pdf->Ln(10);
             $pdf->SetAutoPageBreak(false);
             $pdf->Cell(140,0,utf8_decode(''),0,0,'L');

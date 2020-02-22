@@ -146,7 +146,7 @@
         public function getTotalClientsC()
         {
             try {
-                    $query = "SELECT count(*) FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null or servicio_suspendido='') AND sin_servicio='F' AND estado_cliente_in = 3";
+                    $query = "SELECT count(*) FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null or servicio_suspendido='') AND sin_servicio='F' AND estado_cliente_in = 3 AND cod_cliente<>'00000'";
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute();
                     $result1 = $statement->fetchColumn();
@@ -160,7 +160,7 @@
         public function getTotalClientsI()
         {
             try {
-                    $query = "SELECT count(*) FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null or servicio_suspendido='') and sin_servicio='T' AND estado_cliente_in = 1";
+                    $query = "SELECT count(*) FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null or servicio_suspendido='') and sin_servicio='T' AND estado_cliente_in = 1 AND cod_cliente<>'00000'";
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute();
                     $result1 = $statement->fetchColumn();
@@ -174,7 +174,7 @@
         public function getTotalClientsCI()
         {
             try {
-                    $query = "SELECT count(*) FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null or servicio_suspendido='') and sin_servicio='F' AND estado_cliente_in = 1";
+                    $query = "SELECT count(*) FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null or servicio_suspendido='') and sin_servicio='F' AND estado_cliente_in = 1 AND cod_cliente<>'00000'";
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute();
                     $result1 = $statement->fetchColumn();

@@ -104,6 +104,7 @@ session_start();
             $facebook = $row['facebook'];
             $correo = $row['correo_electronico'];
             $calidad = $row['entrega_calidad'];
+            $observaciones = $row['observaciones'];
             //var_dump($calidad);
 
             /****************** OTROS DATOS ***********************/
@@ -601,11 +602,15 @@ session_start();
                 <form id="formClientes" class="" action="#" method="POST">
                             <td><button id="btn-guardar" class="btn btn-danger btn-block" title="Guardar" disabled><i class="fas fa-save fa-2x"></i></button></td>
                         </tr>
+                        <tr>
+                            <td colspan="8"><textarea class="form-control alert-warning input-sm" name="notas" rows="2" cols="40" placeholder="Notas de recordatorio" readOnly><?php echo $observaciones; ?></textarea></td>
+                        </tr>
                         <!--<tr>
                             <td><button class="btn btn-info btn-block" style="font-size: 16px; ;">Reporte</button></td>
                             <td colspan="2"><button class="btn btn-info btn-block" style="font-size: 16px; ;">Compromiso de internet</button></td>
 
                         </tr>-->
+
                     </table>
                 </div>
                 <div class="col-md-4">

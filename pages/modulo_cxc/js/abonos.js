@@ -147,7 +147,7 @@ function getMesesPagar(){
     }
 }
 
-if (document.getElementById("mesx1") == null && document.getElementById("mesx2") == null) {
+if ((document.getElementById("mesx1") != null && document.getElementById("mesx2") == null) || (document.getElementById("mesx1") == null && document.getElementById("mesx2") == null)) {
     //console.log(document.getElementById("mesx1"));
     //console.log(document.getElementById("xmeses"));
     document.getElementById("xmeses").style.display = "";
@@ -160,23 +160,67 @@ function xmesesCancelar(){
     nextM = nextM.replace("/", "-");
     var joinArray = nextM.split("-").reverse().join("-");
 
-    var d = new Date(joinArray);
-    //console.log("valor de joinArray "+joinArray);
-    //console.log("valor de Date joinArray "+d);
+    var d = new Date(joinArray+'T00:00');
+    console.log("valor de joinArray "+joinArray);
+    console.log("valor de Date joinArray "+d);
     var xmeses = document.getElementById("xmeses").value;
     //d.setMonth(d.getMonth());
-    var newDate = new Date(d.setMonth(d.getMonth()+2));
+    var newDate = new Date(d.setMonth(d.getMonth()+1));
     //var month = (newDate.getMonth())+2;
-    //console.log(newDate);
+    //console.log("FUERA DEL LOOP "+newDate.getMonth());
+    var vueltas = 1;
     for (var i = 1; i < xmeses; i++) {
+        //console.log("EN EL LOOP "+newDate.getMonth());
         //var newDate = new Date(d.setMonth(d.getMonth()+2));
-        var mm = String(newDate.getMonth() + i).padStart(2, '0'); //January is 0!
-        console.log("MES antes de comparar "+mm);
-        var yyyy = newDate.getFullYear();
+        if (vueltas == 1) {
+            console.log("MES MES MES d"+d.getMonth());
+            console.log("MES MES MES newDate "+newDate.getMonth());
+
+                    var mm = String(newDate.getMonth() + i).padStart(2, '0'); //January is 0!
+                    console.log("MES antes de comparar "+mm);
+                    //console.log(newDate2);
+                    var yyyy = newDate.getFullYear();
+
+        }else {
+            var mm = String(newDate.getMonth() + i).padStart(2, '0'); //January is 0!
+            console.log("MES antes de comparar "+mm);
+            //console.log(newDate2);
+            var yyyy = yyyy;
+        }
+
 
         if (mm >12) {
-            mm = 1; //January is 0!
-            yyyy = newDate2.getFullYear()+1;
+            if (mm == 13) {
+                mm=1;
+                yyyy = newDate2.getFullYear()+1;
+                console.log("EL AÑO ACTUAL ES: "+newDate2.getFullYear());
+            }else if (mm == 14) {
+                mm=2;
+                console.log("EL AÑO ACTUAL ES: "+newDate2.getFullYear());
+                yyyy = yyyy;
+            }else if (mm == 15) {
+                mm=3;
+                console.log("EL AÑO ACTUAL ES: "+newDate2.getFullYear());
+                yyyy = yyyy;
+            }else if (mm == 16) {
+                mm=4;
+                console.log("EL AÑO ACTUAL ES: "+newDate2.getFullYear());
+                yyyy = yyyy;
+            }else if (mm == 17) {
+                mm=5;
+                yyyy = yyyy;
+            }else if (mm == 18) {
+                mm=6;
+                yyyy = yyyy;
+            }else if (mm == 19) {
+                mm=7;
+                yyyy = yyyy;
+            }else if (mm == 20) {
+                mm=8;
+                yyyy = yyyy;
+            }
+            //mm = 1; //January is 0!
+            //yyyy = newDate2.getFullYear()+1;
         }
         console.log("MES despues de comparar "+mm);
 
@@ -188,9 +232,17 @@ function xmesesCancelar(){
             //console.log("MES SIN SUMAR 1 "+newDate.getMonth());
 
             if (mm < 10) {
-                newDate2 = yyyy + "-" + "0"+mm;
+                console.log("LONGITUD DE CADENA "+mm.toString.length);
+                if (mm.toString.length == 1) {
+                    var newDate2 = yyyy + "-" + "0"+mm;
+                    console.log("DENTRO DE CONDICIÓN "+mm);
+                }else {
+                    var newDate2 = yyyy + "-" + mm;
+                    console.log("FUERA DE CONDICIÓN "+mm);
+                }
             }else {
-                newDate2 = yyyy + "-" + mm;
+                var newDate2 = yyyy + "-" + mm;
+                console.log("FUERA DE CONDICIÓN FINAL "+mm);
             }
             //console.log("nueva fecha fecha "+newDate.toLocaleDateString());
             newDate2 = newDate2.split("-").reverse().join("-")
@@ -204,6 +256,9 @@ function xmesesCancelar(){
             console.log("PRUEBAAAA "+xxx);
 
             newDate2 = new Date(xxx);
+            console.log("VIENDO "+newDate2);
+            vueltas++;
+
         }
 
     }

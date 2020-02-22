@@ -89,10 +89,28 @@
                     if(!isset($_SESSION["user"])) {
                         header('Location: ../login.php');
                     }elseif (isset($_SESSION["user"])) {
-                        if ($_SESSION["rol"] == 'administracion' || $_SESSION["rol"] == 'subgerencia' || $_SESSION["rol"] == 'jefatura' || $_SESSION["rol"] == 'contabilidad') {
+                        if ($_SESSION["rol"] == 'jefatura' || $_SESSION["rol"] == 'contabilidad') {
                             echo
                             '<ul class="dropdown-menu dropdown-user">
-                                <li><a href="#" data-toggle="modal" data-target="#totalClientes">Clientes</a>
+                                <li><a href="#" data-toggle="modal" data-target="#totalClientes">Listado de cobros</a>
+                                </li>
+                                <li><a href="cobradores.php">Cobradores</a>
+                                </li>
+                                <li><a href="vendedores.php">Vendedores</a>
+                                </li>
+                                <li><a href="zonas.php">Zonas</a>
+                                </li>
+                                <li><a href="#" data-toggle="modal" data-target="#abonosAplicados">Abonos aplicados</a>
+                                </li>
+                                <li><a href="#" data-toggle="modal" data-target="#reporteVentasManuales">Ventas manuales</a>
+                                </li>
+                            </ul>';
+                        }elseif ($_SESSION["rol"] == 'administracion' || $_SESSION["rol"] == 'subgerencia') {
+                            echo
+                            '<ul class="dropdown-menu dropdown-user">
+                                <li><a href="#" data-toggle="modal" data-target="#totalClientesAdmin">Clientes totales</a>
+                                </li>
+                                <li><a href="#" data-toggle="modal" data-target="#totalClientes">Listado de cobros</a>
                                 </li>
                                 <li><a href="cobradores.php">Cobradores</a>
                                 </li>
@@ -1228,7 +1246,7 @@
       <div class="modal-content">
         <div style="background-color: #27ae60; color:white;" class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Reporte de todos los clientes</h4>
+          <h4 class="modal-title">Listado de cobros</h4>
         </div>
         <form id="frmtodosClientes" action="php/reporteClientes.php" method="POST">
         <div class="modal-body">
@@ -1277,9 +1295,12 @@
           <div class="row">
               <br>
               <div class="col-md-12">
-
-                  <input class="pull-right" type="checkbox" name="todosLosDias" value="1">
-                  <label class="pull-right" for="todosLosDias">Mostrar todos los días de cobro</label>
+                  <?php
+                  if ($_SESSION["rol"] == 'administracion' || $_SESSION["rol"] == 'subgerencia'){
+                      echo '<input class="pull-right" type="checkbox" name="todosLosDias" value="1">';
+                      echo '<label class="pull-right" for="todosLosDias">Mostrar todos los días de cobro</label>';
+                  }
+                  ?>
               </div>
           </div>
         </div>
@@ -1296,7 +1317,86 @@
         </div>
       </div>
     </div>
-  </div><!-- Fin Modal LISTA DE TOTAL CLIENTES -->
+</div><!-- Fin Modal LISTA DE TOTAL CLIENTES ADMINISTRACION-->
+
+  <!-- Modal LISTA TOTAL CLEINTES-->
+  <div id="totalClientesAdmin" class="modal fade" role="dialog">
+      <div class="modal-dialog modal-lg">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div style="background-color: #27ae60; color:white;" class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Reporte de todos los clientes</h4>
+          </div>
+          <form id="frmtodosClientes" action="php/listaDeClientes.php" method="POST">
+          <div class="modal-body">
+            <div class="row">
+                <div class="col-md-3">
+                    <label for="clCobrador">Cobrador</label>
+                    <select class="form-control" type="text" id="clCobrador" name="clCobrador" required>
+                        <option value="">Seleccione cobrador</option>
+                        <option value="todos" selected>Todos los cobradores</option>
+                        <?php
+                        require_once 'php/GetAllInfo.php';
+                        $data = new GetAllInfo();
+                        $arrCobradores = $data->getData('tbl_cobradores');
+                        foreach ($arrCobradores as $key) {
+                            echo '<option value="'.$key['codigoCobrador'].'">'.$key['nombreCobrador'].'</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label for="clColonia">Brarrio/Colonia</label>
+                    <select class="form-control" type="text" id="clColonia" name="clColonia" required>
+                        <option value="todas" selected>Todas las zonas</option>
+                        <?php
+                        $arrColonias = $data->getData('tbl_colonias_cxc');
+                        foreach ($arrColonias as $key) {
+                            echo '<option value="'.$key['idColonia'].'">'.$key['nombreColonia'].'</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <label for="clServicio">Tipo de servicio</label>
+                    <select class="form-control" type="text" id="clServicio" name="clServicio" required>
+                        <option value="">Seleccione tipo de servicio</option>
+                        <option value="C" selected>Cable</option>
+                        <option value="I">Internet</option>
+                        <option value="A">Ambos</option>
+                        <option value="T">TODOS</option>
+                    </select>
+                </div>
+                <div class="col-md-2">
+                    <label for="cldiaCobro">Dia de cobro</label>
+                    <input class="form-control" type="number" name="cldiaCobro" value="1">
+                </div>
+            </div>
+            <div class="row">
+                <br>
+                <div class="col-md-12">
+
+                    <input class="pull-right" type="checkbox" name="todosLosDias" value="1">
+                    <label class="pull-right" for="todosLosDias">Mostrar todos los días de cobro</label>
+                </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+              <div class="row">
+                  <div class="col-md-6">
+                      <input type="submit" class="btn btn-success btn-md btn-block" name="submit" value="Ver clientes">
+                  </div>
+                  <div class="col-md-6">
+                      <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>
+                  </div>
+              </div>
+          </form>
+          </div>
+        </div>
+      </div>
+  </div><!-- Fin Modal LISTA DE TOTAL CLIENTES ADMINISTRACION -->
 </div>
         <!-- /#page-wrapper -->
     </div>

@@ -111,7 +111,7 @@
                            $vuelta = 0;
                            foreach ($result as $i) {
 
-                               $qry = "SELECT COUNT(mesCargo)FROM tbl_cargos WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
+                               $qry = "SELECT COUNT(mesCargo)FROM tbl_cargos WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio AND anulada=0";
 
                                $stmt = $this->dbConnect->prepare($qry);
                                $stmt->execute(
@@ -259,7 +259,7 @@
                            $vuelta = 0;
                            foreach ($result as $i) {
 
-                               $qry = "SELECT COUNT(mesCargo)FROM tbl_cargos WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
+                               $qry = "SELECT COUNT(mesCargo)FROM tbl_cargos WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio AND anulada=0";
 
                                $stmt = $this->dbConnect->prepare($qry);
                                $stmt->execute(
@@ -409,7 +409,7 @@
                        else {
                            $vuelta = 0;
                            foreach ($result as $i) {
-                               $qry = "SELECT COUNT(mesCargo)FROM tbl_cargos WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
+                               $qry = "SELECT COUNT(mesCargo)FROM tbl_cargos WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio AND anulada=0";
 
                                $stmt = $this->dbConnect->prepare($qry);
                                $stmt->execute(
@@ -554,7 +554,7 @@
                        else {
                            $vuelta = 0;
                            foreach ($result as $i) {
-                               $qry = "SELECT COUNT(mesCargo)FROM tbl_cargos WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio";
+                               $qry = "SELECT COUNT(mesCargo)FROM tbl_cargos WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio AND anulada=0";
 
                                $stmt = $this->dbConnect->prepare($qry);
                                $stmt->execute(

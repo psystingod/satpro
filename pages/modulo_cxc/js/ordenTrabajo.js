@@ -19,7 +19,7 @@ function ordenInternet(){
             inputsCable[i].disabled = true;
         }
     }
-
+    document.getElementById("tipoActividadInter").required=true;
 }
 
 //ENABLE OR DISABLE INTERNET INPUTS FOR CABLE ORDERS
@@ -43,7 +43,7 @@ function ordenCable(){
             inputsInternet[i].disabled = true;
         }
     }
-
+    document.getElementById("tipoActividadCable").required=true;
 }
 
 // CHANGE FORM COMPORT
