@@ -802,11 +802,11 @@
                                     <option value="3">Ambas</option>
                                 </select>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <br>
-                                <label for="filtro">Filtrar por fecha de cobro</label>
+                                <label for="filtro">Fecha de cobro</label>
                                 <input type="radio" type="text" id="filtroFechaCob" name="filtro" value="1">
-                                <label for="filtro">Filtrar por fecha de comprobante</label>
+                                <label for="filtro">Fecha de comprobante</label>
                                 <input type="radio" type="text" id="filtroFechaComp" name="filtro" value="2" checked>
                             </div>
                             <div class="col-md-3">
@@ -816,9 +816,14 @@
                                 <label for="soloExentas">Solo facturas exentas</label>
                                 <input type="checkbox" type="text" id="soloExentas" name="soloExentas" value="T">
                             </div>
-                            <div class="col-md-2">
-                                <label for="aDetalle">Lista detallada</label>
-                                <input class="form-control" type="checkbox" type="text" id="aDetalle" name="aDetalle">
+                            <div class="col-md-3">
+                                <br>
+                                <label for="ordenar">Ordenar por código</label>
+                                <input type="radio" type="text" id="ordenarCodigo" name="ordenar" value="1">
+                                <label for="ordenar">Ordenar por colonia</label>
+                                <input type="radio" type="text" id="ordenarColonia" name="ordenar" value="2">
+                                <label for="ordenar">Ordenar por factura</label>
+                                <input type="radio" type="text" id="ordenarFactura" name="ordenar" value="3" checked>
                             </div>
                         </div>
                         <div class="row">

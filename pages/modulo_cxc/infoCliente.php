@@ -371,7 +371,7 @@ session_start();
  $data2 = new OrdersInfo();
  $arrDepartamentos = $data->getData('tbl_departamentos_cxc');
  $arrMunicipios = $data->getData('tbl_municipios_cxc');
- $arrColonias = $data->getData('tbl_colonias_cxc');
+ $arrColonias = $data->getDataCols('tbl_colonias_cxc');
  $arrFormaFacturar = $data->getData('tbl_forma_pago');
  $arrCobradores = $data->getData('tbl_cobradores');
  $arrComprobantes = $data->getData('tbl_tipo_comprobante');

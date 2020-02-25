@@ -2,11 +2,13 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9b434152-df7c-48b6-9360-8012b48f8529" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/facturasEmitidas.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/sqldialects.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/Prueba.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/Prueba.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/cxc.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/cxc.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/infoCliente.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/infoCliente.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/GetAllInfo.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/GetAllInfo.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/facturasEmitidas.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/facturasEmitidas.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -61,6 +63,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$/../../php/dev" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
@@ -90,7 +93,7 @@
       <workItem from="1582395469276" duration="336000" />
       <workItem from="1582555741414" duration="22765000" />
       <workItem from="1582642114043" duration="88000" />
-      <workItem from="1582642213641" duration="1364000" />
+      <workItem from="1582642213641" duration="17289000" />
     </task>
     <servers />
   </component>
@@ -114,6 +117,14 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="406" y="0" key="#PHP/0.0.1366.728@0.0.1366.728" timestamp="1582555940614" />
+    <state x="175" y="0" key="#SQL_Dialects" timestamp="1582653833797">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="175" y="0" key="#SQL_Dialects/0.0.1366.728@0.0.1366.728" timestamp="1582653833797" />
+    <state x="275" y="14" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1582653858151">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="275" y="14" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1582653858151" />
     <state x="320" y="0" width="744" height="728" key="#php" timestamp="1582556071737">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
