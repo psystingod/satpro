@@ -187,6 +187,8 @@
                                 </li>
                                 <li><a href="imprimirFacturas.php" data-toggle="modal" data-target="#imprimirFacturas" accesskey="i">Imprimir facturas (Alt+I)</a>
                                 </li>
+                                <li><a href="#" data-toggle="modal" data-target="#facturasEmitidas">Facturas emitidas (a detalle)</a>
+                                </li>
                             </ul>';
                         }elseif ($_SESSION["rol"] == 'informatica' || $_SESSION["rol"] == 'atencion al cliente' || $_SESSION["rol"] == 'jefatura') {
                             echo
@@ -741,6 +743,110 @@
             </div>
         </div><!-- Fin Modal IMPRIMIR FACTURAS -->
 
+    <!-- Modal VENTAS X COMPROBANTE -->
+    <div id="facturasEmitidas" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div style="background-color: #1565C0; color:white;" class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Lista de facturas emitidas</h4>
+                </div>
+                <form id="frmFacturasEmitidas" action="php/facturasEmitidas.php" method="POST">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="lCobrador">Cobrador</label>
+                                <select class="form-control" type="text" id="lCobrador" name="lCobrador" required>
+                                    <option value="">Seleccione cobrador</option>
+                                    <option value="todos" selected>Todos los cobradores</option>
+                                    <?php
+                                    require_once 'php/GetAllInfo.php';
+                                    $data = new GetAllInfo();
+                                    $arrCobradores = $data->getData('tbl_cobradores');
+                                    foreach ($arrCobradores as $key) {
+                                        echo '<option value="'.$key['codigoCobrador'].'">'.$key['nombreCobrador'].'</option>';
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="lColonia">Brarrio/Colonia</label>
+                                <select class="form-control" type="text" id="lColonia" name="lColonia" required>
+                                    <option value="todas" selected>Todas las zonas</option>
+                                    <?php
+                                    $arrColonias = $data->getData('tbl_colonias_cxc');
+                                    foreach ($arrColonias as $key) {
+                                        echo '<option value="'.$key['idColonia'].'">'.$key['nombreColonia'].'</option>';
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="lServicio">Tipo de servicio</label>
+                                <select class="form-control" type="text" id="lServicio" name="lServicio" required>
+                                    <option value="">Seleccione tipo de servicio</option>
+                                    <option value="C" selected>Cable</option>
+                                    <option value="I">Internet</option>
+                                    <option value="A">Ambos</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="lTipoLista">Tipo de Factura</label>
+                                <select class="form-control" type="text" id="lTipoLista" name="lTipoLista" required>
+                                    <option value="2" selected>Consumidor final</option>
+                                    <option value="1">Crédito fiscal</option>
+                                    <option value="3">Ambas</option>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <br>
+                                <label for="filtro">Filtrar por fecha de cobro</label>
+                                <input type="radio" type="text" id="filtroFechaCob" name="filtro" value="1">
+                                <label for="filtro">Filtrar por fecha de comprobante</label>
+                                <input type="radio" type="text" id="filtroFechaComp" name="filtro" value="2" checked>
+                            </div>
+                            <div class="col-md-3">
+                                <br>
+                                <label for="soloAnuladas">Solo facturas anuladas</label>
+                                <input type="checkbox" type="text" id="soloAnuladas" name="soloAnuladas" value="1">
+                                <label for="soloExentas">Solo facturas exentas</label>
+                                <input type="checkbox" type="text" id="soloExentas" name="soloExentas" value="T">
+                            </div>
+                            <div class="col-md-2">
+                                <label for="aDetalle">Lista detallada</label>
+                                <input class="form-control" type="checkbox" type="text" id="aDetalle" name="aDetalle">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="lDesde">Desde fecha</label>
+                                <input class="form-control" type="text" id="lDesde" name="lDesde" placeholder="Fecha en que se generaron las facturas" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))" value="<?php echo date('Y-m-d'); ?>" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lHasta">Hasta fecha</label>
+                                <input class="form-control" type="text" id="lHasta" name="lHasta" placeholder="Fecha en que se generaron las facturas" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))" value="<?php echo date('Y-m-d'); ?>" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="submit" class="btn btn-success btn-md btn-block" name="submit" value="Ver abonos">
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div><!-- Fin Modal VENTAS X COMPROBANTE -->
+
         <!-- Modal abonos Aplicados -->
         <div id="abonosAplicados" class="modal fade" role="dialog">
           <div class="modal-dialog modal-lg">
@@ -824,7 +930,7 @@
           <div class="modal-content">
             <div style="background-color: #1B5E20; color:white;" class="modal-header">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Lista de clientes de 1 factura generada</h4>
+              <h4 class="modal-title">Lista de clientes de 1 factura vencida</h4>
             </div>
             <form id="frmListaSuspendidos1" action="php/listaDeClientesConFacturasVencidas.php" method="POST">
             <div class="modal-body">
@@ -878,7 +984,7 @@
           <div class="modal-content">
             <div style="background-color: #1565C0; color:white;" class="modal-header">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">Lista de clientes a suspender</h4>
+              <h4 class="modal-title">Lista de clientes 2 facturas vencidas</h4>
             </div>
             <form id="frmListaSuspendidos" action="php/listaSuspensiones.php" method="POST">
             <div class="modal-body">
@@ -1191,7 +1297,7 @@
     <div class="modal-content">
       <div style="background-color: #1B5E20; color:white;" class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Lista de clientes de 1 factura generada</h4>
+        <h4 class="modal-title">Lista de clientes de 2 facturas generadas</h4>
       </div>
       <form id="frmListaGeneradas1" action="php/lista_dos_meses_facturas_no_vencidos.php" method="POST">
       <div class="modal-body">
@@ -1218,7 +1324,7 @@
                     <option value="C" selected>Cable</option>
                     <option value="I">Internet</option>
                     <option value="P">Paquete</option>
-                    <!--<option value="A">Todos</option>-->
+                    <option value="A">Todos</option>
                 </select>
             </div>
         </div>
@@ -1284,7 +1390,7 @@
                       <option value="">Seleccione tipo de servicio</option>
                       <option value="C" selected>Cable</option>
                       <option value="I">Internet</option>
-                      <option value="A">Ambos</option>
+                      <option value="A">Paquete</option>
                   </select>
               </div>
               <div class="col-md-2">
@@ -1317,9 +1423,9 @@
         </div>
       </div>
     </div>
-</div><!-- Fin Modal LISTA DE TOTAL CLIENTES ADMINISTRACION-->
+</div><!-- Fin Modal LISTA DE TOTAL CLIENTES-->
 
-  <!-- Modal LISTA TOTAL CLEINTES-->
+  <!-- Modal LISTA TOTAL CLEINTES PARA ADMIN-->
   <div id="totalClientesAdmin" class="modal fade" role="dialog">
       <div class="modal-dialog modal-lg">
 
