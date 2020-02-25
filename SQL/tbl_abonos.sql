@@ -4,13 +4,13 @@ DROP TABLE IF EXISTS tbl_cargos;
 CREATE TABLE tbl_cargos (
   idFactura INT(11) NOT NULL AUTO_INCREMENT,
   nombre VARCHAR(70) DEFAULT NULL,
-  direccion VARCHAR(100) DEFAULT NULL,
+  direccion VARCHAR(200) DEFAULT NULL,
   idMunicipio VARCHAR(40) DEFAULT NULL,
   idColonia VARCHAR(20) DEFAULT NULL,
   /*prefijo VARCHAR(20) DEFAULT NULL,*/
-  numeroFactura VARCHAR(30) DEFAULT NULL,
+  numeroFactura VARCHAR(50) DEFAULT NULL,
   tipoFactura TINYINT(1) DEFAULT NULL,
-  numeroRecibo VARCHAR(30) DEFAULT NULL,
+  numeroRecibo VARCHAR(50) DEFAULT NULL,
   codigoCliente VARCHAR(6) NOT NULL,
   codigoCobrador VARCHAR(6) NOT NULL,
   cuotaCable DOUBLE DEFAULT NULL,
@@ -47,13 +47,13 @@ DROP TABLE IF EXISTS tbl_abonos;
 CREATE TABLE tbl_abonos (
   idAbono INT(11) NOT NULL AUTO_INCREMENT,
   nombre VARCHAR(70) DEFAULT NULL,
-  direccion VARCHAR(100) DEFAULT NULL,
+  direccion VARCHAR(200) DEFAULT NULL,
   idMunicipio VARCHAR(40) DEFAULT NULL,
   idColonia VARCHAR(20) DEFAULT NULL,
   /*prefijo VARCHAR(20) NOT NULL,*/
-  numeroFactura VARCHAR(30) DEFAULT NULL,
+  numeroFactura VARCHAR(50) DEFAULT NULL,
   tipoFactura TINYINT(1) NOT NULL,
-  numeroRecibo VARCHAR(30) DEFAULT NULL,
+  numeroRecibo VARCHAR(50) DEFAULT NULL,
   codigoCliente VARCHAR(6) NOT NULL,
   codigoCobrador VARCHAR(6) NOT NULL,
   cobradoPor VARCHAR(6) NOT NULL,
