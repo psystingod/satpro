@@ -131,7 +131,8 @@
                                        $implus = substr((($i['valor_cuota']/(1 + floatval($iva)))*$cesc),0,4);
                                        //IVA
                                        $separado = (floatval($i['valor_cuota'])/(1 + floatval($iva)));
-                                       $totalIva = substr(floatval($separado) * floatval($iva),0,4);
+                                       $totalIva = (floatval($separado) * floatval($iva));
+                                       $totalIva = number_format($totalIva,2);
                                        //$this->dbConnect->beginTransaction(); $this->dbConnect->exec('LOCK TABLES tbl_cargos, tbl_abonos, clientes, tbl_facturas_config WRITE');
                                        $this->dbConnect->beginTransaction();
                                        $qry = "INSERT INTO tbl_cargos(nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroFactura, /*prefijo,*/ numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, anticipo, tipoServicio, estado, cargoImpuesto, totalImpuesto, cargoIva, totalIva, exento)VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroFactura, /*:prefijo,*/ :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :anticipo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva, :exento)";
@@ -280,7 +281,8 @@
                                        $implus = substr((($i['valor_cuota']/(1 + floatval($iva)))*$cesc),0,4);
                                        //IVA
                                        $separado = (floatval($i['valor_cuota'])/(1 + floatval($iva)));
-                                       $totalIva = substr(floatval($separado) * floatval($iva),0,4);
+                                       $totalIva = (floatval($separado) * floatval($iva));
+                                       $totalIva = number_format($totalIva,2);
 
                                        $this->dbConnect->beginTransaction();
                                        $qry = "INSERT INTO tbl_cargos(nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroFactura, /*prefijo,*/ numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, anticipo, tipoServicio, estado, cargoImpuesto, totalImpuesto, cargoIva, totalIva, exento)VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroFactura, /*:prefijo,*/ :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :anticipo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva, :exento)";
@@ -428,7 +430,8 @@
                                        $implus = substr((($i['cuota_in']/(1 + floatval($iva)))*$cesc),0,4);
                                        //IVA
                                        $separado = (floatval($i['cuota_in'])/(1 + floatval($iva)));
-                                       $totalIva = substr(floatval($separado) * floatval($iva),0,4);
+                                       $totalIva = (floatval($separado) * floatval($iva));
+                                       $totalIva = number_format($totalIva,2);
                                        $this->dbConnect->beginTransaction();
                                        $qry = "INSERT INTO tbl_cargos(nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroFactura, /*prefijo,*/ numeroRecibo, codigoCliente, codigoCobrador, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, anticipo, tipoServicio, estado, cargoImpuesto, totalImpuesto, cargoIva, totalIva, exento)VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroFactura, /*:prefijo,*/ :numeroRecibo, :codigoCliente, :codigoCobrador,
                                               :cuotaInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :anticipo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva, :exento)";
@@ -573,7 +576,8 @@
                                        $implus = substr((($i['cuota_in']/(1 + floatval($iva)))*$cesc),0,4);
                                        //IVA
                                        $separado = (floatval($i['cuota_in'])/(1 + floatval($iva)));
-                                       $totalIva = substr(floatval($separado) * floatval($iva),0,4);
+                                       $totalIva = (floatval($separado) * floatval($iva));
+                                       $totalIva = number_format($totalIva,2);
 
                                        $this->dbConnect->beginTransaction();
                                        $qry = "INSERT INTO tbl_cargos(nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroFactura, /*prefijo,*/ numeroRecibo, codigoCliente, codigoCobrador, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, anticipo, tipoServicio, estado, cargoImpuesto, totalImpuesto, cargoIva, totalIva, exento)VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroFactura, /*:prefijo,*/ :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaInternet,

@@ -27,16 +27,6 @@
                         $fechaOrden = "";
                     }
 
-                    /*if (!empty($_POST["ultSuspCable"])) {
-                        $str1 = $_POST["ultSuspCable"];
-                        $date1 = DateTime::createFromFormat('d/m/Y', $str1);
-                        $ultSuspCable = $date1->format('Y-m-d');
-                    }
-                    else {
-                        $ultSuspCable = "";
-                    }*/
-
-                    //$numeroOrden = $_POST["numeroTraslado"];
                     $diaCobro = $_POST["diaCobro"];
                     $idMunicipio = $_POST["municipio"];
                     $idColonia = $_POST["colonia"];
@@ -104,8 +94,23 @@
                                 ));
                     sleep(0.5);
                     $numeroOrden = $this->dbConnect->lastInsertId();
-                    $this->dbConnect->commit();
-                    header('Location: ../ordenTraslado.php?nOrden='.$numeroOrden);
+                    if (isset($_POST["actualizarDireccion"])){
+                        if ($_POST["actualizarDireccion"] == '1'){
+                            $query = "UPDATE clientes SET direccion=:nuevaDireccion WHERE cod_cliente=:codigoCliente";
+
+                            $statement = $this->dbConnect->prepare($query);
+                            $statement->execute(array(
+                                ':nuevaDireccion' => $direccionTraslado,
+                                ':codigoCliente' => $codigoCliente
+                            ));
+                            $this->dbConnect->commit();
+                            header('Location: ../ordenTraslado.php?nOrden='.$numeroOrden);
+                        }
+                    }else{
+                        $this->dbConnect->commit();
+                        header('Location: ../ordenTraslado.php?nOrden='.$numeroOrden);
+                    }
+
 
                 }
                 catch (Exception $e)
@@ -128,16 +133,6 @@
                         $fechaOrden = "";
                     }
 
-                    /*if (!empty($_POST["ultSuspCable"])) {
-                        $str1 = $_POST["ultSuspCable"];
-                        $date1 = DateTime::createFromFormat('d/m/Y', $str1);
-                        $ultSuspCable = $date1->format('Y-m-d');
-                    }
-                    else {
-                        $ultSuspCable = "";
-                    }*/
-
-                    //$numeroOrden = $_POST["numeroTraslado"];
                     $diaCobro = $_POST["diaCobro"];
                     $codigoCliente = $_POST["codigoCliente"];
                     $tipoOrden = "Traslado";
@@ -213,10 +208,22 @@
 
                     sleep(0.5);
                     $numeroOrden = $this->dbConnect->lastInsertId();
-                    $this->dbConnect->commit();
+                    if (isset($_POST["actualizarDireccion"])){
+                        if ($_POST["actualizarDireccion"] == '1'){
+                            $query = "UPDATE clientes SET direccion=:nuevaDireccion WHERE cod_cliente=:codigoCliente";
 
-                    header('Location: ../ordenTraslado.php?nOrden='.$numeroOrden);
-
+                            $statement = $this->dbConnect->prepare($query);
+                            $statement->execute(array(
+                                ':nuevaDireccion' => $direccionTraslado,
+                                ':codigoCliente' => $codigoCliente
+                            ));
+                            $this->dbConnect->commit();
+                            header('Location: ../ordenTraslado.php?nOrden='.$numeroOrden);
+                        }
+                    }else{
+                        $this->dbConnect->commit();
+                        header('Location: ../ordenTraslado.php?nOrden='.$numeroOrden);
+                    }
                 }
                 catch (Exception $e)
                 {

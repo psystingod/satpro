@@ -43,6 +43,20 @@ class GetAllInfo extends ConectionDB
         }
     }
 
+    public function getDataAct($tabla1,$tabla2){
+        try {
+            $query = "SELECT idActividadCable AS idActividadC, CONCAT(nombreActividad, ' (CABLE)') AS actividadC FROM $tabla1 UNION SELECT idActividadInter AS idActividadI, CONCAT(nombreActividad, ' (INTERNET)') AS actividadI FROM $tabla2";
+            $statement = $this->dbConnect->prepare($query);
+            $statement->execute();
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+
+        } catch (Exception $e) {
+            print "!Error¡: " . $e->getMessage() . "</br>";
+            die();
+        }
+    }
+
     public function getDataGestion($tabla, $idGestion){
         try {
                 $query = "SELECT * FROM $tabla WHERE idGestionGeneral=:idGestionGeneral";

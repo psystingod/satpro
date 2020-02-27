@@ -39,7 +39,7 @@
 	  //echo strftime("El año es %Y y el mes es %B");
       putenv("LANG='es_ES.UTF-8'");
       setlocale(LC_ALL, 'es_ES.UTF-8');
-      $pdf->Ln(14);
+      $pdf->Ln(16);
 	  while($row = $resultado->fetch_assoc())
 	  {
 

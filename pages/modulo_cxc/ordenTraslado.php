@@ -430,6 +430,10 @@
                                       <label for="direccionTraslado">Dirección de traslado</label>
                                       <textarea class="form-control input-sm" name="direccionTraslado" rows="2" cols="40" readonly required><?php echo $direccionTraslado; ?></textarea>
                                   </div>
+                                  <div class="col-md-12">
+                                      <label style="font-weight: normal; text-decoration-line: underline; text-decoration-style: solid;" for="actualizarDireccion">Actualizar dirección en ficha</label>
+                                      <input type="checkbox" id="actualizarDireccion" name="actualizarDireccion" value="1">
+                                  </div>
                               </div>
                               <div class="form-row">
                                   <div class="col-md-4">

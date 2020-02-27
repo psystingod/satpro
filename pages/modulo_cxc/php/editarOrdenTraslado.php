@@ -67,7 +67,7 @@
                     $responsable = $_POST["responsable"];
                     $creadoPor = $_POST['creadoPor'];
 
-                    //$Fecha = date('Y/m/d g:i');
+                    $this->dbConnect->beginTransaction();
                     $query = "UPDATE tbl_ordenes_traslado SET codigoCliente=:codigoCliente, fechaOrden=:fechaOrden, tipoOrden=:tipoOrden, saldoCable=:saldoCable, diaCobro=:diaCobro, nombreCliente=:nombreCliente, direccion=:direccion, direccionTraslado=:direccionTraslado, idDepartamento=:idDepartamento, idMunicipio=:idMunicipio, idColonia=:idColonia, telefonos=:telefonos,
                                      colilla=:colilla, fechaTraslado=:fechaTraslado, idTecnico=:idTecnico, mactv=:mactv, observaciones=:observaciones, tipoServicio=:tipoServicio, creadoPor=:creadoPor WHERE idOrdenTraslado=:idOrdenTraslado";
 
@@ -102,7 +102,22 @@
                                 ':idOrdenTraslado' => $numeroOrden,
                                 ));
 
-                    header('Location: ../ordenTraslado.php?nOrden='.$numeroOrden);
+                    if (isset($_POST["actualizarDireccion"])){
+                        if ($_POST["actualizarDireccion"] == '1'){
+                            $query = "UPDATE clientes SET direccion=:nuevaDireccion WHERE cod_cliente=:codigoCliente";
+
+                            $statement = $this->dbConnect->prepare($query);
+                            $statement->execute(array(
+                                ':nuevaDireccion' => $direccionTraslado,
+                                ':codigoCliente' => $codigoCliente
+                            ));
+                            $this->dbConnect->commit();
+                            header('Location: ../ordenTraslado.php?nOrden='.$numeroOrden);
+                        }
+                    }else{
+                        $this->dbConnect->commit();
+                        header('Location: ../ordenTraslado.php?nOrden='.$numeroOrden);
+                    }
 
                 }
                 catch (Exception $e)
@@ -162,7 +177,7 @@
                     $responsable = $_POST["responsable"];
                     $creadoPor = $_POST['creadoPor'];
 
-                    //$Fecha = date('Y/m/d g:i');
+                    $this->dbConnect->beginTransaction();
                     $query = "UPDATE tbl_ordenes_traslado SET codigoCliente=:codigoCliente, fechaOrden=:fechaOrden, tipoOrden=:tipoOrden, saldoInter=:saldoInter, diaCobro=:diaCobro, nombreCliente=:nombreCliente, direccion=:direccion, direccionTraslado=:direccionTraslado, idDepartamento=:idDepartamento, idMunicipio=:idMunicipio, idColonia=:idColonia, telefonos=:telefonos,
                                      macModem=:macModem,serieModem=:serieModem,colilla=:colilla, fechaTraslado=:fechaTraslado, idTecnico=:idTecnico, mactv=:mactv, observaciones=:observaciones, tipoServicio=:tipoServicio, creadoPor=:creadoPor WHERE idOrdenTraslado=:idOrdenTraslado";
 
@@ -200,7 +215,22 @@
                                 ':idOrdenTraslado' => $numeroOrden,
                                 ));
 
-                    header('Location: ../ordenTraslado.php?nOrden='.$numeroOrden);
+                    if (isset($_POST["actualizarDireccion"])){
+                        if ($_POST["actualizarDireccion"] == '1'){
+                            $query = "UPDATE clientes SET direccion=:nuevaDireccion WHERE cod_cliente=:codigoCliente";
+
+                            $statement = $this->dbConnect->prepare($query);
+                            $statement->execute(array(
+                                ':nuevaDireccion' => $direccionTraslado,
+                                ':codigoCliente' => $codigoCliente
+                            ));
+                            $this->dbConnect->commit();
+                            header('Location: ../ordenTraslado.php?nOrden='.$numeroOrden);
+                        }
+                    }else{
+                        $this->dbConnect->commit();
+                        header('Location: ../ordenTraslado.php?nOrden='.$numeroOrden);
+                    }
 
                 }
                 catch (Exception $e)

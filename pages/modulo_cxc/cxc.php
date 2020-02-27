@@ -94,6 +94,8 @@
                             '<ul class="dropdown-menu dropdown-user">
                                 <li><a href="#" data-toggle="modal" data-target="#totalClientes">Listado de cobros</a>
                                 </li>
+                                <li><a href="#" data-toggle="modal" data-target="#reporteOrdenesTrabajo">Reporte de ordenes</a>
+                                </li>
                                 <li><a href="cobradores.php">Cobradores</a>
                                 </li>
                                 <li><a href="vendedores.php">Vendedores</a>
@@ -111,6 +113,8 @@
                                 <li><a href="#" data-toggle="modal" data-target="#totalClientesAdmin">Clientes totales</a>
                                 </li>
                                 <li><a href="#" data-toggle="modal" data-target="#totalClientes">Listado de cobros</a>
+                                </li>
+                                <li><a href="#" data-toggle="modal" data-target="#reporteOrdenesTrabajo">Reporte de ordenes</a>
                                 </li>
                                 <li><a href="cobradores.php">Cobradores</a>
                                 </li>
@@ -783,7 +787,7 @@
                                     ?>
                                 </select>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-2">
                                 <label for="lServicio">Tipo de servicio</label>
                                 <select class="form-control" type="text" id="lServicio" name="lServicio" required>
                                     <option value="">Seleccione tipo de servicio</option>
@@ -791,6 +795,10 @@
                                     <option value="I">Internet</option>
                                     <option value="A">Ambos</option>
                                 </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="diaCobro">Día cobro</label>
+                                <input class="form-control" type="number" name="diaCobro" value="1" required>
                             </div>
                         </div>
                         <div class="row">
@@ -811,6 +819,8 @@
                             </div>
                             <div class="col-md-3">
                                 <br>
+                                <label for="todosDias">Todos los días de cobro</label>
+                                <input type="checkbox" type="text" id="todosDias" name="todosDias" value="1">
                                 <label for="soloAnuladas">Solo facturas anuladas</label>
                                 <input type="checkbox" type="text" id="soloAnuladas" name="soloAnuladas" value="1">
                                 <label for="soloExentas">Solo facturas exentas</label>
@@ -840,7 +850,7 @@
                     <div class="modal-footer">
                         <div class="row">
                             <div class="col-md-6">
-                                <input type="submit" class="btn btn-success btn-md btn-block" name="submit" value="Ver abonos">
+                                <input type="submit" class="btn btn-success btn-md btn-block" name="submit" value="Ver reporte">
                             </div>
                             <div class="col-md-6">
                                 <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>
@@ -851,6 +861,121 @@
         </div>
     </div>
     </div><!-- Fin Modal VENTAS X COMPROBANTE -->
+
+    <!-- Modal REPORTEORDENES DE TRBAJO -->
+    <div id="reporteOrdenesTrabajo" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div style="background-color: #1565C0; color:white;" class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Reporte de ordenes de trabajo</h4>
+                </div>
+                <form id="frmReporteOrdenes" action="php/reporteOrdenesTrabajo.php" method="POST">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="lCobrador">Cobrador</label>
+                                <select class="form-control" type="text" id="lCobrador" name="lCobrador" required>
+                                    <option value="">Seleccione un técnico</option>
+                                    <option value="todos" selected>Todos los técnicos</option>
+                                    <?php
+                                    require_once 'php/GetAllInfo.php';
+                                    $data = new GetAllInfo();
+                                    $arrTecnicos = $data->getData('tbl_tecnicos_cxc');
+                                    foreach ($arrTecnicos as $key) {
+                                        echo '<option value="'.$key['idTecnico'].'">'.$key['nombreTecnico'].'</option>';
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="lColonia">Brarrio/Colonia</label>
+                                <select class="form-control" type="text" id="lColonia" name="lColonia" required>
+                                    <option value="todas" selected>Todas las zonas</option>
+                                    <?php
+                                    $arrColonias = $data->getData('tbl_colonias_cxc');
+                                    foreach ($arrColonias as $key) {
+                                        echo '<option value="'.$key['idColonia'].'">'.$key['nombreColonia'].'</option>';
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="lServicio">Tipo de servicio</label>
+                                <select class="form-control" type="text" id="lServicio" name="lServicio" required>
+                                    <option value="">Seleccione tipo de servicio</option>
+                                    <option value="C" selected>Cable</option>
+                                    <option value="I">Internet</option>
+                                    <option value="A">Ambos</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="lColonia">Tipo de actividad</label>
+                                <select class="form-control" type="text" id="lColonia" name="lColonia" required>
+                                    <option value="todas" selected>Todas las actividades</option>
+                                    <?php
+                                    $arrActividades = $data->getDataAct('tbl_actividades_cable','tbl_actividades_inter');
+
+                                    foreach ($arrActividades as $key) {
+                                        echo '<option value="'.$key['idActividadC'].'">'.$key['actividadC'].'</option>';
+                                        //echo '<option value="'.$key['idActividadI'].'">'.$key['actividadI'].'</option>';
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <br>
+                                <label for="filtro">Fecha de elaborada</label>
+                                <input type="radio" type="text" id="filtroFechaEl" name="filtro" value="1">
+                                <label for="filtro">Fecha de concluída</label>
+                                <input type="radio" type="text" id="filtroFechaTer" name="filtro" value="2" checked>
+                            </div>
+                            <!--<div class="col-md-4">
+                                <br>
+                                <label for="ordenar">Ordenar por código</label>
+                                <input type="radio" type="text" id="ordenarCodigo" name="ordenar" value="1">
+                                <label for="ordenar">Ordenar por colonia</label>
+                                <input type="radio" type="text" id="ordenarColonia" name="ordenar" value="2">
+                                <label for="ordenar">Ordenar por factura</label>
+                                <input type="radio" type="text" id="ordenarFactura" name="ordenar" value="3" checked>
+                            </div>-->
+                            <div class="col-md-3">
+                                <br>
+                                <label for="ordenar">Reporte detallado</label>
+                                <input type="radio" type="text" id="detallado" name="tipoReporte" value="1">
+                                <label for="ordenar">Reporte general</label>
+                                <input type="radio" type="text" id="general" name="ordenar" value="2" checked>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="lDesde">Desde fecha</label>
+                                <input class="form-control" type="text" id="lDesde" name="lDesde" placeholder="Fecha en que se generaron las facturas" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))" value="<?php echo date('Y-m-d'); ?>" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="lHasta">Hasta fecha</label>
+                                <input class="form-control" type="text" id="lHasta" name="lHasta" placeholder="Fecha en que se generaron las facturas" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))" value="<?php echo date('Y-m-d'); ?>" required>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="submit" class="btn btn-success btn-md btn-block" name="submit" value="Ver reporte">
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div><!-- Fin Modal REPORTEORDENES DE TRBAJO -->
 
         <!-- Modal abonos Aplicados -->
         <div id="abonosAplicados" class="modal fade" role="dialog">

@@ -67,7 +67,7 @@
 	  while($row = $resultado->fetch_assoc())
 	  {
           if ($row['tipo_comprobante'] == 2) {
-              $pdf->Image('../../../images/check.png',33,20, 5, 5);
+              $pdf->Image('../../../images/check.png',31,21, 5, 5);
           }
 
           if ($row['tecnologia'] == 1) {
@@ -82,10 +82,10 @@
 
     	  $pdf->SetFont('Courier','',10);
 
-		  $pdf->Ln(-2);
+		  $pdf->Ln(-4);
           $pdf->Cell(130,6,'',0,0,'L');
     	  $pdf->Cell(80,6,$row['cod_cliente'],0,1,'L');
-    	  $pdf->Ln(-2);
+    	  $pdf->Ln(0);
 
     	  date_default_timezone_set('America/El_Salvador');
 
@@ -94,18 +94,18 @@
 	      setlocale(LC_ALL, 'es_ES.UTF-8');
     	  $pdf->SetFont('Courier','',10);
     	  $pdf->Cell(25,6,'',0,0,'L');
-          $pdf->Cell(70,6,strtoupper($row['nombre']),0,1,'L');
+          $pdf->Cell(70,6,strtoupper(utf8_decode($row['nombre'])),0,1,'L');
           $pdf->Cell(23,6,'',0,0,'L');
           $pdf->Cell(150,6,'',0,0,'L');
           $pdf->Cell(40,6,strtoupper($row['num_registro']),0,1,'L');
 
           $pdf->Cell(80,6,'',0,0,'L');
-          $pdf->Cell(78,6,$row['numero_dui'],0,0,'L');
+          $pdf->Cell(74,6,$row['numero_dui'],0,0,'L');
           $pdf->Cell(70,6,$row['lugar_exp'],0,1,'L');
           $pdf->Cell(12,6,'',0,0,'L');
-          $pdf->Cell(63,6,$row['numero_nit'],0,0,'L');
-          $pdf->Cell(84,6,$row['telefonos'],0,0,'L');
-          $pdf->Cell(40,6,$row['nacionalidad'],0,1,'L');
+          $pdf->Cell(63,3,$row['numero_nit'],0,0,'L');
+          $pdf->Cell(84,3,$row['telefonos'],0,0,'L');
+          $pdf->Cell(40,6,utf8_decode($row['nacionalidad']),0,1,'L');
           //$pdf->Cell(75,6,utf8_decode($row['lugar_exp']),0,0,'L');
           //$pdf->Cell(30,6,utf8_decode($row['fecha_nacimiento']),0,1,'R');
 
@@ -123,24 +123,30 @@
           $pdf->Cell(94,6,'',0,0,'L');
           $pdf->Cell(70,6,strtoupper($row['nombre_conyuge']),0,1,'L');
           $pdf->Ln(15);
-          $pdf->Cell(30,6,'',0,0,'L');
-          $pdf->MultiCell(150,6,strtoupper($row['direccion']),0,'L',0);
-          $pdf->Ln(1);
-          $pdf->Cell(30,6,'',0,0,'L');
-          $pdf->MultiCell(150,6,strtoupper($row['direccion']),0,'L',0);
+          $pdf->SetFont('Courier','',7);
 
+          $pdf->Cell(30,6,'',0,0,'L');
+          $pdf->MultiCell(150,6,strtoupper(utf8_decode($row['direccion'])),0,'L',0);
 
-          $pdf->Ln(6);
-          $pdf->Image('../../../images/check.png',58,96, 5, 5);
+          $pdf->Cell(30,6,'',0,0,'L');
+          $pdf->MultiCell(150,6,strtoupper(utf8_decode($row['direccion'])),0,'L',0);
+          $pdf->SetFont('Courier','',10);
+          if (strlen($row['direccion']) <=100){
+              $pdf->Ln(19);
+          }else{
+              $pdf->Ln(7);
+          }
+
+          $pdf->Image('../../../images/check.png',56,96, 5, 5);
 
           if ($row['id_tipo_cliente'] == 0001 || $row['id_tipo_cliente'] == 0002) {
-              $pdf->Image('../../../images/check.png',58,101, 5, 5);
+              $pdf->Image('../../../images/check.png',56,101, 5, 5);
           }
           elseif ($row['id_tipo_cliente'] == 0003){
-              $pdf->Image('../../../images/check.png',155,101, 5, 5);
+              $pdf->Image('../../../images/check.png',153,101, 5, 5);
           }
 
-          $pdf->Ln(8);
+          $pdf->Ln(6.5);
           $pdf->Cell(22,6,'',0,0,'L');
           $pdf->Cell(70,6,strtoupper('INTERNET'),0,0,'L');
           $pdf->Cell(68,6,strtoupper(getVelocidadById($row['id_velocidad'])),0,0,'L');
@@ -160,7 +166,7 @@
   	    //var_dump($imp);
 
   	    $cantidad = (doubleval($row['cuota_in']) + doubleval($imp));
-        $pdf->Ln(3);
+        $pdf->Ln(1);
         $pdf->Cell(68,6,'',0,0,'L');
         $pdf->Cell(74,6,$row['periodo_contrato_int']." MESES",0,0,'L');
         $pdf->Cell(20,6,"$".$row['costo_instalacion_in'],0,1,'L');

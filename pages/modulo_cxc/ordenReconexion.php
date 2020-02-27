@@ -524,14 +524,16 @@
                               <div class="form-row">
                                   <div class="col-md-8">
                                       <label for="tecnico">Técnico</label>
-                                      <select class="form-control input-sm" name="responsable" disabled>
+                                      <select class="form-control input-sm" name="responsable" disabled required>
                                           <option value="" selected>Seleccionar</option>
                                           <?php
                                           foreach ($arrayTecnicos as $key) {
                                               if ($key['idTecnico'] == $idTecnico) {
                                                   echo "<option value=".$key['idTecnico']." selected>".strtoupper($key['nombreTecnico'])."</option>";
+                                              }else{
+                                                  echo "<option value=".$key['idTecnico'].">".strtoupper($key['nombreTecnico'])."</option>";
                                               }
-                                              echo "<option value=".$key['idTecnico'].">".strtoupper($key['nombreTecnico'])."</option>";
+
                                           }
                                           ?>
                                       </select>

@@ -21,6 +21,8 @@ function ordenInternet(){
             inputsCable[i].disabled = true;
         }
     }
+    document.getElementById("tipoReconexInter").required = true;
+    document.getElementById("velocidad").required = true;
 
 }
 
@@ -45,6 +47,7 @@ function ordenCable(){
             inputsInternet[i].disabled = true;
         }
     }
+    document.getElementById("tipoReconexCable").required = true;
 
 }
 
@@ -161,7 +164,7 @@ function changeAction(action){
 function imprimirOrden(){
     var nOrden = document.getElementById("numeroReconexion").value
     // Trigger the button element with a click
-    window.open("ordenReconexionImp.php?nOrden="+nOrden, '_blank');
+    window.open("php/ordenReconexionImp.php?nOrden="+nOrden, '_blank');
 }
 
 function guardarOrden(){
