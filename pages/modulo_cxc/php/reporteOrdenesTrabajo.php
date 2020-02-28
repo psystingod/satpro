@@ -35,6 +35,13 @@ $desde = $_POST['lDesde'];
 $hasta = $_POST['lHasta'];
 $codigoCobrador = $_POST['lCobrador'];
 $colonia = $_POST['lColonia'];
+
+if ($_POST['lActividad'] == "todas"){
+    $actividad = '%';
+}else{
+    $actividad = '%'.$_POST['lActividad'].'%';
+}
+
 $tipoServicio = $_POST['lServicio'];
 
 $tipoReporte = ["tipoReporte"];
@@ -109,7 +116,7 @@ $totalSoloCescInter = 0;
 
 function abonos()
 {
-    global $desde, $hasta, $codigoCobrador, $colonia, $tipoServicio, $iva, $cesc, $tipoReporte, $mysqli /*$statement1*/ ;
+    global $desde, $hasta, $codigoCobrador, $colonia, $tipoServicio, $iva, $cesc, $tipoReporte, $actividad, $mysqli /*$statement1*/ ;
     global $totalSoloIvaCable, $totalSoloIvaInter, $totalConIvaCable, $totalConIvaInter, $totalConCescInter, $totalSoloCescInter, $totalConCescCable, $totalSoloCescCable;
     global $totalSoloCable, $totalCable, $totalImpuestoC, $totalSoloInter, $totalInter, $totalImpuestoI, $anulada, $exenta, $fechaFiltro, $ordenarFiltro, $diaCobroFiltro, $tipoComprobante;
 
@@ -142,15 +149,9 @@ function abonos()
     $pdf->Cell(20, 5, utf8_decode('Fecha finalizada'), 1, 0, 'L');
     $pdf->Cell(22, 5, utf8_decode('Trabajo realizado'), 1, 0, 'L');
     $pdf->Cell(20, 5, utf8_decode('Tipo de servicio'), 1, 0, 'L');
-    $pdf->Cell(15, 5, utf8_decode('Hora'), 1, 0, 'L');
-    $pdf->Cell(55, 5, utf8_decode('Dirección'), 1, 1, 'L');
+    $pdf->Cell(10, 5, utf8_decode('Hora'), 1, 0, 'L');
+    $pdf->Cell(60, 5, utf8_decode('Dirección'), 1, 1, 'L');
     $pdf->Ln(3);
-
-    if($tipoReporte == '2'){
-
-    }elseif($tipoReporte == '1'){
-
-    }
 
     if ($codigoCobrador === "todos") {
         $contador = 1;
@@ -171,11 +172,11 @@ function abonos()
             if ($tipoServicio == "A") {
                 //SQL para todas las zonas de cobro
                 if ($_POST["lCobrador"] === "todos" && $_POST["lColonia"] === "todas") {
-                    $query = "SELECT * FROM tbl_ordenes_trabajo WHERE idTecnico= '" . $cobradorR . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' ORDER BY idOrdenTrabajo ASC";
+                    $query = "SELECT * FROM tbl_ordenes_trabajo WHERE actividadCable LIKE '" . $actividad . "' OR actividadInter LIKE '" . $actividad . "' AND  idTecnico= '" . $cobradorR . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' ORDER BY idOrdenTrabajo ASC";
                     //var_dump($query."<br>");
                     $resultado = $mysqli->query($query);
                 } elseif ($_POST["lCobrador"] === "todos" && $_POST["lColonia"] != "todas") {
-                    $query = "SELECT * FROM tbl_ordenes_trabajo WHERE idColonia= '" . $colonia . "' AND codigoCobrador= '" . $cobradorR . "' AND anulada= '" . $anulada . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' AND DAY(fechaFactura) LIKE '" . $diaCobroFiltro . "' ORDER BY $ordenarFiltro ASC";
+                    $query = "SELECT * FROM tbl_ordenes_trabajo WHERE idColonia= '" . $colonia . "' AND idTecnico= '" . $cobradorR . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' ORDER BY idOrdenTrabajo ASC";
                     $resultado = $mysqli->query($query);
                 }
             } elseif ($tipoServicio == "C") {
@@ -248,15 +249,31 @@ function abonos()
                 $pdf->SetFont('Arial', '', 6.7);
                 $pdf->Cell(10, 1, utf8_decode($contador), 0, 0, 'L');
                 //$pdf->Cell(15, 1, utf8_decode($row['idFactura']), 0, 0, 'L');
-                $pdf->Cell(30, 1, utf8_decode("1"), 0, 0, 'L');
-                $pdf->Cell(20, 1, utf8_decode("2"), 0, 0, 'L');
-                $pdf->Cell(70, 1, utf8_decode(strtoupper($row['codigoCliente'] . "  " . $row['nombreCliente'])), 0, 0, 'L');
-                $pdf->Cell(16, 1, utf8_decode("3"), 0, 0, 'L');
-                $pdf->Cell(10, 1, utf8_decode("4"), 0, 0, 'L');
-                $pdf->Cell(15, 1, utf8_decode("5"), 0, 0, 'L');
+                $pdf->Cell(20, 1, utf8_decode($row['idOrdenTrabajo']), 0, 0, 'L');
+                $pdf->Cell(65, 1, utf8_decode(strtoupper($row['codigoCliente'] . "  " . $row['nombreCliente'])), 0, 0, 'L');
+                $pdf->Cell(16, 1, utf8_decode($diaCobro), 0, 0, 'L');
+                $pdf->Cell(20, 1, utf8_decode($row['fechaOrdenTrabajo']), 0, 0, 'L');
+                if (strlen($row['fechaTrabajo'] < 5)){
+                    $pdf->Cell(20, 1, utf8_decode("No finalizada"), 0, 0, 'L');
+                }
+                else{
+                    $pdf->Cell(20, 1, utf8_decode($row['fechaTrabajo']), 0, 0, 'L');
+                }
+                if ($row["tipoServicio"] == "C"){
+                    $pdf->Cell(22, 1, utf8_decode($row["actividadCable"]), 0, 0, 'L');
+                }elseif ($row["tipoServicio"] == "I"){
+                    $pdf->Cell(22, 1, utf8_decode($row["actividadInter"]), 0, 0, 'L');
+                }
+
+                $pdf->Cell(20, 1, utf8_decode($row['tipoServicio']), 0, 0, 'L');
+                $pdf->Cell(10, 1, utf8_decode($row['hora']), 0, 0, 'L');
+                if ($row['tipoServicio'] == "C"){
+                    $pdf->MultiCell(60,3,utf8_decode($row['direccionCable']),0,'L');
+                }elseif($row['tipoServicio'] == "I"){
+                    $pdf->MultiCell(60,3,utf8_decode($row['direccionInter']),0,'L');
+                }
 
                 $contador++;
-
             }
             $pdf->Ln(2);
         }

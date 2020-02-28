@@ -914,14 +914,14 @@
                         </div>
                         <div class="row">
                             <div class="col-md-4">
-                                <label for="lColonia">Tipo de actividad</label>
-                                <select class="form-control" type="text" id="lColonia" name="lColonia" required>
+                                <label for="lActividad">Tipo de actividad</label>
+                                <select class="form-control" type="text" id="lActividad" name="lActividad" required>
                                     <option value="todas" selected>Todas las actividades</option>
                                     <?php
                                     $arrActividades = $data->getDataAct('tbl_actividades_cable','tbl_actividades_inter');
 
                                     foreach ($arrActividades as $key) {
-                                        echo '<option value="'.$key['idActividadC'].'">'.$key['actividadC'].'</option>';
+                                        echo '<option value="'.$key['actividadC'].'">'.$key['actividadC'].'</option>';
                                         //echo '<option value="'.$key['idActividadI'].'">'.$key['actividadI'].'</option>';
                                     }
                                     ?>
