@@ -378,7 +378,7 @@
                         </tr>
                         <tr>
                             <th width="200px">Contraseña</th>
-                            <?php echo "<td><input class='form-control' type='text' id='nombres' name='clave' value='".htmlspecialchars($clave, ENT_QUOTES)."'></td>";?>
+                            <?php echo "<td><input class='form-control' type='password' id='nombres' name='clave' value='".htmlspecialchars($clave, ENT_QUOTES)."'></td>";?>
                         </tr>
                         <tr>
                             <th width="200px">Rol que desempeña</th>
