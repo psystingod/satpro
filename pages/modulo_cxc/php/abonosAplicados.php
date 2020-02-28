@@ -71,24 +71,12 @@
           }
       }
 
-      //var_dump($query);
-	  /*// SQL query para traer datos del servicio de cable de la tabla clientes
-	  $query = "SELECT valorImpuesto FROM tbl_impuestos WHERE siglasImpuesto = 'CESC'";
-	  // Preparación de sentencia
-	  $statement = $mysqli->query($query);
-	  //$statement->execute();
-	  while ($result = $statement->fetch_assoc()) {
-		  $cesc = floatval($result['valorImpuesto']);
-	  }
+      $query3 = "SELECT SUM(montoCable + montoInternet + impuesto) AS totalManuales FROM tbl_ventas_manuales WHERE anulada = 0 AND fechaComprobante BETWEEN '".$desde."' AND '".$hasta."'";
+      $statement3 = $mysqli->query($query3);
 
-	  // SQL query para traer datos del servicio de cable de la tabla clientes
-	  $query = "SELECT valorImpuesto FROM tbl_impuestos WHERE siglasImpuesto = 'IVA'";
-	  // Preparación de sentencia
-	  $statement = $mysqli->query($query);
-	  //$statement->execute();
-	  while ($result = $statement->fetch_assoc()) {
-		  $iva = floatval($result['valorImpuesto']);
-	  }*/
+      while ($tManuales = $statement3->fetch_assoc()) {
+          $result3 = $tManuales["totalManuales"];
+      }
 
 	  $pdf = new FPDF();
 
@@ -112,9 +100,9 @@
 	  //echo strftime("El año es %Y y el mes es %B");
       putenv("LANG='es_ES.UTF-8'");
       setlocale(LC_ALL, 'es_ES.UTF-8');
+
+
 	  $pdf->SetFont('Arial','B',6.5);
-
-
       $pdf->Cell(20,5,utf8_decode('N°'),1,0,'L');
       $pdf->Cell(20,5,utf8_decode('N° de recibo'),1,0,'L');
       $pdf->Cell(20,5,utf8_decode('Fecha'),1,0,'L');
@@ -128,6 +116,9 @@
       $pdf->Cell(20,5,utf8_decode('Total recibo'),1,1,'L');
       $pdf->Ln(3);
 
+      $pdf->Cell(35,1,utf8_decode('TOTAL VENTAS MANUALES:'),0,0,'L');
+      $pdf->Cell(18,1,utf8_decode(number_format($result3,2)),0,1,'L');
+      $pdf->Ln(3);
       if ($codigoCobrador === "todos") {
 
           $query1 = "SELECT codigoCobrador, nombreCobrador FROM tbl_cobradores";
@@ -473,7 +464,24 @@
       $pdf->Cell(20,5,number_format(($totalSoloCable+$totalSoloInter),2),"T",0,'L');
       $pdf->Cell(20,5,number_format(($totalAnticipoSoloCable+$totalAnticipoSoloInter),2),"T",0,'L');
       $pdf->Cell(15,5,utf8_decode(number_format(($totalAnticipoImpuestoC+$totalImpuestoC+$totalAnticipoImpuestoI+$totalImpuestoI),2)),"T",0,'L');
+      $pdf->SetFont('Arial','B',8);
       $pdf->Cell(20,5,number_format(($totalSoloCable+$totalSoloInter+$totalAnticipoSoloCable+$totalAnticipoSoloInter+$totalAnticipoImpuestoC+$totalImpuestoC+$totalAnticipoImpuestoI+$totalImpuestoI),2),"T",1,'L');
+
+      //TOTAL MANUAL
+      $pdf->SetFont('Arial','',8);
+      $pdf->Cell(190,5,utf8_decode('TOTAL MANUALES: '),"",0,'R');
+      $pdf->Cell(20,5,'',"T",0,'L');
+      $pdf->Cell(20,5,'',"T",0,'L');
+      $pdf->Cell(15,5,'',"T",0,'L');
+      $pdf->Cell(20,5,number_format(($result3),2),"T",1,'L');
+
+      //TOTAL
+      $pdf->Cell(190,5,utf8_decode('TOTAL GENERAL + MANUALES: '),"",0,'R');
+      $pdf->Cell(20,5,'',"T",0,'L');
+      $pdf->Cell(20,5,'',"T",0,'L');
+      $pdf->Cell(15,5,'',"T",0,'L');
+      $pdf->SetFont('Arial','B',8);
+      $pdf->Cell(20,5,number_format(($totalSoloCable+$totalSoloInter+$totalAnticipoSoloCable+$totalAnticipoSoloInter+$totalAnticipoImpuestoC+$totalImpuestoC+$totalAnticipoImpuestoI+$totalImpuestoI+$result3),2),"T",1,'L');
 
 	  /* close connection */
 	  mysqli_close($mysqli);

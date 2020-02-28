@@ -931,7 +931,7 @@
                                 <br>
                                 <label for="filtro">Fecha de elaborada</label>
                                 <input type="radio" type="text" id="filtroFechaEl" name="filtro" value="1">
-                                <label for="filtro">Fecha de concluída</label>
+                                <label for="filtro">Fecha de finalizada</label>
                                 <input type="radio" type="text" id="filtroFechaTer" name="filtro" value="2" checked>
                             </div>
                             <!--<div class="col-md-4">
@@ -948,7 +948,7 @@
                                 <label for="ordenar">Reporte detallado</label>
                                 <input type="radio" type="text" id="detallado" name="tipoReporte" value="1">
                                 <label for="ordenar">Reporte general</label>
-                                <input type="radio" type="text" id="general" name="ordenar" value="2" checked>
+                                <input type="radio" type="text" id="general" name="tipoReporte" value="2" checked>
                             </div>
                         </div>
                         <div class="row">
