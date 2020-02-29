@@ -127,6 +127,14 @@
           $controlCobrador="";
           while ($cobradores = $statement1->fetch_assoc()) {//RECORRIDO DE TODOS LOS COBRADORES
               $cobradorR = $cobradores["codigoCobrador"];
+              $totalCobradorCable = 0;
+              $totalImpuestoCobradorC = 0;
+              $totalCobradorInter = 0;
+              $totalImpuestoCobradorI = 0;
+              $totalAnticipoCobradorCable = 0;
+              $totalAnticipoCobradorInter = 0;
+              $totalAnticipoImpuestoCobradorC = 0;
+              $totalAnticipoImpuestoCobradorI = 0;
 
               if($tipoServicio == "A") {
                   //SQL para todas las zonas de cobro
@@ -191,6 +199,9 @@
               		$pdf->Cell(20,1,utf8_decode($row['mesCargo']),0,0,'L');
               		$pdf->Cell(10,1,utf8_decode($diaCobro),0,0,'L');
                     $pdf->Cell(20,1,utf8_decode($row['tipoServicio']),0,0,'L');
+
+
+                  //$totalTotalCobrador = 0;
                     if ($row['anticipado'] == "1" || $row['anticipado'] == "T") {
                         if ($row['tipoServicio'] == "C") {
                             $pdf->Cell(20,1,utf8_decode('0.00'),0,0,'L');
@@ -198,16 +209,20 @@
                             $pdf->Cell(15,1,utf8_decode($row['totalImpuesto']),0,0,'L');
                       		$pdf->Cell(20,1,utf8_decode(number_format(doubleval($row['cuotaCable'])+doubleval($row['totalImpuesto']),2)),0,1,'L');
                             $totalAnticipoSoloCable = doubleval($totalAnticipoSoloCable) + doubleval($row['cuotaCable']);
+                            $totalAnticipoCobradorCable = $totalAnticipoCobradorCable + doubleval($row['cuotaCable']);
                             $totalAnticipoCable = doubleval($totalAnticipoCable) + doubleval($row['cuotaCable'])+doubleval($row['totalImpuesto']);
                             $totalAnticipoImpuestoC = doubleval($totalAnticipoImpuestoC) + doubleval($row['totalImpuesto']);
+                            $totalAnticipoImpuestoCobradorC = $totalAnticipoImpuestoCobradorC + doubleval($row['totalImpuesto']);
                         }elseif ($row['tipoServicio'] == "I") {
                             $pdf->Cell(20,1,utf8_decode('0.00'),0,0,'L');
                       		$pdf->Cell(20,1,utf8_decode($row['cuotaInternet']),0,0,'L');
                             $pdf->Cell(15,1,utf8_decode($row['totalImpuesto']),0,0,'L');
                       		$pdf->Cell(20,1,utf8_decode(number_format(doubleval($row['cuotaInternet'])+doubleval($row['totalImpuesto']),2)),0,1,'L');
                             $totalAnticipoSoloInter = doubleval($totalAnticipoSoloInter) + doubleval($row['cuotaInternet']);
+                            $totalAnticipoCobradorInter = $totalAnticipoCobradorInter + doubleval($row['cuotaInternet']);
                             $totalAnticipoInter = doubleval($totalAnticipoInter) + doubleval($row['cuotaInternet'])+doubleval($row['totalImpuesto']);
                             $totalAnticipoImpuestoI = doubleval($totalAnticipoImpuestoI) + doubleval($row['totalImpuesto']);
+                            $totalAnticipoImpuestoCobradorI = $totalAnticipoImpuestoCobradorI + doubleval($row['totalImpuesto']);
                         }
 
                     }else {
@@ -217,8 +232,10 @@
                             $pdf->Cell(15,1,utf8_decode($row['totalImpuesto']),0,0,'L');
                       		$pdf->Cell(20,1,utf8_decode(number_format(doubleval($row['cuotaCable'])+doubleval($row['totalImpuesto']),2)),0,1,'L');
                             $totalSoloCable = doubleval($totalSoloCable) + doubleval($row['cuotaCable']);
+                            $totalCobradorCable = $totalCobradorCable + doubleval($row['cuotaCable']);
                             $totalCable = doubleval($totalCable) + doubleval($row['cuotaCable'])+doubleval($row['totalImpuesto']);
                             $totalImpuestoC = doubleval($totalImpuestoC) + doubleval($row['totalImpuesto']);
+                            $totalImpuestoCobradorC = $totalImpuestoCobradorC + doubleval($row['totalImpuesto']);
                         }elseif ($row['tipoServicio'] == "I") {
                             $pdf->Cell(20,1,utf8_decode($row['cuotaInternet']),0,0,'L');
                       		$pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
@@ -226,13 +243,29 @@
                       		$pdf->Cell(20,1,utf8_decode(number_format(doubleval($row['cuotaInternet'])+doubleval($row['totalImpuesto']),2)),0,1,'L');
                             $totalSoloInter = doubleval($totalSoloInter) + doubleval($row['cuotaInternet']);
                             $totalInter = doubleval($totalInter) + doubleval($row['cuotaInternet'])+doubleval($row['totalImpuesto']);
+                            $totalCobradorInter = $totalCobradorInter + doubleval($row['cuotaInternet']);
                             $totalImpuestoI = doubleval($totalImpuestoI) + doubleval($row['totalImpuesto']);
+                            $totalImpuestoCobradorI = $totalImpuestoCobradorI + doubleval($row['totalImpuesto']);
                         }
 
                     }
 
         	  }
-              $pdf->Ln(2);
+              $pdf->Ln(1);
+              if ($controlCobrador == $cobradores["codigoCobrador"] && $controlCobrador != $row["cobradoPor"]) {
+
+                  $totalCobrador = $totalCobradorCable+$totalCobradorInter;
+                  $totalAnticipoCobrador = $totalAnticipoCobradorCable+$totalAnticipoCobradorInter;
+                  $totalImpuestosCobrador = $totalAnticipoImpuestoCobradorI+$totalAnticipoImpuestoCobradorC+$totalImpuestoCobradorI+$totalImpuestoCobradorC;
+                  $totalTotalCobrador = $totalCobrador+$totalAnticipoCobrador+$totalImpuestosCobrador;
+                  $pdf->SetFont('Arial','B',6.5);
+                  $pdf->Cell(180,5,utf8_decode('TOTAL: '.$cobradores["nombreCobrador"]),0,0,'R');
+                  $pdf->Cell(20,5,number_format($totalCobrador,2),"T",0,'L');
+                  $pdf->Cell(20,5,number_format($totalAnticipoCobrador,2),"T",0,'L');
+                  $pdf->Cell(15,5,number_format(($totalImpuestosCobrador),2),"T",0,'L');
+                  $pdf->Cell(20,5,number_format(($totalTotalCobrador),2),"T",1,'L');
+                  $pdf->Ln(2);
+              }
           }
 
       }
@@ -244,8 +277,14 @@
           $controlCobrador="";
           while ($cobradores = $statement1->fetch_assoc()) {//RECORRIDO DE TODOS LOS COBRADORES
               $cobradorR = $cobradores["codigoCobrador"];
-              //var_dump($cobradorR);
-              //var_dump($colonia);
+              $totalCobradorCable = 0;
+              $totalImpuestoCobradorC = 0;
+              $totalCobradorInter = 0;
+              $totalImpuestoCobradorI = 0;
+              $totalAnticipoCobradorCable = 0;
+              $totalAnticipoCobradorInter = 0;
+              $totalAnticipoImpuestoCobradorC = 0;
+              $totalAnticipoImpuestoCobradorI = 0;
               if($tipoServicio == "A") {
                   //SQL para todas las zonas de cobro
                   if ($_POST["lCobrador"] != "todos" && $_POST["lColonia"] === "todas") {
@@ -309,48 +348,70 @@
               		$pdf->Cell(20,1,utf8_decode($row['mesCargo']),0,0,'L');
               		$pdf->Cell(10,1,utf8_decode($diaCobro),0,0,'L');
                     $pdf->Cell(20,1,utf8_decode($row['tipoServicio']),0,0,'L');
-                    if ($row['anticipado'] == "1" || $row['anticipado'] == "T") {
-                        if ($row['tipoServicio'] == "C") {
-                            $pdf->Cell(20,1,utf8_decode('0.00'),0,0,'L');
-                      		$pdf->Cell(20,1,utf8_decode($row['cuotaCable']),0,0,'L');
-                            $pdf->Cell(15,1,utf8_decode($row['totalImpuesto']),0,0,'L');
-                      		$pdf->Cell(20,1,utf8_decode(number_format(doubleval($row['cuotaCable'])+doubleval($row['totalImpuesto']),2)),0,1,'L');
-                            $totalAnticipoSoloCable = doubleval($totalAnticipoSoloCable) + doubleval($row['cuotaCable']);
-                            $totalAnticipoCable = doubleval($totalAnticipoCable) + doubleval($row['cuotaCable'])+doubleval($row['totalImpuesto']);
-                            $totalAnticipoImpuestoC = doubleval($totalAnticipoImpuestoC) + doubleval($row['totalImpuesto']);
-                        }elseif ($row['tipoServicio'] == "I") {
-                            $pdf->Cell(20,1,utf8_decode('0.00'),0,0,'L');
-                      		$pdf->Cell(20,1,utf8_decode($row['cuotaInternet']),0,0,'L');
-                            $pdf->Cell(15,1,utf8_decode($row['totalImpuesto']),0,0,'L');
-                      		$pdf->Cell(20,1,utf8_decode(number_format(doubleval($row['cuotaInternet'])+doubleval($row['totalImpuesto']),2)),0,1,'L');
-                            $totalAnticipoSoloInter = doubleval($totalAnticipoSoloInter) + doubleval($row['cuotaInternet']);
-                            $totalAnticipoInter = doubleval($totalAnticipoInter) + doubleval($row['cuotaInternet'])+doubleval($row['totalImpuesto']);
-                            $totalAnticipoImpuestoI = doubleval($totalAnticipoImpuestoI) + doubleval($row['totalImpuesto']);
-                        }
+                  if ($row['anticipado'] == "1" || $row['anticipado'] == "T") {
+                      if ($row['tipoServicio'] == "C") {
+                          $pdf->Cell(20,1,utf8_decode('0.00'),0,0,'L');
+                          $pdf->Cell(20,1,utf8_decode($row['cuotaCable']),0,0,'L');
+                          $pdf->Cell(15,1,utf8_decode($row['totalImpuesto']),0,0,'L');
+                          $pdf->Cell(20,1,utf8_decode(number_format(doubleval($row['cuotaCable'])+doubleval($row['totalImpuesto']),2)),0,1,'L');
+                          $totalAnticipoSoloCable = doubleval($totalAnticipoSoloCable) + doubleval($row['cuotaCable']);
+                          $totalAnticipoCobradorCable = $totalAnticipoCobradorCable + doubleval($row['cuotaCable']);
+                          $totalAnticipoCable = doubleval($totalAnticipoCable) + doubleval($row['cuotaCable'])+doubleval($row['totalImpuesto']);
+                          $totalAnticipoImpuestoC = doubleval($totalAnticipoImpuestoC) + doubleval($row['totalImpuesto']);
+                          $totalAnticipoImpuestoCobradorC = $totalAnticipoImpuestoCobradorC + doubleval($row['totalImpuesto']);
+                      }elseif ($row['tipoServicio'] == "I") {
+                          $pdf->Cell(20,1,utf8_decode('0.00'),0,0,'L');
+                          $pdf->Cell(20,1,utf8_decode($row['cuotaInternet']),0,0,'L');
+                          $pdf->Cell(15,1,utf8_decode($row['totalImpuesto']),0,0,'L');
+                          $pdf->Cell(20,1,utf8_decode(number_format(doubleval($row['cuotaInternet'])+doubleval($row['totalImpuesto']),2)),0,1,'L');
+                          $totalAnticipoSoloInter = doubleval($totalAnticipoSoloInter) + doubleval($row['cuotaInternet']);
+                          $totalAnticipoCobradorInter = $totalAnticipoCobradorInter + doubleval($row['cuotaInternet']);
+                          $totalAnticipoInter = doubleval($totalAnticipoInter) + doubleval($row['cuotaInternet'])+doubleval($row['totalImpuesto']);
+                          $totalAnticipoImpuestoI = doubleval($totalAnticipoImpuestoI) + doubleval($row['totalImpuesto']);
+                          $totalAnticipoImpuestoCobradorI = $totalAnticipoImpuestoCobradorI + doubleval($row['totalImpuesto']);
+                      }
 
-                    }else {
-                        if ($row['tipoServicio'] == "C") {
-                            $pdf->Cell(20,1,utf8_decode($row['cuotaCable']),0,0,'L');
-                      		$pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
-                            $pdf->Cell(15,1,utf8_decode($row['totalImpuesto']),0,0,'L');
-                      		$pdf->Cell(20,1,utf8_decode(number_format(doubleval($row['cuotaCable'])+doubleval($row['totalImpuesto']),2)),0,1,'L');
-                            $totalSoloCable = doubleval($totalSoloCable) + doubleval($row['cuotaCable']);
-                            $totalCable = doubleval($totalCable) + doubleval($row['cuotaCable'])+doubleval($row['totalImpuesto']);
-                            $totalImpuestoC = doubleval($totalImpuestoC) + doubleval($row['totalImpuesto']);
-                        }elseif ($row['tipoServicio'] == "I") {
-                            $pdf->Cell(20,1,utf8_decode($row['cuotaInternet']),0,0,'L');
-                      		$pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
-                            $pdf->Cell(15,1,utf8_decode($row['totalImpuesto']),0,0,'L');
-                      		$pdf->Cell(20,1,utf8_decode(number_format(doubleval($row['cuotaInternet'])+doubleval($row['totalImpuesto']),2)),0,1,'L');
-                            $totalSoloInter = doubleval($totalSoloInter) + doubleval($row['cuotaInternet']);
-                            $totalInter = doubleval($totalInter) + doubleval($row['cuotaInternet'])+doubleval($row['totalImpuesto']);
-                            $totalImpuestoI = doubleval($totalImpuestoI) + doubleval($row['totalImpuesto']);
-                        }
+                  }else {
+                      if ($row['tipoServicio'] == "C") {
+                          $pdf->Cell(20,1,utf8_decode($row['cuotaCable']),0,0,'L');
+                          $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
+                          $pdf->Cell(15,1,utf8_decode($row['totalImpuesto']),0,0,'L');
+                          $pdf->Cell(20,1,utf8_decode(number_format(doubleval($row['cuotaCable'])+doubleval($row['totalImpuesto']),2)),0,1,'L');
+                          $totalSoloCable = doubleval($totalSoloCable) + doubleval($row['cuotaCable']);
+                          $totalCobradorCable = $totalCobradorCable + doubleval($row['cuotaCable']);
+                          $totalCable = doubleval($totalCable) + doubleval($row['cuotaCable'])+doubleval($row['totalImpuesto']);
+                          $totalImpuestoC = doubleval($totalImpuestoC) + doubleval($row['totalImpuesto']);
+                          $totalImpuestoCobradorC = $totalImpuestoCobradorC + doubleval($row['totalImpuesto']);
+                      }elseif ($row['tipoServicio'] == "I") {
+                          $pdf->Cell(20,1,utf8_decode($row['cuotaInternet']),0,0,'L');
+                          $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
+                          $pdf->Cell(15,1,utf8_decode($row['totalImpuesto']),0,0,'L');
+                          $pdf->Cell(20,1,utf8_decode(number_format(doubleval($row['cuotaInternet'])+doubleval($row['totalImpuesto']),2)),0,1,'L');
+                          $totalSoloInter = doubleval($totalSoloInter) + doubleval($row['cuotaInternet']);
+                          $totalInter = doubleval($totalInter) + doubleval($row['cuotaInternet'])+doubleval($row['totalImpuesto']);
+                          $totalCobradorInter = $totalCobradorInter + doubleval($row['cuotaInternet']);
+                          $totalImpuestoI = doubleval($totalImpuestoI) + doubleval($row['totalImpuesto']);
+                          $totalImpuestoCobradorI = $totalImpuestoCobradorI + doubleval($row['totalImpuesto']);
+                      }
 
-                    }
+                  }
 
         	  }
-              $pdf->Ln(2);
+              $pdf->Ln(1);
+              if ($controlCobrador == $cobradores["codigoCobrador"] && $controlCobrador != $row["cobradoPor"]) {
+
+                  $totalCobrador = $totalCobradorCable+$totalCobradorInter;
+                  $totalAnticipoCobrador = $totalAnticipoCobradorCable+$totalAnticipoCobradorInter;
+                  $totalImpuestosCobrador = $totalAnticipoImpuestoCobradorI+$totalAnticipoImpuestoCobradorC+$totalImpuestoCobradorI+$totalImpuestoCobradorC;
+                  $totalTotalCobrador = $totalCobrador+$totalAnticipoCobrador+$totalImpuestosCobrador;
+                  $pdf->SetFont('Arial','B',6.5);
+                  $pdf->Cell(180,5,utf8_decode('TOTAL: '.$cobradores["nombreCobrador"]),0,0,'R');
+                  $pdf->Cell(20,5,number_format($totalCobrador,2),"T",0,'L');
+                  $pdf->Cell(20,5,number_format($totalAnticipoCobrador,2),"T",0,'L');
+                  $pdf->Cell(15,5,number_format(($totalImpuestosCobrador),2),"T",0,'L');
+                  $pdf->Cell(20,5,number_format(($totalTotalCobrador),2),"T",1,'L');
+                  $pdf->Ln(2);
+              }
           }
 
       }

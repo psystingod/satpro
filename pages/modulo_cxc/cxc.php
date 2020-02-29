@@ -895,7 +895,7 @@
                                 <select class="form-control" type="text" id="lColonia" name="lColonia" required>
                                     <option value="todas" selected>Todas las zonas</option>
                                     <?php
-                                    $arrColonias = $data->getData('tbl_colonias_cxc');
+                                    $arrColonias = $data->getDataCols('tbl_colonias_cxc');
                                     foreach ($arrColonias as $key) {
                                         echo '<option value="'.$key['idColonia'].'">'.$key['nombreColonia'].'</option>';
                                     }
