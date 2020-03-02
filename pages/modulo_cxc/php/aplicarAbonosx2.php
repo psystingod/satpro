@@ -224,14 +224,14 @@
                                 $this->dbConnect->commit();
                                 $hasta = $arrayMeses[0];
                                 unset($arrayMeses[$lastKey]);
-                                var_dump("EL ULTIMO INDICE ES: ".$lastKey);
+                                //var_dump("EL ULTIMO INDICE ES: ".$lastKey);
                                 $longitud = count($arrayMeses);
                                 $arrayMeses = array_reverse($arrayMeses);
                                //Recorro todos los elementos
                                for($i=0; $i<$longitud; $i++)
                                     //$lastKey = array_pop(array_keys($arrayMeses));
                                {
-                                   var_dump($lastKey);
+                                   //var_dump($lastKey);
                                    $this->dbConnect->beginTransaction();
                                    $qry = "UPDATE tbl_cargos SET tipoFactura=:tipoComprobante, /*numeroRecibo=:numeroRecibo,*/ codigoCliente=:codigoCliente, cuotaCable=:cuotaCable, saldoCable=:saldoCable, fechaCobro=:fechaCobro, /*fechaVencimiento=:fechaVencimiento,*/ fechaAbonado=:fechaAbonado, /*fechaFactura=:fechaFactura,*/ mesCargo=:mesCargo, tipoServicio=:tipoServicio, estado=:estado, cargoImpuesto=:cargoImpuesto, totalImpuesto=:totalImpuesto WHERE /*idFactura=:idFactura*/ codigoCliente=:codigoCliente AND tipoServicio=:tipoServicio AND mesCargo=:mesCargo";
 
@@ -461,7 +461,7 @@
                                $this->dbConnect->commit();
                                $hasta = $arrayMeses[0];
                                unset($arrayMeses[$lastKey]);
-                               var_dump("EL ULTIMO INDICE ES: ".$lastKey);
+                               //var_dump("EL ULTIMO INDICE ES: ".$lastKey);
                                $longitud = count($arrayMeses);
                                $arrayMeses = array_reverse($arrayMeses);
                                //Recorro todos los elementos

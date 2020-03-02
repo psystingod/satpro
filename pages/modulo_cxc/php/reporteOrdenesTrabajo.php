@@ -178,22 +178,24 @@ function abonos()
                 } elseif ($_POST["lCobrador"] === "todos" && $_POST["lColonia"] != "todas") {
                     $query = "SELECT * FROM tbl_ordenes_trabajo WHERE (actividadCable LIKE '" . $actividad . "' OR actividadInter LIKE '" . $actividad . "') AND idColonia= '" . $colonia . "' AND idTecnico= '" . $cobradorR . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' ORDER BY idOrdenTrabajo ASC";
                     $resultado = $mysqli->query($query);
-                    var_dump($query."<br>");
+                    //var_dump($query."<br>");
                 }
             } elseif ($tipoServicio == "C") {
                 if ($_POST["lCobrador"] === "todos" && $_POST["lColonia"] === "todas") {
-                    $query = "SELECT * FROM tbl_ordenes_trabajo WHERE actividadCable LIKE '" . $actividad . "' AND anulada= '" . $anulada . "' AND tipoServicio= '" . $tipoServicio . "' AND codigoCobrador= '" . $cobradorR . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' ORDER BY idOrdenTrabajo ASC";
+                    $query = "SELECT * FROM tbl_ordenes_trabajo WHERE actividadCable LIKE '" . str_replace(" (CABLE)","",utf8_decode($actividad)) . "' AND tipoServicio= '" . $tipoServicio . "' AND idTecnico= '" . $cobradorR . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' ORDER BY idOrdenTrabajo ASC";
                     $resultado = $mysqli->query($query);
+                    //var_dump($query."<br>");
                 } elseif ($_POST["lCobrador"] == "todos" && $_POST["lColonia"] != "todas") {
-                    $query = "SELECT * FROM tbl_ordenes_trabajo WHERE actividadCable LIKE '" . $actividad . "' AND  idColonia= '" . $colonia . "' AND idTecnico= '" . $cobradorR . "' AND tipoServicio= '" . $tipoServicio . "' AND anulada= '" . $anulada . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' ORDER BY idOrdenTrabajo ASC";
+                    $query = "SELECT * FROM tbl_ordenes_trabajo WHERE actividadCable LIKE '" . str_replace(" (CABLE)","",utf8_decode($actividad)) . "' AND  idColonia= '" . $colonia . "' AND idTecnico= '" . $cobradorR . "' AND tipoServicio= '" . $tipoServicio . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' ORDER BY idOrdenTrabajo ASC";
                     $resultado = $mysqli->query($query);
+                    //var_dump($query."<br>");
                 }
             } elseif ($tipoServicio == "I") {
                 if ($_POST["lCobrador"] === "todos" && $_POST["lColonia"] === "todas") {
-                    $query = "SELECT * FROM tbl_ordenes_trabajo WHERE actividadInter LIKE '" . $actividad . "' AND anulada= '" . $anulada . "' AND tipoServicio= '" . $tipoServicio . "' AND idTecnico= '" . $cobradorR . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' ORDER BY idOrdenTrabajo ASC";
+                    $query = "SELECT * FROM tbl_ordenes_trabajo WHERE actividadInter LIKE '" . str_replace(" (INTERNET)","",utf8_decode($actividad)) . "' AND tipoServicio= '" . $tipoServicio . "' AND idTecnico= '" . $cobradorR . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' ORDER BY idOrdenTrabajo ASC";
                     $resultado = $mysqli->query($query);
                 } elseif ($_POST["lCobrador"] === "todos" && $_POST["lColonia"] != "todas") {
-                    $query = "SELECT * FROM tbl_ordenes_trabajo WHERE actividadInter LIKE '" . $actividad . "' AND idColonia= '" . $colonia . "' AND idTecnico= '" . $cobradorR . "' AND tipoServicio= '" . $tipoServicio . "' AND anulada= '" . $anulada . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' ORDER BY idOrdenTrabajo ASC";
+                    $query = "SELECT * FROM tbl_ordenes_trabajo WHERE actividadInter LIKE '" . str_replace(" (INTERNET)","",utf8_decode($actividad)) . "' AND idColonia= '" . $colonia . "' AND idTecnico= '" . $cobradorR . "' AND tipoServicio= '" . $tipoServicio . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' ORDER BY idOrdenTrabajo ASC";
                     $resultado = $mysqli->query($query);
                 }
             }
@@ -276,12 +278,12 @@ function abonos()
 
                 $contador++;
             }
-            $pdf->Ln(2);
+            $pdf->Ln(1);
         }
     }
     if ($codigoCobrador != "todos") {
 
-        $query1 = "SELECT codigoCobrador, nombreCobrador FROM tbl_cobradores where codigoCobrador=" . $codigoCobrador;
+        $query1 = "SELECT idTecnico, nombreTecnico FROM tbl_tecnicos_cxc where idTecnico=" . $codigoCobrador;
         $contador = 1;
 
         // Preparación de sentencia
@@ -294,44 +296,48 @@ function abonos()
         $controlColonia = "";
 
         while ($cobradores = $statement1->fetch_assoc()) {//RECORRIDO DE TODOS LOS COBRADORES
-            $cobradorR = $cobradores["codigoCobrador"];
+            $cobradorR = $cobradores["idTecnico"];
             //var_dump("cobrador: ".$cobradorR);
 
             if ($tipoServicio == "A") {
                 //SQL para todas las zonas de cobro
                 if ($_POST["lCobrador"] != "todos" && $_POST["lColonia"] === "todas") {
-                    $query = "SELECT * FROM tbl_cargos WHERE anulada= '" . $anulada . "' AND tipoFactura LIKE '" . $tipoComprobante."%" . "' AND codigoCobrador= '" . $cobradorR . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' AND DAY(fechaFactura) LIKE '" . $diaCobroFiltro . "' ORDER BY $ordenarFiltro ASC";
+                    $query = "SELECT * FROM tbl_ordenes_trabajo WHERE (actividadCable LIKE '" . $actividad . "' OR actividadInter LIKE '" . $actividad . "') AND idTecnico= '" . $cobradorR . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' ORDER BY idOrdenTrabajo ASC";
                     //var_dump($query."<br>");
                     $resultado = $mysqli->query($query);
                 } elseif ($_POST["lCobrador"] != "todos" && $_POST["lColonia"] != "todas") {
-                    $query = "SELECT * FROM tbl_cargos WHERE idColonia= '" . $colonia . "' AND codigoCobrador= '" . $cobradorR . "' AND anulada= '" . $anulada . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' AND DAY(fechaFactura) LIKE '" . $diaCobroFiltro . "' ORDER BY $ordenarFiltro ASC";
+                    $query = "SELECT * FROM tbl_ordenes_trabajo WHERE (actividadCable LIKE '" . $actividad . "' OR actividadInter LIKE '" . $actividad . "') AND idColonia= '" . $colonia . "' AND idTecnico= '" . $cobradorR . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' ORDER BY idOrdenTrabajo ASC";
                     $resultado = $mysqli->query($query);
                     //var_dump($query."<br>");
                 }
             } elseif ($tipoServicio == "C") {
                 if ($_POST["lCobrador"] != "todos" && $_POST["lColonia"] === "todas") {
-                    $query = "SELECT * FROM tbl_cargos WHERE anulada= '" . $anulada . "' AND tipoServicio= '" . $tipoServicio . "' AND codigoCobrador= '" . $cobradorR . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' AND DAY(fechaFactura) LIKE '" . $diaCobroFiltro . "' ORDER BY $ordenarFiltro ASC";
+                    $query = "SELECT * FROM tbl_ordenes_trabajo WHERE actividadCable LIKE '" . str_replace(" (CABLE)","",utf8_decode($actividad)) . "' AND tipoServicio= '" . $tipoServicio . "' AND idTecnico= '" . $cobradorR . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' ORDER BY idOrdenTrabajo ASC";
                     $resultado = $mysqli->query($query);
+                    //var_dump($query."<br>");
                 } elseif ($_POST["lCobrador"] != "todos" && $_POST["lColonia"] != "todas") {
-                    $query = "SELECT * FROM tbl_cargos WHERE idColonia= '" . $colonia . "' AND codigoCobrador= '" . $cobradorR . "' AND tipoServicio= '" . $tipoServicio . "' AND anulada= '" . $anulada . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' AND DAY(fechaFactura) LIKE '" . $diaCobroFiltro . "' ORDER BY $ordenarFiltro ASC";
+                    $query = "SELECT * FROM tbl_ordenes_trabajo WHERE actividadCable LIKE '" . str_replace(" (CABLE)","",utf8_decode($actividad)) . "' AND  idColonia= '" . $colonia . "' AND idTecnico= '" . $cobradorR . "' AND tipoServicio= '" . $tipoServicio . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' ORDER BY idOrdenTrabajo ASC";
                     $resultado = $mysqli->query($query);
+                    //var_dump($query."<br>");
                 }
             } elseif ($tipoServicio == "I") {
                 if ($_POST["lCobrador"] != "todos" && $_POST["lColonia"] === "todas") {
-                    $query = "SELECT * FROM tbl_cargos WHERE anulada= '" . $anulada . "' AND tipoServicio= '" . $tipoServicio . "' AND codigoCobrador= '" . $cobradorR . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' AND DAY(fechaFactura) LIKE '" . $diaCobroFiltro . "' ORDER BY $ordenarFiltro ASC";
+                    $query = "SELECT * FROM tbl_ordenes_trabajo WHERE actividadInter LIKE '" . str_replace(" (INTERNET)","",utf8_decode($actividad)) . "' AND tipoServicio= '" . $tipoServicio . "' AND idTecnico= '" . $cobradorR . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' ORDER BY idOrdenTrabajo ASC";
                     $resultado = $mysqli->query($query);
                 } elseif ($_POST["lCobrador"] != "todos" && $_POST["lColonia"] != "todas") {
-                    $query = "SELECT * FROM tbl_cargos WHERE idColonia= '" . $colonia . "' AND codigoCobrador= '" . $cobradorR . "' AND tipoServicio= '" . $tipoServicio . "' AND anulada= '" . $anulada . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' AND DAY(fechaFactura) LIKE '" . $diaCobroFiltro . "' ORDER BY $ordenarFiltro ASC";
+                    $query = "SELECT * FROM tbl_ordenes_trabajo WHERE actividadInter LIKE '" . str_replace(" (INTERNET)","",utf8_decode($actividad)) . "' AND idColonia= '" . $colonia . "' AND idTecnico= '" . $cobradorR . "' AND tipoServicio= '" . $tipoServicio . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' ORDER BY idOrdenTrabajo ASC";
                     $resultado = $mysqli->query($query);
                 }
             }
             //var_dump($query);
             while ($row = $resultado->fetch_assoc()) {
 
-                if ($row["codigoCobrador"] == $cobradores["codigoCobrador"] && $controlCobrador != $cobradores["codigoCobrador"]) {
-                    $pdf->SetFont('Arial', 'B', 8);
-                    $pdf->Cell(250, 3, utf8_decode($cobradores['nombreCobrador']), "B", 1, 'L');
-                    $controlCobrador = $cobradores['codigoCobrador'];
+                if ($tipoReporte = '1'){
+                    if ($row["idTecnico"] == $cobradores["idTecnico"] && $controlCobrador != $cobradores["idTecnico"]) {
+                        $pdf->SetFont('Arial', 'B', 8);
+                        $pdf->Cell(250, 3, utf8_decode($cobradores['nombreTecnico']), "B", 1, 'L');
+                        $controlCobrador = $cobradores['idTecnico'];
+                    }
                 }
 
                 if ($ordenarFiltro == 'idColonia'){
@@ -372,54 +378,37 @@ function abonos()
                 }
 
                 $pdf->Ln(3);
+
                 $pdf->SetFont('Arial', '', 6.7);
-                $pdf->Cell(15, 1, utf8_decode($contador), 0, 0, 'L');
+                $pdf->Cell(10, 1, utf8_decode($contador), 0, 0, 'L');
                 //$pdf->Cell(15, 1, utf8_decode($row['idFactura']), 0, 0, 'L');
-                $pdf->Cell(30, 1, utf8_decode($row['numeroFactura']), 0, 0, 'L');
-                $pdf->Cell(20, 1, utf8_decode($row['fechaFactura']), 0, 0, 'L');
-                $pdf->Cell(70, 1, utf8_decode(strtoupper($row['codigoCliente'] . "  " . $row['nombre'])), 0, 0, 'L');
-                $pdf->Cell(16, 1, utf8_decode($row['mesCargo']), 0, 0, 'L');
-                $pdf->Cell(10, 1, utf8_decode($diaCobro), 0, 0, 'L');
-                $pdf->Cell(15, 1, utf8_decode($row['tipoServicio']), 0, 0, 'L');
-
-                if ($row['tipoServicio'] == "C") {
-                    //Calculando IVA
-                    $separado = (doubleval($row['cuotaCable'])/(1 + doubleval($iva)));
-                    $totalIvaCable = (doubleval($separado) * doubleval($iva));
-                    $totalSoloIvaCable = doubleval($totalSoloIvaCable) + doubleval($totalIvaCable);
-                    $totalConIvaCable = doubleval($totalConIvaCable) + doubleval($row["cuotaCable"]);
-                    $totalSoloCescCable = doubleval($totalSoloCescCable) + doubleval($row['totalImpuesto']);
-                    $totalConCescCable = doubleval($totalConCescCable) + doubleval($row["cuotaCable"]) + doubleval($row['totalImpuesto']);
-
-                    $pdf->Cell(15, 1, utf8_decode(number_format($separado, 2)), 0, 0, 'L');
-                    $pdf->Cell(10, 1, utf8_decode(number_format($row["cuotaCable"]-$separado, 2)), 0, 0, 'L');
-                    $pdf->Cell(15, 1, utf8_decode($row['cuotaCable']), 0, 0, 'L');
-                    $pdf->Cell(15, 1, utf8_decode(number_format($row['totalImpuesto'],2)), 0, 0, 'L');
-                    $pdf->Cell(20, 1, utf8_decode(number_format(doubleval($row['cuotaCable']) + doubleval($row['totalImpuesto']), 2)), 0, 1, 'L');
-
-                } elseif ($row['tipoServicio'] == "I") {
-                    //Calculando IVA REVISARLO
-                    $separado = (doubleval($row['cuotaInternet'])/(1 + doubleval($iva)));
-                    $totalIva = (doubleval($separado) * doubleval($iva));
-
-
-                    $totalSoloIvaInter = doubleval($totalSoloIvaInter) + doubleval($totalIva);
-
-                    $totalConIvaInter = doubleval($totalConIvaInter) + doubleval($row["cuotaInternet"]);
-                    $totalSoloCescInter = doubleval($totalSoloCescInter) + doubleval($row['totalImpuesto']);
-                    $totalConCescInter = doubleval($totalConCescInter) + doubleval($row["cuotaInternet"]) + doubleval($row['totalImpuesto']);
-
-                    $pdf->Cell(15, 1, utf8_decode(number_format($separado,2)), 0, 0, 'L');
-                    $pdf->Cell(10, 1, utf8_decode(number_format(doubleval($totalIva), 2)), 0, 0, 'L');
-                    $pdf->Cell(15, 1, utf8_decode($row['cuotaInternet']), 0, 0, 'L');
-                    $pdf->Cell(15, 1, utf8_decode(number_format($row['totalImpuesto'],2)), 0, 0, 'L');
-                    $pdf->Cell(20, 1, utf8_decode(number_format(doubleval($row['cuotaInternet']) + doubleval($row['totalImpuesto']), 2)), 0, 1, 'L');
-
+                $pdf->Cell(20, 1, utf8_decode($row['idOrdenTrabajo']), 0, 0, 'L');
+                $pdf->Cell(65, 1, utf8_decode(strtoupper($row['codigoCliente'] . "  " . $row['nombreCliente'])), 0, 0, 'L');
+                $pdf->Cell(16, 1, utf8_decode($diaCobro), 0, 0, 'L');
+                $pdf->Cell(20, 1, utf8_decode($row['fechaOrdenTrabajo']), 0, 0, 'L');
+                if (strlen($row['fechaTrabajo'] < 5)){
+                    $pdf->Cell(20, 1, utf8_decode("No finalizada"), 0, 0, 'L');
                 }
-                $contador++;
+                else{
+                    $pdf->Cell(20, 1, utf8_decode($row['fechaTrabajo']), 0, 0, 'L');
+                }
+                if ($row["tipoServicio"] == "C"){
+                    $pdf->Cell(22, 1, utf8_decode($row["actividadCable"]), 0, 0, 'L');
+                }elseif ($row["tipoServicio"] == "I"){
+                    $pdf->Cell(22, 1, utf8_decode($row["actividadInter"]), 0, 0, 'L');
+                }
 
+                $pdf->Cell(20, 1, utf8_decode($row['tipoServicio']), 0, 0, 'L');
+                $pdf->Cell(10, 1, utf8_decode($row['hora']), 0, 0, 'L');
+                if ($row['tipoServicio'] == "C"){
+                    $pdf->MultiCell(60,3,utf8_decode($row['direccionCable']),0,'L');
+                }elseif($row['tipoServicio'] == "I"){
+                    $pdf->MultiCell(60,3,utf8_decode($row['direccionInter']),0,'L');
+                }
+
+                $contador++;
             }
-            $pdf->Ln(2);
+            $pdf->Ln(1);
         }
     }
 
