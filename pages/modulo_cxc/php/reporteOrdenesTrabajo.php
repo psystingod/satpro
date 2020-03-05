@@ -450,6 +450,7 @@ function abonos()
     $pdf->Cell(20, 5, number_format(($totalSoloCescCable + $totalSoloCescInter), 2), "T", 0, 'L');
     $pdf->Cell(20, 5, number_format(($totalConCescCable + $totalConCescInter), 2), "T", 1, 'L');
     */
+
     mysqli_close($mysqli);
     $pdf->Output();
 

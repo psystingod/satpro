@@ -1028,13 +1028,17 @@
                     </div>
                 </div>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="lDesde">Desde fecha</label>
                         <input class="form-control" type="text" id="lDesde" name="lDesde" placeholder="Fecha en que se generaron las facturas" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))" value="<?php echo date('Y-m-d'); ?>" required>
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-4">
                         <label for="lHasta">Hasta fecha</label>
                         <input class="form-control" type="text" id="lHasta" name="lHasta" placeholder="Fecha en que se generaron las facturas" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))" value="<?php echo date('Y-m-d'); ?>" required>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="lDetallado">Ver reporte detallado</label>
+                        <input class="form-control" type="checkbox" id="lDetallado" name="lDetallado" value="1" checked>
                     </div>
                 </div>
               </div>

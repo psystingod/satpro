@@ -275,7 +275,7 @@
                         //$totalIva3 = (floatval($separado3) * floatval($iva));
                         //$totalCesc3 = round((floatval($separado3) * floatval($cesc)),2);
 
-                        $totalCesc3 = substr((($montoCancelado3/(1 + floatval($iva)))*$cesc),0,4);
+                        $totalCesc3 = (($montoCancelado3/(1 + floatval($iva)))*$cesc);
                         //IVA
                         $separado3 = (floatval($montoCancelado3)/(1 + floatval($iva)));
                         $totalIva3 = (doubleval($separado3) * doubleval($iva));
@@ -428,7 +428,7 @@
                         //$totalIva3 = round((floatval($separado3) * floatval($iva)),2);
                         //$totalCesc3 = round((floatval($separado3) * floatval($cesc)),2);
 
-                        $totalCesc3 = substr((($montoCancelado3/(1 + floatval($iva)))*$cesc),0,4);
+                        $totalCesc3 = (($montoCancelado3/(1 + floatval($iva)))*$cesc);
                         //IVA
                         $separado3 = (floatval($montoCancelado3)/(1 + floatval($iva)));
                         $totalIva3 = (doubleval($separado3) * doubleval($iva));
@@ -622,7 +622,7 @@
                 $pdf->Cell(40,6,utf8_decode("- ".(number_format($totalSoloIva3,2))." (anuladas)"),0,1,'L');
                 $pdf->Cell(40,6,utf8_decode('5% CESC'),0,0,'L');
                 $pdf->Cell(40,6,utf8_decode(number_format(($totalSoloCesc1+$totalSoloCesc2+$totalSoloCesc3),2)),0,0,'L');
-                $pdf->Cell(40,6,utf8_decode("- ".($totalSoloCesc3)." (anuladas)"),0,1,'L');
+                $pdf->Cell(40,6,utf8_decode("- ".(number_format($totalSoloCesc3,2))." (anuladas)"),0,1,'L');
                 $pdf->Cell(40,6,utf8_decode('Exportaciones'),0,0,'L');
                 $pdf->Cell(40,6,utf8_decode('0.00'),0,1,'L');
                 $pdf->Cell(60,6,utf8_decode(''),"T",1,'C');
@@ -806,10 +806,11 @@
                         }
 
                         //IVA
-                        $totalCesc = substr(((doubleval($montoCancelado)/(1 + doubleval($iva)))*$cesc),0,7);
+                        $totalCesc = ((doubleval($montoCancelado)/(1 + doubleval($iva)))*$cesc);
                         //IVA
                         $separado = (doubleval($montoCancelado)/(1 + doubleval($iva)));
                         $totalIva = (doubleval($separado) * doubleval($iva));
+
 
 
                         $pdf->Cell(5,1,utf8_decode($counter),0,0,'L');
@@ -948,7 +949,7 @@
                                 $separado3 = (floatval($montoCancelado3)/(1 + floatval($iva)));
                                 //var_dump($separado);
                                 $totalIva3 = (doubleval($separado3) * doubleval($iva));
-                                $totalCesc3 = substr((($montoCancelado3/(1 + floatval($iva)))*$cesc),0,4);
+                                $totalCesc3 = (($montoCancelado3/(1 + floatval($iva)))*$cesc);
 
                                 $pdf->Cell(5,1,utf8_decode($counter),0,0,'L');
                                 $pdf->Cell(30,1,utf8_decode($result["inFact"]),0,0,'L');
