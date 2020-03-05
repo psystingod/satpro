@@ -117,9 +117,9 @@ class GetAllInfo extends ConectionDB
         }
     }
 
-    public function getDataOrders($tabla, $codigoCliente){
+    public function getDataOrders($tabla, $codigoCliente, $filtroOrden){
         try {
-                $query = "SELECT * FROM $tabla WHERE codigoCliente = :codigoCliente";
+                $query = "SELECT * FROM $tabla WHERE codigoCliente = :codigoCliente ORDER BY $filtroOrden DESC";
                 $statement = $this->dbConnect->prepare($query);
                 $statement->bindValue(':codigoCliente', $codigoCliente);
                 $statement->execute();

@@ -4,11 +4,11 @@
     <list default="true" id="9b434152-df7c-48b6-9360-8012b48f8529" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/Prueba.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/Prueba.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/cxc.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/cxc.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/infoCliente.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/infoCliente.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/GetAllInfo.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/GetAllInfo.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/abonosAplicados.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/abonosAplicados.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/reporteOrdenesTrabajo.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/reporteOrdenesTrabajo.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/modulo_iva/php/pdfConsumidorFinal.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_iva/php/pdfConsumidorFinal.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/modulo_iva/php/pdfCreditoFiscal.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_iva/php/pdfCreditoFiscal.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/aplicarAbonosx2.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/aplicarAbonosx2.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/generarFacturas.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/generarFacturas.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -100,7 +100,7 @@
       <workItem from="1582988353626" duration="16387000" />
       <workItem from="1583160299777" duration="9788000" />
       <workItem from="1583248250415" duration="11032000" />
-      <workItem from="1583419405653" duration="4224000" />
+      <workItem from="1583419405653" duration="10796000" />
     </task>
     <servers />
   </component>

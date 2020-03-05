@@ -449,45 +449,47 @@ while ($result = $statement->fetch_assoc()) {
               $pdf->Cell(75,5,utf8_decode(''),"",1,'R');
 
               //$pdf->AddPage('L','Letter');
-              $pdf->SetFont('Arial','',8);
+              $pdf->SetFont('Arial','B',8);
 
+              $pdf->Cell(237,5,utf8_decode('TOTALES GENERALES'),'',1,'R');
+              $pdf->SetFont('Arial','',8);
               //TOTAL INTERNET
-              $pdf->Cell(190,5,utf8_decode('TOTAL INTERNET: '),0,0,'R');
+              $pdf->Cell(180,5,utf8_decode('TOTAL INTERNET: '),0,0,'R');
               $pdf->Cell(20,5,number_format($totalSoloInter,2),"T",0,'L');
               $pdf->Cell(20,5,number_format($totalAnticipoSoloInter,2),"T",0,'L');
               $pdf->Cell(15,5,number_format(($totalAnticipoImpuestoI+$totalImpuestoI),2),"T",0,'L');
-              $pdf->Cell(20,5,number_format(($totalSoloInter+$totalAnticipoSoloInter+$totalAnticipoImpuestoI+$totalImpuestoI),2),"T",1,'L');
+              $pdf->Cell(25,5,"+ ".number_format(($totalSoloInter+$totalAnticipoSoloInter+$totalAnticipoImpuestoI+$totalImpuestoI),2),"T",1,'L');
 
               //TOTAL CABLE
-              $pdf->Cell(190,5,utf8_decode('TOTAL CABLE: '),0,0,'R');
+              $pdf->Cell(180,5,utf8_decode('TOTAL CABLE: '),0,0,'R');
               $pdf->Cell(20,5,number_format($totalSoloCable,2),"T",0,'L');
               $pdf->Cell(20,5,number_format($totalAnticipoSoloCable,2),"T",0,'L');
               $pdf->Cell(15,5,number_format(($totalAnticipoImpuestoC+$totalImpuestoC),2),"T",0,'L');
-              $pdf->Cell(20,5,number_format(($totalSoloCable+$totalAnticipoSoloCable+$totalAnticipoImpuestoC+$totalImpuestoC),2),"T",1,'L');
+              $pdf->Cell(25,5,"+ ".number_format(($totalSoloCable+$totalAnticipoSoloCable+$totalAnticipoImpuestoC+$totalImpuestoC),2),"T",1,'L');
 
               //TOTAL IMPUESTO
-              $pdf->Cell(190,5,utf8_decode('TOTAL GENERAL: '),"",0,'R');
+              $pdf->Cell(180,5,utf8_decode('TOTAL GENERAL: '),"",0,'R');
               $pdf->Cell(20,5,number_format(($totalSoloCable+$totalSoloInter),2),"T",0,'L');
               $pdf->Cell(20,5,number_format(($totalAnticipoSoloCable+$totalAnticipoSoloInter),2),"T",0,'L');
               $pdf->Cell(15,5,utf8_decode(number_format(($totalAnticipoImpuestoC+$totalImpuestoC+$totalAnticipoImpuestoI+$totalImpuestoI),2)),"T",0,'L');
               $pdf->SetFont('Arial','B',8);
-              $pdf->Cell(20,5,number_format(($totalSoloCable+$totalSoloInter+$totalAnticipoSoloCable+$totalAnticipoSoloInter+$totalAnticipoImpuestoC+$totalImpuestoC+$totalAnticipoImpuestoI+$totalImpuestoI),2),"T",1,'L');
+              $pdf->Cell(25,5,"= ".number_format(($totalSoloCable+$totalSoloInter+$totalAnticipoSoloCable+$totalAnticipoSoloInter+$totalAnticipoImpuestoC+$totalImpuestoC+$totalAnticipoImpuestoI+$totalImpuestoI),2),"T",1,'L');
 
               //TOTAL MANUAL
               $pdf->SetFont('Arial','',8);
-              $pdf->Cell(190,5,utf8_decode('TOTAL MANUALES: '),"",0,'R');
+              $pdf->Cell(180,5,utf8_decode('TOTAL MANUALES: '),"",0,'R');
               $pdf->Cell(20,5,'',"T",0,'L');
               $pdf->Cell(20,5,'',"T",0,'L');
               $pdf->Cell(15,5,'',"T",0,'L');
-              $pdf->Cell(20,5,number_format(($result3),2),"T",1,'L');
+              $pdf->Cell(25,5,"+ ".number_format(($result3),2),"T",1,'L');
 
               //TOTAL
-              $pdf->Cell(190,5,utf8_decode('TOTAL GENERAL + MANUALES: '),"",0,'R');
+              $pdf->Cell(180,5,utf8_decode('TOTAL GENERAL + MANUALES: '),"",0,'R');
               $pdf->Cell(20,5,'',"T",0,'L');
               $pdf->Cell(20,5,'',"T",0,'L');
               $pdf->Cell(15,5,'',"T",0,'L');
               $pdf->SetFont('Arial','B',8);
-              $pdf->Cell(20,5,number_format(($totalSoloCable+$totalSoloInter+$totalAnticipoSoloCable+$totalAnticipoSoloInter+$totalAnticipoImpuestoC+$totalImpuestoC+$totalAnticipoImpuestoI+$totalImpuestoI+$result3),2),"T",1,'L');
+              $pdf->Cell(25,5,"= ".number_format(($totalSoloCable+$totalSoloInter+$totalAnticipoSoloCable+$totalAnticipoSoloInter+$totalAnticipoImpuestoC+$totalImpuestoC+$totalAnticipoImpuestoI+$totalImpuestoI+$result3),2),"T",1,'L');
           }
       }elseif ($detallado == null){ //EN ESTA CONDICION SE EVALUA SI EL REPORTE SE MOSTRARÁ GENERAL
             //************************************************************************************************************************
@@ -947,45 +949,47 @@ while ($result = $statement->fetch_assoc()) {
             $pdf->Cell(75,5,utf8_decode(''),"",1,'R');
 
             //$pdf->AddPage('L','Letter');
-            $pdf->SetFont('Arial','',8);
+            $pdf->SetFont('Arial','B',8);
 
+            $pdf->Cell(237,5,utf8_decode('TOTALES GENERALES'),'',1,'R');
+            $pdf->SetFont('Arial','',8);
             //TOTAL INTERNET
-            $pdf->Cell(190,5,utf8_decode('TOTAL INTERNET: '),0,0,'R');
+            $pdf->Cell(180,5,utf8_decode('TOTAL INTERNET: '),0,0,'R');
             $pdf->Cell(20,5,number_format($totalSoloInter,2),"T",0,'L');
             $pdf->Cell(20,5,number_format($totalAnticipoSoloInter,2),"T",0,'L');
             $pdf->Cell(15,5,number_format(($totalAnticipoImpuestoI+$totalImpuestoI),2),"T",0,'L');
-            $pdf->Cell(20,5,number_format(($totalSoloInter+$totalAnticipoSoloInter+$totalAnticipoImpuestoI+$totalImpuestoI),2),"T",1,'L');
+            $pdf->Cell(25,5,"+ ".number_format(($totalSoloInter+$totalAnticipoSoloInter+$totalAnticipoImpuestoI+$totalImpuestoI),2),"T",1,'L');
 
             //TOTAL CABLE
-            $pdf->Cell(190,5,utf8_decode('TOTAL CABLE: '),0,0,'R');
+            $pdf->Cell(180,5,utf8_decode('TOTAL CABLE: '),0,0,'R');
             $pdf->Cell(20,5,number_format($totalSoloCable,2),"T",0,'L');
             $pdf->Cell(20,5,number_format($totalAnticipoSoloCable,2),"T",0,'L');
             $pdf->Cell(15,5,number_format(($totalAnticipoImpuestoC+$totalImpuestoC),2),"T",0,'L');
-            $pdf->Cell(20,5,number_format(($totalSoloCable+$totalAnticipoSoloCable+$totalAnticipoImpuestoC+$totalImpuestoC),2),"T",1,'L');
+            $pdf->Cell(25,5,"+ ".number_format(($totalSoloCable+$totalAnticipoSoloCable+$totalAnticipoImpuestoC+$totalImpuestoC),2),"T",1,'L');
 
             //TOTAL IMPUESTO
-            $pdf->Cell(190,5,utf8_decode('TOTAL GENERAL: '),"",0,'R');
+            $pdf->Cell(180,5,utf8_decode('TOTAL GENERAL: '),"",0,'R');
             $pdf->Cell(20,5,number_format(($totalSoloCable+$totalSoloInter),2),"T",0,'L');
             $pdf->Cell(20,5,number_format(($totalAnticipoSoloCable+$totalAnticipoSoloInter),2),"T",0,'L');
             $pdf->Cell(15,5,utf8_decode(number_format(($totalAnticipoImpuestoC+$totalImpuestoC+$totalAnticipoImpuestoI+$totalImpuestoI),2)),"T",0,'L');
             $pdf->SetFont('Arial','B',8);
-            $pdf->Cell(20,5,number_format(($totalSoloCable+$totalSoloInter+$totalAnticipoSoloCable+$totalAnticipoSoloInter+$totalAnticipoImpuestoC+$totalImpuestoC+$totalAnticipoImpuestoI+$totalImpuestoI),2),"T",1,'L');
+            $pdf->Cell(25,5,"= ".number_format(($totalSoloCable+$totalSoloInter+$totalAnticipoSoloCable+$totalAnticipoSoloInter+$totalAnticipoImpuestoC+$totalImpuestoC+$totalAnticipoImpuestoI+$totalImpuestoI),2),"T",1,'L');
 
             //TOTAL MANUAL
             $pdf->SetFont('Arial','',8);
-            $pdf->Cell(190,5,utf8_decode('TOTAL MANUALES: '),"",0,'R');
+            $pdf->Cell(180,5,utf8_decode('TOTAL MANUALES: '),"",0,'R');
             $pdf->Cell(20,5,'',"T",0,'L');
             $pdf->Cell(20,5,'',"T",0,'L');
             $pdf->Cell(15,5,'',"T",0,'L');
-            $pdf->Cell(20,5,number_format(($result3),2),"T",1,'L');
+            $pdf->Cell(25,5,"+ ".number_format(($result3),2),"T",1,'L');
 
             //TOTAL
-            $pdf->Cell(190,5,utf8_decode('TOTAL GENERAL + MANUALES: '),"",0,'R');
+            $pdf->Cell(180,5,utf8_decode('TOTAL GENERAL + MANUALES: '),"",0,'R');
             $pdf->Cell(20,5,'',"T",0,'L');
             $pdf->Cell(20,5,'',"T",0,'L');
             $pdf->Cell(15,5,'',"T",0,'L');
             $pdf->SetFont('Arial','B',8);
-            $pdf->Cell(20,5,number_format(($totalSoloCable+$totalSoloInter+$totalAnticipoSoloCable+$totalAnticipoSoloInter+$totalAnticipoImpuestoC+$totalImpuestoC+$totalAnticipoImpuestoI+$totalImpuestoI+$result3),2),"T",1,'L');
+            $pdf->Cell(25,5,"= ".number_format(($totalSoloCable+$totalSoloInter+$totalAnticipoSoloCable+$totalAnticipoSoloInter+$totalAnticipoImpuestoC+$totalImpuestoC+$totalAnticipoImpuestoI+$totalImpuestoI+$result3),2),"T",1,'L');
         }
 
 	  /* close connection */

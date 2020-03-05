@@ -1232,8 +1232,8 @@
                                     $this->dbConnect->commit();
 
                                }
-                               echo '<script>window.open("comprobantePagox2.php?uaid1='.$reciboCobx1.'&cod='.$codigoCliente.'&desde='.$desde.'&hasta='.$hasta.'&tipoServicio='.strtolower($tipoServicio).'","_blank");</script>';
-                               echo '<script>window.location = "../abonos.php?abonado=yes";</script>';
+                               //echo '<script>window.open("comprobantePagox2.php?uaid1='.$reciboCobx1.'&cod='.$codigoCliente.'&desde='.$desde.'&hasta='.$hasta.'&tipoServicio='.strtolower($tipoServicio).'","_blank");</script>';
+                               //echo '<script>window.location = "../abonos.php?abonado=yes";</script>';
 
                                 /*sleep(0.5);
                                 header('Location: ../abonos.php?abonado=yes');*/

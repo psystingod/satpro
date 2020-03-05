@@ -382,10 +382,10 @@ session_start();
  $arrTecnologias = $data->getData('tbl_tecnologias');
  $arrTiposClientes = $data->getData('tbl_tipos_clientes');
  //Array de ordenes de trabajo por cliente
- $arrOrdenesTrabajo = $data->getDataOrders('tbl_ordenes_trabajo', $codigo);
- $arrOrdenesSuspension = $data->getDataOrders('tbl_ordenes_suspension', $codigo);
- $arrOrdenesReconex = $data->getDataOrders('tbl_ordenes_reconexion', $codigo);
- $arrTraslados = $data->getDataOrders('tbl_ordenes_traslado', $codigo);
+ $arrOrdenesTrabajo = $data->getDataOrders('tbl_ordenes_trabajo', $codigo,'idOrdenTrabajo');
+ $arrOrdenesSuspension = $data->getDataOrders('tbl_ordenes_suspension', $codigo, 'idOrdenSuspension');
+ $arrOrdenesReconex = $data->getDataOrders('tbl_ordenes_reconexion', $codigo, 'idOrdenReconex');
+ $arrTraslados = $data->getDataOrders('tbl_ordenes_traslado', $codigo, 'idOrdenTraslado');
 
  $alert = $data->getDataOrdersAlert('tbl_ordenes_trabajo');
 

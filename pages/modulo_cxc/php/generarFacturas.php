@@ -107,6 +107,7 @@
                        if (count($result) == 0) {
                            header('Location: ../cxc.php?gen=no');
                        }
+
                        else {
                            $vuelta = 0;
                            foreach ($result as $i) {
@@ -121,6 +122,20 @@
                                         ));
                                $contador = $stmt->fetchColumn();
 
+                               /*$qryAb = "SELECT COUNT(mesCargo)FROM tbl_abonos WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio AND anulada=0";
+
+                               $stmtAb = $this->dbConnect->prepare($qryAb);
+                               $stmtAb->execute(
+                                   array(':codigoCliente' => $i["cod_cliente"],
+                                       ':mesCargo' => $mesCargo,
+                                       ':tipoServicio' => $ts,
+                                   ));
+                               $matchAb = $stmtAb->fetchColumn();
+                               if ($matchAb == 0){
+                                   $estado = "pendiente";
+                               }elseif ($matchAb > 0){
+                                   $estado = "CANCELADA";
+                               }*/
                                //var_dump("vuelta: " . $vuelta++);
                                //var_dump($contador);
                                if ($contador == 0) {
@@ -269,7 +284,20 @@
                                          ':tipoServicio' => $ts,
                                         ));
                                $contador = $stmt->fetchColumn();
+                               /*$qryAb = "SELECT COUNT(mesCargo)FROM tbl_abonos WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio AND anulada=0";
 
+                               $stmtAb = $this->dbConnect->prepare($qryAb);
+                               $stmtAb->execute(
+                                   array(':codigoCliente' => $i["cod_cliente"],
+                                       ':mesCargo' => $mesCargo,
+                                       ':tipoServicio' => $ts,
+                                   ));
+                               $matchAb = $stmtAb->fetchColumn();
+                               if ($matchAb == 0){
+                                   $estado = "pendiente";
+                               }elseif ($matchAb > 0){
+                                   $estado = "CANCELADA";
+                               }*/
                                //var_dump("vuelta: " . $vuelta++);
                                //var_dump($contador);
                                if ($contador == 0) {
@@ -420,7 +448,20 @@
                                          ':tipoServicio' => $ts,
                                         ));
                                $contador = $stmt->fetchColumn();
+                               /*$qryAb = "SELECT COUNT(mesCargo)FROM tbl_abonos WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio AND anulada=0";
 
+                               $stmtAb = $this->dbConnect->prepare($qryAb);
+                               $stmtAb->execute(
+                                   array(':codigoCliente' => $i["cod_cliente"],
+                                       ':mesCargo' => $mesCargo,
+                                       ':tipoServicio' => $ts,
+                                   ));
+                               $matchAb = $stmtAb->fetchColumn();
+                               if ($matchAb == 0){
+                                   $estado = "pendiente";
+                               }elseif ($matchAb > 0){
+                                   $estado = "CANCELADA";
+                               }*/
                                //var_dump("vuelta: " . $vuelta++);
                                //var_dump($contador);
                                if ($contador == 0) {
@@ -566,7 +607,20 @@
                                          ':tipoServicio' => $ts,
                                         ));
                                $contador = $stmt->fetchColumn();
+                               /*$qryAb = "SELECT COUNT(mesCargo)FROM tbl_abonos WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio AND anulada=0";
 
+                               $stmtAb = $this->dbConnect->prepare($qryAb);
+                               $stmtAb->execute(
+                                   array(':codigoCliente' => $i["cod_cliente"],
+                                       ':mesCargo' => $mesCargo,
+                                       ':tipoServicio' => $ts,
+                                   ));
+                               $matchAb = $stmtAb->fetchColumn();
+                               if ($matchAb == 0){
+                                   $estado = "pendiente";
+                               }elseif ($matchAb > 0){
+                                   $estado = "CANCELADA";
+                               }*/
                                //var_dump("vuelta: " . $vuelta++);
                                //var_dump($contador);
                                if ($contador == 0) {
