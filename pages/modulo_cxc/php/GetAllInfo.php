@@ -185,7 +185,7 @@ class GetAllInfo extends ConectionDB
     public function getDataAbonos($tabla, $codigoCliente, $tipoServicio, $estado){
         try {
                 //$estado = "pendiente";
-                $query = "SELECT * FROM $tabla WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado AND anulada=:anulada ORDER BY numeroFactura DESC";
+                $query = "SELECT distinct * FROM $tabla WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado AND anulada=:anulada ORDER BY idAbono DESC";
                 $statement = $this->dbConnect->prepare($query);
                 $statement->bindValue(':codigoCliente', $codigoCliente);
                 $statement->bindValue(':tipoServicio', $tipoServicio);
@@ -346,162 +346,165 @@ class GetAllInfo extends ConectionDB
         }
     }
 
-    //Acá comienzan las funciones para obtener los datos de clientes
-    /*public function getDepartamento($idDepartamento){
+    public function getDataAbonosGlobal($codigoCliente, $tipoServicio, $estado){
         try {
-                $query = "SELECT * FROM tbl_departamentos_cxc WHERE idDepartamento=:idDepartamento";
-                $statement = $this->dbConnect->prepare($query);
-                $statement->bindParam(':idDepartamento', $idDepartamento, PDO::PARAM_INT);
-                $statement->execute();
-                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                return $result;
+            //SELECT * FROM Table1 WHERE Table1.principal NOT IN (SELECT principal FROM table2)
+            $query = "SELECT * FROM tbl_abonos WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado AND anulada=:anulada and tbl_abonos.mesCargo NOT IN(SELECT mesCargo from tbl_cargos where anulada = 0 and codigoCliente=:codigoCliente) ORDER BY idAbono DESC";
+            $statement = $this->dbConnect->prepare($query);
+            $statement->bindValue(':codigoCliente', $codigoCliente);
+            $statement->bindValue(':tipoServicio', $tipoServicio);
+            $statement->bindValue(':estado', $estado);
+            $statement->bindValue(':anulada', 0);
+            $statement->execute();
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
 
         } catch (Exception $e) {
             print "!Error¡: " . $e->getMessage() . "</br>";
             die();
         }
     }
-    public function getMunicipio($idMunicipio){
+    public function getDataCargosGlobal($codigoCliente, $tipoServicio, $estado){
         try {
-                $query = "SELECT * FROM municipios_cxc WHERE Id_municipio=:idMunicipio";
-                $statement = $this->dbConnect->prepare($query);
-                $statement->bindParam(':idMunicipio', $idMunicipio, PDO::PARAM_INT);
-                $statement->execute();
-                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                return $result;
+            //SELECT * FROM Table1 WHERE Table1.principal NOT IN (SELECT principal FROM table2)
+            $query = "SELECT * FROM tbl_cargos WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado AND anulada=:anulada and tbl_cargos.mesCargo NOT IN(SELECT mesCargo from tbl_abonos where anulada = 0 and codigoCliente=:codigoCliente) ORDER BY idFactura DESC";
+            $statement = $this->dbConnect->prepare($query);
+            $statement->bindValue(':codigoCliente', $codigoCliente);
+            $statement->bindValue(':tipoServicio', $tipoServicio);
+            $statement->bindValue(':estado', $estado);
+            $statement->bindValue(':anulada', 0);
+            $statement->execute();
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
 
         } catch (Exception $e) {
             print "!Error¡: " . $e->getMessage() . "</br>";
             die();
         }
     }
-    public function getColonia($idColonia){
+
+    public function getDataAbonosGlobalF($codigoCliente, $tipoServicio, $estado, $desde, $hasta){
         try {
-                $query = "SELECT * FROM colonias_cxc WHERE Id_colonia=:idColonia";
-                $statement = $this->dbConnect->prepare($query);
-                $statement->bindParam(':idColonia', $idColonia, PDO::PARAM_INT);
-                $statement->execute();
-                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                return $result;
+            //SELECT * FROM Table1 WHERE Table1.principal NOT IN (SELECT principal FROM table2)
+            $query = "SELECT * FROM tbl_abonos WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado AND fechaAbonado BETWEEN :desde AND DATE_ADD(:hasta, INTERVAL 8 DAY) AND anulada=:anulada and tbl_abonos.mesCargo NOT IN(SELECT mesCargo from tbl_cargos where anulada = 0 AND fechaFactura BETWEEN :desde AND DATE_ADD(:hasta, INTERVAL 8 DAY) and codigoCliente=:codigoCliente) ORDER BY idAbono DESC";
+            $statement = $this->dbConnect->prepare($query);
+            $statement->bindValue(':codigoCliente', $codigoCliente);
+            $statement->bindValue(':tipoServicio', $tipoServicio);
+            $statement->bindValue(':estado', $estado);
+            $statement->bindValue(':anulada', 0);
+            $statement->bindValue(':desde', $desde);
+            $statement->bindValue(':hasta', $hasta);
+            $statement->execute();
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
 
         } catch (Exception $e) {
             print "!Error¡: " . $e->getMessage() . "</br>";
             die();
         }
     }
-    public function getFormaPago($idFormaPago){
+    public function getDataCargosGlobalF($codigoCliente, $tipoServicio, $estado, $desde, $hasta){
         try {
-                $query = "SELECT * FROM tbl_forma_pago WHERE idFormaPago=:idFormaPago";
-                $statement = $this->dbConnect->prepare($query);
-                $statement->bindParam(':idFormaPago', $idFormaPago, PDO::PARAM_INT);
-                $statement->execute();
-                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                return $result;
+            //SELECT * FROM Table1 WHERE Table1.principal NOT IN (SELECT principal FROM table2)
+            $query = "SELECT * FROM tbl_cargos WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado AND fechaFactura BETWEEN :desde AND DATE_ADD(:hasta, INTERVAL 8 DAY) AND anulada=:anulada and tbl_cargos.mesCargo NOT IN(SELECT mesCargo from tbl_abonos where anulada = 0 and codigoCliente=:codigoCliente AND fechaAbonado BETWEEN :desde AND DATE_ADD(:hasta, INTERVAL 8 DAY)) ORDER BY idFactura DESC";
+            $statement = $this->dbConnect->prepare($query);
+            $statement->bindValue(':codigoCliente', $codigoCliente);
+            $statement->bindValue(':tipoServicio', $tipoServicio);
+            $statement->bindValue(':estado', $estado);
+            $statement->bindValue(':anulada', 0);
+            $statement->bindValue(':desde', $desde);
+            $statement->bindValue(':hasta', $hasta);
+            $statement->execute();
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
 
         } catch (Exception $e) {
             print "!Error¡: " . $e->getMessage() . "</br>";
             die();
         }
     }
-    public function getCobrador($codigoCobrador){
+
+    public function getDataEstadoCable($codigoCliente, $tipoServicio){
         try {
-                $query = "SELECT codigoCobrador, nombreCobrador FROM cobradores WHERE codigoCobrador=:codigoCobrador";
-                $statement = $this->dbConnect->prepare($query);
-                $statement->bindParam(':codigoCobrador', $codigoCobrador, PDO::PARAM_SRT);
-                $statement->execute();
-                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                return $result;
+            //$estado = "pendiente";
+            $query = "SELECT c.estado as estadoCargo, c.numeroFactura as facturaCargo, c.numeroRecibo as reciboCargo, c.mesCargo as cargoCargo, c.tipoServicio as servicioCargo, c.fechaFactura as fechaFacturaCargo, c.fechaVencimiento as fechaVencimientoCargo, c.cuotaCable as cuotaCableCargo, c.totalImpuesto as totalImpuestoCargo, a.estado as estadoAbono, a.numeroFactura as facturaAbono, a.numeroRecibo as reciboAbono, a.mesCargo as cargoAbono, a.tipoServicio as servicioAbono, a.fechaAbonado as fechaAbonadoAbono, a.fechaVencimiento as fechaVencimientoAbono, a.cuotaCable as cuotaCableAbono, a.totalImpuesto as totalImpuestoAbono
+                      FROM tbl_cargos as c inner JOIN tbl_abonos as a ON (a.`codigoCliente` = c.`codigoCliente`) WHERE c.`tipoServicio`=:tipoServicio and a.`tipoServicio`=:tipoServicio and (c.`mesCargo`=a.`mesCargo`) and c.codigoCliente=:codigoCliente and a.codigoCliente=:codigoCliente and a.anulada=:anulada and c.anulada=:anulada order by c.`idFactura` DESC";
+
+            $statement = $this->dbConnect->prepare($query);
+            $statement->bindValue(':codigoCliente', $codigoCliente);
+            $statement->bindValue(':tipoServicio', $tipoServicio);
+            $statement->bindValue(':anulada', 0);
+            $statement->execute();
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
 
         } catch (Exception $e) {
             print "!Error¡: " . $e->getMessage() . "</br>";
             die();
         }
     }
-    //Esta función nos tare el nombre del tipo de comprobante a generar, Crédito fiscal y Consumidor final
-    public function getTipoComprobante($idComprobante){
+    public function getDataEstadoInter($codigoCliente, $tipoServicio){
         try {
-                $query = "SELECT * FROM tbl_comprobantes WHERE idComprobante=:idComprobante";
-                $statement = $this->dbConnect->prepare($query);
-                $statement->bindParam(':idComprobante', $idComprobante, PDO::PARAM_INT);
-                $statement->execute();
-                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                return $result;
+            //$estado = "pendiente";
+            $query = "SELECT c.estado as estadoCargo, c.numeroFactura as facturaCargo, c.numeroRecibo as reciboCargo, c.mesCargo as cargoCargo, c.tipoServicio as servicioCargo, c.fechaFactura as fechaFacturaCargo, c.fechaVencimiento as fechaVencimientoCargo, c.cuotaInternet as cuotaInterCargo, c.totalImpuesto as totalImpuestoCargo, a.estado as estadoAbono, a.numeroFactura as facturaAbono, a.numeroRecibo as reciboAbono, a.mesCargo as cargoAbono, a.tipoServicio as servicioAbono, a.fechaAbonado as fechaAbonadoAbono, a.fechaVencimiento as fechaVencimientoAbono, a.cuotaInternet as cuotaInterAbono, a.totalImpuesto as totalImpuestoAbono
+                      FROM tbl_cargos as c inner JOIN tbl_abonos as a ON (a.`codigoCliente` = c.`codigoCliente`) WHERE c.`tipoServicio`=:tipoServicio and a.`tipoServicio`=:tipoServicio and (c.`mesCargo`=a.`mesCargo`) and c.codigoCliente=:codigoCliente and a.codigoCliente=:codigoCliente and a.anulada=:anulada and c.anulada=:anulada order by c.`idFactura` DESC";
+
+            $statement = $this->dbConnect->prepare($query);
+            $statement->bindValue(':codigoCliente', $codigoCliente);
+            $statement->bindValue(':tipoServicio', $tipoServicio);
+            $statement->bindValue(':anulada', 0);
+            $statement->execute();
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
 
         } catch (Exception $e) {
             print "!Error¡: " . $e->getMessage() . "</br>";
             die();
         }
     }
-    public function getTipoServicioCable($idTipoServicioCable){
+
+    public function getDataEstadoCableF($codigoCliente, $tipoServicio, $desde, $hasta){
         try {
-                $query = "SELECT * FROM tbl_servicios_cable WHERE idServicioCable=:idServicioCable";
-                $statement = $this->dbConnect->prepare($query);
-                $statement->bindParam(':idServicioCable', $idTipoServicioCable, PDO::PARAM_INT);
-                $statement->execute();
-                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                return $result;
+            //$estado = "pendiente";
+            $query = "SELECT c.estado as estadoCargo, c.numeroFactura as facturaCargo, c.numeroRecibo as reciboCargo, c.mesCargo as cargoCargo, c.tipoServicio as servicioCargo, c.fechaFactura as fechaFacturaCargo, c.fechaVencimiento as fechaVencimientoCargo, c.cuotaCable as cuotaCableCargo, c.totalImpuesto as totalImpuestoCargo, a.estado as estadoAbono, a.numeroFactura as facturaAbono, a.numeroRecibo as reciboAbono, a.mesCargo as cargoAbono, a.tipoServicio as servicioAbono, a.fechaAbonado as fechaAbonadoAbono, a.fechaVencimiento as fechaVencimientoAbono, a.cuotaCable as cuotaCableAbono, a.totalImpuesto as totalImpuestoAbono
+                      FROM tbl_cargos as c inner JOIN tbl_abonos as a ON (a.`codigoCliente` = c.`codigoCliente`) WHERE c.`tipoServicio`=:tipoServicio and a.`tipoServicio`=:tipoServicio and (c.`mesCargo`=a.`mesCargo`) and c.codigoCliente=:codigoCliente and a.codigoCliente=:codigoCliente AND c.mesCargo >= :desde AND c.mesCargo <= :hasta AND a.mesCargo >= :desde AND a.mesCargo <= :hasta and a.anulada=:anulada and c.anulada=:anulada order by c.`idFactura` DESC";
+
+            $statement = $this->dbConnect->prepare($query);
+            $statement->bindValue(':codigoCliente', $codigoCliente);
+            $statement->bindValue(':tipoServicio', $tipoServicio);
+            $statement->bindValue(':anulada', 0);
+            $statement->bindValue(':desde', $desde);
+            $statement->bindValue(':hasta', $hasta);
+            $statement->execute();
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
 
         } catch (Exception $e) {
             print "!Error¡: " . $e->getMessage() . "</br>";
             die();
         }
     }
-    public function getTipoServicioInter($idTipoServicioInter){
+    public function getDataEstadoInterF($codigoCliente, $tipoServicio, $desde, $hasta){
         try {
-                $query = "SELECT * FROM tbl_servicios_inter WHERE idServicioInter=:idServicioInter";
-                $statement = $this->dbConnect->prepare($query);
-                $statement->bindParam(':idServicioInter', $idTipoServicioInter, PDO::PARAM_INT);
-                $statement->execute();
-                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                return $result;
+            //$estado = "pendiente";
+            $query = "SELECT c.estado as estadoCargo, c.numeroFactura as facturaCargo, c.numeroRecibo as reciboCargo, c.mesCargo as cargoCargo, c.tipoServicio as servicioCargo, c.fechaFactura as fechaFacturaCargo, c.fechaVencimiento as fechaVencimientoCargo, c.cuotaInternet as cuotaInterCargo, c.totalImpuesto as totalImpuestoCargo, a.estado as estadoAbono, a.numeroFactura as facturaAbono, a.numeroRecibo as reciboAbono, a.mesCargo as cargoAbono, a.tipoServicio as servicioAbono, a.fechaAbonado as fechaAbonadoAbono, a.fechaVencimiento as fechaVencimientoAbono, a.cuotaInternet as cuotaInterAbono, a.totalImpuesto as totalImpuestoAbono
+                      FROM tbl_cargos as c inner JOIN tbl_abonos as a ON (a.`codigoCliente` = c.`codigoCliente`) WHERE c.`tipoServicio`=:tipoServicio and a.`tipoServicio`=:tipoServicio and (c.`mesCargo`=a.`mesCargo`) and c.codigoCliente=:codigoCliente and a.codigoCliente=:codigoCliente AND c.mesCargo >= :desde AND c.mesCargo <= :hasta AND a.mesCargo >= :desde AND a.mesCargo <= :hasta and a.anulada=:anulada and c.anulada=:anulada order by c.`idFactura` DESC";
+
+            $statement = $this->dbConnect->prepare($query);
+            $statement->bindValue(':codigoCliente', $codigoCliente);
+            $statement->bindValue(':tipoServicio', $tipoServicio);
+            $statement->bindValue(':anulada', 0);
+            $statement->bindValue(':desde', $desde);
+            $statement->bindValue(':hasta', $hasta);
+            $statement->execute();
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
 
         } catch (Exception $e) {
             print "!Error¡: " . $e->getMessage() . "</br>";
             die();
         }
     }
-    public function getTecnico($idTecnico){
-        try {
-                $query = "SELECT * FROM tecnicos_cxc WHERE Id_tecnico=:idTecnico";
-                $statement = $this->dbConnect->prepare($query);
-                $statement->bindParam(':idTecnico', $idTecnico, PDO::PARAM_INT);
-                $statement->execute();
-                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                return $result;
-
-        } catch (Exception $e) {
-            print "!Error¡: " . $e->getMessage() . "</br>";
-            die();
-        }
-    }
-    public function getVelocidades($idVelocidad){
-        try {
-                $query = "SELECT * FROM tbl_velocidades WHERE idVelocidad=:idVelocidad";
-                $statement = $this->dbConnect->prepare($query);
-                $statement->bindParam(':idVelocidad', $idVelocidad, PDO::PARAM_INT);
-                $statement->execute();
-                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                return $result;
-
-        } catch (Exception $e) {
-            print "!Error¡: " . $e->getMessage() . "</br>";
-            die();
-        }
-    }
-    public function getTipoCliente($idTipoCliente){
-        try {
-                $query = "SELECT * FROM Tipos_clientes WHERE Id_tipo=:idTipoCliente";
-                $statement = $this->dbConnect->prepare($query);
-                $statement->bindParam(':idTipoCliente', $idTipoCliente, PDO::PARAM_INT);
-                $statement->execute();
-                $result = $statement->fetchAll(PDO::FETCH_ASSOC);
-                return $result;
-
-        } catch (Exception $e) {
-            print "!Error¡: " . $e->getMessage() . "</br>";
-            die();
-        }
-    }*/
 
     public function getTotalCobrarCableImp($tabla, $codigoCliente, $estado, $anulada, $hasta){
         try {

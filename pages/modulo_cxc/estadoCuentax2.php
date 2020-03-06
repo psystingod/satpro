@@ -21,17 +21,13 @@ if (isset($_POST['submit'])) {
     $desde = $_POST["desde"];
     $hasta = $_POST["hasta"];
     //var_dump("Con SUBMIT");
-    //$arrCargos = $dataInfo->getDataCargosBy('tbl_cargos', $_GET['codigoCliente'], 'C', $desde, $hasta);
-    //$arrAbonos = $dataInfo->getDataAbonosBy('tbl_abonos', $_GET['codigoCliente'], 'C', 'CANCELADA', $desde, $hasta);
-    $arrCargosCable = $dataInfo->getDataCargosGlobalF($_GET['codigoCliente'], 'C', 'pendiente', $desde, $hasta);
-    $arrCargosInter = $dataInfo->getDataCargosGlobalF($_GET['codigoCliente'], 'I', 'pendiente', $desde, $hasta);
-    $arrAbonosCable = $dataInfo->getDataAbonosGlobalF($_GET['codigoCliente'], 'C', 'CANCELADA', $desde, $hasta);
-    $arrAbonosInter = $dataInfo->getDataAbonosGlobalF($_GET['codigoCliente'], 'I', 'CANCELADA', $desde, $hasta);
-    //$arrCargosI = $dataInfo->getDataCargosBy('tbl_cargos', $_GET['codigoCliente'], 'I', $desde, $hasta);
-    //$arrAbonosI = $dataInfo->getDataAbonosBy('tbl_abonos', $_GET['codigoCliente'], 'I', 'CANCELADA', $desde, $hasta);
-    $arrEstadoCable = $dataInfo->getDataEstadoCableF($_GET['codigoCliente'],'C', $desde, $hasta);
-    $arrEstadoInter = $dataInfo->getDataEstadoInterF($_GET['codigoCliente'],'I', $desde, $hasta);
-    //$arrEstado = $dataInfo->getDataEstadoCable($_GET['codigoCliente'],'C');
+    $arrCargos = $dataInfo->getDataCargosBy('tbl_cargos', $_GET['codigoCliente'], 'C', $desde, $hasta);
+    $arrAbonos = $dataInfo->getDataAbonosBy('tbl_abonos', $_GET['codigoCliente'], 'C', 'CANCELADA', $desde, $hasta);
+
+    $arrCargosI = $dataInfo->getDataCargosBy('tbl_cargos', $_GET['codigoCliente'], 'I', $desde, $hasta);
+    $arrAbonosI = $dataInfo->getDataAbonosBy('tbl_abonos', $_GET['codigoCliente'], 'I', 'CANCELADA', $desde, $hasta);
+
+    $arrEstado = $dataInfo->getDataEstadoCable($_GET['codigoCliente'],'C');
     //var_dump($arrCargos);
 }else {
     //var_dump("SIN submit, no legaste");
@@ -40,8 +36,8 @@ if (isset($_POST['submit'])) {
     $arrAbonosCable = $dataInfo->getDataAbonosGlobal($_GET['codigoCliente'], 'C', 'CANCELADA');
     $arrAbonosInter = $dataInfo->getDataAbonosGlobal($_GET['codigoCliente'], 'I', 'CANCELADA');
 
-    //$arrCargosI = $dataInfo->getDataCargos('tbl_cargos', $_GET['codigoCliente'], 'I');
-    //$arrAbonosI = $dataInfo->getDataAbonos('tbl_abonos', $_GET['codigoCliente'], 'I', 'CANCELADA');
+    $arrCargosI = $dataInfo->getDataCargos('tbl_cargos', $_GET['codigoCliente'], 'I');
+    $arrAbonosI = $dataInfo->getDataAbonos('tbl_abonos', $_GET['codigoCliente'], 'I', 'CANCELADA');
 
     $arrEstadoCable = $dataInfo->getDataEstadoCable($_GET['codigoCliente'],'C');
     $arrEstadoInter = $dataInfo->getDataEstadoInter($_GET['codigoCliente'],'I');
@@ -360,7 +356,7 @@ if(!isset($_SESSION["user"])) {
                                         ?>
                                         </tbody>
                                     </table>
-                                    <?php echo "<div class='alert alert-danger pull-right'><strong>TOTAL A COBRAR: $".$totalCobrarCable."</strong></div>"; ?>
+                                    <?php echo "<div class='well pull-right'><strong>TOTAL A COBRAR: $".$totalCobrarCable."</strong></div>"; ?>
                                 </div>
                             </div>
                         </div>
@@ -475,7 +471,7 @@ if(!isset($_SESSION["user"])) {
                                         ?>
                                         </tbody>
                                     </table>
-                                    <?php echo "<div class='alert alert-danger pull-right'><strong>TOTAL A COBRAR: $".$totalCobrarInter."</strong></div>"; ?>
+                                    <?php echo "<div class='well pull-right'><strong>TOTAL A COBRAR: $".$totalCobrarInter."</strong></div>"; ?>
                                 </div>
                             </div>
                         </div>
