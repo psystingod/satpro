@@ -349,7 +349,7 @@ class GetAllInfo extends ConectionDB
     public function getDataAbonosGlobal($codigoCliente, $tipoServicio, $estado){
         try {
             //SELECT * FROM Table1 WHERE Table1.principal NOT IN (SELECT principal FROM table2)
-            $query = "SELECT * FROM tbl_abonos WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado AND anulada=:anulada and tbl_abonos.mesCargo NOT IN(SELECT mesCargo from tbl_cargos where anulada = 0 and codigoCliente=:codigoCliente) ORDER BY idAbono DESC";
+            $query = "SELECT * FROM tbl_abonos WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado AND anulada=:anulada and tbl_abonos.mesCargo NOT IN(SELECT mesCargo from tbl_cargos where anulada = 0 and codigoCliente=:codigoCliente and tipoServicio = :tipoServicio) ORDER BY idAbono DESC";
             $statement = $this->dbConnect->prepare($query);
             $statement->bindValue(':codigoCliente', $codigoCliente);
             $statement->bindValue(':tipoServicio', $tipoServicio);
@@ -367,7 +367,7 @@ class GetAllInfo extends ConectionDB
     public function getDataCargosGlobal($codigoCliente, $tipoServicio, $estado){
         try {
             //SELECT * FROM Table1 WHERE Table1.principal NOT IN (SELECT principal FROM table2)
-            $query = "SELECT * FROM tbl_cargos WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado AND anulada=:anulada and tbl_cargos.mesCargo NOT IN(SELECT mesCargo from tbl_abonos where anulada = 0 and codigoCliente=:codigoCliente) ORDER BY idFactura DESC";
+            $query = "SELECT * FROM tbl_cargos WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado AND anulada=:anulada and tbl_cargos.mesCargo NOT IN(SELECT mesCargo from tbl_abonos where anulada = 0 and codigoCliente=:codigoCliente and tipoServicio = :tipoServicio) ORDER BY idFactura DESC";
             $statement = $this->dbConnect->prepare($query);
             $statement->bindValue(':codigoCliente', $codigoCliente);
             $statement->bindValue(':tipoServicio', $tipoServicio);

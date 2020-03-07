@@ -467,7 +467,7 @@ session_start();
                         Procesos <i class="fas fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="ordenTrabajo.php" target="_blank">Ordenes de trabajo</a>
+                        <li><a onclick="window.open('ordenTrabajo.php','','height=600,width=1000,top=-300,left=200')">Ordenes de trabajo</a>
                         </li>
                         <li><a href="ordenSuspension.php" target="_blank">Ordenes de suspensión</a>
                         </li>

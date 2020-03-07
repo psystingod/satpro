@@ -215,7 +215,7 @@ session_start();
                 $diaC = $row['dia_cobro'];
                 $fechapf = $row['fecha_primer_factura'];
                 //SACAR ÚLTIMO MES PAGADO DEL CLIENTE
-                $query = "SELECT mesCargo FROM tbl_abonos WHERE codigoCliente=:codigoCliente AND estado=:estado AND tipoServicio=:tipoServicio AND anulada=0 ORDER BY idAbono DESC LIMIT 1";
+                $query = "SELECT mesCargo FROM tbl_abonos WHERE codigoCliente=:codigoCliente AND estado=:estado AND tipoServicio=:tipoServicio AND anulada=0 ORDER BY CAST(CONCAT(substring(mesCargo,4,4), '-', substring(mesCargo,1,2),'-', '01') AS DATE) DESC LIMIT 1";
                 $stmt = $con->prepare($query);
                 $estado = "CANCELADA";
                 // this is the first question mark
@@ -227,7 +227,7 @@ session_start();
                 $diaC = $row['dia_corbo_in'];
                 $fechapf = $row['fecha_primer_factura_in'];
                 //SACAR ÚLTIMO MES PAGADO DEL CLIENTE
-                $query = "SELECT mesCargo FROM tbl_abonos WHERE codigoCliente=:codigoCliente AND estado=:estado AND tipoServicio=:tipoServicio AND anulada=0 ORDER BY idAbono DESC LIMIT 1";
+                $query = "SELECT mesCargo FROM tbl_abonos WHERE codigoCliente=:codigoCliente AND estado=:estado AND tipoServicio=:tipoServicio AND anulada=0 ORDER BY CAST(CONCAT(substring(mesCargo,4,4), '-', substring(mesCargo,1,2),'-', '01') AS DATE) DESC LIMIT 1";
                 $stmt = $con->prepare($query);
                 $estado = "CANCELADA";
                 // this is the first question mark

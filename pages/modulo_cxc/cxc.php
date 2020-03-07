@@ -1654,7 +1654,6 @@
     <!-- Custom Theme JavaScript -->
     <script src="../../dist/js/sb-admin-2.js"></script>
     <script src="js/searchab.js"></script>
-
     <script type="text/javascript">
         // Get the input field
         var mes = document.getElementById("mesGenerar");
