@@ -199,7 +199,54 @@
 
     <!-- Custom Fonts -->
     <link href="../../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <style media="screen">
+        .form-control {
+            color: #212121;
+            font-size: 15px;
+            font-weight: bold;
 
+        }
+        .nav>li>a {
+            color: #fff;
+        }
+        .dark{
+            color: #fff;
+            background-color: #212121;
+        }
+    </style>
+
+    <style media="screen">
+        .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+            color: #fff;
+            background-color: #d32f2f;
+        }
+
+        .nav-pills>li>a{
+            color: #d32f2f;
+
+        }
+
+        .btn-danger {
+            color: #fff;
+            background-color: #d32f2f;
+            border-color: #d43f3a;
+        }
+        a:hover {
+            text-decoration: none;
+        }
+        .label-danger {
+            background-color: #d32f2f;
+        }
+
+        .panel-danger>.panel-heading {
+            color: #fff;
+            background-color: #212121;
+            border-color: #212121;
+        }
+        .panel{
+            border-color: #212121;
+        }
+    </style>
 </head>
 
 <body>
@@ -315,14 +362,14 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <br>
-                        <div class="panel panel-primary">
+                        <div class="panel panel-danger">
                           <div class="panel-heading"><b>Gestión de cobro$ </b> <span id="nombreOrden" class="label label-danger"></span></div>
                           <form id="gestionCobros" action="" method="POST">
-                          <div class="panel-body" style="background-color:#C5CAE9;">
+                          <div class="panel-body" style="background-color:#E0E0E0;">
                               <div class="col-md-12">
                                   <button class="btn btn-default btn-sm" id="nuevaOrdenId" onclick="nuevaOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Nueva gestión"><i class="far fa-file"></i></button>
                                   <button class="btn btn-default btn-sm" id="editar" onclick="editarOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Editar gestión"><i class="far fa-edit"></i></button>
-                                  <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Ver cliente"><i class="far fa-eye"></i></button>
+                                  <button class="btn btn-default btn-sm" id="verClient" type="button" name="btn_nuevo" onclick="verCliente();" data-toggle="tooltip" data-placement="bottom" title="Ver cliente"><i class="far fa-eye"></i></button>
                                   <button class="btn btn-default btn-sm" type="button" id="guardar" name="btn_nuevo" onclick="guardarOrden()" data-toggle="tooltip" data-placement="bottom" title="Guardar gestión" disabled><i class="far fa-save"></i></button>
                                   <?php echo '<input style="display: none;" type="submit" id="guardar2" value="">'; ?>
                                   <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-placement="bottom" title="Buscar orden" data-toggle="modal" data-target="#buscarGestion"><i class="fas fa-search"></i></button>
@@ -332,7 +379,7 @@
                                       <!--<button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Estado de cuenta"><i class="far fa-file-alt"></i></button>
                                       <button id="btn-cable" class="btn btn-default btn-sm" onclick="ordenCable()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Orden de cable" disabled><i class="fas fa-tv"></i></button>
                                       <button id="btn-internet" class="btn btn-default btn-sm" onclick="ordenInternet()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Orden de internet" disabled><i class="fas fa-wifi"></i></button>-->
-                                      <button class="btn btn-success btn-circle btn-md pull-right" type="button" id="agregarGestion" name="agregarGestion" data-toggle="modal" data-target="#agregarGestionForm" disabled><i class="fas fa-plus"></i></button>
+                                      <button class="btn btn-danger btn-circle btn-md pull-right" type="button" id="agregarGestion" name="agregarGestion" data-toggle="modal" data-target="#agregarGestionForm" disabled><i class="fas fa-plus"></i></button>
                                   </div>
                               </div>
                               <div class="form-row">
@@ -628,6 +675,13 @@
 
     }*/
     ?>
+    echo "<script>
+        function verCliente(){
+            var cod = document.getElementById("codigoCliente").value;
+            window.open("infoCliente.php?id="+cod);
+        }
+
+    </script>";
 
 </body>
 

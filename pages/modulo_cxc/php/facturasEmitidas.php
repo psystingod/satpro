@@ -132,9 +132,21 @@ function abonos()
     //echo strftime("El año es %Y y el mes es %B");
     putenv("LANG='es_ES.UTF-8'");
     setlocale(LC_ALL, 'es_ES.UTF-8');
+    $pdf->SetFont('Arial', 'B', 9);
+    $pdf->Cell(190, 4, utf8_decode('CABLE VISION POR SATELITE, S.A DE C.V.'), 0, 1, 'L');
+    $pdf->SetFont('Arial', 'B', 7);
+    $pdf->Cell(190, 4, utf8_decode('LISTADO DE CRÉDITOS FISCALES Y FACTURAS EMITIDAS'), 0, 1, 'L');
+    if ($_SESSION['db'] == 'satpro_sm'){
+        $pdf->Cell(190, 4, utf8_decode('SUCURSAL SAN MIGUEL'), 0, 1, 'L');
+
+    }elseif ($_SESSION['db'] == 'satpro'){
+        $pdf->Cell(190, 4, utf8_decode('SUCURSAL USULUTÁN'), 0, 1, 'L');
+    }
+    $pdf->SetFont('Arial', '', 7);
+    $pdf->Cell(190, 4, utf8_decode('DESDE '.$desde.' HASTA '.$hasta), 0, 1, 'L');
+    $pdf->Ln(2);
+
     $pdf->SetFont('Arial', 'B', 6.5);
-
-
     $pdf->Cell(15, 5, utf8_decode('N°'), 1, 0, 'L');
     $pdf->Cell(30, 5, utf8_decode('N° de factura'), 1, 0, 'L');
     $pdf->Cell(20, 5, utf8_decode('Fecha'), 1, 0, 'L');
@@ -147,7 +159,7 @@ function abonos()
     $pdf->Cell(15, 5, utf8_decode('Neto'), 1, 0, 'L');
     $pdf->Cell(15, 5, utf8_decode('CESC'), 1, 0, 'L');
     $pdf->Cell(20, 5, utf8_decode('Total factura'), 1, 1, 'L');
-    $pdf->Ln(3);
+    //$pdf->Ln(2);
 
     if ($codigoCobrador === "todos") {
         $contador = 1;
@@ -160,7 +172,7 @@ function abonos()
         // Preparación de sentencia
         $statement2 = $mysqli->query($query2);
         $controlColonia = "";
-
+        $contador2 = 1;
         while ($cobradores = $statement1->fetch_assoc()) {//RECORRIDO DE TODOS LOS COBRADORES
             $cobradorR = $cobradores["codigoCobrador"];
             //var_dump("cobrador: ".$cobradorR);
@@ -286,9 +298,55 @@ function abonos()
                         //$totalAnticipoImpuestoI = doubleval($totalAnticipoImpuestoI) + doubleval($row['totalImpuesto']);
                     }
                     $contador++;
+                    if($contador2 > 32){
+                        $pdf->AddPage('L', 'Letter');
+                        $pdf->SetFont('Arial', '', 6);
+                        $pdf->Cell(260, 6, utf8_decode("Página " . str_pad($pdf->pageNo(), 4, "0", STR_PAD_LEFT)), 0, 1, 'R');
+                        $pdf->Image('../../../images/logo.png', 10, 10, 20, 18);
+
+                        $pdf->Ln(15);
+
+                        $pdf->SetFont('Arial', 'B', 11);
+
+                        date_default_timezone_set('America/El_Salvador');
+
+                        //echo strftime("El año es %Y y el mes es %B");
+                        putenv("LANG='es_ES.UTF-8'");
+                        setlocale(LC_ALL, 'es_ES.UTF-8');
+                        $pdf->SetFont('Arial', 'B', 9);
+                        $pdf->Cell(190, 4, utf8_decode('CABLE VISION POR SATELITE, S.A DE C.V.'), 0, 1, 'L');
+                        $pdf->SetFont('Arial', 'B', 7);
+                        $pdf->Cell(190, 4, utf8_decode('LISTADO DE CRÉDITOS FISCALES Y FACTURAS EMITIDAS'), 0, 1, 'L');
+                        if ($_SESSION['db'] == 'satpro_sm'){
+                            $pdf->Cell(190, 4, utf8_decode('SUCURSAL SAN MIGUEL'), 0, 1, 'L');
+
+                        }elseif ($_SESSION['db'] == 'satpro'){
+                            $pdf->Cell(190, 4, utf8_decode('SUCURSAL USULUTÁN'), 0, 1, 'L');
+                        }
+                        $pdf->SetFont('Arial', '', 7);
+                        $pdf->Cell(190, 4, utf8_decode('DESDE '.$desde.' HASTA '.$hasta), 0, 1, 'L');
+                        $pdf->Ln(2);
+
+                        $pdf->SetFont('Arial', 'B', 6.5);
+                        $pdf->Cell(15, 5, utf8_decode('N°'), 1, 0, 'L');
+                        $pdf->Cell(30, 5, utf8_decode('N° de factura'), 1, 0, 'L');
+                        $pdf->Cell(20, 5, utf8_decode('Fecha'), 1, 0, 'L');
+                        $pdf->Cell(70, 5, utf8_decode('Cliente'), 1, 0, 'L');
+                        $pdf->Cell(16, 5, utf8_decode('Mensualidad'), 1, 0, 'L');
+                        $pdf->Cell(10, 5, utf8_decode('Día cob'), 1, 0, 'L');
+                        $pdf->Cell(15, 5, utf8_decode('Servicio'), 1, 0, 'L');
+                        $pdf->Cell(15, 5, utf8_decode('Gravado'), 1, 0, 'L');
+                        $pdf->Cell(10, 5, utf8_decode('IVA'), 1, 0, 'L');
+                        $pdf->Cell(15, 5, utf8_decode('Neto'), 1, 0, 'L');
+                        $pdf->Cell(15, 5, utf8_decode('CESC'), 1, 0, 'L');
+                        $pdf->Cell(20, 5, utf8_decode('Total factura'), 1, 1, 'L');
+                        $contador2=1;
+                    }
+                    $contador2++;
 
                 }
                 $pdf->Ln(2);
+
         }
     }
     if ($codigoCobrador != "todos") {
@@ -304,7 +362,7 @@ function abonos()
         // Preparación de sentencia
         $statement2 = $mysqli->query($query2);
         $controlColonia = "";
-
+        $contador2=1;
         while ($cobradores = $statement1->fetch_assoc()) {//RECORRIDO DE TODOS LOS COBRADORES
             $cobradorR = $cobradores["codigoCobrador"];
             //var_dump("cobrador: ".$cobradorR);
@@ -436,12 +494,99 @@ function abonos()
                 }
                 $contador++;
 
+                if($contador2 > 32){
+                    $pdf->AddPage('L', 'Letter');
+                    $pdf->SetFont('Arial', '', 6);
+                    $pdf->Cell(260, 6, utf8_decode("Página " . str_pad($pdf->pageNo(), 4, "0", STR_PAD_LEFT)), 0, 1, 'R');
+                    $pdf->Image('../../../images/logo.png', 10, 10, 20, 18);
+
+                    $pdf->Ln(15);
+
+                    $pdf->SetFont('Arial', 'B', 11);
+
+                    date_default_timezone_set('America/El_Salvador');
+
+                    //echo strftime("El año es %Y y el mes es %B");
+                    putenv("LANG='es_ES.UTF-8'");
+                    setlocale(LC_ALL, 'es_ES.UTF-8');
+                    $pdf->SetFont('Arial', 'B', 9);
+                    $pdf->Cell(190, 4, utf8_decode('CABLE VISION POR SATELITE, S.A DE C.V.'), 0, 1, 'L');
+                    $pdf->SetFont('Arial', 'B', 7);
+                    $pdf->Cell(190, 4, utf8_decode('LISTADO DE CRÉDITOS FISCALES Y FACTURAS EMITIDAS'), 0, 1, 'L');
+                    if ($_SESSION['db'] == 'satpro_sm'){
+                        $pdf->Cell(190, 4, utf8_decode('SUCURSAL SAN MIGUEL'), 0, 1, 'L');
+
+                    }elseif ($_SESSION['db'] == 'satpro'){
+                        $pdf->Cell(190, 4, utf8_decode('SUCURSAL USULUTÁN'), 0, 1, 'L');
+                    }
+                    $pdf->SetFont('Arial', '', 7);
+                    $pdf->Cell(190, 4, utf8_decode('DESDE '.$desde.' HASTA '.$hasta), 0, 1, 'L');
+                    $pdf->Ln(2);
+
+                    $pdf->SetFont('Arial', 'B', 6.5);
+                    $pdf->Cell(15, 5, utf8_decode('N°'), 1, 0, 'L');
+                    $pdf->Cell(30, 5, utf8_decode('N° de factura'), 1, 0, 'L');
+                    $pdf->Cell(20, 5, utf8_decode('Fecha'), 1, 0, 'L');
+                    $pdf->Cell(70, 5, utf8_decode('Cliente'), 1, 0, 'L');
+                    $pdf->Cell(16, 5, utf8_decode('Mensualidad'), 1, 0, 'L');
+                    $pdf->Cell(10, 5, utf8_decode('Día cob'), 1, 0, 'L');
+                    $pdf->Cell(15, 5, utf8_decode('Servicio'), 1, 0, 'L');
+                    $pdf->Cell(15, 5, utf8_decode('Gravado'), 1, 0, 'L');
+                    $pdf->Cell(10, 5, utf8_decode('IVA'), 1, 0, 'L');
+                    $pdf->Cell(15, 5, utf8_decode('Neto'), 1, 0, 'L');
+                    $pdf->Cell(15, 5, utf8_decode('CESC'), 1, 0, 'L');
+                    $pdf->Cell(20, 5, utf8_decode('Total factura'), 1, 1, 'L');
+                    $contador2=1;
+                }
+                $contador2++;
+
             }
-            $pdf->Ln(2);
+            //$pdf->Ln(2);
         }
     }
 
-    $pdf->Cell(260, 6, utf8_decode("Página " . str_pad($pdf->pageNo(), 4, "0", STR_PAD_LEFT)), 0, 1, 'R');
+        $pdf->AddPage('L', 'Letter');
+        $pdf->SetFont('Arial', '', 6);
+        $pdf->Cell(260, 6, utf8_decode("Página " . str_pad($pdf->pageNo(), 4, "0", STR_PAD_LEFT)), 0, 1, 'R');
+        $pdf->Image('../../../images/logo.png', 10, 10, 20, 18);
+
+        $pdf->Ln(15);
+
+        $pdf->SetFont('Arial', 'B', 11);
+
+        date_default_timezone_set('America/El_Salvador');
+
+        //echo strftime("El año es %Y y el mes es %B");
+        putenv("LANG='es_ES.UTF-8'");
+        setlocale(LC_ALL, 'es_ES.UTF-8');
+        $pdf->SetFont('Arial', 'B', 9);
+        $pdf->Cell(190, 4, utf8_decode('CABLE VISION POR SATELITE, S.A DE C.V.'), 0, 1, 'L');
+        $pdf->SetFont('Arial', 'B', 7);
+        $pdf->Cell(190, 4, utf8_decode('LISTADO DE CRÉDITOS FISCALES Y FACTURAS EMITIDAS'), 0, 1, 'L');
+        if ($_SESSION['db'] == 'satpro_sm'){
+            $pdf->Cell(190, 4, utf8_decode('SUCURSAL SAN MIGUEL'), 0, 1, 'L');
+
+        }elseif ($_SESSION['db'] == 'satpro'){
+            $pdf->Cell(190, 4, utf8_decode('SUCURSAL USULUTÁN'), 0, 1, 'L');
+        }
+        $pdf->SetFont('Arial', '', 7);
+        $pdf->Cell(190, 4, utf8_decode('DESDE '.$desde.' HASTA '.$hasta), 0, 1, 'L');
+        $pdf->Ln(2);
+
+        $pdf->SetFont('Arial', 'B', 6.5);
+        $pdf->Cell(15, 5, utf8_decode('N°'), 1, 0, 'L');
+        $pdf->Cell(30, 5, utf8_decode('N° de factura'), 1, 0, 'L');
+        $pdf->Cell(20, 5, utf8_decode('Fecha'), 1, 0, 'L');
+        $pdf->Cell(70, 5, utf8_decode('Cliente'), 1, 0, 'L');
+        $pdf->Cell(16, 5, utf8_decode('Mensualidad'), 1, 0, 'L');
+        $pdf->Cell(10, 5, utf8_decode('Día cob'), 1, 0, 'L');
+        $pdf->Cell(15, 5, utf8_decode('Servicio'), 1, 0, 'L');
+        $pdf->Cell(15, 5, utf8_decode('Gravado'), 1, 0, 'L');
+        $pdf->Cell(10, 5, utf8_decode('IVA'), 1, 0, 'L');
+        $pdf->Cell(15, 5, utf8_decode('Neto'), 1, 0, 'L');
+        $pdf->Cell(15, 5, utf8_decode('CESC'), 1, 0, 'L');
+        $pdf->Cell(20, 5, utf8_decode('Total factura'), 1, 1, 'L');
+
     $pdf->Cell(185, 5, utf8_decode(''), 0, 0, 'R');
     $pdf->Cell(75, 5, utf8_decode(''), "", 1, 'R');
 

@@ -40,7 +40,79 @@
         font-weight: bold;
 
     }
+    .nav>li>a {
+        color: #fff;
+    }
     </style>
+    <style media="screen">
+        .form-control {
+            color: #212121;
+            font-size: 15px;
+            font-weight: bold;
+
+        }
+        .nav>li>a {
+            color: #fff;
+        }
+        .nav>li>a:hover {
+            color: #2b2b2b;
+        }
+        .dark{
+            color: #fff;
+            background-color: #212121;
+        }
+
+        .nav-tabs.nav-justified>li>a {
+            border-bottom: 1px solid #ddd;
+            border-radius: 20px 20px 0 0;
+            background-color: #d32f2f;
+        }
+        .danger .success{
+            background-color: #F5F5F5;
+        }
+    </style>
+
+    <style media="screen">
+        .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+            color: #fff;
+            background-color: #d32f2f;
+        }
+
+        .nav-pills>li>a{
+            color: #d32f2f;
+
+        }
+
+        .btn-danger {
+            color: #fff;
+            background-color: #d32f2f;
+            border-color: #d43f3a;
+        }
+        .label-danger {
+            background-color: #d32f2f;
+        }
+
+        .panel-danger>.panel-heading {
+            color: #fff;
+            background-color: #212121;
+            border-color: #212121;
+        }
+        .panel{
+            border-color: #212121;
+        }
+        .pagination>.active>a{
+            background-color: #d32f2f;
+            border-color: #d32f2f;
+        }
+        .pagination>.active>a:hover{
+            background-color: #d32f2f;
+            border-color: #d32f2f;
+        }
+        .pagination>li>a, .pagination>li>a:hover{
+            color: #2b2b2b;
+        }
+    </style>
+
 </head>
 
 <body>
@@ -216,6 +288,8 @@
                                 </li>
                                 <li><a href="ventasAnuladas.php">Ventas anuladas</a>
                                 </li>
+                                <li><a href="#" data-toggle="modal" data-target="#facturasEmitidas">Facturas emitidas (a detalle)</a>
+                                </li>
                             </ul>';
                         }
                     }
@@ -388,7 +462,7 @@
 
                 <!-- Modal content-->
                 <div class="modal-content">
-                  <div style="background-color: #1565C0; color:white;" class="modal-header">
+                  <div style="background-color: #d32f2f; color:white;" class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Generar facturas</h4>
                   </div>
@@ -500,7 +574,7 @@
                   <div class="modal-footer">
                       <div class="row">
                           <div class="col-md-6">
-                              <input type="submit" class="btn btn-success btn-lg btn-block" name="submit" value="Generar Facturas">
+                              <input type="submit" class="btn btn-danger btn-lg btn-block" name="submit" value="Generar Facturas">
                           </div>
                           <div class="col-md-6">
                               <button type="button" class="btn btn-default btn-lg btn-block" data-dismiss="modal">Cancelar</button>
@@ -517,7 +591,7 @@
 
                 <!-- Modal content-->
                 <div class="modal-content">
-                  <div style="background-color: #00897B; color:white;" class="modal-header">
+                  <div style="background-color: #d32f2f; color:white;" class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Consultar abonos</h4>
                   </div>
@@ -551,7 +625,7 @@
 
               <!-- Modal content-->
               <div class="modal-content">
-                <div style="background-color: #283593; color:white;" class="modal-header">
+                <div style="background-color: #d32f2f; color:white;" class="modal-header">
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
                   <h4 class="modal-title">Ver facturas generadas</h4>
                 </div>
@@ -629,7 +703,7 @@
                 <div class="modal-footer">
                     <div class="row">
                         <div class="col-md-6">
-                            <input type="submit" class="btn btn-info btn-md btn-block" name="submit" value="Ver facturas">
+                            <input type="submit" class="btn btn-danger btn-md btn-block" name="submit" value="Ver facturas">
                         </div>
                         <div class="col-md-6">
                             <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>
@@ -647,7 +721,7 @@
 
               <!-- Modal content-->
               <div class="modal-content">
-                <div style="background-color: #546E7A; color:white;" class="modal-header">
+                <div style="background-color: #d32f2f; color:white;" class="modal-header">
                   <button type="button" class="close" data-dismiss="modal">&times;</button>
                   <h4 class="modal-title">Imprimir facturas</h4>
                 </div>
@@ -753,7 +827,7 @@
 
             <!-- Modal content-->
             <div class="modal-content">
-                <div style="background-color: #1565C0; color:white;" class="modal-header">
+                <div style="background-color: #d32f2f; color:white;" class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Lista de facturas emitidas</h4>
                 </div>
@@ -850,7 +924,7 @@
                     <div class="modal-footer">
                         <div class="row">
                             <div class="col-md-6">
-                                <input type="submit" class="btn btn-success btn-md btn-block" name="submit" value="Ver reporte">
+                                <input type="submit" class="btn btn-danger btn-md btn-block" name="submit" value="Ver reporte">
                             </div>
                             <div class="col-md-6">
                                 <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>
@@ -868,7 +942,7 @@
 
             <!-- Modal content-->
             <div class="modal-content">
-                <div style="background-color: #1565C0; color:white;" class="modal-header">
+                <div style="background-color: #d32f2f; color:white;" class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Reporte de ordenes de trabajo</h4>
                 </div>
@@ -965,7 +1039,7 @@
                     <div class="modal-footer">
                         <div class="row">
                             <div class="col-md-6">
-                                <input type="submit" class="btn btn-success btn-md btn-block" name="submit" value="Ver reporte">
+                                <input type="submit" class="btn btn-danger btn-md btn-block" name="submit" value="Ver reporte">
                             </div>
                             <div class="col-md-6">
                                 <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>
@@ -983,7 +1057,7 @@
 
             <!-- Modal content-->
             <div class="modal-content">
-              <div style="background-color: #1565C0; color:white;" class="modal-header">
+              <div style="background-color: #d32f2f; color:white;" class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
                 <h4 class="modal-title">Lista de Abonos ingresados</h4>
               </div>
@@ -1045,7 +1119,7 @@
               <div class="modal-footer">
                   <div class="row">
                       <div class="col-md-6">
-                          <input type="submit" class="btn btn-success btn-md btn-block" name="submit" value="Ver abonos">
+                          <input type="submit" class="btn btn-danger btn-md btn-block" name="submit" value="Ver abonos">
                       </div>
                       <div class="col-md-6">
                           <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>
@@ -1062,7 +1136,7 @@
 
           <!-- Modal content-->
           <div class="modal-content">
-            <div style="background-color: #1B5E20; color:white;" class="modal-header">
+            <div style="background-color: #d32f2f; color:white;" class="modal-header">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
               <h4 class="modal-title">Lista de clientes de 1 factura vencida</h4>
             </div>
@@ -1099,7 +1173,7 @@
             <div class="modal-footer">
                 <div class="row">
                     <div class="col-md-6">
-                        <input type="submit" class="btn btn-success btn-md btn-block" name="submit" value="Ver listado">
+                        <input type="submit" class="btn btn-danger btn-md btn-block" name="submit" value="Ver listado">
                     </div>
                     <div class="col-md-6">
                         <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>
@@ -1116,7 +1190,7 @@
 
           <!-- Modal content-->
           <div class="modal-content">
-            <div style="background-color: #1565C0; color:white;" class="modal-header">
+            <div style="background-color: #d32f2f; color:white;" class="modal-header">
               <button type="button" class="close" data-dismiss="modal">&times;</button>
               <h4 class="modal-title">Lista de clientes 2 facturas vencidas</h4>
             </div>
@@ -1153,7 +1227,7 @@
             <div class="modal-footer">
                 <div class="row">
                     <div class="col-md-6">
-                        <input type="submit" class="btn btn-info btn-md btn-block" name="submit" value="Ver listado">
+                        <input type="submit" class="btn btn-danger btn-md btn-block" name="submit" value="Ver listado">
                     </div>
                     <div class="col-md-6">
                         <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>
@@ -1170,7 +1244,7 @@
 
         <!-- Modal content-->
         <div class="modal-content">
-          <div style="background-color: #b71c1c; color:white;" class="modal-header">
+          <div style="background-color: #d32f2f; color:white;" class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             <h4 class="modal-title">Lista de clientes a suspender</h4>
           </div>
@@ -1286,7 +1360,7 @@
             <div class="modal-footer">
                 <div class="row">
                     <div class="col-md-6">
-                        <input type="submit" class="btn btn-success btn-md btn-block" name="submit" value="Ver reporte">
+                        <input type="submit" class="btn btn-danger btn-md btn-block" name="submit" value="Ver reporte">
                     </div>
                     <div class="col-md-6">
                         <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>
@@ -1358,7 +1432,7 @@
           <div class="modal-footer">
               <div class="row">
                   <div class="col-md-6">
-                      <input type="submit" class="btn btn-success btn-md btn-block" name="submit" value="Ver listado">
+                      <input type="submit" class="btn btn-danger btn-md btn-block" name="submit" value="Ver listado">
                   </div>
                   <div class="col-md-6">
                       <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>
@@ -1375,7 +1449,7 @@
 
       <!-- Modal content-->
       <div class="modal-content">
-        <div style="background-color: #1B5E20; color:white;" class="modal-header">
+        <div style="background-color: #d32f2f; color:white;" class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Lista de clientes de 1 factura generada</h4>
         </div>
@@ -1412,7 +1486,7 @@
         <div class="modal-footer">
             <div class="row">
                 <div class="col-md-6">
-                    <input type="submit" class="btn btn-success btn-md btn-block" name="submit" value="Ver listado">
+                    <input type="submit" class="btn btn-danger btn-md btn-block" name="submit" value="Ver listado">
                 </div>
                 <div class="col-md-6">
                     <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>
@@ -1429,7 +1503,7 @@
 
     <!-- Modal content-->
     <div class="modal-content">
-      <div style="background-color: #1B5E20; color:white;" class="modal-header">
+      <div style="background-color: #d32f2f; color:white;" class="modal-header">
         <button type="button" class="close" data-dismiss="modal">&times;</button>
         <h4 class="modal-title">Lista de clientes de 2 facturas generadas</h4>
       </div>
@@ -1466,7 +1540,7 @@
       <div class="modal-footer">
           <div class="row">
               <div class="col-md-6">
-                  <input type="submit" class="btn btn-success btn-md btn-block" name="submit" value="Ver listado">
+                  <input type="submit" class="btn btn-danger btn-md btn-block" name="submit" value="Ver listado">
               </div>
               <div class="col-md-6">
                   <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>
@@ -1484,7 +1558,7 @@
 
       <!-- Modal content-->
       <div class="modal-content">
-        <div style="background-color: #27ae60; color:white;" class="modal-header">
+        <div style="background-color: #d32f2f; color:white;" class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
           <h4 class="modal-title">Listado de cobros</h4>
         </div>
@@ -1547,7 +1621,7 @@
         <div class="modal-footer">
             <div class="row">
                 <div class="col-md-6">
-                    <input type="submit" class="btn btn-success btn-md btn-block" name="submit" value="Ver clientes">
+                    <input type="submit" class="btn btn-danger btn-md btn-block" name="submit" value="Ver clientes">
                 </div>
                 <div class="col-md-6">
                     <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>
@@ -1565,7 +1639,7 @@
 
         <!-- Modal content-->
         <div class="modal-content">
-          <div style="background-color: #27ae60; color:white;" class="modal-header">
+          <div style="background-color: #d32f2f; color:white;" class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
             <h4 class="modal-title">Reporte de todos los clientes</h4>
           </div>
@@ -1626,7 +1700,7 @@
           <div class="modal-footer">
               <div class="row">
                   <div class="col-md-6">
-                      <input type="submit" class="btn btn-success btn-md btn-block" name="submit" value="Ver clientes">
+                      <input type="submit" class="btn btn-danger btn-md btn-block" name="submit" value="Ver clientes">
                   </div>
                   <div class="col-md-6">
                       <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>

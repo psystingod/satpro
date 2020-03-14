@@ -23,6 +23,19 @@ if (document.getElementById("servicio").value == "c") {
     document.getElementById("valorCuota").value = cuotaInter;
 }
 
+function getValorCobrador(){
+    if (document.getElementById("servicio").value == "i") {
+        document.getElementById("valorCuota").value = cuotaInter;
+    }else if (document.getElementById("servicio").value == "c") {
+        document.getElementById("valorCuota").value = cuotaCable;
+    }
+    var codValue = document.getElementById("codigoCliente").value;
+    var servicio = document.getElementById("servicio").value;
+    var cobrador = document.getElementById("cobrador").value;
+    // Trigger the button element with a click
+    window.location="abonos.php?codigoCliente="+codValue+"&tipoServicio="+servicio+"&cobrador="+cobrador;
+}
+
 
 function getValorCuota(){
     if (document.getElementById("servicio").value == "i") {
@@ -32,8 +45,9 @@ function getValorCuota(){
     }
     var codValue = document.getElementById("codigoCliente").value;
     var servicio = document.getElementById("servicio").value;
+    var cobrador = document.getElementById("cobrador").value;
     // Trigger the button element with a click
-    window.location="abonos.php?codigoCliente="+codValue+"&tipoServicio="+servicio;
+    window.location="abonos.php?codigoCliente="+codValue+"&tipoServicio="+servicio+"&cobrador="+cobrador;
 }
 
 function getMesesPagar(){

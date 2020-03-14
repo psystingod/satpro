@@ -223,6 +223,51 @@
     <!-- Custom Fonts -->
     <link href="../../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+    <style media="screen">
+        .form-control {
+            color: #212121;
+            font-size: 15px;
+            font-weight: bold;
+
+        }
+        .nav>li>a {
+            color: #fff;
+        }
+        .dark{
+            color: #fff;
+            background-color: #212121;
+        }
+    </style>
+
+    <style media="screen">
+        .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+            color: #fff;
+            background-color: #d32f2f;
+        }
+
+        .nav-pills>li>a{
+            color: #d32f2f;
+
+        }
+
+        .btn-danger {
+            color: #fff;
+            background-color: #d32f2f;
+            border-color: #d43f3a;
+        }
+        .label-danger {
+            background-color: #d32f2f;
+        }
+
+        .panel-danger>.panel-heading {
+            color: #fff;
+            background-color: #212121;
+            border-color: #212121;
+        }
+        .panel{
+            border-color: #212121;
+        }
+    </style>
 </head>
 
 <body>
@@ -238,7 +283,7 @@
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <div class="panel panel-primary">
+                        <div class="panel panel-danger">
                           <div class="panel-heading"><b>Orden de trabajo</b> <span id="nombreOrden" class="label label-danger"></span></div>
                           <form id="ordenTrabajo" action="" method="POST">
                           <div class="panel-body">
@@ -328,7 +373,7 @@
                               <div class="form-row">
                                   <div class="col-md-6">
 
-                                      <h4 class="alert alert-info cable"><strong>Cable</strong></h4>
+                                      <h4 class="alert btn-danger cable">Cable</h4>
                                       <div class="row">
                                           <div class="col-md-8">
                                               <label for="tipoActividadCable">Tipo de actividad</label>
@@ -361,7 +406,7 @@
                                   </div>
                                   <div class="col-md-6">
 
-                                      <h4 class="alert alert-info"><strong>Internet</strong></h4>
+                                      <h4 class="alert btn-danger">Internet</h4>
                                       <div class="row">
                                           <div class="col-md-8">
                                               <label for="tipoActividadInternet">Tipo de actividad</label>

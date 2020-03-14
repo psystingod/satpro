@@ -89,50 +89,64 @@ function libroConsumidorFinal(){
 
     /*********************************COMIENZO DE LA MASACRE***********************************/
     if ($libroDetallado == 1) {
-        $pdf->AddPage('P','Letter');
+        $pdf->AddPage('L','Letter');
 
         $pdf->SetFont('Times','B',10);
-        $pdf->Cell(190,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE FACTURAS'),0,0,'C');
+        $pdf->Cell(260,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE CREDITO FISCAL'),0,0,'C');
         $pdf->Ln(5);
         $pdf->SetFont('Times','B',8);
-        $pdf->Cell(190,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,0,'C');
+        $pdf->Cell(260,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,0,'C');
         $pdf->Ln(10);
 
         $pdf->SetFont('Times','B',10);
         //FILA 1
-        $pdf->Cell(25,6,utf8_decode(''),"TLR",0,'C');
+        $pdf->Cell(50,6,utf8_decode(''),"TLR",0,'C');
         $pdf->SetFont('Times','B',5);
         $pdf->Cell(15,6,utf8_decode('N° DE'),"T",0,'C');
-        $pdf->SetFont('Times','B',10);
-        $pdf->Cell(60,6,utf8_decode(''),"TLR",0,'C');
-        $pdf->Cell(60,6,utf8_decode('VENTAS'),1,0,'C');
-        $pdf->Cell(40,6,utf8_decode(''),"TLR",1,'C');
+        $pdf->SetFont('Times','B',6);
+        $pdf->Cell(55,6,utf8_decode(''),"TLR",0,'C');
+        $pdf->Cell(15,6,utf8_decode(''),'TLR',0,'C');
+        $pdf->Cell(110,6,utf8_decode('OPERACIONES DE VENTAS PROPIAS Y A CUENTA DE TERCEROS'),'TBLR',0,'C');
+        $pdf->Cell(15,6,utf8_decode(''),'TLR',1,'C');
+        //$pdf->Cell(25,6,utf8_decode(''),"TRB",1,'C');
 
         //FILA 2
-        $pdf->Cell(25,6,utf8_decode(''),"LR",0,'C');
+        $pdf->Cell(50,6,utf8_decode(''),"LR",0,'C');
         $pdf->SetFont('Times','B',5);
         $pdf->Cell(15,6,utf8_decode('FORMULARIO'),"LR",0,'C');
-        $pdf->SetFont('Times','B',10);
-        $pdf->Cell(60,6,utf8_decode(''),"LR",0,'C');
-        $pdf->Cell(20,6,utf8_decode(''),"LRT",0,'C');
-        $pdf->Cell(40,6,utf8_decode('GRAVADAS'),1,0,'C');
-        $pdf->Cell(40,6,utf8_decode(''),"BLR",1,'C');
+        $pdf->SetFont('Times','B',6);
+        $pdf->Cell(55,6,utf8_decode(''),"LR",0,'C');
+        $pdf->Cell(15,6,utf8_decode(''),'LR',0,'C');
+        $pdf->Cell(47.5,6,utf8_decode('PROPIAS'),"LRTB",0,'C');
+        $pdf->Cell(47.5,6,utf8_decode('A CUENTA DE TERCEROS'),1,0,'C');
+        $pdf->Cell(15,6,utf8_decode('IVA'),"TLR",0,'C');
+        //$pdf->Cell(40,6,utf8_decode(''),"LR",0,'C');
+        $pdf->Cell(15,6,utf8_decode('TOTAL'),'LR',1,'C');
 
         //FILA 3
         $pdf->SetFont('Times','B',5);
-        $pdf->Cell(5,6,utf8_decode('DIA'),1,0,'C');
-        $pdf->Cell(20,6,utf8_decode('N° DE FACTURA'),1,0,'C');
-        $pdf->Cell(15,6,utf8_decode('UNICO'),"BLR",0,'C');
-        $pdf->SetFont('Times','B',7);
-        $pdf->Cell(60,6,utf8_decode('NOMBRE DEL CLIENTE'),1,0,'C');
-        $pdf->Cell(20,6,utf8_decode('EXENTAS'),"BLR",0,'C');
-        $pdf->Cell(20,6,utf8_decode('LOCALES'),1,0,'C');
-        $pdf->Cell(20,6,utf8_decode('EXPORTACION'),1,0,'C');
+        $pdf->Cell(10,6,utf8_decode('DIA'),1,0,'C');
+        $pdf->SetFont('Times','B',4.5);
+        $pdf->Cell(20,6,utf8_decode('FECHA DE EMISION'),1,0,'C');
+        $pdf->SetFont('Times','B',4.5);
+        $pdf->Cell(20,6,utf8_decode('CORRELATIVO'),1,0,'C');
         $pdf->SetFont('Times','B',5);
-        $pdf->Cell(15,6,utf8_decode('SUB-TOTAL'),1,0,'C');
-        $pdf->Cell(10,6,utf8_decode('CESC'),1,0,'C');
-        $pdf->SetFont('Times','B',4);
-        $pdf->Cell(15,6,utf8_decode('VENTAS TOTALES'),1,1,'C');
+        $pdf->Cell(15,6,utf8_decode('UNICO'),"BLR",0,'C');
+        $pdf->SetFont('Times','B',5);
+
+        $pdf->Cell(55,6,utf8_decode('NOMBRE DEL CLIENTE'),1,0,'C');
+        $pdf->Cell(15,6,utf8_decode('NRC'),'LRB',0,'C');
+        $pdf->SetFont('Times','B',4.5);
+        $pdf->Cell(12.5,6,utf8_decode('EXENTAS'),"BLR",0,'C');
+        $pdf->Cell(20,6,utf8_decode('INTERNAS GRAVADAS'),1,0,'C');
+        $pdf->Cell(15,6,utf8_decode('DÉBITO FISCAL'),1,0,'C');
+        $pdf->SetFont('Times','B',4.5);
+        $pdf->Cell(10,6,utf8_decode('EXENTAS'),"BLR",0,'C');
+        $pdf->Cell(20,6,utf8_decode('INTERNAS GRAVADAS'),1,0,'C');
+        $pdf->Cell(17.5,6,utf8_decode('DÉBITO FISCAL'),1,0,'C');
+        $pdf->SetFont('Times','B',5);
+        $pdf->Cell(15,6,utf8_decode('RETENIDO'),"BLR",0,'C');
+        $pdf->Cell(15,6,utf8_decode(''),'BLR',1,'C');
         $pdf->SetFont('Times','B',5);
         /*$pdf->Image('../../../images/logo.png',10,10, 26, 24);
         $pdf->Ln(35);
@@ -152,11 +166,12 @@ function libroConsumidorFinal(){
         $pdf->Cell(190,6,utf8_decode(strftime('Ciudad de Usulután, %A %e de %B de %G')),0,1,'L');
         $pdf->Ln();*/
         $pdf->Ln(3);
-        $pdf->SetFont('Times','',6);
+        $pdf->SetFont('Times','',7);
         $counter = 1;
+        $counter2 = 1;
         while ($counter <= 31) {
             if ($tipoFacturaGenerar == 1) {
-                $sql = "SELECT * FROM tbl_cargos WHERE DAY(fechaFactura) =".$counter." AND MONTH(fechaFactura)=".$mesGenerar." AND YEAR(fechaFactura)=".$anoGenerar." AND tipoFactura = 1 AND anulada=0";
+                $sql = "SELECT *, (SELECT num_registro FROM clientes WHERE clientes.cod_cliente=tbl_cargos.codigoCliente) AS nRegistro FROM tbl_cargos WHERE DAY(fechaFactura) =".$counter." AND MONTH(fechaFactura)=".$mesGenerar." AND YEAR(fechaFactura)=".$anoGenerar." AND tipoFactura = 1";
 
                 $stmt = $mysqli->query($sql);
 
@@ -175,34 +190,120 @@ function libroConsumidorFinal(){
                     $separado1 = (doubleval($montoCancelado1)/(1 + doubleval($iva)));
                     $totalIva1 = substr(doubleval($separado1) * doubleval($iva),0,7);
 
-                    $pdf->Cell(5,1,utf8_decode(date("d", strtotime($result['fechaFactura']))),0,0,'L');
-                    $pdf->Cell(20,1,utf8_decode($result['numeroFactura']),0,0,'L');
+                    $pdf->Cell(10,1,utf8_decode(date("d", strtotime($result['fechaFactura']))),0,0,'L');
+                    $pdf->Cell(20,1,utf8_decode($result['fechaFactura']),0,0,'L');
+                    $pdf->Cell(20,1,utf8_decode(substr($result['numeroFactura'],9,7)),0,0,'L');
                     $pdf->Cell(15,1,utf8_decode(0),0,0,'L');
-                    $pdf->Cell(60,1,utf8_decode($result["nombre"]),0,0,'L');
+                    $pdf->SetFont('Times','',5.8);
+
+                    $pdf->Cell(55,1,utf8_decode($result["nombre"]),0,0,'L');
+                    $pdf->Cell(15,1,utf8_decode($result["nRegistro"]),0,0,'L');
+                    $pdf->SetFont('Times','',7);
                     $sinIva1 = doubleval($montoCancelado1)-doubleval($totalIva1);
                     if ($ex->isExento($result["codigoCliente"])) {
-                        $pdf->Cell(20,1,utf8_decode($montoCancelado1),0,0,'L');
+                        $pdf->Cell(12.5,1,utf8_decode($montoCancelado1),0,0,'L');
                         $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
-                        $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
+                        $pdf->Cell(15,1,utf8_decode("0.00"),0,0,'L');
                         $totalSinIvaEx1 = $totalSinIvaEx1 + $sinIva1;
                         $totalConIvaEx1 = $totalConIvaEx1 + $montoCancelado1;
                     }
 
                     else {
-                        $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
-                        $pdf->Cell(20,1,utf8_decode($sinIva1),0,0,'L');
-                        $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
+                        $pdf->Cell(12.5,1,utf8_decode("0.00"),0,0,'L');
+                        $pdf->Cell(20,1,utf8_decode(number_format($sinIva1,2)),0,0,'L');
+                        $pdf->Cell(15,1,utf8_decode(number_format($result['totalIva'],2)),0,0,'L');
                         $totalSinIva1 = $totalSinIva1 +$sinIva1;
                         $totalConIva1 = $totalConIva1 + $montoCancelado1;
+                    }
+
+                    if ($ex->isExento($result["codigoCliente"])) {
+                        $pdf->Cell(10,1,utf8_decode($montoCancelado1),0,0,'L');
+                        $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
+                        $pdf->Cell(17.5,1,utf8_decode("0.00"),0,0,'L');
+                        /*$totalSinIvaEx1 = $totalSinIvaEx1 + $sinIva1;
+                        $totalConIvaEx1 = $totalConIvaEx1 + $montoCancelado1;*/
+                    }
+
+                    else {
+                        $pdf->Cell(10,1,utf8_decode("0.00"),0,0,'L');
+                        $pdf->Cell(20,1,utf8_decode(number_format(0,2)),0,0,'L');
+                        $pdf->Cell(17.5,1,utf8_decode("0.00"),0,0,'L');
+                        /*$totalSinIva1 = $totalSinIva1 +$sinIva1;
+                        $totalConIva1 = $totalConIva1 + $montoCancelado1;*/
                     }
 
                     $totalSoloIva1 = $totalSoloIva1 + $totalIva1;
                     $totalSoloCesc1 = $totalSoloCesc1 + doubleval($result["totalImpuesto"]);
                     //$pdf->Cell(20,1,utf8_decode($montoCancelado),0,1,'L');
-                    $pdf->Cell(15,1,utf8_decode(number_format($montoCancelado1,2)),0,0,'L');
-                    $pdf->Cell(15,1,utf8_decode(number_format($result["totalImpuesto"],2)),0,0,'L');
-                    $pdf->Cell(15,1,utf8_decode(number_format(doubleval($montoCancelado1)+doubleval($result["totalImpuesto"]),2)),0,0,'L');
-                    $pdf->Ln(4);
+                    $pdf->Cell(15,1,utf8_decode('0.00'),0,0,'L');
+                    //$pdf->Cell(15,1,utf8_decode(number_format($result["totalImpuesto"],2)),0,0,'L');
+                    $pdf->Cell(15,1,utf8_decode(number_format(doubleval($montoCancelado1)/*+doubleval($result["totalImpuesto"])*/,2)),0,1,'L');
+                    $pdf->Ln(3);
+
+                    if ($counter2 > 50){
+                        $pdf->AddPage('L','Letter');
+
+                        $pdf->SetFont('Times','B',10);
+                        $pdf->Cell(260,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE CREDITO FISCAL'),0,0,'C');
+                        $pdf->Ln(5);
+                        $pdf->SetFont('Times','B',8);
+                        $pdf->Cell(260,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,0,'C');
+                        $pdf->Ln(10);
+
+                        $pdf->SetFont('Times','B',10);
+                        //FILA 1
+                        $pdf->Cell(50,6,utf8_decode(''),"TLR",0,'C');
+                        $pdf->SetFont('Times','B',5);
+                        $pdf->Cell(15,6,utf8_decode('N° DE'),"T",0,'C');
+                        $pdf->SetFont('Times','B',6);
+                        $pdf->Cell(55,6,utf8_decode(''),"TLR",0,'C');
+                        $pdf->Cell(15,6,utf8_decode(''),'TLR',0,'C');
+                        $pdf->Cell(110,6,utf8_decode('OPERACIONES DE VENTAS PROPIAS Y A CUENTA DE TERCEROS'),'TBLR',0,'C');
+                        $pdf->Cell(15,6,utf8_decode(''),'TLR',1,'C');
+                        //$pdf->Cell(25,6,utf8_decode(''),"TRB",1,'C');
+
+                        //FILA 2
+                        $pdf->Cell(50,6,utf8_decode(''),"LR",0,'C');
+                        $pdf->SetFont('Times','B',5);
+                        $pdf->Cell(15,6,utf8_decode('FORMULARIO'),"LR",0,'C');
+                        $pdf->SetFont('Times','B',6);
+                        $pdf->Cell(55,6,utf8_decode(''),"LR",0,'C');
+                        $pdf->Cell(15,6,utf8_decode(''),'LR',0,'C');
+                        $pdf->Cell(47.5,6,utf8_decode('PROPIAS'),"LRTB",0,'C');
+                        $pdf->Cell(47.5,6,utf8_decode('A CUENTA DE TERCEROS'),1,0,'C');
+                        $pdf->Cell(15,6,utf8_decode('IVA'),"TLR",0,'C');
+                        //$pdf->Cell(40,6,utf8_decode(''),"LR",0,'C');
+                        $pdf->Cell(15,6,utf8_decode('TOTAL'),'LR',1,'C');
+
+                        //FILA 3
+                        $pdf->SetFont('Times','B',5);
+                        $pdf->Cell(10,6,utf8_decode('DIA'),1,0,'C');
+                        $pdf->SetFont('Times','B',4.5);
+                        $pdf->Cell(20,6,utf8_decode('FECHA DE EMISION'),1,0,'C');
+                        $pdf->SetFont('Times','B',4.5);
+                        $pdf->Cell(20,6,utf8_decode('CORRELATIVO'),1,0,'C');
+                        $pdf->SetFont('Times','B',5);
+                        $pdf->Cell(15,6,utf8_decode('UNICO'),"BLR",0,'C');
+                        $pdf->SetFont('Times','B',5);
+
+                        $pdf->Cell(55,6,utf8_decode('NOMBRE DEL CLIENTE'),1,0,'C');
+                        $pdf->Cell(15,6,utf8_decode('NRC'),'LRB',0,'C');
+                        $pdf->SetFont('Times','B',4.5);
+                        $pdf->Cell(12.5,6,utf8_decode('EXENTAS'),"BLR",0,'C');
+                        $pdf->Cell(20,6,utf8_decode('INTERNAS GRAVADAS'),1,0,'C');
+                        $pdf->Cell(15,6,utf8_decode('DÉBITO FISCAL'),1,0,'C');
+                        $pdf->SetFont('Times','B',4.5);
+                        $pdf->Cell(10,6,utf8_decode('EXENTAS'),"BLR",0,'C');
+                        $pdf->Cell(20,6,utf8_decode('INTERNAS GRAVADAS'),1,0,'C');
+                        $pdf->Cell(17.5,6,utf8_decode('DÉBITO FISCAL'),1,0,'C');
+                        $pdf->SetFont('Times','B',5);
+                        $pdf->Cell(15,6,utf8_decode('RETENIDO'),"BLR",0,'C');
+                        $pdf->Cell(15,6,utf8_decode(''),'BLR',1,'C');
+                        $pdf->SetFont('Times','B',5);
+                        $counter2++;
+                        $pdf->Ln(3);
+                        $pdf->SetFont('Times','',7);
+                    }
                 }
             }
             elseif ($tipoFacturaGenerar == 2) {
@@ -255,6 +356,71 @@ function libroConsumidorFinal(){
                     $pdf->Cell(15,1,utf8_decode(number_format($result["impuesto"],2)),0,0,'L');
                     $pdf->Cell(15,1,utf8_decode(number_format(doubleval($montoCancelado2)+doubleval($result["impuesto"]),2)),0,0,'L');
                     $pdf->Ln(4);
+
+                    if ($counter2 > 50){
+                        $pdf->AddPage('L','Letter');
+
+                        $pdf->SetFont('Times','B',10);
+                        $pdf->Cell(260,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE CREDITO FISCAL'),0,0,'C');
+                        $pdf->Ln(5);
+                        $pdf->SetFont('Times','B',8);
+                        $pdf->Cell(260,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,0,'C');
+                        $pdf->Ln(10);
+
+                        $pdf->SetFont('Times','B',10);
+                        //FILA 1
+                        $pdf->Cell(50,6,utf8_decode(''),"TLR",0,'C');
+                        $pdf->SetFont('Times','B',5);
+                        $pdf->Cell(15,6,utf8_decode('N° DE'),"T",0,'C');
+                        $pdf->SetFont('Times','B',6);
+                        $pdf->Cell(55,6,utf8_decode(''),"TLR",0,'C');
+                        $pdf->Cell(15,6,utf8_decode(''),'TLR',0,'C');
+                        $pdf->Cell(110,6,utf8_decode('OPERACIONES DE VENTAS PROPIAS Y A CUENTA DE TERCEROS'),'TBLR',0,'C');
+                        $pdf->Cell(15,6,utf8_decode(''),'TLR',1,'C');
+                        //$pdf->Cell(25,6,utf8_decode(''),"TRB",1,'C');
+
+                        //FILA 2
+                        $pdf->Cell(50,6,utf8_decode(''),"LR",0,'C');
+                        $pdf->SetFont('Times','B',5);
+                        $pdf->Cell(15,6,utf8_decode('FORMULARIO'),"LR",0,'C');
+                        $pdf->SetFont('Times','B',6);
+                        $pdf->Cell(55,6,utf8_decode(''),"LR",0,'C');
+                        $pdf->Cell(15,6,utf8_decode(''),'LR',0,'C');
+                        $pdf->Cell(47.5,6,utf8_decode('PROPIAS'),"LRTB",0,'C');
+                        $pdf->Cell(47.5,6,utf8_decode('A CUENTA DE TERCEROS'),1,0,'C');
+                        $pdf->Cell(15,6,utf8_decode('IVA'),"TLR",0,'C');
+                        //$pdf->Cell(40,6,utf8_decode(''),"LR",0,'C');
+                        $pdf->Cell(15,6,utf8_decode('TOTAL'),'LR',1,'C');
+
+                        //FILA 3
+                        $pdf->SetFont('Times','B',5);
+                        $pdf->Cell(10,6,utf8_decode('DIA'),1,0,'C');
+                        $pdf->SetFont('Times','B',4);
+                        $pdf->Cell(20,6,utf8_decode('FECHA DE EMISION'),1,0,'C');
+                        $pdf->SetFont('Times','B',4);
+                        $pdf->Cell(20,6,utf8_decode('CORRELATIVO'),1,0,'C');
+                        $pdf->SetFont('Times','B',5);
+                        $pdf->Cell(15,6,utf8_decode('UNICO'),"BLR",0,'C');
+                        $pdf->SetFont('Times','B',5);
+
+                        $pdf->Cell(55,6,utf8_decode('NOMBRE DEL CLIENTE'),1,0,'C');
+                        $pdf->Cell(15,6,utf8_decode('NRC'),'LRB',0,'C');
+                        $pdf->SetFont('Times','B',4.5);
+                        $pdf->Cell(12.5,6,utf8_decode('EXENTAS'),"BLR",0,'C');
+                        $pdf->Cell(20,6,utf8_decode('INTERNAS GRAVADAS'),1,0,'C');
+                        $pdf->Cell(15,6,utf8_decode('DÉBITO FISCAL'),1,0,'C');
+                        $pdf->SetFont('Times','B',4.5);
+                        $pdf->Cell(10,6,utf8_decode('EXENTAS'),"BLR",0,'C');
+                        $pdf->Cell(20,6,utf8_decode('INTERNAS GRAVADAS'),1,0,'C');
+                        $pdf->Cell(17.5,6,utf8_decode('DÉBITO FISCAL'),1,0,'C');
+                        $pdf->SetFont('Times','B',5);
+                        $pdf->Cell(15,6,utf8_decode('RETENIDO'),"BLR",0,'C');
+                        $pdf->Cell(15,6,utf8_decode(''),'BLR',1,'C');
+                        $pdf->SetFont('Times','B',5);
+                        $counter2++;
+                        $pdf->Ln(3);
+                        $pdf->SetFont('Times','',6);
+                    }
                 }
             }
             elseif ($tipoFacturaGenerar == 3) {
@@ -309,11 +475,76 @@ function libroConsumidorFinal(){
                     $pdf->Cell(15,1,utf8_decode(number_format($result["impuesto"],2)),0,0,'L');
                     $pdf->Cell(15,1,utf8_decode(number_format(doubleval($montoCancelado3)+doubleval($result["impuesto"]),2)),0,0,'L');
                     $pdf->Ln(4);
+
+                    if ($counter2 > 50){
+                        $pdf->AddPage('L','Letter');
+
+                        $pdf->SetFont('Times','B',10);
+                        $pdf->Cell(260,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE CREDITO FISCAL'),0,0,'C');
+                        $pdf->Ln(5);
+                        $pdf->SetFont('Times','B',8);
+                        $pdf->Cell(260,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,0,'C');
+                        $pdf->Ln(10);
+
+                        $pdf->SetFont('Times','B',10);
+                        //FILA 1
+                        $pdf->Cell(50,6,utf8_decode(''),"TLR",0,'C');
+                        $pdf->SetFont('Times','B',5);
+                        $pdf->Cell(15,6,utf8_decode('N° DE'),"T",0,'C');
+                        $pdf->SetFont('Times','B',6);
+                        $pdf->Cell(55,6,utf8_decode(''),"TLR",0,'C');
+                        $pdf->Cell(15,6,utf8_decode(''),'TLR',0,'C');
+                        $pdf->Cell(110,6,utf8_decode('OPERACIONES DE VENTAS PROPIAS Y A CUENTA DE TERCEROS'),'TBLR',0,'C');
+                        $pdf->Cell(15,6,utf8_decode(''),'TLR',1,'C');
+                        //$pdf->Cell(25,6,utf8_decode(''),"TRB",1,'C');
+
+                        //FILA 2
+                        $pdf->Cell(50,6,utf8_decode(''),"LR",0,'C');
+                        $pdf->SetFont('Times','B',5);
+                        $pdf->Cell(15,6,utf8_decode('FORMULARIO'),"LR",0,'C');
+                        $pdf->SetFont('Times','B',6);
+                        $pdf->Cell(55,6,utf8_decode(''),"LR",0,'C');
+                        $pdf->Cell(15,6,utf8_decode(''),'LR',0,'C');
+                        $pdf->Cell(47.5,6,utf8_decode('PROPIAS'),"LRTB",0,'C');
+                        $pdf->Cell(47.5,6,utf8_decode('A CUENTA DE TERCEROS'),1,0,'C');
+                        $pdf->Cell(15,6,utf8_decode('IVA'),"TLR",0,'C');
+                        //$pdf->Cell(40,6,utf8_decode(''),"LR",0,'C');
+                        $pdf->Cell(15,6,utf8_decode('TOTAL'),'LR',1,'C');
+
+                        //FILA 3
+                        $pdf->SetFont('Times','B',5);
+                        $pdf->Cell(10,6,utf8_decode('DIA'),1,0,'C');
+                        $pdf->SetFont('Times','B',4);
+                        $pdf->Cell(20,6,utf8_decode('FECHA DE EMISION'),1,0,'C');
+                        $pdf->SetFont('Times','B',4);
+                        $pdf->Cell(20,6,utf8_decode('CORRELATIVO'),1,0,'C');
+                        $pdf->SetFont('Times','B',5);
+                        $pdf->Cell(15,6,utf8_decode('UNICO'),"BLR",0,'C');
+                        $pdf->SetFont('Times','B',5);
+
+                        $pdf->Cell(55,6,utf8_decode('NOMBRE DEL CLIENTE'),1,0,'C');
+                        $pdf->Cell(15,6,utf8_decode('NRC'),'LRB',0,'C');
+                        $pdf->SetFont('Times','B',4.5);
+                        $pdf->Cell(12.5,6,utf8_decode('EXENTAS'),"BLR",0,'C');
+                        $pdf->Cell(20,6,utf8_decode('INTERNAS GRAVADAS'),1,0,'C');
+                        $pdf->Cell(15,6,utf8_decode('DÉBITO FISCAL'),1,0,'C');
+                        $pdf->SetFont('Times','B',4.5);
+                        $pdf->Cell(10,6,utf8_decode('EXENTAS'),"BLR",0,'C');
+                        $pdf->Cell(20,6,utf8_decode('INTERNAS GRAVADAS'),1,0,'C');
+                        $pdf->Cell(17.5,6,utf8_decode('DÉBITO FISCAL'),1,0,'C');
+                        $pdf->SetFont('Times','B',5);
+                        $pdf->Cell(15,6,utf8_decode('RETENIDO'),"BLR",0,'C');
+                        $pdf->Cell(15,6,utf8_decode(''),'BLR',1,'C');
+                        $pdf->SetFont('Times','B',5);
+                        $counter2++;
+                        $pdf->Ln(3);
+                        $pdf->SetFont('Times','',6);
+                    }
                 }
 
             }
             elseif ($tipoFacturaGenerar == 4) {
-                $sql = "SELECT * FROM tbl_cargos WHERE DAY(fechaFactura) =".$counter." AND MONTH(fechaFactura)=".$mesGenerar." AND YEAR(fechaFactura)=".$anoGenerar." AND tipoFactura = 1 AND anulada=0";
+                $sql = "SELECT *, (SELECT num_registro FROM clientes WHERE clientes.cod_cliente=tbl_cargos.codigoCliente) AS nRegistro FROM tbl_cargos WHERE DAY(fechaFactura) =".$counter." AND MONTH(fechaFactura)=".$mesGenerar." AND YEAR(fechaFactura)=".$anoGenerar." AND tipoFactura = 1";
 
                 $stmt = $mysqli->query($sql);
 
@@ -332,34 +563,120 @@ function libroConsumidorFinal(){
                     $separado1 = (floatval($montoCancelado1)/(1 + floatval($iva)));
                     $totalIva1 = substr(doubleval($separado1) * doubleval($iva),0,7);
 
-                    $pdf->Cell(5,1,utf8_decode(date("d", strtotime($result['fechaFactura']))),0,0,'L');
-                    $pdf->Cell(20,1,utf8_decode($result['numeroFactura']),0,0,'L');
+                    $pdf->Cell(10,1,utf8_decode(date("d", strtotime($result['fechaFactura']))),0,0,'L');
+                    $pdf->Cell(20,1,utf8_decode($result['fechaFactura']),0,0,'L');
+                    $pdf->Cell(20,1,utf8_decode(substr($result['numeroFactura'],9,7)),0,0,'L');
                     $pdf->Cell(15,1,utf8_decode(0),0,0,'L');
-                    $pdf->Cell(60,1,utf8_decode($result["nombre"]),0,0,'L');
+                    $pdf->SetFont('Times','',5.5);
+
+                    $pdf->Cell(55,1,utf8_decode($result["nombre"]),0,0,'L');
+                    $pdf->Cell(15,1,utf8_decode($result["nRegistro"]),0,0,'L');
+                    $pdf->SetFont('Times','',5.5);
                     $sinIva1 = doubleval($montoCancelado1)-doubleval($totalIva1);
                     if ($ex->isExento($result["codigoCliente"])) {
-                        $pdf->Cell(20,1,utf8_decode($montoCancelado1),0,0,'L');
+                        $pdf->Cell(12.5,1,utf8_decode($montoCancelado1),0,0,'L');
                         $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
-                        $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
+                        $pdf->Cell(15,1,utf8_decode("0.00"),0,0,'L');
                         $totalSinIvaEx1 = $totalSinIvaEx1 + $sinIva1;
                         $totalConIvaEx1 = $totalConIvaEx1 + $montoCancelado1;
                     }
 
                     else {
-                        $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
-                        $pdf->Cell(20,1,utf8_decode(number_format($sinIva1,2)),0,0,'L');//APARENTEMENTE TIENE IVA Y FALTA CESC
-                        $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
+                        $pdf->Cell(12.5,1,utf8_decode("0.00"),0,0,'L');
+                        $pdf->Cell(20,1,utf8_decode(number_format($sinIva1,2)),0,0,'L');
+                        $pdf->Cell(15,1,utf8_decode(number_format($result['totalIva'],2)),0,0,'L');
                         $totalSinIva1 = $totalSinIva1 +$sinIva1;
                         $totalConIva1 = $totalConIva1 + $montoCancelado1;
+                    }
+
+                    if ($ex->isExento($result["codigoCliente"])) {
+                        $pdf->Cell(10,1,utf8_decode($montoCancelado1),0,0,'L');
+                        $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
+                        $pdf->Cell(17.5,1,utf8_decode("0.00"),0,0,'L');
+                        /*$totalSinIvaEx1 = $totalSinIvaEx1 + $sinIva1;
+                        $totalConIvaEx1 = $totalConIvaEx1 + $montoCancelado1;*/
+                    }
+
+                    else {
+                        $pdf->Cell(10,1,utf8_decode("0.00"),0,0,'L');
+                        $pdf->Cell(20,1,utf8_decode(number_format(0,2)),0,0,'L');
+                        $pdf->Cell(17.5,1,utf8_decode("0.00"),0,0,'L');
+                        /*$totalSinIva1 = $totalSinIva1 +$sinIva1;
+                        $totalConIva1 = $totalConIva1 + $montoCancelado1;*/
                     }
 
                     $totalSoloIva1 = $totalSoloIva1 + $totalIva1;
                     $totalSoloCesc1 = $totalSoloCesc1 + doubleval($result["totalImpuesto"]);
                     //$pdf->Cell(20,1,utf8_decode($montoCancelado),0,1,'L');
-                    $pdf->Cell(15,1,utf8_decode(number_format($montoCancelado1,2)),0,0,'L');
-                    $pdf->Cell(15,1,utf8_decode(number_format($result["totalImpuesto"],2)),0,0,'L');
-                    $pdf->Cell(15,1,utf8_decode(number_format(doubleval($montoCancelado1)+doubleval($result["totalImpuesto"]),2)),0,0,'L');
+                    $pdf->Cell(15,1,utf8_decode('0.00'),0,0,'L');
+                    //$pdf->Cell(15,1,utf8_decode(number_format($result["totalImpuesto"],2)),0,0,'L');
+                    $pdf->Cell(15,1,utf8_decode(number_format(doubleval($montoCancelado1)/*+doubleval($result["totalImpuesto"])*/,2)),0,1,'L');
                     $pdf->Ln(4);
+
+                    if ($counter2 > 50){
+                        $pdf->AddPage('L','Letter');
+
+                        $pdf->SetFont('Times','B',10);
+                        $pdf->Cell(260,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE CREDITO FISCAL'),0,0,'C');
+                        $pdf->Ln(5);
+                        $pdf->SetFont('Times','B',8);
+                        $pdf->Cell(260,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,0,'C');
+                        $pdf->Ln(10);
+
+                        $pdf->SetFont('Times','B',10);
+                        //FILA 1
+                        $pdf->Cell(50,6,utf8_decode(''),"TLR",0,'C');
+                        $pdf->SetFont('Times','B',5);
+                        $pdf->Cell(15,6,utf8_decode('N° DE'),"T",0,'C');
+                        $pdf->SetFont('Times','B',6);
+                        $pdf->Cell(55,6,utf8_decode(''),"TLR",0,'C');
+                        $pdf->Cell(15,6,utf8_decode(''),'TLR',0,'C');
+                        $pdf->Cell(110,6,utf8_decode('OPERACIONES DE VENTAS PROPIAS Y A CUENTA DE TERCEROS'),'TBLR',0,'C');
+                        $pdf->Cell(15,6,utf8_decode(''),'TLR',1,'C');
+                        //$pdf->Cell(25,6,utf8_decode(''),"TRB",1,'C');
+
+                        //FILA 2
+                        $pdf->Cell(50,6,utf8_decode(''),"LR",0,'C');
+                        $pdf->SetFont('Times','B',5);
+                        $pdf->Cell(15,6,utf8_decode('FORMULARIO'),"LR",0,'C');
+                        $pdf->SetFont('Times','B',6);
+                        $pdf->Cell(55,6,utf8_decode(''),"LR",0,'C');
+                        $pdf->Cell(15,6,utf8_decode(''),'LR',0,'C');
+                        $pdf->Cell(47.5,6,utf8_decode('PROPIAS'),"LRTB",0,'C');
+                        $pdf->Cell(47.5,6,utf8_decode('A CUENTA DE TERCEROS'),1,0,'C');
+                        $pdf->Cell(15,6,utf8_decode('IVA'),"TLR",0,'C');
+                        //$pdf->Cell(40,6,utf8_decode(''),"LR",0,'C');
+                        $pdf->Cell(15,6,utf8_decode('TOTAL'),'LR',1,'C');
+
+                        //FILA 3
+                        $pdf->SetFont('Times','B',5);
+                        $pdf->Cell(10,6,utf8_decode('DIA'),1,0,'C');
+                        $pdf->SetFont('Times','B',4);
+                        $pdf->Cell(20,6,utf8_decode('FECHA DE EMISION'),1,0,'C');
+                        $pdf->SetFont('Times','B',4);
+                        $pdf->Cell(20,6,utf8_decode('CORRELATIVO'),1,0,'C');
+                        $pdf->SetFont('Times','B',5);
+                        $pdf->Cell(15,6,utf8_decode('UNICO'),"BLR",0,'C');
+                        $pdf->SetFont('Times','B',5);
+
+                        $pdf->Cell(55,6,utf8_decode('NOMBRE DEL CLIENTE'),1,0,'C');
+                        $pdf->Cell(15,6,utf8_decode('NRC'),'LRB',0,'C');
+                        $pdf->SetFont('Times','B',4.5);
+                        $pdf->Cell(12.5,6,utf8_decode('EXENTAS'),"BLR",0,'C');
+                        $pdf->Cell(20,6,utf8_decode('INTERNAS GRAVADAS'),1,0,'C');
+                        $pdf->Cell(15,6,utf8_decode('DÉBITO FISCAL'),1,0,'C');
+                        $pdf->SetFont('Times','B',4.5);
+                        $pdf->Cell(10,6,utf8_decode('EXENTAS'),"BLR",0,'C');
+                        $pdf->Cell(20,6,utf8_decode('INTERNAS GRAVADAS'),1,0,'C');
+                        $pdf->Cell(17.5,6,utf8_decode('DÉBITO FISCAL'),1,0,'C');
+                        $pdf->SetFont('Times','B',5);
+                        $pdf->Cell(15,6,utf8_decode('RETENIDO'),"BLR",0,'C');
+                        $pdf->Cell(15,6,utf8_decode(''),'BLR',1,'C');
+                        $pdf->SetFont('Times','B',5);
+                        $counter2++;
+                        $pdf->Ln(3);
+                        $pdf->SetFont('Times','',6);
+                    }
                 }
 
                 $sql = "SELECT * FROM tbl_ventas_manuales WHERE DAY(fechaComprobante) =".$counter." AND MONTH(fechaComprobante)=".$mesGenerar." AND YEAR(fechaComprobante)=".$anoGenerar." AND tipoComprobante = 1 ORDER BY idVenta ASC";
@@ -410,6 +727,71 @@ function libroConsumidorFinal(){
                     $pdf->Cell(15,1,utf8_decode(number_format($result["impuesto"],2)),0,0,'L');
                     $pdf->Cell(15,1,utf8_decode(number_format(doubleval($montoCancelado2)+doubleval($result["impuesto"]),2)),0,0,'L');
                     $pdf->Ln(4);
+
+                    if ($counter2 > 50){
+                        $pdf->AddPage('L','Letter');
+
+                        $pdf->SetFont('Times','B',10);
+                        $pdf->Cell(260,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE CREDITO FISCAL'),0,0,'C');
+                        $pdf->Ln(5);
+                        $pdf->SetFont('Times','B',8);
+                        $pdf->Cell(260,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,0,'C');
+                        $pdf->Ln(10);
+
+                        $pdf->SetFont('Times','B',10);
+                        //FILA 1
+                        $pdf->Cell(50,6,utf8_decode(''),"TLR",0,'C');
+                        $pdf->SetFont('Times','B',5);
+                        $pdf->Cell(15,6,utf8_decode('N° DE'),"T",0,'C');
+                        $pdf->SetFont('Times','B',6);
+                        $pdf->Cell(55,6,utf8_decode(''),"TLR",0,'C');
+                        $pdf->Cell(15,6,utf8_decode(''),'TLR',0,'C');
+                        $pdf->Cell(110,6,utf8_decode('OPERACIONES DE VENTAS PROPIAS Y A CUENTA DE TERCEROS'),'TBLR',0,'C');
+                        $pdf->Cell(15,6,utf8_decode(''),'TLR',1,'C');
+                        //$pdf->Cell(25,6,utf8_decode(''),"TRB",1,'C');
+
+                        //FILA 2
+                        $pdf->Cell(50,6,utf8_decode(''),"LR",0,'C');
+                        $pdf->SetFont('Times','B',5);
+                        $pdf->Cell(15,6,utf8_decode('FORMULARIO'),"LR",0,'C');
+                        $pdf->SetFont('Times','B',6);
+                        $pdf->Cell(55,6,utf8_decode(''),"LR",0,'C');
+                        $pdf->Cell(15,6,utf8_decode(''),'LR',0,'C');
+                        $pdf->Cell(47.5,6,utf8_decode('PROPIAS'),"LRTB",0,'C');
+                        $pdf->Cell(47.5,6,utf8_decode('A CUENTA DE TERCEROS'),1,0,'C');
+                        $pdf->Cell(15,6,utf8_decode('IVA'),"TLR",0,'C');
+                        //$pdf->Cell(40,6,utf8_decode(''),"LR",0,'C');
+                        $pdf->Cell(15,6,utf8_decode('TOTAL'),'LR',1,'C');
+
+                        //FILA 3
+                        $pdf->SetFont('Times','B',5);
+                        $pdf->Cell(10,6,utf8_decode('DIA'),1,0,'C');
+                        $pdf->SetFont('Times','B',4);
+                        $pdf->Cell(20,6,utf8_decode('FECHA DE EMISION'),1,0,'C');
+                        $pdf->SetFont('Times','B',4);
+                        $pdf->Cell(20,6,utf8_decode('CORRELATIVO'),1,0,'C');
+                        $pdf->SetFont('Times','B',5);
+                        $pdf->Cell(15,6,utf8_decode('UNICO'),"BLR",0,'C');
+                        $pdf->SetFont('Times','B',5);
+
+                        $pdf->Cell(55,6,utf8_decode('NOMBRE DEL CLIENTE'),1,0,'C');
+                        $pdf->Cell(15,6,utf8_decode('NRC'),'LRB',0,'C');
+                        $pdf->SetFont('Times','B',4.5);
+                        $pdf->Cell(12.5,6,utf8_decode('EXENTAS'),"BLR",0,'C');
+                        $pdf->Cell(20,6,utf8_decode('INTERNAS GRAVADAS'),1,0,'C');
+                        $pdf->Cell(15,6,utf8_decode('DÉBITO FISCAL'),1,0,'C');
+                        $pdf->SetFont('Times','B',4.5);
+                        $pdf->Cell(10,6,utf8_decode('EXENTAS'),"BLR",0,'C');
+                        $pdf->Cell(20,6,utf8_decode('INTERNAS GRAVADAS'),1,0,'C');
+                        $pdf->Cell(17.5,6,utf8_decode('DÉBITO FISCAL'),1,0,'C');
+                        $pdf->SetFont('Times','B',5);
+                        $pdf->Cell(15,6,utf8_decode('RETENIDO'),"BLR",0,'C');
+                        $pdf->Cell(15,6,utf8_decode(''),'BLR',1,'C');
+                        $pdf->SetFont('Times','B',5);
+                        $counter2++;
+                        $pdf->Ln(3);
+                        $pdf->SetFont('Times','',6);
+                    }
                 }
 
                 $sql = "SELECT * FROM tbl_ventas_anuladas WHERE DAY(fechaComprobante) =".$counter." AND MONTH(fechaComprobante)=".$mesGenerar." AND YEAR(fechaComprobante)=".$anoGenerar." AND tipoComprobante = 1 ORDER BY idVenta ASC";
@@ -461,6 +843,71 @@ function libroConsumidorFinal(){
                     $pdf->Cell(15,1,utf8_decode(number_format($result["impuesto"],2)),0,0,'L');
                     $pdf->Cell(15,1,utf8_decode(number_format(doubleval($montoCancelado3)+doubleval($result["impuesto"]),2)),0,0,'L');
                     $pdf->Ln(4);
+
+                    if ($counter2 > 50){
+                        $pdf->AddPage('L','Letter');
+
+                        $pdf->SetFont('Times','B',10);
+                        $pdf->Cell(260,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE CREDITO FISCAL'),0,0,'C');
+                        $pdf->Ln(5);
+                        $pdf->SetFont('Times','B',8);
+                        $pdf->Cell(260,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,0,'C');
+                        $pdf->Ln(10);
+
+                        $pdf->SetFont('Times','B',10);
+                        //FILA 1
+                        $pdf->Cell(50,6,utf8_decode(''),"TLR",0,'C');
+                        $pdf->SetFont('Times','B',5);
+                        $pdf->Cell(15,6,utf8_decode('N° DE'),"T",0,'C');
+                        $pdf->SetFont('Times','B',6);
+                        $pdf->Cell(55,6,utf8_decode(''),"TLR",0,'C');
+                        $pdf->Cell(15,6,utf8_decode(''),'TLR',0,'C');
+                        $pdf->Cell(110,6,utf8_decode('OPERACIONES DE VENTAS PROPIAS Y A CUENTA DE TERCEROS'),'TBLR',0,'C');
+                        $pdf->Cell(15,6,utf8_decode(''),'TLR',1,'C');
+                        //$pdf->Cell(25,6,utf8_decode(''),"TRB",1,'C');
+
+                        //FILA 2
+                        $pdf->Cell(50,6,utf8_decode(''),"LR",0,'C');
+                        $pdf->SetFont('Times','B',5);
+                        $pdf->Cell(15,6,utf8_decode('FORMULARIO'),"LR",0,'C');
+                        $pdf->SetFont('Times','B',6);
+                        $pdf->Cell(55,6,utf8_decode(''),"LR",0,'C');
+                        $pdf->Cell(15,6,utf8_decode(''),'LR',0,'C');
+                        $pdf->Cell(47.5,6,utf8_decode('PROPIAS'),"LRTB",0,'C');
+                        $pdf->Cell(47.5,6,utf8_decode('A CUENTA DE TERCEROS'),1,0,'C');
+                        $pdf->Cell(15,6,utf8_decode('IVA'),"TLR",0,'C');
+                        //$pdf->Cell(40,6,utf8_decode(''),"LR",0,'C');
+                        $pdf->Cell(15,6,utf8_decode('TOTAL'),'LR',1,'C');
+
+                        //FILA 3
+                        $pdf->SetFont('Times','B',5);
+                        $pdf->Cell(10,6,utf8_decode('DIA'),1,0,'C');
+                        $pdf->SetFont('Times','B',4);
+                        $pdf->Cell(20,6,utf8_decode('FECHA DE EMISION'),1,0,'C');
+                        $pdf->SetFont('Times','B',4);
+                        $pdf->Cell(20,6,utf8_decode('CORRELATIVO'),1,0,'C');
+                        $pdf->SetFont('Times','B',5);
+                        $pdf->Cell(15,6,utf8_decode('UNICO'),"BLR",0,'C');
+                        $pdf->SetFont('Times','B',5);
+
+                        $pdf->Cell(55,6,utf8_decode('NOMBRE DEL CLIENTE'),1,0,'C');
+                        $pdf->Cell(15,6,utf8_decode('NRC'),'LRB',0,'C');
+                        $pdf->SetFont('Times','B',4.5);
+                        $pdf->Cell(12.5,6,utf8_decode('EXENTAS'),"BLR",0,'C');
+                        $pdf->Cell(20,6,utf8_decode('INTERNAS GRAVADAS'),1,0,'C');
+                        $pdf->Cell(15,6,utf8_decode('DÉBITO FISCAL'),1,0,'C');
+                        $pdf->SetFont('Times','B',4.5);
+                        $pdf->Cell(10,6,utf8_decode('EXENTAS'),"BLR",0,'C');
+                        $pdf->Cell(20,6,utf8_decode('INTERNAS GRAVADAS'),1,0,'C');
+                        $pdf->Cell(17.5,6,utf8_decode('DÉBITO FISCAL'),1,0,'C');
+                        $pdf->SetFont('Times','B',5);
+                        $pdf->Cell(15,6,utf8_decode('RETENIDO'),"BLR",0,'C');
+                        $pdf->Cell(15,6,utf8_decode(''),'BLR',1,'C');
+                        $pdf->SetFont('Times','B',5);
+                        $counter2++;
+                        $pdf->Ln(3);
+                        $pdf->SetFont('Times','',6);
+                    }
                 }
             }
 
@@ -468,64 +915,83 @@ function libroConsumidorFinal(){
         }
 
         // DESPUES DE TODOS LOS CICLOS
-        $pdf->AddPage('P','Letter');
+
+        /*$pdf->AddPage('L','Letter');
 
         $pdf->SetFont('Times','B',10);
-        $pdf->Cell(190,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE FACTURAS'),0,0,'C');
+        $pdf->Cell(260,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE CREDITO FISCAL'),0,0,'C');
         $pdf->Ln(5);
         $pdf->SetFont('Times','B',8);
-        $pdf->Cell(190,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,0,'C');
+        $pdf->Cell(260,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,0,'C');
         $pdf->Ln(10);
 
         $pdf->SetFont('Times','B',10);
         //FILA 1
-        $pdf->Cell(25,6,utf8_decode(''),"TLR",0,'C');
+        $pdf->Cell(50,6,utf8_decode(''),"TLR",0,'C');
         $pdf->SetFont('Times','B',5);
         $pdf->Cell(15,6,utf8_decode('N° DE'),"T",0,'C');
-        $pdf->SetFont('Times','B',10);
-        $pdf->Cell(60,6,utf8_decode(''),"TLR",0,'C');
-        $pdf->Cell(60,6,utf8_decode('VENTAS'),1,0,'C');
-        $pdf->Cell(40,6,utf8_decode(''),"TLR",1,'C');
+        $pdf->SetFont('Times','B',6);
+        $pdf->Cell(55,6,utf8_decode(''),"TLR",0,'C');
+        $pdf->Cell(15,6,utf8_decode(''),'TLR',0,'C');
+        $pdf->Cell(110,6,utf8_decode('OPERACIONES DE VENTAS PROPIAS Y A CUENTA DE TERCEROS'),'TBLR',0,'C');
+        $pdf->Cell(15,6,utf8_decode(''),'TLR',1,'C');
+        //$pdf->Cell(25,6,utf8_decode(''),"TRB",1,'C');
 
         //FILA 2
-        $pdf->Cell(25,6,utf8_decode(''),"LR",0,'C');
+        $pdf->Cell(50,6,utf8_decode(''),"LR",0,'C');
         $pdf->SetFont('Times','B',5);
         $pdf->Cell(15,6,utf8_decode('FORMULARIO'),"LR",0,'C');
-        $pdf->SetFont('Times','B',10);
-        $pdf->Cell(60,6,utf8_decode(''),"LR",0,'C');
-        $pdf->Cell(20,6,utf8_decode(''),"LRT",0,'C');
-        $pdf->Cell(40,6,utf8_decode('GRAVADAS'),1,0,'C');
-        $pdf->Cell(40,6,utf8_decode(''),"BLR",1,'C');
+        $pdf->SetFont('Times','B',6);
+        $pdf->Cell(55,6,utf8_decode(''),"LR",0,'C');
+        $pdf->Cell(15,6,utf8_decode(''),'LR',0,'C');
+        $pdf->Cell(47.5,6,utf8_decode('PROPIAS'),"LRTB",0,'C');
+        $pdf->Cell(47.5,6,utf8_decode('A CUENTA DE TERCEROS'),1,0,'C');
+        $pdf->Cell(15,6,utf8_decode('IVA'),"TLR",0,'C');
+        //$pdf->Cell(40,6,utf8_decode(''),"LR",0,'C');
+        $pdf->Cell(15,6,utf8_decode('TOTAL'),'LR',1,'C');
 
         //FILA 3
         $pdf->SetFont('Times','B',5);
-        $pdf->Cell(5,6,utf8_decode('DIA'),1,0,'C');
-        $pdf->Cell(20,6,utf8_decode('N° DE FACTURA'),1,0,'C');
-        $pdf->Cell(15,6,utf8_decode('UNICO'),"BLR",0,'C');
-        $pdf->SetFont('Times','B',7);
-        $pdf->Cell(60,6,utf8_decode('NOMBRE DEL CLIENTE'),1,0,'C');
-        $pdf->Cell(20,6,utf8_decode('EXENTAS'),"BLR",0,'C');
-        $pdf->Cell(20,6,utf8_decode('LOCALES'),1,0,'C');
-        $pdf->Cell(20,6,utf8_decode('EXPORTACION'),1,0,'C');
-        $pdf->SetFont('Times','B',5);
-        $pdf->Cell(15,6,utf8_decode('SUB-TOTAL'),1,0,'C');
-        $pdf->Cell(10,6,utf8_decode('CESC'),1,0,'C');
+        $pdf->Cell(10,6,utf8_decode('DIA'),1,0,'C');
         $pdf->SetFont('Times','B',4);
-        $pdf->Cell(15,6,utf8_decode('VENTAS TOTALES'),1,1,'C');
+        $pdf->Cell(20,6,utf8_decode('FECHA DE EMISION'),1,0,'C');
+        $pdf->SetFont('Times','B',4);
+        $pdf->Cell(20,6,utf8_decode('CORRELATIVO'),1,0,'C');
+        $pdf->SetFont('Times','B',5);
+        $pdf->Cell(15,6,utf8_decode('UNICO'),"BLR",0,'C');
+        $pdf->SetFont('Times','B',5);
 
-        $pdf->Ln(5);
+        $pdf->Cell(55,6,utf8_decode('NOMBRE DEL CLIENTE'),1,0,'C');
+        $pdf->Cell(15,6,utf8_decode('NRC'),'LRB',0,'C');
+        $pdf->SetFont('Times','B',4.5);
+        $pdf->Cell(12.5,6,utf8_decode('EXENTAS'),"BLR",0,'C');
+        $pdf->Cell(20,6,utf8_decode('INTERNAS GRAVADAS'),1,0,'C');
+        $pdf->Cell(15,6,utf8_decode('DÉBITO FISCAL'),1,0,'C');
+        $pdf->SetFont('Times','B',4.5);
+        $pdf->Cell(10,6,utf8_decode('EXENTAS'),"BLR",0,'C');
+        $pdf->Cell(20,6,utf8_decode('INTERNAS GRAVADAS'),1,0,'C');
+        $pdf->Cell(17.5,6,utf8_decode('DÉBITO FISCAL'),1,0,'C');
+        $pdf->SetFont('Times','B',5);
+        $pdf->Cell(15,6,utf8_decode('RETENIDO'),"BLR",0,'C');
+        $pdf->Cell(15,6,utf8_decode(''),'BLR',1,'C');
+        $pdf->SetFont('Times','B',5);*/
+
+        $pdf->Ln(1);
         $pdf->SetFont('Times','B',7);
-        $pdf->Cell(40,6,utf8_decode(''),0,0,'C');
+        $pdf->Cell(55,6,utf8_decode(''),0,0,'C');
         $pdf->Cell(60,6,utf8_decode('TOTALES DEL MES'),"T",0,'C');
         if ($tipoFacturaGenerar == 1) {
-            $pdf->Cell(20,6,utf8_decode(number_format($totalSinIvaEx1,2)),"T",0,'C');
-            $pdf->Cell(20,6,utf8_decode(number_format($totalSinIva1,2)),"T",0,'C');
-            $pdf->Cell(20,6,utf8_decode('0.00'),"T",0,'C');
-            $pdf->Cell(15,6,utf8_decode(number_format($totalConIva1,2)),"T",0,'C');
-            $pdf->Cell(10,6,utf8_decode(number_format($totalSoloCesc1,2)),"T",0,'C');
-            $pdf->Cell(15,6,utf8_decode(number_format(($totalConIva1 + $totalSoloCesc1),2)),"T",0,'C');
+            $pdf->Cell(20,6,utf8_decode(''),"T",0,'L');
+            $pdf->Cell(12.5,6,utf8_decode(number_format($totalSinIvaEx1,2)),"T",0,'L');
+            $pdf->Cell(20,6,utf8_decode(number_format($totalSinIva1,2)),"T",0,'L');
+            $pdf->Cell(15,6,utf8_decode(number_format($totalSoloIva1,2)),"T",0,'L');
+            $pdf->Cell(10,6,utf8_decode(number_format(0,2)),"T",0,'L');
+            $pdf->Cell(20,6,utf8_decode(number_format(0,2)),"T",0,'L');
+            $pdf->Cell(17.5,6,utf8_decode(number_format((0),2)),"T",0,'L');
+            $pdf->Cell(15,6,utf8_decode(number_format((0),2)),"T",0,'L');
+            $pdf->Cell(15,6,utf8_decode(number_format(($totalConIva1 + $totalSoloCesc1),2)),"T",0,'L');
 
-            $pdf->Ln(10);
+            $pdf->Ln(20);
             $pdf->SetFont('Times','B',10);
             $pdf->Cell(40,6,utf8_decode('RESUMEN'),0,1,'L');
             $pdf->Cell(40,6,utf8_decode('Ventas exentas'),0,0,'L');
@@ -542,16 +1008,19 @@ function libroConsumidorFinal(){
             $pdf->Cell(40,6,utf8_decode("VENTAS TOTALES:"),"",0,'L');
             $pdf->Cell(20,6,utf8_decode(number_format(($totalConIvaEx1+$totalSinIva1+$totalSoloIva1+$totalSoloCesc1),2)),"",1,'L');
 
-            $pdf->Ln(30);
+            $pdf->Ln(20);
             $pdf->Cell(70,3,utf8_decode(''),"T",1,'C');
-            $pdf->Cell(40,1,utf8_decode("Nombre y firma del contador o contribuyente:"),"",0,'L');
+            $pdf->Cell(40,1,utf8_decode("Nombre y firma del contador:"),"",0,'L');
         }elseif ($tipoFacturaGenerar == 2) {
-            $pdf->Cell(20,6,utf8_decode(number_format($totalSinIvaEx2,2)),"T",0,'C');
-            $pdf->Cell(20,6,utf8_decode(number_format($totalSinIva2,2)),"T",0,'C');
-            $pdf->Cell(20,6,utf8_decode('0.00'),"T",0,'C');
-            $pdf->Cell(15,6,utf8_decode(number_format($totalConIva2,2)),"T",0,'C');
-            $pdf->Cell(10,6,utf8_decode(number_format($totalSoloCesc2,2)),"T",0,'C');
-            $pdf->Cell(15,6,utf8_decode(number_format(($totalConIva2 + $totalSoloCesc2),2)),"T",0,'C');
+            $pdf->Cell(20,6,utf8_decode(''),"T",0,'L');
+            $pdf->Cell(12.5,6,utf8_decode(number_format($totalSinIvaEx2,2)),"T",0,'L');
+            $pdf->Cell(20,6,utf8_decode(number_format($totalSinIva2,2)),"T",0,'L');
+            $pdf->Cell(15,6,utf8_decode(number_format($totalSoloIva2,2)),"T",0,'L');
+            $pdf->Cell(10,6,utf8_decode(number_format(0,2)),"T",0,'L');
+            $pdf->Cell(20,6,utf8_decode(number_format(0,2)),"T",0,'L');
+            $pdf->Cell(17.5,6,utf8_decode(number_format((0),2)),"T",0,'L');
+            $pdf->Cell(15,6,utf8_decode(number_format((0),2)),"T",0,'L');
+            $pdf->Cell(15,6,utf8_decode(number_format(($totalConIva2 + $totalSoloCesc2),2)),"T",0,'L');
 
             $pdf->Ln(10);
             $pdf->SetFont('Times','B',10);
@@ -570,16 +1039,19 @@ function libroConsumidorFinal(){
             $pdf->Cell(40,6,utf8_decode("VENTAS TOTALES:"),"",0,'L');
             $pdf->Cell(20,6,utf8_decode(number_format(($totalConIvaEx2+$totalSinIva2+$totalSoloIva2+$totalSoloCesc2),2)),"",1,'L');
 
-            $pdf->Ln(30);
+            $pdf->Ln(10);
             $pdf->Cell(70,3,utf8_decode(''),"T",1,'C');
-            $pdf->Cell(40,1,utf8_decode("Nombre y firma del contador o contribuyente:"),"",0,'L');
+            $pdf->Cell(40,1,utf8_decode("Nombre y firma del contador:"),"",0,'L');
         }elseif ($tipoFacturaGenerar == 3) {
-            $pdf->Cell(20,6,utf8_decode(number_format($totalSinIvaEx3,2)),"T",0,'C');
-            $pdf->Cell(20,6,utf8_decode(number_format($totalSinIva3,2)),"T",0,'C');
-            $pdf->Cell(20,6,utf8_decode('0.00'),"T",0,'C');
-            $pdf->Cell(15,6,utf8_decode(number_format($totalConIva3,2)),"T",0,'C');
-            $pdf->Cell(10,6,utf8_decode(number_format($totalSoloCesc3,2)),"T",0,'C');
-            $pdf->Cell(15,6,utf8_decode(number_format(($totalConIva3 + $totalSoloCesc3),2)),"T",0,'C');
+            $pdf->Cell(20,6,utf8_decode(''),"T",0,'L');
+            $pdf->Cell(12.5,6,utf8_decode(number_format($totalSinIvaEx3,2)),"T",0,'L');
+            $pdf->Cell(20,6,utf8_decode(number_format($totalSinIva3,2)),"T",0,'L');
+            $pdf->Cell(15,6,utf8_decode(number_format($totalSoloIva3,2)),"T",0,'L');
+            $pdf->Cell(10,6,utf8_decode(number_format(0,2)),"T",0,'L');
+            $pdf->Cell(20,6,utf8_decode(number_format(0,2)),"T",0,'L');
+            $pdf->Cell(17.5,6,utf8_decode(number_format((0),2)),"T",0,'L');
+            $pdf->Cell(15,6,utf8_decode(number_format((0),2)),"T",0,'L');
+            $pdf->Cell(15,6,utf8_decode(number_format(($totalConIva3 + $totalSoloCesc3),2)),"T",0,'L');
 
             $pdf->Ln(10);
             $pdf->SetFont('Times','B',10);
@@ -598,16 +1070,20 @@ function libroConsumidorFinal(){
             $pdf->Cell(40,6,utf8_decode("VENTAS TOTALES:"),"",0,'L');
             $pdf->Cell(20,6,utf8_decode(number_format(($totalConIvaEx3+$totalSinIva3+$totalSoloIva3+$totalSoloCesc3),2)),"",1,'L');
 
-            $pdf->Ln(30);
+            $pdf->Ln(10);
             $pdf->Cell(70,3,utf8_decode(''),"T",1,'C');
-            $pdf->Cell(40,1,utf8_decode("Nombre y firma del contador o contribuyente:"),"",0,'L');
+            $pdf->Cell(40,1,utf8_decode("Nombre y firma del contador:"),"",0,'L');
         }elseif ($tipoFacturaGenerar == 4) {
-            $pdf->Cell(20,6,utf8_decode(number_format(($totalSinIvaEx1+$totalSinIvaEx2+$totalSinIvaEx3),2)),"T",0,'C');
-            $pdf->Cell(20,6,utf8_decode(number_format(($totalSinIva1+$totalSinIva2+$totalSinIva3),2)),"T",0,'C');
-            $pdf->Cell(20,6,utf8_decode('0.00'),"T",0,'C');
-            $pdf->Cell(15,6,utf8_decode(number_format(($totalConIva1+$totalConIva2+$totalConIva3),2)),"T",0,'C');
-            $pdf->Cell(10,6,utf8_decode(number_format(($totalSoloCesc1+$totalSoloCesc2+$totalSoloCesc3),2)),"T",0,'C');
-            $pdf->Cell(15,6,utf8_decode(number_format(($totalConIva1 + $totalSoloCesc1 + $totalConIva2 + $totalSoloCesc2 + $totalConIva3 + $totalSoloCesc3),2)),"T",0,'C');
+
+            $pdf->Cell(20,6,utf8_decode(''),"T",0,'L');
+            $pdf->Cell(12.5,6,utf8_decode(number_format($totalSinIvaEx1+$totalSinIvaEx2+$totalSinIvaEx3,2)),"T",0,'L');
+            $pdf->Cell(20,6,utf8_decode(number_format($totalSinIva1+$totalSinIva2+$totalSinIva3,2)),"T",0,'L');
+            $pdf->Cell(15,6,utf8_decode(number_format($totalSoloIva1+$totalSoloIva2+$totalSoloIva3,2)),"T",0,'L');
+            $pdf->Cell(10,6,utf8_decode(number_format(0,2)),"T",0,'L');
+            $pdf->Cell(20,6,utf8_decode(number_format(0,2)),"T",0,'L');
+            $pdf->Cell(17.5,6,utf8_decode(number_format((0),2)),"T",0,'L');
+            $pdf->Cell(15,6,utf8_decode(number_format((0),2)),"T",0,'L');
+            $pdf->Cell(15,6,utf8_decode(number_format(($totalConIva1 + $totalSoloCesc1 + $totalConIva2 + $totalSoloCesc2 + $totalConIva3 + $totalSoloCesc3),2)),"T",0,'L');
 
             $pdf->Ln(10);
             $pdf->SetFont('Times','B',10);
@@ -629,56 +1105,72 @@ function libroConsumidorFinal(){
             $pdf->Cell(40,6,utf8_decode("VENTAS TOTALES:"),"",0,'L');
             $pdf->Cell(20,6,utf8_decode(number_format(($totalConIvaEx1+$totalSinIva1+$totalSoloIva1+$totalSoloCesc1 + $totalConIvaEx2+$totalSinIva2+$totalSoloIva2+$totalSoloCesc2 + $totalConIvaEx3+$totalSinIva3+$totalSoloIva3+$totalSoloCesc3),2)),"",1,'L');
 
-            $pdf->Ln(30);
+            $pdf->Ln(10);
             $pdf->Cell(70,3,utf8_decode(''),"T",1,'C');
-            $pdf->Cell(40,1,utf8_decode("Nombre y firma del contador o contribuyente:"),"",0,'L');
+            $pdf->Cell(40,1,utf8_decode("Nombre y firma del contador:"),"",0,'L');
         }
 
 
     }
     elseif ($libroDetallado == null) { // GENERAL
-        $pdf->AddPage('P','Letter');
+        $pdf->AddPage('L','Letter');
 
         $pdf->SetFont('Times','B',10);
-        $pdf->Cell(190,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE FACTURAS'),0,0,'C');
+        $pdf->Cell(260,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE CREDITO FISCAL'),0,0,'C');
         $pdf->Ln(5);
         $pdf->SetFont('Times','B',8);
-        $pdf->Cell(190,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,0,'C');
-        $pdf->Ln(10);
+        $pdf->Cell(260,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,0,'C');
+        $pdf->Ln(7);
 
         $pdf->SetFont('Times','B',10);
         //FILA 1
-        $pdf->Cell(25,6,utf8_decode(''),"TLR",0,'C');
+        $pdf->Cell(50,6,utf8_decode(''),"TLR",0,'C');
         $pdf->SetFont('Times','B',5);
-        $pdf->SetFont('Times','B',10);
-        $pdf->Cell(75,6,utf8_decode(''),"TLR",0,'C');
-        $pdf->Cell(60,6,utf8_decode('VENTAS'),1,0,'C');
-        $pdf->Cell(40,6,utf8_decode(''),"TLR",1,'C');
+        $pdf->Cell(15,6,utf8_decode('N° DE'),"T",0,'C');
+        $pdf->SetFont('Times','B',6);
+        $pdf->Cell(55,6,utf8_decode(''),"TLR",0,'C');
+        $pdf->Cell(15,6,utf8_decode(''),'TLR',0,'C');
+        $pdf->Cell(110,6,utf8_decode('OPERACIONES DE VENTAS PROPIAS Y A CUENTA DE TERCEROS'),'TBLR',0,'C');
+        $pdf->Cell(15,6,utf8_decode(''),'TLR',1,'C');
+        //$pdf->Cell(25,6,utf8_decode(''),"TRB",1,'C');
 
         //FILA 2
-        $pdf->Cell(25,6,utf8_decode(''),"LR",0,'C');
+        $pdf->Cell(50,6,utf8_decode(''),"LR",0,'C');
         $pdf->SetFont('Times','B',5);
-        $pdf->SetFont('Times','B',10);
-        $pdf->Cell(75,6,utf8_decode(''),"LR",0,'C');
-        $pdf->Cell(20,6,utf8_decode(''),"LRT",0,'C');
-        $pdf->Cell(40,6,utf8_decode('GRAVADAS'),1,0,'C');
-        $pdf->Cell(40,6,utf8_decode(''),"BLR",1,'C');
+        $pdf->Cell(15,6,utf8_decode('FORMULARIO'),"LR",0,'C');
+        $pdf->SetFont('Times','B',6);
+        $pdf->Cell(55,6,utf8_decode(''),"LR",0,'C');
+        $pdf->Cell(15,6,utf8_decode(''),'LR',0,'C');
+        $pdf->Cell(47.5,6,utf8_decode('PROPIAS'),"LRTB",0,'C');
+        $pdf->Cell(47.5,6,utf8_decode('A CUENTA DE TERCEROS'),1,0,'C');
+        $pdf->Cell(15,6,utf8_decode('IVA'),"TLR",0,'C');
+        //$pdf->Cell(40,6,utf8_decode(''),"LR",0,'C');
+        $pdf->Cell(15,6,utf8_decode('TOTAL'),'LR',1,'C');
 
         //FILA 3
         $pdf->SetFont('Times','B',5);
-        $pdf->Cell(5,6,utf8_decode('DIA'),1,0,'C');
-        $pdf->SetFont('Times','B',7);
-        $pdf->Cell(30,6,utf8_decode('DEL N° DE FACTURA'),1,0,'C');
-        $pdf->Cell(30,6,utf8_decode('AL N° DE FACTURA'),1,0,'C');
-        $pdf->Cell(35,6,utf8_decode('N° CAJA REGISTRADORA'),1,0,'C');
-        $pdf->Cell(20,6,utf8_decode('EXENTAS'),"BLR",0,'C');
-        $pdf->Cell(20,6,utf8_decode('LOCALES'),1,0,'C');
-        $pdf->Cell(20,6,utf8_decode('EXPORTACION'),1,0,'C');
-        $pdf->SetFont('Times','B',5);
-        $pdf->Cell(15,6,utf8_decode('SUB-TOTAL'),1,0,'C');
-        $pdf->Cell(10,6,utf8_decode('CESC'),1,0,'C');
+        $pdf->Cell(10,6,utf8_decode('DIA'),1,0,'C');
         $pdf->SetFont('Times','B',4);
-        $pdf->Cell(15,6,utf8_decode('VENTAS TOTALES'),1,1,'C');
+        $pdf->Cell(20,6,utf8_decode('FECHA DE EMISION'),1,0,'C');
+        $pdf->SetFont('Times','B',4);
+        $pdf->Cell(20,6,utf8_decode('CORRELATIVO'),1,0,'C');
+        $pdf->SetFont('Times','B',5);
+        $pdf->Cell(15,6,utf8_decode('UNICO'),"BLR",0,'C');
+        $pdf->SetFont('Times','B',5);
+
+        $pdf->Cell(55,6,utf8_decode('NOMBRE DEL CLIENTE'),1,0,'C');
+        $pdf->Cell(15,6,utf8_decode('NRC'),'LRB',0,'C');
+        $pdf->SetFont('Times','B',4.5);
+        $pdf->Cell(12.5,6,utf8_decode('EXENTAS'),"BLR",0,'C');
+        $pdf->Cell(20,6,utf8_decode('INTERNAS GRAVADAS'),1,0,'C');
+        $pdf->Cell(15,6,utf8_decode('DÉBITO FISCAL'),1,0,'C');
+        $pdf->SetFont('Times','B',4.5);
+        $pdf->Cell(10,6,utf8_decode('EXENTAS'),"BLR",0,'C');
+        $pdf->Cell(20,6,utf8_decode('INTERNAS GRAVADAS'),1,0,'C');
+        $pdf->Cell(17.5,6,utf8_decode('DÉBITO FISCAL'),1,0,'C');
+        $pdf->SetFont('Times','B',5);
+        $pdf->Cell(15,6,utf8_decode('RETENIDO'),"BLR",0,'C');
+        $pdf->Cell(15,6,utf8_decode(''),'BLR',1,'C');
         $pdf->SetFont('Times','B',5);
         /*$pdf->Image('../../../images/logo.png',10,10, 26, 24);
         $pdf->Ln(35);
@@ -698,7 +1190,7 @@ function libroConsumidorFinal(){
         $pdf->Cell(190,6,utf8_decode(strftime('Ciudad de Usulután, %A %e de %B de %G')),0,1,'L');
         $pdf->Ln();*/
         $pdf->Ln(3);
-        $pdf->SetFont('Times','',6);
+        $pdf->SetFont('Times','',8);
         $counter = 1;
         while ($counter <= 31) {
             if ($tipoFacturaGenerar == 1) {
@@ -746,7 +1238,7 @@ function libroConsumidorFinal(){
                     $pdf->Cell(15,1,utf8_decode(number_format($montoCancelado,2)),0,0,'L');
                     $pdf->Cell(15,1,utf8_decode(number_format($result["totalImp"],2)),0,0,'L');
                     $pdf->Cell(15,1,utf8_decode(number_format(doubleval($montoCancelado)+doubleval($result["totalImp"]),2)),0,0,'L');
-                    $pdf->Ln(4);
+                    $pdf->Ln(3);
                 }
             }
             elseif ($tipoFacturaGenerar == 2) {
@@ -908,7 +1400,7 @@ function libroConsumidorFinal(){
                     $pdf->Cell(35,1,utf8_decode(""),0,0,'L');
                     $sinIva2 = doubleval($montoCancelado2)-doubleval($totalIva2);
                     if ($ex->isExento("")) {
-                        $pdf->Cell(20,1,utf8_decode(number_format($montoCancelado,2)),0,0,'L');
+                        $pdf->Cell(20,1,utf8_decode(number_format($montoCancelado2,2)),0,0,'L');
                         $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
                         $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
                         $totalSinIvaEx2 = $totalSinIvaEx2 + $sinIva2;
@@ -986,227 +1478,246 @@ function libroConsumidorFinal(){
         }
 
         // DESPUES DE TODOS LOS CICLOS
-        $pdf->AddPage('P','Letter');
+        //$pdf->AddPage('L','Letter');
 
-        $pdf->SetFont('Times','B',10);
-        $pdf->Cell(190,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE FACTURAS'),0,0,'C');
+        /*$pdf->SetFont('Times','B',10);
+        $pdf->Cell(260,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE CREDITO FISCAL'),0,0,'C');
         $pdf->Ln(5);
         $pdf->SetFont('Times','B',8);
-        $pdf->Cell(190,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,0,'C');
+        $pdf->Cell(260,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,0,'C');
         $pdf->Ln(10);
 
         $pdf->SetFont('Times','B',10);
         //FILA 1
-        $pdf->Cell(25,6,utf8_decode(''),"TLR",0,'C');
+        $pdf->Cell(50,6,utf8_decode(''),"TLR",0,'C');
         $pdf->SetFont('Times','B',5);
         $pdf->Cell(15,6,utf8_decode('N° DE'),"T",0,'C');
-        $pdf->SetFont('Times','B',10);
-        $pdf->Cell(60,6,utf8_decode(''),"TLR",0,'C');
-        $pdf->Cell(60,6,utf8_decode('VENTAS'),1,0,'C');
-        $pdf->Cell(40,6,utf8_decode(''),"TLR",1,'C');
+        $pdf->SetFont('Times','B',6);
+        $pdf->Cell(55,6,utf8_decode(''),"TLR",0,'C');
+        $pdf->Cell(15,6,utf8_decode(''),'TLR',0,'C');
+        $pdf->Cell(110,6,utf8_decode('OPERACIONES DE VENTAS PROPIAS Y A CUENTA DE TERCEROS'),'TBLR',0,'C');
+        $pdf->Cell(15,6,utf8_decode(''),'TLR',1,'C');
+        //$pdf->Cell(25,6,utf8_decode(''),"TRB",1,'C');
 
         //FILA 2
-        $pdf->Cell(25,6,utf8_decode(''),"LR",0,'C');
+        $pdf->Cell(50,6,utf8_decode(''),"LR",0,'C');
         $pdf->SetFont('Times','B',5);
         $pdf->Cell(15,6,utf8_decode('FORMULARIO'),"LR",0,'C');
-        $pdf->SetFont('Times','B',10);
-        $pdf->Cell(60,6,utf8_decode(''),"LR",0,'C');
-        $pdf->Cell(20,6,utf8_decode(''),"LRT",0,'C');
-        $pdf->Cell(40,6,utf8_decode('GRAVADAS'),1,0,'C');
-        $pdf->Cell(40,6,utf8_decode(''),"BLR",1,'C');
+        $pdf->SetFont('Times','B',6);
+        $pdf->Cell(55,6,utf8_decode(''),"LR",0,'C');
+        $pdf->Cell(15,6,utf8_decode(''),'LR',0,'C');
+        $pdf->Cell(47.5,6,utf8_decode('PROPIAS'),"LRTB",0,'C');
+        $pdf->Cell(47.5,6,utf8_decode('A CUENTA DE TERCEROS'),1,0,'C');
+        $pdf->Cell(15,6,utf8_decode('IVA'),"TLR",0,'C');
+        //$pdf->Cell(40,6,utf8_decode(''),"LR",0,'C');
+        $pdf->Cell(15,6,utf8_decode('TOTAL'),'LR',1,'C');
 
         //FILA 3
         $pdf->SetFont('Times','B',5);
-        $pdf->Cell(5,6,utf8_decode('DIA'),1,0,'C');
-        $pdf->Cell(20,6,utf8_decode('N° DE FACTURA'),1,0,'C');
-        $pdf->Cell(15,6,utf8_decode('UNICO'),"BLR",0,'C');
-        $pdf->SetFont('Times','B',7);
-        $pdf->Cell(60,6,utf8_decode('NOMBRE DEL CLIENTE'),1,0,'C');
-        $pdf->Cell(20,6,utf8_decode('EXENTAS'),"BLR",0,'C');
-        $pdf->Cell(20,6,utf8_decode('LOCALES'),1,0,'C');
-        $pdf->Cell(20,6,utf8_decode('EXPORTACION'),1,0,'C');
-        $pdf->SetFont('Times','B',5);
-        $pdf->Cell(15,6,utf8_decode('SUB-TOTAL'),1,0,'C');
-        $pdf->Cell(10,6,utf8_decode('CESC'),1,0,'C');
+        $pdf->Cell(10,6,utf8_decode('DIA'),1,0,'C');
         $pdf->SetFont('Times','B',4);
-        $pdf->Cell(15,6,utf8_decode('VENTAS TOTALES'),1,1,'C');
+        $pdf->Cell(20,6,utf8_decode('FECHA DE EMISION'),1,0,'C');
+        $pdf->SetFont('Times','B',4);
+        $pdf->Cell(20,6,utf8_decode('CORRELATIVO'),1,0,'C');
+        $pdf->SetFont('Times','B',5);
+        $pdf->Cell(15,6,utf8_decode('UNICO'),"BLR",0,'C');
+        $pdf->SetFont('Times','B',5);
+
+        $pdf->Cell(55,6,utf8_decode('NOMBRE DEL CLIENTE'),1,0,'C');
+        $pdf->Cell(15,6,utf8_decode('NRC'),'LRB',0,'C');
+        $pdf->SetFont('Times','B',4.5);
+        $pdf->Cell(12.5,6,utf8_decode('EXENTAS'),"BLR",0,'C');
+        $pdf->Cell(20,6,utf8_decode('INTERNAS GRAVADAS'),1,0,'C');
+        $pdf->Cell(15,6,utf8_decode('DÉBITO FISCAL'),1,0,'C');
+        $pdf->SetFont('Times','B',4.5);
+        $pdf->Cell(10,6,utf8_decode('EXENTAS'),"BLR",0,'C');
+        $pdf->Cell(20,6,utf8_decode('INTERNAS GRAVADAS'),1,0,'C');
+        $pdf->Cell(17.5,6,utf8_decode('DÉBITO FISCAL'),1,0,'C');
+        $pdf->SetFont('Times','B',5);
+        $pdf->Cell(15,6,utf8_decode('RETENIDO'),"BLR",0,'C');
+        $pdf->Cell(15,6,utf8_decode(''),'BLR',1,'C');
+        $pdf->SetFont('Times','B',5);
 
         $pdf->Ln(5);
 
         $pdf->SetFont('Times','B',7);
         $pdf->Cell(40,6,utf8_decode(''),0,0,'C');
         $pdf->Cell(60,6,utf8_decode('TOTALES DEL MES'),"T",0,'C');
-        $pdf->Cell(20,6,utf8_decode(number_format($totalSinIvaEx,2)),"T",0,'C');
-        $pdf->Cell(20,6,utf8_decode(number_format($totalSinIva,2)),"T",0,'C');
-        $pdf->Cell(20,6,utf8_decode('0.00'),"T",0,'C');
-        $pdf->Cell(15,6,utf8_decode(number_format($totalConIva,2)),"T",0,'C');
-        $pdf->Cell(10,6,utf8_decode(number_format($totalSoloCesc,2)),"T",0,'C');
-        $pdf->Cell(15,6,utf8_decode(number_format(($totalConIva + $totalSoloCesc),2)),"T",0,'C');
+        $pdf->Cell(35,6,utf8_decode(''),"T",0,'L');
+        $pdf->Cell(12.5,6,utf8_decode(number_format($totalSinIvaEx,2)),"T",0,'L');
+        $pdf->Cell(20,6,utf8_decode(number_format($totalSinIva,2)),"T",0,'L');
+        $pdf->Cell(15,6,utf8_decode(number_format($totalSoloIva,2)),"T",0,'L');
+        $pdf->Cell(10,6,utf8_decode(number_format(0,2)),"T",0,'L');
+        $pdf->Cell(20,6,utf8_decode(number_format(0,2)),"T",0,'L');
+        $pdf->Cell(17.5,6,utf8_decode(number_format((0),2)),"T",0,'L');
+        $pdf->Cell(15,6,utf8_decode(number_format((0),2)),"T",0,'L');
+        $pdf->Cell(15,6,utf8_decode(number_format(($totalConIva + $totalSoloCesc),2)),"T",0,'L');*/
+
 
         $pdf->Ln(10);
-        $pdf->SetFont('Times','B',10);
-        $pdf->Cell(40,6,utf8_decode('RESUMEN'),0,0,'L');
-        $pdf->Cell(45,6,utf8_decode('FACTURAS GENERADAS'),0,0,'L');
-        $pdf->Cell(45,6,utf8_decode('FACTURAS MANUALES'),0,0,'L');
-        $pdf->Cell(45,6,utf8_decode('FACTURAS ANULADAS'),0,0,'L');
-        $pdf->Cell(40,6,utf8_decode('TOTALES'),0,1,'L');
+        $pdf->SetFont('Times','B',9);
+        $pdf->Cell(40,4,utf8_decode('RESUMEN'),0,0,'L');
+        $pdf->Cell(45,4,utf8_decode('FACTURAS GENERADAS'),0,0,'L');
+        $pdf->Cell(45,4,utf8_decode('FACTURAS MANUALES'),0,0,'L');
+        $pdf->Cell(45,4,utf8_decode('FACTURAS ANULADAS'),0,0,'L');
+        $pdf->Cell(40,4,utf8_decode('TOTALES'),0,1,'L');
         $pdf->Cell(200,1,utf8_decode(''),"T",1,'L');
         if ($tipoFacturaGenerar == 1) {
-            $pdf->Cell(40,6,utf8_decode('Ventas exentas'),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalConIvaEx,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(40,6,utf8_decode(number_format($totalConIvaEx,2)),0,1,'L');
+            $pdf->Cell(40,4,utf8_decode('Ventas exentas'),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalConIvaEx,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(40,4,utf8_decode(number_format($totalConIvaEx,2)),0,1,'L');
 
-            $pdf->Cell(40,6,utf8_decode('Ventas netas gravadas'),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalSinIva,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalSinIva,2)),0,1,'L');
-            $pdf->Cell(40,6,utf8_decode('13% de IVA'),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalSoloIva,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalSoloIva,2)),0,1,'L');
-            $pdf->Cell(40,6,utf8_decode('5% CESC'),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalSoloCesc,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalSoloCesc,2)),0,1,'L');
-            $pdf->Cell(40,6,utf8_decode('Exportaciones'),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,1,'L');
+            $pdf->Cell(40,4,utf8_decode('Ventas netas gravadas'),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalSinIva,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalSinIva,2)),0,1,'L');
+            $pdf->Cell(40,4,utf8_decode('13% de IVA'),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalSoloIva,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalSoloIva,2)),0,1,'L');
+            $pdf->Cell(40,4,utf8_decode('5% CESC'),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalSoloCesc,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalSoloCesc,2)),0,1,'L');
+            $pdf->Cell(40,4,utf8_decode('Exportaciones'),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,1,'L');
 
             $pdf->Cell(200,1,utf8_decode(''),"T",1,'L');
 
-            $pdf->Cell(40,6,utf8_decode(""),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(($totalConIvaEx + $totalSinIva + $totalSoloIva + $totalSoloCesc),2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(40,6,utf8_decode(number_format(($totalConIvaEx + $totalSinIva + $totalSoloIva + $totalSoloCesc),2)),0,1,'L');
+            $pdf->Cell(40,4,utf8_decode(""),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(($totalConIvaEx + $totalSinIva + $totalSoloIva + $totalSoloCesc),2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(40,4,utf8_decode(number_format(($totalConIvaEx + $totalSinIva + $totalSoloIva + $totalSoloCesc),2)),0,1,'L');
 
-            $pdf->Ln(30);
+            $pdf->Ln(15);
             $pdf->Cell(70,3,utf8_decode(''),"T",1,'C');
-            $pdf->Cell(40,1,utf8_decode("Nombre y firma del contador o contribuyente:"),"",0,'L');
+            $pdf->Cell(40,1,utf8_decode("Nombre y firma del contador:"),"",0,'L');
         }elseif ($tipoFacturaGenerar == 2) {
-            $pdf->Cell(40,6,utf8_decode('Ventas exentas'),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalConIvaEx,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(40,6,utf8_decode(number_format($totalConIvaEx,2)),0,1,'L');
+            $pdf->Cell(40,4,utf8_decode('Ventas exentas'),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalConIvaEx,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(40,4,utf8_decode(number_format($totalConIvaEx,2)),0,1,'L');
 
-            $pdf->Cell(40,6,utf8_decode('Ventas netas gravadas'),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalSinIva,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalSinIva,2)),0,1,'L');
-            $pdf->Cell(40,6,utf8_decode('13% de IVA'),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalSoloIva,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalSoloIva,2)),0,1,'L');
-            $pdf->Cell(40,6,utf8_decode('5% CESC'),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalSoloCesc,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalSoloCesc,2)),0,1,'L');
-            $pdf->Cell(40,6,utf8_decode('Exportaciones'),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,1,'L');
+            $pdf->Cell(40,4,utf8_decode('Ventas netas gravadas'),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalSinIva,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalSinIva,2)),0,1,'L');
+            $pdf->Cell(40,4,utf8_decode('13% de IVA'),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalSoloIva,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalSoloIva,2)),0,1,'L');
+            $pdf->Cell(40,4,utf8_decode('5% CESC'),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalSoloCesc,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalSoloCesc,2)),0,1,'L');
+            $pdf->Cell(40,4,utf8_decode('Exportaciones'),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,1,'L');
 
             $pdf->Cell(200,1,utf8_decode(''),"T",1,'L');
 
-            $pdf->Cell(40,6,utf8_decode(""),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(($totalConIvaEx + $totalSinIva + $totalSoloIva + $totalSoloCesc),2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(40,6,utf8_decode(number_format(($totalConIvaEx + $totalSinIva + $totalSoloIva + $totalSoloCesc),2)),0,1,'L');
+            $pdf->Cell(40,4,utf8_decode(""),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(($totalConIvaEx + $totalSinIva + $totalSoloIva + $totalSoloCesc),2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(40,4,utf8_decode(number_format(($totalConIvaEx + $totalSinIva + $totalSoloIva + $totalSoloCesc),2)),0,1,'L');
 
-            $pdf->Ln(30);
+            $pdf->Ln(15);
             $pdf->Cell(70,3,utf8_decode(''),"T",1,'C');
-            $pdf->Cell(40,1,utf8_decode("Nombre y firma del contador o contribuyente:"),"",0,'L');
+            $pdf->Cell(40,1,utf8_decode("Nombre y firma del contador:"),"",0,'L');
         }elseif ($tipoFacturaGenerar == 3) {
-            $pdf->Cell(40,6,utf8_decode('Ventas exentas'),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalConIvaEx,2)),0,0,'L');
-            $pdf->Cell(40,6,utf8_decode(number_format($totalConIvaEx,2)),0,1,'L');
+            $pdf->Cell(40,4,utf8_decode('Ventas exentas'),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalConIvaEx,2)),0,0,'L');
+            $pdf->Cell(40,4,utf8_decode(number_format($totalConIvaEx,2)),0,1,'L');
 
-            $pdf->Cell(40,6,utf8_decode('Ventas netas gravadas'),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalSinIva,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalSinIva,2)),0,1,'L');
-            $pdf->Cell(40,6,utf8_decode('13% de IVA'),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalSoloIva,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalSoloIva,2)),0,1,'L');
-            $pdf->Cell(40,6,utf8_decode('5% CESC'),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalSoloCesc,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalSoloCesc,2)),0,1,'L');
-            $pdf->Cell(40,6,utf8_decode('Exportaciones'),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,1,'L');
+            $pdf->Cell(40,4,utf8_decode('Ventas netas gravadas'),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalSinIva,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalSinIva,2)),0,1,'L');
+            $pdf->Cell(40,4,utf8_decode('13% de IVA'),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalSoloIva,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalSoloIva,2)),0,1,'L');
+            $pdf->Cell(40,4,utf8_decode('5% CESC'),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalSoloCesc,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalSoloCesc,2)),0,1,'L');
+            $pdf->Cell(40,4,utf8_decode('Exportaciones'),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,1,'L');
 
             $pdf->Cell(200,1,utf8_decode(''),"T",1,'L');
 
-            $pdf->Cell(40,6,utf8_decode(""),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(($totalConIvaEx + $totalSinIva + $totalSoloIva + $totalSoloCesc),2)),0,0,'L');
-            $pdf->Cell(40,6,utf8_decode(number_format(($totalConIvaEx + $totalSinIva + $totalSoloIva + $totalSoloCesc),2)),0,1,'L');
+            $pdf->Cell(40,4,utf8_decode(""),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(($totalConIvaEx + $totalSinIva + $totalSoloIva + $totalSoloCesc),2)),0,0,'L');
+            $pdf->Cell(40,4,utf8_decode(number_format(($totalConIvaEx + $totalSinIva + $totalSoloIva + $totalSoloCesc),2)),0,1,'L');
 
-            $pdf->Ln(30);
+            $pdf->Ln(15);
             $pdf->Cell(70,3,utf8_decode(''),"T",1,'C');
-            $pdf->Cell(40,1,utf8_decode("Nombre y firma del contador o contribuyente:"),"",0,'L');
+            $pdf->Cell(40,1,utf8_decode("Nombre y firma del contador:"),"",0,'L');
         }elseif ($tipoFacturaGenerar == 4) {
-            $pdf->Cell(40,6,utf8_decode('Ventas exentas'),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalConIvaEx1,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalConIvaEx2,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalConIvaEx3,2)),0,0,'L');
-            $pdf->Cell(40,6,utf8_decode(number_format($totalConIvaEx1+$totalConIvaEx2+$totalConIvaEx3,2)),0,1,'L');
+            $pdf->Cell(40,4,utf8_decode('Ventas exentas'),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalConIvaEx1,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalConIvaEx2,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalConIvaEx3,2)),0,0,'L');
+            $pdf->Cell(40,4,utf8_decode(number_format($totalConIvaEx1+$totalConIvaEx2+$totalConIvaEx3,2)),0,1,'L');
 
-            $pdf->Cell(40,6,utf8_decode('Ventas netas gravadas'),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalSinIva1,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalSinIva2,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalSinIva3,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalSinIva1+$totalSinIva2+$totalSinIva3,2)),0,1,'L');
-            $pdf->Cell(40,6,utf8_decode('13% de IVA'),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalSoloIva1,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalSoloIva2,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalSoloIva3,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalSoloIva1+$totalSoloIva2+$totalSoloIva3,2)),0,1,'L');
-            $pdf->Cell(40,6,utf8_decode('5% CESC'),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalSoloCesc1,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalSoloCesc2,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalSoloCesc3,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format($totalSoloCesc1+$totalSoloCesc2+$totalSoloCesc3,2)),0,1,'L');
-            $pdf->Cell(40,6,utf8_decode('Exportaciones'),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,1,'L');
+            $pdf->Cell(40,4,utf8_decode('Ventas netas gravadas'),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalSinIva1,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalSinIva2,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalSinIva3,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalSinIva1+$totalSinIva2+$totalSinIva3,2)),0,1,'L');
+            $pdf->Cell(40,4,utf8_decode('13% de IVA'),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalSoloIva1,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalSoloIva2,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalSoloIva3,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalSoloIva1+$totalSoloIva2+$totalSoloIva3,2)),0,1,'L');
+            $pdf->Cell(40,4,utf8_decode('5% CESC'),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalSoloCesc1,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalSoloCesc2,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalSoloCesc3,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format($totalSoloCesc1+$totalSoloCesc2+$totalSoloCesc3,2)),0,1,'L');
+            $pdf->Cell(40,4,utf8_decode('Exportaciones'),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(0,2)),0,1,'L');
 
             $pdf->Cell(200,1,utf8_decode(''),"T",1,'L');
 
-            $pdf->Cell(40,6,utf8_decode(""),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(($totalConIvaEx1 + $totalSinIva1 + $totalSoloIva1 + $totalSoloCesc1),2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(($totalConIvaEx2 + $totalSinIva2 + $totalSoloIva2 + $totalSoloCesc2),2)),0,0,'L');
-            $pdf->Cell(45,6,utf8_decode(number_format(($totalConIvaEx3 + $totalSinIva3 + $totalSoloIva3 + $totalSoloCesc3),2)),0,0,'L');
-            $pdf->Cell(40,6,utf8_decode(number_format(($totalConIvaEx1 + $totalSinIva1 + $totalSoloIva1 + $totalSoloCesc1 + $totalConIvaEx2 + $totalSinIva2 + $totalSoloIva2 + $totalSoloCesc2 + $totalConIvaEx3 + $totalSinIva3 + $totalSoloIva3 + $totalSoloCesc3),2)),0,1,'L');
+            $pdf->Cell(40,4,utf8_decode(""),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(($totalConIvaEx1 + $totalSinIva1 + $totalSoloIva1 + $totalSoloCesc1),2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(($totalConIvaEx2 + $totalSinIva2 + $totalSoloIva2 + $totalSoloCesc2),2)),0,0,'L');
+            $pdf->Cell(45,4,utf8_decode(number_format(($totalConIvaEx3 + $totalSinIva3 + $totalSoloIva3 + $totalSoloCesc3),2)),0,0,'L');
+            $pdf->Cell(40,4,utf8_decode(number_format(($totalConIvaEx1 + $totalSinIva1 + $totalSoloIva1 + $totalSoloCesc1 + $totalConIvaEx2 + $totalSinIva2 + $totalSoloIva2 + $totalSoloCesc2 + $totalConIvaEx3 + $totalSinIva3 + $totalSoloIva3 + $totalSoloCesc3),2)),0,1,'L');
 
-            $pdf->Ln(30);
+            $pdf->Ln(15);
             $pdf->Cell(70,3,utf8_decode(''),"T",1,'C');
-            $pdf->Cell(40,1,utf8_decode("Nombre y firma del contador o contribuyente:"),"",0,'L');
+            $pdf->Cell(40,1,utf8_decode("Nombre y firma del contador:"),"",0,'L');
         }
         /*$pdf->Cell(40,6,utf8_decode('Ventas exentas'),0,0,'L');
         $pdf->Cell(45,6,utf8_decode(number_format(0,2)),0,0,'L');

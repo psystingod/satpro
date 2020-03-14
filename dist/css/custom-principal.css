@@ -26,7 +26,11 @@
 }
 .sidebar-nav{
     color: #ffffff;
-    background: #37474F;
+    background: #212121;
+}
+.sidebar-nav .nav li a:hover{
+    color: #ffffff;
+    background-color: #d32f2f;
 }
 .sidebar-nav ul li{
     border: 0;
@@ -88,3 +92,4 @@ td ul.opt{
 .actions a:hover{
     text-decoration: none;
 }
+

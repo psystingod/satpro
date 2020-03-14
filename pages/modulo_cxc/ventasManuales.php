@@ -267,7 +267,74 @@
 
     <!-- Custom Fonts -->
     <link href="../../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <style media="screen">
+        .form-control {
+            color: #212121;
+            font-size: 15px;
+            font-weight: bold;
 
+        }
+        .nav>li>a {
+            color: #fff;
+        }
+        .nav>li>a:hover {
+            color: #2b2b2b;
+        }
+        .dark{
+            color: #fff;
+            background-color: #212121;
+        }
+
+        .nav-tabs.nav-justified>li>a {
+            border-bottom: 1px solid #ddd;
+            border-radius: 20px 20px 0 0;
+            background-color: #d32f2f;
+        }
+        .danger .success{
+            background-color: #F5F5F5;
+        }
+    </style>
+
+    <style media="screen">
+        .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+            color: #fff;
+            background-color: #d32f2f;
+        }
+
+        .nav-pills>li>a{
+            color: #d32f2f;
+
+        }
+
+        .btn-danger {
+            color: #fff;
+            background-color: #d32f2f;
+            border-color: #d43f3a;
+        }
+        .label-danger {
+            background-color: #d32f2f;
+        }
+
+        .panel-danger>.panel-heading {
+            color: #fff;
+            background-color: #212121;
+            border-color: #212121;
+        }
+        .panel{
+            border-color: #212121;
+        }
+        .pagination>.active>a{
+            background-color: #d32f2f;
+            border-color: #d32f2f;
+        }
+        .pagination>.active>a:hover{
+            background-color: #d32f2f;
+            border-color: #d32f2f;
+        }
+        .pagination>li>a, .pagination>li>a:hover{
+            color: #2b2b2b;
+        }
+    </style>
 </head>
 
 <body>
@@ -383,7 +450,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <br>
-                        <div class="panel panel-primary">
+                        <div class="panel panel-danger">
                           <div class="panel-heading"><b>Ventas manuales (factura pequeña)</b> <span id="nombreOrden" class="label label-danger"></span></div>
                           <form id="ventaManual" action="" method="POST">
                           <div class="panel-body">

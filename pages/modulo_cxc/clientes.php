@@ -39,7 +39,74 @@
 
     <!-- Custom Fonts -->
     <link href="../../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <style media="screen">
+        .form-control {
+            color: #212121;
+            font-size: 15px;
+            font-weight: bold;
 
+        }
+        .nav>li>a {
+            color: #fff;
+        }
+        .nav>li>a:hover {
+            color: #2b2b2b;
+        }
+        .dark{
+            color: #fff;
+            background-color: #212121;
+        }
+
+        .nav-tabs.nav-justified>li>a {
+            border-bottom: 1px solid #ddd;
+            border-radius: 20px 20px 0 0;
+            background-color: #d32f2f;
+        }
+        .danger .success{
+            background-color: #F5F5F5;
+        }
+    </style>
+
+    <style media="screen">
+        .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+            color: #fff;
+            background-color: #d32f2f;
+        }
+
+        .nav-pills>li>a{
+            color: #d32f2f;
+
+        }
+
+        .btn-danger {
+            color: #fff;
+            background-color: #d32f2f;
+            border-color: #d43f3a;
+        }
+        .label-danger {
+            background-color: #d32f2f;
+        }
+
+        .panel-danger>.panel-heading {
+            color: #fff;
+            background-color: #212121;
+            border-color: #212121;
+        }
+        .panel{
+            border-color: #212121;
+        }
+        .pagination>.active>a{
+            background-color: #d32f2f;
+            border-color: #d32f2f;
+        }
+        .pagination>.active>a:hover{
+            background-color: #d32f2f;
+            border-color: #d32f2f;
+        }
+        .pagination>li>a, .pagination>li>a:hover{
+            color: #2b2b2b;
+        }
+    </style>
 </head>
 
 <body>
@@ -158,8 +225,8 @@
                         <div class="page-header">
                             <h1><b>Clientes</b></h1>
                         </div>
-                        <a href="cxc.php"><button class="btn btn-success pull-left" type="button" name="button"><i class="fas fa-arrow-left"></i> Atrás</button></a>
-                        <button class="btn btn-primary pull-right" type="button" name="button"><i class="far fa-user"></i> Último código <?php echo $allClients->getLast(); ?></button>
+                        <a href="cxc.php"><button class="btn btn-danger pull-left" type="button" name="button"><i class="fas fa-arrow-left"></i> Atrás</button></a>
+                        <button class="btn btn-danger pull-right" type="button" name="button"><i class="far fa-user"></i> Último código <?php echo $allClients->getLast(); ?></button>
                         <!--<button id="btn_agregar" class="btn btn-success pull-right" type="button" name="button" data-toggle="modal" data-target="#agregarCliente"><i class="fas fa-plus-circle"></i> Nuevo cliente</button>-->
                         <br><br><br>
                         <div class="row">

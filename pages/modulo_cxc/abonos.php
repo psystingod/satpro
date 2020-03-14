@@ -386,6 +386,20 @@ session_start();
  //$arrOrdenesTrabajo = $data->getDataOrders('tbl_ordenes_trabajo', $codigo);
  //$arrOrdenesSuspension = $data->getDataOrders('tbl_ordenes_suspension', $codigo);
  //$arrOrdenesReconex = $data->getDataOrders('tbl_ordenes_reconexion', $codigo);
+
+if (isset($_GET['cobrador'])) {
+
+$query = "SELECT numeroAsignador FROM tbl_cobradores WHERE codigoCobrador=:codigoCobrador";
+$stmt = $con->prepare($query);
+
+// this is the first question mark
+$stmt->bindParam(':codigoCobrador', $_GET['cobrador']);
+    $stmt->execute();
+    // store retrieved row to a variable
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    $ultimoReciboCobro = (Integer)$row["numeroAsignador"] + 1;
+
+}
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -423,6 +437,51 @@ session_start();
         font-size: 15px;
         font-weight: bold;
     }
+    </style>
+    <style media="screen">
+        .form-control {
+            color: #212121;
+            font-size: 15px;
+            font-weight: bold;
+
+        }
+        .nav>li>a {
+            color: #fff;
+        }
+        .dark{
+            color: #fff;
+            background-color: #212121;
+        }
+    </style>
+
+    <style media="screen">
+        .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+            color: #fff;
+                background-color: #d32f2f;
+        }
+
+        .nav-pills>li>a{
+            color: #d32f2f;
+
+        }
+
+        .btn-danger {
+            color: #fff;
+            background-color: #d32f2f;
+            border-color: #d43f3a;
+        }
+        .label-danger {
+            background-color: #d32f2f;
+        }
+
+        .panel-danger>.panel-heading {
+            color: #fff;
+            background-color: #212121;
+            border-color: #212121;
+        }
+        .panel{
+            border-color: #212121;
+        }
     </style>
 </head>
 <body>
@@ -531,7 +590,7 @@ session_start();
                 <div class="row">
                     <div class="col-lg-12">
                         <br>
-                        <div class="panel panel-primary">
+                        <div class="panel panel-danger">
                           <div class="panel-heading">Abonos</div>
                           <form id="frAbonos" action="php/aplicarAbonosx2.php" method="POST">
                           <div class="panel-body" style="color">
@@ -540,7 +599,7 @@ session_start();
                                   if (isset($_GET['abonado'])) {
                                       if ($_GET['abonado'] == 'yes') {
                                           echo "<br>";
-                                          echo '<span class="alert alert-info">Abono ingresado con exito. Para ingresar otro abono coloque el código de cliente y el tipo de servicio.</span>';
+                                          echo '<span class="alert alert-danger">Abono ingresado con exito. Para ingresar otro abono coloque el código de cliente y el tipo de servicio.</span>';
                                           echo "<br>";
                                       }
                                       elseif ($_GET['abonado'] == 'no') {
@@ -557,7 +616,7 @@ session_start();
                                   }
                                   ?>
                                   <div class="pull-right">
-                                      <a href="estadoCuenta.php?codigoCliente=<?php if(isset($_GET['codigoCliente'])) echo $_GET['codigoCliente']; ?>" target="_blank"><button class="btn btn-warning btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Estado de cuenta"><i style="color:#000000" class="fas fa-file-invoice-dollar"></i></button></a>
+                                      <a href="estadoCuenta.php?codigoCliente=<?php if(isset($_GET['codigoCliente'])) echo $_GET['codigoCliente']; ?>" target="_blank"><button class="btn btn-danger btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Estado de cuenta"><i style="color:#fff" class="fas fa-file-invoice-dollar fa-2x"></i></button></a>
                                   </div>
                               </div>
                               <div class="form-row">
@@ -601,7 +660,7 @@ session_start();
                                       <label for="claseOrden">Fecha del abono</label>
                                       <input class="form-control input-sm input-sm" name="fechaAbono" type="text" value= "<?php echo $fechaAbono;?>" >
                                   </div>
-                                  <div class="col-md-5">
+                                  <div class="col-md-4">
                                       <label for="zona">Zona</label>
                                       <select class="form-control input-sm" name="zona" required>
 
@@ -618,23 +677,36 @@ session_start();
                                            ?>
                                       </select>
                                   </div>
-                                  <div class="col-md-5">
+                                  <div class="col-md-4">
 
                                       <label for="cobrador">Cobrador</label>
-                                      <select class="form-control input-sm" id="cobrador" name="cobrador" required>
+                                      <select class="form-control input-sm" id="cobrador" name="cobrador" onchange='getValorCobrador(this)' required>
                                           <option value="">Seleccionar</option>
                                           <?php
                                           foreach ($arrCobradores as $key) {
-                                              if ($key['codigoCobrador'] == "000") {
+                                              if ($key['codigoCobrador'] == "5000") {
                                                   echo "<option value=".$key['codigoCobrador'].">".utf8_decode($key['nombreCobrador'])."</option>";
                                               }
                                               else {
+                                                  if (isset($_GET['cobrador'])){
+                                                      if ($_GET['cobrador'] == $key['codigoCobrador']){
+                                                          echo "<option value=".$key['codigoCobrador']." selected>".utf8_decode($key['nombreCobrador'])."</option>";
+                                                      }else{
+                                                          echo "<option value=".$key['codigoCobrador'].">".utf8_decode($key['nombreCobrador'])."</option>";
+                                                      }
+
+                                                  }
                                                   echo "<option value=".$key['codigoCobrador'].">".utf8_decode($key['nombreCobrador'])."</option>";
                                               }
 
                                           }
                                            ?>
                                       </select>
+                                  </div>
+                                  <div class="col-md-2">
+                                      <!-- readonly -->
+                                      <label for="codigoCliente">Código</label>
+                                      <input id="codigoCliente" class="form-control input-sm input-sm" type="text" name="codigoCliente" value="<?php echo $codigo; ?>">
                                   </div>
                               </div>
                               <!--<div class="form-row">
@@ -648,12 +720,8 @@ session_start();
                                   </div>
                               </div>-->
                               <div class="form-row">
-                                  <div class="col-md-2">
-                                    <!-- readonly -->
-                                      <label for="codigoCliente">Código</label>
-                                      <input id="codigoCliente" class="form-control input-sm input-sm" type="text" name="codigoCliente" value="<?php echo $codigo; ?>">
-                                  </div>
-                                  <div class="col-md-4">
+
+                                  <div class="col-md-6">
                                       <label for="nombreCliente">Nombre del cliente</label>
                                       <input class="form-control input-sm input-sm" type="text" name="nombreCliente" value="<?php echo utf8_decode($nombre); ?>">
                                   </div>
@@ -685,7 +753,7 @@ session_start();
                                       <label for="valorCuota">Valor de la cuota</label>
                                       <input id="cuotaCable" type="hidden" name="cuotaCable" value="<?php echo $cuotaCable; ?>">
                                       <input id="cuotaInter" type="hidden" name="cuotaInter" value="<?php echo $cuotaInter; ?>">
-                                      <input id="valorCuota" class="form-control input-sm alert-info" type="text" name="valorCuota" value="0.00" style="font-weight: bold;">
+                                      <input id="valorCuota" class="form-control input-sm alert-danger" type="text" name="valorCuota" value="0.00" style="font-weight: bold;">
                                   </div>
                               </div>
                               <div class="form-row">
@@ -723,8 +791,14 @@ session_start();
                                            ?>
                                       </select>
                                   </div>
-                                  <div class="col-md-3" id="ultimoRecibo">
-
+                                  <div class="col-md-3" id="">
+                                        <?php
+                                        if (isset($_GET["cobrador"])){
+                                            echo "<label for='ultimoRecibo'>N° recibo a ingresar</label><input style='color:#000;' class='form-control input-sm input-sm alert-danger' type='text' name='ultimoRecibo' value=".$ultimoReciboCobro." required>";
+                                        }else{
+                                            "<label for='ultimoRecibo'>N° recibo a ingresar</label><input style='color:#000;' class='form-control input-sm input-sm alert-danger' type='text' name='ultimoRecibo' value='' required>";
+                                        }
+                                        ?>
                                   </div>
                               </div>
                               <div class="form-row">
@@ -742,7 +816,7 @@ session_start();
                                   </div>
                                   <div class="col-md-2">
                                       <label for="totalPagar">Total a pagar</label>
-                                      <input class="form-control input-sm" type="text" id="totalPagar" name="totalPagar" value="" required>
+                                      <input class="form-control input-sm alert-danger" type="text" id="totalPagar" name="totalPagar" value="" required>
                                   </div>
                                   <div class="col-md-2">
                                       <label for="porImp">% CESC</label>
@@ -796,16 +870,16 @@ session_start();
                               </div>
                               <div class="form-row">
                                   <div class="col-md-12">
-                                      <table class="table table-bordered table-hover table-striped">
+                                      <table class="table table-hover table-striped">
                                           <tr class="">
-                                              <th class="bg-success">Abonar <i class="fas fa-check-square"></i></th>
-                                              <th class="bg-success"></th>
-                                              <th class="bg-success"></th>
-                                              <th class="bg-success">N° factura</th>
+                                              <th class="dark">Abonar</th>
+                                              <th class="dark"></th>
+                                              <th class="dark"></th>
+                                              <th class="dark">N° factura</th>
                                               <!--<th class="bg-success">N° recibo</th>-->
-                                              <th class="bg-success">Mes de servicio</th>
-                                              <th class="bg-success">Cuota</th>
-                                              <th class="bg-success">Vencimiento</th>
+                                              <th class="dark">Mes de servicio</th>
+                                              <th class="dark">Cuota</th>
+                                              <th class="dark">Vencimiento</th>
                                           </tr>
 
                                           <?php
@@ -911,7 +985,7 @@ session_start();
                                   </div>
                                   <div class="col-md-2">
                                       <label for="meses" style="color: brown;"></label>
-                                      <button id="aplicarAbono" class="btn btn-success btn-md btn-block" type="submit" name="editar" style="margin-bottom: 6px; margin-top: 0px;"><i class="fas fa-check" style="color: white;"></i> Aplicar abonos</button>
+                                      <button id="aplicarAbono" class="btn btn-danger btn-md btn-block" type="submit" name="editar" style="margin-bottom: 6px; margin-top: 0px;"><i class="fas fa-check" style="color: white;"></i> Aplicar abonos</button>
                                       <!--<input id="submitAbono" style="display: none;" type="submit" name="submit" value="">-->
                                       <a href="cxc.php" style="text-decoration: none;"><button class="btn btn-danger btn-md btn-block" type="button" name="button"><i class="fas fa-sign-out-alt" style="color: white;"></i> Salir</button></a>
                                   </div>
@@ -968,8 +1042,9 @@ session_start();
         event.preventDefault();
         var codValue = document.getElementById("codigoCliente").value;
         var servicio = document.getElementById("servicio").value;
+        var cobrador = document.getElementById("cobrador").value;
         // Trigger the button element with a click
-        window.location="abonos.php?codigoCliente="+codValue+"&tipoServicio="+servicio;
+        window.location="abonos.php?codigoCliente="+codValue+"&tipoServicio="+servicio+"&cobrador="+cobrador;
         }
         });
     </script>

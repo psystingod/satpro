@@ -316,8 +316,17 @@
                                     $this->dbConnect->commit();
 
                                }
-                               echo '<script>window.open("comprobantePagox2.php?uaid1='.$reciboCobx1.'&cod='.$codigoCliente.'&desde='.$desde.'&hasta='.$hasta.'&tipoServicio='.strtolower($tipoServicio).'","_blank");</script>';
-                               echo '<script>window.location = "../abonos.php?abonado=yes";</script>';
+                               echo '<script>
+                                        var r = confirm("¿Desea imprimir el recibo?");
+                                        if (r == true) {
+                                          window.open("comprobantePagox2.php?uaid1='.$reciboCobx1.'&cod='.$codigoCliente.'&desde='.$desde.'&hasta='.$hasta.'&tipoServicio='.strtolower($tipoServicio).'","_blank");
+                                          window.location = "../abonos.php?abonado=yes&codigoCliente='.$codigoCliente.'&tipoServicio='.strtolower($tipoServicio).'&cobrador='.$codigoCobrador.'";
+                                        } else {
+                                          window.location = "../abonos.php?abonado=yes&codigoCliente='.$codigoCliente.'&tipoServicio='.strtolower($tipoServicio).'&cobrador='.$codigoCobrador.'";
+                                        }
+                                     </script>';
+                               //echo '<script>window.open("comprobantePagox2.php?uaid1='.$reciboCobx1.'&cod='.$codigoCliente.'&desde='.$desde.'&hasta='.$hasta.'&tipoServicio='.strtolower($tipoServicio).'","_blank");</script>';
+                               //echo '<script>window.location = "../abonos.php?abonado=yes&codigoCliente='.$codigoCliente.'&tipoServicio='.strtolower($tipoServicio).'&cobrador='.$codigoCobrador.'";</script>';
 
                                 /*sleep(0.5);
                                 header('Location: ../abonos.php?abonado=yes');*/
@@ -553,8 +562,17 @@
                                    $this->dbConnect->commit();
 
                                }
-                               echo '<script>window.open("comprobantePagox2.php?uaid1='.$reciboCobx1.'&cod='.$codigoCliente.'&desde='.$desde.'&hasta='.$hasta.'&tipoServicio='.strtolower($tipoServicio).'","_blank");</script>';
-                               echo '<script>window.location = "../abonos.php?abonado=yes";</script>';
+                               echo '<script>
+                                        var r = confirm("¿Desea imprimir el recibo?");
+                                        if (r == true) {
+                                          window.open("comprobantePagox2.php?uaid1='.$reciboCobx1.'&cod='.$codigoCliente.'&desde='.$desde.'&hasta='.$hasta.'&tipoServicio='.strtolower($tipoServicio).'","_blank");
+                                          window.location = "../abonos.php?abonado=yes&codigoCliente='.$codigoCliente.'&tipoServicio='.strtolower($tipoServicio).'&cobrador='.$codigoCobrador.'";
+                                        } else {
+                                          window.location = "../abonos.php?abonado=yes&codigoCliente='.$codigoCliente.'&tipoServicio='.strtolower($tipoServicio).'&cobrador='.$codigoCobrador.'";
+                                        }
+                                     </script>';
+                               //echo '<script>window.open("comprobantePagox2.php?uaid1='.$reciboCobx1.'&cod='.$codigoCliente.'&desde='.$desde.'&hasta='.$hasta.'&tipoServicio='.strtolower($tipoServicio).'","_blank");</script>';
+                               //echo '<script>window.location = "../abonos.php?abonado=yes&codigoCliente='.$codigoCliente.'&tipoServicio='.strtolower($tipoServicio).'&cobrador='.$codigoCobrador.'";</script>';
 
                                /*sleep(0.5);
                                header('Location: ../abonos.php?abonado=yes');*/
@@ -815,9 +833,17 @@
 
                                 sleep(0.5);
                                 $this->dbConnect->commit();
-
-                                echo '<script>window.open("comprobantePago.php?uaid1='.$uaid1.'&uaid2='.$uaid2.'");</script>';
-                                echo '<script>window.location = "../abonos.php?abonado=yes";</script>';
+                               echo '<script>
+                                        var r = confirm("¿Desea imprimir el recibo?");
+                                        if (r == true) {
+                                          window.open("comprobantePago.php?uaid1='.$uaid1.'&uaid2='.$uaid2.'");
+                                          window.location = "../abonos.php?abonado=yes&codigoCliente='.$codigoCliente.'&tipoServicio='.strtolower($tipoServicio).'&cobrador='.$codigoCobrador.'";
+                                        } else {
+                                          window.location = "../abonos.php?abonado=yes&codigoCliente='.$codigoCliente.'&tipoServicio='.strtolower($tipoServicio).'&cobrador='.$codigoCobrador.'";
+                                        }
+                                     </script>';
+                                //echo '<script>window.open("comprobantePago.php?uaid1='.$uaid1.'&uaid2='.$uaid2.'");</script>';
+                               //echo '<script>window.location = "../abonos.php?abonado=yes&codigoCliente='.$codigoCliente.'&tipoServicio='.strtolower($tipoServicio).'&cobrador='.$codigoCobrador.'";</script>';
                                 //sleep(0.5);
                                 //header('Location: ../abonos.php?abonado=yes');
 
@@ -873,15 +899,15 @@
 
                                //$this->dbConnect->beginTransaction(); $this->dbConnect->exec('LOCK TABLES tbl_cargos, tbl_abonos, clientes');
                                $this->dbConnect->beginTransaction();
-                               $qry = "UPDATE tbl_cargos SET tipoFactura=:tipoComprobante, /*numeroRecibo=:numeroRecibo,*/ codigoCliente=:codigoCliente, cuotaCable=:cuotaCable, saldoCable=:saldoCable, fechaCobro=:fechaCobro, fechaVencimiento=:fechaVencimiento, fechaAbonado=:fechaAbonado, /*fechaFactura=:fechaFactura,*/ mesCargo=:mesCargo, tipoServicio=:tipoServicio, estado=:estado, cargoImpuesto=:cargoImpuesto, totalImpuesto=:totalImpuesto WHERE idFactura=:idFactura";
+                               $qry = "UPDATE tbl_cargos SET tipoFactura=:tipoComprobante, /*numeroRecibo=:numeroRecibo,*/ codigoCliente=:codigoCliente, cuotaInternet=:cuotaInternet, saldoInternet=:saldoInternet, fechaCobro=:fechaCobro, fechaVencimiento=:fechaVencimiento, fechaAbonado=:fechaAbonado, /*fechaFactura=:fechaFactura,*/ mesCargo=:mesCargo, tipoServicio=:tipoServicio, estado=:estado, cargoImpuesto=:cargoImpuesto, totalImpuesto=:totalImpuesto WHERE idFactura=:idFactura";
 
                                $stmt = $this->dbConnect->prepare($qry);
                                $stmt->execute(
                                    array(':tipoComprobante' => $tipoComprobante,
                                          //':numeroRecibo' => $reciboCobx1,
                                          ':codigoCliente' => $codigoCliente,
-                                         ':cuotaCable' => $cuotaCable,
-                                         ':saldoCable' => $saldoCable,
+                                         ':cuotaInternet' => $cuotaInter,
+                                         ':saldoInternet' => $saldoInter,
                                          ':fechaCobro' => $fechaCobrox1,
                                          //':fechaFactura' => $fechaFacturax1,
                                          ':fechaVencimiento' => $fechaVencimientox1,
@@ -992,15 +1018,15 @@
                                    $saldoCable = $_POST['pendiente']; // Quizá update
                                    $estado = "CANCELADA";
 
-                                   $qry = "UPDATE tbl_cargos SET tipoFactura=:tipoComprobante, /*numeroRecibo=:numeroRecibo,*/ codigoCliente=:codigoCliente, cuotaCable=:cuotaCable, saldoCable=:saldoCable, fechaCobro=:fechaCobro, fechaVencimiento=:fechaVencimiento, fechaAbonado=:fechaAbonado, /*fechaFactura=:fechaFactura,*/ mesCargo=:mesCargo, tipoServicio=:tipoServicio, estado=:estado, cargoImpuesto=:cargoImpuesto, totalImpuesto=:totalImpuesto WHERE idFactura=:idFactura";
+                                   $qry = "UPDATE tbl_cargos SET tipoFactura=:tipoComprobante, /*numeroRecibo=:numeroRecibo,*/ codigoCliente=:codigoCliente, cuotaInternet=:cuotaInternet, saldoInternet=:saldoInternet, fechaCobro=:fechaCobro, fechaVencimiento=:fechaVencimiento, fechaAbonado=:fechaAbonado, /*fechaFactura=:fechaFactura,*/ mesCargo=:mesCargo, tipoServicio=:tipoServicio, estado=:estado, cargoImpuesto=:cargoImpuesto, totalImpuesto=:totalImpuesto WHERE idFactura=:idFactura";
 
                                    $stmt = $this->dbConnect->prepare($qry);
                                    $stmt->execute(
                                        array(':tipoComprobante' => $tipoComprobante,
                                              //':numeroRecibo' => $reciboCobx2,
                                              ':codigoCliente' => $codigoCliente,
-                                             ':cuotaCable' => $cuotaCable,
-                                             ':saldoCable' => $saldoCable,
+                                             ':cuotaInternet' => $cuotaInter,
+                                             ':saldoInternet' => $saldoInter,
                                              ':fechaCobro' => $fechaCobrox2,
                                              //':fechaFactura' => $fechaFacturax2,
                                              ':fechaVencimiento' => $fechaVencimientox2,
@@ -1073,14 +1099,19 @@
 
                                     sleep(0.5);
                                     $this->dbConnect->commit();
-
-                                    echo '<script>window.open("comprobantePago.php?uaid1='.$uaid1.'&uaid2='.$uaid2.'");</script>';
+                                   echo '<script>
+                                        var r = confirm("¿Desea imprimir el recibo?");
+                                        if (r == true) {
+                                          window.open("comprobantePago.php?uaid1='.$uaid1.'&uaid2='.$uaid2.'");
+                                          window.location = "../abonos.php?abonado=yes&codigoCliente='.$codigoCliente.'&tipoServicio='.strtolower($tipoServicio).'&cobrador='.$codigoCobrador.'";
+                                        } else {
+                                          window.location = "../abonos.php?abonado=yes&codigoCliente='.$codigoCliente.'&tipoServicio='.strtolower($tipoServicio).'&cobrador='.$codigoCobrador.'";
+                                        }
+                                     </script>';
+                                    //echo '<script>window.open("comprobantePago.php?uaid1='.$uaid1.'&uaid2='.$uaid2.'");</script>';
                                     //sleep(0.5);
-                                    echo '<script>window.location = "../abonos.php?abonado=yes";</script>';
+                                   //echo '<script>window.location = "../abonos.php?abonado=yes&codigoCliente='.$codigoCliente.'&tipoServicio='.strtolower($tipoServicio).'&cobrador='.$codigoCobrador.'";</script>';
 
-                                    //header('Location: ../abonos.php?abonado=yes');
-
-                                    //$this->dbConnect->exec('UNLOCK TABLES');
                                }else {
                                    header('Location: ../cobradores.php?codigoCobrador='.$cobrador.'&talonario=no');
                                }
@@ -1232,9 +1263,17 @@
                                     $this->dbConnect->commit();
 
                                }
+                               echo '<script>
+                                        var r = confirm("¿Desea imprimir el recibo?");
+                                        if (r == true) {
+                                          window.open("comprobantePagox2.php?uaid1='.$reciboCobx1.'&cod='.$codigoCliente.'&desde='.$desde.'&hasta='.$hasta.'&tipoServicio='.strtolower($tipoServicio).'","_blank");
+                                          window.location = "../abonos.php?abonado=yes&codigoCliente='.$codigoCliente.'&tipoServicio='.strtolower($tipoServicio).'&cobrador='.$codigoCobrador.'";
+                                        } else {
+                                          window.location = "../abonos.php?abonado=yes&codigoCliente='.$codigoCliente.'&tipoServicio='.strtolower($tipoServicio).'&cobrador='.$codigoCobrador.'";
+                                        }
+                                     </script>';
                                //echo '<script>window.open("comprobantePagox2.php?uaid1='.$reciboCobx1.'&cod='.$codigoCliente.'&desde='.$desde.'&hasta='.$hasta.'&tipoServicio='.strtolower($tipoServicio).'","_blank");</script>';
-                               //echo '<script>window.location = "../abonos.php?abonado=yes";</script>';
-
+                               //echo '<script>window.location = "../abonos.php?abonado=yes&codigoCliente='.$codigoCliente.'&tipoServicio='.strtolower($tipoServicio).'&cobrador='.$codigoCobrador.'";</script>';
                                 /*sleep(0.5);
                                 header('Location: ../abonos.php?abonado=yes');*/
                                 //$this->dbConnect->exec('UNLOCK TABLES');
@@ -1385,8 +1424,17 @@
                                     $this->dbConnect->commit();
 
                                }
-                               echo '<script>window.open("comprobantePagox2.php?uaid1='.$reciboCobx1.'&cod='.$codigoCliente.'&desde='.$desde.'&hasta='.$hasta.'&tipoServicio='.strtolower($tipoServicio).'","_blank");</script>';
-                               echo '<script>window.location = "../abonos.php?abonado=yes";</script>';
+                               echo '<script>
+                                        var r = confirm("¿Desea imprimir el recibo?");
+                                        if (r == true) {
+                                          window.open("comprobantePagox2.php?uaid1='.$reciboCobx1.'&cod='.$codigoCliente.'&desde='.$desde.'&hasta='.$hasta.'&tipoServicio='.strtolower($tipoServicio).'","_blank");
+                                          window.location = "../abonos.php?abonado=yes&codigoCliente='.$codigoCliente.'&tipoServicio='.strtolower($tipoServicio).'&cobrador='.$codigoCobrador.'";
+                                        } else {
+                                          window.location = "../abonos.php?abonado=yes&codigoCliente='.$codigoCliente.'&tipoServicio='.strtolower($tipoServicio).'&cobrador='.$codigoCobrador.'";
+                                        }
+                                     </script>';
+                               //echo '<script>window.open("comprobantePagox2.php?uaid1='.$reciboCobx1.'&cod='.$codigoCliente.'&desde='.$desde.'&hasta='.$hasta.'&tipoServicio='.strtolower($tipoServicio).'","_blank");</script>';
+                               //echo '<script>window.location = "../abonos.php?abonado=yes&codigoCliente='.$codigoCliente.'&tipoServicio='.strtolower($tipoServicio).'&cobrador='.$codigoCobrador.'";</script>';
 
                                 /*sleep(0.5);
                                 header('Location: ../abonos.php?abonado=yes');*/

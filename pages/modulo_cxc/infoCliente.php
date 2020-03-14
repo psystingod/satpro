@@ -430,11 +430,51 @@ session_start();
     <!--<link rel="stylesheet" href="../vendor/datatables/css/jquery.dataTables.min.css"> -->
     <style media="screen">
     .form-control {
-        color: #01579B;
+        color: #212121;
         font-size: 15px;
         font-weight: bold;
 
     }
+    .nav>li>a {
+        color: #fff;
+    }
+    .dark{
+        color: #fff;
+        background-color: #212121;
+    }
+    </style>
+
+    <style media="screen">
+        .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+            color: #fff;
+            background-color: #d32f2f;
+        }
+
+        .nav-pills>li>a{
+            color: #d32f2f;
+
+        }
+
+        .btn-danger {
+            color: #fff;
+            background-color: #d32f2f;
+            border-color: #d43f3a;
+        }
+        a:hover {
+            text-decoration: none;
+        }
+        .label-danger {
+            background-color: #d32f2f;
+        }
+
+        .panel-danger>.panel-heading {
+            color: #fff;
+            background-color: #212121;
+            border-color: #212121;
+        }
+        .panel{
+            border-color: #212121;
+        }
     </style>
 </head>
 
@@ -469,11 +509,11 @@ session_start();
                     <ul class="dropdown-menu dropdown-user">
                         <li><a onclick="window.open('ordenTrabajo.php','','height=600,width=1000,top=-300,left=200')">Ordenes de trabajo</a>
                         </li>
-                        <li><a href="ordenSuspension.php" target="_blank">Ordenes de suspensión</a>
+                        <li><a onclick="window.open('ordenSuspension.php','','height=600,width=1000,top=-300,left=200')">Ordenes de suspensión</a>
                         </li>
-                        <li><a href="ordenReconexion.php" target="_blank">Ordenes de reconexión</a>
+                        <li><a onclick="window.open('ordenReconexion.php','','height=600,width=1000,top=-300,left=200')">Ordenes de reconexión</a>
                         </li>
-                        <li><a href="ordenTraslado.php" target="_blank">Ordenes de traslado</a>
+                        <li><a onclick="window.open('ordenTraslado.php','','height=600,width=1000,top=-300,left=200')">Ordenes de traslado</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -590,15 +630,15 @@ session_start();
                     <table class="table table-responsive">
                         <tr>
                             <td><button class="btn btn-danger btn-block"><i class="fas fa-sign-out-alt fa-2x"></i></button></td>
-                            <td><button class="btn btn-success btn-block"><i class="fas fa-print fa-2x"></i></button></td>
-                            <td><button class="btn btn-warning btn-block" id="btn-editar" name="editar" onclick="editarCliente();" title="Editar"><i class="far fa-edit fa-2x"></i></button></td>
-                            <td><button id="btn-nuevo" name="agregar" onclick="nuevoCliente();" class="btn btn-primary btn-block" title="Nuevo"><i class="fas fa-user-plus fa-2x"></i></button></td>
+                            <td><button class="btn btn-danger btn-block"><i class="fas fa-print fa-2x"></i></button></td>
+                            <td><button class="btn btn-danger btn-block" id="btn-editar" name="editar" onclick="editarCliente();" title="Editar"><i class="far fa-edit fa-2x"></i></button></td>
+                            <td><button id="btn-nuevo" name="agregar" onclick="nuevoCliente();" class="btn btn-danger btn-block" title="Nuevo"><i class="fas fa-user-plus fa-2x"></i></button></td>
                         </tr>
 
                         <tr>
-                            <td><a href="php/contratoCable.php<?php echo "?id=".$id; ?>" target="_blank" class="btn btn-primary btn-block" style="font-size: 16px;"><i class="far fa-file-alt"></i> Contrato de cable</a></td>
-                            <td><a href="php/contratoInter.php<?php echo "?id=".$id; ?>" target="_blank" class="btn btn-primary btn-block" style="font-size: 16px;"><i class="far fa-file-alt"></i> Contrato de internet</a></td>
-                            <td><a href="estadoCuenta.php?codigoCliente=<?php echo $codigo; ?>" target="_blank"><button class="btn btn-primary btn-block" style="font-size: 16px;"><i class="fas fa-dollar"></i> Estado de cuenta</button></a></td>
+                            <td><a href="php/contratoCable.php<?php echo "?id=".$id; ?>" target="_blank" class="btn btn-danger btn-block" style="font-size: 16px;"><i class="far fa-file-alt"></i> Contrato de cable</a></td>
+                            <td><a href="php/contratoInter.php<?php echo "?id=".$id; ?>" target="_blank" class="btn btn-danger btn-block" style="font-size: 16px;"><i class="far fa-file-alt"></i> Contrato de internet</a></td>
+                            <td><a href="estadoCuenta.php?codigoCliente=<?php echo $codigo; ?>" target="_blank"><button class="btn btn-danger btn-block" style="font-size: 16px;"><i class="fas fa-dollar"></i> Estado de cuenta</button></a></td>
                 <form id="formClientes" class="" action="#" method="POST">
                             <td><button id="btn-guardar" class="btn btn-danger btn-block" title="Guardar" disabled><i class="fas fa-save fa-2x"></i></button></td>
                         </tr>
@@ -614,15 +654,15 @@ session_start();
                     </table>
                 </div>
                 <div class="col-md-4">
-                    <table class="table table-bordered table-responsive table-condensed">
-                        <th></th>
-                        <th>Activo</th>
-                        <th>Susp</th>
-                        <th>Sin serv</th>
+                    <table style="margin-top: 9px;" class="table table-responsive table-bordered table-condensed">
+                        <th class="dark"></th>
+                        <th class="dark">Activo</th>
+                        <th class="dark">Susp</th>
+                        <th class="dark">Sin serv</th>
                         <?php
 
                         if (($estado_cable == "F" || $estado_cable == "") && $sinServicio == "F") {
-                            echo "<tr class='info'>
+                            echo "<tr class='dark'>
                                 <th>TV</th>
                                 <td><label class='switch'><input id='activoCable' class='switch' type='radio' name ='cable' value='activo' checked disabled><span class='slider round'></span></label></td>
                                 <td><label class='switch'><input id='suspendidoCable' class='switch' type='radio' name ='cable' value='suspendido' disabled><span class='slider round'></span></label></td>
@@ -630,7 +670,7 @@ session_start();
                             </tr>";
                         }
                         else if ($estado_cable == "T" && $sinServicio == "F") {
-                            echo "<tr class='info'>
+                            echo "<tr class='dark'>
                                 <th>TV</th>
                                 <td><label class='switch'><input id='activoCable' class='switch' type='radio' name ='cable' value='activo' disabled><span class='slider round'></span></label></td>
                                 <td><label class='switch'><input id='suspendidoCable' class='switch' type='radio' name ='cable' value='suspendido' checked disabled><span class='slider round'></span></label></td>
@@ -638,7 +678,7 @@ session_start();
                             </tr>";
                         }
                         elseif (($estado_cable == "F" || $estado_cable == "") && $sinServicio == "T") {
-                            echo "<tr class='info'>
+                            echo "<tr class='dark'>
                                 <th>TV</th>
                                 <td><label class='switch'><input id='activoCable' class='switch' type='radio' name ='cable' value='activo' disabled required><span class='slider round'></span></label></td>
                                 <td><label class='switch'><input id='suspendidoCable' class='switch' type='radio' name ='cable' value='suspendido' disabled required><span class='slider round'></span></label></td>
@@ -646,7 +686,7 @@ session_start();
                             </tr>";
                         }
                         else {
-                            echo "<tr class='info'>
+                            echo "<tr class='dark'>
                                 <th>TV</th>
                                 <td><label class='switch'><input id='activoCable' class='switch' type='radio' name ='cable' value='activo' disabled required><span class='slider round'></span></label></td>
                                 <td><label class='switch'><input id='suspendidoCable' class='switch' type='radio' name ='cable' value='suspendido' disabled required><span class='slider round'></span></label></td>
@@ -654,7 +694,7 @@ session_start();
                             </tr>";
                         }
                         if ($estado_internet == 1) {
-                            echo "<tr class='success'>
+                            echo "<tr class='dark'>
                                 <th>Internet</th>
                                 <td><label class='switch'><input id='activoInter' class='switch' type='radio' name='internet' value='activo' checked disabled><span class='slider round'></span></label></td>
                                 <td><label class='switch'><input id='suspendidoInter' class='switch' type='radio' name='internet' value='suspendido' disabled><span class='slider round'></span></label></td>
@@ -662,7 +702,7 @@ session_start();
                             </tr>";
                         }
                         elseif ($estado_internet == 2) {
-                            echo "<tr class='success'>
+                            echo "<tr class='dark'>
                                 <th>Internet</th>
                                 <td><label class='switch'><input id='activoInter' class='switch' type='radio' name='internet' value='activo' disabled><span class='slider round'></span></label></td>
                                 <td><label class='switch'><input id='suspendidoInter' class='switch' type='radio' name='internet' value='suspendido' checked disabled><span class='slider round'></span></label></td>
@@ -670,14 +710,14 @@ session_start();
                             </tr>";
                         }
                         else {
-                            echo "<tr class='success'>
+                            echo "<tr class='dark'>
                                 <th>Internet</th>
                                 <td><label class='switch'><input id='activoInter' class='switch' type='radio' name='internet' value='activo' disabled required><span class='slider round'></span></label></td>
                                 <td><label class='switch'><input id='suspendidoInter' class='switch' type='radio' name='internet' value='suspendido' disabled required><span class='slider round'></span></label></td>
                                 <td><label class='switch'><input id='sinInter' class='switch' type='radio' name='internet' value='sin' checked disabled required><span class='slider round'></span></label></td>
                             </tr>";
                         }
-                        echo "<tr class='warning'>
+                        echo "<tr class='dark'>
                             <th>Teléfono</th>
                             <td><label class='switch'><input class='switch' type='radio' name='telefono' value='activo' disabled><span class='slider round'></span></label></td>
                             <td><label class='switch'><input class='switch' type='radio' name='telefono' value='suspendido' disabled><span class='slider round'></span></label></td>
@@ -689,28 +729,29 @@ session_start();
             </div>
             <div class="row">
                 <div class="col-md-12">
-                    <div class="panel panel-primary">
+                    <div class="panel panel-danger">
                         <div class="panel-heading">
                             <span style="font-size:15px;" class="label label-danger"><?php echo $codigo; ?></span> <span><?php echo strtoupper($nombre); ?></span>
-                            <span class="pull-right"><button class="btn btn-info btn-xs" type="button" id="todoAtras" name="todoAtras" onclick="<?php echo 'todoAtras1('.$allClients->getFirst().')' ?>"><i class="fas fa-fast-backward"></i></button>&nbsp;
-                            <span class="pull-right"><button class="btn btn-info btn-xs" type="button" id="atras" name="atras" onclick="<?php echo 'atras1('.$_GET["id"].')' ?>"><i class="fas fa-step-backward"></i></button>&nbsp;
-                                <span class="pull-right"><button class="btn btn-info btn-xs" type="button" id="adelante" name="adelante" onclick="<?php echo 'adelante1('.$_GET["id"].')' ?>"><i class="fas fa-step-forward"></i></button>&nbsp;
-                                <span class="pull-right"><button class="btn btn-info btn-xs" type="button" id="todoAdelante" name="todoAdelante" onclick="<?php echo 'todoAdelante1('.$allClients->getLast().')' ?>"><i class="fas fa-fast-forward"></i></button>
+                            <span class="pull-right"><button class="btn btn-danger btn-xs" type="button" id="todoAtras" name="todoAtras" onclick="<?php echo 'todoAtras1('.$allClients->getFirst().')' ?>"><i class="fas fa-fast-backward"></i></button>&nbsp;
+                            <span class="pull-right"><button class="btn btn-danger btn-xs" type="button" id="atras" name="atras" onclick="<?php echo 'atras1('.$_GET["id"].')' ?>"><i class="fas fa-step-backward"></i></button>&nbsp;
+                                <span class="pull-right"><button class="btn btn-danger btn-xs" type="button" id="adelante" name="adelante" onclick="<?php echo 'adelante1('.$_GET["id"].')' ?>"><i class="fas fa-step-forward"></i></button>&nbsp;
+                                <span class="pull-right"><button class="btn btn-danger btn-xs" type="button" id="todoAdelante" name="todoAdelante" onclick="<?php echo 'todoAdelante1('.$allClients->getLast().')' ?>"><i class="fas fa-fast-forward"></i></button>
                             </span>
                         </div>
                         <!-- /.panel-heading -->
                         <div class="panel-body">
+
                             <!-- Nav tabs -->
-                            <ul class="nav nav-pills nav-justified">
-                                <li class="active"><a href="#datos-generales" data-toggle="tab">Datos generales</a>
+                            <ul class="nav nav-pills nav-justified red">
+                                <li class="active"><a href="#datos-generales" data-toggle="tab">DATOS GENERALES</a>
                                 </li>
-                                <li><a href="#otros-datos" data-toggle="tab">Otros datos</a>
+                                <li><a href="#otros-datos" data-toggle="tab">OTROS DATOS</a>
                                 </li>
-                                <li><a href="#servicios" data-toggle="tab">Servicios</a>
+                                <li><a href="#servicios" data-toggle="tab">SERVICIOS</a>
                                 </li>
-                                <li><a href="#ordenes-tecnicas" data-toggle="tab">Ordenes técnicas</a>
+                                <li><a href="#ordenes-tecnicas" data-toggle="tab">ORDENES TÉCNICAS</a>
                                 </li>
-                                <li><a href="#notificaciones-traslados" data-toggle="tab">Traslados</a>
+                                <li><a href="#notificaciones-traslados" data-toggle="tab">TRASLADOS</a>
                                 </li>
                             </ul>
                             <!-- Tab panes -->
@@ -723,8 +764,8 @@ session_start();
                                             <input class="form-control input-sm" type="text" name="codigo" value="<?php echo $codigo; ?>" readonly>
                                         </div>
                                         <div class="col-md-4">
-                                            <label for="contrato">Número de contrato</label>
-                                            <input class="form-control input-sm" type="text" name="contrato" value="<?php echo $nContrato; ?>" readonly>
+                                            <label for="contrato">N° de contrato (CABLE)</label>
+                                            <input class="form-control input-sm alert-danger" type="text" name="contrato" value="<?php echo $nContrato; ?>" readonly>
                                         </div>
                                         <div class="col-md-4">
                                             <label for="factura">Número de factura</label>
@@ -1009,7 +1050,7 @@ session_start();
                                         <div class="card-header" role="tab" id="headingTwo1">
                                           <a style="text-decoration:none;" class="collapsed" data-toggle="collapse" data-parent="#accordionEx1" href="#collapseTwo1"
                                             aria-expanded="false" aria-controls="collapseTwo1">
-                                            <h5 class="mb-0 alert bg-info">
+                                            <h5 class="mb-0 alert dark">
                                               TV POR CABLE <i class="fas fa-angle-down rotate-icon"></i>
                                             </h5>
                                           </a>
@@ -1085,7 +1126,7 @@ session_start();
                                                   <div class="col-md-3">
                                                       <label for="mactv">TV DIGITAL</label>
                                                       <!--<input class="form-control input-sm" type="text" name="mactv" value="<?php //echo $mactv; ?>" readonly>-->
-                                                      <button type="button" class="btn btn-primary btn-block btn-xl" data-toggle="modal" data-target="#cas" name="button"><i class="fas fa-tv"></i> Datos de caja digital</button>
+                                                      <button type="button" class="btn btn-danger btn-block btn-xl" data-toggle="modal" data-target="#cas" name="button"><i class="fas fa-tv"></i> Datos de caja digital</button>
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="mesesContratoCable">Meses de contrato</label>
@@ -1152,7 +1193,7 @@ session_start();
                                         <div class="card-header" role="tab" id="headingTwo2">
                                           <a style="text-decoration:none;" class="collapsed" data-toggle="collapse" data-parent="#accordionEx1" href="#collapseTwo21"
                                             aria-expanded="false" aria-controls="collapseTwo21">
-                                            <h5 class="mb-0 alert bg-success">
+                                            <h5 class="mb-0 alert dark">
                                               INTERNET <i class="fas fa-angle-down rotate-icon"></i>
                                             </h5>
                                           </a>
@@ -1261,8 +1302,8 @@ session_start();
                                               </div>
                                               <div class="row">
                                                   <div class="col-md-3">
-                                                      <label for="nContratoVigente">N° de contrato vigente</label>
-                                                      <input class="form-control input-sm" type="text" name="nContratoVigente" value="<?php echo $nContratoInter; ?>" readonly>
+                                                      <label for="nContratoVigente">N° de contrato (INTERNET)</label>
+                                                      <input class="form-control input-sm alert-danger" type="text" name="nContratoVigente" value="<?php echo $nContratoInter; ?>" readonly>
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="vencimientoContratoInternet">Vencimiento de contrato</label>
@@ -1405,7 +1446,7 @@ session_start();
                                         <div class="card-header" role="tab" id="headingThree31">
                                           <a style="text-decoration:none;" class="collapsed" data-toggle="collapse" data-parent="#accordionEx1" href="#collapseThree31"
                                             aria-expanded="false" aria-controls="collapseThree31">
-                                            <h5 class="mb-0 alert bg-warning">
+                                            <h5 class="mb-0 alert dark">
                                               TELEFONIA <i class="fas fa-angle-down rotate-icon"></i>
                                             </h5>
                                           </a>
@@ -1426,28 +1467,28 @@ session_start();
                 </form>             <!-- Accordion wrapper -->
                                 </div>
                                 <div class="tab-pane fade" id="ordenes-tecnicas">
-                                    <h4 class="alert bg-info"><strong>Historial de ordenes de trabajo</strong></h4>
+                                    <h4 style="background-color: #ccc;" class="alert">Historial de ordenes de trabajo</h4>
                                     <div class="ordenes">
                                         <!-- <div class="col-md-12">
                                             <button class="btn btn-danger pull-right" type="button" name="button" data-toggle="modal" data-target="#ordenesTrabajo"><i class="fas fa-search"></i></button>
                                             <br><br>
                                         </div>-->
                                         <table class="table table-bordered table-hover">
-                                                <thead class="info">
-                                                    <tr class="bg-warning">
-                                                        <th>N° de orden</th>
-                                                        <th>Tipo de orden</th>
-                                                        <th>Fecha de orden</th>
-                                                        <th>Fecha realizada</th>
-                                                        <th>Actividad cable</th>
-                                                        <th>Actividad internet</th>
+                                                <thead class="">
+                                                    <tr class="dark">
+                                                        <td>N° de orden</td>
+                                                        <td>Tipo de orden</td>
+                                                        <td>Fecha de orden</td>
+                                                        <td>Fecha realizada</td>
+                                                        <td>Actividad cable</td>
+                                                        <td>Actividad internet</td>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <?php
                                                         foreach ($arrOrdenesTrabajo as $key) {
                                                             echo "<tr><td>";
-                                                            echo "<a href='ordenTrabajo.php?nOrden={$key["idOrdenTrabajo"]}' target='_blank' class='btn btn-primary btn-xs'>".$key["idOrdenTrabajo"] . "</td><td>";
+                                                            echo "<a onclick=\"window.open('ordenTrabajo.php?nOrden={$key["idOrdenTrabajo"]}','','height=600,width=1000,top=-300,left=200')\" class='btn btn-danger btn-xs'>".$key["idOrdenTrabajo"] . "</td><td>";
                                                             echo $key["tipoOrdenTrabajo"] . "</td><td>";
                                                             echo date_format(date_create($key["fechaOrdenTrabajo"]), 'd/m/Y') . "</td><td>";
                                                             echo $key["fechaTrabajo"] . "</td><td>";
@@ -1458,28 +1499,28 @@ session_start();
                                                 </tbody>
                                         </table>
                                     </div>
-                                    <h4 class="alert bg-info"><strong>Historial de ordenes de suspensión</strong></h4>
+                                    <h4 style="background-color: #ccc;" class="alert">Historial de ordenes de suspensión</h4>
                                     <div class="ordenes">
                                         <!--<div class="col-md-12">
                                             <button class="btn btn-danger pull-right" type="button" name="button" data-toggle="modal" data-target="#ordenesSuspension"><i class="fas fa-search"></i></button>
                                             <br><br>
                                         </div>-->
                                         <table class="table table-bordered table-hover">
-                                                <thead class="info">
-                                                    <tr class="bg-danger">
-                                                        <th>N° de orden</th>
-                                                        <th>Tipo de orden</th>
-                                                        <th>Fecha de orden</th>
-                                                        <th>Fecha realizada</th>
-                                                        <th>Actividad cable</th>
-                                                        <th>Actividad internet</th>
+                                                <thead class="">
+                                                    <tr class="dark">
+                                                        <td>N° de orden</td>
+                                                        <td>Tipo de orden</td>
+                                                        <td>Fecha de orden</td>
+                                                        <td>Fecha realizada</td>
+                                                        <td>Actividad cable</td>
+                                                        <td>Actividad internet</td>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <?php
                                                         foreach ($arrOrdenesSuspension as $key) {
                                                             echo "<tr><td>";
-                                                            echo "<a href='ordenSuspension.php?nOrden={$key["idOrdenSuspension"]}' target='_blank' class='btn btn-primary btn-xs'>".$key["idOrdenSuspension"] . "</td><td>";
+                                                            echo "<a onclick=\"window.open('ordenSuspension.php?nOrden={$key["idOrdenSuspension"]}', '', 'height=600,width=1000,top=-300,left=200')\" class='btn btn-danger btn-xs'>".$key["idOrdenSuspension"] . "</td><td>";
                                                             echo $key["tipoOrden"] . "</td><td>";
                                                             echo $key["fechaOrden"] . "</td><td>";
                                                             echo $key["fechaSuspension"] . "</td><td>";
@@ -1490,27 +1531,27 @@ session_start();
                                                 </tbody>
                                         </table>
                                     </div>
-                                    <h4 class="alert bg-info"><strong>Historial de ordenes de reconexión</strong></h4>
+                                    <h4 style="background-color: #ccc;" class="alert">Historial de ordenes de reconexión</h4>
                                     <div class="ordenes">
                                         <!--<div class="col-md-12">
                                             <button class="btn btn-danger pull-right" type="button" name="button" data-toggle="modal" data-target="#ordenesReconexion"><i class="fas fa-search"></i></button>
                                             <br><br>
                                         </div>-->
                                         <table class="table table-bordered table-hover">
-                                                <thead class="info">
-                                                    <tr class="bg-success">
-                                                        <th>N° de orden</th>
-                                                        <th>Tipo de orden</th>
-                                                        <th>Fecha de orden</th>
-                                                        <th>Fecha realizada Cable</th>
-                                                        <th>Fecha realizada Internet</th>
+                                                <thead class="">
+                                                    <tr class="dark">
+                                                        <td>N° de orden</td>
+                                                        <td>Tipo de orden</td>
+                                                        <td>Fecha de orden</td>
+                                                        <td>Fecha realizada Cable</td>
+                                                        <td>Fecha realizada Internet</td>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
                                                     <?php
                                                         foreach ($arrOrdenesReconex as $key) {
                                                             echo "<tr><td>";
-                                                            echo "<a href='ordenReconexion.php?nOrden={$key["idOrdenReconex"]}' target='_blank' class='btn btn-primary btn-xs'>".$key["idOrdenReconex"] . "</td><td>";
+                                                            echo "<a onclick=\"window . open('ordenReconexion.php?nOrden={$key["idOrdenReconex"]}', '', 'height=600,width=1000,top=-300,left=200')\" class='btn btn-danger btn-xs'>".$key["idOrdenReconex"] . "</td><td>";
                                                             echo $key["tipoOrden"] . "</td><td>";
                                                             echo $key["fechaOrden"] . "</td><td>";
                                                             //echo $key["fechaSuspension"] . "</td><td>";
@@ -1523,23 +1564,23 @@ session_start();
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="notificaciones-traslados">
-                                    <h4 class="alert bg-info"><strong>Historial de traslados</strong></h4>
+                                    <h4 style="background-color: #ccc;" class="alert">Historial de traslados</h4>
                                     <div class="ordenes">
                                         <table class="table table-bordered table-hover">
                                             <thead class="info">
-                                                <tr class="bg-success">
-                                                    <th>N° de orden</th>
-                                                    <th>Tipo de orden</th>
-                                                    <th>Fecha de orden</th>
-                                                    <th>Fecha traslado</th>
-                                                    <th>Tipo servicio</th>
+                                                <tr class="dark">
+                                                    <td>N° de orden</td>
+                                                    <td>Tipo de orden</td>
+                                                    <td>Fecha de orden</td>
+                                                    <td>Fecha traslado</td>
+                                                    <td>Tipo servicio</td>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                                 <?php
                                                     foreach ($arrTraslados as $key) {
                                                         echo "<tr><td>";
-                                                        echo "<a href='ordenTraslado.php?nOrden={$key["idOrdenTraslado"]}' target='_blank' class='btn btn-primary btn-xs'>".$key["idOrdenTraslado"] . "</td><td>";
+                                                        echo "<a onclick=\"window.open('ordenTraslado.php?nOrden={$key["idOrdenTraslado"]}', '', 'height=600,width=1000,top=-300,left=200')\" class='btn btn-danger btn-xs'>".$key["idOrdenTraslado"] . "</td><td>";
                                                         echo $key["tipoOrden"] . "</td><td>";
                                                         echo $key["fechaOrden"] . "</td><td>";
                                                         echo $key["fechaTraslado"] . "</td><td>";
@@ -1562,7 +1603,7 @@ session_start();
 
                     <!-- Modal content-->
                     <div class="modal-content">
-                      <div style="background-color: #1565C0; color:white; font-size: 8px;" class="modal-header">
+                      <div style="background-color: #d32f2f; color:white; font-size: 8px;" class="modal-header">
                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                         <h4 class="modal-title">Datos de servicio digital de TV</h4>
                       </div>
@@ -1785,7 +1826,7 @@ session_start();
                       <div class="modal-footer">
                           <div class="row">
                               <div class="col-md-12">
-                                  <button type="button" class="btn btn-success btn-md btn-block" data-dismiss="modal">Aceptar</button>
+                                  <button type="button" class="btn btn-danger btn-md btn-block" data-dismiss="modal">Aceptar</button>
                               </div>
                           </div>
                       </div>

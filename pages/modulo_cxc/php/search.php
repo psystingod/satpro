@@ -24,8 +24,8 @@ $query = "SELECT cod_cliente, nombre, direccion, telefonos, Mac_modem, Serie_mod
  if ($resultado->num_rows > 0) {
  	$salida.="<br><table class='table table-striped table-responsive'>
 			    <thead>
-					<tr class='success'>
-						<th>CODIGO</th>
+					<tr style='background-color: #2b2b2b; color: #ffffff;' class='inverse'>
+						<th class='th-dark'>CODIGO</th>
 						<th>NOMBRE</th>
 						<th>DIRECCION</th>
                         <th>TELEFONOS</th>
@@ -37,7 +37,7 @@ $query = "SELECT cod_cliente, nombre, direccion, telefonos, Mac_modem, Serie_mod
 				<tbody>";
 	while ($fila = $resultado->fetch_assoc()) {
 		$salida.= "<tr>
-			<td>"."<a class='btn btn-primary btn-sm' href=infoCliente.php?id={$fila['cod_cliente']} target='_blank'>".$fila['cod_cliente']."<a></td>
+			<td>"."<a class='btn btn-danger btn-sm' href=infoCliente.php?id={$fila['cod_cliente']} target='_blank'>".$fila['cod_cliente']."<a></td>
 			<td>".$fila['nombre']."</td>
 			<td>".$fila['direccion']."</td>
             <td>".$fila['telefonos']."</td>

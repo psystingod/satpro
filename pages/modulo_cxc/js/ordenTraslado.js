@@ -161,7 +161,7 @@ function changeAction(action){
 function imprimirOrden(){
     var nOrden = document.getElementById("numeroTraslado").value
     // Trigger the button element with a click
-    window.open("php/ordenTrasladoImp.php?nOrden="+nOrden, '_blank');
+    window.open("php/ordenTrasladoImp.php?nOrden="+nOrden, '_self');
 }
 
 function guardarOrden(){

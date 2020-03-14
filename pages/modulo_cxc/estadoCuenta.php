@@ -158,8 +158,74 @@ if (isset($_GET['codigoCliente'])) {
 
     <!-- Custom Fonts -->
     <link href="../../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <style media="screen">
+        .form-control {
+            color: #212121;
+            font-size: 15px;
+            font-weight: bold;
 
+        }
+        .nav>li>a {
+            color: #fff;
+        }
+        .nav>li>a:hover {
+            color: #2b2b2b;
+        }
+        .dark{
+            color: #fff;
+            background-color: #212121;
+        }
 
+        .nav-tabs.nav-justified>li>a {
+                border-bottom: 1px solid #ddd;
+                border-radius: 20px 20px 0 0;
+                background-color: #d32f2f;
+            }
+        .danger .success{
+            background-color: #F5F5F5;
+        }
+    </style>
+
+    <style media="screen">
+        .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+            color: #fff;
+            background-color: #d32f2f;
+        }
+
+        .nav-pills>li>a{
+             color: #d32f2f;
+
+         }
+
+        .btn-danger {
+            color: #fff;
+            background-color: #d32f2f;
+            border-color: #d43f3a;
+        }
+        .label-danger {
+            background-color: #d32f2f;
+        }
+
+        .panel-danger>.panel-heading {
+            color: #fff;
+            background-color: #212121;
+            border-color: #212121;
+        }
+        .panel{
+            border-color: #212121;
+        }
+        .pagination>.active>a{
+            background-color: #d32f2f;
+            border-color: #d32f2f;
+        }
+        .pagination>.active>a:hover{
+            background-color: #d32f2f;
+            border-color: #d32f2f;
+        }
+        .pagination>li>a, .pagination>li>a:hover{
+            color: #2b2b2b;
+        }
+    </style>
 </head>
 
 <body style="background-color:#eeeeee;">
@@ -218,7 +284,7 @@ if(!isset($_SESSION["user"])) {
                         <tbody class="">
                         <tr>
                             <th>Código</th>
-                            <td><span class="label label-primary" style="font-size: 12px;"><?php echo $_GET['codigoCliente']; ?></span></td>
+                            <td><span class="label label-danger" style="font-size: 12px;"><?php echo $_GET['codigoCliente']; ?></span></td>
                         </tr>
                         <tr>
                             <th>Nombre</th>
@@ -244,6 +310,7 @@ if(!isset($_SESSION["user"])) {
                         <li class="nav-item">
                             <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#cable" role="tab" aria-controls="pills-home" aria-selected="true"><b>CABLE</b></a>
                         </li>
+
                         <li class="nav-item">
                             <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#internet" role="tab" aria-controls="pills-profile" aria-selected="true"><b>INTERNET</b></a>
                         </li>
@@ -252,7 +319,7 @@ if(!isset($_SESSION["user"])) {
                     <div class="tab-content mt-3 mb-3" id="pills-tabContent" style="font-size: 14px;">
                         <div class="tab-pane fade active" id="cable" role="tabpanel" aria-labelledby="pills-home-tab">
                             <br>
-                            <div class="panel panel-primary">
+                            <div class="panel panel-danger">
                                 <div class="panel-heading">Resumen estado de cuenta cable, <b>saldo actual: <?php echo $saldoRealCable; ?></b></div>
                                 <div class="panel-body">
                                     <table id="tablaecc" class="table table-striped table-hover">
@@ -285,41 +352,41 @@ if(!isset($_SESSION["user"])) {
                                                     <input class="form-control" type="text" name="hasta" placeholder="Hasta mes/año">
                                                 </div>
                                                 <div class="col-md-1">
-                                                    <input class="btn btn-info btn-block" type="submit" name="submit" value="ver">
+                                                    <input class="btn btn-danger btn-block" type="submit" name="submit" value="ver">
                                                 </div>
                                             </form>
                                         </div>
                                         <?php
                                         foreach ($arrAbonosCable as $abonoC) {
 
-                                            echo "<tr><td class='text-success success'>";
-                                            echo $abonoC['numeroRecibo']."</td><td class='text-success success'>";
-                                            echo $abonoC['tipoServicio']."</td><td class='text-success success'>";
-                                            echo $abonoC['numeroFactura']."</td><td class='text-success success'>";
-                                            echo "<span class='label label-primary'>".$abonoC['mesCargo']."</span>"."</td><td class='text-success success'>";
-                                            echo "<span class='label label-success'>".$abonoC['fechaAbonado']."</span>"."</td><td class='text-success success'>";
-                                            echo "<span class='label label-danger'>".$abonoC['fechaVencimiento']."</span>"."</td><td class='text-success success'>";
-                                            echo "0.00"."</td><td class='text-success success'>";
-                                            echo $abonoC['cuotaCable']."</td><td class='text-success success'>";
-                                            echo "0.00"."</td><td class='text-success success'>";
-                                            echo $abonoC['totalImpuesto']."</td><td class='text-success success'>";
+                                            echo "<tr><td class='text'>";
+                                            echo $abonoC['numeroRecibo']."</td><td class='text'>";
+                                            echo $abonoC['tipoServicio']."</td><td class='text'>";
+                                            echo $abonoC['numeroFactura']."</td><td class='text'>";
+                                            echo "<span class='label label-default'>".$abonoC['mesCargo']."</span>"."</td><td class='text'>";
+                                            echo "<span class='label label-default'>".$abonoC['fechaAbonado']."</span>"."</td><td class='text'>";
+                                            echo "<span class='label label-default'>".$abonoC['fechaVencimiento']."</span>"."</td><td class='text'>";
+                                            echo "0.00"."</td><td class='text'>";
+                                            echo $abonoC['cuotaCable']."</td><td class='text'>";
+                                            echo "0.00"."</td><td class='text'>";
+                                            echo $abonoC['totalImpuesto']."</td><td class='text'>";
                                             echo number_format((doubleval($abonoC['cuotaCable'])+doubleval($abonoC['totalImpuesto'])),2)."</td></tr>";
                                             //$control = $abonoC['mesCargo'];
                                             //break;
                                         }
                                         foreach ($arrCargosCable as $cargoC) {
 
-                                            echo "<tr><td class='text-danger danger'>";
-                                            echo $cargoC['numeroRecibo']."</td><td class='text-danger danger'>";
-                                            echo $cargoC['tipoServicio']."</td><td class='text-danger danger'>";
-                                            echo $cargoC['numeroFactura']."</td><td class='text-danger danger'>";
-                                            echo "<span class='label label-primary'>".$cargoC['mesCargo']."</span>"."</td><td class='text-danger danger'>";
-                                            echo "<span class='label label-success'>".$cargoC['fechaFactura']."</span>"."</td><td class='text-danger danger'>";
-                                            echo "<span class='label label-danger'>".$cargoC['fechaVencimiento']."</span>"."</td><td class='text-danger danger'>";
-                                            echo $cargoC['cuotaCable']."</td><td class='text-danger danger'>";
-                                            echo "0.00"."</td><td class='text-danger danger'>";
-                                            echo $cargoC['totalImpuesto']."</td><td class='text-danger danger'>";
-                                            echo "0.00"."</td><td class='text-danger danger'>";
+                                            echo "<tr><td class='text-danger'>";
+                                            echo $cargoC['numeroRecibo']."</td><td class='text-danger'>";
+                                            echo $cargoC['tipoServicio']."</td><td class='text-danger'>";
+                                            echo $cargoC['numeroFactura']."</td><td class='text-danger'>";
+                                            echo "<span class='label label-default'>".$cargoC['mesCargo']."</span>"."</td><td class='text-danger'>";
+                                            echo "<span class='label label-default'>".$cargoC['fechaFactura']."</span>"."</td><td class='text-danger'>";
+                                            echo "<span class='label labeldefault'>".$cargoC['fechaVencimiento']."</span>"."</td><td class='text-danger'>";
+                                            echo $cargoC['cuotaCable']."</td><td class='text-danger'>";
+                                            echo "0.00"."</td><td class='text-danger'>";
+                                            echo $cargoC['totalImpuesto']."</td><td class='text-danger'>";
+                                            echo "0.00"."</td><td class='text-danger'>";
 
                                             echo number_format((doubleval($cargoC['cuotaCable'])+doubleval($cargoC['totalImpuesto'])),2)."</td></tr>";
                                             //$control = $abonoC['mesCargo'];
@@ -329,31 +396,31 @@ if(!isset($_SESSION["user"])) {
                                             //$control = $estado['cargoAbono'];
                                             if ($estado['estadoCargo'] == 'CANCELADA' && $estado['estadoAbono'] == 'CANCELADA'){
 
-                                                echo "<tr><td class='text-danger danger'>";
-                                                echo $estado['reciboCargo']."</td><td class='text-danger danger'>";
-                                                echo $estado['servicioCargo']."</td><td class='text-danger danger'>";
-                                                echo $estado['facturaCargo']."</td><td class='text-danger danger'>";
-                                                echo "<span class='label label-primary'>".$estado['cargoCargo']."</span>"."</td><td class='text-danger danger'>";
-                                                echo "<span class='label label-success'>".$estado['fechaFacturaCargo']."</span>"."</td><td class='text-danger danger'>";
-                                                echo "<span class='label label-danger'>".$estado['fechaVencimientoCargo']."</span>"."</td><td class='text-danger danger'>";
-                                                echo $estado['cuotaCableCargo']."</td><td class='text-danger danger'>";
-                                                echo "0.00"."</td><td class='text-danger danger'>";
-                                                echo $estado['totalImpuestoCargo']."</td><td class='text-danger danger'>";
+                                                echo "<tr><td class='text-danger'>";
+                                                echo $estado['reciboCargo']."</td><td class='text-danger'>";
+                                                echo $estado['servicioCargo']."</td><td class='text-danger'>";
+                                                echo $estado['facturaCargo']."</td><td class='text-danger'>";
+                                                echo "<span class='label label-default'>".$estado['cargoCargo']."</span>"."</td><td class='text-danger'>";
+                                                echo "<span class='label label-default'>".$estado['fechaFacturaCargo']."</span>"."</td><td class='text-danger'>";
+                                                echo "<span class='label label-default'>".$estado['fechaVencimientoCargo']."</span>"."</td><td class='text-danger'>";
+                                                echo $estado['cuotaCableCargo']."</td><td class='text-danger'>";
+                                                echo "0.00"."</td><td class='text-danger'>";
+                                                echo $estado['totalImpuestoCargo']."</td><td class='text-danger'>";
 
-                                                echo "0.00"."</td><td class='text-danger danger'>";
+                                                echo "0.00"."</td><td class='text-danger'>";
                                                 echo number_format((doubleval($estado['cuotaCableCargo'])+doubleval($estado['totalImpuestoCargo'])),2)."</td></tr>";
                                                 /*********************************SEPARACIÓN***************************************/
-                                                echo "<tr><td class='text-success success'>";
-                                                echo $estado['reciboAbono']."</td><td class='text-success success'>";
-                                                echo $estado['servicioAbono']."</td><td class='text-success success'>";
-                                                echo $estado['facturaAbono']."</td><td class='text-success success'>";
-                                                echo "<span class='label label-primary'>".$estado['cargoAbono']."</span>"."</td><td class='text-success success'>";
-                                                echo "<span class='label label-success'>".$estado['fechaAbonadoAbono']."</span>"."</td><td class='text-success success'>";
-                                                echo "<span class='label label-danger'>".$estado['fechaVencimientoAbono']."</span>"."</td><td class='text-success success'>";
-                                                echo "0.00"."</td><td class='text-success success'>";
-                                                echo $estado['cuotaCableAbono']."</td><td class='text-success success'>";
-                                                echo "0.00"."</td><td class='text-success success'>";
-                                                echo $estado['totalImpuestoAbono']."</td><td class='text-success success'>";
+                                                echo "<tr><td class='text'>";
+                                                echo $estado['reciboAbono']."</td><td class='text'>";
+                                                echo $estado['servicioAbono']."</td><td class='text'>";
+                                                echo $estado['facturaAbono']."</td><td class='text'>";
+                                                echo "<span class='label label-default'>".$estado['cargoAbono']."</span>"."</td><td class='text'>";
+                                                echo "<span class='label label-default'>".$estado['fechaAbonadoAbono']."</span>"."</td><td class='text'>";
+                                                echo "<span class='label label-default'>".$estado['fechaVencimientoAbono']."</span>"."</td><td class='text'>";
+                                                echo "0.00"."</td><td class='text'>";
+                                                echo $estado['cuotaCableAbono']."</td><td class='text'>";
+                                                echo "0.00"."</td><td class='text'>";
+                                                echo $estado['totalImpuestoAbono']."</td><td class='text'>";
                                                 echo number_format((doubleval($estado['cuotaCableAbono'])+doubleval($estado['totalImpuestoAbono'])),2)."</td></tr>";
                                             }
                                         }
@@ -366,10 +433,10 @@ if(!isset($_SESSION["user"])) {
                         </div>
                         <div class="tab-pane fade" id="internet" role="tabpanel" aria-labelledby="pills-profile-tab">
                             <br>
-                            <div class="panel panel-primary">
+                            <div class="panel panel-danger">
                                 <div class="panel-heading">Resumen estado de cuenta internet, <b>saldo actual: <?php echo $saldoRealInter; ?></b></div>
                                 <div class="panel-body">
-                                    <table id="tablaeci" class="table table-striped">
+                                    <table id="tablaeci" class="table table-striped table-hover">
                                         <thead>
                                         <th>N° recibo</th>
                                         <th>Tipo servicio</th>
@@ -400,41 +467,41 @@ if(!isset($_SESSION["user"])) {
                                                     <input class="form-control" type="text" name="hasta" placeholder="Hasta mes/año">
                                                 </div>
                                                 <div class="col-md-1">
-                                                    <input class="btn btn-info btn-block" type="submit" name="submit" value="ver">
+                                                    <input class="btn btn-danger btn-block" type="submit" name="submit" value="ver">
                                                 </div>
                                             </form>
                                         </div>
                                         <?php
                                         foreach ($arrAbonosInter as $abonoI) {
 
-                                            echo "<tr><td class='text-success success'>";
-                                            echo $abonoI['numeroRecibo']."</td><td class='text-success success'>";
-                                            echo $abonoI['tipoServicio']."</td><td class='text-success success'>";
-                                            echo $abonoI['numeroFactura']."</td><td class='text-success success'>";
-                                            echo "<span class='label label-primary'>".$abonoI['mesCargo']."</span>"."</td><td class='text-success success'>";
-                                            echo "<span class='label label-success'>".$abonoI['fechaAbonado']."</span>"."</td><td class='text-success success'>";
-                                            echo "<span class='label label-danger'>".$abonoI['fechaVencimiento']."</span>"."</td><td class='text-success success'>";
-                                            echo "0.00"."</td><td class='text-success success'>";
-                                            echo $abonoI['cuotaInternet']."</td><td class='text-success success'>";
-                                            echo "0.00"."</td><td class='text-success success'>";
-                                            echo $abonoI['totalImpuesto']."</td><td class='text-success success'>";
+                                            echo "<tr><td class='text'>";
+                                            echo $abonoI['numeroRecibo']."</td><td class='text'>";
+                                            echo $abonoI['tipoServicio']."</td><td class='text'>";
+                                            echo $abonoI['numeroFactura']."</td><td class='text'>";
+                                            echo "<span class='label label-default'>".$abonoI['mesCargo']."</span>"."</td><td class='text'>";
+                                            echo "<span class='label label-default'>".$abonoI['fechaAbonado']."</span>"."</td><td class='text'>";
+                                            echo "<span class='label label-default'>".$abonoI['fechaVencimiento']."</span>"."</td><td class='text'>";
+                                            echo "0.00"."</td><td class='text'>";
+                                            echo $abonoI['cuotaInternet']."</td><td class='text'>";
+                                            echo "0.00"."</td><td class='text'>";
+                                            echo $abonoI['totalImpuesto']."</td><td class='text'>";
                                             echo number_format((doubleval($abonoI['cuotaInternet'])+doubleval($abonoI['totalImpuesto'])),2)."</td></tr>";
                                             //$control = $abonoC['mesCargo'];
                                             //break;
                                         }
                                         foreach ($arrCargosInter as $cargoI) {
 
-                                            echo "<tr><td class='text-danger danger'>";
-                                            echo $cargoI['numeroRecibo']."</td><td class='text-danger danger'>";
-                                            echo $cargoI['tipoServicio']."</td><td class='text-danger danger'>";
-                                            echo $cargoI['numeroFactura']."</td><td class='text-danger danger'>";
-                                            echo "<span class='label label-primary'>".$cargoI['mesCargo']."</span>"."</td><td class='text-danger danger'>";
-                                            echo "<span class='label label-success'>".$cargoI['fechaFactura']."</span>"."</td><td class='text-danger danger'>";
-                                            echo "<span class='label label-danger'>".$cargoI['fechaVencimiento']."</span>"."</td><td class='text-danger danger'>";
-                                            echo $cargoI['cuotaInternet']."</td><td class='text-danger danger'>";
-                                            echo "0.00"."</td><td class='text-danger danger'>";
-                                            echo $cargoI['totalImpuesto']."</td><td class='text-danger danger'>";
-                                            echo "0.00"."</td><td class='text-danger danger'>";
+                                            echo "<tr><td class='text-danger'>";
+                                            echo $cargoI['numeroRecibo']."</td><td class='text-danger'>";
+                                            echo $cargoI['tipoServicio']."</td><td class='text-danger'>";
+                                            echo $cargoI['numeroFactura']."</td><td class='text-danger'>";
+                                            echo "<span class='label label-default'>".$cargoI['mesCargo']."</span>"."</td><td class='text-danger'>";
+                                            echo "<span class='label label-default'>".$cargoI['fechaFactura']."</span>"."</td><td class='text-danger'>";
+                                            echo "<span class='label label-default'>".$cargoI['fechaVencimiento']."</span>"."</td><td class='text-danger'>";
+                                            echo $cargoI['cuotaInternet']."</td><td class='text-danger'>";
+                                            echo "0.00"."</td><td class='text-danger'>";
+                                            echo $cargoI['totalImpuesto']."</td><td class='text-danger'>";
+                                            echo "0.00"."</td><td class='text-danger'>";
 
                                             echo number_format((doubleval($cargoI['cuotaInternet'])+doubleval($cargoI['totalImpuesto'])),2)."</td></tr>";
                                             //$control = $abonoC['mesCargo'];
@@ -444,31 +511,31 @@ if(!isset($_SESSION["user"])) {
                                             //$control = $estado['cargoAbono'];
                                             if ($estado['estadoCargo'] == 'CANCELADA' && $estado['estadoAbono'] == 'CANCELADA'){
 
-                                                echo "<tr><td class='text-danger danger'>";
-                                                echo $estado['reciboCargo']."</td><td class='text-danger danger'>";
-                                                echo $estado['servicioCargo']."</td><td class='text-danger danger'>";
-                                                echo $estado['facturaCargo']."</td><td class='text-danger danger'>";
-                                                echo "<span class='label label-primary'>".$estado['cargoCargo']."</span>"."</td><td class='text-danger danger'>";
-                                                echo "<span class='label label-success'>".$estado['fechaFacturaCargo']."</span>"."</td><td class='text-danger danger'>";
-                                                echo "<span class='label label-danger'>".$estado['fechaVencimientoCargo']."</span>"."</td><td class='text-danger danger'>";
-                                                echo $estado['cuotaInterCargo']."</td><td class='text-danger danger'>";
-                                                echo "0.00"."</td><td class='text-danger danger'>";
-                                                echo $estado['totalImpuestoCargo']."</td><td class='text-danger danger'>";
+                                                echo "<tr><td class='text-danger'>";
+                                                echo $estado['reciboCargo']."</td><td class='text-danger'>";
+                                                echo $estado['servicioCargo']."</td><td class='text-danger'>";
+                                                echo $estado['facturaCargo']."</td><td class='text-danger'>";
+                                                echo "<span class='label label-default'>".$estado['cargoCargo']."</span>"."</td><td class='text-danger'>";
+                                                echo "<span class='label label-default'>".$estado['fechaFacturaCargo']."</span>"."</td><td class='text-danger'>";
+                                                echo "<span class='label label-default'>".$estado['fechaVencimientoCargo']."</span>"."</td><td class='text-danger'>";
+                                                echo $estado['cuotaInterCargo']."</td><td class='text-danger'>";
+                                                echo "0.00"."</td><td class='text-danger'>";
+                                                echo $estado['totalImpuestoCargo']."</td><td class='text-danger'>";
 
-                                                echo "0.00"."</td><td class='text-danger danger'>";
+                                                echo "0.00"."</td><td class='text-danger'>";
                                                 echo number_format((doubleval($estado['cuotaInterCargo'])+doubleval($estado['totalImpuestoCargo'])),2)."</td></tr>";
                                                 /*********************************SEPARACIÓN***************************************/
-                                                echo "<tr><td class='text-success success'>";
-                                                echo $estado['reciboAbono']."</td><td class='text-success success'>";
-                                                echo $estado['servicioAbono']."</td><td class='text-success success'>";
-                                                echo $estado['facturaAbono']."</td><td class='text-success success'>";
-                                                echo "<span class='label label-primary'>".$estado['cargoAbono']."</span>"."</td><td class='text-success success'>";
-                                                echo "<span class='label label-success'>".$estado['fechaAbonadoAbono']."</span>"."</td><td class='text-success success'>";
-                                                echo "<span class='label label-danger'>".$estado['fechaVencimientoAbono']."</span>"."</td><td class='text-success success'>";
-                                                echo "0.00"."</td><td class='text-success success'>";
-                                                echo $estado['cuotaInterAbono']."</td><td class='text-success success'>";
-                                                echo "0.00"."</td><td class='text-success success'>";
-                                                echo $estado['totalImpuestoAbono']."</td><td class='text-success success'>";
+                                                echo "<tr><td class='text'>";
+                                                echo $estado['reciboAbono']."</td><td class='text'>";
+                                                echo $estado['servicioAbono']."</td><td class='text'>";
+                                                echo $estado['facturaAbono']."</td><td class='text'>";
+                                                echo "<span class='label label-default'>".$estado['cargoAbono']."</span>"."</td><td class='text'>";
+                                                echo "<span class='label label-default'>".$estado['fechaAbonadoAbono']."</span>"."</td><td class='text'>";
+                                                echo "<span class='label label-default'>".$estado['fechaVencimientoAbono']."</span>"."</td><td class='text'>";
+                                                echo "0.00"."</td><td class='text'>";
+                                                echo $estado['cuotaInterAbono']."</td><td class='text'>";
+                                                echo "0.00"."</td><td class='text'>";
+                                                echo $estado['totalImpuestoAbono']."</td><td class='text'>";
                                                 echo number_format((doubleval($estado['cuotaInterAbono'])+doubleval($estado['totalImpuestoAbono'])),2)."</td></tr>";
                                             }
                                         }

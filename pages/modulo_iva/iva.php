@@ -149,7 +149,7 @@
                     <div class="row">
                           <a data-toggle="modal" data-target="#VerLibroContri" ><div class="col-lg-6 btn btn-default">
                             <div class="stat-icon">
-                                <i class="fas fa-book fa-3x" style="color: DodgerBlue"></i>
+                                <i class="fas fa-book fa-3x" style="color: #d32f2f;"></i>
                             </div>
                             <div class="stat-values">
                                 <br>
@@ -158,7 +158,7 @@
                         </div></a>
                         <a data-toggle="modal" data-target="#VerLibroConsuFinal"><div class="col-lg-6 btn btn-default">
                             <div class="stat-icon">
-                                <i class="fas fa-book fa-3x" style="color: LimeGreen"></i>
+                                <i class="fas fa-book fa-3x" style="color: #d32f2f;"></i>
                             </div>
                             <div class="stat-values">
                                 <br>
@@ -182,7 +182,7 @@
     <div class="modal fade" id="VerLibroContri" tabindex="-1" role="dialog" aria-labelledby="VerLibroContri">
           <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
-                      <div class="modal-header" style="background-color: DodgerBlue; color: white;">
+                      <div class="modal-header" style="background-color: #d32f2f; color: white;">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title" id="Balance Comprobación">Generación de libro de ventas a contribuyentes</h4>
                       </div>
@@ -221,31 +221,31 @@
                                       </div>
                                   </div>
                                   <div class="row">
-                                      <div class="form-group col-md-6 col-xs-6">
+                                      <div class="form-group col-md-8 col-xs-8">
                                         <input type='checkbox' class='' name="encabezados" value="">
                                           <label for="encabezados">Encabezados en el libro</label><br>
                                         <input type='checkbox' class='' name="numPag" value="">
                                           <label for="codigo">Incluir números de página</label><br>
-                                        <input type='checkbox' class='' name="libroDetallado" value="">
+                                        <input type='checkbox' class='' name="libroDetallado" value="" checked>
                                           <label for="libroDetallado">Imprimir libro detallado</label>
                                       </div>
-                                      <div class="form-group col-md-6 col-xs-6">
-                                        <input class="" type="radio" name="facturas" value="1">
+                                      <div class="form-group col-md-4 col-xs-4">
+                                        <input class="" type="radio" name="facturas" value="1" checked>
                                         <label for="facturas">Factura normal</label>
-                                         <input class="" type="radio" name="facturas" value="2">
+                                         <!--<input class="" type="radio" name="facturas" value="2">
                                         <label for="facturas">Factura pequeña</label>
                                         <input class="" type="radio" name="facturas" value="3">
                                        <label for="facturas">Anuladas</label>
                                        <input class="" type="radio" name="facturas" value="4" checked>
-                                      <label for="facturas">Todas</label>
+                                      <label for="facturas">Todas</label>-->
                                       </div>
                                   </div>
 
                       </div>
                       <div class="modal-footer">
-                            <button type="submit" name="excel" class="btn btn-default" data-dismiss="modal"><i class="fas fa-file-excel" style="color: green;"></i></button>
+                            <!--<button type="submit" name="excel" class="btn btn-default" data-dismiss="modal"><i class="fas fa-file-excel" style="color: green;"></i></button>-->
                             <button type="button" name="cancelar" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                            <input type="submit" name="generar" class="btn btn-primary" value="Generar">
+                            <input type="submit" name="generar" class="btn btn-danger" value="Generar">
                       </div>
                       </form>
                 </div>
@@ -257,7 +257,7 @@
     <div class="modal fade" id="VerLibroConsuFinal" tabindex="-1" role="dialog" aria-labelledby="VerLibroConsuFinal">
           <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
-                      <div class="modal-header" style="background-color: ForestGreen; color: white;">
+                      <div class="modal-header" style="background-color: #d32f2f;; color: white;">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title" id="Balance Comprobación">Generación de libro de ventas a consumidor final</h4>
                       </div>
@@ -317,9 +317,9 @@
 
                       </div>
                       <div class="modal-footer">
-                            <button type="submit" name="excel" class="btn btn-default" data-dismiss="modal"><i class="fas fa-file-excel" style="color: green;"></i></button>
+                            <!--<button type="submit" name="excel" class="btn btn-default" data-dismiss="modal"><i class="fas fa-file-excel" style="color: green;"></i></button>-->
                             <button type="button" name="cancelar" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                            <input type="submit" name="generar" class="btn btn-success" value="Generar">
+                            <input type="submit" name="generar" class="btn btn-danger" value="Generar">
                       </div>
                       </form>
                 </div>

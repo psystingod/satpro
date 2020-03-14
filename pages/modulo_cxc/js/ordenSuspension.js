@@ -154,7 +154,7 @@ function changeAction(action){
 function imprimirOrden(){
     var nOrden = document.getElementById("numeroSuspension").value
     // Trigger the button element with a click
-    window.open("php/ordenSuspensionImp.php?nOrden="+nOrden, '_blank');
+    window.open("php/ordenSuspensionImp.php?nOrden="+nOrden, '_self');
 }
 
 function guardarOrden(){
