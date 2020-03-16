@@ -55,12 +55,13 @@
                     $recepcionTv = $_POST["recepcionTv"];
                     $tecnologia = $_POST["tecnologia"];
                     $tipoServicio = $_POST["tipoServicio"];
+                    $coor = $_POST["coordenadas"];
                     $nodo = $_POST["nodo"];
                     $creadoPor = $_POST['creadoPor'];
 
                     //$Fecha = date('Y/m/d g:i');
 
-                    $query = "UPDATE tbl_ordenes_trabajo SET codigoCliente=:codigoCliente, fechaOrdenTrabajo=:fechaOrdenTrabajo, tipoOrdenTrabajo=:tipoOrdenTrabajo, diaCobro=:diaCobro, nombreCliente=:nombreCliente, telefonos=:telefonos, idMunicipio=:idMunicipio, actividadCable=:idActividadCable, saldoCable=:saldoCable, direccionCable=:direccionCable, fechaTrabajo=:fechaTrabajo, hora=:hora, fechaProgramacion=:fechaProgramacion, idTecnico=:idTecnico, mactv=:mactv, observaciones=:observaciones, idVendedor=:idVendedor, tecnologia=:tecnologia, recepcionTv=:recepcionTv, tipoServicio=:tipoServicio, nodo=:nodo, creadoPor=:creadoPor WHERE idOrdenTrabajo=:idOrdenTrabajo";
+                    $query = "UPDATE tbl_ordenes_trabajo SET codigoCliente=:codigoCliente, fechaOrdenTrabajo=:fechaOrdenTrabajo, tipoOrdenTrabajo=:tipoOrdenTrabajo, diaCobro=:diaCobro, nombreCliente=:nombreCliente, telefonos=:telefonos, idMunicipio=:idMunicipio, actividadCable=:idActividadCable, saldoCable=:saldoCable, direccionCable=:direccionCable, fechaTrabajo=:fechaTrabajo, hora=:hora, fechaProgramacion=:fechaProgramacion, idTecnico=:idTecnico, mactv=:mactv, observaciones=:observaciones, idVendedor=:idVendedor, tecnologia=:tecnologia, recepcionTv=:recepcionTv, tipoServicio=:tipoServicio, coordenadas=:coordenadas, nodo=:nodo, creadoPor=:creadoPor WHERE idOrdenTrabajo=:idOrdenTrabajo";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
@@ -84,6 +85,7 @@
                                 ':tecnologia' => $tecnologia,
                                 ':recepcionTv' => $recepcionTv,
                                 ':tipoServicio' => $tipoServicio,
+                                ':coordenadas' => $coor,
                                 ':nodo' => $nodo,
                                 ':creadoPor' => $creadoPor,
                                 ':idOrdenTrabajo' => $numeroOrden

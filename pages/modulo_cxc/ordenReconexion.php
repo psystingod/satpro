@@ -28,7 +28,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT cod_cliente, nombre, telefonos, direccion, saldoCable, mactv, saldoInternet, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, fecha_suspencion, fecha_suspencion_in, mac_modem, serie_modem, id_velocidad, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
+            $query = "SELECT cod_cliente, nombre, telefonos, direccion, saldoCable, mactv, saldoInternet, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, fecha_suspencion, fecha_suspencion_in, mac_modem, serie_modem, id_velocidad, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia, coordenadas FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -83,7 +83,7 @@
             $fechaReconexInter = "";
             $hora = "";
             $fechaProgramacion = "";
-            $coordenadas = "";
+            $coordenadas = $row['coordenadas'];
             $observaciones = "";
             $nodo = "";
             $idVendedor = "";
@@ -103,7 +103,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT idOrdenReconex, codigoCliente, fechaOrden, tipoOrden, tipoReconexCable, tipoReconexInter, diaCobro, telefonos, nombreCliente, direccion, fechaReconexCable, saldoCable, fechaReconexInter, saldoInter, ultSuspCable, ultSuspInter, macModem, serieModem, velocidad, colilla, fechaReconex, idTecnico, mactv, observaciones, tipoServicio, creadoPor  FROM tbl_ordenes_reconexion WHERE idOrdenReconex = ? LIMIT 0,1";
+            $query = "SELECT idOrdenReconex, codigoCliente, fechaOrden, tipoOrden, tipoReconexCable, tipoReconexInter, diaCobro, telefonos, nombreCliente, direccion, fechaReconexCable, saldoCable, fechaReconexInter, saldoInter, ultSuspCable, ultSuspInter, macModem, serieModem, velocidad, colilla, fechaReconex, idTecnico, mactv, observaciones, tipoServicio,coordenadas, creadoPor  FROM tbl_ordenes_reconexion WHERE idOrdenReconex = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -163,6 +163,7 @@
             $idTecnico = $row['idTecnico'];
             $mactv = $row['mactv'];
             $observaciones = $row['observaciones'];
+            $coordenadas = $row['coordenadas'];
             //$nodo = $row['nodo'];
             $tipoServicio = $row['tipoServicio'];
             $creadoPor = $row['creadoPor'];
@@ -196,6 +197,7 @@
         $fechaReconexInter = "";
         //$hora="";
         $observaciones="";
+        $coordenadas="";
         //$tipoServicio = "";
         //$creadoPor = "";
         //$nodo="";
@@ -334,7 +336,7 @@
                                   </div>
                                   <div class="col-md-2">
 
-                                      <label for="fechaElaborada">Fecha de elaborada</label>
+                                      <label for="fechaElaborada">Fecha elaborada</label>
                                       <input id="fechaOrden" class="form-control input-sm" type="text" name="fechaOrden" value="<?php echo $fechaOrden; ?>" readonly>
                                   </div>
                                   <div class="col-md-2">
@@ -354,9 +356,13 @@
                                   </div>
                               </div>
                               <div class="form-row">
-                                  <div class="col-md-12">
+                                  <div class="col-md-6 col-xs-6">
                                       <label for="telefonos">Telefonos</label>
                                       <input id="telefonos" class="form-control input-sm" type="text" name="telefonos" value="<?php echo $telefonos; ?>" readonly>
+                                  </div>
+                                  <div class="col-md-6 col-xs-6">
+                                      <label for="coordenadas">coordenadas</label>
+                                      <input id="coordenadas" class="form-control input-sm" type="text" name="coordenadas" value="<?php echo $coordenadas; ?>" readonly>
                                   </div>
                               </div>
                               <div class="form-row">

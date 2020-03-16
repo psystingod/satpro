@@ -28,7 +28,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT cod_cliente, nombre, telefonos, direccion, saldoCable, mactv, saldoInternet, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, mac_modem, serie_modem, id_velocidad, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
+            $query = "SELECT cod_cliente, nombre, telefonos, direccion, saldoCable, mactv, saldoInternet, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, mac_modem, serie_modem, id_velocidad, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia, coordenadas FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -69,7 +69,7 @@
             $fechaSuspension = "";
             $hora = "";
             $fechaProgramacion = "";
-            $coordenadas = "";
+            $coordenadas = $row['coordenadas'];;
             $observaciones = "";
             $nodo = "";
             $idVendedor = "";
@@ -89,7 +89,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT idOrdenSuspension, codigoCliente, fechaOrden, tipoOrden, diaCobro, nombreCliente, direccion, actividadCable, saldoCable, actividadInter, saldoInter, ordenaSuspension, macModem, serieModem, velocidad, colilla, fechaSuspension, idTecnico, mactv, observaciones, tipoServicio, creadoPor  FROM tbl_ordenes_suspension WHERE idOrdenSuspension = ? LIMIT 0,1";
+            $query = "SELECT idOrdenSuspension, codigoCliente, fechaOrden, tipoOrden, diaCobro, nombreCliente, direccion, actividadCable, saldoCable, actividadInter, saldoInter, ordenaSuspension, macModem, serieModem, velocidad, colilla, fechaSuspension, idTecnico, mactv, observaciones, tipoServicio, coordenadas, creadoPor  FROM tbl_ordenes_suspension WHERE idOrdenSuspension = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -143,6 +143,7 @@
             $idTecnico = $row['idTecnico'];
             $mactv = $row['mactv'];
             $observaciones = $row['observaciones'];
+            $coordenadas = $row['coordenadas'];
             //$nodo = $row['nodo'];
             $tipoServicio = $row['tipoServicio'];
             $creadoPor = $row['creadoPor'];
@@ -172,6 +173,7 @@
         $fechaSuspension="";
         $ordenaSuspensionInter = "";
         $observaciones="";
+        $coordenadas="";
         //$tipoServicio = "";
         //$creadoPor = "";
         //$nodo="";
@@ -309,7 +311,7 @@
                                   </div>
                                   <div class="col-md-2">
 
-                                      <label for="fechaElaborada">Fecha de elaborada</label>
+                                      <label for="fechaElaborada">Fecha elaborada</label>
                                       <input id="fechaOrden" class="form-control input-sm" type="text" name="fechaOrden" value="<?php echo $fechaOrden; ?>" readonly>
                                   </div>
                                   <div class="col-md-2">
@@ -332,6 +334,10 @@
                                   <div class="col-md-12">
                                       <label for="direccionCliente">Dirección</label>
                                       <textarea class="form-control input-sm" name="direccionCliente" rows="2" cols="40" readonly><?php echo $direccion; ?></textarea>
+                                  </div>
+                                  <div class="col-md-12">
+                                      <label for="coordenadas">Coordenadas</label>
+                                      <input class="form-control input-sm" type="text" name="coordenadas" value="<?php echo $coordenadas; ?>" readonly>
                                   </div>
                               </div>
                               <div class="form-row">

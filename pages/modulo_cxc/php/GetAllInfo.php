@@ -558,6 +558,58 @@ class GetAllInfo extends ConectionDB
             die();
         }
     }
+
+    public function getPrefijo($tc){
+        try {
+            // Total servicio INTERNET
+
+            if ($tc == 1){
+                $query = "SELECT prefijoFiscal FROM tbl_facturas_config";
+                $statement = $this->dbConnect->prepare($query);
+                $statement->execute();
+                $result2 = $statement->fetch(PDO::FETCH_ASSOC);
+
+                return $result2['prefijoFiscal'];
+            }elseif ($tc == 2){
+                //var_dump("Logramos entrar");
+                $query = "SELECT prefijoFactura FROM tbl_facturas_config";
+                $statement = $this->dbConnect->prepare($query);
+                $statement->execute();
+                $result2 = $statement->fetch(PDO::FETCH_ASSOC);
+                //var_dump($result2['prefijoFactura']);
+                return $result2['prefijoFactura'];
+            }
+
+        } catch (Exception $e) {
+            print "!Error¡: " . $e->getMessage() . "</br>";
+            die();
+        }
+    }
+
+    public function getUltFact($tc2){
+        try {
+            // Total servicio INTERNET
+            if ($tc2 == 1){
+                $query = "SELECT ultimaFiscal FROM tbl_facturas_config";
+                $statement = $this->dbConnect->prepare($query);
+                $statement->execute();
+                $result2 = $statement->fetch(PDO::FETCH_ASSOC);
+
+                return $result2['ultimaFiscal']+1;
+            }elseif ($tc2 == 2){
+                $query = "SELECT ultimaFactura FROM tbl_facturas_config";
+                $statement = $this->dbConnect->prepare($query);
+                $statement->execute();
+                $result2 = $statement->fetch(PDO::FETCH_ASSOC);
+
+                return $result2['ultimaFactura'] +1;
+            }
+
+        } catch (Exception $e) {
+            print "!Error¡: " . $e->getMessage() . "</br>";
+            die();
+        }
+    }
 }
 
 ?>

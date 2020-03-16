@@ -30,7 +30,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT cod_cliente, nombre, telefonos, direccion, saldoCable, mactv, saldoInternet, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, fecha_suspencion, fecha_suspencion_in, mac_modem, serie_modem, id_velocidad, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
+            $query = "SELECT cod_cliente, nombre, telefonos, direccion, saldoCable, mactv, saldoInternet, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, fecha_suspencion, fecha_suspencion_in, mac_modem, serie_modem, id_velocidad, recep_modem, trans_modem, ruido_modem, coordenadas, colilla, marca_modem, tecnologia, coordenadas, id_departamento, id_municipio, id_colonia FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -85,16 +85,19 @@
             $fechaReconexInter = "";
             $hora = "";
             $fechaProgramacion = "";
-            $coordenadas = "";
+            $coordenadas = $row['coordenadas'];
             $observaciones = "";
             $nodo = "";
             $idVendedor = "";
             $recepcionTv = "";
             $fechaTraslado = "";
             $direccionTraslado = "";
-            $idDepartamento = "";
-            $idMunicipio = "";
-            $idColonia = "";
+            $idDepartamento = ""/*$row["id_departamento"]*/;
+            $idMunicipio = ""/*$row["id_municipio"]*/;
+            $idColonia = ""/*$row["id_colonia"]*/;
+            $coor = $row['coordenadas'];
+            $coorNuevas = $row['coordenadas'];
+
 
         }
 
@@ -110,7 +113,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT idOrdenTraslado, codigoCliente, fechaOrden, tipoOrden, diaCobro, telefonos, nombreCliente, direccion, direccionTraslado, idDepartamento, idMunicipio, idColonia, saldoCable, fechaTraslado, saldoInter, macModem, serieModem, velocidad, colilla, idTecnico, mactv, observaciones, tipoServicio, creadoPor  FROM tbl_ordenes_traslado WHERE idOrdenTraslado = ? LIMIT 0,1";
+            $query = "SELECT idOrdenTraslado, codigoCliente, fechaOrden, tipoOrden, diaCobro, telefonos, nombreCliente, direccion, direccionTraslado, idDepartamento, idMunicipio, idColonia, saldoCable, fechaTraslado, saldoInter, macModem, serieModem, velocidad, colilla, idTecnico, coordenadas, mactv, observaciones, tipoServicio, creadoPor, coordenadas FROM tbl_ordenes_traslado WHERE idOrdenTraslado = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -177,6 +180,8 @@
             $observaciones = $row['observaciones'];
             //$nodo = $row['nodo'];
             $tipoServicio = $row['tipoServicio'];
+            $coor = $row['coordenadas'];
+            $coorNuevas = $row['coordenadasNuevas'];
             $creadoPor = $row['creadoPor'];
             //creadoPor
         }
@@ -210,6 +215,8 @@
         $fechaReconexInter = "";
         //$hora="";
         $observaciones="";
+        $coor="";
+        $coorNuevas="";
         //$tipoServicio = "";
         //$creadoPor = "";
         //$nodo="";
@@ -381,6 +388,16 @@
                                   <div class="col-md-12">
                                       <label style="font-weight: normal; text-decoration-line: underline; text-decoration-style: solid;" for="actualizarDireccion">Actualizar dirección en ficha</label>
                                       <input type="checkbox" id="actualizarDireccion" name="actualizarDireccion" value="1">
+                                  </div>
+                              </div>
+                              <div class="form-row">
+                                  <div class="col-md-6">
+                                      <label for="coordenadas">Coordenadas anteriores</label>
+                                      <input class="form-control input-sm" type="text" name="coordenadas" value="<?php echo $coor; ?>" readonly>
+                                  </div>
+                                  <div class="col-md-6">
+                                      <label for="coordenadas">Nuevas coordenadas</label>
+                                      <input class="form-control input-sm" type="text" name="coordenadasNuevas" value="<?php echo "*".$coorNuevas."*"; ?>" readonly>
                                   </div>
                               </div>
                               <div class="form-row">

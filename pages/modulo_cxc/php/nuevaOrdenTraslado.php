@@ -55,13 +55,15 @@
                     $responsable = $_POST["responsable"];
                     $observaciones = $_POST["observaciones"];
                     $tipoServicio = $_POST["tipoServicio"];
+                    $coordenadas = $_POST["coordenadas"];
+                    $coordenadasNuevas = $_POST["coordenadasNuevas"];
                     $creadoPor = $_POST['creadoPor'];
 
                     //$Fecha = date('Y/m/d g:i');
                     $this->dbConnect->beginTransaction();
-                    $query = "INSERT INTO tbl_ordenes_traslado (codigoCliente,fechaOrden,tipoOrden,saldoCable,diaCobro,nombreCliente,direccion,direccionTraslado,idDepartamento,idMunicipio,idColonia,telefonos,colilla,fechaTraslado,idTecnico,mactv,observaciones,tipoServicio,creadoPor)
+                    $query = "INSERT INTO tbl_ordenes_traslado (codigoCliente,fechaOrden,tipoOrden,saldoCable,diaCobro,nombreCliente,direccion,direccionTraslado,idDepartamento,idMunicipio,idColonia,telefonos,colilla,fechaTraslado,idTecnico,mactv,observaciones,tipoServicio, coordenadas, coordenadasNuevas, creadoPor)
                               VALUES (:codigoCliente, :fechaOrden, :tipoOrden, :saldoCable, :diaCobro, :nombreCliente, :direccion, :direccionTraslado, :idDepartamento, :idMunicipio, :idColonia, :telefonos,
-                              :colilla, :fechaTraslado, :idTecnico, :mactv, :observaciones, :tipoServicio, :creadoPor)";
+                              :colilla, :fechaTraslado, :idTecnico, :mactv, :observaciones, :tipoServicio, :coordenadas, :coordenadasNuevas, :creadoPor)";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
@@ -89,6 +91,8 @@
 
                                 ':observaciones' => $observaciones,
                                 ':tipoServicio' => $tipoServicio,
+                                ':coordenadas' => $coordenadas,
+                                ':coordenadasNuevas' => $coordenadasNuevas,
                                 ':creadoPor' => $creadoPor,
                                 //':idOrdenTraslado' => $numeroOrden,
                                 ));
@@ -96,11 +100,12 @@
                     $numeroOrden = $this->dbConnect->lastInsertId();
                     if (isset($_POST["actualizarDireccion"])){
                         if ($_POST["actualizarDireccion"] == '1'){
-                            $query = "UPDATE clientes SET direccion=:nuevaDireccion WHERE cod_cliente=:codigoCliente";
+                            $query = "UPDATE clientes SET direccion=:nuevaDireccion, coordenadas=:coordenadasNuevas WHERE cod_cliente=:codigoCliente";
 
                             $statement = $this->dbConnect->prepare($query);
                             $statement->execute(array(
                                 ':nuevaDireccion' => $direccionTraslado,
+                                ':coordenadasNuevas' => $coordenadasNuevas,
                                 ':codigoCliente' => $codigoCliente
                             ));
                             $this->dbConnect->commit();
@@ -166,12 +171,14 @@
                     $idDepartamento = $_POST['departamento'];
                     $idMunicipio = $_POST['municipio'];
                     $idColonia = $_POST['colonia'];
+                    $coordenadas = $_POST["coordenadas"];
+                    $coordenadasNuevas = $_POST["coordenadasNuevas"];
 
                     //$Fecha = date('Y/m/d g:i');
                     $this->dbConnect->beginTransaction();
-                    $query = "INSERT INTO tbl_ordenes_traslado (codigoCliente,fechaOrden,tipoOrden,saldoInter,diaCobro,nombreCliente,direccion,direccionTraslado,idDepartamento,idMunicipio,idColonia,telefonos,macModem,serieModem,velocidad,colilla,fechaTraslado,idTecnico,observaciones,tipoServicio,creadoPor)
+                    $query = "INSERT INTO tbl_ordenes_traslado (codigoCliente,fechaOrden,tipoOrden,saldoInter,diaCobro,nombreCliente,direccion,direccionTraslado,idDepartamento,idMunicipio,idColonia,telefonos,macModem,serieModem,velocidad,colilla,fechaTraslado,idTecnico,observaciones,tipoServicio,coordenadas,coordenadasNuevas,creadoPor)
                               VALUES (:codigoCliente, :fechaOrden, :tipoOrden, :saldoInter, :diaCobro, :nombreCliente, :direccion, :direccionTraslado, :idDepartamento, :idMunicipio, :idColonia, :telefonos, :macModem, :serieModem, :velocidad,
-                              :colilla, :fechaTraslado, :idTecnico, :observaciones, :tipoServicio, :creadoPor)";
+                              :colilla, :fechaTraslado, :idTecnico, :observaciones, :tipoServicio,:coordenadas,:coordenadasNuevas, :creadoPor)";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
@@ -202,6 +209,8 @@
 
                                 ':observaciones' => $observaciones,
                                 ':tipoServicio' => $tipoServicio,
+                                ':coordenadas' => $coordenadas,
+                                ':coordenadasNuevas' => $coordenadasNuevas,
                                 ':creadoPor' => $creadoPor,
                                 //':idOrdenTraslado' => $numeroOrden,
                                 ));
@@ -210,11 +219,12 @@
                     $numeroOrden = $this->dbConnect->lastInsertId();
                     if (isset($_POST["actualizarDireccion"])){
                         if ($_POST["actualizarDireccion"] == '1'){
-                            $query = "UPDATE clientes SET direccion=:nuevaDireccion WHERE cod_cliente=:codigoCliente";
+                            $query = "UPDATE clientes SET direccion=:nuevaDireccion, coordenadas=:nuevasCoordenadas WHERE cod_cliente=:codigoCliente";
 
                             $statement = $this->dbConnect->prepare($query);
                             $statement->execute(array(
                                 ':nuevaDireccion' => $direccionTraslado,
+                                ':coordenadas' => $coordenadasNuevas,
                                 ':codigoCliente' => $codigoCliente
                             ));
                             $this->dbConnect->commit();

@@ -526,7 +526,7 @@
                                   <div class="col-md-9">
 
                                       <label for="coordenadas">Coordenadas/otros datos</label>
-                                      <input class="form-control input-sm internet" type="text" name="coordenadas" value="<?php echo $coordenadas; ?>" readonly>
+                                      <input class="form-control input-sm" type="text" name="coordenadas" value="<?php echo $coordenadas; ?>" readonly>
                                   </div>
                               </div>
                               <div class="form-row">

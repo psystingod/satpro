@@ -10,7 +10,7 @@
 
     $data = new OrdersInfo();
     //$client = new GetClient();
-    $arrayVendedores = $data->getVendedores();
+    $arrayVendedores = $data->getCobradores();
     $arrayTecnicos = $data->getTecnicos();
     $arrayActividadesSusp = $data->getActividadesSusp();
     $arrayFormasPago = $data->getFormasPago(); //Modificar
@@ -34,7 +34,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT cod_cliente, nombre, num_registro, numero_dui, telefonos, direccion, saldoCable, mactv, saldoInternet, id_departamento, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, fecha_suspencion, fecha_suspencion_in, mac_modem, serie_modem, id_velocidad, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
+            $query = "SELECT cod_cliente, nombre, num_registro, numero_dui, telefonos, direccion, saldoCable, mactv, cod_cobrador, saldoInternet, id_departamento, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, fecha_suspencion, fecha_suspencion_in, mac_modem, serie_modem, id_velocidad, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -70,7 +70,7 @@
             $impuesto = "";
             $percepcion = "";
             $total = "";
-
+            $cobrador = $row["cod_cobrador"];
 
             $telefonos = $row["telefonos"];
             //$idMunicipio = $row["id_municipio"];
@@ -209,6 +209,7 @@
         $cambioFecha = "";
         $otros = "";
         $proporcion = "";
+        $cobrador = "";
         //$tipoServicio = "";
         //$creadoPor = "";
         //$nodo="";
@@ -246,7 +247,58 @@
 
     <!-- Custom Fonts -->
     <link href="../../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <style media="screen">
+        .form-control {
+            color: #01579B;
+            font-size: 15px;
+            font-weight: bold;
+        }
+    </style>
+    <style media="screen">
+        .form-control {
+            color: #212121;
+            font-size: 15px;
+            font-weight: bold;
 
+        }
+        .nav>li>a {
+            color: #fff;
+        }
+        .dark{
+            color: #fff;
+            background-color: #212121;
+        }
+    </style>
+
+    <style media="screen">
+        .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+            color: #fff;
+            background-color: #d32f2f;
+        }
+
+        .nav-pills>li>a{
+            color: #d32f2f;
+
+        }
+
+        .btn-danger {
+            color: #fff;
+            background-color: #d32f2f;
+            border-color: #d43f3a;
+        }
+        .label-danger {
+            background-color: #d32f2f;
+        }
+
+        .panel-danger>.panel-heading {
+            color: #fff;
+            background-color: #212121;
+            border-color: #212121;
+        }
+        .panel{
+            border-color: #212121;
+        }
+    </style>
 </head>
 
 <body>
@@ -362,8 +414,8 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <br>
-                        <div class="panel panel-primary">
-                          <div class="panel-heading"><b>Ingresar facturas anuladas</b> <span id="nombreOrden" class="label label-danger"></span></div>
+                        <div class="panel panel-danger">
+                          <div class="panel-heading"><b>Factura manual</b> <span id="nombreOrden" class="label label-danger"></span></div>
                           <form id="ventaManual" action="" method="POST">
                           <div class="panel-body">
                               <div class="col-md-12">
@@ -374,11 +426,55 @@
                                   <?php echo '<input style="display: none;" type="submit" id="guardar2" value="">'; ?>
                                   <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-placement="bottom" title="Buscar orden" data-toggle="modal" data-target="#buscarVentaManual"><i class="fas fa-search"></i></button>
                                   <button class="btn btn-default btn-sm" id="imprimir" onclick="imprimirOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Imprimir orden" ><i class="fas fa-print"></i></button>
+                                  <div class="pull-right">
+                                      <button class="btn btn-danger btn-sm" id="" onclick="clearAll()" type="button" name="" data-toggle="tooltip" data-placement="bottom" title="Limpiar"><i class="fas fa-trash-alt"></i></button>
+                                  </div>
                               </div>
-
                               <div class="form-row">
-                                  <div class="col-md-3">
-                                      <br>
+                                  <div class="col-md-10">
+                                      <label for="nombreCliente">Nombre</label>
+                                      <input id="nombreCliente" class="form-control input-sm" type="text" name="nombreCliente" value="<?php echo $nombreCliente; ?>" readonly required>
+                                  </div>
+                                  <div class="col-md-2">
+                                      <label for="codigoCliente">Código</label>
+                                      <input id="codigoCliente" class="form-control input-sm alert-danger" type="text" name="codigoCliente" value="<?php echo $codigoCliente; ?>" readonly required>
+                                  </div>
+                              </div>
+                              <div class="form-row">
+                                  <div class="col-md-4">
+                                      <label for="departamento">Departamento</label>
+                                      <select id="departamento" class="form-control input-sm" name="departamento" disabled required>
+                                          <option value="">Seleccionar</option>
+                                          <?php
+                                          foreach ($arrayDepartamentos as $key) {
+                                              if ($key['idDepartamento'] == $departamento) {
+                                                  echo "<option value='".$key['idDepartamento']."' selected>".$key['nombreDepartamento']."</option>";
+                                              }else {
+                                                  echo "<option value='".$key['idDepartamento']."'>".$key['nombreDepartamento']."</option>";
+                                              }
+                                          }
+                                          ?>
+                                      </select>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <label for="municipio">Municipio</label>
+                                      <select id="municipio" class="form-control input-sm" name="municipio" disabled required>
+                                          <option value="">Seleccionar</option>
+                                          <?php
+                                          foreach ($arrMunicipios as $key) {
+                                              if ($key['idMunicipio'] == $municipio) {
+                                                  echo "<option value='".$key['idMunicipio']."' selected>".$key['nombreMunicipio']."</option>";
+                                              }else {
+                                                  echo "<option value='".$key['idMunicipio']."'>".$key['nombreMunicipio']."</option>";
+                                              }
+                                          }
+                                          ?>
+                                      </select>
+                                  </div>
+                              </div>
+                              <div class="form-row">
+                                  <div class="col-md-4">
+
                                       <?php
                                       if (isset($_GET['idVenta'])) {
                                          echo "<input id='creadoPor' class='form-control input-sm' type='hidden' name='creadoPor' value='{$creadoPor}'>";
@@ -404,78 +500,40 @@
                                       </select>
                                   </div>
                                   <div class="col-md-3">
-                                      <br>
+
                                       <label for="tipoComprobante">Tipo comprobante</label>
-                                      <select id="tipoComprobante" class="form-control input-sm" name="tipoComprobante" disabled required>
+                                      <select id="tipoComprobante" class="form-control input-sm" onchange="tipoFactura();" id="tipoComprobante" name="tipoComprobante" disabled required>
                                           <option value="">Seleccionar</option>
                                           <?php
                                           foreach ($arrComprobantes as $key) {
-                                              if ($key['idComprobante'] == $tipoComprobante) {
+                                              if ($key['idComprobante'] == $_GET['tipoComprobante']) {
                                                   echo "<option value=".$key['idComprobante']." selected>".$key['nombreComprobante']."</option>";
                                               }
                                               else {
                                                   echo "<option value=".$key['idComprobante'].">".$key['nombreComprobante']."</option>";
                                               }
                                           }
+
                                           ?>
                                       </select>
                                   </div>
-                                  <div class="col-md-2">
-                                      <br>
+
+                                  <div class="col-md-3">
                                       <label for="Prefijo">Prefijo</label>
-                                      <input id="prefijo" class="form-control input-sm" type="text" name="prefijo" value="<?php echo $prefijo; ?>" readonly>
+                                      <input id="prefijo" class="form-control input-sm alert-danger" type="text" name="prefijo" value="<?php echo $dataInfo->getPrefijo($_GET["tipoComprobante"]); ?>" readonly>
                                   </div>
-                                  <div class="col-md-2">
-                                      <br>
+                                  <div class="col-md-3">
+
                                       <label for="nComprobante">N° de comprobante</label>
-                                      <input id="nComprobante" class="form-control input-sm alert-info" type="text" name="nComprobante" value="<?php echo $nComprobante; ?>" readonly required>
+                                      <input id="nComprobante" class="form-control input-sm alert-danger" type="text" name="nComprobante" value="<?php echo $dataInfo->getUltFact($_GET['tipoComprobante']); ?>" readonly required>
                                   </div>
-                                  <div class="col-md-2">
-                                      <br>
-                                      <label for="fechaComprobante">Fecha comprob</label>
+                                  <div class="col-md-3">
+
+                                      <label for="fechaComprobante">Fecha comprobrobante</label>
                                       <input class="form-control input-sm" type="text" id="fechaComprobante" name="fechaComprobante" value="<?php date_default_timezone_set('America/El_Salvador'); echo date('Y-m-d'); ?>" readonly>
                                   </div>
                               </div>
-                              <div class="form-row">
-                                  <div class="col-md-2">
-                                      <label for="codigoCliente">Código</label>
-                                      <input id="codigoCliente" class="form-control input-sm" type="text" name="codigoCliente" value="<?php echo $codigoCliente; ?>" readonly required>
-                                  </div>
-                                  <div class="col-md-4">
-                                      <label for="nombreCliente">Nombre</label>
-                                      <input id="nombreCliente" class="form-control input-sm" type="text" name="nombreCliente" value="<?php echo $nombreCliente; ?>" readonly required>
-                                  </div>
-                                  <div class="col-md-3">
-                                      <label for="departamento">Departamento</label>
-                                      <select id="departamento" class="form-control input-sm" name="departamento" disabled required>
-                                          <option value="">Seleccionar</option>
-                                          <?php
-                                          foreach ($arrayDepartamentos as $key) {
-                                              if ($key['idDepartamento'] == $departamento) {
-                                                  echo "<option value='".$key['idDepartamento']."' selected>".$key['nombreDepartamento']."</option>";
-                                              }else {
-                                                  echo "<option value='".$key['idDepartamento']."'>".$key['nombreDepartamento']."</option>";
-                                              }
-                                          }
-                                          ?>
-                                      </select>
-                                  </div>
-                                  <div class="col-md-3">
-                                      <label for="municipio">Municipio</label>
-                                      <select id="municipio" class="form-control input-sm" name="municipio" disabled required>
-                                          <option value="">Seleccionar</option>
-                                          <?php
-                                          foreach ($arrMunicipios as $key) {
-                                              if ($key['idMunicipio'] == $municipio) {
-                                                  echo "<option value='".$key['idMunicipio']."' selected>".$key['nombreMunicipio']."</option>";
-                                              }else {
-                                                  echo "<option value='".$key['idMunicipio']."'>".$key['nombreMunicipio']."</option>";
-                                              }
-                                          }
-                                          ?>
-                                      </select>
-                                  </div>
-                              </div>
+
                               <div class="form-row">
                                   <div class="col-md-12">
                                       <label for="direccion">Dirección</label>
@@ -513,7 +571,7 @@
                                           }
                                           ?>
                                       </select>
-                                      <br>
+
                                   </div>
 
                               </div>
@@ -524,10 +582,10 @@
                                           <option value="" selected>Seleccionar</option>
                                           <?php
                                           foreach ($arrayVendedores as $key) {
-                                              if ($key['idVendedor'] == $vendedor) {
-                                                  echo "<option value='".$key['idVendedor']."' selected>".$key['nombresVendedor']." ".$key['apellidosVendedor']."</option>";
+                                              if ($key['codigoCobrador'] == $cobrador) {
+                                                  echo "<option value='".$key['codigoCobrador']."' selected>".$key['nombreCobrador']."</option>";
                                               }else {
-                                                  echo "<option value='".$key['idVendedor']."'>".$key['nombresVendedor']." ".$key['apellidosVendedor']."</option>";
+                                                  echo "<option value='".$key['codigoCobrador']."'>".$key['nombreCobrador']."</option>";
                                               }
                                           }
                                           ?>
@@ -555,7 +613,7 @@
                               </div>
                               <div class="form-row">
                                   <div class="col-md-8">
-                                      <br>
+
                                       <label for="ventaCuentaDe">Impuesto seguridad</label>
                                       <input id="aplicarCesc" class="" onclick="getCesc()" type="radio" name="aplicarCesc" value="0.05">
                                       <label for="5">5%</label>
@@ -598,7 +656,7 @@
                                   </div>
                                   <div class="col-md-2">
                                       <label for="total">Total</label>
-                                      <input id="total" class="form-control input-sm" type="text" name="total" value="<?php echo $total; ?>" readonly>
+                                      <input id="total" class="form-control input-sm alert-danger" type="text" name="total" value="<?php echo $total; ?>" readonly>
                                   </div>
                               </div>
                           </div>
