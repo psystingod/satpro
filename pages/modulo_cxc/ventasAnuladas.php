@@ -66,7 +66,7 @@
             $montoInternet = "";
             $totalExento = "";
             $totalAfecto = "";
-            $iva = "";
+            $iva = "0.00";
             $impuesto = "";
             $percepcion = "";
             $total = "";
@@ -416,7 +416,7 @@
                         <br>
                         <div class="panel panel-danger">
                           <div class="panel-heading"><b>Factura manual</b> <span id="nombreOrden" class="label label-danger"></span></div>
-                          <form id="ventaManual" action="" method="POST">
+                          <form id="ventaManual" action="generarFacturaManual.php" method="POST">
                           <div class="panel-body">
                               <div class="col-md-12">
                                   <button class="btn btn-default btn-sm" id="" onclick="nuevaOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Nueva orden"><i class="far fa-file"></i></button>
@@ -576,7 +576,7 @@
 
                               </div>
                               <div class="form-row">
-                                  <div class="col-md-5">
+                                  <div class="col-md-4">
                                       <label for="vendedor">Vendedor</label>
                                       <select id="vendedor" class="form-control input-sm" name="vendedor" disabled>
                                           <option value="" selected>Seleccionar</option>
@@ -606,21 +606,57 @@
                                           ?>
                                       </select>
                                   </div>
-                                  <div class="col-md-4">
-                                      <label for="ventaCuentaDe">Venta a cuenta de</label>
-                                      <input id="ventaCuentaDe" class="form-control input-sm" type="text" name="ventaCuentaDe" value="<?php echo $ventaCuentaDe; ?>" readonly>
+                                  <div class="col-md-3">
+                                      <label for="ventaCuentaDe">Tipo de servicio</label>
+                                      <select class="form-control input-sm" name="tipoServicio" id="tipoServicio" onchange="getTipoServicio();" required>
+                                          <option value="">Seleccionar</option>
+                                          <option value="C">Cable</option>
+                                          <option value="I">Internet</option>
+                                      </select>
+                                  </div>
+                                  <div class="col-md-2">
+                                      <label for="motivo">Motivo</label>
+                                      <select class="form-control input-sm alert-danger" name="motivo" id="motivo" onchange="getMotivo();" required>
+                                          <option value="">Seleccionar</option>
+                                          <option value="1">Instalación</option>
+                                          <option value="2">Reinstalación</option>
+                                          <option value="3">Cuota mensual</option>
+                                          <option value="4">Otros</option>
+                                      </select>
                                   </div>
                               </div>
                               <div class="form-row">
-                                  <div class="col-md-8">
+                                  <div class="col-md-4">
 
                                       <label for="ventaCuentaDe">Impuesto seguridad</label>
-                                      <input id="aplicarCesc" class="" onclick="getCesc()" type="radio" name="aplicarCesc" value="0.05">
+                                      <input id="aplicarCesc" class="" onclick="getCesc()" type="radio" name="aplicarCesc" value="0.05" checked>
                                       <label for="5">5%</label>
                                       <input class="" type="radio" onclick="getCesc()" name="aplicarCesc" value="0.10">
                                       <label for="5">10%</label>
                                       <input class="" type="radio" onclick="getCesc()" name="aplicarCesc" value="0">
                                       <label for="5">Exento</label>
+                                  </div>
+                                  <div class="col-md-2">
+                                      <label for="mesGenerar">Mes a generar</label>
+                                      <select id="mesGenerar" class="form-control input-sm" name="mesGenerar" required>
+                                          <option value="">Seleccionar</option>
+                                          <option value="01">Enero</option>
+                                          <option value="02">Febrero</option>
+                                          <option value="03">Marzo</option>
+                                          <option value="04">Abril</option>
+                                          <option value="05">Mayo</option>
+                                          <option value="06">Junio</option>
+                                          <option value="07">Julio</option>
+                                          <option value="08">Agosto</option>
+                                          <option value="09">Septiembre</option>
+                                          <option value="10">Octubre</option>
+                                          <option value="11">Noviembre</option>
+                                          <option value="12">Diciembre</option>
+                                      </select>
+                                  </div>
+                                  <div class="col-md-2">
+                                      <label for="anoGenerar">Año a generar</label>
+                                      <input id="anoGenerar" class="form-control input-sm" type="number" name="anoGenerar" value="<?php echo date('Y') ?>" readonly>
                                   </div>
                                   <div class="col-md-2">
                                       <label for="montoCable">Monto cable</label>
@@ -636,27 +672,27 @@
                               <div class="form-row">
                                   <div class="col-md-2">
                                       <label for="totalExento">Total exento</label>
-                                      <input id="totalExento" class="form-control input-sm" type="text" name="totalExento" value="<?php echo $totalExento; ?>" readonly>
+                                      <input id="totalExento" class="form-control input-sm" type="text" id="totalExento" name="totalExento" value="<?php echo $totalExento; ?>" readonly>
                                   </div>
                                   <div class="col-md-2">
                                       <label for="totalAfecto">Total afecto</label>
-                                      <input id="totalAfecto" class="form-control input-sm" type="text" name="totalAfecto" value="<?php echo $totalAfecto; ?>" readonly>
+                                      <input id="totalAfecto" class="form-control input-sm" type="text" id="totalAfecto" name="totalAfecto" value="<?php echo $totalAfecto; ?>" readonly>
                                   </div>
                                   <div class="col-md-2">
                                       <label for="iva">IVA</label>
-                                      <input id="iva" class="form-control input-sm" type="text" name="iva" value="<?php echo $iva; ?>" readonly>
+                                      <input id="iva" class="form-control input-sm" type="text" id="iva" name="iva" value="<?php echo $iva; ?>" readonly>
                                   </div>
                                   <div class="col-md-2">
                                       <label for="impuesto">Impuesto</label>
-                                      <input id="impuesto" class="form-control input-sm" type="text" name="impuesto" value="<?php echo $impuesto; ?>" readonly>
+                                      <input id="impuesto" class="form-control input-sm" type="text" id="impuesto" name="impuesto" value="<?php echo $impuesto; ?>" readonly>
                                   </div>
                                   <div class="col-md-2">
                                       <label for="percepcion">Percepcion</label>
-                                      <input id="percepcion" class="form-control input-sm" type="text" name="percepcion" value="<?php echo $percepcion; ?>" readonly>
+                                      <input id="percepcion" class="form-control input-sm" type="text" id="percepcion" name="percepcion" value="<?php echo $percepcion; ?>" readonly>
                                   </div>
                                   <div class="col-md-2">
                                       <label for="total">Total</label>
-                                      <input id="total" class="form-control input-sm alert-danger" type="text" name="total" value="<?php echo $total; ?>" readonly>
+                                      <input id="total" class="form-control input-sm alert-danger" type="text" id="total" name="total" value="<?php echo $total; ?>" readonly>
                                   </div>
                               </div>
                           </div>

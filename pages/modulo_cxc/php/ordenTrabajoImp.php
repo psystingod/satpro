@@ -166,8 +166,9 @@
             $pdf->Cell(70,3,'Tecnico: '.$tecnico,0,1,'L');
             $pdf->Ln(3);
             $pdf->Cell(50,3,'MACTV: '.$row["mactv"],0,0,'L');
-            $pdf->Cell(50,3,'Colilla: '.$row["colilla"],0,0,'L');
-            $pdf->Cell(50,3,'Tecnologia: '.$row["tecnologia"],0,1,'L');
+            $pdf->Cell(40,3,'Colilla: '.$row["colilla"],0,0,'L');
+            $pdf->Cell(60,3,'Coordenadas: '.$row["coordenadas"],0,0,'L');
+            $pdf->Cell(40,3,'Tecnologia: '.$row["tecnologia"],0,1,'L');
             $pdf->Ln(3);
 
             $pdf->MultiCell(190,6,'Observaciones: '.utf8_decode($row["observaciones"]),0,'L',0);

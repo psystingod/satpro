@@ -50,7 +50,9 @@ function nuevaOrden(){
 
     document.getElementById("totalExento").value = '0.00';
     document.getElementById("totalAfecto").value = '0.00';
+    document.getElementById("iva").value = '0.00';
     document.getElementById("total").value = '0.00';
+    document.getElementById("impuesto").value = document.getElementById("aplicarCesc").value;
 
     document.getElementById("editar").disabled = true;
 
@@ -106,5 +108,36 @@ function tipoFactura(){
 }
 
 function clearAll(){
-    
+    document.getElementById("montoCable").value = "";
+    document.getElementById("montoInternet").value = "";
+    document.getElementById("totalExento").value = "0.00";
+    document.getElementById("totalAfecto").value = "0.00";
+    document.getElementById("iva").value = "0.00";
+    document.getElementById("impuesto").value = document.getElementById("aplicarCesc").value;
+    document.getElementById("percepcion").value = "0.00";
+    document.getElementById("total").value = "0.00";
+}
+function getMotivo(){
+    var motivo = document.getElementById("motivo").value;
+    if (motivo == '4'){
+        document.getElementById("mesGenerar").disabled = true;
+        document.getElementById("anoGenerar").disabled = true;
+    }else {
+        document.getElementById("mesGenerar").disabled = false;
+        document.getElementById("anoGenerar").disabled = false;
+    }
+}
+function getTipoServicio(){
+    var motivo = document.getElementById("tipoServicio").value;
+    if (motivo == 'C'){
+        document.getElementById("montoCable").disabled = false;
+        document.getElementById("montoInternet").disabled = true;
+
+    }else if(motivo == 'I') {
+        document.getElementById("montoCable").disabled = true;
+        document.getElementById("montoInternet").disabled = false;
+    }else{
+        document.getElementById("montoCable").disabled = false;
+        document.getElementById("montoInternet").disabled = false;
+    }
 }

@@ -87,6 +87,9 @@
             $pdf->Cell(40,3,'MAC: '.$row["macModem"],0,0,'L');
             $pdf->Cell(40,3,'Colilla: '.$row["colilla"],0,1,'L');
             $pdf->Ln(3);
+            $pdf->Cell(85,3,'Coordenadas: '.$row["coordenadas"],0,0,'L');
+            $pdf->Cell(85,3,'Nuevas coordenadas: '.$row["coordenadasNuevas"],0,1,'L');
+            $pdf->Ln(3);
 
             $pdf->MultiCell(190,6,'Observaciones: '.utf8_decode($row["observaciones"]),0,'L',0);
             $pdf->Ln(3);
@@ -129,12 +132,15 @@
             $pdf->MultiCell(190,6,'Direccion a trasladar: '.utf8_decode($row["direccionTraslado"]),0,'L',0);
             $pdf->Ln(3);
 
-            $pdf->Cell(95,3,'Telefono: '.$row["telefonos"],0,0,'L');
+            $pdf->Cell(50,3,'Telefono: '.$row["telefonos"],0,0,'L');
 
-            $pdf->Cell(95,3,'Tecnico: '.utf8_decode($tecnico),0,1,'R');
+            $pdf->Cell(70,3,'Tecnico: '.utf8_decode($tecnico),0,0,'L');
+            //$pdf->Ln(3);
+            $pdf->Cell(40,3,'MACTV: '.$row["mactv"],0,0,'L');
+            $pdf->Cell(40,3,'Colilla: '.$row["colilla"],0,1,'L');
             $pdf->Ln(3);
-            $pdf->Cell(50,3,'MACTV: '.$row["mactv"],0,0,'L');
-            $pdf->Cell(50,3,'Colilla: '.$row["colilla"],0,1,'L');
+            $pdf->Cell(85,3,'Coordenadas: '.$row["coordenadas"],0,0,'L');
+            $pdf->Cell(85,3,'Nuevas coordenadas: '.$row["coordenadasNuevas"],0,1,'L');
             $pdf->Ln(3);
 
             $pdf->MultiCell(190,6,'Observaciones: '.utf8_decode($row["observaciones"]),0,'L',0);
@@ -143,9 +149,9 @@
             $pdf->Cell(70,6,'Fecha de realizacion: ',1,1,'L');
             $pdf->Ln(3);
             $pdf->SetFont('Arial','B',9);
-            $pdf->Cell(60,6,'Cliente: '.$row["mactv"],1,0,'L');
+            $pdf->Cell(60,6,'Cliente: '."",1,0,'L');
             $pdf->Cell(70,6,'Tecnico: ',1,0,'L');
-            $pdf->Cell(65,6,'Autorizacion: '.$row["tecnologia"],1,1,'L');
+            $pdf->Cell(65,6,'Autorizacion: '."",1,1,'L');
 
             $pdf->SetFont('Arial','B',9);
             $pdf->Cell(95,8,'Creado por: '.utf8_decode($row["creadoPor"]),0,0,'L');

@@ -113,7 +113,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT idOrdenTraslado, codigoCliente, fechaOrden, tipoOrden, diaCobro, telefonos, nombreCliente, direccion, direccionTraslado, idDepartamento, idMunicipio, idColonia, saldoCable, fechaTraslado, saldoInter, macModem, serieModem, velocidad, colilla, idTecnico, coordenadas, mactv, observaciones, tipoServicio, creadoPor, coordenadas FROM tbl_ordenes_traslado WHERE idOrdenTraslado = ? LIMIT 0,1";
+            $query = "SELECT idOrdenTraslado, codigoCliente, fechaOrden, tipoOrden, diaCobro, telefonos, nombreCliente, direccion, direccionTraslado, idDepartamento, idMunicipio, idColonia, saldoCable, fechaTraslado, saldoInter, macModem, serieModem, velocidad, colilla, idTecnico, coordenadas, mactv, observaciones, tipoServicio, creadoPor, coordenadas, coordenadasNuevas FROM tbl_ordenes_traslado WHERE idOrdenTraslado = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -176,6 +176,7 @@
 
             //$hora = $row['hora'];
             $idTecnico = $row['idTecnico'];
+            var_dump($idTecnico);
             $mactv = $row['mactv'];
             $observaciones = $row['observaciones'];
             //$nodo = $row['nodo'];
@@ -339,7 +340,7 @@
                               </div>
                               <div class="form-row">
                                   <div class="col-md-2">
-                                      <br>
+
                                       <?php
                                       if (isset($_GET['nOrden'])) {
                                          echo "<input id='creadoPor' class='form-control input-sm' type='hidden' name='creadoPor' value='{$creadoPor}'>";
@@ -355,7 +356,7 @@
                                   </div>
                                   <div class="col-md-2">
 
-                                      <label for="fechaElaborada">Fecha de elaborada</label>
+                                      <label for="fechaElaborada">Fecha elaborada</label>
                                       <input id="fechaOrden" class="form-control input-sm" type="text" name="fechaOrden" value="<?php echo $fechaOrden; ?>" readonly>
                                   </div>
                                   <div class="col-md-2">

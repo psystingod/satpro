@@ -53,7 +53,7 @@ class EditarCliente extends ConectionDB
             $departamento = $_POST['departamento'];
             $municipio = $_POST['municipio'];
             $colonia = $_POST['colonia'];
-            $direccionCobro = $_POST['direccionCobro'];
+            $direccionCobro = strtoupper($_POST['direccionCobro']);
             $telefonos = $_POST['telefono'];
             $telTrabajo = $_POST['telefonoTrabajo'];
             $ocupacion = $_POST['ocupacion'];
@@ -178,7 +178,7 @@ class EditarCliente extends ConectionDB
             $tecnicoInternet = $_POST['encargadoInstalacionInter'];
             $mactv = $_POST['mactv'];
             $nDerivaciones = $_POST['derivaciones'];
-            $direccionCable = $_POST['direccionCable'];
+            $direccionCable = strtoupper($_POST['direccionCable']);
 
 
             /****************** DATOS INTERNET ***********************/
@@ -267,7 +267,7 @@ class EditarCliente extends ConectionDB
             }
             $promocionHasta = $_POST['promocionHasta'];
             $cuotaPromocion = $_POST['cuotaPromocion'];
-            $direccionInternet = $_POST['direccionInternet'];
+            $direccionInternet = strtoupper($_POST['direccionInternet']);
             $colilla = $_POST['colilla'];
             $costoInstalacionIn = $_POST['costoInstalacionIn'];
             $nodo = $_POST['nodo'];

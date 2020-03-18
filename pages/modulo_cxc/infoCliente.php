@@ -254,6 +254,7 @@ session_start();
             $nodo = $row['dire_telefonia'];
             $wifiClave = $row['clave_modem'];
             $costoInstalacionIn = $row['costo_instalacion_in'];
+
         }
 
         // show error
@@ -820,7 +821,7 @@ session_start();
                                     <div class="row">
                                         <div class="col-md-12">
                                             <label for="direccion">Dirección</label>
-                                            <textarea class="form-control input-sm" name="direccion" rows="2" cols="40" readonly><?php echo $direccion; ?></textarea>
+                                            <textarea class="form-control input-sm" name="direccion" rows="2" cols="40" readonly><?php echo htmlentities($direccion); ?></textarea>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -879,7 +880,7 @@ session_start();
                                     <div class="row">
                                         <div class="col-md-12">
                                             <label for="direccionCobro">Dirección de cobro</label>
-                                            <textarea class="form-control input-sm" name="direccionCobro" rows="2" cols="40" readonly><?php echo $direccionCobro; ?></textarea>
+                                            <textarea class="form-control input-sm" name="direccionCobro" rows="2" cols="40" readonly><?php echo htmlentities($direccionCobro); ?></textarea>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -1177,7 +1178,7 @@ session_start();
                                               <div class="row">
                                                   <div class="col-md-12">
                                                       <label for="direccionCable">Dirección</label>
-                                                      <input class="form-control input-sm" type="text" name="direccionCable" value="<?php echo $direccionCable; ?>" readonly>
+                                                      <input class="form-control input-sm" type="text" name="direccionCable" value="<?php echo htmlentities($direccionCable); ?>" readonly>
                                                   </div>
                                               </div>
                                           </div>
@@ -1366,7 +1367,7 @@ session_start();
                                               <div class="row">
                                                   <div class="col-md-12">
                                                       <label for="direccionInternet">Dirección</label>
-                                                      <input class="form-control input-sm" type="text" name="direccionInternet" value="<?php echo $direccionInternet; ?>" readonly>
+                                                      <input class="form-control input-sm" type="text" name="direccionInternet" value="<?php echo htmlentities($direccionInternet); ?>" readonly>
                                                   </div>
                                               </div>
                                               <hr style="border-top: 1px solid #0288D1;">

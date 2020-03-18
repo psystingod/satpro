@@ -83,14 +83,15 @@ function f3(){
             //$pdf->Cell(190,3,'Direccion: '.$row["direccionCable"],0,1,'L');
             $pdf->MultiCell(190,6,'Direccion: '.utf8_decode($row["direccion"]),0,'L',0);
             $pdf->Ln(3);
-            $pdf->Cell(140,3,'Telefonos: '.$row["telefonos"],0,0,'L');
+            $pdf->Cell(70,3,'Telefonos: '.$row["telefonos"],0,0,'L');
+            $pdf->Cell(70,3,'Coordenadas: '.$row["coordenadas"],0,0,'L');
             $pdf->Cell(50,3,'Estado de cuenta actual: '.number_format($estadoCuenta,2),0,1,'L');
             $pdf->Ln(3);
 
-            $pdf->Cell(70,3,'Tecnico: '.utf8_decode($tecnico),0,1,'L');
-            $pdf->Ln(3);
+            $pdf->Cell(70,3,'Tecnico: '.utf8_decode($tecnico),0,0,'L');
+            //$pdf->Ln(3);
 
-            $pdf->Cell(40,3,'MAC: '.$row["macModem"],0,0,'L');
+            $pdf->Cell(70,3,'MAC: '.$row["macModem"],0,0,'L');
             $pdf->Cell(40,3,'Colilla: '.$row["colilla"],0,1,'L');
             $pdf->Ln(3);
             //$pdf->Cell(190,3,'Motivo de la suspension: '.$actividadInter,0,1,'L');
@@ -143,19 +144,16 @@ function f3(){
             //$pdf->Cell(190,3,'Direccion: '.$row["direccionCable"],0,1,'L');
             $pdf->MultiCell(190,6,'Direccion: '.utf8_decode($row["direccion"]),0,'L',0);
             $pdf->Ln(3);
-            $pdf->Cell(140,3,'Telefonos: '.$row["telefonos"],0,0,'L');
+            $pdf->Cell(70,3,'Telefonos: '.$row["telefonos"],0,0,'L');
+            $pdf->Cell(70,3,'Coordenadas: '.$row["coordenadas"],0,0,'L');
             $pdf->Cell(50,3,'Estado de cuenta actual: '.number_format($estadoCuenta,2),0,1,'L');
             $pdf->Ln(3);
-            //$pdf->Cell(190,3,'Direccion: '.$row["direccionCable"],0,1,'L');
-            //$pdf->MultiCell(190,6,'Direccion a trasladar: '.utf8_decode($row["direccionTraslado"]),0,'L',0);
-            //$pdf->Ln(5);
 
-            $pdf->Cell(70,3,'Tecnico: '.utf8_decode($tecnico),0,1,'L');
-            $pdf->Ln(3);
+            $pdf->Cell(70,3,'Tecnico: '.utf8_decode($tecnico),0,0,'L');
+            //$pdf->Ln(3);
 
-            //$pdf->Cell(40,3,'MAC: '.$row["macModem"],0,0,'L');
+            $pdf->Cell(70,3,'MAC: '.$row["macModem"],0,0,'L');
             $pdf->Cell(40,3,'Colilla: '.$row["colilla"],0,1,'L');
-
             $pdf->Ln(3);
             $pdf->SetFont('Arial','B',9);
 

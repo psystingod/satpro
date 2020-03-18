@@ -59,7 +59,7 @@ if (isset($_GET['nOrden'])) {
         //$nodo = $row['nodo'];
         //$tecnologia = $row['tecnologia'];
         $observaciones = $row['observaciones'];
-        //$coordenadas = $row['coordenadas'];
+        $coordenadas = $row['coordenadas'];
         //$marcaModelo = $row['marcaModelo'];
         //$idVendedor = $row['idVendedor'];
         //$recepcionTv = $row['recepcionTv'];

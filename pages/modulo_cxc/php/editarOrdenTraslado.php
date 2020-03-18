@@ -65,7 +65,7 @@
                     $observaciones = $_POST["observaciones"];
                     $tipoServicio = $_POST["tipoServicio"];
                     $responsable = $_POST["responsable"];
-                    $coordenadas = $_POST["cordenadas"];
+                    $coordenadas = $_POST["coordenadas"];
                     $coordenadasNuevas = $_POST["coordenadasNuevas"];
                     $creadoPor = $_POST['creadoPor'];
 
@@ -99,7 +99,7 @@
 
                                 ':observaciones' => $observaciones,
                                 ':tipoServicio' => $tipoServicio,
-                                ':idTecnico' => $responsable,
+                                //':idTecnico' => $responsable,
                                 ':coordenadas' => $coordenadas,
                                 ':coordenadasNuevas' => $coordenadasNuevas,
                                 ':creadoPor' => $creadoPor,
@@ -217,7 +217,7 @@
 
                                 ':observaciones' => $observaciones,
                                 ':tipoServicio' => $tipoServicio,
-                                ':idTecnico' => $responsable,
+                                //':idTecnico' => $responsable,
                                 ':coordenadas' => $coordenadas,
                                 ':coordenadasNuevas' => $coordenadasNuevas,
                                 ':creadoPor' => $creadoPor,
