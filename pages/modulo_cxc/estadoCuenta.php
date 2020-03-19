@@ -363,7 +363,7 @@ if(!isset($_SESSION["user"])) {
                                             echo $abonoC['numeroRecibo']."</td><td class='text'>";
                                             echo $abonoC['tipoServicio']."</td><td class='text'>";
                                             echo $abonoC['numeroFactura']."</td><td class='text'>";
-                                            echo "<span class='label label-default'>".$abonoC['mesCargo']."</span>"."</td><td class='text'>";
+                                            echo "<span class='label label-success'>".$abonoC['mesCargo']."</span>"."</td><td class='text'>";
                                             echo "<span class='label label-default'>".$abonoC['fechaAbonado']."</span>"."</td><td class='text'>";
                                             echo "<span class='label label-default'>".$abonoC['fechaVencimiento']."</span>"."</td><td class='text'>";
                                             echo "0.00"."</td><td class='text'>";
@@ -380,7 +380,7 @@ if(!isset($_SESSION["user"])) {
                                             echo $cargoC['numeroRecibo']."</td><td class='text-danger'>";
                                             echo $cargoC['tipoServicio']."</td><td class='text-danger'>";
                                             echo $cargoC['numeroFactura']."</td><td class='text-danger'>";
-                                            echo "<span class='label label-default'>".$cargoC['mesCargo']."</span>"."</td><td class='text-danger'>";
+                                            echo "<span class='label label-danger'>".$cargoC['mesCargo']."</span>"."</td><td class='text-danger'>";
                                             echo "<span class='label label-default'>".$cargoC['fechaFactura']."</span>"."</td><td class='text-danger'>";
                                             echo "<span class='label labeldefault'>".$cargoC['fechaVencimiento']."</span>"."</td><td class='text-danger'>";
                                             echo $cargoC['cuotaCable']."</td><td class='text-danger'>";
@@ -400,7 +400,7 @@ if(!isset($_SESSION["user"])) {
                                                 echo $estado['reciboCargo']."</td><td class='text-danger'>";
                                                 echo $estado['servicioCargo']."</td><td class='text-danger'>";
                                                 echo $estado['facturaCargo']."</td><td class='text-danger'>";
-                                                echo "<span class='label label-default'>".$estado['cargoCargo']."</span>"."</td><td class='text-danger'>";
+                                                echo "<span class='label label-danger'>".$estado['cargoCargo']./*" "."<i class='fas fa-arrow-down'></i>".*/"</span>"."</td><td class='text-danger'>";
                                                 echo "<span class='label label-default'>".$estado['fechaFacturaCargo']."</span>"."</td><td class='text-danger'>";
                                                 echo "<span class='label label-default'>".$estado['fechaVencimientoCargo']."</span>"."</td><td class='text-danger'>";
                                                 echo $estado['cuotaCableCargo']."</td><td class='text-danger'>";
@@ -414,7 +414,7 @@ if(!isset($_SESSION["user"])) {
                                                 echo $estado['reciboAbono']."</td><td class='text'>";
                                                 echo $estado['servicioAbono']."</td><td class='text'>";
                                                 echo $estado['facturaAbono']."</td><td class='text'>";
-                                                echo "<span class='label label-default'>".$estado['cargoAbono']."</span>"."</td><td class='text'>";
+                                                echo "<span class='label label-success'>".$estado['cargoAbono']./*" "."<i class='fas fa-arrow-up'></i>".*/"</span>"."</td><td class='text'>";
                                                 echo "<span class='label label-default'>".$estado['fechaAbonadoAbono']."</span>"."</td><td class='text'>";
                                                 echo "<span class='label label-default'>".$estado['fechaVencimientoAbono']."</span>"."</td><td class='text'>";
                                                 echo "0.00"."</td><td class='text'>";
@@ -478,7 +478,7 @@ if(!isset($_SESSION["user"])) {
                                             echo $abonoI['numeroRecibo']."</td><td class='text'>";
                                             echo $abonoI['tipoServicio']."</td><td class='text'>";
                                             echo $abonoI['numeroFactura']."</td><td class='text'>";
-                                            echo "<span class='label label-default'>".$abonoI['mesCargo']."</span>"."</td><td class='text'>";
+                                            echo "<span class='label label-success'>".$abonoI['mesCargo']."</span>"."</td><td class='text'>";
                                             echo "<span class='label label-default'>".$abonoI['fechaAbonado']."</span>"."</td><td class='text'>";
                                             echo "<span class='label label-default'>".$abonoI['fechaVencimiento']."</span>"."</td><td class='text'>";
                                             echo "0.00"."</td><td class='text'>";
@@ -495,7 +495,7 @@ if(!isset($_SESSION["user"])) {
                                             echo $cargoI['numeroRecibo']."</td><td class='text-danger'>";
                                             echo $cargoI['tipoServicio']."</td><td class='text-danger'>";
                                             echo $cargoI['numeroFactura']."</td><td class='text-danger'>";
-                                            echo "<span class='label label-default'>".$cargoI['mesCargo']."</span>"."</td><td class='text-danger'>";
+                                            echo "<span class='label label-danger'>".$cargoI['mesCargo']."</span>"."</td><td class='text-danger'>";
                                             echo "<span class='label label-default'>".$cargoI['fechaFactura']."</span>"."</td><td class='text-danger'>";
                                             echo "<span class='label label-default'>".$cargoI['fechaVencimiento']."</span>"."</td><td class='text-danger'>";
                                             echo $cargoI['cuotaInternet']."</td><td class='text-danger'>";
@@ -515,7 +515,7 @@ if(!isset($_SESSION["user"])) {
                                                 echo $estado['reciboCargo']."</td><td class='text-danger'>";
                                                 echo $estado['servicioCargo']."</td><td class='text-danger'>";
                                                 echo $estado['facturaCargo']."</td><td class='text-danger'>";
-                                                echo "<span class='label label-default'>".$estado['cargoCargo']."</span>"."</td><td class='text-danger'>";
+                                                echo "<span class='label label-danger'>".$estado['cargoCargo']."</span>"."</td><td class='text-danger'>";
                                                 echo "<span class='label label-default'>".$estado['fechaFacturaCargo']."</span>"."</td><td class='text-danger'>";
                                                 echo "<span class='label label-default'>".$estado['fechaVencimientoCargo']."</span>"."</td><td class='text-danger'>";
                                                 echo $estado['cuotaInterCargo']."</td><td class='text-danger'>";
@@ -529,7 +529,7 @@ if(!isset($_SESSION["user"])) {
                                                 echo $estado['reciboAbono']."</td><td class='text'>";
                                                 echo $estado['servicioAbono']."</td><td class='text'>";
                                                 echo $estado['facturaAbono']."</td><td class='text'>";
-                                                echo "<span class='label label-default'>".$estado['cargoAbono']."</span>"."</td><td class='text'>";
+                                                echo "<span class='label label-success'>".$estado['cargoAbono']."</span>"."</td><td class='text'>";
                                                 echo "<span class='label label-default'>".$estado['fechaAbonadoAbono']."</span>"."</td><td class='text'>";
                                                 echo "<span class='label label-default'>".$estado['fechaVencimientoAbono']."</span>"."</td><td class='text'>";
                                                 echo "0.00"."</td><td class='text'>";

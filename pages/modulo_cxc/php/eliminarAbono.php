@@ -27,7 +27,7 @@
 
                if (strlen($numeroFactura) < 15) {
                    $this->dbConnect->beginTransaction();
-                   $query = "UPDATE tbl_abonos SET cuotaCable=0.00, cuotaInternet=0.00, saldoCable=0.00, saldoInternet=0.00, /*mesCargo=:mes,*/ cargoImpuesto=0.00, totalImpuesto=0.00, anulada=1 WHERE /*numeroFactura=:numeroFactura AND */numeroRecibo=:numeroRecibo AND codigoCliente=:codigoCliente AND tipoServicio=:tipoServicio AND mesCargo=:mesCargo";
+                   $query = "UPDATE tbl_abonos SET nombre='[Recibo anulado]', cuotaCable=0.00, cuotaInternet=0.00, saldoCable=0.00, saldoInternet=0.00, /*mesCargo=:mes,*/ cargoImpuesto=0.00, totalImpuesto=0.00, anulada=1 WHERE /*numeroFactura=:numeroFactura AND */numeroRecibo=:numeroRecibo AND codigoCliente=:codigoCliente AND tipoServicio=:tipoServicio AND mesCargo=:mesCargo";
                    //$query = "UPDATE tbl_cargos SET anulada=1, cuotaCable=0, cuotaInternet=0, saldoCable=0, saldoInternet=0, cargoImpuesto=0, totalImpuesto=0 WHERE idFactura=:id";
                    $statement = $this->dbConnect->prepare($query);
                    //$statement->bindValue(':mes', $mensualidad);
@@ -54,14 +54,14 @@
                    $this->dbConnect->commit();
 
                    $this->dbConnect = null;
-
+                   echo '<script>window.close()</script>';
                    //echo "<h2>Factura eliminada con exito</h2>";
                   //header('Location: ../cxc.php');
 
               }else {
                   $this->dbConnect->beginTransaction();
                   $estado = "pendiente";
-                  $query = "UPDATE tbl_abonos SET cuotaCable=0.00, cuotaInternet=0.00, saldoCable=0.00, saldoInternet=0.00, /*mesCargo=:mes,*/ cargoImpuesto=0.00, totalImpuesto=0.00, anulada=1 WHERE numeroFactura=:numeroFactura AND numeroRecibo=:numeroRecibo AND codigoCliente=:codigoCliente AND tipoServicio=:tipoServicio AND mesCargo=:mesCargo";
+                  $query = "UPDATE tbl_abonos SET nombre='[Recibo anulado]', cuotaCable=0.00, cuotaInternet=0.00, saldoCable=0.00, saldoInternet=0.00, /*mesCargo=:mes,*/ cargoImpuesto=0.00, totalImpuesto=0.00, anulada=1 WHERE numeroFactura=:numeroFactura AND numeroRecibo=:numeroRecibo AND codigoCliente=:codigoCliente AND tipoServicio=:tipoServicio AND mesCargo=:mesCargo";
                   //$query = "UPDATE tbl_cargos SET anulada=1, cuotaCable=0, cuotaInternet=0, saldoCable=0, saldoInternet=0, cargoImpuesto=0, totalImpuesto=0 WHERE idFactura=:id";
                   $statement = $this->dbConnect->prepare($query);
                   //$statement->bindValue(':mes', $mensualidad);
@@ -88,7 +88,7 @@
                   $this->dbConnect->commit();
 
                   $this->dbConnect = null;
-
+                  echo '<script>window.close()</script>';
                   //echo "<h2>Factura eliminada con exito</h2>";
                  //header('Location: ../cxc.php');
               }

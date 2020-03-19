@@ -91,7 +91,7 @@ function guardarOrden(){
 function changeAction(action){
     switch (action) {
         case "nueva":
-            document.getElementById("ventaManual").action = "php/nuevaVentaAnulada.php";
+            document.getElementById("ventaManual").action = "php/generarFacturaManual.php";
             break;
         case "editar":
             document.getElementById("ventaManual").action = "php/editarVentaAnulada.php";
@@ -112,7 +112,7 @@ function clearAll(){
     document.getElementById("montoInternet").value = "";
     document.getElementById("totalExento").value = "0.00";
     document.getElementById("totalAfecto").value = "0.00";
-    document.getElementById("iva").value = "0.00";
+    document.getElementById("iva").value = document.getElementById("iva").value;
     document.getElementById("impuesto").value = document.getElementById("aplicarCesc").value;
     document.getElementById("percepcion").value = "0.00";
     document.getElementById("total").value = "0.00";

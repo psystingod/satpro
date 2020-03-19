@@ -253,7 +253,7 @@
                                 </li>
                                 <li><a href="#" data-toggle="modal" data-target="#verFacturasGeneradas">Ver facturas generadas</a>
                                 </li>
-                                <li><a href="#" data-toggle="modal" data-target="#eliminarAbonos">Consultar/Eliminar abonos</a>
+                                <li><a href="#" data-toggle="modal" data-target="#eliminarAbonos">Administrar abonos</a>
                                 </li>
                                 <li><a href="gestionCobros.php">Gestion de cobros</a>
                                 </li>
@@ -269,7 +269,7 @@
                         }elseif ($_SESSION["rol"] == 'informatica' || $_SESSION["rol"] == 'atencion al cliente' || $_SESSION["rol"] == 'jefatura') {
                             echo
                             '<ul class="dropdown-menu dropdown-user">
-                                <li><a href="#" data-toggle="modal" data-target="#eliminarAbonos">Consultar/Eliminar abonos</a>
+                                <li><a href="#" data-toggle="modal" data-target="#eliminarAbonos">Administrar abonos</a>
                                 </li>
                                 <li><a href="gestionCobros.php">Gestion de cobros</a>
                                 </li>
@@ -282,7 +282,7 @@
                         elseif ($_SESSION["rol"] == 'contabilidad') {
                             echo
                             '<ul class="dropdown-menu dropdown-user">
-                                <li><a href="#" data-toggle="modal" data-target="#eliminarAbonos">Consultar/Eliminar abonos</a>
+                                <li><a href="#" data-toggle="modal" data-target="#eliminarAbonos">Administrar abonos</a>
                                 </li>
                                 <li><a href="ventasManuales.php">Ventas manuales</a>
                                 </li>
@@ -593,14 +593,14 @@
                 <div class="modal-content">
                   <div style="background-color: #d32f2f; color:white;" class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">Consultar abonos</h4>
+                    <h4 class="modal-title">Administrador de abonos</h4>
                   </div>
                   <form id="eliminarAbonos" action="php/eliminarAbonos.php?" method="POST">
                   <div class="modal-body">
                     <div class="row">
                         <div class="col-md-12">
                             <input class="form-control" type="text" id="caja_busqueda" name="caja_busqueda" value="" placeholder="Número de recibo, Código del cliente, Fecha del abono, Código del cobrador">
-                            <br>
+
                             <div class="" id="datos">
 
                             </div>

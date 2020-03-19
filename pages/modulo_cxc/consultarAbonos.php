@@ -14,7 +14,7 @@ $recArray = $rec->verRecibo($idAbono);
 <html lang="es" dir="ltr">
     <head>
         <meta charset="utf-8">
-        <title>Facturación generada</title>
+        <title>Administrar abonos</title>
         <link rel="shortcut icon" href="../images/Cablesat.png" />
         <!-- Bootstrap Core CSS -->
         <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
@@ -56,6 +56,7 @@ $recArray = $rec->verRecibo($idAbono);
                         <th>Tipo servicio</th>
                         <th>Estado</th>
                         <th></th>
+                        <th></th>
                     </thead>
                     <tbody>
                         <?php
@@ -87,11 +88,12 @@ $recArray = $rec->verRecibo($idAbono);
                                 echo "<span style='font-size:13px;' class='label label-danger'>".strtoupper($key['estado'])."</span></td><td>";
                             }
                             if ($key['anulada'] == 1) {
-                                echo "<a class='btn btn-danger'>Anulada</a>"."</td></tr>";
+                                echo "<a class='btn btn-danger'>Anulada</a>"."</td><td>";
                             }else {
                                 //echo "<a onclick=anularFactura('".$key['numeroFactura']."','".$key['codigoCliente']."','".$key['tipoServicio']."','".$key['mesCargo']."');"." class='btn btn-warning'>Anular</a>"."</td><td>";
-                                echo "<a onclick=eliminarAbono('".$key['numeroFactura']."','".$key['numeroRecibo']."','".$key['codigoCliente']."','".$key['tipoServicio']."','".$key['mesCargo']."');"." class='btn btn-danger'>Eliminar</a>"."</td></tr>";
+                                echo "<a onclick=eliminarAbono('".$key['numeroFactura']."','".$key['numeroRecibo']."','".$key['codigoCliente']."','".$key['tipoServicio']."','".$key['mesCargo']."');"." class='btn btn-danger'><i class=\"fas fa-ban\"></i> Anular</a>"."</td><td>";
                             }
+                            echo "<a onclick=eliminarAbonoTodo('".$key['numeroFactura']."','".$key['numeroRecibo']."','".$key['codigoCliente']."','".$key['tipoServicio']."','".$key['mesCargo']."');"." class='btn btn-danger'><i class=\"far fa-trash-alt\"></i> ELIMINAR</a>"."</td></tr>";
 
                         }
                         ?>
@@ -121,10 +123,19 @@ $recArray = $rec->verRecibo($idAbono);
 
             function eliminarAbono(numeroFactura, numeroRecibo, codigoCliente, tipoServicio, mesCargo){
 
-                var answer = confirm('¿Está seguro de ELIMINAR este abono?');
+                var answer = confirm('¿Está seguro de ANULAR este abono?');
                 if (answer){
                     //window.location = 'php/eliminarFactura.php?numeroFactura=' + numeroFactura+'&codigoCliente=' + codigoCliente+'&tipoServicio=' + tipoServicio+'&mesCargo=' + mesCargo;
                     window.open('php/eliminarAbono.php?numeroFactura=' + numeroFactura+'&numeroRecibo=' + numeroRecibo+'&codigoCliente=' + codigoCliente+'&tipoServicio=' + tipoServicio+'&mesCargo=' + mesCargo, '_blank');
+                }
+            }
+
+            function eliminarAbonoTodo(numeroFactura, numeroRecibo, codigoCliente, tipoServicio, mesCargo){
+
+                var answer = confirm('¿Está seguro de ELIMINAR este abono?');
+                if (answer){
+                    //window.location = 'php/eliminarFactura.php?numeroFactura=' + numeroFactura+'&codigoCliente=' + codigoCliente+'&tipoServicio=' + tipoServicio+'&mesCargo=' + mesCargo;
+                    window.open('php/eliminarAbonoTodo.php?numeroFactura=' + numeroFactura+'&numeroRecibo=' + numeroRecibo+'&codigoCliente=' + codigoCliente+'&tipoServicio=' + tipoServicio+'&mesCargo=' + mesCargo, '_blank');
                 }
             }
         </script>

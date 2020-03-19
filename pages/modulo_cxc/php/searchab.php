@@ -24,20 +24,20 @@ $query = "SELECT idAbono, numeroRecibo, codigoCliente, codigoCobrador, fechaAbon
  if ($resultado->num_rows > 0) {
  	$salida.="<br><table class='table table-striped table-responsive'>
 			    <thead>
-					<tr class='success'>
+					<tr class='dark'>
 						<th>N° RECIBO</th>
 						<th>CODIGO CLIENTE</th>
 						<th>CODIGO COBRADOR</th>
                         <th>FECHA ABONADO</th>
                         <th>SERVICIO</th>
-                        <th>PROCEDIMIENTO</th>
+                        <th></th>
 					</tr>
 				</thead>
 				<tbody>";
 	while ($fila = $resultado->fetch_assoc()) {
         if ($fila['anulada'] == 0) {
             $salida.= "<tr>
-    			<td>"."<a class='btn btn-primary btn-sm' href=consultarAbonos.php?idAbono={$fila['idAbono']}>".$fila['numeroRecibo']."<a></td>
+    			<td>"."<a class='btn btn-danger btn-sm' href=consultarAbonos.php?idAbono={$fila['idAbono']}>".$fila['numeroRecibo']."<a></td>
     			<td>".$fila['codigoCliente']."</td>
     			<td>".$fila['codigoCobrador']."</td>
                 <td>".$fila['fechaAbonado']."</td>
@@ -47,7 +47,7 @@ $query = "SELECT idAbono, numeroRecibo, codigoCliente, codigoCobrador, fechaAbon
         }
         elseif ($fila['anulada'] == 1) {
             $salida.= "<tr>
-    			<td>"."<a class='btn btn-primary btn-sm' href=consultarAbonos.php?idAbono={$fila['idAbono']}>".$fila['numeroRecibo']."<a></td>
+    			<td>"."<a class='btn btn-danger btn-sm' href=consultarAbonos.php?idAbono={$fila['idAbono']}>".$fila['numeroRecibo']."<a></td>
     			<td>".$fila['codigoCliente']."</td>
     			<td>".$fila['codigoCobrador']."</td>
                 <td>".$fila['fechaAbonado']."</td>

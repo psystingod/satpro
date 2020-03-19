@@ -46,6 +46,16 @@
             // store retrieved row to a variable
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
+            $query2 = "SELECT valorImpuesto FROM tbl_impuestos WHERE siglasImpuesto = 'IVA'";
+            $stmt2 = $con->prepare( $query2 );
+
+            // execute our query
+            $stmt2->execute();
+
+            // store retrieved row to a variable
+            $row2 = $stmt2->fetch(PDO::FETCH_ASSOC);
+            $iva = floatval($row2['valorImpuesto']);
+
             /****************** DATOS GENERALES ***********************/
             date_default_timezone_set('America/El_Salvador');
             $fechaComprobante = date_format(date_create(date('Y-m-d')), 'd/m/Y');
@@ -66,7 +76,6 @@
             $montoInternet = "";
             $totalExento = "";
             $totalAfecto = "";
-            $iva = "0.00";
             $impuesto = "";
             $percepcion = "";
             $total = "";
@@ -210,6 +219,7 @@
         $otros = "";
         $proporcion = "";
         $cobrador = "";
+        $iva = "";
         //$tipoServicio = "";
         //$creadoPor = "";
         //$nodo="";
@@ -416,7 +426,7 @@
                         <br>
                         <div class="panel panel-danger">
                           <div class="panel-heading"><b>Factura manual</b> <span id="nombreOrden" class="label label-danger"></span></div>
-                          <form id="ventaManual" action="generarFacturaManual.php" method="POST">
+                          <form id="ventaManual" action="" method="POST">
                           <div class="panel-body">
                               <div class="col-md-12">
                                   <button class="btn btn-default btn-sm" id="" onclick="nuevaOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Nueva orden"><i class="far fa-file"></i></button>
@@ -520,12 +530,12 @@
 
                                   <div class="col-md-3">
                                       <label for="Prefijo">Prefijo</label>
-                                      <input id="prefijo" class="form-control input-sm alert-danger" type="text" name="prefijo" value="<?php echo $dataInfo->getPrefijo($_GET["tipoComprobante"]); ?>" readonly>
+                                      <input id="prefijo" class="form-control input-sm alert-danger" type="text" name="prefijo" value="<?php if (isset($_GET["tipoComprobante"])){echo $dataInfo->getPrefijo($_GET["tipoComprobante"]);} ?>" readonly>
                                   </div>
                                   <div class="col-md-3">
 
                                       <label for="nComprobante">N° de comprobante</label>
-                                      <input id="nComprobante" class="form-control input-sm alert-danger" type="text" name="nComprobante" value="<?php echo $dataInfo->getUltFact($_GET['tipoComprobante']); ?>" readonly required>
+                                      <input id="nComprobante" class="form-control input-sm alert-danger" type="text" name="nComprobante" value="<?php if (isset($_GET["tipoComprobante"])){echo $dataInfo->getUltFact($_GET["tipoComprobante"]);} ?>" readonly required>
                                   </div>
                                   <div class="col-md-3">
 
@@ -848,7 +858,7 @@
     if (isset($_GET['codigoCliente'])) {
         echo "<script>
             token = false;
-            document.getElementById('ventaManual').action = 'php/nuevaVentaAnulada.php';
+            document.getElementById('ventaManual').action = 'php/generarFacturaManual.php';
             //document.getElementById('btn-cable').disabled = false;
             //document.getElementById('btn-internet').disabled = false;
             document.getElementById('guardar').disabled = false;
