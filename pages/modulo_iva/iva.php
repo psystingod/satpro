@@ -230,14 +230,14 @@
                                           <label for="libroDetallado">Imprimir libro detallado</label>
                                       </div>
                                       <div class="form-group col-md-4 col-xs-4">
-                                        <input class="" type="radio" name="facturas" value="1" checked>
-                                        <label for="facturas">Factura normal</label>
-                                         <!--<input class="" type="radio" name="facturas" value="2">
-                                        <label for="facturas">Factura pequeña</label>
-                                        <input class="" type="radio" name="facturas" value="3">
-                                       <label for="facturas">Anuladas</label>
-                                       <input class="" type="radio" name="facturas" value="4" checked>
-                                      <label for="facturas">Todas</label>-->
+                                          <input class="" type="radio" name="facturas" value="1" checked>
+                                          <label for="facturas">Factura normal</label>
+                                          <!--<input class="" type="radio" name="facturas" value="2">
+                                         <label for="facturas">Factura pequeña</label>-->
+                                          <input class="" type="radio" name="facturas" value="3">
+                                         <label for="facturas">Anuladas</label>
+                                            <!--<input class="" type="radio" name="facturas" value="4" checked>
+                                           <label for="facturas">Todas</label>-->
                                       </div>
                                   </div>
 

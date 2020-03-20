@@ -146,7 +146,7 @@
                        //SEPARACION DE OPERACIONES
 
                        $this->dbConnect->beginTransaction();
-                       $query = "UPDATE tbl_cargos SET cuotaCable=0.00, cuotaInternet=0.00, saldoCable=0.00, saldoInternet=0.00, cargoImpuesto=0.00, totalImpuesto=0.00, anulada=1 WHERE numeroFactura=:numeroFactura AND codigoCliente=:codigoCliente AND tipoServicio=:tipoServicio AND mesCargo=:mesCargo";
+                       $query = "UPDATE tbl_cargos SET cuotaCable=0.00, cuotaInternet=0.00, saldoCable=0.00, saldoInternet=0.00, cargoImpuesto=0.00, totalImpuesto=0.00, cargoIva=0.00, totalIva=0.00, anticipo=0.00, anulada=1 WHERE numeroFactura=:numeroFactura AND codigoCliente=:codigoCliente AND tipoServicio=:tipoServicio AND mesCargo=:mesCargo";
                        //$query = "UPDATE tbl_cargos SET anulada=1, cuotaCable=0, cuotaInternet=0, saldoCable=0, saldoInternet=0, cargoImpuesto=0, totalImpuesto=0 WHERE idFactura=:id";
                        $statement = $this->dbConnect->prepare($query);
                        //$statement->bindValue(':mes', $mensualidad);
@@ -165,7 +165,7 @@
                }
                elseif(!isset($_POST["aIva"])) {
                    $this->dbConnect->beginTransaction();
-                   $query = "UPDATE tbl_cargos SET cuotaCable=0.00, cuotaInternet=0.00, saldoCable=0.00, saldoInternet=0.00, cargoImpuesto=0.00, totalImpuesto=0.00, anulada=1 WHERE numeroFactura=:numeroFactura AND codigoCliente=:codigoCliente AND tipoServicio=:tipoServicio AND mesCargo=:mesCargo";
+                   $query = "UPDATE tbl_cargos SET cuotaCable=0.00, cuotaInternet=0.00, saldoCable=0.00, saldoInternet=0.00, cargoImpuesto=0.00, totalImpuesto=0.00, cargoIva=0.00, totalIva=0.00, anticipo=0.00, anulada=1 WHERE numeroFactura=:numeroFactura AND codigoCliente=:codigoCliente AND tipoServicio=:tipoServicio AND mesCargo=:mesCargo";
                    //$query = "UPDATE tbl_cargos SET anulada=1, cuotaCable=0, cuotaInternet=0, saldoCable=0, saldoInternet=0, cargoImpuesto=0, totalImpuesto=0 WHERE idFactura=:id";
                    $statement = $this->dbConnect->prepare($query);
 

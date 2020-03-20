@@ -5,7 +5,7 @@
      */
     class ConectionDB
     {
-        protected $dbConect;
+        protected $dbConnect;
 
         public function ConectionDB($db)
         {

@@ -104,7 +104,7 @@ function libroConsumidorFinal(){
         $pdf->SetFont('Times','B',5);
         $pdf->Cell(15,6,utf8_decode('N° DE'),"T",0,'C');
         $pdf->SetFont('Times','B',6);
-        $pdf->Cell(55,6,utf8_decode(''),"TLR",0,'C');
+        $pdf->Cell(60,6,utf8_decode(''),"TLR",0,'C');
         $pdf->Cell(15,6,utf8_decode(''),'TLR',0,'C');
         $pdf->Cell(110,6,utf8_decode('OPERACIONES DE VENTAS PROPIAS Y A CUENTA DE TERCEROS'),'TBLR',0,'C');
         $pdf->Cell(15,6,utf8_decode(''),'TLR',1,'C');
@@ -115,7 +115,7 @@ function libroConsumidorFinal(){
         $pdf->SetFont('Times','B',5);
         $pdf->Cell(15,6,utf8_decode('FORMULARIO'),"LR",0,'C');
         $pdf->SetFont('Times','B',6);
-        $pdf->Cell(55,6,utf8_decode(''),"LR",0,'C');
+        $pdf->Cell(60,6,utf8_decode(''),"LR",0,'C');
         $pdf->Cell(15,6,utf8_decode(''),'LR',0,'C');
         $pdf->Cell(47.5,6,utf8_decode('PROPIAS'),"LRTB",0,'C');
         $pdf->Cell(47.5,6,utf8_decode('A CUENTA DE TERCEROS'),1,0,'C');
@@ -134,7 +134,7 @@ function libroConsumidorFinal(){
         $pdf->Cell(15,6,utf8_decode('UNICO'),"BLR",0,'C');
         $pdf->SetFont('Times','B',5);
 
-        $pdf->Cell(55,6,utf8_decode('NOMBRE DEL CLIENTE'),1,0,'C');
+        $pdf->Cell(60,6,utf8_decode('NOMBRE DEL CLIENTE'),1,0,'C');
         $pdf->Cell(15,6,utf8_decode('NRC'),'LRB',0,'C');
         $pdf->SetFont('Times','B',4.5);
         $pdf->Cell(12.5,6,utf8_decode('EXENTAS'),"BLR",0,'C');
@@ -196,7 +196,7 @@ function libroConsumidorFinal(){
                     $pdf->Cell(15,1,utf8_decode(0),0,0,'L');
                     $pdf->SetFont('Times','',5.8);
 
-                    $pdf->Cell(55,1,utf8_decode($result["nombre"]),0,0,'L');
+                    $pdf->Cell(60,1,utf8_decode($result["nombre"]),0,0,'L');
                     $pdf->Cell(15,1,utf8_decode($result["nRegistro"]),0,0,'L');
                     $pdf->SetFont('Times','',7);
                     $sinIva1 = doubleval($montoCancelado1)-doubleval($totalIva1);
@@ -256,7 +256,7 @@ function libroConsumidorFinal(){
                         $pdf->SetFont('Times','B',5);
                         $pdf->Cell(15,6,utf8_decode('N° DE'),"T",0,'C');
                         $pdf->SetFont('Times','B',6);
-                        $pdf->Cell(55,6,utf8_decode(''),"TLR",0,'C');
+                        $pdf->Cell(60,6,utf8_decode(''),"TLR",0,'C');
                         $pdf->Cell(15,6,utf8_decode(''),'TLR',0,'C');
                         $pdf->Cell(110,6,utf8_decode('OPERACIONES DE VENTAS PROPIAS Y A CUENTA DE TERCEROS'),'TBLR',0,'C');
                         $pdf->Cell(15,6,utf8_decode(''),'TLR',1,'C');
@@ -267,7 +267,7 @@ function libroConsumidorFinal(){
                         $pdf->SetFont('Times','B',5);
                         $pdf->Cell(15,6,utf8_decode('FORMULARIO'),"LR",0,'C');
                         $pdf->SetFont('Times','B',6);
-                        $pdf->Cell(55,6,utf8_decode(''),"LR",0,'C');
+                        $pdf->Cell(60,6,utf8_decode(''),"LR",0,'C');
                         $pdf->Cell(15,6,utf8_decode(''),'LR',0,'C');
                         $pdf->Cell(47.5,6,utf8_decode('PROPIAS'),"LRTB",0,'C');
                         $pdf->Cell(47.5,6,utf8_decode('A CUENTA DE TERCEROS'),1,0,'C');
@@ -286,7 +286,7 @@ function libroConsumidorFinal(){
                         $pdf->Cell(15,6,utf8_decode('UNICO'),"BLR",0,'C');
                         $pdf->SetFont('Times','B',5);
 
-                        $pdf->Cell(55,6,utf8_decode('NOMBRE DEL CLIENTE'),1,0,'C');
+                        $pdf->Cell(60,6,utf8_decode('NOMBRE DEL CLIENTE'),1,0,'C');
                         $pdf->Cell(15,6,utf8_decode('NRC'),'LRB',0,'C');
                         $pdf->SetFont('Times','B',4.5);
                         $pdf->Cell(12.5,6,utf8_decode('EXENTAS'),"BLR",0,'C');
@@ -373,7 +373,7 @@ function libroConsumidorFinal(){
                         $pdf->SetFont('Times','B',5);
                         $pdf->Cell(15,6,utf8_decode('N° DE'),"T",0,'C');
                         $pdf->SetFont('Times','B',6);
-                        $pdf->Cell(55,6,utf8_decode(''),"TLR",0,'C');
+                        $pdf->Cell(60,6,utf8_decode(''),"TLR",0,'C');
                         $pdf->Cell(15,6,utf8_decode(''),'TLR',0,'C');
                         $pdf->Cell(110,6,utf8_decode('OPERACIONES DE VENTAS PROPIAS Y A CUENTA DE TERCEROS'),'TBLR',0,'C');
                         $pdf->Cell(15,6,utf8_decode(''),'TLR',1,'C');
@@ -384,7 +384,7 @@ function libroConsumidorFinal(){
                         $pdf->SetFont('Times','B',5);
                         $pdf->Cell(15,6,utf8_decode('FORMULARIO'),"LR",0,'C');
                         $pdf->SetFont('Times','B',6);
-                        $pdf->Cell(55,6,utf8_decode(''),"LR",0,'C');
+                        $pdf->Cell(60,6,utf8_decode(''),"LR",0,'C');
                         $pdf->Cell(15,6,utf8_decode(''),'LR',0,'C');
                         $pdf->Cell(47.5,6,utf8_decode('PROPIAS'),"LRTB",0,'C');
                         $pdf->Cell(47.5,6,utf8_decode('A CUENTA DE TERCEROS'),1,0,'C');
@@ -403,7 +403,7 @@ function libroConsumidorFinal(){
                         $pdf->Cell(15,6,utf8_decode('UNICO'),"BLR",0,'C');
                         $pdf->SetFont('Times','B',5);
 
-                        $pdf->Cell(55,6,utf8_decode('NOMBRE DEL CLIENTE'),1,0,'C');
+                        $pdf->Cell(60,6,utf8_decode('NOMBRE DEL CLIENTE'),1,0,'C');
                         $pdf->Cell(15,6,utf8_decode('NRC'),'LRB',0,'C');
                         $pdf->SetFont('Times','B',4.5);
                         $pdf->Cell(12.5,6,utf8_decode('EXENTAS'),"BLR",0,'C');
@@ -492,7 +492,7 @@ function libroConsumidorFinal(){
                         $pdf->SetFont('Times','B',5);
                         $pdf->Cell(15,6,utf8_decode('N° DE'),"T",0,'C');
                         $pdf->SetFont('Times','B',6);
-                        $pdf->Cell(55,6,utf8_decode(''),"TLR",0,'C');
+                        $pdf->Cell(60,6,utf8_decode(''),"TLR",0,'C');
                         $pdf->Cell(15,6,utf8_decode(''),'TLR',0,'C');
                         $pdf->Cell(110,6,utf8_decode('OPERACIONES DE VENTAS PROPIAS Y A CUENTA DE TERCEROS'),'TBLR',0,'C');
                         $pdf->Cell(15,6,utf8_decode(''),'TLR',1,'C');
@@ -503,7 +503,7 @@ function libroConsumidorFinal(){
                         $pdf->SetFont('Times','B',5);
                         $pdf->Cell(15,6,utf8_decode('FORMULARIO'),"LR",0,'C');
                         $pdf->SetFont('Times','B',6);
-                        $pdf->Cell(55,6,utf8_decode(''),"LR",0,'C');
+                        $pdf->Cell(60,6,utf8_decode(''),"LR",0,'C');
                         $pdf->Cell(15,6,utf8_decode(''),'LR',0,'C');
                         $pdf->Cell(47.5,6,utf8_decode('PROPIAS'),"LRTB",0,'C');
                         $pdf->Cell(47.5,6,utf8_decode('A CUENTA DE TERCEROS'),1,0,'C');
@@ -522,7 +522,7 @@ function libroConsumidorFinal(){
                         $pdf->Cell(15,6,utf8_decode('UNICO'),"BLR",0,'C');
                         $pdf->SetFont('Times','B',5);
 
-                        $pdf->Cell(55,6,utf8_decode('NOMBRE DEL CLIENTE'),1,0,'C');
+                        $pdf->Cell(60,6,utf8_decode('NOMBRE DEL CLIENTE'),1,0,'C');
                         $pdf->Cell(15,6,utf8_decode('NRC'),'LRB',0,'C');
                         $pdf->SetFont('Times','B',4.5);
                         $pdf->Cell(12.5,6,utf8_decode('EXENTAS'),"BLR",0,'C');
@@ -978,7 +978,7 @@ function libroConsumidorFinal(){
 
         $pdf->Ln(1);
         $pdf->SetFont('Times','B',7);
-        $pdf->Cell(55,6,utf8_decode(''),0,0,'C');
+        $pdf->Cell(60,6,utf8_decode(''),0,0,'C');
         $pdf->Cell(60,6,utf8_decode('TOTALES DEL MES'),"T",0,'C');
         if ($tipoFacturaGenerar == 1) {
             $pdf->Cell(20,6,utf8_decode(''),"T",0,'L');
