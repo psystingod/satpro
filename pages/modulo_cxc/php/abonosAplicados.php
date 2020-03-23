@@ -136,6 +136,8 @@ while ($result = $statement->fetch_assoc()) {
 
               }elseif ($_SESSION['db'] == 'satpro'){
                   $pdf->Cell(190, 4, utf8_decode('SUCURSAL USULUTÁN'), 0, 1, 'L');
+              }else{
+                  $pdf->Cell(190, 4, utf8_decode('SUCURSAL DE PRUEBA'), 0, 1, 'L');
               }
               $pdf->SetFont('Arial', '', 7);
               $pdf->Cell(190, 4, utf8_decode('DESDE '.$desde.' HASTA '.$hasta), 0, 1, 'L');
@@ -167,6 +169,7 @@ while ($result = $statement->fetch_assoc()) {
                   $counter2=1;
                   while ($cobradores = $statement1->fetch_assoc()) {//RECORRIDO DE TODOS LOS COBRADORES
                       $cobradorR = $cobradores["codigoCobrador"];
+                      //var_dump($cobradores["codigoCobrador"]);
                       $totalCobradorCable = 0;
                       $totalImpuestoCobradorC = 0;
                       $totalCobradorInter = 0;
@@ -182,7 +185,7 @@ while ($result = $statement->fetch_assoc()) {
                           if ($_POST["lCobrador"] === "todos" && $_POST["lColonia"] === "todas") {
                               $query = "SELECT * FROM tbl_abonos WHERE anulada= '".$anulada."' AND cobradoPor= '".$cobradorR."' AND fechaAbonado BETWEEN '".$desde."' AND '".$hasta."' ORDER BY numeroRecibo ASC";
                               $resultado = $mysqli->query($query);
-
+                              
                           }elseif ($_POST["lCobrador"] === "todos" && $_POST["lColonia"] != "todas") {
                               $query = "SELECT * FROM tbl_abonos WHERE idColonia= '".$colonia."' AND codigoCobrador= '".$cobradorR."' AND anulada= '".$anulada."' AND fechaAbonado BETWEEN '".$desde."' AND '".$hasta."' ORDER BY numeroRecibo ASC";
                               $resultado = $mysqli->query($query);

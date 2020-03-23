@@ -369,7 +369,7 @@ if(!isset($_SESSION["user"])) {
                                             echo "0.00"."</td><td class='text'>";
                                             echo $abonoC['cuotaCable']."</td><td class='text'>";
                                             echo "0.00"."</td><td class='text'>";
-                                            echo $abonoC['totalImpuesto']."</td><td class='text'>";
+                                            echo number_format($abonoC['totalImpuesto'],2)."</td><td class='text'>";
                                             echo number_format((doubleval($abonoC['cuotaCable'])+doubleval($abonoC['totalImpuesto'])),2)."</td></tr>";
                                             //$control = $abonoC['mesCargo'];
                                             //break;
@@ -385,7 +385,7 @@ if(!isset($_SESSION["user"])) {
                                             echo "<span class='label labeldefault'>".$cargoC['fechaVencimiento']."</span>"."</td><td class='text-danger'>";
                                             echo $cargoC['cuotaCable']."</td><td class='text-danger'>";
                                             echo "0.00"."</td><td class='text-danger'>";
-                                            echo $cargoC['totalImpuesto']."</td><td class='text-danger'>";
+                                            echo number_format($cargoCC['totalImpuesto'],2)."</td><td class='text-danger'>";
                                             echo "0.00"."</td><td class='text-danger'>";
 
                                             echo number_format((doubleval($cargoC['cuotaCable'])+doubleval($cargoC['totalImpuesto'])),2)."</td></tr>";
@@ -405,7 +405,7 @@ if(!isset($_SESSION["user"])) {
                                                 echo "<span class='label label-default'>".$estado['fechaVencimientoCargo']."</span>"."</td><td class='text-danger'>";
                                                 echo $estado['cuotaCableCargo']."</td><td class='text-danger'>";
                                                 echo "0.00"."</td><td class='text-danger'>";
-                                                echo $estado['totalImpuestoCargo']."</td><td class='text-danger'>";
+                                                echo number_format($estado['totalImpuestoCargo'],2)."</td><td class='text-danger'>";
 
                                                 echo "0.00"."</td><td class='text-danger'>";
                                                 echo number_format((doubleval($estado['cuotaCableCargo'])+doubleval($estado['totalImpuestoCargo'])),2)."</td></tr>";
@@ -420,7 +420,7 @@ if(!isset($_SESSION["user"])) {
                                                 echo "0.00"."</td><td class='text'>";
                                                 echo $estado['cuotaCableAbono']."</td><td class='text'>";
                                                 echo "0.00"."</td><td class='text'>";
-                                                echo $estado['totalImpuestoAbono']."</td><td class='text'>";
+                                                echo number_format($estado['totalImpuestoAbono'],2)."</td><td class='text'>";
                                                 echo number_format((doubleval($estado['cuotaCableAbono'])+doubleval($estado['totalImpuestoAbono'])),2)."</td></tr>";
                                             }
                                         }
@@ -484,7 +484,7 @@ if(!isset($_SESSION["user"])) {
                                             echo "0.00"."</td><td class='text'>";
                                             echo $abonoI['cuotaInternet']."</td><td class='text'>";
                                             echo "0.00"."</td><td class='text'>";
-                                            echo $abonoI['totalImpuesto']."</td><td class='text'>";
+                                            echo number_format($abonoI['totalImpuesto'],2)."</td><td class='text'>";
                                             echo number_format((doubleval($abonoI['cuotaInternet'])+doubleval($abonoI['totalImpuesto'])),2)."</td></tr>";
                                             //$control = $abonoC['mesCargo'];
                                             //break;
@@ -500,7 +500,7 @@ if(!isset($_SESSION["user"])) {
                                             echo "<span class='label label-default'>".$cargoI['fechaVencimiento']."</span>"."</td><td class='text-danger'>";
                                             echo $cargoI['cuotaInternet']."</td><td class='text-danger'>";
                                             echo "0.00"."</td><td class='text-danger'>";
-                                            echo $cargoI['totalImpuesto']."</td><td class='text-danger'>";
+                                            echo number_format($cargoI['totalImpuesto'],2)."</td><td class='text-danger'>";
                                             echo "0.00"."</td><td class='text-danger'>";
 
                                             echo number_format((doubleval($cargoI['cuotaInternet'])+doubleval($cargoI['totalImpuesto'])),2)."</td></tr>";
@@ -520,7 +520,7 @@ if(!isset($_SESSION["user"])) {
                                                 echo "<span class='label label-default'>".$estado['fechaVencimientoCargo']."</span>"."</td><td class='text-danger'>";
                                                 echo $estado['cuotaInterCargo']."</td><td class='text-danger'>";
                                                 echo "0.00"."</td><td class='text-danger'>";
-                                                echo $estado['totalImpuestoCargo']."</td><td class='text-danger'>";
+                                                echo number_format($estado['totalImpuestoCargo'],2)."</td><td class='text-danger'>";
 
                                                 echo "0.00"."</td><td class='text-danger'>";
                                                 echo number_format((doubleval($estado['cuotaInterCargo'])+doubleval($estado['totalImpuestoCargo'])),2)."</td></tr>";
@@ -535,7 +535,7 @@ if(!isset($_SESSION["user"])) {
                                                 echo "0.00"."</td><td class='text'>";
                                                 echo $estado['cuotaInterAbono']."</td><td class='text'>";
                                                 echo "0.00"."</td><td class='text'>";
-                                                echo $estado['totalImpuestoAbono']."</td><td class='text'>";
+                                                echo number_format($estado['totalImpuestoAbono'],2)."</td><td class='text'>";
                                                 echo number_format((doubleval($estado['cuotaInterAbono'])+doubleval($estado['totalImpuestoAbono'])),2)."</td></tr>";
                                             }
                                         }

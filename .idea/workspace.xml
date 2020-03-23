@@ -3,11 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="9b434152-df7c-48b6-9360-8012b48f8529" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SQL/UTILS.txt" beforeDir="false" afterPath="$PROJECT_DIR$/SQL/UTILS.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/Prueba.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/Prueba.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/anularFactura.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/anularFactura.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/modulo_iva/iva.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_iva/iva.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/modulo_iva/php/pdfCreditoFiscal.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_iva/php/pdfCreditoFiscal.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/php/connection.php" beforeDir="false" afterPath="$PROJECT_DIR$/php/connection.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/estadoCuenta.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/estadoCuenta.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/abonosAplicados.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/abonosAplicados.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/setCobrador.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/setCobrador.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -116,7 +117,9 @@
       <workItem from="1584543481119" duration="21221000" />
       <workItem from="1584576758917" duration="292000" />
       <workItem from="1584629815582" duration="20253000" />
-      <workItem from="1584716431773" duration="8667000" />
+      <workItem from="1584716431773" duration="12968000" />
+      <workItem from="1584803213626" duration="5985000" />
+      <workItem from="1584969251902" duration="1712000" />
     </task>
     <servers />
   </component>
@@ -152,10 +155,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="320" y="0" width="744" height="728" key="#php/0.0.1366.728@0.0.1366.728" timestamp="1582556071737" />
-    <state x="431" y="103" key="FileChooserDialogImpl" timestamp="1582555939079">
+    <state x="431" y="103" key="FileChooserDialogImpl" timestamp="1584737708642">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="431" y="103" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1582555939079" />
+    <state x="431" y="103" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1584737708642" />
     <state width="1311" height="208" key="GridCell.Tab.0.bottom" timestamp="1584036330922">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -212,10 +215,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="10" y="0" width="1149" height="728" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1584652820357" />
-    <state x="391" y="191" key="com.intellij.ide.util.TipDialog" timestamp="1584716435216">
+    <state x="391" y="191" key="com.intellij.ide.util.TipDialog" timestamp="1584969254129">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="391" y="191" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1584716435216" />
+    <state x="391" y="191" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1584969254129" />
     <state x="458" y="226" key="com.intellij.ide.util.TipDialog/0.0.1600.860@0.0.1600.860" timestamp="1583160443979" />
     <state x="255" y="159" width="840" height="1034" key="run.anything.popup" timestamp="1584026311992">
       <screen x="0" y="0" width="1366" height="728" />

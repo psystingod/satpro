@@ -61,6 +61,7 @@
                                     <select class="form-control" name="sucursal" required>
                                         <option value="satpro" selected>Sucursal Usulután</option>
                                         <option value="satpro_sm">Sucursal San Miguel</option>
+                                        <option value="satproapp">Testing (NO USAR)</option>
                                     </select>
                                     <span class="input-group-addon danger"><i class="glyphicon glyphicon-home"></i></span>
                                 </div>

@@ -6,6 +6,8 @@ http://190.120.18.204:7637/satpro/pages/index.php
 
 mysql -u satprouser -p satpro_sm < tbl_facturas_config.sql
 
+mysql -u satprouser -p satproapp < satproapp.sql
+
 mysqldump -u satprouser -p satpro> satpro5-12-2019.sql
 mysqldump -u satprouser -p satpro_sm > satpro_sm_backup.sql
 
