@@ -184,13 +184,13 @@ $dashboardSubgerencia = "<div id='page-wrapper'>
         <br>
         <br>
         <div class='page-header'>
-            <h2 class='text-center'><strong>Bienvenido a Satpro</strong></h2>
+            <h2 class='text-center'><strong>BIENVENIDO A CSAT WEB</strong></h2>
         </div>
         <div class='col-lg-12'>
             <img class ='center-block' src='../images/logo.png' height='300' width='320'>
         </div>
         <div class='page-header'>
-            <h2 class='text-center'><strong>Subgerencia</strong></h2>
+            <h2 class='text-center'><strong>SUBGERENCIA</strong></h2>
         </div>
     </div>
 </div>
@@ -203,13 +203,13 @@ $dashboardJefatura = "<div id='page-wrapper'>
         <br>
         <br>
         <div class='page-header'>
-            <h2 class='text-center'><strong>Bienvenido a Satpro</strong></h2>
+            <h2 class='text-center'><strong>BIENVENIDO A CSAT WEB</strong></h2>
         </div>
         <div class='col-lg-12'>
             <img class ='center-block' src='../images/logo.png' height='300' width='320'>
         </div>
         <div class='page-header'>
-            <h2 class='text-center'><strong>Jefatura</strong></h2>
+            <h2 class='text-center'><strong>JEFATURA DE ÁREA</strong></h2>
         </div>
     </div>
 </div>
@@ -222,13 +222,13 @@ $dashboardContabilidad = "<div id='page-wrapper'>
         <br>
         <br>
         <div class='page-header'>
-            <h2 class='text-center'><strong>Bienvenido a Satpro</strong></h2>
+            <h2 class='text-center'><strong>BIENVENIDO A CSAT WEB</strong></h2>
         </div>
         <div class='col-lg-12'>
             <img class ='center-block' src='../images/logo.png' height='300' width='320'>
         </div>
         <div class='page-header'>
-            <h2 class='text-center'><strong>Contabilidad</strong></h2>
+            <h2 class='text-center'><strong>CONTABILIDAD</strong></h2>
         </div>
     </div>
 </div>
@@ -241,13 +241,13 @@ $dashboardAtencion = "<div id='page-wrapper'>
         <br>
         <br>
         <div class='page-header'>
-            <h2 class='text-center'><strong>Bienvenido a Satpro</strong></h2>
+            <h2 class='text-center'><strong>BIENVENIDO A CSAT WEB</strong></h2>
         </div>
         <div class='col-lg-12'>
             <img class ='center-block' src='../images/logo.png' height='300' width='320'>
         </div>
         <div class='page-header'>
-            <h2 class='text-center'><strong>Atención al cliente</strong></h2>
+            <h2 class='text-center'><strong>ATENCIÓN AL CLIENTE</strong></h2>
         </div>
     </div>
 </div>
@@ -260,13 +260,13 @@ $dashboardPracticante = "<div id='page-wrapper'>
         <br>
         <br>
         <div class='page-header'>
-            <h2 class='text-center'><strong>Bienvenido a Satpro</strong></h2>
+            <h2 class='text-center'><strong>BIENVENIDO A CSAT WEB</strong></h2>
         </div>
         <div class='col-lg-12'>
             <img class ='center-block' src='../images/logo.png' height='300' width='320'>
         </div>
         <div class='page-header'>
-            <h2 class='text-center'><strong>Practicante</strong></h2>
+            <h2 class='text-center'><strong>PRACTICANTE</strong></h2>
         </div>
     </div>
 </div>
@@ -315,12 +315,12 @@ $dashboardUsuario = "<div id='page-wrapper'>
         <br>
         <br>
         <div class='page-header'>
-            <h2 class='text-center'>Bienvenido a Satpro</h2>
+            <h2 class='text-center'>BIENVENIDO A CSAT WEB</h2>
         </div>
             <img class'center-block' src='../images/logo.png' alt='Smiley face' height='300' width='320'>
         </div>
         <div class='page-header'>
-            <h2 class='text-center'><strong>Invitado</strong></h2>
+            <h2 class='text-center'><strong>INVITADO</strong></h2>
         </div>
     </div>
 </div>

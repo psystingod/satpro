@@ -385,7 +385,7 @@ if(!isset($_SESSION["user"])) {
                                             echo "<span class='label labeldefault'>".$cargoC['fechaVencimiento']."</span>"."</td><td class='text-danger'>";
                                             echo $cargoC['cuotaCable']."</td><td class='text-danger'>";
                                             echo "0.00"."</td><td class='text-danger'>";
-                                            echo number_format($cargoCC['totalImpuesto'],2)."</td><td class='text-danger'>";
+                                            echo number_format($cargoC['totalImpuesto'],2)."</td><td class='text-danger'>";
                                             echo "0.00"."</td><td class='text-danger'>";
 
                                             echo number_format((doubleval($cargoC['cuotaCable'])+doubleval($cargoC['totalImpuesto'])),2)."</td></tr>";

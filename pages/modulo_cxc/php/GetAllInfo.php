@@ -182,6 +182,25 @@ class GetAllInfo extends ConectionDB
         }
     }
 
+    public function getDataCargos2Ven($tabla, $codigoCliente, $tipoServicio, $estado){
+        try {
+            //$estado = "pendiente";
+            $query = "SELECT COUNT(*) FROM $tabla WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado AND anulada=:anulada AND fechaVencimiento < CURDATE() ORDER BY numeroFactura DESC";
+            $statement = $this->dbConnect->prepare($query);
+            $statement->bindValue(':codigoCliente', $codigoCliente);
+            $statement->bindValue(':tipoServicio', $tipoServicio);
+            $statement->bindValue(':estado', $estado);
+            $statement->bindValue(':anulada', 0);
+            $statement->execute();
+            $result = $statement->fetchColumn();
+            return $result;
+
+        } catch (Exception $e) {
+            print "!Error¡: " . $e->getMessage() . "</br>";
+            die();
+        }
+    }
+
     public function getDataAbonos($tabla, $codigoCliente, $tipoServicio, $estado){
         try {
                 //$estado = "pendiente";

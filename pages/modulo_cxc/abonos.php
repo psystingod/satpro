@@ -382,6 +382,8 @@ session_start();
  }
 
  $arrCargos = $data->getDataCargos2('tbl_cargos', $codigo, $tipoServicio, "pendiente");
+ $arrCargosVen = $data->getDataCargos2Ven('tbl_cargos', $codigo, $tipoServicio, "pendiente");
+
  //Array de ordenes de trabajo por cliente
  //$arrOrdenesTrabajo = $data->getDataOrders('tbl_ordenes_trabajo', $codigo);
  //$arrOrdenesSuspension = $data->getDataOrders('tbl_ordenes_suspension', $codigo);
@@ -695,8 +697,10 @@ $stmt->bindParam(':codigoCobrador', $_GET['cobrador']);
                                                           echo "<option value=".$key['codigoCobrador'].">".utf8_decode($key['nombreCobrador'])."</option>";
                                                       }
 
+                                                  }else{
+                                                      echo "<option value=".$key['codigoCobrador'].">".utf8_decode($key['nombreCobrador'])."</option>";
                                                   }
-                                                  echo "<option value=".$key['codigoCobrador'].">".utf8_decode($key['nombreCobrador'])."</option>";
+
                                               }
 
                                           }
@@ -1101,15 +1105,34 @@ $stmt->bindParam(':codigoCobrador', $_GET['cobrador']);
     </script>
 
     <?php
-    if (isset($_GET['codigoCliente'])) {
-        echo "<script>
-            //document.getElementById('ordenTrabajo').action = 'php/nuevaOrdenTrabajo.php';
-            //document.getElementById('guardar').disabled = false;
-            //document.getElementById('editar').disabled = true;
-            //document.getElementById('imprimir').disabled = true;
-            //var inputs = document.getElementsByClassName('input-sm');
-        </script>";
-    }
+        if ($arrCargosVen >= 2){
+            echo "
+            <script>
+                alert('CLIENTE POSEE 2 FACTURAS VENCIDAS. IMPOSIBLE REALIZAR COBRO AUTOMATICO. REALIZA EL COBRO DE FORMA MANUAL Y COBRA LOS RECARGOS CORRESPONDIENTES.');
+                //document.getElementById('meses').disabled=true;
+                //document.getElementById('xmeses').disabled=true;
+                //document.getElementById('aplicarAbono').disabled=true;
+                document.getElementById('xmeses').style.display = '';
+                document.getElementById('mesx1').disabled=true;
+                document.getElementById('mesx2').disabled=true;
+                document.getElementById('mesx3').disabled=true;
+            </script>";
+        }
+
+        if ($estado_cable == "T") {
+        echo "
+            <script>
+                alert('CLIENTE SUSPENDIDO. IMPOSIBLE REALIZAR COBRO AUTOMATICO. REALIZA EL COBRO DE FORMA MANUAL Y COBRA LOS RECARGOS Y RECONEXIÓN CORRESPONDIENTES.');
+                //document.getElementById('meses').disabled=true;
+                //document.getElementById('xmeses').disabled=true;
+                //document.getElementById('aplicarAbono').disabled=true;
+                document.getElementById('xmeses').style.display = '';
+                document.getElementById('mesx1').disabled=true;
+                document.getElementById('mesx2').disabled=true;
+                document.getElementById('mesx3').disabled=true;
+            </script>";
+        }
+
     /*
     $fechaHoy = date("Y-m-d");
 
