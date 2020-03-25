@@ -1095,9 +1095,9 @@
                         <label for="lServicio">Tipo de servicio</label>
                         <select class="form-control" type="text" id="lServicio" name="lServicio" required>
                             <option value="">Seleccione tipo de servicio</option>
-                            <option value="C" selected>Cable</option>
+                            <option value="C">Cable</option>
                             <option value="I">Internet</option>
-                            <option value="A">Ambos</option>
+                            <option value="A" selected>Ambos</option>
                         </select>
                     </div>
                 </div>
