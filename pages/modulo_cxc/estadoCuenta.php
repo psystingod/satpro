@@ -382,7 +382,7 @@ if(!isset($_SESSION["user"])) {
                                             echo $cargoC['numeroFactura']."</td><td class='text-danger'>";
                                             echo "<span class='label label-danger'>".$cargoC['mesCargo']."</span>"."</td><td class='text-danger'>";
                                             echo "<span class='label label-default'>".$cargoC['fechaFactura']."</span>"."</td><td class='text-danger'>";
-                                            echo "<span class='label labeldefault'>".$cargoC['fechaVencimiento']."</span>"."</td><td class='text-danger'>";
+                                            echo "<span class='label label-default'>".$cargoC['fechaVencimiento']."</span>"."</td><td class='text-danger'>";
                                             echo $cargoC['cuotaCable']."</td><td class='text-danger'>";
                                             echo "0.00"."</td><td class='text-danger'>";
                                             echo number_format($cargoC['totalImpuesto'],2)."</td><td class='text-danger'>";

@@ -20,6 +20,7 @@ function ordenInternet(){
         }
     }
     document.getElementById("tipoActividadInter").required=true;
+    document.getElementById("velocidad").required=true;
 }
 
 //ENABLE OR DISABLE INTERNET INPUTS FOR CABLE ORDERS

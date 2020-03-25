@@ -154,7 +154,7 @@
                     //$Fecha = date('Y/m/d g:i');
 
                     $query = "UPDATE tbl_ordenes_reconexion SET codigoCliente=:codigoCliente, fechaOrden=:fechaOrden, tipoOrden=:tipoOrden, tipoReconexInter=:tipoReconexInter, saldoInter=:saldoInter, diaCobro=:diaCobro, nombreCliente=:nombreCliente, direccion=:direccion, telefonos=:telefonos, macModem=:macModem, serieModem=:serieModem,
-                                     velocidad=:velocidad, colilla=:colilla, fechaReconexInter=:fechaReconexInter, ultSuspInter=:ultSuspInter, idTecnico=:idTecnico, observaciones=:observaciones, tipoServicio=:tipoServicio,coordenadas=:coordenaas, creadoPor=:creadoPor WHERE idOrdenReconex=:idOrdenReconex";
+                                     velocidad=:velocidad, colilla=:colilla, fechaReconexInter=:fechaReconexInter, ultSuspInter=:ultSuspInter, idTecnico=:idTecnico, observaciones=:observaciones, tipoServicio=:tipoServicio,coordenadas=:coordenadas, creadoPor=:creadoPor WHERE idOrdenReconex=:idOrdenReconex";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(

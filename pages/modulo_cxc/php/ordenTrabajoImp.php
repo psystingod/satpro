@@ -51,7 +51,7 @@
       	  while ($result1 = $statement1->fetch_assoc()) {
       		  $tecnico = $result1['nombreTecnico'];
       	  }
-
+          
           // SQL query para traer datos del servicio de cable de la tabla clientes
     	  $query2 = "SELECT nombreVelocidad FROM tbl_velocidades WHERE idVelocidad= ".$row['velocidad'];
     	  // Preparación de sentencia

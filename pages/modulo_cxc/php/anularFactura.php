@@ -59,8 +59,8 @@
                        if ($tipoServicio == "C") {
                            $cuotaCable = $result['cuotaCable'];
                            if ($exento == "1") {
-                               $query = "INSERT INTO tbl_ventas_anuladas (prefijo,numeroComprobante,tipoComprobante,fechaComprobante,codigoCliente,nombreCliente,municipio,fechaVencimiento,ventaExenta,totalComprobante,idPunto,creadoPor,fechaHora)
-                                         VALUES (:prefijo,:numeroComprobante,:tipoComprobante,:fechaComprobante,:codigoCliente,:nombreCliente,:municipio,:fechaVencimiento,:ventaExenta,:totalComprobante,:idPunto,:creadoPor,:fechaHora)";
+                               $query = "INSERT INTO tbl_ventas_anuladas (prefijo,numeroComprobante,tipoComprobante,fechaComprobante,codigoCliente,nombreCliente,municipio,fechaVencimiento,ventaExenta,totalComprobante,idPunto,creadoPor,fechaHora,tipoServicio)
+                                         VALUES (:prefijo,:numeroComprobante,:tipoComprobante,:fechaComprobante,:codigoCliente,:nombreCliente,:municipio,:fechaVencimiento,:ventaExenta,:totalComprobante,:idPunto,:creadoPor,:fechaHora,:tipoServicio)";
 
                                  $statement = $this->dbConnect->prepare($query);
                                  $statement->bindValue(':prefijo', $prefijo);
@@ -77,9 +77,10 @@
                                  $statement->bindValue(':fechaVencimiento', $fechaVencimiento);
                                  $statement->bindValue(':creadoPor', $creadoPor);
                                  $statement->bindValue(':fechaHora', $fechaHora);
+                                 $statement->bindValue(':tipoServicio', $tipoServicio);
                            }else {
-                               $query = "INSERT INTO tbl_ventas_anuladas (prefijo,numeroComprobante,tipoComprobante,fechaComprobante,codigoCliente,nombreCliente,municipio,fechaVencimiento,ventaAfecta,totalComprobante,idPunto,creadoPor,fechaHora)
-                                         VALUES (:prefijo,:numeroComprobante,:tipoComprobante,:fechaComprobante,:codigoCliente,:nombreCliente,:municipio,:fechaVencimiento,:ventaAfecta,:totalComprobante,:idPunto,:creadoPor,:fechaHora)";
+                               $query = "INSERT INTO tbl_ventas_anuladas (prefijo,numeroComprobante,tipoComprobante,fechaComprobante,codigoCliente,nombreCliente,municipio,fechaVencimiento,ventaAfecta,totalComprobante,idPunto,creadoPor,fechaHora,tipoServicio)
+                                         VALUES (:prefijo,:numeroComprobante,:tipoComprobante,:fechaComprobante,:codigoCliente,:nombreCliente,:municipio,:fechaVencimiento,:ventaAfecta,:totalComprobante,:idPunto,:creadoPor,:fechaHora,:tipoServicio)";
 
                                  $statement = $this->dbConnect->prepare($query);
                                  $statement->bindValue(':prefijo', $prefijo);
@@ -96,12 +97,13 @@
                                  $statement->bindValue(':fechaVencimiento', $fechaVencimiento);
                                  $statement->bindValue(':creadoPor', $creadoPor);
                                  $statement->bindValue(':fechaHora', $fechaHora);
+                                 $statement->bindValue(':tipoServicio', $tipoServicio);
                            }
                        }elseif ($tipoServicio == "I") {
                            $cuotaInternet = $result['cuotaInternet'];
                            if ($exento == "1") {
-                               $query = "INSERT INTO tbl_ventas_anuladas (prefijo,numeroComprobante,tipoComprobante,fechaComprobante,codigoCliente,nombreCliente,municipio,fechaVencimiento,ventaExenta,totalComprobante,idPunto,creadoPor,fechaHora)
-                                         VALUES (:prefijo,:numeroComprobante,:tipoComprobante,:fechaComprobante,:codigoCliente,:nombreCliente,:municipio,:fechaVencimiento,:ventaExenta,:totalComprobante,:idPunto,:creadoPor,:fechaHora)";
+                               $query = "INSERT INTO tbl_ventas_anuladas (prefijo,numeroComprobante,tipoComprobante,fechaComprobante,codigoCliente,nombreCliente,municipio,fechaVencimiento,ventaExenta,totalComprobante,idPunto,creadoPor,fechaHora,tipoServicio)
+                                         VALUES (:prefijo,:numeroComprobante,:tipoComprobante,:fechaComprobante,:codigoCliente,:nombreCliente,:municipio,:fechaVencimiento,:ventaExenta,:totalComprobante,:idPunto,:creadoPor,:fechaHora,:tipoServicio)";
 
                                  $statement = $this->dbConnect->prepare($query);
                                  $statement->bindValue(':prefijo', $prefijo);
@@ -118,9 +120,10 @@
                                  $statement->bindValue(':fechaVencimiento', $fechaVencimiento);
                                  $statement->bindValue(':creadoPor', $creadoPor);
                                  $statement->bindValue(':fechaHora', $fechaHora);
+                                 $statement->bindValue(':tipoServicio', $tipoServicio);
                            }else {
-                               $query = "INSERT INTO tbl_ventas_anuladas (prefijo,numeroComprobante,tipoComprobante,fechaComprobante,codigoCliente,nombreCliente,municipio,fechaVencimiento,ventaAfecta,totalComprobante,idPunto,creadoPor,fechaHora)
-                                         VALUES (:prefijo,:numeroComprobante,:tipoComprobante,:fechaComprobante,:codigoCliente,:nombreCliente,:municipio,:fechaVencimiento,:ventaAfecta,:totalComprobante,:idPunto,:creadoPor,:fechaHora)";
+                               $query = "INSERT INTO tbl_ventas_anuladas (prefijo,numeroComprobante,tipoComprobante,fechaComprobante,codigoCliente,nombreCliente,municipio,fechaVencimiento,ventaAfecta,totalComprobante,idPunto,creadoPor,fechaHora,tipoServicio)
+                                         VALUES (:prefijo,:numeroComprobante,:tipoComprobante,:fechaComprobante,:codigoCliente,:nombreCliente,:municipio,:fechaVencimiento,:ventaAfecta,:totalComprobante,:idPunto,:creadoPor,:fechaHora,:tipoServicio)";
 
                                  $statement = $this->dbConnect->prepare($query);
                                  $statement->bindValue(':prefijo', $prefijo);
@@ -137,6 +140,7 @@
                                  $statement->bindValue(':fechaVencimiento', $fechaVencimiento);
                                  $statement->bindValue(':creadoPor', $creadoPor);
                                  $statement->bindValue(':fechaHora', $fechaHora);
+                                 $statement->bindValue(':tipoServicio', $tipoServicio);
                            }
                        }
                        $statement->execute();
