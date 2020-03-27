@@ -661,9 +661,9 @@ session_start();
                         </tr>
 
                         <tr>
-                            <td><a href="php/contratoCable.php<?php echo "?id=".$id; ?>" target="_blank" class="btn btn-danger btn-block" style="font-size: 16px;"><i class="far fa-file-alt"></i> Contrato de cable</a></td>
-                            <td><a href="php/contratoInter.php<?php echo "?id=".$id; ?>" target="_blank" class="btn btn-danger btn-block" style="font-size: 16px;"><i class="far fa-file-alt"></i> Contrato de internet</a></td>
-                            <td><a href="estadoCuenta.php?codigoCliente=<?php echo $codigo; ?>" target="_blank"><button class="btn btn-danger btn-block" style="font-size: 16px;"><i class="fas fa-dollar"></i> Estado de cuenta</button></a></td>
+                            <td><a onclick="window.open('php/contratoCable.php<?php echo "?id=".$id; ?>','','height=600,width=1000,top=-300,left=200')" class="btn btn-danger btn-block" style="font-size: 16px;"><i class="far fa-file-alt"></i> Contrato de cable</a></td>
+                            <td><a onclick="window.open('php/contratoInter.php<?php echo "?id=".$id; ?>','','height=600,width=1000,top=-300,left=200')" class="btn btn-danger btn-block" style="font-size: 16px;"><i class="far fa-file-alt"></i> Contrato de internet</a></td>
+                            <td><a onclick="window.location='estadoCuenta.php?codigoCliente=<?php echo $codigo; ?>'" ><button class="btn btn-danger btn-block" style="font-size: 16px;"><i class="fas fa-dollar"></i> Estado de cuenta</button></a></td>
                 <form id="formClientes" class="" action="#" method="POST">
                             <td><button id="btn-guardar" class="btn btn-danger btn-block" title="Guardar" disabled><i class="fas fa-save fa-2x"></i></button></td>
                         </tr>
@@ -827,7 +827,7 @@ session_start();
                                     <div class="row">
                                         <div class="col-md-2">
                                             <label for="dui"><span style="color:red;font-size:18px;">**</span>DUI</label>
-                                            <input class="form-control input-sm" type="text" name="dui" pattern="[0-9]{8}-[0-9]{1}" value="<?php echo $dui; ?>" readonly required>
+                                            <input class="form-control input-sm" type="text" id="dui" name="dui" pattern="[0-9]{8}-[0-9]{1}" value="<?php echo $dui; ?>" readonly required>
                                         </div>
                                         <div class="col-md-4">
                                             <label for="expedicion">Lugar y fecha de expedición</label>
@@ -835,11 +835,11 @@ session_start();
                                         </div>
                                         <div class="col-md-3">
                                             <label for="nit">NIT</label>
-                                            <input class="form-control input-sm" type="text" name="nit" value="<?php echo $nit; ?>" readonly>
+                                            <input class="form-control input-sm" type="text" id="nit" name="nit" value="<?php echo $nit; ?>" readonly>
                                         </div>
                                         <div class="col-md-3">
                                             <label for="fechaNacimiento">Fecha de nacimiento</label>
-                                            <input class="form-control input-sm" type="text" name="fechaNacimiento" value="<?php echo $fechaNacimiento; ?>" readonly>
+                                            <input class="form-control input-sm" type="text" id="fechaNacimiento" name="fechaNacimiento" value="<?php echo $fechaNacimiento; ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -1087,7 +1087,7 @@ session_start();
                                               <div class="row">
                                                   <div class="col-md-3">
                                                       <label for="fechaInstalacionCable">Fecha de instalación</label>
-                                                      <input class="form-control input-sm cable" type="text" id="fechaInstalacionCable" name="fechaInstalacionCable" value="<?php echo $fechaInstalacion; ?>" readonly>
+                                                      <input class="form-control input-sm cable" type="text" id="fechaInstalacionCable" name="fechaInstalacionCable" value="<?php echo $fechaInstalacion; ?>" placeholder="__/__/____" readonly>
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="fechaPrimerFacturaCable">Fecha primer factura</label>
@@ -1169,11 +1169,11 @@ session_start();
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="fechaSuspensionCable">Fecha suspension</label>
-                                                      <input class="form-control input-sm" style="color: #b71c1c;" type="text" name="fechaSuspensionCable" value="<?php echo $fechaSuspensionCable; ?>" readonly>
+                                                      <input class="form-control input-sm" style="color: #b71c1c;" type="text" id="fechaSuspensionCable" name="fechaSuspensionCable" value="<?php echo $fechaSuspensionCable; ?>" readonly>
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="fechaReconexionCable">Fecha de reconexión</label>
-                                                      <input class="form-control input-sm" type="text" name="fechaReconexionCable" value="<?php echo $fechaReinstalacionCable; ?>" readonly>
+                                                      <input class="form-control input-sm" type="text" id="fechaReconexionCable" name="fechaReconexionCable" value="<?php echo $fechaReinstalacionCable; ?>" readonly>
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="derivaciones">N° de derivaciones</label>
@@ -1336,15 +1336,15 @@ session_start();
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="ultimaRenovacionInternet">Última renovación</label>
-                                                      <input class="form-control input-sm" type="text" name="ultimaRenovacionInternet" value="<?php echo $ultimaRenovacionInternet; ?>" readonly>
+                                                      <input class="form-control input-sm" type="text" id="ultimaRenovacionInternet" name="ultimaRenovacionInternet" value="<?php echo $ultimaRenovacionInternet; ?>" readonly>
                                                   </div>
                                                   <div class="col-md-2">
-                                                      <label for="fechaSuspencionInternet">Fecha de suspención</label>
-                                                      <input class="form-control input-sm" style="color: #b71c1c;" type="text" name="fechaSuspencionInternet" value="<?php echo $fechaSuspencionInternet; ?>" readonly>
+                                                      <label for="fechaSuspencionInternet">Fecha de suspensión</label>
+                                                      <input class="form-control input-sm" style="color: #b71c1c;" type="text" id="fechaSuspencionInternet" name="fechaSuspencionInternet" value="<?php echo $fechaSuspencionInternet; ?>" readonly>
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="fechaReconexionInternet">Fecha de reconexión</label>
-                                                      <input class="form-control input-sm" type="text" name="fechaReconexionInternet" value="<?php echo $fechaReconexionInternet; ?>" readonly>
+                                                      <input class="form-control input-sm" type="text" id="fechaReconexionInternet" name="fechaReconexionInternet" value="<?php echo $fechaReconexionInternet; ?>" readonly>
                                                   </div>
                                               </div>
                                               <div class="row">
@@ -1404,7 +1404,7 @@ session_start();
                                                           </div>
                                                           <div class="col-md-12">
                                                               <label for="wanip">WAN IP</label>
-                                                              <input class="form-control input-sm" type="text" name="wanip" value="<?php echo $wanip; ?>" readonly>
+                                                              <input class="form-control input-sm" type="text" id="wanip" name="wanip" value="<?php echo $wanip; ?>" readonly>
                                                           </div>
                                                           <div class="col-md-12">
                                                               <label for="coordenadas">Coordenadas</label>
@@ -1428,7 +1428,7 @@ session_start();
                                                           </div>
                                                           <div class="col-md-8">
                                                               <label for="mac">MAC</label>
-                                                              <input class="form-control input-sm" type="text" name="mac" value="<?php echo $mac; ?>" readonly>
+                                                              <input class="form-control input-sm" type="text" id="mac" name="mac" value="<?php echo $mac; ?>" readonly>
                                                           </div>
                                                           <div class="col-md-4">
                                                               <label for="transmicion">Transmisión</label>
@@ -1970,6 +1970,10 @@ session_start();
     <script src="../../vendor/datatables/js/jquery.dataTables.min.js"></script>
     <script src="../../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
     <script src="../../vendor/datatables-responsive/dataTables.responsive.js"></script>
+
+    <script src="../../vendor/jQuery-Mask-Plugin-master/dist/jquery.mask.min.js"></script>
+
+
     <!-- Custom Theme JavaScript -->
     <script src="js/clientes.js"></script>
     <script src="js/searchmun.js"></script>
@@ -2095,7 +2099,7 @@ session_start();
 
         function cableFalse(){
             var reqInputs = document.getElementsByClassName("cable");
-            alert("Holaaaaaaaaaaaa");
+            //alert("Holaaaaaaaaaaaa");
             for (var i = 0; i < reqInputs.length; i++) {
 
                 reqInputs[i].required = false;
@@ -2110,6 +2114,27 @@ session_start();
         }
     </script>
 
+    <script>
+        $(document).ready(function(){
+            $('#fechaInstalacionCable').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+            $('#fechaPrimerFacturaCable').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+            $('#inicioContratoCable').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+            $('#vencimientoContratoCable').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+            $('#fechaReconexionCable').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+            $('#fechaSuspensionCable').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+
+            $('#fechaInstalacionInternet').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+            $('#fechaPrimerFacturaInternet').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+            $('#vencimientoContratoInternet').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+            $('#ultimaRenovacionInternet').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+            $('#fechaSuspencionInternet').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+            $('#fechaReconexionInternet').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+
+            //$('#wanip').mask("099.099.099.099", {placeholder: ".  .  .  ."});
+            //$('#mac').mask({pattern: /[a-zA-Z0-9]/}, {placeholder: ":  :  :  :  :"});
+            //$('#phone-number').mask('0000-0000');
+        });
+    </script>
 </body>
 
 </html>

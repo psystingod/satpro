@@ -280,6 +280,7 @@ if(!isset($_SESSION["user"])) {
             <div class="row">
                 <div class="col-lg-12">
                     <h3 class="page-header text-center" style="border: none;"><b>Estado de cuenta</b></h3>
+                    <button onclick="history.back()" class="btn btn-danger pull-right"><i class="fas fa-arrow-alt-circle-left"></i> Regresar</button>
                     <table class="table table-responsive table-condensed" style="border: none; font-size:12px;">
                         <tbody class="">
                         <tr>

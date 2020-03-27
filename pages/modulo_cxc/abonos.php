@@ -41,6 +41,7 @@ session_start();
 
             /****************** DATOS GENERALES ***********************/
             $estado_cable = $row['servicio_suspendido']; // F o T
+            $sinServicio = $row['sin_servicio']; // F o T
             $estado_internet = $row['estado_cliente_in']; // 1, 2, 3
             $codigo = $row["cod_cliente"];
             $nContrato = $row["numero_contrato"];
@@ -268,6 +269,7 @@ session_start();
     else {
         /****************** DATOS GENERALES ***********************/
         $estado_cable = "0"; // 0 o 1
+        $sinServicio = "";
         $estado_internet = ""; // 1, 2, 3
         $codigo = "";
         $nContrato = "";
@@ -739,7 +741,70 @@ $stmt->bindParam(':codigoCobrador', $_GET['cobrador']);
                                       <label for="servicio">Servicio</label>
                                       <select id="servicio" class="form-control input-sm" onchange='getValorCuota(this)' name="servicio">
                                           <?php
-                                          if ($_GET['tipoServicio'] == "c") {
+                                          if ($sinServicio == 'T' && ($estado_internet == 1 || $estado_internet == 2)){
+                                              if ($_GET['tipoServicio'] == "c") {
+                                                  //echo "<option value='c' selected>Cable</option>";
+                                                  echo "<option value='i' selected>Internet</option>";
+                                                  echo "<script>
+                                                            var codValue = document.getElementById(\"codigoCliente\").value;
+                                                            var servicio = document.getElementById(\"servicio\").value;
+                                                            var cobrador = document.getElementById(\"cobrador\").value;
+                                                            // Trigger the button element with a click
+                                                            window.location=\"abonos.php?codigoCliente=\"+codValue+\"&tipoServicio=\"+servicio+\"&cobrador=\"+cobrador;
+                                                        </script>";
+                                              }elseif ($_GET['tipoServicio'] == "i") {
+                                                  echo "<option value='i' selected>Internet</option>";
+                                                  //echo "<option value='c'>Cable</option>";
+                                              }else {
+                                                  //echo "<option value='c' selected>Cable</option>";
+                                                  echo "<option value='i' selected>Internet</option>";
+                                              }
+                                          }
+                                          elseif ($sinServicio == 'F' && $estado_internet == 3){
+                                              if ($_GET['tipoServicio'] == "c") {
+                                                  echo "<option value='c' selected>Cable</option>";
+                                                  //echo "<option value='i' selected>Internet</option>";
+                                              }elseif ($_GET['tipoServicio'] == "i") {
+                                                  //echo "<option value='i' selected>Internet</option>";
+                                                  echo "<option value='c' selected>Cable</option>";
+                                                  echo "<script>
+                                                            var codValue = document.getElementById(\"codigoCliente\").value;
+                                                            var servicio = document.getElementById(\"servicio\").value;
+                                                            var cobrador = document.getElementById(\"cobrador\").value;
+                                                            // Trigger the button element with a click
+                                                            window.location=\"abonos.php?codigoCliente=\"+codValue+\"&tipoServicio=\"+servicio+\"&cobrador=\"+cobrador;
+                                                        </script>";
+                                              }else {
+                                                  echo "<option value='c' selected>Cable</option>";
+                                                  //echo "<option value='i' selected>Internet</option>";
+                                              }
+                                          }
+                                          elseif ($sinServicio == 'F' && $estado_internet == 1){
+                                              if ($_GET['tipoServicio'] == "c") {
+                                                  echo "<option value='c' selected>Cable</option>";
+                                                  echo "<option value='i'>Internet</option>";
+                                              }elseif ($_GET['tipoServicio'] == "i") {
+                                                  echo "<option value='i' selected>Internet</option>";
+                                                  echo "<option value='c'>Cable</option>";
+                                              }else {
+                                                  echo "<option value='c' selected>Cable</option>";
+                                                  echo "<option value='i'>Internet</option>";
+                                              }
+                                          }
+                                          else {
+                                              if ($_GET['tipoServicio'] == "c") {
+                                                  echo "<option value='c' selected>Cable</option>";
+                                                  echo "<option value='i'>Internet</option>";
+                                              }elseif ($_GET['tipoServicio'] == "i") {
+                                                  echo "<option value='i' selected>Internet</option>";
+                                                  echo "<option value='c'>Cable</option>";
+                                              }else {
+                                                  echo "<option value='c' selected>Cable</option>";
+                                                  echo "<option value='i'>Internet</option>";
+                                              }
+                                          }
+
+                                          /*if ($_GET['tipoServicio'] == "c") {
                                               echo "<option value='c' selected>Cable</option>";
                                               echo "<option value='i'>Internet</option>";
                                           }elseif ($_GET['tipoServicio'] == "i") {
@@ -748,7 +813,7 @@ $stmt->bindParam(':codigoCobrador', $_GET['cobrador']);
                                           }else {
                                               echo "<option value='c' selected>Cable</option>";
                                               echo "<option value='i'>Internet</option>";
-                                          }
+                                          }*/
 
                                           ?>
                                       </select>
@@ -819,7 +884,7 @@ $stmt->bindParam(':codigoCobrador', $_GET['cobrador']);
                                       </select>
                                   </div>
                                   <div class="col-md-2">
-                                      <label for="totalPagar">Total a pagar</label>
+                                      <label for="totalPagar">Cuota a pagar</label>
                                       <input class="form-control input-sm alert-danger" type="text" id="totalPagar" name="totalPagar" value="" required>
                                   </div>
                                   <div class="col-md-2">

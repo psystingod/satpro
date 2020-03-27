@@ -13,6 +13,9 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/font-awesome/fonts" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/font-awesome/less" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/font-awesome/scss" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/jQuery-Mask-Plugin-master/dist" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/jQuery-Mask-Plugin-master/src" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/jQuery-Mask-Plugin-master/test" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/spipu/html2pdf" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/tecnickcom/tcpdf" />
     </content>

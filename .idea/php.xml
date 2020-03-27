@@ -16,6 +16,9 @@
       <path value="$PROJECT_DIR$/vendor/spipu/html2pdf" />
       <path value="$PROJECT_DIR$/vendor/datatables/js" />
       <path value="$PROJECT_DIR$/../../php/dev" />
+      <path value="$PROJECT_DIR$/vendor/jQuery-Mask-Plugin-master/test" />
+      <path value="$PROJECT_DIR$/vendor/jQuery-Mask-Plugin-master/src" />
+      <path value="$PROJECT_DIR$/vendor/jQuery-Mask-Plugin-master/dist" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />
