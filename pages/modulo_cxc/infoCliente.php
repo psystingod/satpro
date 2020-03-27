@@ -549,15 +549,15 @@ session_start();
                         Documentación <i class="fas fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="php/f3.php<?php echo "?id=".$id; ?>" target="_blank">Documento F-3</a>
+                        <li><a onclick="window.open('php/f3.php<?php echo "?id=".$id; ?>','','height=600,width=1000,top=-300,left=200')">Documento F-3</a>
                         </li>
-                        <li><a href="php/f4.php<?php echo "?id=".$id; ?>" target="_blank">Documento F-4</a>
+                        <li><a onclick="window.open('php/f4.php<?php echo "?id=".$id; ?>','','height=600,width=1000,top=-300,left=200')">Documento F-4</a>
                         </li>
-                        <li><a href="php/f5.php<?php echo "?id=".$id; ?>" target="_blank">Documento F-5</a>
+                        <li><a onclick="window.open('php/f5.php<?php echo "?id=".$id; ?>','','height=600,width=1000,top=-300,left=200')">Documento F-5</a>
                         </li>
-                        <li><a href="php/f9.php<?php echo "?id=".$id; ?>" target="_blank">Documento F-9</a>
+                        <li><a onclick="window.open('php/f9.php<?php echo "?id=".$id; ?>','','height=600,width=1000,top=-300,left=200')">Documento F-9</a>
                         </li>
-                        <li><a href="php/allDoc.php<?php echo "?id=".$id; ?>" target="_blank">Documentación completa</a>
+                        <li><a onclick="window.open('php/allDoc.php<?php echo "?id=".$id; ?>','','height=600,width=1000,top=-300,left=200')">Documentación completa</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
