@@ -467,8 +467,8 @@
                               </div>
                               <div class="form-row">
                                   <div class="col-md-3">
-                                      <label for="fechaSuspension">Fecha suspención</label>
-                                      <input class="form-control input-sm" type="text" name="fechaSuspension" value="<?php echo $fechaSuspension; ?>" readonly>
+                                      <label for="fechaSuspension">Fecha suspensión</label>
+                                      <input class="form-control input-sm" type="text" id="fechaSuspension" name="fechaSuspension" value="<?php echo $fechaSuspension; ?>" readonly>
                                   </div>
                                   <div class="col-md-5">
                                       <label for="tecnico">Técnico</label>
@@ -548,6 +548,7 @@
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../../vendor/metisMenu/metisMenu.min.js"></script>
+    <script src="../../vendor/jQuery-Mask-Plugin-master/dist/jquery.mask.min.js"></script>
 
     <!-- Custom Theme JavaScript -->
     <script src="../../dist/js/sb-admin-2.js"></script>
@@ -622,6 +623,12 @@
 
     }
     ?>
+    <script>
+        $(document).ready(function(){
+            $('#fechaSuspension').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+            //$('#fechaPrimerFacturaCable').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+        });
+    </script>
 
 </body>
 

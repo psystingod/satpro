@@ -186,7 +186,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title" id="Balance Comprobación">Generación de libro de ventas a contribuyentes</h4>
                       </div>
-                      <form action="php/pdfCreditoFiscal.php" method="POST">
+                      <form action="php/pdfCreditoFiscal.php" method="POST" target="_blank">
                       <div class="modal-body">
                                   <div class="row">
                                       <div class="form-group col-md-4 col-xs-4">
@@ -261,7 +261,7 @@
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title" id="Balance Comprobación">Generación de libro de ventas a consumidor final</h4>
                       </div>
-                      <form action="php/pdfConsumidorFinal.php" method="POST">
+                      <form action="php/pdfConsumidorFinal.php" method="POST" target="_blank">
                       <div class="modal-body">
                                   <div class="row">
                                       <div class="form-group col-md-4 col-xs-4">

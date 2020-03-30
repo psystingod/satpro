@@ -40,7 +40,7 @@
                 if ($row["tipoServicio"] == "I") {
 
                     $pdf->SetFont('Arial','B',10);
-                    $pdf->Cell(150,3,/*utf8_decode("Ciudad de Usulután, ").*/utf8_decode(strftime('%A %e de %B de %G')),"B",0,'L');
+                    $pdf->Cell(150,3,/*utf8_decode("Ciudad de Usulután, ").*/utf8_decode(strftime('%A %e de %B de %G',$row["fechaAbonado"])),"B",0,'L');
                     $pdf->Cell(40,3,utf8_decode("Recibo N°: ".$row["numeroRecibo"]),0,1,'L');
                     $pdf->Ln(7);
                     $pdf->Cell(190,3,utf8_decode("Cliente: ".$row["codigoCliente"]."  ".$row["nombre"]),0,1,'L');
@@ -110,7 +110,7 @@
                 }elseif($row["tipoServicio"] == "C") {
 
                     $pdf->SetFont('Arial','B',10);
-                    $pdf->Cell(150,3,/*utf8_decode("Ciudad de Usulután, ").*/utf8_decode(strftime('%A %e de %B de %G')),"B",0,'L');
+                    $pdf->Cell(150,3,/*utf8_decode("Ciudad de Usulután, ").*/utf8_decode(strftime('%A %e de %B de %G',$row["fechaAbonado"])),"B",0,'L');
                     $pdf->Cell(40,3,utf8_decode("Recibo N°: ".$row["numeroRecibo"]),0,1,'L');
                     $pdf->Ln(7);
                     $pdf->Cell(190,3,utf8_decode("Cliente: ".$row["codigoCliente"]."  ".$row["nombre"]),0,1,'L');
@@ -180,7 +180,7 @@
 
                 if ($row["tipoServicio"] == "I") {
 
-                    $query1 = "SELECT numeroFactura, numeroRecibo, cuotaInternet, totalImpuesto, mesCargo FROM tbl_abonos WHERE idAbono = ".$id2;
+                    $query1 = "SELECT numeroFactura, numeroRecibo, cuotaInternet, fechaAbonado, totalImpuesto, mesCargo FROM tbl_abonos WHERE idAbono = ".$id2;
                 	  // Preparación de sentencia
                 	  $statement1 = $mysqli->query($query1);
                 	  //$statement->execute();
@@ -193,14 +193,14 @@
                 	  }
 
                     $pdf->SetFont('Arial','B',10);
-                    $pdf->Cell(150,3,/*utf8_decode("Ciudad de Usulután, ").*/utf8_decode(strftime('%A %e de %B de %G')),"B",0,'L');
+                    $pdf->Cell(150,3,/*utf8_decode("Ciudad de Usulután, ").*/utf8_decode(strftime('%A %e de %B de %G',$row["fechaAbonado"])),"B",0,'L');
                     $pdf->Cell(40,3,utf8_decode("Recibos N°: ".$row["numeroRecibo"]),0,1,'L');
                     $pdf->Ln(7);
                     $pdf->Cell(190,3,"Cliente: ".$row["codigoCliente"]."  ".utf8_decode($row["nombre"]),0,1,'L');
                     $pdf->SetFont('Arial','B',10);
                     $pdf->Ln(5);
-                    $pdf->Cell(140,20,'CONCEPTO: 2 meses de servicio de INTERNET correspondientes a',1,0,'C');
-                    $pdf->Cell(50,20,$row["mesCargo"].", ".$mes2,1,1,'C');
+                    $pdf->Cell(140,20,'CONCEPTO: 2 meses de servicio de INTERNET correspondientes de',1,0,'C');
+                    $pdf->Cell(50,20,$row["mesCargo"]." a ".$mes2,1,1,'C');
                     $pdf->Ln(5);
                     $pdf->Cell(140,3,'No COMPROBANTE: '.$row["numeroFactura"].", ".$nFactura2,"B",0,'L');
                     $pdf->Cell(50,3,'VALOR ',"B",1,'L');
@@ -230,7 +230,7 @@
 
                 }elseif($row["tipoServicio"] == "C") {
 
-                    $query1 = "SELECT numeroFactura, numeroRecibo, cuotaCable, totalImpuesto, mesCargo FROM tbl_abonos WHERE idAbono = ".$id2;
+                    $query1 = "SELECT numeroFactura, numeroRecibo, cuotaCable, fechaAbonado, totalImpuesto, mesCargo FROM tbl_abonos WHERE idAbono = ".$id2;
                 	  // Preparación de sentencia
                 	  $statement1 = $mysqli->query($query1);
                 	  //$statement->execute();
@@ -243,14 +243,14 @@
                 	  }
 
                     $pdf->SetFont('Arial','B',10);
-                    $pdf->Cell(150,3,/*utf8_decode("Ciudad de Usulután, ").*/utf8_decode(strftime('%A %e de %B de %G')),"B",0,'L');
+                    $pdf->Cell(150,3,/*utf8_decode("Ciudad de Usulután, ").*/utf8_decode(strftime('%A %e de %B de %G',$row["fechaAbonado"])),"B",0,'L');
                     $pdf->Cell(40,3,utf8_decode("Recibos N°: ".$row["numeroRecibo"]),0,1,'L');
                     $pdf->Ln(7);
                     $pdf->Cell(190,3,"Cliente: ".$row["codigoCliente"]."  ".utf8_decode($row["nombre"]),0,1,'L');
                     $pdf->SetFont('Arial','B',10);
                     $pdf->Ln(5);
-                    $pdf->Cell(140,20,'CONCEPTO: 2 meses de servicio de CABLE correspondientes a',1,0,'C');
-                    $pdf->Cell(50,20,$row["mesCargo"].", ".$mes2,1,1,'C');
+                    $pdf->Cell(140,20,'CONCEPTO: 2 meses de servicio de CABLE correspondientes de',1,0,'C');
+                    $pdf->Cell(50,20,$row["mesCargo"]." a ".$mes2,1,1,'C');
                     $pdf->Ln(5);
                     $pdf->Cell(140,3,'No COMPROBANTE: '.$row["numeroFactura"].", ".$nFactura2,"B",0,'L');
                     $pdf->Cell(50,3,'VALOR ',"B",1,'L');

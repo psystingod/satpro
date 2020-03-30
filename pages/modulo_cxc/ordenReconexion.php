@@ -557,6 +557,8 @@
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../../vendor/metisMenu/metisMenu.min.js"></script>
 
+    <script src="../../vendor/jQuery-Mask-Plugin-master/dist/jquery.mask.min.js"></script>
+
     <!-- Custom Theme JavaScript -->
     <script src="../../dist/js/sb-admin-2.js"></script>
     <script src="js/ordenReconexion.js"></script>
@@ -630,6 +632,15 @@
 
     }
     ?>
+    <script>
+        $(document).ready(function(){
+            $('#fechaReconexCable').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+            $('#fechaReconexInter').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+            $('#ultSuspCable').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+            $('#ultSuspInter').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+            //$('#fechaPrimerFacturaCable').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+        });
+    </script>
 
 </body>
 

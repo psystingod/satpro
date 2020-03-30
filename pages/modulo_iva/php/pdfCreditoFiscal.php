@@ -1420,6 +1420,7 @@ function libroConsumidorFinal(){
             $pdf->Cell(40,6,utf8_decode('0.00'),0,1,'L');
             $pdf->Cell(60,1,utf8_decode(''),"T",1,'C');
             $pdf->Cell(40,6,utf8_decode("VENTAS TOTALES:"),"B",0,'L');
+            //$pdf->SetFillColor(207,216,220);
             $pdf->Cell(20,6,utf8_decode(number_format(($totalConIvaEx3+$totalSinIva3+$totalSoloIva3+$totalSoloCesc3),2)),"B",1,'L');
 
             $pdf->Cell(40,6,utf8_decode('Total solo cable'),0,0,'L');
@@ -1552,7 +1553,7 @@ function libroConsumidorFinal(){
         $pdf->Cell(190,6,utf8_decode(strftime('Ciudad de Usulután, %A %e de %B de %G')),0,1,'L');
         $pdf->Ln();*/
         $pdf->Ln(3);
-        $pdf->SetFont('Times','',8);
+        $pdf->SetFont('Times','',7);
         $counter = 1;
         while ($counter <= 31) {
             if ($tipoFacturaGenerar == 1) {
@@ -1571,11 +1572,21 @@ function libroConsumidorFinal(){
                     //var_dump($separado);
                     $totalIva = substr(floatval($separado) * floatval($iva),0,7);
 
-                    $pdf->Cell(5,1,utf8_decode($counter),0,0,'L');
+                    $pdf->Cell(10,1,utf8_decode($counter),0,0,'L');
+                    if (strlen($result["inFact"]) == 0){
+                        $pdf->Cell(20,1,utf8_decode(""),0,0,'L');
+                    }else{
+                        $pdf->Cell(20,1,utf8_decode($mesGenerar."/".$anoGenerar),0,0,'L');
+                    }
                     //$pdf->Cell(30,1,utf8_decode($montoCancelado),0,0,'L');
-                    $pdf->Cell(30,1,utf8_decode($result["inFact"]),0,0,'L');
-                    $pdf->Cell(30,1,utf8_decode($result["finFact"]),0,0,'L');
-                    $pdf->Cell(35,1,utf8_decode(""),0,0,'L');
+                    $pdf->Cell(20,1,utf8_decode(substr($result["inFact"],9,7)."-".substr($result["finFact"],9,7)),0,0,'L');
+                    //$pdf->Cell(30,1,utf8_decode(),0,0,'L');
+                    $pdf->Cell(15,1,utf8_decode(0),0,0,'L');
+                    $pdf->SetFont('Times','',5.8);
+
+                    $pdf->Cell(55,1,utf8_decode(""),0,0,'L');
+                    $pdf->Cell(15,1,utf8_decode(""),0,0,'L');
+                    $pdf->SetFont('Times','',7);
                     $sinIva = doubleval($montoCancelado)-doubleval($totalIva);
                     if ($ex->isExento("")) {
                         $pdf->Cell(20,1,utf8_decode($montoCancelado),0,0,'L');
@@ -1586,18 +1597,37 @@ function libroConsumidorFinal(){
                     }
 
                     else {
-                        $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
+                        $pdf->Cell(12.5,1,utf8_decode("0.00"),0,0,'L');
                         $pdf->Cell(20,1,utf8_decode(number_format($sinIva,2)),0,0,'L');
-                        $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
+                        $pdf->Cell(15,1,utf8_decode(number_format($result["totalImp"],2)),0,0,'L');
                         $totalSinIva = $totalSinIva +$sinIva;
                         $totalConIva = $totalConIva + $montoCancelado;
                     }
 
+                    /*if ($ex->isExento("")) {
+                        $pdf->Cell(10,1,utf8_decode($montoCancelado),0,0,'L');
+                        $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
+                        $pdf->Cell(17.5,1,utf8_decode("0.00"),0,0,'L');
+                        //$totalSinIvaEx1 = $totalSinIvaEx1 + $sinIva1;
+                        //$totalConIvaEx1 = $totalConIvaEx1 + $montoCancelado1;
+                    }
+
+                    else {
+                        $pdf->Cell(10,1,utf8_decode("0.00"),0,0,'L');
+                        $pdf->Cell(20,1,utf8_decode(number_format(0,2)),0,0,'L');
+                        $pdf->Cell(17.5,1,utf8_decode("0.00"),0,0,'L');
+                        //$totalSinIva1 = $totalSinIva1 +$sinIva1;
+                        //$totalConIva1 = $totalConIva1 + $montoCancelado1;
+                    }*/
+
                     $totalSoloIva = $totalSoloIva + $totalIva;
                     $totalSoloCesc = $totalSoloCesc + doubleval($result["totalImp"]);
                     //$pdf->Cell(20,1,utf8_decode($montoCancelado),0,1,'L');
-                    $pdf->Cell(15,1,utf8_decode(number_format($montoCancelado,2)),0,0,'L');
-                    $pdf->Cell(15,1,utf8_decode(number_format($result["totalImp"],2)),0,0,'L');
+                    $pdf->Cell(10,1,utf8_decode("0.00"),0,0,'L');
+                    $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
+                    //$pdf->Cell(17.5,1,utf8_decode("0.00"),0,0,'L');
+                    $pdf->Cell(17.5,1,utf8_decode("0.00"),0,0,'L');
+                    $pdf->Cell(15,1,utf8_decode("0.00"),0,0,'L');
                     $pdf->Cell(15,1,utf8_decode(number_format(doubleval($montoCancelado)+doubleval($result["totalImp"]),2)),0,0,'L');
                     $pdf->Ln(3);
                 }
@@ -1663,13 +1693,21 @@ function libroConsumidorFinal(){
                     //IVA
                     $separado = (doubleval($montoCancelado)/(1 + doubleval($iva)));
                     $totalIva = (doubleval($separado) * doubleval($iva));
+                    $pdf->Cell(10,1,utf8_decode($counter),0,0,'L');
+                    if (strlen($result["inFact"]) == 0){
+                        $pdf->Cell(20,1,utf8_decode(""),0,0,'L');
+                    }else{
+                        $pdf->Cell(20,1,utf8_decode($mesGenerar."/".$anoGenerar),0,0,'L');
+                    }
+                    //$pdf->Cell(30,1,utf8_decode($montoCancelado),0,0,'L');
+                    $pdf->Cell(20,1,utf8_decode(substr($result["inFact"],9,7)."-".substr($result["finFact"],9,7)),0,0,'L');
+                    //$pdf->Cell(30,1,utf8_decode(),0,0,'L');
+                    $pdf->Cell(15,1,utf8_decode(0),0,0,'L');
+                    $pdf->SetFont('Times','',5.8);
 
-
-
-                    $pdf->Cell(5,1,utf8_decode($counter),0,0,'L');
-                    $pdf->Cell(30,1,utf8_decode($result["inFact"]),0,0,'L');
-                    $pdf->Cell(30,1,utf8_decode($result["finFact"]),0,0,'L');
-                    $pdf->Cell(35,1,utf8_decode(""),0,0,'L');
+                    $pdf->Cell(55,1,utf8_decode(""),0,0,'L');
+                    $pdf->Cell(15,1,utf8_decode(""),0,0,'L');
+                    $pdf->SetFont('Times','',7);
                     $sinIva = doubleval($montoCancelado)-doubleval($totalIva);
                     if ($ex->isExento("")) {
                         $pdf->Cell(20,1,utf8_decode(number_format($montoCancelado,2)),0,0,'L');
@@ -1680,20 +1718,22 @@ function libroConsumidorFinal(){
                     }
 
                     else {
-                        $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
-                        $pdf->Cell(20,1,utf8_decode(number_format($montoCancelado,2)),0,0,'L');
-                        $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
+                        $pdf->Cell(12.5,1,utf8_decode("0.00"),0,0,'L');
+                        $pdf->Cell(20,1,utf8_decode(number_format($separado,2)),0,0,'L');
+                        $pdf->Cell(15,1,utf8_decode(number_format($totalCesc,2)),0,0,'L');
                         $totalSinIva = $totalSinIva +$sinIva;
                         $totalConIva = $totalConIva + $montoCancelado;
                     }
 
                     $totalSoloIva = $totalSoloIva + $totalIva;
                     $totalSoloCesc = $totalSoloCesc + $totalCesc;
-                    //$pdf->Cell(20,1,utf8_decode($montoCancelado),0,1,'L');
-                    $pdf->Cell(15,1,utf8_decode(number_format($montoCancelado,2)),0,0,'L');
-                    $pdf->Cell(15,1,utf8_decode($totalCesc),0,0,'L');
+                    $pdf->Cell(10,1,utf8_decode("0.00"),0,0,'L');
+                    $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
+                    //$pdf->Cell(17.5,1,utf8_decode("0.00"),0,0,'L');
+                    $pdf->Cell(17.5,1,utf8_decode("0.00"),0,0,'L');
+                    $pdf->Cell(15,1,utf8_decode("0.00"),0,0,'L');
                     $pdf->Cell(15,1,utf8_decode(number_format(doubleval($montoCancelado + $totalCesc),2)),0,0,'L');
-                    $pdf->Ln(4);
+                    $pdf->Ln(3);
                 }
             }
             elseif ($tipoFacturaGenerar == 4) {

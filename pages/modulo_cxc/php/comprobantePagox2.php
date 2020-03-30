@@ -51,20 +51,25 @@
 
                       $cliente = $row["codigoCliente"]."  ".$row["nombre"];
                       $concepto = "CONCEPTO: ".$count." mes/es de servicio de INTERNET correspondiente/s de";
+                      $fechaAbonado = $row["fechaAbonado"];
                       $subtotal = $subtotal + $row["cuotaInternet"];
                       $totalImpuesto = $totalImpuesto + $row["totalImpuesto"];
                       $total = $total + $row["cuotaInternet"]+$row["totalImpuesto"];
 
                   }
                   $pdf->SetFont('Arial','B',10);
-                  $pdf->Cell(150,3,/*utf8_decode("Ciudad de Usulután, ").*/utf8_decode(strftime('%A %e de %B de %G')),"B",0,'L');
+                  $pdf->Cell(150,3,/*utf8_decode("Ciudad de Usulután, ").*/utf8_decode(strftime('%A %e de %B de %G', strtotime($fechaAbonado))),"B",0,'L');
                   $pdf->Cell(40,3,utf8_decode("Recibo N°: ".$numRecibo),0,1,'L');
                   $pdf->Ln(7);
                   $pdf->Cell(190,3,utf8_decode("Cliente: ".$cliente),0,1,'L');
                   $pdf->SetFont('Arial','B',10);
                   $pdf->Ln(5);
                   $pdf->Cell(140,20,$concepto,1,0,'C');
-                  $pdf->Cell(50,20,$desde." a ".$hasta,1,1,'C');
+                  if ($desde == $hasta){
+                      $pdf->Cell(50,20,$desde,1,1,'C');
+                  }else{
+                      $pdf->Cell(50,20,$desde." a ".$hasta,1,1,'C');
+                  }
                   $pdf->Ln(5);
                   $pdf->Cell(140,3,'No COMPROBANTE: '." ","B",0,'L');
                   $pdf->Cell(50,3,'VALOR ',"B",1,'L');
@@ -105,7 +110,7 @@
             	  {
 
                       $numRecibo = $row["numeroRecibo"];
-
+                      $fechaAbonado = $row["fechaAbonado"];
                       $cliente = $row["codigoCliente"]."  ".$row["nombre"];
                       $concepto = "CONCEPTO: ".$count." mes/es de servicio de CABLE TV correspondiente/s de";
                       $subtotal = $subtotal + $row["cuotaCable"];
@@ -114,14 +119,18 @@
 
                   }
                   $pdf->SetFont('Arial','B',10);
-                  $pdf->Cell(150,3,/*utf8_decode("Ciudad de Usulután, ").*/utf8_decode(strftime('%A %e de %B de %G')),"B",0,'L');
+                  $pdf->Cell(150,3,/*utf8_decode("Ciudad de Usulután, ").*/utf8_decode(strftime('%A %e de %B de %G',strtotime($fechaAbonado))),"B",0,'L');
                   $pdf->Cell(40,3,utf8_decode("Recibo N°: ".$numRecibo),0,1,'L');
                   $pdf->Ln(7);
                   $pdf->Cell(190,3,utf8_decode("Cliente: ".$cliente),0,1,'L');
                   $pdf->SetFont('Arial','B',10);
                   $pdf->Ln(5);
                   $pdf->Cell(140,20,$concepto,1,0,'C');
-                  $pdf->Cell(50,20,$desde." a ".$hasta,1,1,'C');
+                  if ($desde == $hasta){
+                      $pdf->Cell(50,20,$desde,1,1,'C');
+                  }else{
+                      $pdf->Cell(50,20,$desde." a ".$hasta,1,1,'C');
+                  }
                   $pdf->Ln(5);
                   $pdf->Cell(140,3,'No COMPROBANTE: '." ","B",0,'L');
                   $pdf->Cell(50,3,'VALOR ',"B",1,'L');

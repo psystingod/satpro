@@ -489,7 +489,7 @@
                                   <div class="col-md-2">
 
                                       <label for="fechaTrabajo">Fecha de trabajo</label>
-                                      <input class="form-control input-sm" type="text" name="fechaTrabajo" value="<?php echo $fechaTrabajo; ?>" readonly>
+                                      <input class="form-control input-sm" type="text" id="fechaTrabajo" name="fechaTrabajo" value="<?php echo $fechaTrabajo; ?>" readonly>
                                   </div>
                                   <div class="col-md-2">
 
@@ -627,6 +627,7 @@
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../../vendor/metisMenu/metisMenu.min.js"></script>
+    <script src="../../vendor/jQuery-Mask-Plugin-master/dist/jquery.mask.min.js"></script>
 
     <!-- Custom Theme JavaScript -->
     <script src="../../dist/js/sb-admin-2.js"></script>
@@ -699,6 +700,12 @@
 
     }
     ?>
+    <script>
+        $(document).ready(function(){
+            $('#fechaTrabajo').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+            //$('#fechaPrimerFacturaCable').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+        });
+    </script>
 
 </body>
 
