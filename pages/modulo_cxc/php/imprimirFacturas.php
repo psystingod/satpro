@@ -76,6 +76,11 @@ if ($tipoComprobante == 2) {
         $pdf->AliasNbPages();
         $pdf->AddPage();
         $pdf->Image('../../../images/comp.png',155,120, 45, 10);
+        if ($row["anulada"] == 1){
+            //$pdf->Image('../../../images/anulada.png',155,120);
+            $pdf->Image('../../../images/anulada.png',135,70);
+            $pdf->Image('../../../images/anulada.png',20,70);
+        }
         if ($tipoServicio == "C") {
             $pdf->Image('../../../images/cable.png',45,100, 15, 17);
             $pdf->Image('../../../images/cable.png',160,100, 15, 17);
@@ -418,6 +423,12 @@ elseif ($tipoComprobante == 1) {
         $pdf->AliasNbPages();
         $pdf->AddPage();
         $pdf->Image('../../../images/comp.png',150,100, 45, 10);
+
+          if ($row["anulada"] == 1){
+              //$pdf->Image('../../../images/anulada.png',155,120);
+              $pdf->Image('../../../images/anulada.png',135,70);
+              $pdf->Image('../../../images/anulada.png',20,70);
+          }
         if ($tipoServicio == "C") {
             $pdf->Image('../../../images/cable.png',40,90, 15, 17);
             $pdf->Image('../../../images/cable.png',160,88, 15, 17);

@@ -4,6 +4,7 @@
     <list default="true" id="9b434152-df7c-48b6-9360-8012b48f8529" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/Prueba.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/Prueba.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/imprimirFacturas.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/imprimirFacturas.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -126,7 +127,7 @@
       <workItem from="1585231685548" duration="12578000" />
       <workItem from="1585317897497" duration="16338000" />
       <workItem from="1585408848625" duration="5730000" />
-      <workItem from="1585576743508" duration="15853000" />
+      <workItem from="1585576743508" duration="19519000" />
     </task>
     <servers />
   </component>
@@ -218,10 +219,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="495" y="272" key="NewPhpFileDialog/0.0.1366.728@0.0.1366.728" timestamp="1584655342398" />
-    <state x="10" y="0" width="1149" height="728" key="SettingsEditor" timestamp="1584652820357">
+    <state x="225" y="0" width="1141" height="728" key="SettingsEditor" timestamp="1585604745008">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="10" y="0" width="1149" height="728" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1584652820357" />
+    <state x="225" y="0" width="1141" height="728" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1585604745008" />
     <state x="391" y="191" key="com.intellij.ide.util.TipDialog" timestamp="1585576743080">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -231,10 +232,10 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="0" y="0" width="731" height="728" key="find.popup/0.0.1366.728@0.0.1366.728" timestamp="1584984808596" />
-    <state x="255" y="159" width="840" height="1034" key="run.anything.popup" timestamp="1584026311992">
+    <state x="255" y="159" width="840" height="1034" key="run.anything.popup" timestamp="1585607234083">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="255" y="159" width="840" height="1034" key="run.anything.popup/0.0.1366.728@0.0.1366.728" timestamp="1584026311992" />
+    <state x="255" y="159" width="840" height="1034" key="run.anything.popup/0.0.1366.728@0.0.1366.728" timestamp="1585607234083" />
     <state x="262" y="-1" width="840" height="1034" key="search.everywhere.popup" timestamp="1582585997042">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
