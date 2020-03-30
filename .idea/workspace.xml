@@ -4,15 +4,6 @@
     <list default="true" id="9b434152-df7c-48b6-9360-8012b48f8529" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/Prueba.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/Prueba.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/ordenReconexion.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/ordenReconexion.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/ordenSuspension.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/ordenSuspension.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/ordenTrabajo.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/ordenTrabajo.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/ordenTraslado.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/ordenTraslado.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/comprobantePago.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/comprobantePago.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/comprobantePagox2.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/comprobantePagox2.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/modulo_iva/iva.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_iva/iva.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/modulo_iva/php/pdfConsumidorFinal.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_iva/php/pdfConsumidorFinal.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/modulo_iva/php/pdfCreditoFiscal.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_iva/php/pdfCreditoFiscal.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -135,7 +126,7 @@
       <workItem from="1585231685548" duration="12578000" />
       <workItem from="1585317897497" duration="16338000" />
       <workItem from="1585408848625" duration="5730000" />
-      <workItem from="1585576743508" duration="12443000" />
+      <workItem from="1585576743508" duration="15853000" />
     </task>
     <servers />
   </component>
