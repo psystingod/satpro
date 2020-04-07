@@ -2,9 +2,26 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9b434152-df7c-48b6-9360-8012b48f8529" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/abonosLiquidados.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/estadoCuentaImp.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/registrosBanco.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/anulada.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/anulada.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/Prueba.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/Prueba.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/imprimirFacturas.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/imprimirFacturas.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/abonos.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/abonos.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/cxc.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/cxc.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/abonosAplicados.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/abonosAplicados.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/aplicarAbonosx2.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/aplicarAbonosx2.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/eliminarAbonoTodo.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/eliminarAbonoTodo.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/getAllClients.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/getAllClients.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/listaDeClientes.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/listaDeClientes.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/listaDeClientesConFacturasGeneradas.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/listaDeClientesConFacturasGeneradas.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/lista_dos_meses_facturas_no_vencidos.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/lista_dos_meses_facturas_no_vencidos.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/reporteClientes.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/reporteClientes.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/php/connection.php" beforeDir="false" afterPath="$PROJECT_DIR$/php/connection.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/php/signin.php" beforeDir="false" afterPath="$PROJECT_DIR$/php/signin.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -127,7 +144,15 @@
       <workItem from="1585231685548" duration="12578000" />
       <workItem from="1585317897497" duration="16338000" />
       <workItem from="1585408848625" duration="5730000" />
-      <workItem from="1585576743508" duration="19519000" />
+      <workItem from="1585576743508" duration="20459000" />
+      <workItem from="1585666344082" duration="8883000" />
+      <workItem from="1585750749237" duration="7800000" />
+      <workItem from="1585836699552" duration="9525000" />
+      <workItem from="1585930519198" duration="14286000" />
+      <workItem from="1586008942879" duration="9600000" />
+      <workItem from="1586035643123" duration="4000" />
+      <workItem from="1586181732613" duration="19145000" />
+      <workItem from="1586271580255" duration="5052000" />
     </task>
     <servers />
   </component>
@@ -167,66 +192,66 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="431" y="103" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1584737708642" />
-    <state width="1311" height="208" key="GridCell.Tab.0.bottom" timestamp="1584036330922">
+    <state width="1311" height="208" key="GridCell.Tab.0.bottom" timestamp="1586214180784">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1311" height="208" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1584036330922" />
-    <state width="1311" height="208" key="GridCell.Tab.0.center" timestamp="1584036330922">
+    <state width="1311" height="208" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1586214180784" />
+    <state width="1311" height="208" key="GridCell.Tab.0.center" timestamp="1586214180784">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1311" height="208" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1584036330922" />
-    <state width="1311" height="208" key="GridCell.Tab.0.left" timestamp="1584036330922">
+    <state width="1311" height="208" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1586214180784" />
+    <state width="1311" height="208" key="GridCell.Tab.0.left" timestamp="1586214180784">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1311" height="208" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1584036330922" />
-    <state width="1311" height="208" key="GridCell.Tab.0.right" timestamp="1584036330922">
+    <state width="1311" height="208" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1586214180784" />
+    <state width="1311" height="208" key="GridCell.Tab.0.right" timestamp="1586214180784">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1311" height="208" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1584036330922" />
-    <state width="1311" height="208" key="GridCell.Tab.1.bottom" timestamp="1584036330923">
+    <state width="1311" height="208" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1586214180784" />
+    <state width="1311" height="208" key="GridCell.Tab.1.bottom" timestamp="1586214180784">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1311" height="208" key="GridCell.Tab.1.bottom/0.0.1366.728@0.0.1366.728" timestamp="1584036330923" />
-    <state width="1311" height="208" key="GridCell.Tab.1.center" timestamp="1584036330923">
+    <state width="1311" height="208" key="GridCell.Tab.1.bottom/0.0.1366.728@0.0.1366.728" timestamp="1586214180784" />
+    <state width="1311" height="208" key="GridCell.Tab.1.center" timestamp="1586214180784">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1311" height="208" key="GridCell.Tab.1.center/0.0.1366.728@0.0.1366.728" timestamp="1584036330923" />
-    <state width="1311" height="208" key="GridCell.Tab.1.left" timestamp="1584036330922">
+    <state width="1311" height="208" key="GridCell.Tab.1.center/0.0.1366.728@0.0.1366.728" timestamp="1586214180784" />
+    <state width="1311" height="208" key="GridCell.Tab.1.left" timestamp="1586214180784">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1311" height="208" key="GridCell.Tab.1.left/0.0.1366.728@0.0.1366.728" timestamp="1584036330922" />
-    <state width="1311" height="208" key="GridCell.Tab.1.right" timestamp="1584036330923">
+    <state width="1311" height="208" key="GridCell.Tab.1.left/0.0.1366.728@0.0.1366.728" timestamp="1586214180784" />
+    <state width="1311" height="208" key="GridCell.Tab.1.right" timestamp="1586214180784">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1311" height="208" key="GridCell.Tab.1.right/0.0.1366.728@0.0.1366.728" timestamp="1584036330923" />
-    <state width="1311" height="208" key="GridCell.Tab.2.bottom" timestamp="1584036330923">
+    <state width="1311" height="208" key="GridCell.Tab.1.right/0.0.1366.728@0.0.1366.728" timestamp="1586214180784" />
+    <state width="1311" height="208" key="GridCell.Tab.2.bottom" timestamp="1586214180785">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1311" height="208" key="GridCell.Tab.2.bottom/0.0.1366.728@0.0.1366.728" timestamp="1584036330923" />
-    <state width="1311" height="208" key="GridCell.Tab.2.center" timestamp="1584036330923">
+    <state width="1311" height="208" key="GridCell.Tab.2.bottom/0.0.1366.728@0.0.1366.728" timestamp="1586214180785" />
+    <state width="1311" height="208" key="GridCell.Tab.2.center" timestamp="1586214180784">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1311" height="208" key="GridCell.Tab.2.center/0.0.1366.728@0.0.1366.728" timestamp="1584036330923" />
-    <state width="1311" height="208" key="GridCell.Tab.2.left" timestamp="1584036330923">
+    <state width="1311" height="208" key="GridCell.Tab.2.center/0.0.1366.728@0.0.1366.728" timestamp="1586214180784" />
+    <state width="1311" height="208" key="GridCell.Tab.2.left" timestamp="1586214180784">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1311" height="208" key="GridCell.Tab.2.left/0.0.1366.728@0.0.1366.728" timestamp="1584036330923" />
-    <state width="1311" height="208" key="GridCell.Tab.2.right" timestamp="1584036330923">
+    <state width="1311" height="208" key="GridCell.Tab.2.left/0.0.1366.728@0.0.1366.728" timestamp="1586214180784" />
+    <state width="1311" height="208" key="GridCell.Tab.2.right" timestamp="1586214180784">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1311" height="208" key="GridCell.Tab.2.right/0.0.1366.728@0.0.1366.728" timestamp="1584036330923" />
-    <state x="495" y="272" key="NewPhpFileDialog" timestamp="1584655342398">
+    <state width="1311" height="208" key="GridCell.Tab.2.right/0.0.1366.728@0.0.1366.728" timestamp="1586214180784" />
+    <state x="495" y="272" key="NewPhpFileDialog" timestamp="1586210073898">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="495" y="272" key="NewPhpFileDialog/0.0.1366.728@0.0.1366.728" timestamp="1584655342398" />
+    <state x="495" y="272" key="NewPhpFileDialog/0.0.1366.728@0.0.1366.728" timestamp="1586210073898" />
     <state x="225" y="0" width="1141" height="728" key="SettingsEditor" timestamp="1585604745008">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="225" y="0" width="1141" height="728" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1585604745008" />
-    <state x="391" y="191" key="com.intellij.ide.util.TipDialog" timestamp="1585576743080">
+    <state x="391" y="191" key="com.intellij.ide.util.TipDialog" timestamp="1586271581989">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="391" y="191" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1585576743080" />
+    <state x="391" y="191" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1586271581989" />
     <state x="458" y="226" key="com.intellij.ide.util.TipDialog/0.0.1600.860@0.0.1600.860" timestamp="1583160443979" />
     <state x="0" y="0" width="731" height="728" key="find.popup" timestamp="1584984808596">
       <screen x="0" y="0" width="1366" height="728" />

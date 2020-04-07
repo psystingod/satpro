@@ -15,14 +15,14 @@
                 $this->dbConnect->exec("SET CHARACTER SET utf8");
                 return $this->dbConnect;
 
-            } catch (Exception $e) {
+            } /*catch (Exception $e) {
                 print "<h1>" . "No existe la sucursal que solicita." . "</h1>";
                 print "<a href='../pages/login.php'>" . "<h2>Volver atrás</h2>" . "</a>";
                 die();
-            }/*catch (Exception $e) {
+            }*/catch (Exception $e) {
                 print "!Error¡: " . $e->getMessage() . "</br>";
                 die();
-            }*/
+            }
         }
     }
 ?>

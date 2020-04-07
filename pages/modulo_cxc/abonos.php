@@ -981,8 +981,8 @@ $stmt->bindParam(':codigoCobrador', $_GET['cobrador']);
                                                   }
                                               }
 
-                                              echo "<tr><td>";
-                                              echo "<input name='mesx{$counter}' type='checkbox' id='mesx{$counter}' onchange='getMesesPagar()' value=''>"."</td>";
+                                              echo "<tr><td style='background-color: #c62828'>";
+                                              echo "<input class='form-control' name='mesx{$counter}' type='checkbox' id='mesx{$counter}' onchange='getMesesPagar()' value=''>"."</td>";
                                               echo "<input type='hidden' name='idFacturax{$counter}' value='".$key["idFactura"] . "' readonly>"."</td><td>";
                                               echo "<input type='hidden' name='fechaCobrox{$counter}' value='".$key["fechaCobro"] . "' readonly>"."</td><td>";
                                               echo "<input type='hidden' name='fechaFacturax{$counter}' value='".$key["fechaFactura"] . "' readonly>"."</td><td>";
@@ -1178,9 +1178,14 @@ $stmt->bindParam(':codigoCobrador', $_GET['cobrador']);
                 //document.getElementById('xmeses').disabled=true;
                 //document.getElementById('aplicarAbono').disabled=true;
                 document.getElementById('xmeses').style.display = '';
-                document.getElementById('mesx1').disabled=true;
-                document.getElementById('mesx2').disabled=true;
-                document.getElementById('mesx3').disabled=true;
+                //document.getElementById('mesx1').disabled=true;
+                //document.getElementById('mesx2').disabled=true;
+                //document.getElementById('mesx3').disabled=true;
+            </script>";
+        }else{
+            echo "
+            <script>
+                document.getElementById('xmeses').style.display = '';
             </script>";
         }
 
@@ -1192,9 +1197,9 @@ $stmt->bindParam(':codigoCobrador', $_GET['cobrador']);
                 //document.getElementById('xmeses').disabled=true;
                 //document.getElementById('aplicarAbono').disabled=true;
                 document.getElementById('xmeses').style.display = '';
-                document.getElementById('mesx1').disabled=true;
-                document.getElementById('mesx2').disabled=true;
-                document.getElementById('mesx3').disabled=true;
+                //document.getElementById('mesx1').disabled=true;
+                //document.getElementById('mesx2').disabled=true;
+                //document.getElementById('mesx3').disabled=true;
             </script>";
         }
 

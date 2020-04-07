@@ -5,7 +5,17 @@
     /**
      * Clase para iniciar sesión de los usuarios
      */
-     $db = $_POST['sucursal'];
+    if (isset($_POST['sucursal'])){
+        if ($_POST['sucursal'] == '1'){
+            $db = "satpro";
+        }
+        elseif ($_POST['sucursal'] == '2'){
+            $db = "satpro_sm";
+        }
+        elseif ($_POST['sucursal'] == '3'){
+            $db = "satproapp";
+        }
+    }
     class Login extends ConectionDB
     {
         public function Login()

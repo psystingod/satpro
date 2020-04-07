@@ -38,13 +38,13 @@ class EliminarAbono extends ConectionDB
                 $statement->execute();
                 sleep(0.5);
 
-                $query = "UPDATE tbl_cargos SET estado=:estado WHERE /*numeroFactura=:numeroFactura AND */numeroRecibo=:numeroRecibo AND codigoCliente=:codigoCliente AND tipoServicio=:tipoServicio AND mesCargo=:mesCargo";
+                $query = "UPDATE tbl_cargos SET estado=:estado WHERE numeroFactura=:numeroFactura/*numeroRecibo=:numeroRecibo*/ AND codigoCliente=:codigoCliente AND tipoServicio=:tipoServicio AND mesCargo=:mesCargo";
                 //$query = "UPDATE tbl_cargos SET anulada=1, cuotaCable=0, cuotaInternet=0, saldoCable=0, saldoInternet=0, cargoImpuesto=0, totalImpuesto=0 WHERE idFactura=:id";
                 $statement = $this->dbConnect->prepare($query);
                 //$statement->bindValue(':mes', $mensualidad);
                 $statement->bindValue(':estado', $estado);
                 //$statement->bindValue(':numeroFactura', $numeroFactura);
-                $statement->bindValue(':numeroRecibo', $numeroRecibo);
+                $statement->bindValue(':numeroFactura', $numeroFactura);
                 $statement->bindValue(':codigoCliente', $codigoCliente);
                 $statement->bindValue(':tipoServicio', $tipoServicio);
                 $statement->bindValue(':mesCargo', $mesCargo);
@@ -72,12 +72,12 @@ class EliminarAbono extends ConectionDB
                 $statement->execute();
                 sleep(0.5);
 
-                $query = "UPDATE tbl_cargos SET estado=:estado WHERE numeroFactura=:numeroFactura AND /*numeroRecibo=:numeroRecibo AND */codigoCliente=:codigoCliente AND tipoServicio=:tipoServicio AND mesCargo=:mesCargo";
+                $query = "UPDATE tbl_cargos SET estado=:estado WHERE /*numeroFactura=:numeroFactura AND numeroRecibo=:numeroRecibo AND */codigoCliente=:codigoCliente AND tipoServicio=:tipoServicio AND mesCargo=:mesCargo";
                 //$query = "UPDATE tbl_cargos SET anulada=1, cuotaCable=0, cuotaInternet=0, saldoCable=0, saldoInternet=0, cargoImpuesto=0, totalImpuesto=0 WHERE idFactura=:id";
                 $statement = $this->dbConnect->prepare($query);
                 //$statement->bindValue(':mes', $mensualidad);
                 $statement->bindValue(':estado', $estado);
-                $statement->bindValue(':numeroFactura', $numeroFactura);
+                //$statement->bindValue(':numeroFactura', $numeroFactura);
                 //$statement->bindValue(':numeroRecibo', $numeroRecibo);
                 $statement->bindValue(':codigoCliente', $codigoCliente);
                 $statement->bindValue(':tipoServicio', $tipoServicio);

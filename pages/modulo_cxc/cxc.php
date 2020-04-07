@@ -176,6 +176,8 @@
                                 </li>
                                 <li><a href="#" data-toggle="modal" data-target="#abonosAplicados">Abonos aplicados</a>
                                 </li>
+                                <li><a href="#" data-toggle="modal" data-target="#abonosLiquidados">Abonos liquidados</a>
+                                </li>
                                 <li><a href="#" data-toggle="modal" data-target="#reporteVentasManuales">Ventas manuales</a>
                                 </li>
                             </ul>';
@@ -195,6 +197,8 @@
                                 <li><a href="zonas.php">Zonas</a>
                                 </li>
                                 <li><a href="#" data-toggle="modal" data-target="#abonosAplicados">Abonos aplicados</a>
+                                </li>
+                                <li><a href="#" data-toggle="modal" data-target="#abonosLiquidados">Abonos liquidados</a>
                                 </li>
                                 <li><a href="#" data-toggle="modal" data-target="#reporteVentasManuales">Ventas manuales</a>
                                 </li>
@@ -1130,6 +1134,86 @@
             </div>
           </div>
       </div><!-- Fin Modal ABONOS APLICADOS -->
+
+    <!-- Modal abonos LIQUIDADOS -->
+    <div id="abonosLiquidados" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div style="background-color: #d32f2f; color:white;" class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Lista de Abonos liquidados</h4>
+                </div>
+                <form id="frmAbonosLiquidados" action="php/abonosLiquidados.php" method="POST">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="lCobrador">Cobrador</label>
+                                <select class="form-control" type="text" id="lCobrador" name="lCobrador" required>
+                                    <option value="">Seleccione cobrador</option>
+                                    <option value="todos" selected>Todos los cobradores</option>
+                                    <?php
+                                    require_once 'php/GetAllInfo.php';
+                                    $data = new GetAllInfo();
+                                    $arrCobradores = $data->getData('tbl_cobradores');
+                                    foreach ($arrCobradores as $key) {
+                                        echo '<option value="'.$key['codigoCobrador'].'">'.$key['nombreCobrador'].'</option>';
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="lColonia">Brarrio/Colonia</label>
+                                <select class="form-control" type="text" id="lColonia" name="lColonia" required>
+                                    <option value="todas" selected>Todas las zonas</option>
+                                    <?php
+                                    $arrColonias = $data->getData('tbl_colonias_cxc');
+                                    foreach ($arrColonias as $key) {
+                                        echo '<option value="'.$key['idColonia'].'">'.$key['nombreColonia'].'</option>';
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="lServicio">Tipo de servicio</label>
+                                <select class="form-control" type="text" id="lServicio" name="lServicio" required>
+                                    <option value="">Seleccione tipo de servicio</option>
+                                    <option value="C">Cable</option>
+                                    <option value="I">Internet</option>
+                                    <option value="A" selected>Ambos</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label for="lDesde">Desde fecha</label>
+                                <input class="form-control" type="text" id="lDesde" name="lDesde" placeholder="Fecha en que se generaron las facturas" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))" value="<?php echo date('Y-m-d'); ?>" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="lHasta">Hasta fecha</label>
+                                <input class="form-control" type="text" id="lHasta" name="lHasta" placeholder="Fecha en que se generaron las facturas" pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))" value="<?php echo date('Y-m-d'); ?>" required>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="lDetallado">Ver reporte detallado</label>
+                                <input class="form-control" type="checkbox" id="lDetallado" name="lDetallado" value="1" checked>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="submit" class="btn btn-danger btn-md btn-block" name="submit" value="Ver abonos">
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    </div><!-- Fin Modal ABONOS LIQUIDADOS -->
       <!-- Modal LISTA SUSPENSIONES 1 mes-->
       <div id="listaSuspensiones1" class="modal fade" role="dialog">
         <div class="modal-dialog modal-lg">
@@ -1447,270 +1531,282 @@
   <div id="listaGeneradas" class="modal fade" role="dialog">
     <div class="modal-dialog modal-lg">
 
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div style="background-color: #d32f2f; color:white;" class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Lista de clientes de 1 factura generada</h4>
-        </div>
-        <form id="frmListaGeneradas1" action="php/listaDeClientesConFacturasGeneradas.php" method="POST">
-        <div class="modal-body">
-          <div class="row">
-              <div class="col-md-6">
-                  <label for="susCobrador">Cobrador</label>
-                  <select class="form-control" type="text" id="susCobrador" name="susCobrador" required>
-                      <option value="">Seleccione cobrador</option>
-                      <option value="todos" selected>Todos los cobradores</option>
-                      <?php
-                      require_once 'php/GetAllInfo.php';
-                      $data = new GetAllInfo();
-                      $arrCobradores = $data->getData('tbl_cobradores');
-                      foreach ($arrCobradores as $key) {
-                          echo '<option value="'.$key['codigoCobrador'].'">'.$key['nombreCobrador'].'</option>';
-                      }
-                      ?>
-                  </select>
-              </div>
-              <div class="col-md-6">
-                  <label for="susServicio">Tipo de servicio</label>
-                  <select class="form-control" type="text" id="susServicio" name="susServicio" required>
-                      <option value="">Seleccione tipo de servicio</option>
-                      <option value="C" selected>Cable</option>
-                      <option value="I">Internet</option>
-                      <option value="P">Paquete</option>
-                      <!--<option value="A">Todos</option>-->
-                  </select>
-              </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-            <div class="row">
-                <div class="col-md-6">
-                    <input type="submit" class="btn btn-danger btn-md btn-block" name="submit" value="Ver listado">
-                </div>
-                <div class="col-md-6">
-                    <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>
-                </div>
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div style="background-color: #d32f2f; color:white;" class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Lista de clientes de 1 factura generada</h4>
             </div>
-        </form>
+            <form id="frmListaGeneradas1" action="php/listaDeClientesConFacturasGeneradas.php" method="POST">
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <label for="susCobrador">Cobrador</label>
+                            <select class="form-control" type="text" id="susCobrador" name="susCobrador" required>
+                                <option value="">Seleccione cobrador</option>
+                                <option value="todos" selected>Todos los cobradores</option>
+                                <?php
+                                require_once 'php/GetAllInfo.php';
+                                $data = new GetAllInfo();
+                                $arrCobradores = $data->getData('tbl_cobradores');
+                                foreach ($arrCobradores as $key) {
+                                    echo '<option value="'.$key['codigoCobrador'].'">'.$key['nombreCobrador'].'</option>';
+                                }
+                                ?>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="susServicio">Tipo de servicio</label>
+                            <select class="form-control" type="text" id="susServicio" name="susServicio" required>
+                                <option value="">Seleccione tipo de servicio</option>
+                                <option value="C" selected>Cable</option>
+                                <option value="I">Internet</option>
+                                <option value="P">Paquete</option>
+                                <option value="A">Todos</option><!--All services-->
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <input type="submit" class="btn btn-danger btn-md btn-block" name="submit" value="Ver listado">
+                        </div>
+                        <div class="col-md-6">
+                            <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>
+                        </div>
+                    </div>
+            </form>
         </div>
+    </div>
+  </div>
+    </div><!-- Fin Modal LISTA DE FACTURAS GENERADAS -->
       </div>
     </div>
 </div><!-- Fin Modal LISTA DE FACTURAS GENERADAS -->
-<!-- Modal LISTA FACTURAS GNERADAS 2meses-->
-<div id="listaGeneradas2Meses" class="modal fade" role="dialog">
-  <div class="modal-dialog modal-lg">
+    <!-- Modal LISTA FACTURAS GNERADAS 2meses-->
+    <div id="listaGeneradas2Meses" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div style="background-color: #d32f2f; color:white;" class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Lista de clientes de 2 facturas generadas</h4>
-      </div>
-      <form id="frmListaGeneradas1" action="php/lista_dos_meses_facturas_no_vencidos.php" method="POST">
-      <div class="modal-body">
-        <div class="row">
-            <div class="col-md-6">
-                <label for="susCobrador">Cobrador</label>
-                <select class="form-control" type="text" id="susCobrador" name="susCobrador" required>
-                    <option value="">Seleccione cobrador</option>
-                    <option value="todos" selected>Todos los cobradores</option>
-                    <?php
-                    require_once 'php/GetAllInfo.php';
-                    $data = new GetAllInfo();
-                    $arrCobradores = $data->getData('tbl_cobradores');
-                    foreach ($arrCobradores as $key) {
-                        echo '<option value="'.$key['codigoCobrador'].'">'.$key['nombreCobrador'].'</option>';
-                    }
-                    ?>
-                </select>
-            </div>
-            <div class="col-md-6">
-                <label for="susServicio">Tipo de servicio</label>
-                <select class="form-control" type="text" id="susServicio" name="susServicio" required>
-                    <option value="">Seleccione tipo de servicio</option>
-                    <option value="C" selected>Cable</option>
-                    <option value="I">Internet</option>
-                    <option value="P">Paquete</option>
-                    <option value="A">Todos</option>
-                </select>
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div style="background-color: #d32f2f; color:white;" class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Lista de clientes de 2 facturas generadas</h4>
+                </div>
+                <form id="frmListaGeneradas1" action="php/lista_dos_meses_facturas_no_vencidos.php" method="POST">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="susCobrador">Cobrador</label>
+                                <select class="form-control" type="text" id="susCobrador" name="susCobrador" required>
+                                    <option value="">Seleccione cobrador</option>
+                                    <option value="todos" selected>Todos los cobradores</option>
+                                    <?php
+                                    require_once 'php/GetAllInfo.php';
+                                    $data = new GetAllInfo();
+                                    $arrCobradores = $data->getData('tbl_cobradores');
+                                    foreach ($arrCobradores as $key) {
+                                        echo '<option value="'.$key['codigoCobrador'].'">'.$key['nombreCobrador'].'</option>';
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="susServicio">Tipo de servicio</label>
+                                <select class="form-control" type="text" id="susServicio" name="susServicio" required>
+                                    <option value="">Seleccione tipo de servicio</option>
+                                    <option value="C" selected>Cable</option>
+                                    <option value="I">Internet</option>
+                                    <option value="P">Paquete</option>
+                                    <option value="A">Todos</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="submit" class="btn btn-danger btn-md btn-block" name="submit" value="Ver listado">
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                </form>
             </div>
         </div>
-      </div>
-      <div class="modal-footer">
-          <div class="row">
-              <div class="col-md-6">
-                  <input type="submit" class="btn btn-danger btn-md btn-block" name="submit" value="Ver listado">
-              </div>
-              <div class="col-md-6">
-                  <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>
-              </div>
-          </div>
-      </form>
-      </div>
     </div>
-  </div>
-</div><!-- Fin Modal LISTA DE FACTURAS GENERADAS 2 meses -->
+    </div><!-- Fin Modal LISTA DE FACTURAS GENERADAS 2 meses -->
 
-<!-- Modal LISTA TOTAL CLEINTES-->
-<div id="totalClientes" class="modal fade" role="dialog">
-    <div class="modal-dialog modal-lg">
+    <!-- Modal LISTA TOTAL CLEINTES-->
+    <div id="totalClientes" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
 
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div style="background-color: #d32f2f; color:white;" class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Listado de cobros</h4>
-        </div>
-        <form id="frmtodosClientes" action="php/reporteClientes.php" method="POST">
-        <div class="modal-body">
-          <div class="row">
-              <div class="col-md-3">
-                  <label for="clCobrador">Cobrador</label>
-                  <select class="form-control" type="text" id="clCobrador" name="clCobrador" required>
-                      <option value="">Seleccione cobrador</option>
-                      <option value="todos" selected>Todos los cobradores</option>
-                      <?php
-                      require_once 'php/GetAllInfo.php';
-                      $data = new GetAllInfo();
-                      $arrCobradores = $data->getData('tbl_cobradores');
-                      foreach ($arrCobradores as $key) {
-                          echo '<option value="'.$key['codigoCobrador'].'">'.$key['nombreCobrador'].'</option>';
-                      }
-                      ?>
-                  </select>
-              </div>
-              <div class="col-md-4">
-                  <label for="clColonia">Brarrio/Colonia</label>
-                  <select class="form-control" type="text" id="clColonia" name="clColonia" required>
-                      <option value="todas" selected>Todas las zonas</option>
-                      <?php
-                      $arrColonias = $data->getData('tbl_colonias_cxc');
-                      foreach ($arrColonias as $key) {
-                          echo '<option value="'.$key['idColonia'].'">'.$key['nombreColonia'].'</option>';
-                      }
-                      ?>
-                  </select>
-              </div>
-              <div class="col-md-3">
-                  <label for="clServicio">Tipo de servicio</label>
-                  <select class="form-control" type="text" id="clServicio" name="clServicio" required>
-                      <option value="">Seleccione tipo de servicio</option>
-                      <option value="C" selected>Cable</option>
-                      <option value="I">Internet</option>
-                      <option value="A">Paquete</option>
-                  </select>
-              </div>
-              <div class="col-md-2">
-                  <label for="cldiaCobro">Dia de cobro</label>
-                  <input class="form-control" type="number" name="cldiaCobro" value="1">
-              </div>
-          </div>
-          <div class="row">
-              <br>
-              <div class="col-md-12">
-                  <?php
-                  if ($_SESSION["rol"] == 'administracion' || $_SESSION["rol"] == 'subgerencia'){
-                      echo '<input class="pull-right" type="checkbox" name="todosLosDias" value="1">';
-                      echo '<label class="pull-right" for="todosLosDias">Mostrar todos los días de cobro</label>';
-                  }
-                  ?>
-              </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-            <div class="row">
-                <div class="col-md-6">
-                    <input type="submit" class="btn btn-danger btn-md btn-block" name="submit" value="Ver clientes">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div style="background-color: #d32f2f; color:white;" class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Reporte de todos los clientes</h4>
                 </div>
-                <div class="col-md-6">
-                    <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>
-                </div>
+                <form id="frmtodosClientes" action="php/reporteClientes.php" method="POST">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="clCobrador">Cobrador</label>
+                                <select class="form-control" type="text" id="clCobrador" name="clCobrador" required>
+                                    <option value="">Seleccione cobrador</option>
+                                    <option value="todos" selected>Todos los cobradores</option>
+                                    <?php
+                                    require_once 'php/GetAllInfo.php';
+                                    $data = new GetAllInfo();
+                                    $arrCobradores = $data->getData('tbl_cobradores');
+                                    foreach ($arrCobradores as $key) {
+                                        echo '<option value="'.$key['codigoCobrador'].'">'.$key['nombreCobrador'].'</option>';
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="clColonia">Brarrio/Colonia</label>
+                                <select class="form-control" type="text" id="clColonia" name="clColonia" required>
+                                    <option value="todas" selected>Todas las zonas</option>
+                                    <?php
+                                    $arrColonias = $data->getData('tbl_colonias_cxc');
+                                    foreach ($arrColonias as $key) {
+                                        echo '<option value="'.$key['idColonia'].'">'.$key['nombreColonia'].'</option>';
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="clServicio">Tipo de servicio</label>
+                                <select class="form-control" type="text" id="clServicio" name="clServicio" required>
+                                    <option value="">Seleccione tipo de servicio</option>
+                                    <option value="C" selected>Cable</option>
+                                    <option value="I">Internet</option>
+                                    <option value="A">Paquete</option>
+                                    <option value="T">TODOS</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="cldiaCobro">Dia de cobro</label>
+                                <input class="form-control" type="number" name="cldiaCobro" value="1">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <br>
+                            <div class="col-md-6">
+                                <label class="pull-right" for="todosLosDias">Ordenar Por Colonia</label>
+                                <input class="pull-right" type="checkbox" name="ordenarPorColonias" value="1">
+                            </div>
+                            <div class="col-md-5">
+                                <?php
+                                if ($_SESSION["rol"] == 'administracion' || $_SESSION["rol"] == 'subgerencia'){
+                                    echo '<input class="pull-right" type="checkbox" name="todosLosDias" value="1">';
+                                    echo '<label class="pull-right" for="todosLosDias">Mostrar todos los días de cobro</label>';
+                                }
+                                ?>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="submit" class="btn btn-danger btn-md btn-block" name="submit" value="Ver clientes">
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                </form>
             </div>
-        </form>
         </div>
-      </div>
     </div>
-</div><!-- Fin Modal LISTA DE TOTAL CLIENTES-->
+    </div><!-- Fin Modal LISTA DE TOTAL CLIENTES -->
 
-  <!-- Modal LISTA TOTAL CLEINTES PARA ADMIN-->
-  <div id="totalClientesAdmin" class="modal fade" role="dialog">
-      <div class="modal-dialog modal-lg">
+    <!-- Modal LISTA TOTAL CLEINTES PARA ADMIN-->
+    <div id="totalClientesAdmin" class="modal fade" role="dialog">
+        <div class="modal-dialog modal-lg">
 
-        <!-- Modal content-->
-        <div class="modal-content">
-          <div style="background-color: #d32f2f; color:white;" class="modal-header">
-            <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">Reporte de todos los clientes</h4>
-          </div>
-          <form id="frmtodosClientes" action="php/listaDeClientes.php" method="POST">
-          <div class="modal-body">
-            <div class="row">
-                <div class="col-md-3">
-                    <label for="clCobrador">Cobrador</label>
-                    <select class="form-control" type="text" id="clCobrador" name="clCobrador" required>
-                        <option value="">Seleccione cobrador</option>
-                        <option value="todos" selected>Todos los cobradores</option>
-                        <?php
-                        require_once 'php/GetAllInfo.php';
-                        $data = new GetAllInfo();
-                        $arrCobradores = $data->getData('tbl_cobradores');
-                        foreach ($arrCobradores as $key) {
-                            echo '<option value="'.$key['codigoCobrador'].'">'.$key['nombreCobrador'].'</option>';
-                        }
-                        ?>
-                    </select>
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div style="background-color: #d32f2f; color:white;" class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Reporte de todos los clientes</h4>
                 </div>
-                <div class="col-md-4">
-                    <label for="clColonia">Brarrio/Colonia</label>
-                    <select class="form-control" type="text" id="clColonia" name="clColonia" required>
-                        <option value="todas" selected>Todas las zonas</option>
-                        <?php
-                        $arrColonias = $data->getData('tbl_colonias_cxc');
-                        foreach ($arrColonias as $key) {
-                            echo '<option value="'.$key['idColonia'].'">'.$key['nombreColonia'].'</option>';
-                        }
-                        ?>
-                    </select>
-                </div>
-                <div class="col-md-3">
-                    <label for="clServicio">Tipo de servicio</label>
-                    <select class="form-control" type="text" id="clServicio" name="clServicio" required>
-                        <option value="">Seleccione tipo de servicio</option>
-                        <option value="C" selected>Cable</option>
-                        <option value="I">Internet</option>
-                        <option value="A">Ambos</option>
-                        <option value="T">TODOS</option>
-                    </select>
-                </div>
-                <div class="col-md-2">
-                    <label for="cldiaCobro">Dia de cobro</label>
-                    <input class="form-control" type="number" name="cldiaCobro" value="1">
-                </div>
+                <form id="frmtodosClientes" action="php/listaDeClientes.php" method="POST">
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label for="clCobrador">Cobrador</label>
+                                <select class="form-control" type="text" id="clCobrador" name="clCobrador" required>
+                                    <option value="">Seleccione cobrador</option>
+                                    <option value="todos" selected>Todos los cobradores</option>
+                                    <?php
+                                    require_once 'php/GetAllInfo.php';
+                                    $data = new GetAllInfo();
+                                    $arrCobradores = $data->getData('tbl_cobradores');
+                                    foreach ($arrCobradores as $key) {
+                                        echo '<option value="'.$key['codigoCobrador'].'">'.$key['nombreCobrador'].'</option>';
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="clColonia">Brarrio/Colonia</label>
+                                <select class="form-control" type="text" id="clColonia" name="clColonia" required>
+                                    <option value="todas" selected>Todas las zonas</option>
+                                    <?php
+                                    $arrColonias = $data->getData('tbl_colonias_cxc');
+                                    foreach ($arrColonias as $key) {
+                                        echo '<option value="'.$key['idColonia'].'">'.$key['nombreColonia'].'</option>';
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="col-md-3">
+                                <label for="clServicio">Tipo de servicio</label>
+                                <select class="form-control" type="text" id="clServicio" name="clServicio" required>
+                                    <option value="">Seleccione tipo de servicio</option>
+                                    <option value="C" selected>Cable</option>
+                                    <option value="I">Internet</option>
+                                    <option value="A">Ambos</option>
+                                    <option value="T">TODOS</option>
+                                </select>
+                            </div>
+                            <div class="col-md-2">
+                                <label for="cldiaCobro">Dia de cobro</label>
+                                <input class="form-control" type="number" name="cldiaCobro" value="1">
+                            </div>
+                        </div>
+                        <div class="row">
+                            <br>
+                            <div class="col-md-6">
+                                <label class="pull-right" for="todosLosDias">Ordenar Por Colonia</label>
+                                <input class="pull-right" type="checkbox" name="ordenarPorColonias" value="1">
+                            </div>
+                            <div class="col-md-5">
+                                <label class="pull-right" for="todosLosDias">Mostrar todos los días de cobro</label>
+                                <input class="pull-right" type="checkbox" name="todosLosDias" value="1">
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <input type="submit" class="btn btn-danger btn-md btn-block" name="submit" value="Ver clientes">
+                            </div>
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>
+                            </div>
+                        </div>
+                </form>
             </div>
-            <div class="row">
-                <br>
-                <div class="col-md-12">
-
-                    <input class="pull-right" type="checkbox" name="todosLosDias" value="1">
-                    <label class="pull-right" for="todosLosDias">Mostrar todos los días de cobro</label>
-                </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-              <div class="row">
-                  <div class="col-md-6">
-                      <input type="submit" class="btn btn-danger btn-md btn-block" name="submit" value="Ver clientes">
-                  </div>
-                  <div class="col-md-6">
-                      <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>
-                  </div>
-              </div>
-          </form>
-          </div>
         </div>
-      </div>
-  </div><!-- Fin Modal LISTA DE TOTAL CLIENTES ADMINISTRACION -->
+    </div>
+    </div><!-- Fin Modal LISTA DE TOTAL CLIENTES ADMINISTRACION -->
 </div>
         <!-- /#page-wrapper -->
     </div>

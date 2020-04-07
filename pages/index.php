@@ -1,4 +1,9 @@
 <?php
+
+    session_start();
+    if (!isset($_SESSION["user"])) {
+        header('Location: login.php');
+    }
     require('../php/contenido.php');
     require('../php/modulePermissions.php');
     require('../php/permissions.php');
@@ -46,12 +51,7 @@
 </head>
 
 <body>
-    <!-- <?php
-         session_start();
-         if(!isset($_SESSION["user"])) {
-             header('Location: login.php');
-         }
-     ?> -->
+
     <div id="wrapper">
 
         <!-- Navigation -->

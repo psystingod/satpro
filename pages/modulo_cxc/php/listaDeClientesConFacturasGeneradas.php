@@ -827,12 +827,21 @@ FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento >= 
 
     }//end if ALL Services
 
+    //__________INIT CLASSS_________________
+    class FPDF2 extends FPDF{
+      public function header(){
+        $this->SetFont('Arial','',5);
+        $this->AliasnbPages();
+        $this->Cell(260,3,utf8_decode("Página ".str_pad($this->pageNo(),0,"0",STR_PAD_LEFT)."/".str_pad("{nb}",0,"0",STR_PAD_LEFT)),0,1,'R');
+      }
 
+    }
+    //____________end CLASS_________________
 
-	  $pdf = new FPDF();
+	  $pdf = new FPDF2();
 $pdf->AddPage('L','Letter');
         $pdf->SetFont('Arial','',6);
-        $pdf->Cell(260,6,utf8_decode("Página ".str_pad($pdf->pageNo(),4,"0",STR_PAD_LEFT)),0,1,'R');
+        //$pdf->Cell(260,6,utf8_decode("Página ".str_pad($pdf->pageNo(),4,"0",STR_PAD_LEFT)),0,1,'R');
         $pdf->Ln(0);
         date_default_timezone_set('America/El_Salvador');
         $pdf->Cell(260,6,utf8_decode( date('Y/m/d g:i')),0,1,'R');
@@ -843,10 +852,10 @@ $pdf->AddPage('L','Letter');
       $pdf->Ln(4);
       $pdf->SetFont('Arial','',8);
       $pdf->Cell(260,6,utf8_decode("INFORME DE CLIENTES CON UN MES DE FACTURAS PENDIENTES. "),0,1,'L');
-      //filtro cobrador del reporte
-      $pdf->Cell(260,6,utf8_decode("Cobrador: ".$cobradorReporte),0,1,'L');
+          //filtro cobrador del reporte
+      $pdf->Cell(260,4,utf8_decode("Cobrador: ".$cobradorReporte),0,1,'L');
       //filtro servicio del reporte
-      $pdf->Cell(260,6,utf8_decode("Servicio: ".$servicioReporte),0,1,'L');
+      $pdf->Cell(260,4,utf8_decode("Servicio: ".$servicioReporte),0,1,'L');
 
 	  $pdf->SetFont('Arial','B',11);
 
@@ -859,13 +868,13 @@ $pdf->AddPage('L','Letter');
 $pdf->Ln(6);
     $pdf->Cell(10,6,utf8_decode('N°'),1,0,'L');
     $pdf->Cell(65,6,utf8_decode('Cliente'),1,0,'L');
-    $pdf->Cell(20,6,utf8_decode('Tipo Servicio'),1,0,'L');
-    $pdf->Cell(10,6,utf8_decode('Cant'),1,0,'L');
-    $pdf->Cell(21,6,utf8_decode('Vencimiento'),1,0,'L');
+    $pdf->Cell(13,6,utf8_decode('Servicio'),1,0,'L');
+    $pdf->Cell(8,6,utf8_decode('Cant'),1,0,'L');
+    $pdf->Cell(19,6,utf8_decode('Vencimiento'),1,0,'L');
     $pdf->Cell(10,6,utf8_decode('Total'),1,0,'L');
     $pdf->Cell(30,6,utf8_decode('Teléfono'),1,0,'L');
     $pdf->Cell(30,6,utf8_decode('Colonia'),1,0,'L');
-    $pdf->Cell(70,6,utf8_decode('Direccion'),1,0,'L');
+    $pdf->Cell(77,6,utf8_decode('Direccion'),1,0,'L');
       $pdf->Ln(6);
 
         while($row = $resultado->fetch_assoc())
@@ -892,14 +901,15 @@ $pdf->Ln(6);
                 $pdf->Cell(10,3,utf8_decode($contadorDeFilas),0,0,'L');
                 $contadorDeFilas++;
                 $pdf->Cell(65,3,utf8_decode(strtoupper($row['codigoCliente']."  ".$row['nombre'])),0,0,'L');
-                $pdf->Cell(20,3,utf8_decode($tipoServicioTemp),0,0,'L');
-                $pdf->Cell(10,3,utf8_decode($row['cantidadDeFacturasVencidas']),0,0,'C');
-                $pdf->Cell(21,3,utf8_decode($row['fechaVencimiento']),0,0,'C');
+                $pdf->Cell(13,3,utf8_decode($tipoServicioTemp),0,0,'L');
+                $pdf->Cell(8,3,utf8_decode($row['cantidadDeFacturasVencidas']),0,0,'C');
+                $pdf->Cell(19,3,utf8_decode($row['fechaVencimiento']),0,0,'C');
                 $pdf->Cell(10,3,utf8_decode("$ ".number_format($row['totalDeuda'],2)),0,0,'L');
                 $pdf->Cell(30,3,utf8_decode($row['telefono']),0,0,'C');
                 $pdf->Cell(30,3,utf8_decode($colonia->getColonia($row['idColonia'])),0,0,'L');
-                $pdf->MultiCell(70,3,utf8_decode($row['direccion']),0,'L',0);
-                 $pdf->Ln(3);
+                $pdf->SetFont('Arial','',6);
+                $pdf->MultiCell(77,3,utf8_decode($row['direccion']),0,'L',0);
+                // $pdf->Ln(3);
     	  }
 
 
@@ -911,10 +921,11 @@ $pdf->Ln(6);
         $pdf->SetFont('Arial','',8);
 
         //TOTAL Ventas
-        $pdf->Cell(199,5,utf8_decode('TOTAL: '),0,0,'R');
-        $pdf->Cell(16,5,$totalCantidadDeFacturasReporte,"T",0,'C');
-        $pdf->Cell(21,5,"","T",0,'C');
-        $pdf->Cell(20,5,"$ ".number_format($totalDeudaReporte,2),"T",0,'L');
+        $pdf->Cell(88,5,utf8_decode('TOTAL: '),0,0,'R');
+        $pdf->Cell(8,5,$totalCantidadDeFacturasReporte,"T",0,'C');
+        $pdf->Cell(19,5,"","T",0,'C');
+        $pdf->Cell(10,5,"$ ".number_format($totalDeudaReporte,2),"T",0,'L');
+        $pdf->Cell(5,5,"","T",0,'C');
         $pdf->Ln(10);
 
   putenv("LANG='es_ES.UTF-8'");

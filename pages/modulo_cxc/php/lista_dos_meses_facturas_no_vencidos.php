@@ -69,7 +69,7 @@
 
 
       if ($_POST["susServicio"] == "C") {
-        $servicioReporte="Cable";
+        $servicioReporte="CABLE";
         if($_POST["susCobrador"]=="todos"){//cable y todos los cobradores
           $query = "SELECT codigoCliente, nombre, direccion,(SELECT telefonos from clientes where cod_cliente=codigoCliente) as telefono,idColonia, tipoServicio,'C' as filtro, COUNT(*) as cantidadDeFacturasVencidas, MAX(fechaVencimiento) as fechaVencimiento, SUM(cuotaCable + totalImpuesto) as totalDeuda
 FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C'
@@ -120,7 +120,7 @@ AND codigoCliente NOT IN (
           $resultado = $mysqli->query($query) ;
         }
     }elseif ($_POST["susServicio"] == "I") {//internet
-      $servicioReporte="Internet";
+      $servicioReporte="INTERNET";
         if($_POST["susCobrador"]=="todos"){//internet y todos los cobradores
           $query = "SELECT codigoCliente, nombre, direccion,(SELECT telefonos from clientes where cod_cliente=codigoCliente) as telefono,idColonia, tipoServicio,'I' as filtro, COUNT(*) as cantidadDeFacturasVencidas, MAX(fechaVencimiento) as fechaVencimiento, SUM(cuotaInternet + totalImpuesto) as totalDeuda
 FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I'
@@ -171,7 +171,7 @@ AND codigoCliente NOT IN (
         }
 
     }else if($_POST["susServicio"]=="P") { //paquete
-      $servicioReporte="Paquete";
+      $servicioReporte="PAQUETE";
        if($_POST["susCobrador"]=="todos"){//paquete y todos los cobradores
           $query = "SELECT codigoCliente, nombre, direccion,(SELECT telefonos from clientes where cod_cliente=codigoCliente) as telefono,idColonia, tipoServicio,'P' as filtro, COUNT(*) as cantidadDeFacturasVencidas,  MAX(fechaVencimiento) as fechaVencimiento, SUM(cuotaCable + cuotaInternet + totalImpuesto) as totalDeuda
 FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0
@@ -251,12 +251,206 @@ FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND codigoCobrador=".$_P
         }//end else paquete y cobrador especifico
 
     }//end paquete
+    else if($_POST["susServicio"]=="A"){
+
+      $servicioReporte="TODOS";
+       if($_POST["susCobrador"]=="todos"){//all services y todos los cobradores
+          $query = "/*CABLE TODOS LOS COBRADORES*/
+          SELECT codigoCliente, nombre, direccion,(SELECT telefonos from clientes where cod_cliente=codigoCliente) as telefono,idColonia, tipoServicio,'C' as filtro, COUNT(*) as cantidadDeFacturasVencidas, MAX(fechaVencimiento) as fechaVencimiento, SUM(cuotaCable + totalImpuesto) as totalDeuda
+FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C'
+AND codigoCliente NOT IN (
+	/*--Internet en general*/
+	SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I'  group by `codigoCliente` HAVING COUNT(*) >= 1
+    /*--fin Internet en general*/
+    UNION
+    	/**Todos Los Clientes Suspendidos**/
+		/**clientes de solo cable ya suspendidos*/
+		SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 3
+		/**fin clientes de solo cable ya suspendidos*/
+		UNION
+		/**clientes de solo internet ya suspendidos*/
+		SELECT cod_cliente as codigoCliente FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='T' AND estado_cliente_in = 2
+		/**Fin clientes de solo internet ya suspendidos*/
+		UNION
+		/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+		SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 2
+		/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+		/**Todos Los Clientes Suspendidos**/
+) group by `codigoCliente` HAVING COUNT(*) = 2
+          /*FIN CABLE TODOS LOS COBRADORES*/
+          UNION
+          /*SOLO INTERNET Y TODOS LOS COBRADORES*/
+          SELECT codigoCliente, nombre, direccion,(SELECT telefonos from clientes where cod_cliente=codigoCliente) as telefono,idColonia, tipoServicio,'I' as filtro, COUNT(*) as cantidadDeFacturasVencidas, MAX(fechaVencimiento) as fechaVencimiento, SUM(cuotaInternet + totalImpuesto) as totalDeuda
+FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I'
+AND codigoCliente NOT IN (
+	/*--Cable en general*/
+	SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' group by `codigoCliente` HAVING COUNT(*) >= 1
+	/*--fin Cable en general*/
+	UNION
+		/**Todos Los Clientes Suspendidos**/
+		/**clientes de solo cable ya suspendidos*/
+		SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 3
+		/**fin clientes de solo cable ya suspendidos*/
+		UNION
+		/**clientes de solo internet ya suspendidos*/
+		SELECT cod_cliente as codigoCliente FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='T' AND estado_cliente_in = 2
+		/**Fin clientes de solo internet ya suspendidos*/
+		UNION
+		/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+		SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 2
+		/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+		/**Todos Los Clientes Suspendidos**/
+) group by `codigoCliente` HAVING COUNT(*) = 2
+          /*FIN SOLO INTERNET Y TODOS LOS COBRADORES*/
+          UNION
+          /*pAQUETES*/
+          SELECT codigoCliente, nombre, direccion,(SELECT telefonos from clientes where cod_cliente=codigoCliente) as telefono,idColonia, tipoServicio,'P' as filtro, COUNT(*) as cantidadDeFacturasVencidas,  MAX(fechaVencimiento) as fechaVencimiento, SUM(cuotaCable + cuotaInternet + totalImpuesto) as totalDeuda
+FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0
+AND codigoCliente NOT IN (
+            /*---SOLO CABLE TODOS LOS COBRADORES con >= 1 facturas pendientes*/
+        SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND codigoCliente NOT IN (
+          /*--Internet en general*/
+          SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I'  group by `codigoCliente` HAVING COUNT(*) >= 1
+          /*--fin Internet en general*/
+        ) group by `codigoCliente` HAVING COUNT(*) >= 1
+      /*---FIN SOLO CABLE TODOS LOS COBRADORES con >= 1 facturas pendientes*/
+              UNION
+      /*---SOLO INTERNET TODOS LOS COBRADORES con >= 1 facturas pendientes*/
+          SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND codigoCliente NOT IN (
+            /*--Cable en general*/
+            SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' group by `codigoCliente` HAVING COUNT(*) >= 1
+            /*--fin Cable en general*/
+          ) group by `codigoCliente` HAVING COUNT(*) >= 1
+      /*---FIN SOLO INTERNET TODOS LOS COBRADORES con >= 1 facturas vencidas*/
+            UNION
+          /**Todos Los Clientes Suspendidos**/
+          /**clientes de solo cable ya suspendidos*/
+          SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 3
+          /**fin clientes de solo cable ya suspendidos*/
+          UNION
+          /**clientes de solo internet ya suspendidos*/
+          SELECT cod_cliente as codigoCliente FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='T' AND estado_cliente_in = 2
+          /**Fin clientes de solo internet ya suspendidos*/
+          UNION
+          /**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+          SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 2
+          /**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+          /**Todos Los Clientes Suspendidos**/
+) group by `codigoCliente` HAVING COUNT(*) = 4";
+          $resultado = $mysqli->query($query) ;
+
+        }else{//all services y cobrador espercifico
+            $query = "/*CABLE Y COBRADOR ESPECIFICO*/
+            SELECT codigoCliente, nombre, direccion,(SELECT telefonos from clientes where cod_cliente=codigoCliente) as telefono,idColonia, tipoServicio,'C' as filtro, COUNT(*) as cantidadDeFacturasVencidas,  MAX(fechaVencimiento) as fechaVencimiento, SUM(cuotaCable + totalImpuesto) as totalDeuda
+ FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C'  AND codigoCobrador=".$_POST["susCobrador"]."
+ AND codigoCliente NOT IN (
+ 	/*--Internet en general*/
+ 	SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND codigoCobrador=".$_POST["susCobrador"]."
+     group by `codigoCliente` HAVING COUNT(*) >= 1
+     /*--fin Internet en general*/
+     UNION
+     	/**Todos Los Clientes Suspendidos**/
+ 		/**clientes de solo cable ya suspendidos*/
+ 		SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 3
+ 		/**fin clientes de solo cable ya suspendidos*/
+ 		UNION
+ 		/**clientes de solo internet ya suspendidos*/
+ 		SELECT cod_cliente as codigoCliente FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='T' AND estado_cliente_in = 2
+ 		/**Fin clientes de solo internet ya suspendidos*/
+ 		UNION
+ 		/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+ 		SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 2
+ 		/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+ 		/**Todos Los Clientes Suspendidos**/
+ ) group by `codigoCliente` HAVING COUNT(*) = 2
+          /*FIN CABLE Y COBRADOR ESPECIFICO*/
+          UNION
+            /*INTERNET Y COBRADOR ESPECIFICO*/
+            SELECT codigoCliente, nombre, direccion,(SELECT telefonos from clientes where cod_cliente=codigoCliente) as telefono,idColonia, tipoServicio,'I' as filtro, COUNT(*) as cantidadDeFacturasVencidas, MAX(fechaVencimiento) as fechaVencimiento, SUM(cuotaInternet + totalImpuesto) as totalDeuda
+ FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND codigoCobrador=".$_POST["susCobrador"]."
+ AND codigoCliente NOT IN (
+ 	/*--Cable en general*/
+ 	SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND codigoCobrador=".$_POST["susCobrador"]."
+     group by `codigoCliente` HAVING COUNT(*) >= 1
+ 	/*--fin Cable en general*/
+     UNION
+ 		/**Todos Los Clientes Suspendidos**/
+ 		/**clientes de solo cable ya suspendidos*/
+ 		SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 3
+ 		/**fin clientes de solo cable ya suspendidos*/
+ 		UNION
+ 		/**clientes de solo internet ya suspendidos*/
+ 		SELECT cod_cliente as codigoCliente FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='T' AND estado_cliente_in = 2
+ 		/**Fin clientes de solo internet ya suspendidos*/
+ 		UNION
+ 		/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+ 		SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 2
+ 		/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+ 		/**Todos Los Clientes Suspendidos**/
+ ) group by `codigoCliente` HAVING COUNT(*) = 2
+            /*FIN INTERNET Y COBRADOR ESPECIFICO*/
+            UNION
+            /*PAQUETES Y COBRADOR ESPECIFICO*/
+            SELECT codigoCliente, nombre, direccion,(SELECT telefonos from clientes where cod_cliente=codigoCliente) as telefono,idColonia, tipoServicio,'P' as filtro, COUNT(*) as cantidadDeFacturasVencidas, MAX(fechaVencimiento) as fechaVencimiento, SUM(cuotaCable + cuotaInternet + totalImpuesto) as totalDeuda
+FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND codigoCobrador=".$_POST["susCobrador"]."
+            AND codigoCliente NOT IN (
+              /*---SOLO CABLE POR COBRADOR ESPECIFICO CON >= 1 facturas generadas*/
+      SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND codigoCobrador=".$_POST["susCobrador"]."
+      AND codigoCliente NOT IN (
+        /*--Internet en general*/
+        SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND codigoCobrador=".$_POST["susCobrador"]."
+        group by `codigoCliente` HAVING COUNT(*) >= 1
+        /*--fin Internet en general*/
+      ) group by `codigoCliente` HAVING COUNT(*) >= 1
+              /*---FIN SOLO CABLE POR COBRADOR ESPECIFICO CON >=1 facturas generadas*/
+              UNION
+              /*---SOLO INTERNET POR COBRADOR ESPECIFICO*/
+        SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND codigoCobrador=".$_POST["susCobrador"]."
+        AND codigoCliente NOT IN (
+          /*--Cable en general*/
+          SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND codigoCobrador=".$_POST["susCobrador"]."
+          group by `codigoCliente` HAVING COUNT(*) >= 1
+          /*--fin Cable en general*/
+        ) group by `codigoCliente` HAVING COUNT(*) >= 1
+        /*---FIN SOLO INTERNET POR COBRADOR ESPECIFICO*/
+               UNION
+            /**Todos Los Clientes Suspendidos**/
+            /**clientes de solo cable ya suspendidos*/
+            SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 3
+            /**fin clientes de solo cable ya suspendidos*/
+            UNION
+            /**clientes de solo internet ya suspendidos*/
+            SELECT cod_cliente as codigoCliente FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='T' AND estado_cliente_in = 2
+            /**Fin clientes de solo internet ya suspendidos*/
+            UNION
+            /**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+            SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 2
+            /**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+            /**Todos Los Clientes Suspendidos**/
+) group by `codigoCliente` HAVING COUNT(*) = 4";
+          $resultado = $mysqli->query($query) ;
+
+        }//end else all services y cobrador especifico
 
 
-	  $pdf = new FPDF();
+    }//end ALL services
+
+
+    //__________INIT CLASSS_________________
+    class FPDF2 extends FPDF{
+      public function header(){
+        $this->SetFont('Arial','',5);
+        $this->AliasnbPages();
+        $this->Cell(260,3,utf8_decode("Página ".str_pad($this->pageNo(),0,"0",STR_PAD_LEFT)."/".str_pad("{nb}",0,"0",STR_PAD_LEFT)),0,1,'R');
+      }
+
+    }
+    //____________end CLASS_________________
+
+	  $pdf = new FPDF2();
 $pdf->AddPage('L','Letter');
         $pdf->SetFont('Arial','',6);
-        $pdf->Cell(260,6,utf8_decode("Página ".str_pad($pdf->pageNo(),4,"0",STR_PAD_LEFT)),0,1,'R');
+        //$pdf->Cell(260,6,utf8_decode("Página ".str_pad($pdf->pageNo(),4,"0",STR_PAD_LEFT)),0,1,'R');
         $pdf->Ln(0);
         date_default_timezone_set('America/El_Salvador');
         $pdf->Cell(260,6,utf8_decode( date('Y/m/d g:i')),0,1,'R');
@@ -338,10 +532,11 @@ $pdf->AddPage('L','Letter');
         $pdf->SetFont('Arial','',8);
 
         //TOTAL Ventas
-        $pdf->Cell(199,5,utf8_decode('TOTAL: '),0,0,'R');
-        $pdf->Cell(16,5,$totalCantidadDeFacturasReporte,"T",0,'C');
+        $pdf->Cell(95,5,utf8_decode('TOTAL: '),"T",0,'R');
+        $pdf->Cell(10,5,$totalCantidadDeFacturasReporte,"T",0,'C');
         $pdf->Cell(21,5,"","T",0,'C');
-        $pdf->Cell(20,5,"$ ".number_format($totalDeudaReporte,2),"T",0,'L');
+        $pdf->Cell(10,5,"$ ".number_format($totalDeudaReporte,2),"T",0,'L');
+        $pdf->Cell(124,5,utf8_decode(''),"T",1,'R');
         $pdf->Ln(10);
 
 
