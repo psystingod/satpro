@@ -168,114 +168,242 @@ if ((document.getElementById("mesx1") != null && document.getElementById("mesx2"
 }
 
 function xmesesCancelar(){
+    if (document.getElementById("mesx1") != null && document.getElementById("mesx2") != null){
+        var nextM = (document.getElementById("meses").value).substring(0,7);
+        //console.log("valor de meses "+nextM);
+        nextM = nextM.replace("/", "-");
+        var joinArray = nextM.split("-").reverse().join("-");
 
-    var nextM = (document.getElementById("meses").value).substring(0,7);
-    //console.log("valor de meses "+nextM);
-    nextM = nextM.replace("/", "-");
-    var joinArray = nextM.split("-").reverse().join("-");
+        var d = new Date(joinArray+'T00:00');
+        console.log("valor de joinArray "+joinArray);
+        console.log("valor de Date joinArray "+d);
+        var xmeses = document.getElementById("xmeses").value;
 
-    var d = new Date(joinArray+'T00:00');
-    console.log("valor de joinArray "+joinArray);
-    console.log("valor de Date joinArray "+d);
-    var xmeses = document.getElementById("xmeses").value;
-    //d.setMonth(d.getMonth());
-    var newDate = new Date(d.setMonth(d.getMonth()+1));
-    //var month = (newDate.getMonth())+2;
-    //console.log("FUERA DEL LOOP "+newDate.getMonth());
-    var vueltas = 1;
-    for (var i = 1; i < xmeses; i++) {
-        //console.log("EN EL LOOP "+newDate.getMonth());
-        //var newDate = new Date(d.setMonth(d.getMonth()+2));
-        if (vueltas == 1) {
-            console.log("MES MES MES d"+d.getMonth());
-            console.log("MES MES MES newDate "+newDate.getMonth());
+        //d.setMonth(d.getMonth());
+        var newDate = new Date(d.setMonth(d.getMonth()+1));
+        //var month = (newDate.getMonth())+2;
+        //console.log("FUERA DEL LOOP "+newDate.getMonth());
+        var vueltas = 2;
+        for (var i = 1; i < xmeses; i++) {
+            //console.log("EN EL LOOP "+newDate.getMonth());
+            //var newDate = new Date(d.setMonth(d.getMonth()+2));
+            if (vueltas == 1) {
+                console.log("MES MES MES d"+d.getMonth());
+                console.log("MES MES MES newDate "+newDate.getMonth());
 
-                    var mm = String(newDate.getMonth() + i).padStart(2, '0'); //January is 0!
-                    console.log("MES antes de comparar "+mm);
-                    //console.log(newDate2);
-                    var yyyy = newDate.getFullYear();
+                var mm = String(newDate.getMonth() + i).padStart(2, '0'); //January is 0!
+                console.log("MES antes de comparar "+mm);
+                //console.log(newDate2);
+                var yyyy = newDate.getFullYear();
 
-        }else {
-            var mm = String(newDate.getMonth() + i).padStart(2, '0'); //January is 0!
-            console.log("MES antes de comparar "+mm);
-            //console.log(newDate2);
-            var yyyy = yyyy;
-        }
-
-
-        if (mm >12) {
-            if (mm == 13) {
-                mm=1;
-                yyyy = newDate2.getFullYear()+1;
-                console.log("EL AÑO ACTUAL ES: "+newDate2.getFullYear());
-            }else if (mm == 14) {
-                mm=2;
-                console.log("EL AÑO ACTUAL ES: "+newDate2.getFullYear());
-                yyyy = yyyy;
-            }else if (mm == 15) {
-                mm=3;
-                console.log("EL AÑO ACTUAL ES: "+newDate2.getFullYear());
-                yyyy = yyyy;
-            }else if (mm == 16) {
-                mm=4;
-                console.log("EL AÑO ACTUAL ES: "+newDate2.getFullYear());
-                yyyy = yyyy;
-            }else if (mm == 17) {
-                mm=5;
-                yyyy = yyyy;
-            }else if (mm == 18) {
-                mm=6;
-                yyyy = yyyy;
-            }else if (mm == 19) {
-                mm=7;
-                yyyy = yyyy;
-            }else if (mm == 20) {
-                mm=8;
-                yyyy = yyyy;
+            }else {
+                var mm = String(newDate.getMonth() + i).padStart(2, '0'); //January is 0!
+                console.log("MES antes de comparar "+mm);
+                //console.log(newDate2);
+                var yyyy = yyyy;
             }
-            //mm = 1; //January is 0!
-            //yyyy = newDate2.getFullYear()+1;
-        }
-        console.log("MES despues de comparar "+mm);
 
-        date = mm + '/' + yyyy;
 
-        console.log(date);
-        var beforeDate = "";
-        if (i >= 1) {
-            //console.log("MES SIN SUMAR 1 "+newDate.getMonth());
+            if (mm >12) {
+                if (mm == 13) {
+                    mm=1;
+                    yyyy = newDate2.getFullYear()+1;
+                    console.log("EL AÑO ACTUAL ES: "+newDate2.getFullYear());
+                }else if (mm == 14) {
+                    mm=2;
+                    console.log("EL AÑO ACTUAL ES: "+newDate2.getFullYear());
+                    yyyy = yyyy;
+                }else if (mm == 15) {
+                    mm=3;
+                    console.log("EL AÑO ACTUAL ES: "+newDate2.getFullYear());
+                    yyyy = yyyy;
+                }else if (mm == 16) {
+                    mm=4;
+                    console.log("EL AÑO ACTUAL ES: "+newDate2.getFullYear());
+                    yyyy = yyyy;
+                }else if (mm == 17) {
+                    mm=5;
+                    yyyy = yyyy;
+                }else if (mm == 18) {
+                    mm=6;
+                    yyyy = yyyy;
+                }else if (mm == 19) {
+                    mm=7;
+                    yyyy = yyyy;
+                }else if (mm == 20) {
+                    mm=8;
+                    yyyy = yyyy;
+                }
+                //mm = 1; //January is 0!
+                //yyyy = newDate2.getFullYear()+1;
+            }
+            console.log("MES despues de comparar "+mm);
 
-            if (mm < 10) {
-                console.log("LONGITUD DE CADENA "+mm.toString.length);
-                if (mm.toString.length == 1) {
-                    var newDate2 = yyyy + "-" + "0"+mm;
-                    console.log("DENTRO DE CONDICIÓN "+mm);
+            date = mm + '/' + yyyy;
+
+            console.log(date);
+            var beforeDate = "";
+            if (i >= 1) {
+                //console.log("MES SIN SUMAR 1 "+newDate.getMonth());
+
+                if (mm < 10) {
+                    console.log("LONGITUD DE CADENA "+mm.toString.length);
+                    if (mm.toString.length == 1) {
+                        var newDate2 = yyyy + "-" + "0"+mm;
+                        console.log("DENTRO DE CONDICIÓN "+mm);
+                    }else {
+                        var newDate2 = yyyy + "-" + mm;
+                        console.log("FUERA DE CONDICIÓN "+mm);
+                    }
                 }else {
                     var newDate2 = yyyy + "-" + mm;
-                    console.log("FUERA DE CONDICIÓN "+mm);
+                    console.log("FUERA DE CONDICIÓN FINAL "+mm);
                 }
-            }else {
-                var newDate2 = yyyy + "-" + mm;
-                console.log("FUERA DE CONDICIÓN FINAL "+mm);
+                //console.log("nueva fecha fecha "+newDate.toLocaleDateString());
+                newDate2 = newDate2.split("-").reverse().join("-");
+                //console.log("MES SUMANDO 1 "+newDate2);
+                beforeDate = document.getElementById("meses").value;
+                //console.log(beforeDate);
+                document.getElementById("meses").value = (newDate2 + "," + beforeDate).replace("-", "/");
+
+                var month = month+i;
+                var xxx = newDate2.split("-").reverse().join("-");
+                console.log("PRUEBAAAA "+xxx);
+
+                newDate2 = new Date(xxx);
+                console.log("VIENDO "+newDate2);
+                vueltas++;
+
             }
-            //console.log("nueva fecha fecha "+newDate.toLocaleDateString());
-            newDate2 = newDate2.split("-").reverse().join("-")
-            //console.log("MES SUMANDO 1 "+newDate2);
-            beforeDate = document.getElementById("meses").value;
-            //console.log(beforeDate);
-            document.getElementById("meses").value = (newDate2 + "," + beforeDate).replace("-", "/");
-
-            var month = month+i;
-            var xxx = newDate2.split("-").reverse().join("-");
-            console.log("PRUEBAAAA "+xxx);
-
-            newDate2 = new Date(xxx);
-            console.log("VIENDO "+newDate2);
-            vueltas++;
 
         }
-
     }
+    else {
+        var nextM = (document.getElementById("meses").value).substring(0,7);
+        //console.log("valor de meses "+nextM);
+        nextM = nextM.replace("/", "-");
+        var joinArray = nextM.split("-").reverse().join("-");
+
+        var d = new Date(joinArray+'T00:00');
+        console.log("valor de joinArray "+joinArray);
+        console.log("valor de Date joinArray "+d);
+        var xmeses = document.getElementById("xmeses").value;
+        //d.setMonth(d.getMonth());
+        var newDate = new Date(d.setMonth(d.getMonth()+1));
+        //var month = (newDate.getMonth())+2;
+        //console.log("FUERA DEL LOOP "+newDate.getMonth());
+        var vueltas = 1;
+        for (var i = 1; i < xmeses; i++) {
+            //console.log("EN EL LOOP "+newDate.getMonth());
+            //var newDate = new Date(d.setMonth(d.getMonth()+2));
+            if (vueltas == 1) {
+                console.log("MES MES MES d"+d.getMonth());
+                console.log("MES MES MES newDate "+newDate.getMonth());
+
+                var mm = String(newDate.getMonth() + i).padStart(2, '0'); //January is 0!
+                console.log("MES antes de comparar "+mm);
+                //console.log(newDate2);
+                var yyyy = newDate.getFullYear();
+
+            }else {
+                var mm = String(newDate.getMonth() + i).padStart(2, '0'); //January is 0!
+                console.log("MES antes de comparar "+mm);
+                //console.log(newDate2);
+                var yyyy = yyyy;
+            }
+
+
+            if (mm >12) {
+                if (mm == 13) {
+                    mm=1;
+                    yyyy = newDate2.getFullYear()+1;
+                    console.log("EL AÑO ACTUAL ES: "+newDate2.getFullYear());
+                }else if (mm == 14) {
+                    mm=2;
+                    console.log("EL AÑO ACTUAL ES: "+newDate2.getFullYear());
+                    yyyy = yyyy;
+                }else if (mm == 15) {
+                    mm=3;
+                    console.log("EL AÑO ACTUAL ES: "+newDate2.getFullYear());
+                    yyyy = yyyy;
+                }else if (mm == 16) {
+                    mm=4;
+                    console.log("EL AÑO ACTUAL ES: "+newDate2.getFullYear());
+                    yyyy = yyyy;
+                }else if (mm == 17) {
+                    mm=5;
+                    yyyy = yyyy;
+                }else if (mm == 18) {
+                    mm=6;
+                    yyyy = yyyy;
+                }else if (mm == 19) {
+                    mm=7;
+                    yyyy = yyyy;
+                }else if (mm == 20) {
+                    mm=8;
+                    yyyy = yyyy;
+                }
+                //mm = 1; //January is 0!
+                //yyyy = newDate2.getFullYear()+1;
+            }
+            console.log("MES despues de comparar "+mm);
+
+            date = mm + '/' + yyyy;
+
+            console.log(date);
+            var beforeDate = "";
+            if (i >= 1) {
+                //console.log("MES SIN SUMAR 1 "+newDate.getMonth());
+
+                if (mm < 10) {
+                    console.log("LONGITUD DE CADENA "+mm.toString.length);
+                    if (mm.toString.length == 1) {
+                        var newDate2 = yyyy + "-" + "0"+mm;
+                        console.log("DENTRO DE CONDICIÓN "+mm);
+                    }else {
+                        var newDate2 = yyyy + "-" + mm;
+                        console.log("FUERA DE CONDICIÓN "+mm);
+                    }
+                }else {
+                    var newDate2 = yyyy + "-" + mm;
+                    console.log("FUERA DE CONDICIÓN FINAL "+mm);
+                }
+                //console.log("nueva fecha fecha "+newDate.toLocaleDateString());
+                newDate2 = newDate2.split("-").reverse().join("-")
+                //console.log("MES SUMANDO 1 "+newDate2);
+                beforeDate = document.getElementById("meses").value;
+                //console.log(beforeDate);
+                document.getElementById("meses").value = (newDate2 + "," + beforeDate).replace("-", "/");
+
+                var month = month+i;
+                var xxx = newDate2.split("-").reverse().join("-");
+                console.log("PRUEBAAAA "+xxx);
+
+                newDate2 = new Date(xxx);
+                console.log("VIENDO "+newDate2);
+                vueltas++;
+
+                // CALCULO PARA MOSTRAR EL TOTAL A PAGAR
+                var cesc = document.getElementById("cesc").value;
+                totalSinIva = String(parseFloat(document.getElementById("valorCuota").value)/1.13);//.substring(0, 10);
+                var impuestox = String(parseFloat(cesc)*parseFloat(totalSinIva)).substring(0, 4);
+
+                var totalPagar1 = document.getElementById("xmeses").value*parseFloat(document.getElementById("valorCuota").value);
+                document.getElementById("totalPagar").value = totalPagar1;
+
+                //console.log(document.getElementById("impSeg").value);
+                //console.log(document.getElementById("xmeses").value);
+                document.getElementById("impSeg").value = Number(parseFloat(impuestox) * document.getElementById("xmeses").value).toFixed(2);
+                document.getElementById("totalAbonoImpSeg").value = Number(parseFloat(totalPagar1)+parseFloat(document.getElementById("impSeg").value)).toFixed(2);
+                //console.log(document.getElementById("totalPagar").value);
+                //console.log(document.getElementById("xmeses").value);
+                // FIN CALCULO PARA MOSTRAR EL TOTAL A PAGAR
+
+            }
+
+        }
+    }
+
 }
 /*function imprimirAbono(){
     var r = confirm("¿Desea imprimir el comprobante de pago?");
@@ -288,3 +416,10 @@ function xmesesCancelar(){
       document.getElementById("submitAbono").click();
     }
 }*/
+
+function anularTodo(){
+    document.getElementById("totalPagar").value="0.00";
+    document.getElementById("impSeg").value="0.00";
+    document.getElementById("totalAbonoImpSeg").value="0.00";
+    document.getElementById("total").value="0.00";
+}

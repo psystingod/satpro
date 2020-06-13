@@ -6,7 +6,12 @@
     function getAccess($permisosActuales, $permisoRequerido){
         return ((intval($permisosActuales) & intval($permisoRequerido)) == 0) ? false : true;
     }
-    session_start();
+if(!isset($_SESSION))
+{
+    session_start([
+        'cookie_lifetime' => 86400,
+    ]);
+}
     require("../../php/connection.php");
     require('../../php/permissions.php');
  ?>
@@ -155,7 +160,7 @@
 
             //include database connection
         $obj = new ConectionDB($_SESSION['db']);
-        $con = $obj->dbConnect;
+        $con = $obj->ConectionDB($_SESSION['db']);
 
             // read current record's data
             try {
@@ -364,7 +369,7 @@
                     }
                 }
                 ?>
-                <form action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}");?>" method="POST">
+                <form id="frmPermisos" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"] . "?id={$id}");?>" method="POST">
                 <!-- /.row -->
                 <div class="row">
                     <table class='table table-hover table-responsive'>
@@ -438,7 +443,7 @@
                                 echo "<tr><td>BANCOS</td><td><input type='checkbox' name='bancos' value='64'></td></tr>";
                             }
                             if (setMenu($totalPermissionsModules, CXC)) {
-                                echo "<tr><td>CUENTAS POR COBRAR</td><td><input type='checkbox' name='cxc' value='128' checked></td></tr>";
+                                echo "<tr><td>CUENTAS POR COBRAR</td><td><input type='checkbox' id='cxc' name='cxc' value='128' checked></td></tr>";
                             }else {
                                 echo "<tr><td>CUENTAS POR COBRAR</td><td><input type='checkbox' name='cxc' value='128'></td></tr>";
                             }
@@ -482,6 +487,30 @@
                         </table>
                     </div>
                 </div>
+                <!--<div class="row">
+                    <table class='table table-hover table-responsive table-bordered' style="background-color:#ffffff;">
+                        <th>REPORTERIA</th>
+                        <th>PROCESOS</th>
+                        <th>TRANSACCIONES</th>
+                        <?php/*
+                        if (setMenu($totalPermissions, AGREGAR)) {
+                            echo "<tr><td><input type='checkbox' name='agregar' value='1' checked></td>";
+                        }else {
+                            echo "<tr><td><input type='checkbox' name='agregar' value='1'></td>";
+                        }
+                        if (setMenu($totalPermissions, EDITAR)) {
+                            echo "<td><input type='checkbox' name='editar' value='2' checked></td>";
+                        }else {
+                            echo "<td><input type='checkbox' name='editar' value='2'></td>";
+                        }
+                        if (setMenu($totalPermissions, ELIMINAR)) {
+                            echo "<td><input type='checkbox' name='eliminar' value='4' checked></td></tr>";
+                        }else {
+                            echo "<td><input type='checkbox' name='eliminar' value='4'></td></tr>";
+                        }*/
+                        ?>
+                    </table>
+                </div>-->
                 <div class="row">
                     <div class="col-lg-4">
 
@@ -489,11 +518,29 @@
                     <div class="col-lg-4">
                         <a href="empleados.php"><button class="btn btn-default" type="button" name="regresar">Cancelar</button></a>
                         <button class="btn btn-primary" type="submit">Guardar cambios</button>
+                        <!--<button id="btnMcxc" data-toggle="modal" data-target="#Mcxc">Permisos por módulo</button>-->
                     </div>
                     <div class="col-lg-4">
 
                     </div>
                 </div>
+                    <!-- Modal BUSCAR CLIENTE -->
+                    <div id="Mcxc" class="modal fade" role="dialog">
+                        <div class="modal-dialog modal-lg">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div style="background-color: #d32f2f; color:white; padding: 10px;" class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal"><span style=" font-size: 30px;">&times;</span></button>
+                                    <h4 class="modal-title">Permisos para cuentas por cobrar</h4>
+                                </div>
+                                <div style="font-size: 11px;" class="modal-body">
+                                    <div class="row">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- Fin Modal BUSCAR CLIENTE-->
                 </form>
             </div>
             <!-- /.container-fluid -->
@@ -514,6 +561,7 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="../../dist/js/sb-admin-2.js"></script>
+    <script src="js/especificos.js"></script>
 
 </body>
 

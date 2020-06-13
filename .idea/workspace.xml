@@ -2,26 +2,107 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9b434152-df7c-48b6-9360-8012b48f8529" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/abonosLiquidados.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/estadoCuentaImp.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/registrosBanco.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/modulo_administrar/js/especificos.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/modulo_administrar/php/bankClose.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/modulo_cxc/js/searchMun2.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/modulo_cxc/js/zoom.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/GetLocalidades.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/analisisSuspensiones.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/generarCompromisos.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/satpro.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/satpro.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/images/anulada.png" beforeDir="false" afterPath="$PROJECT_DIR$/images/anulada.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/Prueba.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/Prueba.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/SQL/UTILS.txt" beforeDir="false" afterPath="$PROJECT_DIR$/SQL/UTILS.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/data/morris-data.js" beforeDir="false" afterPath="$PROJECT_DIR$/data/morris-data.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/dist/css/sb-admin-2.css" beforeDir="false" afterPath="$PROJECT_DIR$/dist/css/sb-admin-2.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/HistorialRegistros.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/HistorialRegistros.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/Prueba.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/actualizarArticulo.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/actualizarArticulo.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/actualizarArticuloI.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/actualizarArticuloI.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/asignaciones.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/asignaciones.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/index.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/login.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/login.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/infoCliente.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/infoCliente.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/inventario.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/inventario.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/inventarioInternet.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/inventarioInternet.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_administrar/actualizarAfp.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_administrar/actualizarAfp.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_administrar/actualizarBanco.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_administrar/actualizarBanco.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_administrar/actualizarBodega.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_administrar/actualizarBodega.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_administrar/actualizarCategoria.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_administrar/actualizarCategoria.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_administrar/actualizarDepartamento.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_administrar/actualizarDepartamento.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_administrar/actualizarPlaza.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_administrar/actualizarPlaza.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_administrar/actualizarProveedor.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_administrar/actualizarProveedor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_administrar/actualizarTipoProducto.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_administrar/actualizarTipoProducto.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_administrar/actualizarUnidadMedida.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_administrar/actualizarUnidadMedida.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_administrar/afp.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_administrar/afp.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_administrar/bancos.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_administrar/bancos.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_administrar/configFacturas.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_administrar/configFacturas.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_administrar/configuracion.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_administrar/configuracion.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_administrar/departamentos.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_administrar/departamentos.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_administrar/editarUsuario.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_administrar/editarUsuario.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/abonos.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/abonos.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/clientes.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/clientes.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/cxc.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/cxc.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/estadoCuenta.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/estadoCuenta.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/estadoCuentax2.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/estadoCuentax2.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/facturacionGenerada.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/facturacionGenerada.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/gestionCobros.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/gestionCobros.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/impagos.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/impagos.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/infoCliente.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/infoCliente.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/js/abonos.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/js/abonos.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/js/clientes.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/js/clientes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/js/ordenSuspension.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/js/ordenSuspension.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/js/ordenTrabajo.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/js/ordenTrabajo.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/js/search.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/js/search.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/js/searchmun.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/js/searchmun.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/js/ventasAnuladas.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/js/ventasAnuladas.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/ordenReconexion.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/ordenReconexion.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/ordenReconexionImp.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/ordenReconexionImp.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/ordenSuspension.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/ordenSuspension.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/ordenTrabajo.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/ordenTrabajo.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/ordenTraslado.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/ordenTraslado.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/GetAllInfo.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/GetAllInfo.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/abonosAplicados.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/abonosAplicados.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/abonosLiquidados.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/abonosLiquidados.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/aplicarAbonosx2.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/aplicarAbonosx2.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/contratoInter.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/contratoInter.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/editarCliente.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/editarCliente.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/editarOrdenSuspension.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/editarOrdenSuspension.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/editarOrdenTraslado.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/editarOrdenTraslado.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/editarVentaAnulada.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/editarVentaAnulada.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/eliminarAbonoTodo.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/eliminarAbonoTodo.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/getAllClients.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/getAllClients.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/estadoCuentaImp.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/estadoCuentaImp.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/facturasEmitidas.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/facturasEmitidas.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/generarFacturaManual.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/generarFacturaManual.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/generarFacturas.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/generarFacturas.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/getData.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/getData.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/getSaldoReal.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/getSaldoReal.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/imprimirFacturas.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/imprimirFacturas.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/listaDeClientes.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/listaDeClientes.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/listaDeClientesConFacturasGeneradas.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/listaDeClientesConFacturasGeneradas.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/lista_dos_meses_facturas_no_vencidos.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/lista_dos_meses_facturas_no_vencidos.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/reporteClientes.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/reporteClientes.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/php/connection.php" beforeDir="false" afterPath="$PROJECT_DIR$/php/connection.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/nuevaOrdenSuspension.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/nuevaOrdenSuspension.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/nuevaVentaAnulada.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/nuevaVentaAnulada.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/nuevoCliente.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/nuevoCliente.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/ordenReconexionImp.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/ordenReconexionImp.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/ordenSuspensionImp.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/ordenSuspensionImp.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/ordenTrasladoImp.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/ordenTrasladoImp.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/reporteOrdenesTrabajo.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/reporteOrdenesTrabajo.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/search.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/search.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/setVendedor.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/setVendedor.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/updateTvBox.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/updateTvBox.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/vendedores.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/vendedores.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/ventasAnuladas.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/facturacionManual.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/ventasManuales.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/ventasManuales.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_iva/php/pdfConsumidorFinal.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_iva/php/pdfConsumidorFinal.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_iva/php/pdfCreditoFiscal.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_iva/php/pdfCreditoFiscal.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/ordenTrabajo.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/ordenTrabajo.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/php/Dashboard.php" beforeDir="false" afterPath="$PROJECT_DIR$/php/Dashboard.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/php/contenido.php" beforeDir="false" afterPath="$PROJECT_DIR$/php/contenido.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/php/enterProductInternet.php" beforeDir="false" afterPath="$PROJECT_DIR$/php/enterProductInternet.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/php/getInventoryPDF.php" beforeDir="false" afterPath="$PROJECT_DIR$/php/getInventoryPDF.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/php/getViewA_D.php" beforeDir="false" afterPath="$PROJECT_DIR$/php/getViewA_D.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/php/productsInfo.php" beforeDir="false" afterPath="$PROJECT_DIR$/php/productsInfo.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/php/signin.php" beforeDir="false" afterPath="$PROJECT_DIR$/php/signin.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/font-awesome/css/font-awesome.css" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/font-awesome/css/font-awesome.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/vendor/font-awesome/css/font-awesome.min.css" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/font-awesome/css/font-awesome.min.css" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -30,9 +111,7 @@
   </component>
   <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
     <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
-    <execution>
-      <executable />
-    </execution>
+    <execution />
   </component>
   <component name="DatabaseView">
     <option name="SHOW_INTERMEDIATE" value="true" />
@@ -47,6 +126,14 @@
     </option>
     <expand />
     <select />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="CSS File" />
+        <option value="JavaScript File" />
+      </list>
+    </option>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -70,19 +157,20 @@
       <path value="$PROJECT_DIR$/vendor/jQuery-Mask-Plugin-master/test" />
       <path value="$PROJECT_DIR$/vendor/jQuery-Mask-Plugin-master/src" />
       <path value="$PROJECT_DIR$/vendor/jQuery-Mask-Plugin-master/dist" />
+      <path value="$PROJECT_DIR$/vendor/font-awesome/kkk" />
     </include_path>
   </component>
   <component name="ProjectId" id="1Y8EIEzXnZ8SMxDTKsRG2GDOyPH" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
-    <option name="showExcludedFiles" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../api" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
     <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors" />
   </component>
   <component name="RunManager">
@@ -152,46 +240,76 @@
       <workItem from="1586008942879" duration="9600000" />
       <workItem from="1586035643123" duration="4000" />
       <workItem from="1586181732613" duration="19145000" />
-      <workItem from="1586271580255" duration="5052000" />
+      <workItem from="1586271580255" duration="9708000" />
+      <workItem from="1586358615608" duration="15970000" />
+      <workItem from="1586793491557" duration="14316000" />
+      <workItem from="1586872300305" duration="8523000" />
+      <workItem from="1586958297015" duration="12410000" />
+      <workItem from="1587051694360" duration="11309000" />
+      <workItem from="1587072989135" duration="4133000" />
+      <workItem from="1587173872466" duration="3000" />
+      <workItem from="1587326401639" duration="2082000" />
+      <workItem from="1587477792042" duration="17751000" />
+      <workItem from="1587561532655" duration="13879000" />
+      <workItem from="1587647098057" duration="12490000" />
+      <workItem from="1587682887371" duration="1113000" />
+      <workItem from="1587733690254" duration="19406000" />
+      <workItem from="1588165560898" duration="22230000" />
+      <workItem from="1588203202503" duration="548000" />
+      <workItem from="1588254119398" duration="4379000" />
+      <workItem from="1588266073423" duration="8460000" />
+      <workItem from="1588338200226" duration="7286000" />
+      <workItem from="1588353484324" duration="8787000" />
+      <workItem from="1588425008856" duration="14927000" />
+      <workItem from="1589116722911" duration="26000" />
+      <workItem from="1589116869439" duration="23111000" />
+      <workItem from="1589202328336" duration="21280000" />
+      <workItem from="1589291011964" duration="23204000" />
+      <workItem from="1589374816553" duration="14469000" />
+      <workItem from="1589461514610" duration="19625000" />
+      <workItem from="1589547789273" duration="24912000" />
+      <workItem from="1589634344041" duration="22893000" />
+      <workItem from="1590325783889" duration="25838000" />
+      <workItem from="1590411858642" duration="11270000" />
+      <workItem from="1590437480958" duration="6177000" />
+      <workItem from="1590448500299" duration="3000" />
+      <workItem from="1590498109901" duration="19708000" />
+      <workItem from="1590584918834" duration="12562000" />
+      <workItem from="1590610378207" duration="3785000" />
+      <workItem from="1590671399641" duration="16474000" />
+      <workItem from="1590782789854" duration="4697000" />
+      <workItem from="1590844256869" duration="27731000" />
+      <workItem from="1591535065876" duration="17253000" />
+      <workItem from="1591621086537" duration="10262000" />
+      <workItem from="1591707811802" duration="12207000" />
+      <workItem from="1591745937565" duration="19000" />
+      <workItem from="1591794735971" duration="7637000" />
+      <workItem from="1591880774780" duration="6219000" />
+      <workItem from="1591967260300" duration="17277000" />
+      <workItem from="1592053976155" duration="14238000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
+    <option name="version" value="2" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="275" y="25" key="#Deployment" timestamp="1582315866632">
+    <state x="305" y="26" key="#Inspections" timestamp="1589146925222">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="25" key="#Deployment/0.0.1366.728@0.0.1366.728" timestamp="1582315866632" />
-    <state x="175" y="0" key="#Notifications" timestamp="1582316223517">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="175" y="0" key="#Notifications/0.0.1366.728@0.0.1366.728" timestamp="1582316223517" />
-    <state x="275" y="25" key="#Options" timestamp="1582315891762">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="275" y="25" key="#Options/0.0.1366.728@0.0.1366.728" timestamp="1582315891762" />
-    <state x="406" y="0" key="#PHP" timestamp="1582555940614">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="406" y="0" key="#PHP/0.0.1366.728@0.0.1366.728" timestamp="1582555940614" />
+    <state x="305" y="26" key="#Inspections/0.0.1366.728@0.0.1366.728" timestamp="1589146925222" />
     <state x="175" y="0" key="#SQL_Dialects" timestamp="1584379219726">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="175" y="0" key="#SQL_Dialects/0.0.1366.728@0.0.1366.728" timestamp="1584379219726" />
-    <state x="275" y="14" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1582653858151">
+    <state x="363" y="89" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog" timestamp="1587682764817">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="275" y="14" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1366.728@0.0.1366.728" timestamp="1582653858151" />
-    <state x="320" y="0" width="744" height="728" key="#php" timestamp="1582556071737">
+    <state x="363" y="89" key="#com.intellij.openapi.updateSettings.impl.PluginUpdateInfoDialog/0.0.1366.728@0.0.1366.728" timestamp="1587682764817" />
+    <state x="431" y="103" key="FileChooserDialogImpl" timestamp="1591880976589">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="320" y="0" width="744" height="728" key="#php/0.0.1366.728@0.0.1366.728" timestamp="1582556071737" />
-    <state x="431" y="103" key="FileChooserDialogImpl" timestamp="1584737708642">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="431" y="103" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1584737708642" />
+    <state x="431" y="103" key="FileChooserDialogImpl/0.0.1366.728@0.0.1366.728" timestamp="1591880976589" />
     <state width="1311" height="208" key="GridCell.Tab.0.bottom" timestamp="1586214180784">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -240,19 +358,22 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state width="1311" height="208" key="GridCell.Tab.2.right/0.0.1366.728@0.0.1366.728" timestamp="1586214180784" />
-    <state x="495" y="272" key="NewPhpFileDialog" timestamp="1586210073898">
+    <state x="495" y="272" key="NewPhpFileDialog" timestamp="1591545064410">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="495" y="272" key="NewPhpFileDialog/0.0.1366.728@0.0.1366.728" timestamp="1586210073898" />
+    <state x="495" y="272" key="NewPhpFileDialog/0.0.1366.728@0.0.1366.728" timestamp="1591545064410" />
     <state x="225" y="0" width="1141" height="728" key="SettingsEditor" timestamp="1585604745008">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="225" y="0" width="1141" height="728" key="SettingsEditor/0.0.1366.728@0.0.1366.728" timestamp="1585604745008" />
-    <state x="391" y="191" key="com.intellij.ide.util.TipDialog" timestamp="1586271581989">
+    <state width="623" height="498" key="SwitcherDM" timestamp="1590359208351">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state x="391" y="191" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1586271581989" />
-    <state x="458" y="226" key="com.intellij.ide.util.TipDialog/0.0.1600.860@0.0.1600.860" timestamp="1583160443979" />
+    <state width="623" height="498" key="SwitcherDM/0.0.1366.728@0.0.1366.728" timestamp="1590359208351" />
+    <state x="391" y="191" key="com.intellij.ide.util.TipDialog" timestamp="1587647106204">
+      <screen x="0" y="0" width="1366" height="728" />
+    </state>
+    <state x="391" y="191" key="com.intellij.ide.util.TipDialog/0.0.1366.728@0.0.1366.728" timestamp="1587647106204" />
     <state x="0" y="0" width="731" height="728" key="find.popup" timestamp="1584984808596">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -261,9 +382,5 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="255" y="159" width="840" height="1034" key="run.anything.popup/0.0.1366.728@0.0.1366.728" timestamp="1585607234083" />
-    <state x="262" y="-1" width="840" height="1034" key="search.everywhere.popup" timestamp="1582585997042">
-      <screen x="0" y="0" width="1366" height="728" />
-    </state>
-    <state x="262" y="-1" width="840" height="1034" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1582585997042" />
   </component>
 </project>

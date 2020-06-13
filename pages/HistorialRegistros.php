@@ -1,5 +1,8 @@
 <?php
+if (!isset($_SESSION)){
     session_start();
+}
+
     require("../php/getViewA_D.php");
     $In = new GetViewA_D();
     $histo = $In->getHistorial();
@@ -169,7 +172,7 @@
                             <?php
                                 foreach ($histo as $key) {
                                     echo "<tr><td>";
-                                    echo $key["nombreEmpleado"] ." ". $key["Apellidos"] . "</td><td>";
+                                    echo $key["nombreEmpleado"] ." ". /*$key["Apellidos"] . */"</td><td>";
                                     echo $key["nombreArticulo"] . "</td><td>";
                                     echo $key["cantidad"] . "</td><td>";
                                     echo $key["fechaHora"] . "</td><td>";

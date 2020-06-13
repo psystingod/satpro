@@ -42,10 +42,71 @@ class GetAllInfo extends ConectionDB
             die();
         }
     }
+    //SOBREESCRITURA DE MÉTODO
+    public function getMunSearch($tabla, $depto){
+        try {
+            if ($depto == 'satpro_sm'){
+                $depto = '03';
+            }else{
+                $depto = '';
+            }
+            $query = "SELECT * FROM $tabla WHERE idMunicipio LIKE '{$depto}%'";
+            $statement = $this->dbConnect->prepare($query);
+            $statement->execute();
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+
+        } catch (Exception $e) {
+            print "!Error¡: " . $e->getMessage() . "</br>";
+            die();
+        }
+    }
+
+    //SOBREESCRITURA DE MÉTODO
+    /*public function getColsSearch($tabla){
+        try {
+            $query = "SELECT * FROM $tabla WHERE idColonia LIKE '0301%'";
+            $statement = $this->dbConnect->prepare($query);
+            $statement->execute();
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+
+        } catch (Exception $e) {
+            print "!Error¡: " . $e->getMessage() . "</br>";
+            die();
+        }
+    }*/
 
     public function getDataAct($tabla1,$tabla2){
         try {
             $query = "SELECT idActividadCable AS idActividadC, CONCAT(nombreActividad, ' (CABLE)') AS actividadC FROM $tabla1 UNION SELECT idActividadInter AS idActividadI, CONCAT(nombreActividad, ' (INTERNET)') AS actividadI FROM $tabla2";
+            $statement = $this->dbConnect->prepare($query);
+            $statement->execute();
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+
+        } catch (Exception $e) {
+            print "!Error¡: " . $e->getMessage() . "</br>";
+            die();
+        }
+    }
+
+    public function getDataActC($tabla){
+        try {
+            $query = "SELECT idActividadCable, nombreActividad FROM $tabla";
+            $statement = $this->dbConnect->prepare($query);
+            $statement->execute();
+            $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+            return $result;
+
+        } catch (Exception $e) {
+            print "!Error¡: " . $e->getMessage() . "</br>";
+            die();
+        }
+    }
+    public function getDataActI($tabla){
+        try {
+            $query = "SELECT idActividadInter, nombreActividad FROM $tabla";
             $statement = $this->dbConnect->prepare($query);
             $statement->execute();
             $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -368,7 +429,7 @@ class GetAllInfo extends ConectionDB
     public function getDataAbonosGlobal($codigoCliente, $tipoServicio, $estado){
         try {
             //SELECT * FROM Table1 WHERE Table1.principal NOT IN (SELECT principal FROM table2)
-            $query = "SELECT * FROM tbl_abonos WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado AND anulada=:anulada and tbl_abonos.mesCargo NOT IN(SELECT mesCargo from tbl_cargos where anulada = 0 and codigoCliente=:codigoCliente and tipoServicio = :tipoServicio) ORDER BY idAbono DESC";
+            $query = "SELECT * FROM tbl_abonos WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado AND anulada=:anulada and tbl_abonos.mesCargo NOT IN(SELECT mesCargo from tbl_cargos where anulada = 0 and codigoCliente=:codigoCliente and tipoServicio = :tipoServicio) ORDER BY CAST(CONCAT(substring(mesCargo,4,4), '-', substring(mesCargo,1,2),'-', '01') AS DATE) DESC";
             $statement = $this->dbConnect->prepare($query);
             $statement->bindValue(':codigoCliente', $codigoCliente);
             $statement->bindValue(':tipoServicio', $tipoServicio);
@@ -386,7 +447,7 @@ class GetAllInfo extends ConectionDB
     public function getDataCargosGlobal($codigoCliente, $tipoServicio, $estado){
         try {
             //SELECT * FROM Table1 WHERE Table1.principal NOT IN (SELECT principal FROM table2)
-            $query = "SELECT * FROM tbl_cargos WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado AND anulada=:anulada and tbl_cargos.mesCargo NOT IN(SELECT mesCargo from tbl_abonos where anulada = 0 and codigoCliente=:codigoCliente and tipoServicio = :tipoServicio) ORDER BY idFactura DESC";
+            $query = "SELECT * FROM tbl_cargos WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado AND anulada=:anulada and tbl_cargos.mesCargo NOT IN(SELECT mesCargo from tbl_abonos where anulada = 0 and codigoCliente=:codigoCliente and tipoServicio = :tipoServicio) ORDER BY CAST(CONCAT(substring(mesCargo,4,4), '-', substring(mesCargo,1,2),'-', '01') AS DATE) DESC";
             $statement = $this->dbConnect->prepare($query);
             $statement->bindValue(':codigoCliente', $codigoCliente);
             $statement->bindValue(':tipoServicio', $tipoServicio);
@@ -447,7 +508,7 @@ class GetAllInfo extends ConectionDB
         try {
             //$estado = "pendiente";
             $query = "SELECT c.estado as estadoCargo, c.numeroFactura as facturaCargo, c.numeroRecibo as reciboCargo, c.mesCargo as cargoCargo, c.tipoServicio as servicioCargo, c.fechaFactura as fechaFacturaCargo, c.fechaVencimiento as fechaVencimientoCargo, c.cuotaCable as cuotaCableCargo, c.totalImpuesto as totalImpuestoCargo, a.estado as estadoAbono, a.numeroFactura as facturaAbono, a.numeroRecibo as reciboAbono, a.mesCargo as cargoAbono, a.tipoServicio as servicioAbono, a.fechaAbonado as fechaAbonadoAbono, a.fechaVencimiento as fechaVencimientoAbono, a.cuotaCable as cuotaCableAbono, a.totalImpuesto as totalImpuestoAbono
-                      FROM tbl_cargos as c inner JOIN tbl_abonos as a ON (a.`codigoCliente` = c.`codigoCliente`) WHERE c.`tipoServicio`=:tipoServicio and a.`tipoServicio`=:tipoServicio and (c.`mesCargo`=a.`mesCargo`) and c.codigoCliente=:codigoCliente and a.codigoCliente=:codigoCliente and a.anulada=:anulada and c.anulada=:anulada order by c.`idFactura` DESC";
+                      FROM tbl_cargos as c inner JOIN tbl_abonos as a ON (a.`codigoCliente` = c.`codigoCliente`) WHERE c.`tipoServicio`=:tipoServicio and a.`tipoServicio`=:tipoServicio and (c.`mesCargo`=a.`mesCargo`) and c.codigoCliente=:codigoCliente and a.codigoCliente=:codigoCliente and a.anulada=:anulada and c.anulada=:anulada order by CAST(CONCAT(substring(c.mesCargo,4,4), '-', substring(c.mesCargo,1,2),'-', '01') AS DATE) DESC";
 
             $statement = $this->dbConnect->prepare($query);
             $statement->bindValue(':codigoCliente', $codigoCliente);
@@ -466,7 +527,7 @@ class GetAllInfo extends ConectionDB
         try {
             //$estado = "pendiente";
             $query = "SELECT c.estado as estadoCargo, c.numeroFactura as facturaCargo, c.numeroRecibo as reciboCargo, c.mesCargo as cargoCargo, c.tipoServicio as servicioCargo, c.fechaFactura as fechaFacturaCargo, c.fechaVencimiento as fechaVencimientoCargo, c.cuotaInternet as cuotaInterCargo, c.totalImpuesto as totalImpuestoCargo, a.estado as estadoAbono, a.numeroFactura as facturaAbono, a.numeroRecibo as reciboAbono, a.mesCargo as cargoAbono, a.tipoServicio as servicioAbono, a.fechaAbonado as fechaAbonadoAbono, a.fechaVencimiento as fechaVencimientoAbono, a.cuotaInternet as cuotaInterAbono, a.totalImpuesto as totalImpuestoAbono
-                      FROM tbl_cargos as c inner JOIN tbl_abonos as a ON (a.`codigoCliente` = c.`codigoCliente`) WHERE c.`tipoServicio`=:tipoServicio and a.`tipoServicio`=:tipoServicio and (c.`mesCargo`=a.`mesCargo`) and c.codigoCliente=:codigoCliente and a.codigoCliente=:codigoCliente and a.anulada=:anulada and c.anulada=:anulada order by c.`idFactura` DESC";
+                      FROM tbl_cargos as c inner JOIN tbl_abonos as a ON (a.`codigoCliente` = c.`codigoCliente`) WHERE c.`tipoServicio`=:tipoServicio and a.`tipoServicio`=:tipoServicio and (c.`mesCargo`=a.`mesCargo`) and c.codigoCliente=:codigoCliente and a.codigoCliente=:codigoCliente and a.anulada=:anulada and c.anulada=:anulada order by CAST(CONCAT(substring(c.mesCargo,4,4), '-', substring(c.mesCargo,1,2),'-', '01') AS DATE) DESC";
 
             $statement = $this->dbConnect->prepare($query);
             $statement->bindValue(':codigoCliente', $codigoCliente);
@@ -551,6 +612,72 @@ class GetAllInfo extends ConectionDB
             die();
         }
     }
+    public function getTotalCobrarCableImp2($tabla, $codigoCliente, $estado, $anulada){
+        try {
+            $c = "C";
+
+            // Total servicio CABLE
+            $query = "SELECT SUM(cuotaCable) AS sumaCable, SUM(totalImpuesto) AS sumaImpuestosCable FROM $tabla WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado AND anulada=:anulada";
+            $statement = $this->dbConnect->prepare($query);
+            $statement->bindValue(':codigoCliente', $codigoCliente);
+            $statement->bindValue(':tipoServicio', $c);
+            $statement->bindValue(':estado', $estado);
+            $statement->bindValue(':anulada', $anulada);
+            $statement->execute();
+            $result1 = $statement->fetch(PDO::FETCH_ASSOC);
+            $sumaCable = $result1["sumaCable"];
+            $sumaImpuestosCable = $result1["sumaImpuestosCable"];
+
+            $number = floatval($sumaCable) + floatval($sumaImpuestosCable);
+            $total = number_format($number, 2);
+            return $total;
+
+        } catch (Exception $e) {
+            print "!Error¡: " . $e->getMessage() . "</br>";
+            die();
+        }
+    }
+    public function getTotalCuentasC($tabla, $codigoCliente, $estado, $anulada){
+        try {
+            $c = "C";
+
+            // Total servicio CABLE
+            $query = "SELECT COUNT(*) FROM $tabla WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado AND anulada=:anulada";
+            $statement = $this->dbConnect->prepare($query);
+            $statement->bindValue(':codigoCliente', $codigoCliente);
+            $statement->bindValue(':tipoServicio', $c);
+            $statement->bindValue(':estado', $estado);
+            $statement->bindValue(':anulada', $anulada);
+            $statement->execute();
+            $result1 = $statement->fetchColumn();
+            return $result1;
+
+        } catch (Exception $e) {
+            print "!Error¡: " . $e->getMessage() . "</br>";
+            die();
+        }
+    }
+    public function getTotalCuentasI($tabla, $codigoCliente, $estado, $anulada){
+        try {
+            $c = "I";
+
+            // Total servicio CABLE
+            $query = "SELECT COUNT(*) FROM $tabla WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado AND anulada=:anulada";
+            $statement = $this->dbConnect->prepare($query);
+            $statement->bindValue(':codigoCliente', $codigoCliente);
+            $statement->bindValue(':tipoServicio', $c);
+            $statement->bindValue(':estado', $estado);
+            $statement->bindValue(':anulada', $anulada);
+            $statement->execute();
+            $result1 = $statement->fetchColumn();
+
+            return $result1;
+
+        } catch (Exception $e) {
+            print "!Error¡: " . $e->getMessage() . "</br>";
+            die();
+        }
+    }
 
     public function getTotalCobrarInterImp($tabla, $codigoCliente, $estado, $anulada, $hasta){
         try {
@@ -563,6 +690,30 @@ class GetAllInfo extends ConectionDB
             $statement->bindValue(':estado', $estado);
             $statement->bindValue(':anulada', $anulada);
             $statement->bindValue(':hasta', $hasta);
+            $statement->execute();
+            $result2 = $statement->fetch(PDO::FETCH_ASSOC);
+            $sumaInter = $result2["sumaInter"];
+            $sumaImpuestosInter = $result2["sumaImpuestosInter"];
+
+            $number = floatval($sumaInter) + floatval($sumaImpuestosInter);
+            $total = number_format($number, 2);
+            return $total;
+
+        } catch (Exception $e) {
+            print "!Error¡: " . $e->getMessage() . "</br>";
+            die();
+        }
+    }
+    public function getTotalCobrarInterImp2($tabla, $codigoCliente, $estado, $anulada){
+        try {
+            // Total servicio INTERNET
+            $i = "I";
+            $query = "SELECT SUM(cuotaInternet) AS sumaInter, SUM(totalImpuesto) AS sumaImpuestosInter FROM $tabla WHERE codigoCliente = :codigoCliente AND tipoServicio=:tipoServicio AND estado=:estado AND anulada=:anulada";
+            $statement = $this->dbConnect->prepare($query);
+            $statement->bindValue(':codigoCliente', $codigoCliente);
+            $statement->bindValue(':tipoServicio', $i);
+            $statement->bindValue(':estado', $estado);
+            $statement->bindValue(':anulada', $anulada);
             $statement->execute();
             $result2 = $statement->fetch(PDO::FETCH_ASSOC);
             $sumaInter = $result2["sumaInter"];

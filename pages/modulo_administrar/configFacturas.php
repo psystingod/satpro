@@ -1,5 +1,10 @@
 <?php
-    session_start();
+if(!isset($_SESSION))
+{
+    session_start([
+        'cookie_lifetime' => 86400,
+    ]);
+}
     require_once "php/getFacturaConfig.php";
     $config = new getFacturaConfig();
     $arrConfig = $config->getConfig();

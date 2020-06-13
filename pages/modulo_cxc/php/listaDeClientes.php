@@ -6,7 +6,12 @@ require_once('../../../php/connection.php');
 require_once('../../modulo_administrar/php/getInfo2.php');
 if(!isset($_SESSION))
 {
-  session_start();
+  if(!isset($_SESSION))
+  {
+    session_start([
+        'cookie_lifetime' => 86400,
+    ]);
+  }
 }
 $host = DB_HOST;
 $user = DB_USER;
@@ -18,6 +23,15 @@ $mysqliCableDePaquete = new mysqli($host, $user, $password, $database);
 $mysqliInternetDePaquete = new mysqli($host, $user, $password, $database);
 $mysqliFacturasPendientes  = new mysqli($host, $user, $password, $database);
 $mysqliColonias  = new mysqli($host, $user, $password, $database);
+$ultimoMesPagado = $_POST["ultimoMesCancelado"];
+$ultimoAnioPagado = $_POST["ultimoAnioCancelado"];
+
+//Verificamos el último mes que el cliente ha pagado
+if ($ultimoMesPagado == "0"){
+  $ultimoMesHelper = '%'.$ultimoAnioPagado;
+}else{
+  $ultimoMesHelper = '%'.$ultimoMesPagado.'/'.$ultimoAnioPagado.'%';
+}
 
 $colonia = new GetInfo2();
 
@@ -44,6 +58,24 @@ $totalCantidadDeClientesSoloCable=0;
 $totalCantidadDeClientesSoloInternet=0;
 $totalCantidadDeClientesPaquete=0;
 
+// SQL query para traer datos del servicio de cable de la tabla impuestos
+$query = "SELECT valorImpuesto FROM tbl_impuestos WHERE siglasImpuesto = 'IVA'";
+// Preparación de sentencia
+$statement = $mysqli->query($query);
+//$statement->execute();
+while ($result = $statement->fetch_assoc()) {
+  $iva = floatval($result['valorImpuesto']);
+}
+
+// SQL query para traer datos del servicio de cable de la tabla impuestos
+$query = "SELECT valorImpuesto FROM tbl_impuestos WHERE siglasImpuesto = 'CESC'";
+// Preparación de sentencia
+$statement = $mysqli->query($query);
+//$statement->execute();
+while ($result = $statement->fetch_assoc()) {
+  $cesc = floatval($result['valorImpuesto']);
+}
+
 //__________INIT CLASSS_________________
 class FPDF2 extends FPDF{
   public function footer(){
@@ -65,7 +97,7 @@ function facturasGeneradasDosMesesOrdenadaPorColonias(){
   global $totalCantidadDeFacturasPaquete,$totalCantidadDeClientesPaquete;
   global $totalCantidadDefacturasCableDePaquete, $totalCantidadDeClientesCableDePaquete, $totalDeudaCableDePaquete;
   global $totalCantidadDefacturasInterDePaquete, $totalDeudaInternetDePaquete,$totalCantidadDeClientesInternetPaquete;
-  global $colonia;
+  global $colonia, $iva, $cesc, $ultimoMesHelper;
   global $totalCantidadDeFacturasReporteTC,$totalCantidadDeFacturasReporteTI,$totalCantidadDeFacturasReporteTP, $totalDeudaReporteTP, $totalDeudaReporteTC,$totalDeudaReporteTI;
   global $totalCantidadDeFacturasSoloCableTPC,$totalCantidadDeClientesSoloCableTPI,$totalDeudaSoloCableTPC;
 
@@ -87,18 +119,19 @@ function facturasGeneradasDosMesesOrdenadaPorColonias(){
   $pdf = new FPDF2();
   $pdf->AddPage('L','Letter');
   $pdf->SetFont('Arial','',6);
-  $pdf->Cell(260,6,utf8_decode("Página ".str_pad($pdf->pageNo(),4,"0",STR_PAD_LEFT)),0,1,'R');
+  $pdf->Cell(260,3,utf8_decode("Página ".str_pad($pdf->pageNo(),4,"0",STR_PAD_LEFT)),0,1,'R');
   $pdf->Ln(0);
   date_default_timezone_set('America/El_Salvador');
-  $pdf->Cell(260,6,utf8_decode( date('Y/m/d g:i')),0,1,'R');
+  $pdf->Cell(260,3,utf8_decode( date('Y/m/d g:i')),0,1,'R');
   $pdf->SetFont('Arial','B',12);
-  $pdf->Cell(260,6,utf8_decode("CABLE VISION POR SATELITE, S.A DE C.V "),0,1,'C');
+  $pdf->Cell(260,3,utf8_decode("CABLE VISION POR SATELITE, S.A DE C.V "),0,1,'C');
   $pdf->Image('../../../images/logo.png',10,10, 20, 18);
 
-  $pdf->Ln(4);
+  $pdf->Ln(1);
   $pdf->SetFont('Arial','',8);
   $pdf->Cell(260,6,utf8_decode("INFORME GENERAL DE CLIENTES. "),0,1,'C');
   $pdf->SetFont('Arial','',6);
+  $pdf->Ln(5);
 
 $x=0;
   //Datos el cobrador para mostrar en el reporte
@@ -174,19 +207,17 @@ $x=0;
 
 
 
-
-
       //filtro servicio del reporte
-      $pdf->Cell(260,4,utf8_decode("Servicio: ".$servicioReporte),0,1,'L');
+      $pdf->Cell(260,3,utf8_decode("Servicio: ".$servicioReporte),0,1,'L');
       //filtro cobrador del reporte
-      $pdf->Cell(260,4,utf8_decode("Cobrador: ".$cobradorReporte),0,1,'L');
+      $pdf->Cell(260,3,utf8_decode("Cobrador: ".$cobradorReporte),0,1,'L');
       //filtro servicio del Colonia
-      $pdf->Cell(260,4,utf8_decode("Barrio/Colonia: ".$coloniaReporte),0,1,'L');
+      $pdf->Cell(260,3,utf8_decode("Barrio/Colonia: ".$coloniaReporte),0,1,'L');
       //filtro servicio del diaCobro
-      $pdf->Cell(260,4,utf8_decode("Dia de cobro: ".$diaDeCobroReporte),0,1,'L');
+      $pdf->Cell(260,3,utf8_decode("Dia de cobro: ".$diaDeCobroReporte),0,1,'L');
 
 
-      $pdf->SetFont('Arial','B',11);
+      //$pdf->SetFont('Arial','B',11);
 
       date_default_timezone_set('America/El_Salvador');
 
@@ -194,7 +225,7 @@ $x=0;
       putenv("LANG='es_ES.UTF-8'");
       setlocale(LC_ALL, 'es_ES.UTF-8');
       $pdf->SetFont('Arial','B',8);
-      $pdf->Ln(6);
+      $pdf->Ln(3);
       $pdf->Cell(10,6,utf8_decode('N°'),1,0,'L');
       $pdf->Cell(70,6,utf8_decode('Cliente'),1,0,'L');
       $pdf->Cell(97,6,utf8_decode('Direccion de cobro'),1,0,'L');
@@ -350,13 +381,13 @@ $x=0;
       $resultado = $mysqli->query($query) ;
 
       //filtro servicio del reporte
-      $pdf->Cell(260,4,utf8_decode("Servicio: ".$servicioReporte),0,1,'L');
+      $pdf->Cell(260,3,utf8_decode("Servicio: ".$servicioReporte),0,1,'L');
       //filtro cobrador del reporte
-      $pdf->Cell(260,4,utf8_decode("Cobrador: ".$cobradorReporte),0,1,'L');
+      $pdf->Cell(260,3,utf8_decode("Cobrador: ".$cobradorReporte),0,1,'L');
       //filtro servicio del Colonia
-      $pdf->Cell(260,4,utf8_decode("Barrio/Colonia: ".$coloniaReporte),0,1,'L');
+      $pdf->Cell(260,3,utf8_decode("Barrio/Colonia: ".$coloniaReporte),0,1,'L');
       //filtro servicio del diaCobro
-      $pdf->Cell(260,4,utf8_decode("Dia de cobro: ".$diaDeCobroReporte),0,1,'L');
+      $pdf->Cell(260,3,utf8_decode("Dia de cobro: ".$diaDeCobroReporte),0,1,'L');
 
 
       $pdf->SetFont('Arial','B',11);
@@ -488,36 +519,36 @@ $x=0;
             case "C":
             $servicioReporte="CABLE";
             $FiltroServicio="/*clientes solo cable activos*/
-            select cod_cliente, nombre, direccion_cobro, id_colonia, dia_cobro,'Cable' as servicio, telefonos, fecha_ult_pago, cod_cobrador
-            from clientes WHERE (servicio_suspendido='F' OR servicio_suspendido is null)  AND sin_servicio='F' AND estado_cliente_in = 3 AND cod_cliente<>'00000'
+            select cod_cliente, nombre, direccion_cobro, id_colonia, dia_cobro,'Cable' as servicio, telefonos, fecha_ult_pago, cod_cobrador,valor_cuota,cuota_in
+            from clientes WHERE (servicio_suspendido='F' OR servicio_suspendido is null or servicio_suspendido='')  AND sin_servicio='F' AND estado_cliente_in = 3 AND cod_cliente<>'00000' AND fecha_ult_pago LIKE '{$ultimoMesHelper}'
             /*fin clientes solo cable activos*/";
             break;
             case "I":
             $servicioReporte="INTERNET";
             $FiltroServicio="/*clientes solo Internet activos */
-            select cod_cliente, nombre, direccion_cobro, id_colonia, (dia_corbo_in) as dia_cobro,'Internet' as servicio, telefonos, fecha_ult_pago, cod_cobrador
-            from clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null or servicio_suspendido='') and sin_servicio='T' AND estado_cliente_in = 1 AND cod_cliente<>'00000'
+            select cod_cliente, nombre, direccion_cobro, id_colonia, (dia_corbo_in) as dia_cobro,'Internet' as servicio, telefonos, fecha_ult_pago, cod_cobrador,valor_cuota,cuota_in
+            from clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null or servicio_suspendido='') and sin_servicio='T' AND estado_cliente_in = 1 AND cod_cliente<>'00000' AND fecha_ult_nota LIKE '{$ultimoMesHelper}'
             /*fin clientes solo Internet activos */";
             break;
             case "A":
             $servicioReporte="PAQUETE";
             $FiltroServicio="/*clientes paquete activos*/
-            select cod_cliente, nombre, direccion_cobro, id_colonia, dia_cobro,'Paquete' as servicio, telefonos, fecha_ult_pago, cod_cobrador
-            from clientes WHERE (servicio_suspendido='F' OR servicio_suspendido is null)  AND sin_servicio='F' AND estado_cliente_in = 1 AND cod_cliente<>'00000'
+            select cod_cliente, nombre, direccion_cobro, id_colonia, dia_cobro,'Paquete' as servicio, telefonos, fecha_ult_pago, cod_cobrador,valor_cuota,cuota_in
+            from clientes WHERE (servicio_suspendido='F' OR servicio_suspendido is null or servicio_suspendido='')  AND sin_servicio='F' AND estado_cliente_in = 1 AND cod_cliente<>'00000' AND (fecha_ult_pago LIKE '{$ultimoMesHelper}' OR fecha_ult_nota LIKE '{$ultimoMesHelper}')
             /*fin clientes paquete activos*/";
             break;
             case "T":
             $servicioReporte="TODOS";
-            $FiltroColonia="  order by id_colonia,servicio ";
+            $FiltroColonia="  order by /*cod_cliente*/id_colonia,servicio ";
             $FiltroServicio="/*clientes solo cable activos*/
-            select cod_cliente, nombre, direccion_cobro, id_colonia, dia_cobro,'Cable' as servicio, telefonos, fecha_ult_pago, cod_cobrador
-            from clientes WHERE (servicio_suspendido='F' OR servicio_suspendido is null)  AND sin_servicio='F' AND estado_cliente_in = 3 AND cod_cliente<>'00000'
+            select cod_cliente, nombre, direccion_cobro, id_colonia, dia_cobro,'Cable' as servicio, telefonos, fecha_ult_pago, cod_cobrador,valor_cuota,cuota_in
+            from clientes WHERE (servicio_suspendido='F' OR servicio_suspendido is null or servicio_suspendido='')  AND sin_servicio='F' AND estado_cliente_in = 3 AND cod_cliente<>'00000' AND (fecha_ult_pago LIKE '{$ultimoMesHelper}' OR fecha_ult_nota LIKE '{$ultimoMesHelper}')
             /*fin clientes solo cable activos*/".$filtroCobrador.$filtroDiaDeCobro." UNION "."/*clientes solo Internet activos */
-            select cod_cliente, nombre, direccion_cobro, id_colonia, (dia_corbo_in) as dia_cobro,'Internet' as servicio, telefonos, fecha_ult_pago, cod_cobrador
-            from clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null or servicio_suspendido='') and sin_servicio='T' AND estado_cliente_in = 1 AND cod_cliente<>'00000'
+            select cod_cliente, nombre, direccion_cobro, id_colonia, (dia_corbo_in) as dia_cobro,'Internet' as servicio, telefonos, fecha_ult_pago, cod_cobrador,valor_cuota,cuota_in
+            from clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null or servicio_suspendido='') and sin_servicio='T' AND estado_cliente_in = 1 AND cod_cliente<>'00000' AND (fecha_ult_pago LIKE '{$ultimoMesHelper}' OR fecha_ult_nota LIKE '{$ultimoMesHelper}')
             /*fin clientes solo Internet activos */".$filtroCobrador.$filtroDiaDeCobro." UNION "."/*clientes paquete activos*/
-            select cod_cliente, nombre, direccion_cobro, id_colonia, dia_cobro,'Paquete' as servicio, telefonos, fecha_ult_pago, cod_cobrador
-            from clientes WHERE (servicio_suspendido='F' OR servicio_suspendido is null)  AND sin_servicio='F' AND estado_cliente_in = 1 AND cod_cliente<>'00000'
+            select cod_cliente, nombre, direccion_cobro, id_colonia, dia_cobro,'Paquete' as servicio, telefonos, fecha_ult_pago, cod_cobrador,valor_cuota,cuota_in
+            from clientes WHERE (servicio_suspendido='F' OR servicio_suspendido is null or servicio_suspendido='')  AND sin_servicio='F' AND estado_cliente_in = 1 AND cod_cliente<>'00000' AND (fecha_ult_pago LIKE '{$ultimoMesHelper}' OR fecha_ult_nota LIKE '{$ultimoMesHelper}')
             /*fin clientes paquete activos*/";
             break;
             default:
@@ -530,32 +561,32 @@ $x=0;
           echo ("<br>");
           echo ("<br>");
           echo ("<br>");
-*/
+*/        //var_dump($query);
           $resultado = $mysqli->query($query) ;
           if($mostrarEncabezados){
                 //filtro servicio del reporte
-                $pdf->Cell(260,4,utf8_decode("Servicio: ".$servicioReporte),0,1,'L');
+                $pdf->Cell(260,3,utf8_decode("Servicio: ".$servicioReporte),0,1,'L');
                 //filtro cobrador del reporte
-                $pdf->Cell(260,4,utf8_decode("Cobrador: TODOS"),0,1,'L');
+                $pdf->Cell(260,3,utf8_decode("Cobrador: TODOS"),0,1,'L');
                 //filtro servicio del Colonia
-                $pdf->Cell(260,4,utf8_decode("Barrio/Colonia: ".$coloniaReporte),0,1,'L');
+                $pdf->Cell(260,3,utf8_decode("Barrio/Colonia: ".$coloniaReporte),0,1,'L');
                 //filtro servicio del diaCobro
-                $pdf->Cell(260,4,utf8_decode("Dia de cobro: ".$diaDeCobroReporte),0,1,'L');
+                $pdf->Cell(260,3,utf8_decode("Dia de cobro: ".$diaDeCobroReporte),0,1,'L');
                 $pdf->SetFont('Arial','B',11);
                 date_default_timezone_set('America/El_Salvador');
                 //echo strftime("El año es %Y y el mes es %B");
                 putenv("LANG='es_ES.UTF-8'");
                 setlocale(LC_ALL, 'es_ES.UTF-8');
-                $pdf->SetFont('Arial','B',8);
+                $pdf->SetFont('Arial','B',6.8);
                 $pdf->Ln(6);
                 $pdf->Cell(10,6,utf8_decode('N°'),1,0,'L');
-                $pdf->Cell(70,6,utf8_decode('Cliente'),1,0,'L');
+                $pdf->Cell(60,6,utf8_decode('Cliente'),1,0,'L');
                 $pdf->Cell(97,6,utf8_decode('Direccion de cobro'),1,0,'L');
                 $pdf->Cell(26,6,utf8_decode('Colonia'),1,0,'L');
                 $current_y = $pdf->GetY();
                 $current_x = $pdf->GetX();
-                $cell_width = 12;
-                $pdf->MultiCell(12,3,utf8_decode('Dia Cobro'),1,'C');
+                $cell_width = 7;
+                $pdf->MultiCell(7,3,utf8_decode('Dia cob'),1,'C');
                 $pdf->SetXY($current_x + $cell_width, $current_y);
                 $current_y = $pdf->GetY();
                 $current_x = $pdf->GetX();
@@ -565,9 +596,10 @@ $x=0;
                 $pdf->Cell(15,6,utf8_decode('Telefono'),1,0,'C');
                 $current_y = $pdf->GetY();
                 $current_x = $pdf->GetX();
-                $cell_width = 15;
-                $pdf->MultiCell(15,3,utf8_decode('Ult. mes pagado'),1,'C');
+                $cell_width = 20;
+                $pdf->MultiCell(20,3,utf8_decode('Ult. mes pagado'),1,'C');
                 $pdf->SetXY($current_x + $cell_width, $current_y);
+                $pdf->Cell(20,6,utf8_decode('Cuota'),1,0,'L');
 
                 $pdf->Ln(6);
                 $pdf->SetFont('Arial','',6);
@@ -578,6 +610,33 @@ $x=0;
                 $mostrarColoniaTemporal="";
                 while($row = $resultado->fetch_assoc())
                 {
+                    // SQL query para traer datos del servicio de cable de la tabla impuestos
+                    $query = "SELECT mesCargo FROM tbl_abonos WHERE codigoCliente = {$row['cod_cliente']} AND tipoServicio='C' AND anulada=0 ORDER BY CAST(CONCAT(substring(mesCargo,4,4), '-', substring(mesCargo,1,2),'-', '01') AS DATE) DESC LIMIT 0,1";
+
+                    // Preparación de sentencia
+                    $statement = $mysqli->query($query);
+                    //$statement->execute();
+                    while ($result = $statement->fetch_assoc()) {
+                      $mesC = $result['mesCargo'];
+                    }
+
+                    // SQL query para traer datos del servicio de cable de la tabla impuestos
+                  $query = "SELECT mesCargo FROM tbl_abonos WHERE codigoCliente = {$row['cod_cliente']} AND tipoServicio='I' AND anulada=0 ORDER BY CAST(CONCAT(substring(mesCargo,4,4), '-', substring(mesCargo,1,2),'-', '01') AS DATE) DESC LIMIT 0,1";
+                    // Preparación de sentencia
+                    $statement = $mysqli->query($query);
+                    //$statement->execute();
+                    while ($result = $statement->fetch_assoc()) {
+                      $mesI = $result['mesCargo'];
+                    }
+
+                    $totalCescC = substr((($row['valor_cuota']/(1 + floatval($iva)))*$cesc),0,4);
+                    $totalCescI = substr((($row['cuota_in']/(1 + floatval($iva)))*$cesc),0,4);
+                    //var_dump($totalCescC);
+                  //var_dump($totalCescI);
+
+                    $totalCanceladoC = number_format(doubleval($row['valor_cuota']) + doubleval(str_replace(',', '.', $totalCescC)),2);
+                    $totalCanceladoI = number_format(doubleval($row['cuota_in']) + doubleval(str_replace(',', '.', $totalCescI)),2);
+
                   if($mostrarEncabezadoCobrador){
                     $pdf->Ln(3);
                     $pdf->SetFont('Arial','B',8);
@@ -603,8 +662,8 @@ $x=0;
                   $pdf->SetFont('Arial','',5);
                   $current_y = $pdf->GetY();
                   $current_x = $pdf->GetX();
-                  $cell_width = 70;
-                  $pdf->MultiCell(70,3,utf8_decode(strtoupper($row['cod_cliente']."  ".$row['nombre'])),0,'L');
+                  $cell_width = 60;
+                  $pdf->MultiCell(60,3,utf8_decode(strtoupper(str_pad($row['cod_cliente'], 5, "0", STR_PAD_LEFT)."  ".$row['nombre'])),0,'L');
                   $pdf->SetXY($current_x + $cell_width, $current_y);
                   $current_y = $pdf->GetY();
                   $current_x = $pdf->GetX();
@@ -614,14 +673,29 @@ $x=0;
                   $pdf->SetXY($current_x + $cell_width, $current_y);
                   $pdf->Cell(26,3,utf8_decode($colonia->getColonia($row['id_colonia'])),0,0,'L');
                   $pdf->SetFont('Arial','',6);
-                  $pdf->Cell(12,3,utf8_decode($row['dia_cobro']),0,0,'C');
+                  $pdf->Cell(7,3,utf8_decode($row['dia_cobro']),0,0,'C');
                   $pdf->Cell(13,3,utf8_decode($row['servicio']),0,0,'C');
                   $current_y = $pdf->GetY();
                   $current_x = $pdf->GetX();
                   $cell_width = 15;
                   $pdf->MultiCell(15,2,utf8_decode($row['telefonos']),0,'C');
                   $pdf->SetXY($current_x + $cell_width, $current_y);
-                  $pdf->Cell(15,3,utf8_decode($row['fecha_ult_pago']),0,0,'C');
+                  if ($row['servicio'] == 'Cable'){
+                    $pdf->Cell(20,3,utf8_decode($mesC),0,0,'C');
+                  }elseif ($row['servicio'] == 'Internet'){
+                    $pdf->Cell(20,3,utf8_decode($mesI),0,0,'C');
+                  }elseif ($row['servicio'] == 'Paquete'){
+                    $pdf->Cell(20,3,utf8_decode($mesC." | ".$mesI),0,0,'L');
+                  }
+
+                  if ($row['servicio'] == 'Cable'){
+                    $pdf->Cell(20,3,utf8_decode("C: ".$totalCanceladoC),0,0,'C');
+                  }elseif ($row['servicio'] == 'Internet'){
+                    $pdf->Cell(20,3,utf8_decode("Int: ". $totalCanceladoI),0,0,'C');
+                  }elseif ($row['servicio'] == 'Paquete'){
+                    $pdf->Cell(20,3,utf8_decode("C: ".$totalCanceladoC." | Int: ". $totalCanceladoI),0,0,'C');
+                  }
+
                   $pdf->Ln(3);
 
                 }
@@ -737,6 +811,7 @@ $x=0;
               $mostrarEncabezados=false;
         }//endif mostrar encabezados
               $mostrarEncabezadoCobrador=true;
+
               while($row = $resultado->fetch_assoc())
               {
                 if($mostrarEncabezadoCobrador){
@@ -815,7 +890,7 @@ function facturasGeneradasDosMesesOrderByCode(){
   global $totalCantidadDeFacturasPaquete,$totalCantidadDeClientesPaquete;
   global $totalCantidadDefacturasCableDePaquete, $totalCantidadDeClientesCableDePaquete, $totalDeudaCableDePaquete;
   global $totalCantidadDefacturasInterDePaquete, $totalDeudaInternetDePaquete,$totalCantidadDeClientesInternetPaquete;
-  global $colonia;
+  global $colonia, $iva, $cesc, $ultimoMesHelper;
   global $totalCantidadDeFacturasReporteTC,$totalCantidadDeFacturasReporteTI,$totalCantidadDeFacturasReporteTP, $totalDeudaReporteTP, $totalDeudaReporteTC,$totalDeudaReporteTI;
   global $totalCantidadDeFacturasSoloCableTPC,$totalCantidadDeClientesSoloCableTPI,$totalDeudaSoloCableTPC;
 
@@ -924,9 +999,6 @@ function facturasGeneradasDosMesesOrderByCode(){
     $query=$FiltroServicio.$filtroCobrador.$FiltroColonia.$filtroDiaDeCobro." order by cod_cliente";;
     //echo($query);
     $resultado = $mysqli->query($query) ;
-
-
-
 
 
     //filtro servicio del reporte

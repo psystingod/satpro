@@ -92,14 +92,14 @@
                 sleep(0.5);
                 $idVenta = $this->dbConnect->lastInsertId();
                 $this->dbConnect->commit();
-                header('Location: ../ventasAnuladas.php?idVenta='.$idVenta);
+                header('Location: ../facturacionManual.php?idVenta='.$idVenta);
 
             }
             catch (Exception $e)
             {
                 print "Error!: " . $e->getMessage() . "</br>";
                 die();
-                header('Location: ../ventasAnuladas.php?status=failed');
+                header('Location: ../facturacionManual.php?status=failed');
             }
         }
     }

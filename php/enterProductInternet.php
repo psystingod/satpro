@@ -7,12 +7,24 @@
     {
         public function EnterProduct()
         {
-            session_start();
+            if(!isset($_SESSION))
+            {
+                session_start([
+                    'cookie_lifetime' => 86400,
+                ]);
+            }
             parent::__construct ($_SESSION['db']);
         }
         public function enter()
         {
             try {
+                $queryVen = "SELECT IdArticulo FROM tbl_articulointernet order by IdArticulo DESC LIMIT 0, 1";
+                // Preparación de sentencia
+                $statementVen = $this->dbConnect->prepare($queryVen);
+                $statementVen->execute();
+                $resultVen = $statementVen->fetch(PDO::FETCH_ASSOC);
+                $ultimoArticulo = $resultVen["IdArticulo"]; //ULTIMO ARTICULO
+
                 $mac = $_POST["mac"];
                 $serie = $_POST["serie"];
                 $estado = $_POST["estado"];
@@ -26,7 +38,7 @@
                 $condicion = "En bodega";
                 date_default_timezone_set('America/El_Salvador');
                 $fechaForm = $_POST["fecha"];
-                $Fecha = date('Y/m/d g:i');
+                //$Fecha = date('Y/m/d g:i');
                 $query = "SELECT count(*) FROM tbl_articulointernet where Mac='".$mac."' or  serie='".$serie."'";
                 $statement = $this->dbConnect->query($query);
 
@@ -36,12 +48,13 @@
                 }
                 else
                 {
-
-                    $query = "INSERT into tbl_articulointernet(Mac,Serie,Estado,IdBodega,Marca,Modelo,Descripcion,Proveedor,fecha,docsis,nosh,condicion)
-                    values (:mac,:serie,:estado,(SELECT idBodega FROM tbl_bodega where NombreBodega=:idBodega),:marca,:modelo,:descripcion,(SELECT Nombre FROM tbl_proveedor where IdProveedor = :proveedor),:fecha,:docsis,:nosh,:condicion)";
+                    $ultimoArticulo = $ultimoArticulo + 1;
+                    $query = "INSERT into tbl_articulointernet(IdArticulo,Mac,Serie,Estado,IdBodega,Marca,Modelo,Descripcion,Proveedor,fecha,docsis,nosh,condicion)
+                    values (:idArticulo,:mac,:serie,:estado,(SELECT idBodega FROM tbl_bodega where NombreBodega=:idBodega),:marca,:modelo,:descripcion,(SELECT Nombre FROM tbl_proveedor where IdProveedor = :proveedor),:fecha,:docsis,:nosh,:condicion)";
                     // Preparación de sentencia
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
+                    ':idArticulo' => $ultimoArticulo,
                     ':fecha' => $fechaForm,
                     ':mac' => $mac,
                     ':serie' => $serie,

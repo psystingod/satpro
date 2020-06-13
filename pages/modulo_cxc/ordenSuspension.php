@@ -1,6 +1,11 @@
 <?php
 
-    session_start();
+if(!isset($_SESSION))
+{
+    session_start([
+        'cookie_lifetime' => 86400,
+    ]);
+}
     require("php/getData.php");
     require("php/GetAllInfo.php");
     require($_SERVER['DOCUMENT_ROOT'].'/satpro'.'/php/permissions.php');
@@ -28,7 +33,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT cod_cliente, nombre, telefonos, direccion, saldoCable, mactv, saldoInternet, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, mac_modem, serie_modem, id_velocidad, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia, coordenadas FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
+            $query = "SELECT cod_cliente, nombre, telefonos, direccion, saldoCable, mactv, saldoInternet, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, dire_telefonia, mactv, mac_modem, serie_modem, id_velocidad, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia, coordenadas FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -71,9 +76,10 @@
             $fechaProgramacion = "";
             $coordenadas = $row['coordenadas'];;
             $observaciones = "";
-            $nodo = "";
+            //$nodo = $row['dire_telefonia'];
             $idVendedor = "";
             $recepcionTv = "";
+            $servSusp = 0;
 
         }
 
@@ -89,7 +95,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT idOrdenSuspension, codigoCliente, fechaOrden, tipoOrden, diaCobro, nombreCliente, direccion, actividadCable, saldoCable, actividadInter, saldoInter, ordenaSuspension, macModem, serieModem, velocidad, colilla, fechaSuspension, idTecnico, mactv, observaciones, tipoServicio, coordenadas, creadoPor  FROM tbl_ordenes_suspension WHERE idOrdenSuspension = ? LIMIT 0,1";
+            $query = "SELECT idOrdenSuspension, codigoCliente, fechaOrden, tipoOrden, diaCobro, nombreCliente, direccion, actividadCable, saldoCable, actividadInter, saldoInter, ordenaSuspension, macModem, serieModem, velocidad, colilla, fechaSuspension, idTecnico, mactv, observaciones, tipoServicio, coordenadas, creadoPor, servSusp  FROM tbl_ordenes_suspension WHERE idOrdenSuspension = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -137,7 +143,7 @@
             }else {
                 $fechaSuspension = "";
             }
-
+            $servSusp = $row['servSusp'];
 
             //$hora = $row['hora'];
             $idTecnico = $row['idTecnico'];
@@ -335,14 +341,26 @@
                                       <label for="direccionCliente">Dirección</label>
                                       <textarea class="form-control input-sm" name="direccionCliente" rows="2" cols="40" readonly><?php echo $direccion; ?></textarea>
                                   </div>
-                                  <div class="col-md-12">
+                                  <div class="col-md-8">
                                       <label for="coordenadas">Coordenadas</label>
                                       <input class="form-control input-sm" type="text" name="coordenadas" value="<?php echo $coordenadas; ?>" readonly>
+                                  </div>
+                                  <div class="col-md-4">
+                                      <label for="">Suspender servicio</label>
+                                      <?php
+                                      if ($servSusp == 1){
+                                          echo "<input class='input-sm' type='checkbox' name='suspServ' value='".$servSusp."'"."readonly checked>";
+                                      }elseif($servSusp == 0){
+                                          echo "<input class='input-sm' type='checkbox' name='suspServ' value='".$servSusp."'"."readonly>";
+                                      }else{
+                                          echo "<input class='input-sm' type='checkbox' name='suspServ' value='".'0'."'"."readonly>";
+                                      }
+                                      ?>
                                   </div>
                               </div>
                               <div class="form-row">
                                   <div id="divCable" class="col-md-12">
-                                      <h4 class="alert btn-danger cable">Cable</h4>
+                                      <h5 class="alert btn-danger cable">Cable</h5>
                                       <div class="row">
                                           <div class="col-md-4">
                                               <label for="tipoActividadCable">Motivo</label>
@@ -365,7 +383,7 @@
                                           </div>
                                           <div class="col-md-2">
                                               <label for="saldoCable">Saldo</label>
-                                              <input id="saldoCable" class="form-control input-sm cable" type="text" name="saldoCable" value="<?php echo $saldoCable ?>" readonly>
+                                              <input id="saldoCable" class="form-control input-sm cable" type="text" name="saldoCable" value="<?php echo number_format($saldoCable,2) ?>" readonly>
                                           </div>
                                           <div class="col-md-3">
                                               <label for="ordenaSuspencionCable">Ordena la suspensión</label>
@@ -395,7 +413,7 @@
                                       </div>
                                   </div>
                                   <div class="col-md-12">
-                                      <h4 class="alert btn-danger">Internet</h4>
+                                      <h5 class="alert btn-danger">Internet</h5>
                                       <div class="row">
                                           <div class="col-md-4">
                                               <label for="tipoActividadInternet">Motivo</label>
@@ -414,7 +432,7 @@
                                           </div>
                                           <div class="col-md-4">
                                               <label for="saldoInternet">Saldo</label>
-                                              <input id="saldoInternet" class="form-control input-sm internet" type="text" name="saldoInternet" value="<?php echo $saldoInter ?>" readonly>
+                                              <input id="saldoInternet" class="form-control input-sm internet" type="text" name="saldoInternet" value="<?php echo number_format($saldoInter,2) ?>" readonly>
                                           </div>
                                           <div class="col-md-4">
                                               <label for="ordenaSuspencionInternet">Ordena suspensión</label>
@@ -427,9 +445,14 @@
                                                   }else if ($ordenaSuspensionInter == 'administracion') {
                                                       echo '<option value="oficina">Oficina</option>';
                                                       echo '<option value="administracion" selected>La administración</option>';
+                                                  }else if ($ordenaSuspensionInter == 'cliente') {
+                                                      echo '<option value="oficina">Oficina</option>';
+                                                      echo '<option value="administracion">La administración</option>';
+                                                      echo '<option value="cliente" selected>El cliente</option>';
                                                   }else {
                                                       echo '<option value="oficina">Oficina</option>';
                                                       echo '<option value="administracion">La administración</option>';
+                                                      echo '<option value="cliente">El cliente</option>';
                                                   }
                                                   ?>
                                               </select>
@@ -448,7 +471,7 @@
                                   </div>
                                   <div class="col-md-4">
                                       <label for="velocidad">Velocidad</label>
-                                      <select id="velocidad" class="form-control input-sm internet" name="velocidad" disabled>
+                                      <select id="velocidad" class="form-control input-sm internet" name="velocidad" disabled required>
                                           <option value="" selected>Seleccionar</option>
                                           <?php
                                           foreach ($arrayVelocidades as $key) {
@@ -457,11 +480,9 @@
                                               }else {
                                                   echo "<option value=".$key['idVelocidad'].">".strtoupper($key['nombreVelocidad'])."</option>";
                                               }
-
                                           }
                                           ?>
                                       </select>
-
                                   </div>
 
                               </div>
@@ -472,7 +493,7 @@
                                   </div>
                                   <div class="col-md-5">
                                       <label for="tecnico">Técnico</label>
-                                      <select class="form-control input-sm" name="responsable" disabled>
+                                      <select class="form-control input-sm" name="responsable" disabled required>
                                           <option value="" selected>Seleccionar</option>
                                           <?php
                                           foreach ($arrayTecnicos as $key) {

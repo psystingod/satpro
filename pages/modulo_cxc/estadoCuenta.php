@@ -1,6 +1,11 @@
 <?php
 
-session_start();
+if(!isset($_SESSION))
+{
+    session_start([
+        'cookie_lifetime' => 86400,
+    ]);
+}
 
 require("php/getData.php");
 require("php/GetAllInfo.php");
@@ -54,6 +59,12 @@ $saldoRealInter = number_format(($getSaldoReal->getSaldoInter($_GET['codigoClien
 
 $totalCobrarCable = number_format(($getSaldoReal->getTotalCobrarCable($_GET['codigoCliente'])),2);
 $totalCobrarInter = number_format(($getSaldoReal->getTotalCobrarInter($_GET['codigoCliente'])),2);
+
+$totalCobrarCable = number_format(($getSaldoReal->getTotalCobrarCable($_GET['codigoCliente'])),2);
+$totalCobrarInter = number_format(($getSaldoReal->getTotalCobrarInter($_GET['codigoCliente'])),2);
+
+$servicioC = $getSaldoReal->detServC($_GET['codigoCliente']);
+$servicioI = $getSaldoReal->detServI($_GET['codigoCliente']);
 
 //include database connection
 require_once('../../php/connection.php');
@@ -120,7 +131,7 @@ if (isset($_GET['codigoCliente'])) {
 
     }
 
-        // show error
+    // show error
     catch(PDOException $exception){
         die('ERROR: ' . $exception->getMessage());
     }
@@ -131,7 +142,6 @@ if (isset($_GET['codigoCliente'])) {
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -150,8 +160,6 @@ if (isset($_GET['codigoCliente'])) {
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
 
     <!-- Custom CSS -->
-    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
-    <link rel="stylesheet" href="../dist/css/custom-principal.css">
 
     <!-- Morris Charts CSS -->
     <link href="../../vendor/morrisjs/morris.css" rel="stylesheet">
@@ -237,7 +245,6 @@ if(!isset($_SESSION["user"])) {
 }
 ?>
 <div id="wrapper">
-
     <!-- Navigation -->
     <nav class="navbar navbar-inverse navbar-static-top" role="navigation" style="margin-bottom: 0">
         <div class="navbar-header">
@@ -250,7 +257,6 @@ if(!isset($_SESSION["user"])) {
             <a class="navbar-brand" href="index.php">Cablesat</a>
         </div>
         <!-- /.navbar-header -->
-
         <ul class="nav navbar-top-links navbar-right">
             <!-- /.dropdown -->
             <li class="dropdown" style="padding:5px;">
@@ -273,7 +279,6 @@ if(!isset($_SESSION["user"])) {
         <!-- /.navbar-top-links -->
         <!-- /.navbar-static-side -->
     </nav>
-
     <!-- Page Content -->
     <div id="page-wrapper">
         <div class="container-fluid">
@@ -281,11 +286,32 @@ if(!isset($_SESSION["user"])) {
                 <div class="col-lg-12">
                     <h3 class="page-header text-center" style="border: none;"><b>Estado de cuenta</b></h3>
                     <button onclick="history.back()" class="btn btn-danger pull-right"><i class="fas fa-arrow-alt-circle-left"></i> Regresar</button>
+                    <br>
+                    <br>
                     <table class="table table-responsive table-condensed" style="border: none; font-size:12px;">
                         <tbody class="">
                         <tr>
                             <th>Código</th>
                             <td><span class="label label-danger" style="font-size: 12px;"><?php echo $_GET['codigoCliente']; ?></span></td>
+                            <?php
+                            if ($servicioC == "Activo"){
+                                echo '<td>CABLE: <span class="label label-success" style="font-size: 12px;">Activo</span></td>';
+                            }elseif ($servicioC == "Sin servicio"){
+                                echo '<td>CABLE: <span class="label label-default" style="font-size: 12px;">Sin servicio</span></td>';
+                            }elseif ($servicioC == "Suspendido"){
+                                echo '<td>CABLE: <span class="label label-danger" style="font-size: 12px;">Suspendido</span></td>';
+                            }
+                            ?>
+
+                            <?php
+                            if ($servicioI == "Activo"){
+                                echo '<td>INTERNET: <span class="label label-success" style="font-size: 12px;">Activo</span></td>';
+                            }elseif ($servicioI == "Sin servicio"){
+                                echo '<td>INTERNET: <span class="label label-default" style="font-size: 12px;">Sin servicio</span></td>';
+                            }elseif ($servicioI == "Suspendido"){
+                                echo '<td>INTERNET: <span class="label label-danger" style="font-size: 12px;">Suspendido</span></td>';
+                            }
+                            ?>
                         </tr>
                         <tr>
                             <th>Nombre</th>
@@ -295,14 +321,14 @@ if(!isset($_SESSION["user"])) {
                         </tr>
                         <tr>
                             <th>Domicilio</th>
-                            <td><?php echo $direccion; ?></td>
+                            <td><?php echo substr($direccion, 0, 135); ?></td>
                             <th>Día de cobro</th>
                             <td><?php echo $diaCobro; ?></td>
                         </tr>
                         <tr>
                             <th>Teléfonos</th>
                             <td><?php echo $telefonos?></td>
-                            <th>última fecha de pago</th>
+                            <th>último mes cancelado</th>
                             <td><span class="label label-danger" style="font-size:12px;"><?php echo $fechaUltPago ?></span></td>
                         </tr>
                         </tbody>
@@ -311,12 +337,10 @@ if(!isset($_SESSION["user"])) {
                         <li class="nav-item">
                             <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#cable" role="tab" aria-controls="pills-home" aria-selected="true"><b>CABLE</b></a>
                         </li>
-
                         <li class="nav-item">
                             <a class="nav-link" id="pills-profile-tab" data-toggle="pill" href="#internet" role="tab" aria-controls="pills-profile" aria-selected="true"><b>INTERNET</b></a>
                         </li>
                     </ul>
-
                     <div class="tab-content mt-3 mb-3" id="pills-tabContent" style="font-size: 14px;">
                         <div class="tab-pane fade active" id="cable" role="tabpanel" aria-labelledby="pills-home-tab">
                             <br>
@@ -359,7 +383,6 @@ if(!isset($_SESSION["user"])) {
                                         </div>
                                         <?php
                                         foreach ($arrAbonosCable as $abonoC) {
-
                                             echo "<tr><td class='text'>";
                                             echo $abonoC['numeroRecibo']."</td><td class='text'>";
                                             echo $abonoC['tipoServicio']."</td><td class='text'>";
@@ -376,7 +399,6 @@ if(!isset($_SESSION["user"])) {
                                             //break;
                                         }
                                         foreach ($arrCargosCable as $cargoC) {
-
                                             echo "<tr><td class='text-danger'>";
                                             echo $cargoC['numeroRecibo']."</td><td class='text-danger'>";
                                             echo $cargoC['tipoServicio']."</td><td class='text-danger'>";
@@ -396,7 +418,6 @@ if(!isset($_SESSION["user"])) {
                                         foreach ($arrEstadoCable as $estado){
                                             //$control = $estado['cargoAbono'];
                                             if ($estado['estadoCargo'] == 'CANCELADA' && $estado['estadoAbono'] == 'CANCELADA'){
-
                                                 echo "<tr><td class='text-danger'>";
                                                 echo $estado['reciboCargo']."</td><td class='text-danger'>";
                                                 echo $estado['servicioCargo']."</td><td class='text-danger'>";
@@ -450,7 +471,6 @@ if(!isset($_SESSION["user"])) {
                                         <th>CESC cargo</th>
                                         <th>CESC abono</th>
                                         <th>TOTAL</th>
-
                                         </thead>
                                         <tbody>
                                         <div class="row">
@@ -474,7 +494,6 @@ if(!isset($_SESSION["user"])) {
                                         </div>
                                         <?php
                                         foreach ($arrAbonosInter as $abonoI) {
-
                                             echo "<tr><td class='text'>";
                                             echo $abonoI['numeroRecibo']."</td><td class='text'>";
                                             echo $abonoI['tipoServicio']."</td><td class='text'>";
@@ -491,7 +510,6 @@ if(!isset($_SESSION["user"])) {
                                             //break;
                                         }
                                         foreach ($arrCargosInter as $cargoI) {
-
                                             echo "<tr><td class='text-danger'>";
                                             echo $cargoI['numeroRecibo']."</td><td class='text-danger'>";
                                             echo $cargoI['tipoServicio']."</td><td class='text-danger'>";
@@ -511,7 +529,6 @@ if(!isset($_SESSION["user"])) {
                                         foreach ($arrEstadoInter as $estado){
                                             //$control = $estado['cargoAbono'];
                                             if ($estado['estadoCargo'] == 'CANCELADA' && $estado['estadoAbono'] == 'CANCELADA'){
-
                                                 echo "<tr><td class='text-danger'>";
                                                 echo $estado['reciboCargo']."</td><td class='text-danger'>";
                                                 echo $estado['servicioCargo']."</td><td class='text-danger'>";
@@ -550,55 +567,64 @@ if(!isset($_SESSION["user"])) {
                     </div>
                     <!-- Modal -->
                     <div id="uanC" class="modal fade" role="dialog">
-                        <div class="modal-dialog modal-lg">
-
+                        <div class="modal-dialog modal-xs">
                             <!-- Modal content-->
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Próximamente</h4>
+                                    <h4 class="modal-title">Imprimir estado de cuenta</h4>
                                 </div>
                                 <div class="modal-body">
+                                <form action="php/estadoCuentaImp.php?codigoCliente=<?php echo $_GET['codigoCliente'];?>" method="POST">
                                     <div class="row">
-                                        <div class="col-md-12">
-                                            <div id="datos">
-
-                                            </div>
+                                        <div class="col-md-6">
+                                            <label for="ecDesde">Desde</label>
+                                            <input class="form-control" type="text" name="ecDesde" value="<?php echo date('Y-m-d', strtotime("-1 years", strtotime(date('Y-m-01')))); ?>">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="ecHasta">Hasta</label>
+                                            <input class="form-control" type="text" name="ecHasta" value="<?php echo date('Y-m-30'); ?>">
+                                            <input class="form-control" type="hidden" name="tipoServicio" value="<?php echo 'C'; ?>">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
+                                    <button type="submit" class="btn btn-danger">Generar</button>
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                                 </div>
+                                </form>
                             </div>
-
                         </div>
                     </div>
-
                     <!-- Modal -->
                     <div id="uanI" class="modal fade" role="dialog">
-                        <div class="modal-dialog modal-lg">
-
+                        <div class="modal-dialog modal-xs">
                             <!-- Modal content-->
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">Próximamente</h4>
+                                    <h4 class="modal-title">Imprimir estado de cuenta</h4>
                                 </div>
                                 <div class="modal-body">
+                                <form action="php/estadoCuentaImp.php?codigoCliente=<?php echo $_GET['codigoCliente'];?>" method="POST">
                                     <div class="row">
-                                        <div class="col-md-12">
-                                            <div id="datos">
-
-                                            </div>
+                                        <div class="col-md-6">
+                                            <label for="ecDesde">Desde</label>
+                                            <input class="form-control" type="text" name="ecDesde" value="<?php echo date('Y-m-d', strtotime("-1 years", strtotime(date('Y-m-01')))); ?>">
+                                        </div>
+                                        <div class="col-md-6">
+                                            <label for="ecHasta">Hasta</label>
+                                            <input class="form-control" type="text" name="ecHasta" value="<?php echo date('Y-m-30'); ?>">
+                                            <input class="form-control" type="hidden" name="tipoServicio" value="<?php echo 'I'; ?>">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
+                                    <button type="submit" class="btn btn-danger">Generar</button>
                                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                                 </div>
+                                </form>
                             </div>
-
                         </div>
                     </div>
                 </div>
@@ -618,12 +644,6 @@ if(!isset($_SESSION["user"])) {
 
 <!-- Bootstrap Core JavaScript -->
 <script src="../../vendor/bootstrap/js/bootstrap.min.js"></script>
-
-<!-- Metis Menu Plugin JavaScript -->
-<script src="../../vendor/metisMenu/metisMenu.min.js"></script>
-
-<!-- Custom Theme JavaScript -->
-<script src="../../dist/js/sb-admin-2.js"></script>
 
 <!-- DataTables JavaScript -->
 <script src="../../vendor/datatables/js/dataTables.bootstrap.js"></script>

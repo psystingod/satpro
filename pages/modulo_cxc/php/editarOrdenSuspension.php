@@ -45,9 +45,18 @@
                     $tipoServicio = $_POST["tipoServicio"];
                     $coordenadas = $_POST["coordenadas"];
                     $creadoPor = $_POST['creadoPor'];
+                    if (isset($_POST['suspServ'])){
+                        if($_POST['suspServ'] == 1){
+                            $suspServ = $_POST['suspServ'];
+                        }else{
+                            $suspServ = 1;
+                        }
+                    }else{
+                        $suspServ = 0;
+                    }
 
                     //$Fecha = date('Y/m/d g:i');
-                    $query = "UPDATE tbl_ordenes_suspension SET codigoCliente=:codigoCliente, fechaOrden=:fechaOrden, tipoOrden=:tipoOrden, diaCobro=:diaCobro, nombreCliente=:nombreCliente, actividadCable=:idActividadCable, saldoCable=:saldoCable, direccion=:direccion, fechaSuspension=:fechaSuspension, ordenaSuspension=:ordenaSuspension, idTecnico=:idTecnico, mactv=:mactv, observaciones=:observaciones, tipoServicio=:tipoServicio,coordenadas=:coordenadas, creadoPor=:creadoPor WHERE idOrdenSuspension=:idOrdenSuspension";
+                    $query = "UPDATE tbl_ordenes_suspension SET codigoCliente=:codigoCliente, fechaOrden=:fechaOrden, tipoOrden=:tipoOrden, diaCobro=:diaCobro, nombreCliente=:nombreCliente, actividadCable=:idActividadCable, saldoCable=:saldoCable, direccion=:direccion, fechaSuspension=:fechaSuspension, ordenaSuspension=:ordenaSuspension, idTecnico=:idTecnico, mactv=:mactv, observaciones=:observaciones, tipoServicio=:tipoServicio,coordenadas=:coordenadas, creadoPor=:creadoPor, servSusp=:servSusp WHERE idOrdenSuspension=:idOrdenSuspension";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
@@ -68,10 +77,25 @@
                                 ':tipoServicio' => $tipoServicio,
                                 ':coordenadas' => $coordenadas,
                                 ':creadoPor' => $creadoPor,
-                                ':idOrdenSuspension' => $numeroOrden
+                                ':idOrdenSuspension' => $numeroOrden,
+                                ':servSusp' => $suspServ
                                 ));
                     //$numeroOrden = $this->dbConnect->lastInsertId();
-                    header('Location: ../ordenSuspension.php?nOrden='.$numeroOrden);
+                    //header('Location: ../ordenSuspension.php?nOrden='.$numeroOrden);
+                    if ($suspServ == 1){
+                        $query = "UPDATE clientes SET servicio_suspendido=:servSusp, fecha_suspencion=:fechaSuspension WHERE cod_cliente=:codigoCliente";
+
+                        $statement = $this->dbConnect->prepare($query);
+                        $statement->execute(array(
+                            ':codigoCliente' => $codigoCliente,
+                            ':servSusp' => 'T',
+                            ':fechaSuspension' => $fechaSuspension
+                        ));
+
+                        header('Location: ../ordenSuspension.php?nOrden='.$numeroOrden);
+                    }else{
+                        header('Location: ../ordenSuspension.php?nOrden='.$numeroOrden);
+                    }
 
                 }
                 catch (Exception $e)
@@ -115,11 +139,20 @@
                     $tipoServicio = $_POST["tipoServicio"];
                     $coordenadas = $_POST["coordenadas"];
                     $creadoPor = $_POST['creadoPor'];
+                    if (isset($_POST['suspServ'])){
+                        if($_POST['suspServ'] == 1){
+                            $suspServ = $_POST['suspServ'];
+                        }else{
+                            $suspServ = 1;
+                        }
+                    }else{
+                        $suspServ = 0;
+                    }
 
                     //$Fecha = date('Y/m/d g:i');
 
                     $query = "UPDATE tbl_ordenes_suspension SET codigoCliente=:codigoCliente, fechaOrden=:fechaOrden, tipoOrden=:tipoOrden, diaCobro=:diaCobro, nombreCliente=:nombreCliente,
-                    actividadInter=:idActividadInter, tipoServicio=:tipoServicio, saldoInter=:saldoInter, ordenaSuspension=:ordenaSuspension, direccion=:direccion, fechaSuspension=:fechaSuspension, idTecnico=:idTecnico, observaciones=:observaciones, macModem=:macModem, serieModem=:serieModem, velocidad=:velocidad, colilla=:colilla,coordenadas=:coordenadas, creadoPor=:creadoPor WHERE idOrdenSuspension=:idOrdenSuspension";
+                    actividadInter=:idActividadInter, tipoServicio=:tipoServicio, saldoInter=:saldoInter, ordenaSuspension=:ordenaSuspension, direccion=:direccion, fechaSuspension=:fechaSuspension, idTecnico=:idTecnico, observaciones=:observaciones, macModem=:macModem, serieModem=:serieModem, velocidad=:velocidad, colilla=:colilla,coordenadas=:coordenadas, creadoPor=:creadoPor, servSusp=:servSusp WHERE idOrdenSuspension=:idOrdenSuspension";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
@@ -143,11 +176,26 @@
                                 ':tipoServicio' => $tipoServicio,
                                 ':coordenadas' => $coordenadas,
                                 ':creadoPor' => $creadoPor,
-                                ':idOrdenSuspension' => $numeroOrden
+                                ':idOrdenSuspension' => $numeroOrden,
+                                ':servSusp' => $suspServ
                                 ));
 
                         //$numeroOrden = $this->dbConnect->lastInsertId();
+                        //header('Location: ../ordenSuspension.php?nOrden='.$numeroOrden);
+                    if ($suspServ == 1){
+                        $query = "UPDATE clientes SET estado_cliente_in = :servSusp, fecha_suspencion_in=:fechaSuspension WHERE cod_cliente=:codigoCliente";
+
+                        $statement = $this->dbConnect->prepare($query);
+                        $statement->execute(array(
+                            ':codigoCliente' => $codigoCliente,
+                            ':servSusp' => '2',
+                            ':fechaSuspension' => $fechaSuspension
+                        ));
+
                         header('Location: ../ordenSuspension.php?nOrden='.$numeroOrden);
+                    }else{
+                        header('Location: ../ordenSuspension.php?nOrden='.$numeroOrden);
+                    }
 
                 }
                 catch (Exception $e)

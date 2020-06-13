@@ -89,12 +89,30 @@
                    $cesc = 0.0;
                }
 
+               $covid19 = false;
+               if (isset($_POST['covid19'])) {
+                   if ($_POST['covid19'] == 1){
+                       $covid19 = true;
+                   }else{
+                       $covid19 = false;
+                   }
+               }
+               else {
+                   $covid19 = false;
+               }
+
                if ($_POST['tipoServicio'] == 'cable') {
                    $ts = "C";
                    if ($tipoComprobante == 1) {
                        // SQL query para traer datos del servicio de cable de la tabla clientes
-                       $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_colonia, id_departamento, numero_nit, giro, valor_cuota, prepago, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento, servicio_cortesia FROM clientes WHERE
-                       (servicio_suspendido IS NULL OR servicio_suspendido = 'F' OR servicio_suspendido = '') AND sin_servicio = 'F' AND (servicio_cortesia IS NULL OR servicio_cortesia = 'F') AND dia_cobro = :diaCobro AND fecha_primer_factura <= :fechaGenerar AND (estado_cliente_in=3 OR estado_cliente_in=1) AND tipo_comprobante =:tipoComprobante";
+                       if ($covid19 == false){
+                           $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_colonia, id_departamento, numero_nit, giro, valor_cuota, prepago, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento, servicio_cortesia FROM clientes WHERE
+                           (servicio_suspendido IS NULL OR servicio_suspendido = 'F' OR servicio_suspendido = '') AND sin_servicio = 'F' AND (servicio_cortesia IS NULL OR servicio_cortesia = 'F') AND dia_cobro = :diaCobro AND fecha_primer_factura <= :fechaGenerar AND (estado_cliente_in=3 OR estado_cliente_in=1) AND tipo_comprobante =:tipoComprobante";
+                       }else{
+                           $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_colonia, id_departamento, numero_nit, giro, valor_cuota, prepago, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento, servicio_cortesia FROM clientes WHERE
+                       (servicio_suspendido IS NULL OR servicio_suspendido = 'F' OR servicio_suspendido = '') AND sin_servicio = 'F' AND (servicio_cortesia IS NULL OR servicio_cortesia = 'F') AND dia_cobro = :diaCobro AND fecha_primer_factura <= :fechaGenerar AND (estado_cliente_in=3 OR estado_cliente_in=1) AND tipo_comprobante =:tipoComprobante AND /*id_cuenta <> 'covid19'*/(fecha_ult_pago <> '01/2020' AND fecha_ult_pago <> '02/2020')/* OR (fecha_ult_nota <> '01/2020' AND fecha_ult_nota <> '02/2020')*/";
+                       }
+
                        // Preparación de sentencia
                        $statement = $this->dbConnect->prepare($query);
                        $statement->execute(
@@ -257,8 +275,15 @@
                    }
                    elseif($tipoComprobante == 2){
                        // SQL query para traer datos del servicio de cable de la tabla clientes
-                       $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_colonia, id_departamento, numero_nit, giro, valor_cuota, prepago, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento, servicio_cortesia FROM clientes WHERE
-                       (servicio_suspendido IS NULL OR servicio_suspendido = 'F' OR servicio_suspendido = '') AND sin_servicio = 'F' AND (servicio_cortesia IS NULL OR servicio_cortesia = 'F') AND dia_cobro = :diaCobro AND fecha_primer_factura <= :fechaGenerar AND (estado_cliente_in=3 OR estado_cliente_in=1) AND tipo_comprobante =:tipoComprobante";
+
+                       if ($covid19 == false){
+                           $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_colonia, id_departamento, numero_nit, giro, valor_cuota, prepago, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento, servicio_cortesia FROM clientes WHERE
+                           (servicio_suspendido IS NULL OR servicio_suspendido = 'F' OR servicio_suspendido = '') AND sin_servicio = 'F' AND (servicio_cortesia IS NULL OR servicio_cortesia = 'F') AND dia_cobro = :diaCobro AND fecha_primer_factura <= :fechaGenerar AND (estado_cliente_in=3 OR estado_cliente_in=1) AND tipo_comprobante =:tipoComprobante";
+                       }else{
+                           $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_colonia, id_departamento, numero_nit, giro, valor_cuota, prepago, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento, servicio_cortesia FROM clientes WHERE
+                           (servicio_suspendido IS NULL OR servicio_suspendido = 'F' OR servicio_suspendido = '') AND sin_servicio = 'F' AND (servicio_cortesia IS NULL OR servicio_cortesia = 'F') AND dia_cobro = :diaCobro AND fecha_primer_factura <= :fechaGenerar AND (estado_cliente_in=3 OR estado_cliente_in=1) AND tipo_comprobante =:tipoComprobante AND /*id_cuenta <> 'covid19'*/(fecha_ult_pago <> '01/2020' AND fecha_ult_pago <> '02/2020')/* OR (fecha_ult_nota <> '01/2020' AND fecha_ult_nota <> '02/2020')*/";
+                       }
+
                        // Preparación de sentencia
                        $statement = $this->dbConnect->prepare($query);
                        $statement->execute(
@@ -423,7 +448,12 @@
                    $ts = "I";
                    if ($tipoComprobante == 1) {
                        // SQL query para traer datos del servicio de cable de la tabla clientes
-                       $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_colonia, id_departamento, numero_nit, giro, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento FROM clientes WHERE estado_cliente_in=1 AND dia_corbo_in = :diaCobro AND fecha_primer_factura_in <= :fechaGenerar AND tipo_comprobante =:tipoComprobante";
+                       if ($covid19 == false){
+                           $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_colonia, id_departamento, numero_nit, giro, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento FROM clientes WHERE estado_cliente_in=1 AND dia_corbo_in = :diaCobro AND fecha_primer_factura_in <= :fechaGenerar AND tipo_comprobante =:tipoComprobante";
+                       }else{
+                           $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_colonia, id_departamento, numero_nit, giro, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento FROM clientes WHERE estado_cliente_in=1 AND dia_corbo_in = :diaCobro AND fecha_primer_factura_in <= :fechaGenerar AND tipo_comprobante =:tipoComprobante AND /*id_cuenta <> 'covid19'*/(fecha_ult_nota <> '01/2020' AND fecha_ult_nota <> '02/2020')";
+                       }
+
                        // Preparación de sentencia
                        $statement = $this->dbConnect->prepare($query);
                        $statement->execute(
@@ -582,7 +612,13 @@
                    }
                    elseif($tipoComprobante == 2){
                        // SQL query para traer datos del servicio de cable de la tabla clientes
-                       $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_colonia, id_departamento, numero_nit, giro, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento FROM clientes WHERE estado_cliente_in = 1 AND dia_corbo_in = :diaCobro AND fecha_primer_factura_in <= :fechaGenerar AND tipo_comprobante = :tipoComprobante";
+
+                       if ($covid19 == false){
+                           $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_colonia, id_departamento, numero_nit, giro, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento FROM clientes WHERE estado_cliente_in=1 AND dia_corbo_in = :diaCobro AND fecha_primer_factura_in <= :fechaGenerar AND tipo_comprobante =:tipoComprobante";
+                       }else{
+                           $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_colonia, id_departamento, numero_nit, giro, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento FROM clientes WHERE estado_cliente_in=1 AND dia_corbo_in = :diaCobro AND fecha_primer_factura_in <= :fechaGenerar AND tipo_comprobante =:tipoComprobante AND /*id_cuenta <> 'covid19'*/(fecha_ult_nota <> '01/2020' AND fecha_ult_nota <> '02/2020')";
+                       }
+
                        // Preparación de sentencia
                        $statement = $this->dbConnect->prepare($query);
                        $statement->execute(

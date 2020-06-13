@@ -245,7 +245,7 @@ if ($tipoComprobante == 2) {
         }
 
         $pdf->SetFont('Arial','B',10);
-        $totalFactura = number_format((doubleval($monto)/*+doubleval($ant)*/),2);//(doubleval($unitario) + doubleval($row['totalImpuesto']) + doubleval($ant)),2); // ACA SE CALCULA MONTO TOTAL
+        $totalFactura = number_format((doubleval($unitario) + doubleval($row['totalImpuesto'])+doubleval($ant)),2);//(doubleval($unitario) + doubleval($row['totalImpuesto']) + doubleval($ant)),2); // ACA SE CALCULA MONTO TOTAL
         $pdf->Cell(285,6,utf8_decode(''),0,0,'L');
         $pdf->Cell(70,-45,utf8_decode($totalFactura),0,1,'L'); // MONTO TOTAL QUE APARECE EN COLUMNA 3
         $pdf->Cell(285,6,utf8_decode(''),0,0,'L');

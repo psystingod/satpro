@@ -263,7 +263,7 @@ function abonos(){
                             }
 
                         }
-                        if ($counter2 > 42){
+                        if ($counter2 > 41){
                             $pdf->AddPage('L','Letter');
                             $pdf->SetFont('Arial','',6);
                             $pdf->Cell(260,6,utf8_decode("Página ".str_pad($pdf->pageNo(),4,"0",STR_PAD_LEFT)),0,1,'R');
@@ -461,7 +461,7 @@ function abonos(){
                             }
 
                         }
-                        if ($counter2 > 42){
+                        if ($counter2 > 41){
                             $pdf->AddPage('L','Letter');
                             $pdf->SetFont('Arial','',6);
                             $pdf->Cell(260,6,utf8_decode("Página ".str_pad($pdf->pageNo(),4,"0",STR_PAD_LEFT)),0,1,'R');

@@ -9,7 +9,9 @@
        {
            if(!isset($_SESSION))
            {
-               session_start();
+               session_start([
+                   'cookie_lifetime' => 86400,
+               ]);
            }
            parent::__construct ($_SESSION['db']);
        }
@@ -39,7 +41,7 @@
                    $tipoComprobante = $_POST['creditoFiscal'];
                }
                // Fin de verificación del tipo de comprobante del cliente
-               var_dump("Probandollegar hasta acá1");
+               //var_dump("Probandollegar hasta acá1");
                $nombreCliente = utf8_decode($_POST['nombreCliente']);
                $codigoCliente = $_POST['codigoCliente'];
                $zona = $_POST['zona'];
@@ -49,6 +51,13 @@
                $colonia = $_POST['colonia'];
                //INICIO DE EXTRAER DATOS DEL COBRADOR
                // SQL query para traer datos
+               $anularIva = null;
+               if (isset($_POST["anularComp"])){
+                   if ($_POST["anularComp"] == "1"){
+                        $anularIva = 1;
+                       $nombreCliente = "[Recibo anulado]";
+                   }
+               }
                $query = "SELECT * FROM tbl_facturas_config";
                // Preparación de sentencia
                $statement = $this->dbConnect->prepare($query);
@@ -98,7 +107,8 @@
                                $idFactura1 = $_POST['idFacturax1'];
                                $nRecibox1 = $_POST['nFacturax1'];
                                $nFacturax1 = $_POST['nFacturax1'];
-                               $impSeg = $_POST['impSeg'];
+                               //$impSeg = $_POST['impSeg'];
+                               $impSeg = doubleval($_POST['impSeg'])/doubleval($_POST['xmeses']);
                                $reciboCobx1 = $prefijoCobro."-".$ultimoNumero; //Recibo de cobro
 
                                //CALCULANDO FECHAS
@@ -135,6 +145,10 @@
                                $totalIva = substr(floatval($separado) * floatval($iva),0,4);
                                $saldoCable = $_POST['pendiente']; // Quizá update
                                $estado = "CANCELADA";
+
+                               if ($anularIva == 1){
+                                   $totalIva = 0.00;
+                               }
 
                                //INGRESO DEL MES QUE YA ESTÁ GENERADO
 
@@ -207,7 +221,7 @@
                                     array(
                                           ':codigoCliente' => $codigoCliente,
                                           ':cuotaCable' => floatVal($cuotaCable),
-                                          ':fechaUltPago' => $fechaAbonado
+                                          ':fechaUltPago' => $arrayMeses[$lastKey]
                                          ));
 
                                 //ACA HACER ACTUALIZACION DE LA TABLA COBRADORES
@@ -243,11 +257,25 @@
                                    $contador = $stmtx->fetchColumn();
                                    if ($contador > 0){
                                        $anticipado = 0;
+                                       /*****COMIENZO DE VERIFICACIÓN DE NUMERO DE FACTURA*****/
+                                       $qryx = "SELECT numeroFactura FROM tbl_cargos WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio AND anulada=0";
+
+                                       $stmtx = $this->dbConnect->prepare($qryx);
+                                       $stmtx->execute(
+                                           array(':codigoCliente' => $codigoCliente,
+                                               ':mesCargo' => $arrayMeses[$i],
+                                               ':tipoServicio' => $tipoServicio
+                                           ));
+                                       $resultRec = $stmtx->fetch(PDO::FETCH_ASSOC);
+                                       $numeroFactura = $resultRec["numeroFactura"];
+                                       /*****FIN DE VERIFICACIÓN DE NUMERO DE FACTURA*****/
                                    }else{
                                        $anticipado = 1;
+                                       $numeroFactura = $arrayMeses[$i];
                                    }
 
                                    /*****FIN DE VERIFICACIÓN DE ANTICIPADO*****/
+
                                    //var_dump($lastKey);
                                    $this->dbConnect->beginTransaction();
                                    $qry = "UPDATE tbl_cargos SET tipoFactura=:tipoComprobante, /*numeroRecibo=:numeroRecibo,*/ codigoCliente=:codigoCliente, cuotaCable=:cuotaCable, saldoCable=:saldoCable, fechaCobro=:fechaCobro, /*fechaVencimiento=:fechaVencimiento,*/ fechaAbonado=:fechaAbonado, /*fechaFactura=:fechaFactura,*/ mesCargo=:mesCargo, tipoServicio=:tipoServicio, estado=:estado, cargoImpuesto=:cargoImpuesto, totalImpuesto=:totalImpuesto WHERE /*idFactura=:idFactura*/ codigoCliente=:codigoCliente AND tipoServicio=:tipoServicio AND mesCargo=:mesCargo";
@@ -285,7 +313,7 @@
                                               ':idColonia' => $colonia,
                                               ':tipoComprobante' => $tipoComprobante,
                                               ':numeroRecibo' => $reciboCobx1,
-                                              ':numeroFactura' => $arrayMeses[$i],
+                                              ':numeroFactura' => $numeroFactura,
                                               ':codigoCliente' => $codigoCliente,
                                               ':codigoCobrador' => $zona,
                                               ':cobradoPor' => $codigoCobrador,
@@ -316,7 +344,7 @@
                                         array(
                                               ':codigoCliente' => $codigoCliente,
                                               ':cuotaCable' => floatVal($cuotaCable),
-                                              ':fechaUltPago' => $fechaAbonado
+                                              ':fechaUltPago' => $arrayMeses[$i]
                                              ));
 
                                     //ACA HACER ACTUALIZACION DE LA TABLA COBRADORES
@@ -361,7 +389,8 @@
                                $idFactura1 = $_POST['idFacturax1'];
                                $nRecibox1 = $_POST['nFacturax1'];
                                $nFacturax1 = $_POST['nFacturax1'];
-                               $impSeg = $_POST['impSeg'];
+                               //$impSeg = $_POST['impSeg'];
+                               $impSeg = doubleval($_POST['impSeg'])/doubleval($_POST['xmeses']);
                                $reciboCobx1 = $prefijoCobro."-".$ultimoNumero; //Recibo de cobro
 
                                //CALCULANDO FECHAS
@@ -398,6 +427,10 @@
                                $totalIva = substr(floatval($separado) * floatval($iva),0,4);
                                $saldoInter = $_POST['pendiente']; // Quizá update
                                $estado = "CANCELADA";
+
+                               if ($anularIva == 1){
+                                   $totalIva = 0.00;
+                               }
 
                                //INGRESO DEL MES QUE YA ESTÁ GENERADO
 
@@ -463,14 +496,14 @@
 
                                $uaid1 = $this->dbConnect->lastInsertId();
                                //ACA HACER ACTUALIZACION DE SALDO EN TABLA CLIENTES
-                               $qry3 = "UPDATE clientes SET saldoInternet= saldoInternet - :cuotaInternet, fecha_ult_pago=:fechaUltPago WHERE cod_cliente=:codigoCliente";
+                               $qry3 = "UPDATE clientes SET saldoInternet= saldoInternet - :cuotaInternet, fecha_ult_nota=:fechaUltPago WHERE cod_cliente=:codigoCliente";
 
                                $stmt3 = $this->dbConnect->prepare($qry3);
                                $stmt3->execute(
                                    array(
                                        ':codigoCliente' => $codigoCliente,
                                        ':cuotaInternet' => floatVal($cuotaInter),
-                                       ':fechaUltPago' => $fechaAbonado
+                                       ':fechaUltPago' => $arrayMeses[$lastKey]
                                    ));
 
                                //ACA HACER ACTUALIZACION DE LA TABLA COBRADORES
@@ -506,8 +539,21 @@
                                    $contador = $stmtx->fetchColumn();
                                    if ($contador > 0){
                                        $anticipado = 0;
+                                       /*****COMIENZO DE VERIFICACIÓN DE NUMERO DE FACTURA*****/
+                                       $qryx = "SELECT numeroFactura FROM tbl_cargos WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio AND anulada=0";
+
+                                       $stmtx = $this->dbConnect->prepare($qryx);
+                                       $stmtx->execute(
+                                           array(':codigoCliente' => $codigoCliente,
+                                               ':mesCargo' => $arrayMeses[$i],
+                                               ':tipoServicio' => $tipoServicio
+                                           ));
+                                       $resultRec = $stmtx->fetch(PDO::FETCH_ASSOC);
+                                       $numeroFactura = $resultRec["numeroFactura"];
+                                       /*****FIN DE VERIFICACIÓN DE NUMERO DE FACTURA*****/
                                    }else{
                                        $anticipado = 1;
+                                       $numeroFactura = $arrayMeses[$i];
                                    }
 
                                    /*****FIN DE VERIFICACIÓN DE ANTICIPADO*****/
@@ -548,7 +594,7 @@
                                            ':idColonia' => $colonia,
                                            ':tipoComprobante' => $tipoComprobante,
                                            ':numeroRecibo' => $reciboCobx1,
-                                           ':numeroFactura' => $arrayMeses[$i],
+                                           ':numeroFactura' => $numeroFactura,
                                            ':codigoCliente' => $codigoCliente,
                                            ':codigoCobrador' => $zona,
                                            ':cobradoPor' => $codigoCobrador,
@@ -572,14 +618,14 @@
 
                                    $uaid1 = $this->dbConnect->lastInsertId();
                                    //ACA HACER ACTUALIZACION DE SALDO EN TABLA CLIENTES
-                                   $qry3 = "UPDATE clientes SET saldoInternet= saldoInternet - :cuotaInternet, fecha_ult_pago=:fechaUltPago WHERE cod_cliente=:codigoCliente";
+                                   $qry3 = "UPDATE clientes SET saldoInternet= saldoInternet - :cuotaInternet, fecha_ult_nota=:fechaUltPago WHERE cod_cliente=:codigoCliente";
 
                                    $stmt3 = $this->dbConnect->prepare($qry3);
                                    $stmt3->execute(
                                        array(
                                            ':codigoCliente' => $codigoCliente,
                                            ':cuotaInternet' => floatVal($cuotaInter),
-                                           ':fechaUltPago' => $fechaAbonado
+                                           ':fechaUltPago' => $arrayMeses[$i]
                                        ));
 
                                    //ACA HACER ACTUALIZACION DE LA TABLA COBRADORES
@@ -660,6 +706,10 @@
                                $impSeg1 = $impSeg/2;
                                $impSeg2 = $impSeg/2;
 
+                               if ($anularIva == 1){
+                                   $totalIva1 = 0.00;
+                               }
+
                                $lastKey = array_pop(array_keys($arrayMeses));
 
                                $desde = $arrayMeses[$lastKey];
@@ -731,7 +781,7 @@
                                     array(
                                           ':codigoCliente' => $codigoCliente,
                                           ':cuotaCable' => floatVal($cuotaCable),
-                                          ':fechaUltPago' => $fechaAbonado
+                                          ':fechaUltPago' => $arrayMeses[$lastKey]
                                          ));
 
                                  //ACA HACER ACTUALIZACION DE LA TABLA COBRADORES
@@ -791,6 +841,10 @@
                                $totalIva2 = substr(floatval($separado) * floatval($iva),0,4);
                                $saldoCable = $_POST['pendiente']; // Quizá update
                                $estado = "CANCELADA";
+
+                               if ($anularIva == 1){
+                                   $totalIva2 = 0.00;
+                               }
 
                                $this->dbConnect->beginTransaction();
                                $qry = "UPDATE tbl_cargos SET tipoFactura=:tipoComprobante, /*numeroRecibo=:numeroRecibo,*/ codigoCliente=:codigoCliente, cuotaCable=:cuotaCable, saldoCable=:saldoCable, fechaCobro=:fechaCobro, fechaVencimiento=:fechaVencimiento, fechaAbonado=:fechaAbonado, /*fechaFactura=:fechaFactura,*/ mesCargo=:mesCargo, tipoServicio=:tipoServicio, estado=:estado, cargoImpuesto=:cargoImpuesto, totalImpuesto=:totalImpuesto WHERE idFactura=:idFactura";
@@ -858,7 +912,7 @@
                                     array(
                                           ':codigoCliente' => $codigoCliente,
                                           ':cuotaCable' => floatVal($cuotaCable),
-                                          ':fechaUltPago' => $fechaAbonado
+                                          ':fechaUltPago' => $arrayMeses[$lastKey2]
                                          ));
 
                                  //ACA HACER ACTUALIZACION DE LA TABLA COBRADORES
@@ -896,8 +950,21 @@
                                    $contador = $stmtx->fetchColumn();
                                    if ($contador > 0){
                                        $anticipado = 0;
+                                       /*****COMIENZO DE VERIFICACIÓN DE NUMERO DE FACTURA*****/
+                                       $qryx = "SELECT numeroFactura FROM tbl_cargos WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio AND anulada=0";
+
+                                       $stmtx = $this->dbConnect->prepare($qryx);
+                                       $stmtx->execute(
+                                           array(':codigoCliente' => $codigoCliente,
+                                               ':mesCargo' => $arrayMeses[$i],
+                                               ':tipoServicio' => $tipoServicio
+                                           ));
+                                       $resultRec = $stmtx->fetch(PDO::FETCH_ASSOC);
+                                       $numeroFactura = $resultRec["numeroFactura"];
+                                       /*****FIN DE VERIFICACIÓN DE NUMERO DE FACTURA*****/
                                    }else{
                                        $anticipado = 1;
+                                       $numeroFactura = $arrayMeses[$i];
                                    }
 
                                    /*****FIN DE VERIFICACIÓN DE ANTICIPADO*****/
@@ -938,7 +1005,7 @@
                                            ':idColonia' => $colonia,
                                            ':tipoComprobante' => $tipoComprobante,
                                            ':numeroRecibo' => $reciboCobx1,
-                                           ':numeroFactura' => $arrayMeses[$i],
+                                           ':numeroFactura' => $numeroFactura,
                                            ':codigoCliente' => $codigoCliente,
                                            ':codigoCobrador' => $zona,
                                            ':cobradoPor' => $codigoCobrador,
@@ -969,7 +1036,7 @@
                                        array(
                                            ':codigoCliente' => $codigoCliente,
                                            ':cuotaCable' => floatVal($cuotaCable),
-                                           ':fechaUltPago' => $fechaAbonado
+                                           ':fechaUltPago' => $arrayMeses[$i]
                                        ));
 
                                    //ACA HACER ACTUALIZACION DE LA TABLA COBRADORES
@@ -1050,6 +1117,10 @@
                                $impSeg1 = $impSeg/2;
                                $impSeg2 = $impSeg/2;
 
+                               if ($anularIva == 1){
+                                   $totalIva1 = 0.00;
+                               }
+
                                $lastKey = array_pop(array_keys($arrayMeses));
 
                                $desde = $arrayMeses[$lastKey];
@@ -1115,14 +1186,14 @@
                                 $uaid1 = $this->dbConnect->lastInsertId();
 
                                 //ACA HACER ACTUALIZACION DE SALDO EN TABLA CLIENTES
-                                $qry3 = "UPDATE clientes SET saldoInternet= saldoInternet - :cuotaInter, fecha_ult_pago=:fechaUltPago WHERE cod_cliente=:codigoCliente";
+                                $qry3 = "UPDATE clientes SET saldoInternet= saldoInternet - :cuotaInter, fecha_ult_nota=:fechaUltPago WHERE cod_cliente=:codigoCliente";
 
                                 $stmt3 = $this->dbConnect->prepare($qry3);
                                 $stmt3->execute(
                                     array(
                                           ':codigoCliente' => $codigoCliente,
                                           ':cuotaInter' => floatVal($cuotaInter),
-                                          ':fechaUltPago' => $fechaAbonado
+                                          ':fechaUltPago' => $arrayMeses[$lastKey]
                                          ));
 
                                  //ACA HACER ACTUALIZACION DE LA TABLA COBRADORES
@@ -1179,6 +1250,10 @@
                                    $totalIva2 = substr(floatval($separado) * floatval($iva),0,4);
                                    $saldoCable = $_POST['pendiente']; // Quizá update
                                    $estado = "CANCELADA";
+
+                                   if ($anularIva == 1){
+                                       $totalIva2 = 0.00;
+                                   }
 
                                    $this->dbConnect->beginTransaction();
                                    $qry = "UPDATE tbl_cargos SET tipoFactura=:tipoComprobante, /*numeroRecibo=:numeroRecibo,*/ codigoCliente=:codigoCliente, cuotaInternet=:cuotaInternet, saldoInternet=:saldoInternet, fechaCobro=:fechaCobro, fechaVencimiento=:fechaVencimiento, fechaAbonado=:fechaAbonado, /*fechaFactura=:fechaFactura,*/ mesCargo=:mesCargo, tipoServicio=:tipoServicio, estado=:estado, cargoImpuesto=:cargoImpuesto, totalImpuesto=:totalImpuesto WHERE idFactura=:idFactura";
@@ -1239,14 +1314,14 @@
 
                                     $uaid2 = $this->dbConnect->lastInsertId();
                                     //ACA HACER ACTUALIZACION DE SALDO EN TABLA CLIENTES
-                                    $qry3 = "UPDATE clientes SET saldoInternet= saldoInternet - :cuotaInter, fecha_ult_pago=:fechaUltPago WHERE cod_cliente=:codigoCliente";
+                                    $qry3 = "UPDATE clientes SET saldoInternet= saldoInternet - :cuotaInter, fecha_ult_nota=:fechaUltPago WHERE cod_cliente=:codigoCliente";
 
                                     $stmt3 = $this->dbConnect->prepare($qry3);
                                     $stmt3->execute(
                                         array(
                                               ':codigoCliente' => $codigoCliente,
                                               ':cuotaInter' => floatVal($cuotaInter),
-                                              ':fechaUltPago' => $fechaAbonado
+                                              ':fechaUltPago' => $arrayMeses[$lastKey2]
                                              ));
 
 
@@ -1285,8 +1360,21 @@
                                        $contador = $stmtx->fetchColumn();
                                        if ($contador > 0){
                                            $anticipado = 0;
+                                           /*****COMIENZO DE VERIFICACIÓN DE NUMERO DE FACTURA*****/
+                                           $qryx = "SELECT numeroFactura FROM tbl_cargos WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio AND anulada=0";
+
+                                           $stmtx = $this->dbConnect->prepare($qryx);
+                                           $stmtx->execute(
+                                               array(':codigoCliente' => $codigoCliente,
+                                                   ':mesCargo' => $arrayMeses[$i],
+                                                   ':tipoServicio' => $tipoServicio
+                                               ));
+                                           $resultRec = $stmtx->fetch(PDO::FETCH_ASSOC);
+                                           $numeroFactura = $resultRec["numeroFactura"];
+                                           /*****FIN DE VERIFICACIÓN DE NUMERO DE FACTURA*****/
                                        }else{
                                            $anticipado = 1;
+                                           $numeroFactura = $arrayMeses[$i];
                                        }
 
                                        /*****FIN DE VERIFICACIÓN DE ANTICIPADO*****/
@@ -1327,7 +1415,7 @@
                                                ':idColonia' => $colonia,
                                                ':tipoComprobante' => $tipoComprobante,
                                                ':numeroRecibo' => $reciboCobx1,
-                                               ':numeroFactura' => $arrayMeses[$i],
+                                               ':numeroFactura' => $numeroFactura,
                                                ':codigoCliente' => $codigoCliente,
                                                ':codigoCobrador' => $zona,
                                                ':cobradoPor' => $codigoCobrador,
@@ -1351,14 +1439,14 @@
 
                                        $uaid1 = $this->dbConnect->lastInsertId();
                                        //ACA HACER ACTUALIZACION DE SALDO EN TABLA CLIENTES
-                                       $qry3 = "UPDATE clientes SET saldoInternet= saldoInternet - :cuotaInternet, fecha_ult_pago=:fechaUltPago WHERE cod_cliente=:codigoCliente";
+                                       $qry3 = "UPDATE clientes SET saldoInternet= saldoInternet - :cuotaInternet, fecha_ult_nota=:fechaUltPago WHERE cod_cliente=:codigoCliente";
 
                                        $stmt3 = $this->dbConnect->prepare($qry3);
                                        $stmt3->execute(
                                            array(
                                                ':codigoCliente' => $codigoCliente,
                                                ':cuotaInternet' => floatVal($cuotaInter),
-                                               ':fechaUltPago' => $fechaAbonado
+                                               ':fechaUltPago' => $arrayMeses[$i]
                                            ));
 
                                        //ACA HACER ACTUALIZACION DE LA TABLA COBRADORES
@@ -1405,7 +1493,8 @@
                                $idFactura1 = $_POST['idFacturax1'];
                                $nRecibox1 = $_POST['nFacturax1'];
                                $nFacturax1 = $_POST['nFacturax1'];
-                               $impSeg = $_POST['impSeg'];
+                               //$impSeg = $_POST['impSeg'];
+                               $impSeg = doubleval($_POST['impSeg'])/doubleval($_POST['xmeses']);
                                $reciboCobx1 = $prefijoCobro."-".$ultimoNumero; //Recibo de cobro
 
                                //CALCULANDO FECHAS
@@ -1443,6 +1532,10 @@
                                $saldoCable = $_POST['pendiente']; // Quizá update
                                $estado = "CANCELADA";
 
+                               if ($anularIva == 1){
+                                   $totalIva = 0.00;
+                               }
+
                                $lastKey = array_pop(array_keys($arrayMeses));
                                $desde = $arrayMeses[$lastKey];
 
@@ -1466,8 +1559,21 @@
                                    $contador = $stmtx->fetchColumn();
                                    if ($contador > 0){
                                        $anticipado = 0;
+                                       /*****COMIENZO DE VERIFICACIÓN DE NUMERO DE FACTURA*****/
+                                       $qryx = "SELECT numeroFactura FROM tbl_cargos WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio AND anulada=0";
+
+                                       $stmtx = $this->dbConnect->prepare($qryx);
+                                       $stmtx->execute(
+                                           array(':codigoCliente' => $codigoCliente,
+                                               ':mesCargo' => $arrayMeses[$i],
+                                               ':tipoServicio' => $tipoServicio
+                                           ));
+                                       $resultRec = $stmtx->fetch(PDO::FETCH_ASSOC);
+                                       $numeroFactura = $resultRec["numeroFactura"];
+                                       /*****FIN DE VERIFICACIÓN DE NUMERO DE FACTURA*****/
                                    }else{
                                        $anticipado = 1;
+                                       $numeroFactura = $arrayMeses[$i];
                                    }
 
                                    /*****FIN DE VERIFICACIÓN DE ANTICIPADO*****/
@@ -1508,7 +1614,7 @@
                                               ':idColonia' => $colonia,
                                               ':tipoComprobante' => $tipoComprobante,
                                               ':numeroRecibo' => $reciboCobx1,
-                                              ':numeroFactura' => $arrayMeses[$i],
+                                              ':numeroFactura' => $numeroFactura,
                                               ':codigoCliente' => $codigoCliente,
                                               ':codigoCobrador' => $zona,
                                               ':cobradoPor' => $codigoCobrador,
@@ -1539,7 +1645,7 @@
                                         array(
                                               ':codigoCliente' => $codigoCliente,
                                               ':cuotaCable' => floatVal($cuotaCable),
-                                              ':fechaUltPago' => $fechaAbonado
+                                              ':fechaUltPago' => $arrayMeses[$i]
                                              ));
 
                                     //ACA HACER ACTUALIZACION DE LA TABLA COBRADORES
@@ -1583,7 +1689,8 @@
                                $idFactura1 = $_POST['idFacturax1'];
                                $nRecibox1 = $_POST['nFacturax1'];
                                $nFacturax1 = $_POST['nFacturax1'];
-                               $impSeg = $_POST['impSeg'];
+                               //$impSeg = $_POST['impSeg'];
+                               $impSeg = doubleval($_POST['impSeg'])/doubleval($_POST['xmeses']);
                                $reciboCobx1 = $prefijoCobro."-".$ultimoNumero; //Recibo de cobro
 
                                //CALCULANDO FECHAS
@@ -1621,6 +1728,10 @@
                                $saldoInter = $_POST['pendiente']; // Quizá update
                                $estado = "CANCELADA";
 
+                               if ($anularIva == 1){
+                                   $totalIva = 0.00;
+                               }
+
                                $lastKey = array_pop(array_keys($arrayMeses));
                                $desde = $arrayMeses[$lastKey];
 
@@ -1644,8 +1755,21 @@
                                    $contador = $stmtx->fetchColumn();
                                    if ($contador > 0){
                                        $anticipado = 0;
+                                       /*****COMIENZO DE VERIFICACIÓN DE NUMERO DE FACTURA*****/
+                                       $qryx = "SELECT numeroFactura FROM tbl_cargos WHERE codigoCliente=:codigoCliente AND mesCargo=:mesCargo AND tipoServicio=:tipoServicio AND anulada=0";
+
+                                       $stmtx = $this->dbConnect->prepare($qryx);
+                                       $stmtx->execute(
+                                           array(':codigoCliente' => $codigoCliente,
+                                               ':mesCargo' => $arrayMeses[$i],
+                                               ':tipoServicio' => $tipoServicio
+                                           ));
+                                       $resultRec = $stmtx->fetch(PDO::FETCH_ASSOC);
+                                       $numeroFactura = $resultRec["numeroFactura"];
+                                       /*****FIN DE VERIFICACIÓN DE NUMERO DE FACTURA*****/
                                    }else{
                                        $anticipado = 1;
+                                       $numeroFactura = $arrayMeses[$i];
                                    }
 
                                    /*****FIN DE VERIFICACIÓN DE ANTICIPADO*****/
@@ -1686,7 +1810,7 @@
                                               ':idColonia' => $colonia,
                                               ':tipoComprobante' => $tipoComprobante,
                                               ':numeroRecibo' => $reciboCobx1,
-                                              ':numeroFactura' => $arrayMeses[$i],
+                                              ':numeroFactura' => $numeroFactura,
                                               ':codigoCliente' => $codigoCliente,
                                               ':codigoCobrador' => $zona,
                                               ':cobradoPor' => $codigoCobrador,
@@ -1710,14 +1834,14 @@
 
                                     $uaid1 = $this->dbConnect->lastInsertId();
                                     //ACA HACER ACTUALIZACION DE SALDO EN TABLA CLIENTES
-                                    $qry3 = "UPDATE clientes SET saldoInternet= saldoInternet - :cuotaInternet, fecha_ult_pago=:fechaUltPago WHERE cod_cliente=:codigoCliente";
+                                    $qry3 = "UPDATE clientes SET saldoInternet= saldoInternet - :cuotaInternet, fecha_ult_nota=:fechaUltPago WHERE cod_cliente=:codigoCliente";
 
                                     $stmt3 = $this->dbConnect->prepare($qry3);
                                     $stmt3->execute(
                                         array(
                                               ':codigoCliente' => $codigoCliente,
                                               ':cuotaInternet' => floatVal($cuotaInter),
-                                              ':fechaUltPago' => $fechaAbonado
+                                              ':fechaUltPago' => $arrayMeses[$i]
                                              ));
 
                                     //ACA HACER ACTUALIZACION DE LA TABLA COBRADORES

@@ -95,7 +95,7 @@
        {
            try {
                // SQL query para traer nombre de las categorías
-               $query = "SELECT idVendedor, nombresVendedor, apellidosVendedor FROM tbl_vendedores where state = 1";
+               $query = "SELECT idVendedor, nombresVendedor, apellidosVendedor FROM tbl_vendedores";
                // Preparación de sentencia
                $statement = $this->dbConnect->prepare($query);
                $statement->execute();

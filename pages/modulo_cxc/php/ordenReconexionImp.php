@@ -39,7 +39,7 @@ function f3(){
     //echo strftime("El año es %Y y el mes es %B");
     putenv("LANG='es_ES.UTF-8'");
     setlocale(LC_ALL, 'es_ES.UTF-8');
-    $pdf->Ln(16);
+    $pdf->Ln(12);
     while($row = $resultado->fetch_assoc())
     {
 
@@ -69,8 +69,18 @@ function f3(){
             while ($result2 = $statement2->fetch_assoc()) {
                 $estadoCuenta = $result2['totalEstado'];
             }
+            // SQL query para traer datos del servicio de cable de la tabla clientes
+            $query3 = "SELECT dire_telefonia FROM clientes WHERE cod_cliente= ".$row["codigoCliente"];
+            // Preparación de sentencia
+            $statement3 = $mysqli->query($query3);
+            //$statement->execute();
+            while ($result3 = $statement3->fetch_assoc()) {
+                $nodo = $result3['dire_telefonia'];
+            }
+
             $pdf->SetFont('Arial','B',12);
             $pdf->Cell(190,6,'RECONEXION DE SERVICIO',0,1,'C');
+            $pdf->Cell(190,6,$nodo,0,1,'C');
             $pdf->SetFont('Arial','B',9);
             $pdf->Cell(175,6,'Dia de cobro: '.$row["diaCobro"],0,0,'L');
             $pdf->Cell(20,6,utf8_decode('N° ').$row["idOrdenReconex"],1,1,'C');
@@ -129,9 +139,18 @@ function f3(){
             while ($result2 = $statement2->fetch_assoc()) {
                 $estadoCuenta = $result2['totalEstado'];
             }
+            // SQL query para traer datos del servicio de cable de la tabla clientes
+            $query3 = "SELECT dire_telefonia FROM clientes WHERE cod_cliente= ".$row["codigoCliente"];
+            // Preparación de sentencia
+            $statement3 = $mysqli->query($query3);
+            //$statement->execute();
+            while ($result3 = $statement3->fetch_assoc()) {
+                $nodo = $result3['dire_telefonia'];
+            }
 
             $pdf->SetFont('Arial','B',12);
             $pdf->Cell(190,6,'RECONEXION DE SERVICIO',0,1,'C');
+            $pdf->Cell(190,6,$nodo,0,1,'C');
             $pdf->SetFont('Arial','B',9);
             $pdf->Cell(175,6,'Dia de cobro: '.$row["diaCobro"],0,0,'L');
             $pdf->Cell(20,6,utf8_decode('N° ').$row["idOrdenReconex"],1,1,'C');

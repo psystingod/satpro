@@ -205,16 +205,51 @@ function setVencimientoCable(){
     var fechaCable = document.getElementById("fechaPrimerFacturaCable").value;
     var mesesCable = parseInt(document.getElementById("mesesContratoCable").value);
 
-    var nuevaFechaCable = fechaCable.split("/").reverse().join("-");
+    var vencimientoCable = document.getElementById("vencimientoContratoCable").value;
+    var vencimientoInter = document.getElementById("vencimientoContratoInternet").value;
+    if (vencimientoInter.length >= 10 && vencimientoCable.length < 10 ){
+        if (fechaCable.length != 10 || Number.isInteger(mesesCable) == false){
+            alert("Para calcular la fecha de vencimiento automaticamente, debes completar la fecha de primer factura y los meses de contrato");
+            //document.getElementById("fechaPrimerFacturaCable").value = '';
+        }else{
 
-    var date = new Date(nuevaFechaCable);
-    date.setMonth(date.getMonth() + mesesCable);
-    var dia = date.getDate();
-    var mes = ("0" + (date.getMonth() + 1)).slice(-2);
-    var ano = date.getFullYear();
-    var vencimiento = dia + "/" + mes + "/" + ano;
-    document.getElementById("vencimientoContratoCable").value = vencimiento;
-    document.getElementById("vencimientoContratoCable").style.color = "red";
+            var nuevaFechaCable = fechaCable.split("/").reverse().join("-");
+
+            var date = new Date(nuevaFechaCable);
+            date.setMonth(date.getMonth() + mesesCable);
+            var dia = date.getDate();
+            var mes = ("0" + (date.getMonth() + 1)).slice(-2);
+            var ano = date.getFullYear();
+            var vencimiento = dia + "/" + mes + "/" + ano;
+            document.getElementById("vencimientoContratoCable").value = vencimiento;
+            document.getElementById("vencimientoContratoCable").style.color = "red";
+
+            document.getElementById("vencimientoContratoInternet").value = vencimiento;
+            document.getElementById("vencimientoContratoInternet").style.color = "red";
+        }
+    }
+    else {
+        var fechaCable = document.getElementById("fechaPrimerFacturaCable").value;
+        var mesesCable = parseInt(document.getElementById("mesesContratoCable").value);
+        //console.log(fechaCable.length);
+        //console.log(Number.isInteger(mesesCable));
+        if (fechaCable.length != 10 || Number.isInteger(mesesCable) == false){
+            alert("Para calcular la fecah de vencimiento automaticamente, debes completar la fecha de primer factura y los meses de contrato");
+            //document.getElementById("fechaPrimerFacturaCable").value = '';
+        }else{
+
+            var nuevaFechaCable = fechaCable.split("/").reverse().join("-");
+
+            var date = new Date(nuevaFechaCable);
+            date.setMonth(date.getMonth() + mesesCable);
+            var dia = date.getDate();
+            var mes = ("0" + (date.getMonth() + 1)).slice(-2);
+            var ano = date.getFullYear();
+            var vencimiento = dia + "/" + mes + "/" + ano;
+            document.getElementById("vencimientoContratoCable").value = vencimiento;
+            document.getElementById("vencimientoContratoCable").style.color = "red";
+        }
+    }
 
 }
 
@@ -222,16 +257,49 @@ function setVencimientoInternet(){
     var fechaInter = document.getElementById("fechaPrimerFacturaInternet").value;
     var mesesInter = parseInt(document.getElementById("mesesContratoInternet").value);
 
-    var nuevaFechaInter = fechaInter.split("/").reverse().join("-");
+    var vencimientoCable = document.getElementById("vencimientoContratoCable").value;
+    var vencimientoInter = document.getElementById("vencimientoContratoInternet").value;
+    if (vencimientoCable.length >= 10 && vencimientoInter.length < 10 ){
+        if (fechaInter.length != 10 || Number.isInteger(mesesInter) == false){
+            alert("Para calcular la fecha de vencimiento automaticamente, debes completar la fecha de primer factura y los meses de contrato");
+            //document.getElementById("fechaPrimerFacturaInternet").value = '';
+        }else{
 
-    var date = new Date(nuevaFechaInter);
-    date.setMonth(date.getMonth() + mesesInter);
-    var dia = date.getDate();
-    var mes = ("0" + (date.getMonth() + 1)).slice(-2);
-    var ano = date.getFullYear();
-    var vencimiento = dia + "/" + mes + "/" + ano;
-    document.getElementById("vencimientoContratoInternet").value = vencimiento;
-    document.getElementById("vencimientoContratoInternet").style.color = "red";
+            var nuevaFechaInter = fechaInter.split("/").reverse().join("-");
+
+            var date = new Date(nuevaFechaInter);
+            date.setMonth(date.getMonth() + mesesInter);
+            var dia = date.getDate();
+            var mes = ("0" + (date.getMonth() + 1)).slice(-2);
+            var ano = date.getFullYear();
+            var vencimiento = dia + "/" + mes + "/" + ano;
+            document.getElementById("vencimientoContratoCable").value = vencimiento;
+            document.getElementById("vencimientoContratoCable").style.color = "red";
+
+            document.getElementById("vencimientoContratoInternet").value = vencimiento;
+            document.getElementById("vencimientoContratoInternet").style.color = "red";
+
+
+        }
+    }
+    else {
+        if (fechaInter.length != 10 || Number.isInteger(mesesInter) == false){
+            alert("Para calcular la fecha de vencimiento automaticamente, debes completar la fecha de primer factura y los meses de contrato");
+            //document.getElementById("fechaPrimerFacturaInternet").value = '';
+        }else{
+
+            var nuevaFechaInter = fechaInter.split("/").reverse().join("-");
+
+            var date = new Date(nuevaFechaInter);
+            date.setMonth(date.getMonth() + mesesInter);
+            var dia = date.getDate();
+            var mes = ("0" + (date.getMonth() + 1)).slice(-2);
+            var ano = date.getFullYear();
+            var vencimiento = dia + "/" + mes + "/" + ano;
+            document.getElementById("vencimientoContratoInternet").value = vencimiento;
+            document.getElementById("vencimientoContratoInternet").style.color = "red";
+        }
+    }
 
 }
 
@@ -251,4 +319,14 @@ function tipoServicioCabletv(){
         document.getElementById('sn1').required = false;
     }
 
+}
+function selectTipoComp(){
+    var tipoComprobante = document.getElementById('tipoComprobante').value;
+    if (tipoComprobante == "1"){
+        document.getElementById("nrc").required = true;
+        var nrc = document.getElementById("nrc").value;
+        if (nrc.length < 3){
+            document.getElementById("nrc").focus();
+        }
+    }
 }

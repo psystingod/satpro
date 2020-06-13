@@ -1,6 +1,11 @@
 <?php
 
-    session_start();
+if(!isset($_SESSION))
+{
+    session_start([
+        'cookie_lifetime' => 86400,
+    ]);
+}
     require("php/getData.php");
     require("php/GetAllInfo.php");
     require($_SERVER['DOCUMENT_ROOT'].'/satpro'.'/php/permissions.php');
@@ -21,8 +26,7 @@
     $precon = new ConectionDB($_SESSION['db']);
     $con = $precon->ConectionDB($_SESSION['db']);
     /**************************************************/
-    if (isset($_GET['codigoCliente'])) {
-
+    if (isset($_GET['codigoCliente']) && !isset($_GET['nOrden'])) {
         // get passed parameter value, in this case, the record ID
         // isset() is a PHP function used to verify if a value is there or not
         $id=isset($_GET['codigoCliente']) ? $_GET['codigoCliente'] : die('ERROR: Record no encontrado.');
@@ -82,7 +86,7 @@
         catch(PDOException $exception){
             die('ERROR: ' . $exception->getMessage());
         }
-    }else if(isset($_GET['nOrden'])){
+    }else if(isset($_GET['nOrden']) && !isset($_GET['codigoCliente'])){
         // get passed parameter value, in this case, the record ID
         // isset() is a PHP function used to verify if a value is there or not
         $id=isset($_GET['nOrden']) ? $_GET['nOrden'] : die('ERROR: Record no encontrado.');
@@ -157,7 +161,135 @@
         catch(PDOException $exception){
             die('ERROR: ' . $exception->getMessage());
         }
-    }else {
+    }elseif (isset($_GET['codigoCliente']) && isset($_GET['nOrden'])) {
+
+    // get passed parameter value, in this case, the record ID
+    // isset() is a PHP function used to verify if a value is there or not
+    $id=isset($_GET['codigoCliente']) ? $_GET['codigoCliente'] : die('ERROR: Record no encontrado.');
+
+    // read current record's data
+    try {
+        // prepare select query
+        $query = "SELECT cod_cliente, nombre, telefonos, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, mac_modem, serie_modem, id_velocidad, dire_telefonia, recep_modem, trans_modem, ruido_modem, wanip, coordenadas, colilla, marca_modem, tecnologia, saldoCable, saldoInternet FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
+        $stmt = $con->prepare( $query );
+
+        // this is the first question mark
+        $stmt->bindParam(1, $id);
+
+        // execute our query
+        $stmt->execute();
+
+        // store retrieved row to a variable
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        /****************** DATOS GENERALES ***********************/
+        date_default_timezone_set('America/El_Salvador');
+        $fechaOrdenTrabajo = date_format(date_create(date('Y-m-d')), 'd/m/Y');
+
+        //$tipoOrden = "Técnica";
+        $diaCobro = $row["dia_cobro"];
+        $telefonos = $row["telefonos"];
+        $codigoCliente = $row["cod_cliente"];
+        $nombreCliente = $row['nombre'];
+        $idMunicipio = $row["id_municipio"];
+        $saldoCable = $row["saldoCable"];
+        $saldoInter = $row["saldoInternet"];
+        $direccionCable = $row["dire_cable"];
+        $mactv = $row['mactv'];
+        $direccionInter = $row["dire_internet"];
+        $macModem = $row['mac_modem'];
+        $serieModem = $row['serie_modem'];
+        $idVelocidad = $row['id_velocidad'];
+        $rx = $row['recep_modem'];
+        $tx = $row['trans_modem'];
+        $snr = $row['ruido_modem'];
+        $velocidad = $row['id_velocidad'];
+        $colilla = $row['colilla'];
+        $marcaModelo = $row['marca_modem'];
+        $tecnologia = $row['tecnologia'];
+        $fechaTrabajo = "";
+        $hora = "";
+        $fechaProgramacion = $row['wanip']; //SE MODIFICO
+        $coordenadas = $row['coordenadas']; //SE MODIFICO
+        $observaciones = "";
+        $nodo = $row['dire_telefonia'];
+        $idVendedor = "";
+        $recepcionTv = "";
+
+        // DATOS DE LA ORDEN EN SÍ
+        $id=isset($_GET['nOrden']) ? $_GET['nOrden'] : die('ERROR: Record no encontrado.');
+        // prepare select query
+        $query = "SELECT idOrdenTrabajo, codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, diaCobro, nombreCliente, telefonos, idMunicipio, actividadCable, saldoCable, direccionCable, actividadInter, saldoInter, direccionInter, saldoInter, direccionInter, macModem, serieModem, velocidad, rx, tx, snr, colilla, fechaTrabajo, hora, fechaProgramacion, idTecnico, mactv, coordenadas, observaciones, nodo, marcaModelo, tecnologia, idVendedor, recepcionTv, tipoServicio, creadoPor  FROM tbl_ordenes_trabajo WHERE idOrdenTrabajo = ? LIMIT 0,1";
+        $stmt = $con->prepare( $query );
+
+        // this is the first question mark
+        $stmt->bindParam(1, $id);
+
+        // execute our query
+        $stmt->execute();
+
+        // store retrieved row to a variable
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        /****************** DATOS GENERALES ***********************/
+        $idOrdenTrabajo = $row["idOrdenTrabajo"];
+        $fechaOrdenTrabajo = date_format(date_create($row["fechaOrdenTrabajo"]), 'd/m/Y');
+        $tipoOrdenTrabajo = $row["tipoOrdenTrabajo"];
+        //$diaCobro = $row["diaCobro"];
+        //$codigoCliente = $row["codigoCliente"];
+        if ($codigoCliente === "00000") {
+            $codigoCliente = "SC";
+        }
+        $nombreCliente = $row['nombreCliente'];
+        $telefonos = $row["telefonos"];
+        //$idMunicipio = $row["idMunicipio"];
+        $idActividadCable = $row["actividadCable"];
+        //$saldoCable = $row["saldoCable"];
+        $direccionCable = $row["direccionCable"];
+        $idActividadInter = $row["actividadInter"];
+        //$saldoInter = $row["saldoInter"];
+        //$direccionInter = $row["direccionInter"];
+        //$macModem = $row['macModem'];
+        //$serieModem = $row['serieModem'];
+        //$velocidad = $row['velocidad'];
+        //$rx = $row['rx'];
+        //$tx = $row['tx'];
+        //$snr = $row['snr'];
+        //$colilla = $row['colilla'];
+        if ($row["fechaTrabajo"] >= 7) {
+            $date2 = DateTime::createFromFormat('Y-m-d', $row["fechaTrabajo"]);
+            $fechaTrabajo = $date2->format('d/m/Y');
+        }else {
+            $fechaTrabajo = "";
+        }
+
+        $hora = $row['hora'];
+        /*if ($row["fechaProgramacion"] >= 7) {
+            $fechaProgramacion = date_format(date_create($row["fechaProgramacion"]), 'd/m/Y');
+        }else {
+            $fechaProgramacion = "";
+        }*/
+        $fechaProgramacion = $row["fechaProgramacion"];
+        $idTecnico = $row['idTecnico'];
+        $mactv = $row['mactv'];
+        //$coordenadas = $row['coordenadas'];
+        $observaciones = $row['observaciones'];
+        //$nodo = $row['nodo'];
+        //$marcaModelo = $row['marcaModelo'];
+        //$tecnologia = $row['tecnologia'];
+        $idVendedor = $row['idVendedor'];
+        //$recepcionTv = $row['recepcionTv'];
+        $tipoServicio = $row['tipoServicio'];
+        $creadoPor = $row['creadoPor'];
+        //creadoPor
+
+    }
+
+        // show error
+    catch(PDOException $exception){
+        die('ERROR: ' . $exception->getMessage());
+    }
+}else {
         $fechaOrdenTrabajo = "";
         $idOrdenTrabajo = "";
         $codigoCliente = "";
@@ -317,6 +449,7 @@
                                       ?>
                                       <label for="fechaOrden">Fecha de orden</label>
                                       <input id="fechaOrden" class="form-control input-sm" type="text" name="fechaOrden" value="<?php echo $fechaOrdenTrabajo ?>" readonly>
+                                      <input id="nuevaEditar" class="form-control input-sm" type="hidden" name="nuevaEditar" value="<?php if(isset($_GET['key']))echo $_GET['key']; else echo ""; ?>">
                                   </div>
                                   <div class="col-md-2">
 
@@ -330,7 +463,6 @@
                                   </div>
 
                                   <div class="col-md-3">
-
                                       <label for="tipoOrden">Tipo de orden</label>
                                       <input id="tipoOrden" class="form-control input-sm" type="text" name="tipoOrden" value="Técnica" readonly>
                                   </div>
@@ -377,7 +509,7 @@
                                       <div class="row">
                                           <div class="col-md-8">
                                               <label for="tipoActividadCable">Tipo de actividad</label>
-                                              <select id="tipoActividadCable" class="form-control input-sm cable" name="tipoActividadCable" disabled>
+                                              <select id="tipoActividadCable" onchange="changeActividad()" class="form-control input-sm cable" name="tipoActividadCable" disabled>
                                                   <option value="" selected>Seleccionar</option>
                                                   <?php
 
@@ -410,7 +542,7 @@
                                       <div class="row">
                                           <div class="col-md-8">
                                               <label for="tipoActividadInternet">Tipo de actividad</label>
-                                              <select id="tipoActividadInter" class="form-control input-sm internet" name="tipoActividadInternet" disabled>
+                                              <select id="tipoActividadInter" onchange="changeActividad()" class="form-control input-sm internet" name="tipoActividadInternet" disabled>
                                                   <option value="" selected>Seleccionar</option>
                                                   <?php
                                                   foreach ($arrayActividadesI as $key) {
@@ -640,7 +772,8 @@
     <script type="text/javascript">
         // Get the input field
         var cod = document.getElementById("codigoCliente");
-
+        var nOrden = '<?php if(isset($_GET["nOrden"])) echo $_GET["nOrden"]; else echo "";?>';
+        var nuevaEditar = document.getElementById("nuevaEditar").value;
         $('#ordenTrabajo').on('keyup keypress', function(e) {
           var keyCode = e.keyCode || e.which;
           if (keyCode === 13) {
@@ -653,18 +786,30 @@
         cod.addEventListener("keyup", function(event) {
         // Number 13 is the "Enter" key on the keyboard
         if (event.keyCode === 13) {
-        // Cancel the default action, if needed
-        event.preventDefault();
-        var codValue = document.getElementById("codigoCliente").value
-        // Trigger the button element with a click
-        window.location="ordenTrabajo.php?codigoCliente="+codValue;
+
+            // Cancel the default action, if needed
+            event.preventDefault();
+            var codValue = document.getElementById("codigoCliente").value
+            nuevaEditar = document.getElementById("nuevaEditar").value;
+            nOrden = '<?php if(isset($_GET["nOrden"])) echo $_GET["nOrden"]; else echo "";?>';
+            console.log(document.getElementById("nuevaEditar").value);
+            // Trigger the button element with a click
+            if(nOrden.length > 3 && nuevaEditar == 1){
+                window.location="ordenTrabajo.php?codigoCliente="+codValue+"&key="+nuevaEditar;
+            }else if (nOrden.length > 3 && nuevaEditar == 2){
+                window.location="ordenTrabajo.php?codigoCliente="+codValue+"&nOrden="+nOrden+"&key="+nuevaEditar;
+            }else{
+                window.location="ordenTrabajo.php?codigoCliente="+codValue+"&key="+nuevaEditar;
+            }
+
         }
         });
     </script>
     <?php
-    if (isset($_GET['codigoCliente'])) {
+    if (isset($_GET['codigoCliente']) && !isset($_GET['nOrden'])) {
         echo "<script>
             document.getElementById('ordenTrabajo').action = 'php/nuevaOrdenTrabajo.php';
+            document.getElementById('nuevaEditar').value = 1;
             document.getElementById('btn-cable').disabled = false;
             document.getElementById('btn-internet').disabled = false;
             document.getElementById('guardar').disabled = false;
@@ -686,9 +831,72 @@
             var hour = time.getHours();
             time = hour + ':' + minutes + ':' + seconds;
             document.getElementById('hora').value = time;
+            
         </script>";
     }
-    if (isset($_GET['nOrden'])) {
+    if (isset($_GET['nOrden']) && !isset($_GET['codigoCliente'])) {
+        echo "<script>
+        var tipoServicio = document.getElementById('tipoServicio').value
+        if (tipoServicio == 'C') {
+            document.getElementById('nombreOrden').innerHTML = 'CABLE';
+        }else if (tipoServicio == 'I') {
+            document.getElementById('nombreOrden').innerHTML = 'INTERNET';
+        }
+        </script>";
+
+    }
+
+    if (isset($_GET['nOrden']) && isset($_GET['codigoCliente'])) {
+        echo "<script>
+        document.getElementById('nuevaOrdenId').disabled = true;
+        document.getElementById('btn-cable').disabled = false;
+        document.getElementById('guardar').disabled = false;
+        document.getElementById('btn-internet').disabled = false;
+        document.getElementById('imprimir').disabled = true;
+    
+        var editInputs = document.getElementsByClassName('input-sm');
+        for (var i = 0; i < editInputs.length; i++) {
+            if (editInputs[i].readOnly == true) {
+                editInputs[i].readOnly = false;
+            }
+            else if (editInputs[i].disabled == true){
+                editInputs[i].disabled = false;
+            }
+        }
+        document.getElementById('numeroOrden').readOnly = true;
+        document.getElementById('saldoCable').readOnly = true;
+        document.getElementById('saldoInternet').readOnly = true;
+        document.getElementById('nodo').readOnly = true;
+        document.getElementById('colilla').readOnly = true;
+        document.getElementById('velocidad').readOnly = true;
+        document.getElementById('macModem').readOnly = true;
+        document.getElementById('serieModem').readOnly = true;
+    
+        document.getElementById('nombreOrden').style.display = 'run-in';
+        var tipoServicio = document.getElementById('tipoServicio').value;
+        if (tipoServicio == 'C') {
+            //document.getElementById('btn-internet').disabled = true;
+            document.getElementById('btn-cable').style.color='#4CAF50';
+            document.getElementById('tipoActividadInter').disabled=true;
+            document.getElementById('direccionInternet').readOnly=true;
+            document.getElementById('rx').readOnly=true;
+            document.getElementById('tx').readOnly=true;
+            document.getElementById('snr').readOnly=true;
+            document.getElementById('tecnologia').readOnly=true;
+        }else if (tipoServicio == 'I') {
+            //document.getElementById('btn-cable').disabled = true;
+            document.getElementById('btn-internet').style.color='#039BE5';
+    
+            document.getElementById('tipoActividadCable').disabled=true;
+            document.getElementById('direccionCable').readOnly=true;
+            document.getElementById('saldoCable').readOnly=true;
+            document.getElementById('tecnologia').readOnly=true;
+        }
+        changeAction('editar');
+        </script>";
+
+    }
+    if (isset($_GET['nOrden']) && isset($_GET['codigoCliente'])) {
         echo "<script>
         var tipoServicio = document.getElementById('tipoServicio').value
         if (tipoServicio == 'C') {
@@ -700,6 +908,7 @@
 
     }
     ?>
+
     <script>
         $(document).ready(function(){
             $('#fechaTrabajo').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});

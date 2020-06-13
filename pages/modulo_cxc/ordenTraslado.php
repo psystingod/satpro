@@ -1,6 +1,11 @@
 <?php
 
-    session_start();
+if(!isset($_SESSION))
+{
+    session_start([
+        'cookie_lifetime' => 86400,
+    ]);
+}
     require("php/getData.php");
     require("php/GetAllInfo.php");
     require($_SERVER['DOCUMENT_ROOT'].'/satpro'.'/php/permissions.php');
@@ -133,7 +138,13 @@
             //$tipoReconexInter = $row["tipoReconexInter"];
             $diaCobro = $row["diaCobro"];
             $codigoCliente = $row["codigoCliente"];
-            $fechaTraslado = date_format(date_create($row["fechaTraslado"]), 'd/m/Y');
+            //var_dump($fechaTraslado = $row["fechaTraslado"]);
+            if (strlen($row["fechaTraslado"]) > 8){
+                $fechaTraslado = date_format(date_create($row["fechaTraslado"]), 'd/m/Y');
+            }else{
+                $fechaTraslado = "";
+            }
+
             $direccionTraslado = $row['direccionTraslado'];
             if ($codigoCliente === "00000") {
                 $codigoCliente = "SC";
@@ -504,7 +515,7 @@
                                       <label for="telefonos">Teléfono reciente</label>
                                       <input id="telefonos" class="form-control input-sm" type="text" name="telefonos" value="<?php echo $telefonos; ?>" readonly>
                                   </div>
-                                  <div class="col-md-5">
+                                  <div class="col-md-4">
                                       <label for="tecnico">Técnico</label>
                                       <select class="form-control input-sm" name="responsable" disabled required>
                                           <option value="" selected>Seleccionar</option>
@@ -518,7 +529,7 @@
                                           ?>
                                       </select>
                                   </div>
-                                  <div class="col-md-2">
+                                  <div class="col-md-3">
                                       <label for="colilla">Colilla</label>
                                       <input id="colilla" class="form-control input-sm" type="text" name="colilla" value="<?php echo $colilla; ?>" readonly required>
                                   </div>

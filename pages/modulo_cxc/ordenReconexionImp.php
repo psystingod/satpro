@@ -1,6 +1,11 @@
 <?php
 require_once('../../php/connection.php');
-session_start();
+if(!isset($_SESSION))
+{
+    session_start([
+        'cookie_lifetime' => 86400,
+    ]);
+}
 $precon = new ConectionDB($_SESSION['db']);
 $con = $precon->ConectionDB($_SESSION['db']);
 require("php/getData.php");

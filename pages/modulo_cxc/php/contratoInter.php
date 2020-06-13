@@ -1,12 +1,13 @@
 <?php
-
-	require '../../../pdfs/fpdf.php';
+  require '../../../pdfs/fpdf.php';
   require_once("../../../php/config.php");
   require '../../../numLe/src/NumerosEnLetras.php';
+
   if(!isset($_SESSION))
   {
   	session_start();
   }
+
   $host = DB_HOST;
   $user = DB_USER;
   $password = DB_PASSWORD;
@@ -26,11 +27,10 @@
           while ($result = $statement->fetch_assoc()) {
     		  $velocidad = $result['nombreVelocidad'];
     	  }
-
           return $velocidad;
 
       } catch (Exception $e) {
-          print "!ErrorÂ¡: " . $e->getMessage() . "</br>";
+          print "!Error¡: " . $e->getMessage() . "</br>";
           die();
       }
   }
@@ -106,19 +106,6 @@
           $pdf->Cell(63,3,$row['numero_nit'],0,0,'L');
           $pdf->Cell(84,3,$row['telefonos'],0,0,'L');
           $pdf->Cell(40,6,utf8_decode($row['nacionalidad']),0,1,'L');
-          //$pdf->Cell(75,6,utf8_decode($row['lugar_exp']),0,0,'L');
-          //$pdf->Cell(30,6,utf8_decode($row['fecha_nacimiento']),0,1,'R');
-
-          /*$pdf->Cell(40,6,utf8_decode(''),0,0,'L');
-          $pdf->Cell(65,6,utf8_decode(''),0,0,'L');
-          $pdf->Cell(48,6,utf8_decode($row['num_registro']),0,0,'L');
-          $pdf->Cell(40,6,utf8_decode($row['telefonos']),0,1,'L');
-
-          $pdf->Cell(40,6,utf8_decode(''),0,0,'L');
-          $pdf->Cell(65,6,utf8_decode($row['lugar_trabajo']),0,0,'L');
-          $pdf->Cell(48,6,utf8_decode(''),0,0,'L');
-          $pdf->Cell(40,6,utf8_decode($row['tel_trabajo']),0,1,'R');
-    	  $pdf->Ln(5);*/
 
           $pdf->Cell(94,6,'',0,0,'L');
           $pdf->Cell(70,6,strtoupper($row['nombre_conyuge']),0,1,'L');
@@ -149,7 +136,11 @@
           $pdf->Ln(6.5);
           $pdf->Cell(22,6,'',0,0,'L');
           $pdf->Cell(70,6,strtoupper('INTERNET'),0,0,'L');
-          $pdf->Cell(68,6,strtoupper(getVelocidadById($row['id_velocidad'])),0,0,'L');
+          if ($row['id_velocidad'] <= '0'){
+              $pdf->Cell(68,6,strtoupper("Velocidad no espeficicada"),0,0,'L');
+          }else{
+              $pdf->Cell(68,6,strtoupper(getVelocidadById($row['id_velocidad'])),0,0,'L');
+          }
           $pdf->Cell(70,6,strtoupper($tecnologia),0,1,'L');
 
           $pdf->Cell(22,6,'',0,0,'L');

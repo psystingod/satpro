@@ -124,6 +124,9 @@ $dashboardAdministracion = "<div id='page-wrapper'>
         <div class='col-lg-4'>
             <h4>Actividades</h4>
             <h6>Nuevas instalaciones, suspensiones o renovaciones</h6>
+            <script>var enc =".$dashboard->getGraphics()."</script>".
+            "<script>var enc2 =".$dashboard->getGraphics2()."</script>".
+            "<script>var enc3 =".$dashboard->getGraphics3()."</script>
             <div class='row orders'>
                 <div id='morris-donut-chart'></div>
             </div>

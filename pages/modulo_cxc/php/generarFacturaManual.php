@@ -70,12 +70,25 @@ class GenerarFacturas extends ConectionDB
             $direccion = $_POST["direccion"];
             $municipio = $_POST["municipio"];
 
-            if (isset($_POST["montoCable"]) && !isset($_POST["montoInternet"])){
+            $queryCl = "SELECT id_municipio, id_colonia FROM clientes WHERE cod_cliente = '{$codigoCliente}'";
+            // Preparación de sentencia
+            $statementCl = $this->dbConnect->prepare($queryCl);
+            $statementCl->execute();
+            $resultCl = $statementCl->fetch(PDO::FETCH_ASSOC);
+
+            $idMunicipio = $resultCl['id_municipio'];
+            $idColonia = $resultCl['id_colonia'];
+
+            //var_dump($_POST['tipoServicio']);
+            //var_dump($_POST["montoCable"]);
+            //var_dump($_POST["montoInternet"]);
+            //$montoCancelar = null;
+            if ($_POST['tipoServicio'] == 'C'){
                 $montoCancelar = $_POST["montoCable"];
-            }elseif (!isset($_POST["montoCable"]) && isset($_POST["montoInternet"])){
+            }elseif ($_POST['tipoServicio'] == 'I'){
                 $montoCancelar = $_POST["montoInternet"];
             }
-
+            //var_dump($montoCancelar);
             $cargoImpuesto = $_POST["impuesto"];
             $cargoIva = $_POST["iva"];
             $anticipo=0;
@@ -102,6 +115,8 @@ class GenerarFacturas extends ConectionDB
             //var_dump($comprobante2);
             //var_dump($vencimiento2);
             $fechaComprobante = date_format(date_create($comprobante2), 'Y-m-d');
+            $fechaVencimiento = date("Y-m-d", strtotime($fechaComprobante. "+8 day"));
+            $fechaCobro = date("Y-m-d", strtotime($fechaComprobante. "-1 month"));
             //$fechaVencimiento = date_format(date_create($vencimiento2), 'Y-m-d');
 
             $correlativo = "---"; //$_POST['correlativo'];
@@ -141,15 +156,15 @@ class GenerarFacturas extends ConectionDB
                                     $totalIva = number_format($totalIva,2);
                                     //$this->dbConnect->beginTransaction(); $this->dbConnect->exec('LOCK TABLES tbl_cargos, tbl_abonos, clientes, tbl_facturas_config WRITE');
                                     $this->dbConnect->beginTransaction();
-                                    $qry = "INSERT INTO tbl_cargos(nombre, direccion, idMunicipio, /*idColonia,*/ tipoFactura, numeroFactura, /*prefijo,*/ numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, /*fechaCobro, fechaVencimiento,*/ fechaFactura, mesCargo, anticipo, tipoServicio, estado, cargoImpuesto, totalImpuesto, cargoIva, totalIva, exento)VALUES(:nombre, :direccion, :idMunicipio, /*:idColonia,*/ :tipoComprobante, :numeroFactura, /*:prefijo,*/ :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, /*:fechaCobro, :fechaVencimiento,*/ :fechaFactura, :mesCargo, :anticipo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva, :exento)";
+                                    $qry = "INSERT INTO tbl_cargos(nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroFactura, /*prefijo,*/ numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, anticipo, tipoServicio, estado, cargoImpuesto, totalImpuesto, cargoIva, totalIva, exento)VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroFactura, /*:prefijo,*/ :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :anticipo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva, :exento)";
 
                                     $stmt = $this->dbConnect->prepare($qry);
                                     $stmt->execute(
                                         array(
                                             ':nombre' => $nombre,
                                             ':direccion' => $direccion,
-                                            //':idMunicipio' => $i['id_municipio'],
-                                            //':idColonia' => $i['id_colonia'],
+                                            ':idMunicipio' => $idMunicipio,
+                                            ':idColonia' => $idColonia,
                                             ':tipoComprobante' => $tipoComprobante,
                                             ':numeroFactura' => $numeroFactura,
                                             //':prefijo' => $prefijoFiscal,
@@ -158,9 +173,9 @@ class GenerarFacturas extends ConectionDB
                                             ':codigoCobrador' => $cobrador,
                                             ':cuotaCable' => $montoCancelar,
                                             //':cuotaInternet' => $i['cuota_in'],
-                                            //':fechaCobro' => $fechaGenerar1,
+                                            ':fechaCobro' => $fechaCobro,
                                             ':fechaFactura' => $fechaComprobante,
-                                            //':fechaVencimiento' => $fechaVencimiento,
+                                            ':fechaVencimiento' => $fechaVencimiento,
                                             ':mesCargo' => $mesCargo,
                                             ':anticipo' => $anticipo,
                                             ':tipoServicio' => $ts,
@@ -254,15 +269,15 @@ class GenerarFacturas extends ConectionDB
                                             $totalIva = number_format($totalIva,2);
 
                                             $this->dbConnect->beginTransaction();
-                                            $qry = "INSERT INTO tbl_cargos(nombre, direccion, idMunicipio, /*idColonia,*/ tipoFactura, numeroFactura, /*prefijo,*/ numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, /*fechaCobro, fechaVencimiento,*/ fechaFactura, mesCargo, anticipo, tipoServicio, estado, cargoImpuesto, totalImpuesto, cargoIva, totalIva, exento)VALUES(:nombre, :direccion, :idMunicipio, /*:idColonia,*/ :tipoComprobante, :numeroFactura, /*:prefijo,*/ :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, /*:fechaCobro, :fechaVencimiento,*/ :fechaFactura, :mesCargo, :anticipo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva, :exento)";
+                                            $qry = "INSERT INTO tbl_cargos(nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroFactura, /*prefijo,*/ numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, anticipo, tipoServicio, estado, cargoImpuesto, totalImpuesto, cargoIva, totalIva, exento)VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroFactura, /*:prefijo,*/ :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :anticipo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva, :exento)";
 
                                             $stmt = $this->dbConnect->prepare($qry);
                                             $stmt->execute(
                                                 array(
                                                     ':nombre' => $nombre,
                                                     ':direccion' => $direccion,
-                                                    ':idMunicipio' => $municipio,
-                                                    //':idColonia' => $i['id_colonia'],
+                                                    ':idMunicipio' => $idMunicipio,
+                                                    ':idColonia' => $idColonia,
                                                     ':tipoComprobante' => $tipoComprobante,
                                                     ':numeroFactura' => $numeroFactura,
                                                     //':prefijo' => $prefijoFactura,
@@ -271,9 +286,9 @@ class GenerarFacturas extends ConectionDB
                                                     ':codigoCobrador' => $cobrador,
                                                     ':cuotaCable' => $montoCancelar,
                                                     //':cuotaInternet' => $i['cuota_in'],
-                                                    //':fechaCobro' => $fechaGenerar1,
+                                                    ':fechaCobro' => $fechaCobro,
                                                     ':fechaFactura' => $fechaComprobante,
-                                                    //':fechaVencimiento' => $fechaVencimiento,
+                                                    ':fechaVencimiento' => $fechaVencimiento,
                                                     ':mesCargo' => $mesCargo,
                                                     ':anticipo' => $anticipo,
                                                     ':tipoServicio' => $ts,
@@ -370,16 +385,16 @@ class GenerarFacturas extends ConectionDB
                                     $totalIva = (floatval($separado) * floatval($iva));
                                     $totalIva = number_format($totalIva,2);
                                     $this->dbConnect->beginTransaction();
-                                    $qry = "INSERT INTO tbl_cargos(nombre, direccion, idMunicipio, /*idColonia,*/ tipoFactura, numeroFactura, /*prefijo,*/ numeroRecibo, codigoCliente, codigoCobrador, cuotaInternet, /*fechaCobro, fechaVencimiento,*/ fechaFactura, mesCargo, /*anticipo,*/ tipoServicio, estado, cargoImpuesto, totalImpuesto, cargoIva, totalIva, exento)VALUES(:nombre, :direccion, :idMunicipio, /*:idColonia,*/ :tipoComprobante, :numeroFactura, /*:prefijo,*/ :numeroRecibo, :codigoCliente, :codigoCobrador,
-                                              :cuotaInternet, /*:fechaCobro, :fechaVencimiento,*/ :fechaFactura, :mesCargo, /*:anticipo,*/ :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva, :exento)";
+                                    $qry = "INSERT INTO tbl_cargos(nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroFactura, /*prefijo,*/ numeroRecibo, codigoCliente, codigoCobrador, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, /*anticipo,*/ tipoServicio, estado, cargoImpuesto, totalImpuesto, cargoIva, totalIva, exento)VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroFactura, /*:prefijo,*/ :numeroRecibo, :codigoCliente, :codigoCobrador,
+                                              :cuotaInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, /*:anticipo,*/ :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva, :exento)";
 
                                     $stmt = $this->dbConnect->prepare($qry);
                                     $stmt->execute(
                                         array(
                                             ':nombre' => $nombre,
                                             ':direccion' => $direccion,
-                                            //':idMunicipio' => $i['id_municipio'],
-                                            //':idColonia' => $i['id_colonia'],
+                                            ':idMunicipio' => $idMunicipio,
+                                            ':idColonia' => $idColonia,
                                             ':tipoComprobante' => $tipoComprobante,
                                             ':numeroFactura' => $numeroFactura,
                                             //':prefijo' => $prefijoFiscal,
@@ -388,9 +403,9 @@ class GenerarFacturas extends ConectionDB
                                             ':codigoCobrador' => $cobrador,
                                             //':cuotaCable' => $i['valor_cuota'],
                                             ':cuotaInternet' => $montoCancelar,
-                                            //':fechaCobro' => $fechaGenerar1,
+                                            ':fechaCobro' => $fechaCobro,
                                             ':fechaFactura' => $fechaComprobante,
-                                            //':fechaVencimiento' => $fechaVencimiento,
+                                            ':fechaVencimiento' => $fechaVencimiento,
                                             ':mesCargo' => $mesCargo,
                                             //':anticipo' => $montoCancelar,
                                             ':tipoServicio' => $ts,
@@ -484,16 +499,16 @@ class GenerarFacturas extends ConectionDB
                                     $totalIva = number_format($totalIva,2);
 
                                     $this->dbConnect->beginTransaction();
-                                    $qry = "INSERT INTO tbl_cargos(nombre, direccion, idMunicipio, /*idColonia,*/ tipoFactura, numeroFactura, /*prefijo,*/ numeroRecibo, codigoCliente, codigoCobrador, cuotaInternet, /*fechaCobro, fechaVencimiento,*/ fechaFactura, mesCargo, /*anticipo,*/ tipoServicio, estado, cargoImpuesto, totalImpuesto, cargoIva, totalIva, exento)VALUES(:nombre, :direccion, :idMunicipio, /*:idColonia,*/ :tipoComprobante, :numeroFactura, /*:prefijo,*/ :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaInternet,
-                                               /*:fechaCobro, :fechaVencimiento,*/ :fechaFactura, :mesCargo, /*:anticipo,*/ :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva, :exento)";
+                                    $qry = "INSERT INTO tbl_cargos(nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroFactura, /*prefijo,*/ numeroRecibo, codigoCliente, codigoCobrador, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, /*anticipo,*/ tipoServicio, estado, cargoImpuesto, totalImpuesto, cargoIva, totalIva, exento)VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroFactura, /*:prefijo,*/ :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaInternet,
+                                               :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, /*:anticipo,*/ :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva, :exento)";
 
                                     $stmt = $this->dbConnect->prepare($qry);
                                     $stmt->execute(
                                         array(
                                             ':nombre' => $nombre,
                                             ':direccion' => $direccion,
-                                            //':idMunicipio' => $i['id_municipio'],
-                                            //':idColonia' => $i['id_colonia'],
+                                            ':idMunicipio' => $idMunicipio,
+                                            ':idColonia' => $idColonia,
                                             ':tipoComprobante' => $tipoComprobante,
                                             ':numeroFactura' => $numeroFactura,
                                             //':prefijo' => $prefijoFactura,
@@ -502,9 +517,9 @@ class GenerarFacturas extends ConectionDB
                                             ':codigoCobrador' => $cobrador,
                                             //':cuotaCable' => $i['valor_cuota'],
                                             ':cuotaInternet' => $montoCancelar,
-                                            //':fechaCobro' => $fechaGenerar1,
+                                            ':fechaCobro' => $fechaCobro,
                                             ':fechaFactura' => $fechaComprobante,
-                                            //':fechaVencimiento' => $fechaVencimiento,
+                                            ':fechaVencimiento' => $fechaVencimiento,
                                             ':mesCargo' => $mesCargo,
                                             //':anticipo' => $montoCancelar,
                                             ':tipoServicio' => $ts,

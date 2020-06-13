@@ -1,5 +1,10 @@
 <?php
-    session_start();
+if(!isset($_SESSION))
+{
+    session_start([
+        'cookie_lifetime' => 86400,
+    ]);
+}
     require("../php/getInventoryPDF.php");
     require("../php/productsInfo.php");
 
@@ -159,7 +164,7 @@
 
         <div id="page-wrapper">
             <div class="row">
-                      <h1 class="page-header alert alert-info">Inventario Internet: <?php echo "<b>".htmlspecialchars(ucwords($Bodega), ENT_QUOTES)."</b>";  ?> </h1>
+                      <h1 class="page-header alert alert-danger">Inventario Internet: <?php echo "<b>".htmlspecialchars(ucwords($Bodega), ENT_QUOTES)."</b>";  ?> </h1>
                     <?php
                     if (isset($_GET['status'])) {
                        if ($_GET['status'] == 'success') {
@@ -214,11 +219,11 @@
             </div>
 
             <div class="row">
-                <a href="inventario.php"><button class="btn btn-success pull-left" type="button" name="regresar"><i class="fas fa-arrow-circle-left"></i> Atrás</button></a>
+                <a href="inventario.php"><button class="btn btn-danger pull-left" type="button" name="regresar"><i class="fas fa-arrow-circle-left"></i> Atrás</button></a>
                 <form class="" action="resumenTraslado.php" method="POST">
-                  <button id="btn_agregar0" class="btn btn-info center-block" type="button" name="button" data-toggle="modal" data-target="#SeleccioneBodegaI" accesskey="b">Seleccionar Otra Bodega</button>
+                  <button id="btn_agregar0" class="btn btn-default center-block" type="button" name="button" data-toggle="modal" data-target="#SeleccioneBodegaI" accesskey="b">Seleccionar Otra Bodega</button>
 
-                  <button id="btn_agregar0" class="btn btn-primary pull-right" type="button" name="button" data-toggle="modal" data-target="#agregar" accesskey="a"><i class="fas fa-plus-circle"></i> Agregar Nuevo Producto</button>
+                  <button id="btn_agregar0" class="btn btn-danger pull-right" type="button" name="button" data-toggle="modal" data-target="#agregar" accesskey="a"><i class="fas fa-plus-circle"></i> Agregar Nuevo Producto</button>
                 <br><br>
                     <table width="100%" class="table table-striped table-hover" id="inventario">
                         <thead>
@@ -318,7 +323,7 @@
     <div class="modal fade" id="agregar" tabindex="-1" role="dialog" aria-labelledby="agregar">
           <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
-                      <div class="modal-header">
+                      <div class="modal-header" style="background-color: #9f191f; color: white">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                             <h4 class="modal-title" id="Agregar">Nuevo producto</h4>
                       </div>
@@ -337,7 +342,6 @@
                                           <label for="Modelo del articulo">Modelo</label>
                                           <input type="text" class="form-control" name="modelo" id="modelo" placeholder="Modelo del Producto" value="<?php if(isset($_GET['modelo'])) echo $_GET['modelo'] ?>" required>
                                       </div>
-
                                   </div>
                                   <div class="form-row">
                                       <div class="form-group col-md-4 col-xs-4">
@@ -400,7 +404,7 @@
 
                         <input type="hidden" name="nombreEmpleadoHistorial" value="<?php echo $_SESSION['nombres'].' '.$_SESSION['apellidos'] ?>">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-                            <input type="submit" class="btn btn-primary" value="Registrar">
+                            <input type="submit" class="btn btn-danger" value="Registrar">
                       </div>
                     </form>
                 </div>

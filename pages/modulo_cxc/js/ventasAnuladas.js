@@ -104,7 +104,7 @@ function changeAction(action){
 function tipoFactura(){
     var tp= document.getElementById('tipoComprobante').value;
     var cod= document.getElementById('codigoCliente').value;
-    window.location="ventasAnuladas.php?tipoComprobante="+tp+"&codigoCliente="+cod;
+    window.location="facturacionManual.php?tipoComprobante="+tp+"&codigoCliente="+cod;
 }
 
 function clearAll(){

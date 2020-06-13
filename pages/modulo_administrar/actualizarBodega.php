@@ -160,7 +160,7 @@
 
     //include database connection
     $obj = new ConectionDB($_SESSION['db']);
-    $con = $obj->dbConnect;
+    $con = $obj->ConectionDB($_SESSION['db']);
 
     // read current record's data
     try {

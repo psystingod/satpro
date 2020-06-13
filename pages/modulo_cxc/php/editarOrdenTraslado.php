@@ -168,6 +168,13 @@
                     //$ordenaSuspension = $_POST['ordenaSuspensionCable'];
                     $colilla = ucwords($_POST['colilla']);
                     $fechaTraslado = $_POST["fechaTraslado"];
+                    $str2 = $fechaTraslado;
+                    if (strlen($str2) >= 7) {
+                        $date2 = DateTime::createFromFormat('d/m/Y', $str2);
+                        $fechaTraslado = $date2->format('Y-m-d');
+                    }else {
+                        $fechaTraslado = "";
+                    }
                     //$responsable = $_POST["responsable"];
                     $mactv = $_POST["mactv"];
                     $idDepartamento = $_POST['departamento'];

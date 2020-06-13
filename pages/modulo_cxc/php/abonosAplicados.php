@@ -108,8 +108,11 @@ while ($result = $statement->fetch_assoc()) {
               $pdf = new FPDF();
 
               $pdf->AddPage('L','Letter');
+              $pdf->SetAutoPageBreak(false, 10);
               $pdf->SetFont('Arial','',6);
+              date_default_timezone_set('America/El_Salvador');
               $pdf->Cell(260,6,utf8_decode("Página ".str_pad($pdf->pageNo(),4,"0",STR_PAD_LEFT)),0,1,'R');
+              $pdf->Cell(260,4,utf8_decode("IMPRESO POR: ".strtoupper($_SESSION['nombres'])." ".strtoupper($_SESSION['apellidos']). " ".date('d/m/Y h:i:s')),"",1,'R');
               $pdf->Image('../../../images/logo.png',10,10, 20, 18);
 
               $pdf->Ln(15);
@@ -295,10 +298,13 @@ while ($result = $statement->fetch_assoc()) {
                               }
 
                           }
-                          if ($counter2 > 42){
+                          if ($counter2 > 45){
                               $pdf->AddPage('L','Letter');
+                              $pdf->SetAutoPageBreak(false, 10);
                               $pdf->SetFont('Arial','',6);
+                              date_default_timezone_set('America/El_Salvador');
                               $pdf->Cell(260,6,utf8_decode("Página ".str_pad($pdf->pageNo(),4,"0",STR_PAD_LEFT)),0,1,'R');
+                              $pdf->Cell(260,4,utf8_decode("IMPRESO POR: ".strtoupper($_SESSION['nombres'])." ".strtoupper($_SESSION['apellidos']). " ".date('d/m/Y h:i:s')),"",1,'R');
                               $pdf->Image('../../../images/logo.png',10,10, 20, 18);
 
                               $pdf->Ln(15);
@@ -493,8 +499,9 @@ while ($result = $statement->fetch_assoc()) {
                               }
 
                           }
-                          if ($counter2 > 42){
+                          if ($counter2 > 45){
                               $pdf->AddPage('L','Letter');
+                              $pdf->SetAutoPageBreak(false, 10);
                               $pdf->SetFont('Arial','',6);
                               $pdf->Cell(260,6,utf8_decode("Página ".str_pad($pdf->pageNo(),4,"0",STR_PAD_LEFT)),0,1,'R');
                               $pdf->Image('../../../images/logo.png',10,10, 20, 18);
@@ -609,6 +616,8 @@ while ($result = $statement->fetch_assoc()) {
               $pdf->Cell(15,4,'',"T",0,'L');
               $pdf->SetFont('Arial','B',8);
               $pdf->Cell(25,4,"= ".number_format(($totalSoloCable+$totalSoloInter+$totalAnticipoSoloCable+$totalAnticipoSoloInter+$totalAnticipoImpuestoC+$totalImpuestoC+$totalAnticipoImpuestoI+$totalImpuestoI+$result3),2),"T",1,'L');
+              $pdf->Ln(15);
+              //$pdf->Cell(190,4,utf8_decode("IMPRESO POR: ".strtoupper($_SESSION['nombres'])." ".strtoupper($_SESSION['apellidos']). "EN LA FECHA"." ".date('d/m/Y h:i:s')),"",1,'L');
           }
       }elseif ($detallado == null){ //EN ESTA CONDICION SE EVALUA SI EL REPORTE SE MOSTRARÁ GENERAL
             //************************************************************************************************************************
@@ -647,18 +656,53 @@ while ($result = $statement->fetch_assoc()) {
                 }
             }
 
-            $query3 = "SELECT SUM(montoCable + montoInternet + impuesto) AS totalManuales FROM tbl_ventas_manuales WHERE anulada = 0 AND fechaComprobante BETWEEN '".$desde."' AND '".$hasta."'";
+            // SQL query para traer datos del servicio de cable de la tabla impuestos
+            $query = "SELECT valorImpuesto FROM tbl_impuestos WHERE siglasImpuesto = 'IVA'";
+            // Preparación de sentencia
+            $statement = $mysqli->query($query);
+            //$statement->execute();
+            while ($result = $statement->fetch_assoc()) {
+                $iva = floatval($result['valorImpuesto']);
+            }
+
+            // SQL query para traer datos del servicio de cable de la tabla impuestos
+            $query = "SELECT valorImpuesto FROM tbl_impuestos WHERE siglasImpuesto = 'CESC'";
+            // Preparación de sentencia
+            $statement = $mysqli->query($query);
+            //$statement->execute();
+            while ($result = $statement->fetch_assoc()) {
+                $cesc = floatval($result['valorImpuesto']);
+            }
+
+            $query3 = "SELECT SUM(montoCable) AS totalManualesC, SUM(impuesto) AS totalImpC FROM tbl_ventas_manuales WHERE anulada = 0 AND fechaComprobante BETWEEN '".$desde."' AND '".$hasta."' AND montoCable > 0";
             $statement3 = $mysqli->query($query3);
 
-            while ($tManuales = $statement3->fetch_assoc()) {
-                $result3 = $tManuales["totalManuales"];
+            while ($tManualesC = $statement3->fetch_assoc()) {
+                $tmc = $tManualesC["totalManualesC"];
+                $tic = $tManualesC["totalImpC"];
+
+                $separadoC = (floatval($tmc)/(1 + floatval($iva)));
+                $totalIvaC= (doubleval($separadoC) * doubleval($iva));
+            }
+
+            $query3 = "SELECT SUM(montoInternet) AS totalManualesI, SUM(impuesto) AS totalImpI FROM tbl_ventas_manuales WHERE anulada = 0 AND fechaComprobante BETWEEN '".$desde."' AND '".$hasta."' AND montoInternet > 0";
+            $statement3 = $mysqli->query($query3);
+
+            while ($tManualesI = $statement3->fetch_assoc()) {
+                $tmi = $tManualesI["totalManualesI"];
+                $tii = $tManualesI["totalImpI"];
+
+                $separadoI = (floatval($tmi)/(1 + floatval($iva)));
+                $totalIvaI = (doubleval($separadoI) * doubleval($iva));
             }
 
             $pdf = new FPDF();
 
-            $pdf->AddPage('L','Letter');
+            $pdf->AddPage('P','Letter');
             $pdf->SetFont('Arial','',6);
-            $pdf->Cell(260,6,utf8_decode("Página ".str_pad($pdf->pageNo(),4,"0",STR_PAD_LEFT)),0,1,'R');
+            date_default_timezone_set('America/El_Salvador');
+            $pdf->Cell(200,6,utf8_decode("Página ".str_pad($pdf->pageNo(),4,"0",STR_PAD_LEFT)),0,1,'R');
+            $pdf->Cell(200,4,utf8_decode("IMPRESO POR: ".strtoupper($_SESSION['nombres'])." ".strtoupper($_SESSION['apellidos']). " ".date('d/m/Y h:i:s')),"",1,'R');
             $pdf->Image('../../../images/logo.png',10,10, 20, 18);
 
             $pdf->Ln(15);
@@ -668,6 +712,7 @@ while ($result = $statement->fetch_assoc()) {
             $pdf->Ln();
             $pdf->Cell(190,6,utf8_decode('PAGARÉ SIN PROTESTO'),0,1,'C');
             $pdf->Ln(10);*/
+            $pdf->SetFont('Arial','B',8);
 
             //$pdf->SetFont('Arial','B',11);
 
@@ -699,12 +744,42 @@ while ($result = $statement->fetch_assoc()) {
             $pdf->Cell(10,5,utf8_decode('Día cob'),1,0,'L');
             $pdf->Cell(20,5,utf8_decode('Tipo serv'),1,0,'L');
             $pdf->Cell(20,5,utf8_decode('Abonado'),1,0,'L');*/
-            $pdf->Cell(260,5,utf8_decode('RESUMEN GENERAL DE INGRESOS DEL '.$desde." AL ".$hasta),'B',1,'C');
+            $pdf->Cell(200,5,utf8_decode('RESUMEN GENERAL DE INGRESOS DEL '.$desde." AL ".$hasta),'B',1,'C');
             $pdf->Ln(6);
             /*$pdf->SetFont('Arial','B',6.5);
             $pdf->Cell(35,1,utf8_decode('TOTAL VENTAS MANUALES:'),0,0,'L');
             $pdf->Cell(18,1,utf8_decode(number_format($result3,2)),0,1,'L');
             $pdf->Ln(3);*/
+            $pdf->SetFont('Arial','B',8);
+            $pdf->Cell(200,4,utf8_decode('VM VENTAS MANUALES'),0,1,'L');
+            $pdf->Cell(40,4,utf8_decode('SERVICIO'),0,0,'L');
+            $pdf->Cell(30,4,utf8_decode('TOTAL'),0,0,'L');
+            $pdf->Cell(50,4,utf8_decode('TOTAL NETO'),0,0,'L');
+            $pdf->Cell(30,4,utf8_decode('IVA'),0,0,'L');
+            $pdf->Cell(30,4,utf8_decode('CESC'),0,1,'L');
+
+            $pdf->SetFont('Arial','',8);
+            $pdf->Cell(40,4,utf8_decode('CABLE'),"T",0,'L');
+            $pdf->Cell(30,4,number_format($tmc,2),"T",0,'L');
+            $pdf->Cell(50,4,number_format($separadoC,2),"T",0,'L');
+            $pdf->Cell(30,4,number_format(($totalIvaC),2),"T",0,'L');
+            $pdf->Cell(30,4,number_format(($tic),2),"T",1,'L');
+            $pdf->Ln(1);
+
+            $pdf->Cell(40,4,utf8_decode('INTERNET'),"T",0,'L');
+            $pdf->Cell(30,4,number_format($tmi,2),"T",0,'L');
+            $pdf->Cell(50,4,number_format($separadoI,2),"T",0,'L');
+            $pdf->Cell(30,4,number_format(($totalIvaI),2),"T",0,'L');
+            $pdf->Cell(30,4,number_format(($tii),2),"T",1,'L');
+            $pdf->Ln(1);
+            $pdf->SetFont('Arial','I',8);
+            $pdf->SetFillColor(207,216,220);
+            $pdf->Cell(60,5,utf8_decode('TOTAL '."VENTAS MANUALES".":"),"BTL",0,'R',1);
+            /*$pdf->Cell(20,5,number_format($totalCobrador,2),"T",0,'L');
+            $pdf->Cell(20,5,number_format($totalAnticipoCobrador,2),"T",0,'L');
+            $pdf->Cell(15,5,number_format(($totalImpuestosCobrador),2),"T",0,'L');*/
+            $pdf->Cell(20,5,number_format(($tmc+$tic+$tmi+$tii),2),"BTR",1,'L',1);
+            $pdf->Ln(3);
             if ($codigoCobrador === "todos") {
 
                 $query1 = "SELECT codigoCobrador, nombreCobrador FROM tbl_cobradores";
@@ -888,10 +963,12 @@ while ($result = $statement->fetch_assoc()) {
                         $pdf->Cell(20,5,number_format(($totalTotalCobrador),2),"BTR",1,'L',1);
                         $pdf->Ln(3);
 
-                        if ($counter2 > 5){
-                            $pdf->AddPage('L','Letter');
+                        if ($counter2 > 6){
+                            $pdf->AddPage('P','Letter');
                             $pdf->SetFont('Arial','',6);
-                            $pdf->Cell(260,6,utf8_decode("Página ".str_pad($pdf->pageNo(),4,"0",STR_PAD_LEFT)),0,1,'R');
+                            date_default_timezone_set('America/El_Salvador');
+                            $pdf->Cell(190,6,utf8_decode("Página ".str_pad($pdf->pageNo(),4,"0",STR_PAD_LEFT)),0,1,'R');
+                            $pdf->Cell(190,4,utf8_decode("IMPRESO POR: ".strtoupper($_SESSION['nombres'])." ".strtoupper($_SESSION['apellidos']). " ".date('d/m/Y h:i:s')),"",1,'R');
                             $pdf->Image('../../../images/logo.png',10,10, 20, 18);
 
                             $pdf->Ln(15);
@@ -1110,10 +1187,12 @@ while ($result = $statement->fetch_assoc()) {
                         $pdf->Cell(20,5,number_format(($totalTotalCobrador),2),"BTR",1,'L',1);
                         $pdf->Ln(3);
 
-                        if ($counter2 > 5){
-                            $pdf->AddPage('L','Letter');
+                        if ($counter2 > 6){
+                            $pdf->AddPage('P','Letter');
                             $pdf->SetFont('Arial','',6);
-                            $pdf->Cell(260,6,utf8_decode("Página ".str_pad($pdf->pageNo(),4,"0",STR_PAD_LEFT)),0,1,'R');
+                            date_default_timezone_set('America/El_Salvador');
+                            $pdf->Cell(190,6,utf8_decode("Página ".str_pad($pdf->pageNo(),4,"0",STR_PAD_LEFT)),0,1,'R');
+                            $pdf->Cell(190,4,utf8_decode("IMPRESO POR: ".strtoupper($_SESSION['nombres'])." ".strtoupper($_SESSION['apellidos']). " ".date('d/m/Y h:i:s')),"",1,'R');
                             $pdf->Image('../../../images/logo.png',10,10, 20, 18);
 
                             $pdf->Ln(15);
@@ -1155,24 +1234,24 @@ while ($result = $statement->fetch_assoc()) {
             //$pdf->AddPage('L','Letter');
             $pdf->SetFont('Arial','B',8);
 
-            $pdf->Cell(237,4,utf8_decode('TOTALES GENERALES'),'',1,'R');
+            $pdf->Cell(130,4,utf8_decode('TOTALES GENERALES'),'',1,'R');
             $pdf->SetFont('Arial','',8);
             //TOTAL INTERNET
-            $pdf->Cell(180,4,utf8_decode('TOTAL INTERNET: '),0,0,'R');
+            $pdf->Cell(75,4,utf8_decode('TOTAL INTERNET: '),0,0,'R');
             $pdf->Cell(20,4,number_format($totalSoloInter,2),"T",0,'L');
             $pdf->Cell(20,4,number_format($totalAnticipoSoloInter,2),"T",0,'L');
             $pdf->Cell(15,4,number_format(($totalAnticipoImpuestoI+$totalImpuestoI),2),"T",0,'L');
             $pdf->Cell(25,4,"+ ".number_format(($totalSoloInter+$totalAnticipoSoloInter+$totalAnticipoImpuestoI+$totalImpuestoI),2),"T",1,'L');
 
             //TOTAL CABLE
-            $pdf->Cell(180,4,utf8_decode('TOTAL CABLE: '),0,0,'R');
+            $pdf->Cell(75,4,utf8_decode('TOTAL CABLE: '),0,0,'R');
             $pdf->Cell(20,4,number_format($totalSoloCable,2),"T",0,'L');
             $pdf->Cell(20,4,number_format($totalAnticipoSoloCable,2),"T",0,'L');
             $pdf->Cell(15,4,number_format(($totalAnticipoImpuestoC+$totalImpuestoC),2),"T",0,'L');
             $pdf->Cell(25,4,"+ ".number_format(($totalSoloCable+$totalAnticipoSoloCable+$totalAnticipoImpuestoC+$totalImpuestoC),2),"T",1,'L');
 
             //TOTAL IMPUESTO
-            $pdf->Cell(180,4,utf8_decode('TOTAL GENERAL: '),"",0,'R');
+            $pdf->Cell(75,4,utf8_decode('TOTAL GENERAL: '),"",0,'R');
             $pdf->Cell(20,4,number_format(($totalSoloCable+$totalSoloInter),2),"T",0,'L');
             $pdf->Cell(20,4,number_format(($totalAnticipoSoloCable+$totalAnticipoSoloInter),2),"T",0,'L');
             $pdf->Cell(15,4,utf8_decode(number_format(($totalAnticipoImpuestoC+$totalImpuestoC+$totalAnticipoImpuestoI+$totalImpuestoI),2)),"T",0,'L');
@@ -1181,19 +1260,22 @@ while ($result = $statement->fetch_assoc()) {
 
             //TOTAL MANUAL
             $pdf->SetFont('Arial','',8);
-            $pdf->Cell(180,4,utf8_decode('TOTAL MANUALES: '),"",0,'R');
+            $pdf->Cell(75,4,utf8_decode('TOTAL MANUALES: '),"",0,'R');
             $pdf->Cell(20,4,'',"T",0,'L');
             $pdf->Cell(20,4,'',"T",0,'L');
             $pdf->Cell(15,4,'',"T",0,'L');
-            $pdf->Cell(25,4,"+ ".number_format(($result3),2),"T",1,'L');
+            $pdf->Cell(25,4,"+ ".number_format(($tmc+$tic+$tmi+$tii),2),"T",1,'L');
 
             //TOTAL
-            $pdf->Cell(180,4,utf8_decode('TOTAL GENERAL + MANUALES: '),"",0,'R');
+            $pdf->Cell(75,4,utf8_decode('TOTAL GENERAL + MANUALES: '),"",0,'R');
             $pdf->Cell(20,4,'',"T",0,'L');
             $pdf->Cell(20,4,'',"T",0,'L');
             $pdf->Cell(15,4,'',"T",0,'L');
             $pdf->SetFont('Arial','B',8);
-            $pdf->Cell(25,4,"= ".number_format(($totalSoloCable+$totalSoloInter+$totalAnticipoSoloCable+$totalAnticipoSoloInter+$totalAnticipoImpuestoC+$totalImpuestoC+$totalAnticipoImpuestoI+$totalImpuestoI+$result3),2),"T",1,'L');
+            $pdf->Cell(25,4,"= ".number_format(($totalSoloCable+$totalSoloInter+$totalAnticipoSoloCable+$totalAnticipoSoloInter+$totalAnticipoImpuestoC+$totalImpuestoC+$totalAnticipoImpuestoI+$totalImpuestoI+$tmc+$tic+$tmi+$tii),2),"T",1,'L');
+
+            //$pdf->Ln(15);
+
         }
 
 	  /* close connection */

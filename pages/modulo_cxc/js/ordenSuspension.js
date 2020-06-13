@@ -21,6 +21,10 @@ function ordenInternet(){
             inputsCable[i].disabled = true;
         }
     }
+    document.getElementById("tipoActividadInternet").required=true;
+    document.getElementById("tipoActividadCable").required=false;
+    document.getElementById("ordenaSuspensionInter").required=true;
+    document.getElementById("ordenaSuspensionCable").required=false;
 
 }
 
@@ -45,6 +49,10 @@ function ordenCable(){
             inputsInternet[i].disabled = true;
         }
     }
+    document.getElementById("tipoActividadInternet").required=false;
+    document.getElementById("tipoActividadCable").required=true;
+    document.getElementById("ordenaSuspensionInter").required=false;
+    document.getElementById("ordenaSuspensionCable").required=true;
 
 }
 

@@ -138,7 +138,6 @@ function abonos()
     setlocale(LC_ALL, 'es_ES.UTF-8');
     $pdf->SetFont('Arial', 'B', 6.5);
 
-
     $pdf->Cell(10, 5, utf8_decode('N°'), 1, 0, 'L');
     $pdf->Cell(20, 5, utf8_decode('N° de orden'), 1, 0, 'L');
     //$pdf->Cell(20, 5, utf8_decode('Fecha'), 1, 0, 'L');
@@ -168,7 +167,7 @@ function abonos()
         while ($cobradores = $statement1->fetch_assoc()) {//RECORRIDO DE TODOS LOS COBRADORES
             $cobradorR = $cobradores["idTecnico"];
             //var_dump("cobrador: ".$cobradorR);
-
+            //var_dump($fechaFiltro);
             if ($tipoServicio == "A") {
                 //SQL para todas las zonas de cobro
                 if ($_POST["lCobrador"] === "todos" && $_POST["lColonia"] === "todas") {
@@ -182,24 +181,24 @@ function abonos()
                 }
             } elseif ($tipoServicio == "C") {
                 if ($_POST["lCobrador"] === "todos" && $_POST["lColonia"] === "todas") {
-                    $query = "SELECT * FROM tbl_ordenes_trabajo WHERE actividadCable LIKE '" . str_replace(" (CABLE)","",utf8_decode($actividad)) . "' AND tipoServicio= '" . $tipoServicio . "' AND idTecnico= '" . $cobradorR . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' ORDER BY idOrdenTrabajo ASC";
+                    $query = "SELECT * FROM tbl_ordenes_trabajo WHERE actividadCable LIKE '" . utf8_decode($actividad) . "' AND tipoServicio= '" . $tipoServicio . "' AND idTecnico= '" . $cobradorR . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' ORDER BY idOrdenTrabajo ASC";
                     $resultado = $mysqli->query($query);
                     //var_dump($query."<br>");
                 } elseif ($_POST["lCobrador"] == "todos" && $_POST["lColonia"] != "todas") {
-                    $query = "SELECT * FROM tbl_ordenes_trabajo WHERE actividadCable LIKE '" . str_replace(" (CABLE)","",utf8_decode($actividad)) . "' AND  idColonia= '" . $colonia . "' AND idTecnico= '" . $cobradorR . "' AND tipoServicio= '" . $tipoServicio . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' ORDER BY idOrdenTrabajo ASC";
+                    $query = "SELECT * FROM tbl_ordenes_trabajo WHERE actividadCable LIKE '" . utf8_decode($actividad) . "' AND  idColonia= '" . $colonia . "' AND idTecnico= '" . $cobradorR . "' AND tipoServicio= '" . $tipoServicio . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' ORDER BY idOrdenTrabajo ASC";
                     $resultado = $mysqli->query($query);
                     //var_dump($query."<br>");
                 }
             } elseif ($tipoServicio == "I") {
                 if ($_POST["lCobrador"] === "todos" && $_POST["lColonia"] === "todas") {
-                    $query = "SELECT * FROM tbl_ordenes_trabajo WHERE actividadInter LIKE '" . str_replace(" (INTERNET)","",utf8_decode($actividad)) . "' AND tipoServicio= '" . $tipoServicio . "' AND idTecnico= '" . $cobradorR . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' ORDER BY idOrdenTrabajo ASC";
+                    $query = "SELECT * FROM tbl_ordenes_trabajo WHERE actividadInter LIKE '" . utf8_decode($actividad) . "' AND tipoServicio= '" . $tipoServicio . "' AND idTecnico= '" . $cobradorR . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' ORDER BY idOrdenTrabajo ASC";
                     $resultado = $mysqli->query($query);
                 } elseif ($_POST["lCobrador"] === "todos" && $_POST["lColonia"] != "todas") {
-                    $query = "SELECT * FROM tbl_ordenes_trabajo WHERE actividadInter LIKE '" . str_replace(" (INTERNET)","",utf8_decode($actividad)) . "' AND idColonia= '" . $colonia . "' AND idTecnico= '" . $cobradorR . "' AND tipoServicio= '" . $tipoServicio . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' ORDER BY idOrdenTrabajo ASC";
+                    $query = "SELECT * FROM tbl_ordenes_trabajo WHERE actividadInter LIKE '" . utf8_decode($actividad) . "' AND idColonia= '" . $colonia . "' AND idTecnico= '" . $cobradorR . "' AND tipoServicio= '" . $tipoServicio . "' AND $fechaFiltro BETWEEN '" . $desde . "' AND '" . $hasta . "' ORDER BY idOrdenTrabajo ASC";
                     $resultado = $mysqli->query($query);
                 }
             }
-            //var_dump($query);
+            var_dump($query);
             while ($row = $resultado->fetch_assoc()) {
 
                 if ($tipoReporte = '1'){
@@ -227,7 +226,6 @@ function abonos()
                         $controlColonia = $row['idColonia'];
                     }
                 }
-
 
                 if ($row["tipoServicio"] == "C") {
                     $query3 = "SELECT dia_cobro FROM clientes WHERE cod_cliente= " . $row['codigoCliente'];

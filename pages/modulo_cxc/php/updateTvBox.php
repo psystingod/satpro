@@ -35,7 +35,7 @@ class UpdateTvBox extends ConectionDB
             $stmt->bindValue(':id', $id);
 
             $stmt->execute();
-
+            //echo "<script>alert('Caja digital añadida')</script>";
             echo "<script>window.close();</script>";
 
             sleep(0.5);

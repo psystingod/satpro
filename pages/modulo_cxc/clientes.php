@@ -4,7 +4,9 @@
     $allClientsArray = $allClients->getClients();
     if(!isset($_SESSION))
     {
-  	  session_start();
+        session_start([
+            'cookie_lifetime' => 86400,
+        ]);
     }
     header('Content-Type: text/html; charset=utf-8');
  ?>

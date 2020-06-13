@@ -11,6 +11,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/datatables/js" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/font-awesome/css" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/font-awesome/fonts" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/font-awesome/kkk" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/font-awesome/less" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/font-awesome/scss" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/jQuery-Mask-Plugin-master/dist" />

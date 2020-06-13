@@ -7,7 +7,9 @@
     {
         public function getViewA_D()
         {
-            session_start();
+            if (!isset($_SESSION)){
+                session_start();
+            }
             parent::__construct ($_SESSION['db']);
         }
         public function ReportesFinales()

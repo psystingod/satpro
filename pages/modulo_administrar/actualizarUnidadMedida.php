@@ -160,7 +160,7 @@
     $id=isset($_GET['Id']) ? $_GET['Id'] : die('ERROR: Registro no encontrado.');
 
     $obj = new ConectionDB($_SESSION['db']);
-    $con = $obj->dbConnect;
+    $con = $obj->ConectionDB($_SESSION['db']);
 
     // read current record's data
     try {

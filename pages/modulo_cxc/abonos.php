@@ -1,5 +1,10 @@
 <?php
-session_start();
+if(!isset($_SESSION))
+{
+    session_start([
+        'cookie_lifetime' => 86400,
+    ]);
+}
     require($_SERVER['DOCUMENT_ROOT'].'/satpro'.'/php/permissions.php');
     if(!isset($_SESSION["user"])) {
         header('Location: ../login.php');
@@ -435,6 +440,7 @@ $stmt->bindParam(':codigoCobrador', $_GET['cobrador']);
 
     <!-- Custom Fonts -->
     <link href="../../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="js/zoom.css" rel="stylesheet" type="text/css">
     <style media="screen">
     .form-control {
         color: #01579B;
@@ -589,7 +595,7 @@ $stmt->bindParam(':codigoCobrador', $_GET['cobrador']);
         </nav>
 
         <!-- Page Content -->
-        <div id="page-wrapper">
+        <div id="page-wrapper" class="">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
@@ -863,7 +869,7 @@ $stmt->bindParam(':codigoCobrador', $_GET['cobrador']);
                                   <div class="col-md-3" id="">
                                         <?php
                                         if (isset($_GET["cobrador"])){
-                                            echo "<label for='ultimoRecibo'>N° recibo a ingresar</label><input style='color:#000;' class='form-control input-sm input-sm alert-danger' type='text' name='ultimoRecibo' value=".$ultimoReciboCobro." required>";
+                                            echo "<label for='ultimoRecibo'>N° recibo a ingresar</label><input style='color: #0097A7;' class='form-control input-sm input-sm alert-info' type='text' name='ultimoRecibo' value=".$ultimoReciboCobro." required>";
                                         }else{
                                             "<label for='ultimoRecibo'>N° recibo a ingresar</label><input style='color:#000;' class='form-control input-sm input-sm alert-danger' type='text' name='ultimoRecibo' value='' required>";
                                         }
@@ -933,8 +939,8 @@ $stmt->bindParam(':codigoCobrador', $_GET['cobrador']);
                                       <label for="5">Excento</label>
                                   </div>
                                   <div class="col-md-3">
-                                      <input class="" type="checkbox" name="anularComp">
-                                      <label for="5">Anular comprobante</label>
+                                      <input class="" type="checkbox" name="anularComp" onclick="anularTodo()">
+                                      <label for="5" style="color: #b71c1c; font-size: larger">Anular comprobante</label>
                                   </div>
                               </div>
                               <div class="form-row">
@@ -1054,7 +1060,8 @@ $stmt->bindParam(':codigoCobrador', $_GET['cobrador']);
                                   </div>
                                   <div class="col-md-2">
                                       <label for="meses" style="color: brown;"></label>
-                                      <button id="aplicarAbono" class="btn btn-danger btn-md btn-block" type="submit" name="editar" style="margin-bottom: 6px; margin-top: 0px;"><i class="fas fa-check" style="color: white;"></i> Aplicar abonos</button>
+                                      <button id="aplicarAbono" class="btn btn-danger btn-md btn-block" type="submit" name="editar" style="display: none;"><i class="fas fa-check" style="color: white;"></i> Aplicar abonos</button>
+                                      <button id="aplicarAbonoB" class="btn btn-danger btn-md btn-block" type="button" name="editar" style="margin-bottom: 6px; margin-top: 0px;" onclick="confirmarAbono();"><i class="fas fa-check" style="color: white;"></i> Aplicar abonos</button>
                                       <!--<input id="submitAbono" style="display: none;" type="submit" name="submit" value="">-->
                                       <a href="cxc.php" style="text-decoration: none;"><button class="btn btn-danger btn-md btn-block" type="button" name="button"><i class="fas fa-sign-out-alt" style="color: white;"></i> Salir</button></a>
                                   </div>
@@ -1114,6 +1121,7 @@ $stmt->bindParam(':codigoCobrador', $_GET['cobrador']);
         var cobrador = document.getElementById("cobrador").value;
         // Trigger the button element with a click
         window.location="abonos.php?codigoCliente="+codValue+"&tipoServicio="+servicio+"&cobrador="+cobrador;
+
         }
         });
     </script>
@@ -1131,6 +1139,11 @@ $stmt->bindParam(':codigoCobrador', $_GET['cobrador']);
         });
 
         // Execute a function when the user releases a key on the keyboard
+        if (document.getElementById("codigoCliente").value.length != ''){
+            document.getElementById("totalPagar").focus(); // AGREGADO PARA HACER FOCUS EN EL TOTAL A PAGAR
+        }
+        document.getElementById("totalPagar").value = document.getElementById("valorCuota").value
+
         totalP.addEventListener("keyup", function(event) {
         // Number 13 is the "Enter" key on the keyboard
         if (event.keyCode === 13) {
@@ -1139,34 +1152,43 @@ $stmt->bindParam(':codigoCobrador', $_GET['cobrador']);
 
         var totalPagar = document.getElementById("totalPagar").value;
         var cesc = document.getElementById("cesc").value;
-        totalSinIva = String(parseFloat(totalPagar)/1.13);//.substring(0, 5);
+        //totalSinIva = String(parseFloat(totalPagar)/1.13);//.substring(0, 10);
+        totalSinIva = String(parseFloat(document.getElementById("valorCuota").value)/1.13);//.substring(0, 10);
+        //alert(totalSinIva);
         document.getElementById("impSeg").value = String(parseFloat(cesc)*parseFloat(totalSinIva)).substring(0, 4);
         var impSeg = document.getElementById("impSeg").value;
-        document.getElementById("totalAbonoImpSeg").value = String(parseFloat(totalPagar)+parseFloat(impSeg)).substring(0, 5);
-        cargoTotal = document.getElementById("totalAbonoImpSeg").value = String(parseFloat(totalPagar)+parseFloat(impSeg)).substring(0, 5);
+        //document.getElementById("totalAbonoImpSeg").value = Number(String(parseFloat(totalPagar)+parseFloat(impSeg)).substring(0, 5)).toFixed(2);
+        //console.log(document.getElementById("totalAbonoImpSeg").value)
+        cargoTotal = document.getElementById("totalAbonoImpSeg").value = Number(String(parseFloat(totalPagar)+parseFloat(impSeg)).substring(0, 5)).toFixed(2);
         var mesPendiente = document.getElementById("mesPendiente").value;
         var mesPendienteFinal = String(mesPendiente).substring(3, 10);
         document.getElementById("meses").value = mesPendienteFinal;
         // Trigger the button element with a click
         //window.location="abonos.php?codigoCliente="+codValue+"&tipoServicio="+servicio;
+        //sleep(1);
+            //document.getElementById("aplicarAbonoB").click();
+            document.getElementById("totalAbonoImpSeg").focus();
         }
         });
-    </script>
 
-    <script>
-    /*var vencimiento1 = document.getElementById('vencimientox1');
-    if (vencimiento1.value != null) {
-        vencimiento1 = document.write(vencimiento1.value);
-    }else{
-        vencimiento1 = document.write(0);
-    }
+        var totalTot = document.getElementById("totalAbonoImpSeg");
+        $('#frAbonos').on('keyup keypress', function(e) {
+            var keyCode = e.keyCode || e.which;
+            if (keyCode === 13) {
+                e.preventDefault();
+                return false;
+            }
+        });
 
-    var vencimiento2 = document.getElementById('vencimientox2');
-    if (vencimiento2.value != null) {
-        vencimiento2 = document.write(vencimiento2.value);
-    }else{
-        vencimiento2 = document.write(0);
-    }*/
+        totalTot.addEventListener("keyup", function(event) {
+            // Number 13 is the "Enter" key on the keyboard
+            if (event.keyCode === 13) {
+                // Cancel the default action, if needed
+                event.preventDefault();
+
+                document.getElementById("aplicarAbonoB").click();
+            }
+        });
     </script>
 
     <?php
@@ -1226,6 +1248,18 @@ $stmt->bindParam(':codigoCobrador', $_GET['cobrador']);
     var_dump($vencimiento2);
     */
     ?>
+
+    <script>
+        function confirmarAbono() {
+            var ca = confirm("¿Está seguro de INGRESAR este abono?");
+            if (ca == true) {
+                console.log("Presionado!");
+                document.getElementById("aplicarAbono").click();
+            } else {
+                alert("Abono no fue aplicado.");
+            }
+        }
+    </script>
 
 </body>
 

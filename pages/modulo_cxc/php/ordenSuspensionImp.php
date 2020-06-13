@@ -39,7 +39,7 @@
 	  //echo strftime("El año es %Y y el mes es %B");
       putenv("LANG='es_ES.UTF-8'");
       setlocale(LC_ALL, 'es_ES.UTF-8');
-      $pdf->Ln(16);
+      $pdf->Ln(13);
 	  while($row = $resultado->fetch_assoc())
 	  {
 
@@ -71,12 +71,21 @@
     	  while ($result3 = $statement3->fetch_assoc()) {
     		  $actividadInter = $result3['nombreActividad'];
     	  }
+            // SQL query para traer datos del servicio de cable de la tabla clientes
+            $query3 = "SELECT dire_telefonia FROM clientes WHERE cod_cliente= ".$row["codigoCliente"];
+            // Preparación de sentencia
+            $statement3 = $mysqli->query($query3);
+            //$statement->execute();
+            while ($result3 = $statement3->fetch_assoc()) {
+                $nodo = $result3['dire_telefonia'];
+            }
             $pdf->SetFont('Arial','B',12);
             $pdf->Cell(190,6,'SUSPENSION DE SERVICIO',0,1,'C');
+            $pdf->Cell(190,6,$nodo,0,1,'C');
             $pdf->SetFont('Arial','B',9);
             $pdf->Cell(175,6,'Dia de cobro: '.$row["diaCobro"],0,0,'L');
             $pdf->Cell(20,6,utf8_decode('N° ').$row["idOrdenSuspension"],1,1,'C');
-            $pdf->Ln(12);
+            $pdf->Ln(8);
             $pdf->SetFont('Arial','UB',9);
             $pdf->Cell(40,3,'Fecha: '.$row["fechaOrden"],0,0,'L');
             $pdf->Cell(50,3,'Codigo de cliente: '.$row["codigoCliente"],0,0,'L');
@@ -84,7 +93,8 @@
             $pdf->Ln(3);
             //$pdf->Cell(190,3,'Direccion: '.$row["direccionCable"],0,1,'L');
             $pdf->MultiCell(190,6,'Direccion: '.utf8_decode($row["direccion"]),0,'L',0);
-            $pdf->Ln(3);
+            $pdf->Cell(95,3,'Coordenadas: '.utf8_decode($row["coordenadas"]),0,'L',0);
+            $pdf->Ln(1);
             //$pdf->Cell(190,3,'Direccion: '.$row["direccionCable"],0,1,'L');
             //$pdf->MultiCell(190,6,'Direccion a trasladar: '.utf8_decode($row["direccionTraslado"]),0,'L',0);
             //$pdf->Ln(5);
@@ -156,12 +166,21 @@
     	  while ($result3 = $statement3->fetch_assoc()) {
     		  $actividadCable = $result3['nombreActividad'];
     	  }
+            // SQL query para traer datos del servicio de cable de la tabla clientes
+            $query3 = "SELECT dire_telefonia FROM clientes WHERE cod_cliente= ".$row["codigoCliente"];
+            // Preparación de sentencia
+            $statement3 = $mysqli->query($query3);
+            //$statement->execute();
+            while ($result3 = $statement3->fetch_assoc()) {
+                $nodo = $result3['dire_telefonia'];
+            }
             $pdf->SetFont('Arial','B',12);
             $pdf->Cell(190,6,'SUSPENSION DE SERVICIO',0,1,'C');
+            $pdf->Cell(190,6,$nodo,0,1,'C');
             $pdf->SetFont('Arial','B',9);
             $pdf->Cell(175,6,'Dia de cobro: '.$row["diaCobro"],0,0,'L');
             $pdf->Cell(20,6,utf8_decode('N° ').$row["idOrdenSuspension"],1,1,'C');
-            $pdf->Ln(12);
+            $pdf->Ln(8);
             $pdf->SetFont('Arial','UB',9);
             $pdf->Cell(40,3,'Fecha: '.$row["fechaOrden"],0,0,'L');
             $pdf->Cell(50,3,'Codigo de cliente: '.$row["codigoCliente"],0,0,'L');
@@ -170,6 +189,7 @@
             //$pdf->Cell(190,3,'Direccion: '.$row["direccionCable"],0,1,'L');
             $pdf->MultiCell(190,6,'Direccion: '.utf8_decode($row["direccion"]),0,'L',0);
             $pdf->Ln(3);
+            $pdf->Cell(70,3,'Coordenadas: '.$row["coordenadas"],0,0,'L');
             $pdf->Cell(70,3,'Tecnico: '.$tecnico,0,1,'L');
             $pdf->Ln(5);
             $pdf->Cell(50,3,'MACTV: '.$row["mactv"],0,0,'L');

@@ -1,6 +1,11 @@
 <?php
 
-    session_start();
+if(!isset($_SESSION))
+{
+    session_start([
+        'cookie_lifetime' => 86400,
+    ]);
+}
     require_once "php/getData.php";
     require_once "php/GetAllInfo.php";
     require_once "php/getSaldoReal.php";

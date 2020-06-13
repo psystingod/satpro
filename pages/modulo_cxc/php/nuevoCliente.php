@@ -413,7 +413,7 @@ class NuevoCliente extends ConectionDB
                         ));
             $codigoClienteNuevo = $this->dbConnect->lastInsertId();
             //AQUI IBA
-
+            $addBox = "";
             if (isset($_POST['z1'])) {
                 $caja1 = $_POST['caja1'];
                 $cas1 = $_POST['cas1'];
@@ -428,12 +428,13 @@ class NuevoCliente extends ConectionDB
                 $stmt->bindValue(':user', $creadoPor);
 
                 $stmt->execute();
+                $addBox = "&digital=1";
             }
 
             sleep(0.5);
             $this->dbConnect->commit();
 
-            header('Location: ../infoCliente.php?id='.$codigoClienteNuevo);
+            header('Location: ../infoCliente.php?id='.$codigoClienteNuevo.$addBox);
 
         } catch (Exception $e) {
             print "!Error¡: " . $e->getMessage() . "</br>";

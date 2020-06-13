@@ -1,5 +1,10 @@
 <?php
-session_start();
+if(!isset($_SESSION))
+{
+    session_start([
+        'cookie_lifetime' => 86400,
+    ]);
+}
     require($_SERVER['DOCUMENT_ROOT'].'/satpro'.'/php/permissions.php');
     $permisos = new Permissions();
     $permisosUsuario = $permisos->getPermissions($_SESSION['id_usuario']);
@@ -31,7 +36,9 @@ session_start();
                 $counter = $stmt->rowCount($arrTvBox);
 
                 if ($counter > 0) {
-                    echo "<script>alert('Caja digital ingresada con exito');</script>";
+                    if (isset($_GET['digital'])){
+                        echo "<script>alert('Caja digital ingresada con exito');</script>";
+                    }
                 }
                 /*foreach ($row as $key) {
                     ${"caja".$counter} = $key['boxNum'];
@@ -65,6 +72,7 @@ session_start();
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
             /****************** DATOS GENERALES ***********************/
+            $idCuenta = $row['id_cuenta'];
             $estado_cable = $row['servicio_suspendido']; // 0 o 1 SIN Servicio
             $sinServicio = $row['sin_servicio']; // T o F
             $estado_internet = $row['estado_cliente_in']; // 1, 2, 3
@@ -93,7 +101,7 @@ session_start();
             $telefonos = $row['telefonos'];
             $telTrabajo = $row['tel_trabajo'];
             $ocupacion = $row['profesion'];
-            $cuentaContable = $row['id_cuenta'];
+            //$cuentaContable = $row['id_cuenta'];
             $formaFacturar = $row['forma_pago']; //Contado o al crédito
             $saldoCable = $row['saldoCable'];
             $saldoInter = $row['saldoInternet'];
@@ -309,6 +317,7 @@ session_start();
         $telefonos = "";
         $telTrabajo = "";
         $ocupacion = "";
+        $idCuenta = "";
         $cuentaContable = "";
         $formaFacturar = ""; //Contado o al crédito
         $saldoActual = "";
@@ -332,6 +341,7 @@ session_start();
         $dir1 = "";
         $dir2 = "";
         $dir3 = "";
+        $observaciones = "";
 
         /****************** DATOS CABLE ***********************/
         $fechaInstalacion = "";
@@ -397,6 +407,8 @@ session_start();
  $arrDepartamentos = $data->getData('tbl_departamentos_cxc');
  $arrMunicipios = $data->getData('tbl_municipios_cxc');
  $arrColonias = $data->getDataCols('tbl_colonias_cxc');
+ $arrMunicipiosSearch = $data->getMunSearch('tbl_municipios_cxc', $_SESSION['db']);
+ //$arrColoniasSearch = $data->getDataCols('tbl_colonias_cxc', $_SESSION['db']);
  $arrFormaFacturar = $data->getData('tbl_forma_pago');
  $arrCobradores = $data->getData('tbl_cobradores');
  $arrComprobantes = $data->getData('tbl_tipo_comprobante');
@@ -430,7 +442,7 @@ session_start();
     <meta name="author" content="">
 
     <title>Cablesat</title>
-    <link rel="shortcut icon" href="../images/cablesat.png" />
+    <link rel="shortcut icon" href="../../images/cablesat.png" />
     <!-- Bootstrap Core CSS -->
     <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!-- MetisMenu CSS -->
@@ -500,6 +512,20 @@ session_start();
         .panel{
             border-color: #212121;
         }
+
+        .modal-dialog {
+            width: 1300px;
+        }
+        /* Important part */
+        .modal-dialog{
+            overflow-y: initial !important
+        }
+        .modal-body{
+            height: 500px;
+            overflow-y: auto;
+            font-size: 11px;
+            font-weight: normal;
+        }
     </style>
 </head>
 
@@ -532,13 +558,13 @@ session_start();
                         Procesos <i class="fas fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a onclick="window.open('ordenTrabajo.php','','height=600,width=1000,top=-300,left=200')">Ordenes de trabajo</a>
+                        <li><a onclick="window.open('ordenTrabajo.php?codigoCliente=<?php echo str_pad($_GET["id"], 5, "0", STR_PAD_LEFT); ?>','','height=600,width=1000,top=-300,left=200')">Ordenes de trabajo</a>
                         </li>
-                        <li><a onclick="window.open('ordenSuspension.php','','height=600,width=1000,top=-300,left=200')">Ordenes de suspensión</a>
+                        <li><a onclick="window.open('ordenSuspension.php?codigoCliente=<?php echo str_pad($_GET["id"], 5, "0", STR_PAD_LEFT); ?>','','height=600,width=1000,top=-300,left=200')">Ordenes de suspensión</a>
                         </li>
-                        <li><a onclick="window.open('ordenReconexion.php','','height=600,width=1000,top=-300,left=200')">Ordenes de reconexión</a>
+                        <li><a onclick="window.open('ordenReconexion.php?codigoCliente=<?php echo str_pad($_GET["id"], 5, "0", STR_PAD_LEFT); ?>','','height=600,width=1000,top=-300,left=200')">Ordenes de reconexión</a>
                         </li>
-                        <li><a onclick="window.open('ordenTraslado.php','','height=600,width=1000,top=-300,left=200')">Ordenes de traslado</a>
+                        <li><a onclick="window.open('ordenTraslado.php?codigoCliente=<?php echo str_pad($_GET["id"], 5, "0", STR_PAD_LEFT); ?>','','height=600,width=1000,top=-300,left=200')">Ordenes de traslado</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -654,8 +680,8 @@ session_start();
                 <div class="col-md-8">
                     <table class="table table-responsive">
                         <tr>
-                            <td><button class="btn btn-danger btn-block"><i class="fas fa-sign-out-alt fa-2x"></i></button></td>
-                            <td><button class="btn btn-danger btn-block"><i class="fas fa-print fa-2x"></i></button></td>
+                            <td><button class="btn btn-danger btn-block"><i class="far fa-user fa-2x"></i> <?php echo $allClients->getLast(); ?></button></td>
+                            <td><button class="btn btn-danger btn-block" data-toggle="modal" data-target="#buscarCliente"><i class="fas fa-search fa-2x"></i></button></td>
                             <td><button class="btn btn-danger btn-block" id="btn-editar" name="editar" onclick="editarCliente();" title="Editar"><i class="far fa-edit fa-2x"></i></button></td>
                             <td><button id="btn-nuevo" name="agregar" onclick="nuevoCliente();" class="btn btn-danger btn-block" title="Nuevo"><i class="fas fa-user-plus fa-2x"></i></button></td>
                         </tr>
@@ -663,12 +689,12 @@ session_start();
                         <tr>
                             <td><a onclick="window.open('php/contratoCable.php<?php echo "?id=".$id; ?>','','height=600,width=1000,top=-300,left=200')" class="btn btn-danger btn-block" style="font-size: 16px;"><i class="far fa-file-alt"></i> Contrato de cable</a></td>
                             <td><a onclick="window.open('php/contratoInter.php<?php echo "?id=".$id; ?>','','height=600,width=1000,top=-300,left=200')" class="btn btn-danger btn-block" style="font-size: 16px;"><i class="far fa-file-alt"></i> Contrato de internet</a></td>
-                            <td><a onclick="window.location='estadoCuenta.php?codigoCliente=<?php echo $codigo; ?>'" ><button class="btn btn-danger btn-block" style="font-size: 16px;"><i class="fas fa-dollar"></i> Estado de cuenta</button></a></td>
+                            <td><a onclick="window.location='estadoCuenta.php?codigoCliente=<?php echo $codigo; ?>'" ><button class="btn btn-danger btn-block" style="font-size: 16px;"><i class="fas fa-file-invoice-dollar"></i> Estado de cuenta</button></a></td>
                 <form id="formClientes" class="" action="#" method="POST">
                             <td><button id="btn-guardar" class="btn btn-danger btn-block" title="Guardar" disabled><i class="fas fa-save fa-2x"></i></button></td>
                         </tr>
                         <tr>
-                            <td colspan="8"><textarea class="form-control alert-warning input-sm" name="notas" rows="2" cols="40" placeholder="Notas de recordatorio" readOnly><?php echo $observaciones; ?></textarea></td>
+                            <td colspan="8"><textarea class="form-control alert-warning input-sm" name="notas" rows="2" cols="40" placeholder="Observaciones" readOnly><?php echo $observaciones; ?></textarea></td>
                         </tr>
                         <!--<tr>
                             <td><button class="btn btn-info btn-block" style="font-size: 16px; ;">Reporte</button></td>
@@ -757,6 +783,13 @@ session_start();
                     <div class="panel panel-danger">
                         <div class="panel-heading">
                             <span style="font-size:15px;" class="label label-danger"><?php echo $codigo; ?></span> <span><?php echo strtoupper($nombre); ?></span>
+                            <?php
+                                if ($idCuenta == "covid19"){
+                                    echo '<span style="color: #d33333 ; font-weight: bold; font-size: 20px;">COVID-19 <i class="fas fa-biohazard"></i></span> <input class="" type="checkbox" name="aplicaCovid" checked>';
+                                }else{
+                                    echo '<span style="color: #d33333 ; font-weight: bold; font-size: 20px;">COVID-19 <i class="fas fa-biohazard"></i></span> <input class="" type="checkbox" name="aplicaCovid">';
+                                }
+                            ?>
                             <span class="pull-right"><button class="btn btn-danger btn-xs" type="button" id="todoAtras" name="todoAtras" onclick="<?php echo 'todoAtras1('.$allClients->getFirst().')' ?>"><i class="fas fa-fast-backward"></i></button>&nbsp;
                             <span class="pull-right"><button class="btn btn-danger btn-xs" type="button" id="atras" name="atras" onclick="<?php echo 'atras1('.$_GET["id"].')' ?>"><i class="fas fa-step-backward"></i></button>&nbsp;
                                 <span class="pull-right"><button class="btn btn-danger btn-xs" type="button" id="adelante" name="adelante" onclick="<?php echo 'adelante1('.$_GET["id"].')' ?>"><i class="fas fa-step-forward"></i></button>&nbsp;
@@ -804,7 +837,7 @@ session_start();
                                         </div>
                                         <div class="col-md-3">
                                             <label for="ncr">Número de registro</label>
-                                            <input class="form-control input-sm" type="text" name="nrc" value="<?php echo $nRegistro; ?>" readonly>
+                                            <input class="form-control input-sm" type="text" id="nrc" name="nrc" value="<?php echo $nRegistro; ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -851,7 +884,7 @@ session_start();
                                     <div class="row">
                                         <div class="col-md-3">
                                             <label for="departamento"><span style="color:red;font-size:18px;">**</span>Departamento</label>
-                                            <select class="form-control input-sm" name="departamento" disabled required>
+                                            <select class="form-control input-sm" id="departamento" name="departamento" disabled required>
                                                 <option value="" selected>Seleccionar</option>
                                                 <?php
                                                 foreach ($arrDepartamentos as $key) {
@@ -866,9 +899,9 @@ session_start();
                                                  ?>
                                             </select>
                                         </div>
-                                        <div class="col-md-3">
+                                        <div class="col-md-4">
                                             <label for="municipio"><span style="color:red;font-size:18px;">**</span>Municipio</label>
-                                            <select class="form-control input-sm" name="municipio" disabled required>
+                                            <select class="form-control input-sm" id="municipio" name="municipio" disabled required>
                                                 <option value="" selected>Seleccionar</option>
                                                 <?php
                                                 foreach ($arrMunicipios as $key) {
@@ -883,9 +916,9 @@ session_start();
                                                  ?>
                                             </select>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-5">
                                             <label for="colonia"><span style="color:red;font-size:18px;">**</span>Barrio o colonia</label>
-                                            <select class="form-control input-sm" name="colonia" disabled required>
+                                            <select class="form-control input-sm" id="colonia" name="colonia" disabled required>
                                                 <option value="" selected>Seleccionar</option>
                                                 <?php
                                                 foreach ($arrColonias as $key) {
@@ -924,7 +957,7 @@ session_start();
                                     <div class="row">
                                         <div class="col-md-3">
                                             <label for="cuentaContable">Cuenta contable</label>
-                                            <input class="form-control input-sm" type="text" name="cuentaContable" value="<?php echo $cuentaContable; ?>" readonly>
+                                            <input class="form-control input-sm" type="text" name="cuentaContable" value="<?php echo $idCuenta; ?>" readonly>
                                         </div>
                                         <div class="col-md-3">
                                             <label for="formaFacturar">Forma al facturar</label>
@@ -945,7 +978,7 @@ session_start();
                                         </div>
                                         <div class="col-md-4">
                                             <label for="tipoComprobante"><span style="color:red;font-size:18px;">**</span>Tipo de comprobante</label>
-                                            <select class="form-control input-sm" name="tipoComprobante" disabled required>
+                                            <select class="form-control input-sm" onchange="selectTipoComp();" id="tipoComprobante" name="tipoComprobante" disabled required>
                                                 <option value="" selected>Seleccionar</option>
                                                 <?php
 
@@ -1091,7 +1124,11 @@ session_start();
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="fechaPrimerFacturaCable">Fecha primer factura</label>
-                                                      <input class="form-control input-sm cable" type="text" id="fechaPrimerFacturaCable" name="fechaPrimerFacturaCable" value="<?php echo $fechaPrimerFactura; ?>" readonly>
+                                                      <input class="form-control input-sm cable" type="text" id="fechaPrimerFacturaCable" name="fechaPrimerFacturaCable" onchange="setVencimientoCable()" value="<?php echo $fechaPrimerFactura; ?>" readonly>
+                                                  </div>
+                                                  <div class="col-md-2">
+                                                      <label for="mesesContratoCable">Meses de contrato</label>
+                                                      <input class="form-control input-sm cable" type="text" id="mesesContratoCable" name="mesesContratoCable" onchange="setVencimientoCable()" value="<?php echo $periodoContratoCable; ?>" readonly>
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="exento">Exento</label>
@@ -1104,10 +1141,7 @@ session_start();
                                                       ?>
 
                                                   </div>
-                                                  <div class="col-md-2">
-                                                      <label for="diaGenerarFacturaCable"><span style="color:red;font-size:18px;">**</span>Día cobro</label>
-                                                      <input class="form-control input-sm cable" type="text" name="diaGenerarFacturaCable" value="<?php echo $diaCobro; ?>" readonly>
-                                                  </div>
+
                                                   <div class="col-md-2">
                                                       <label for="cortesia">Cortesía</label>
                                                       <?php
@@ -1154,8 +1188,8 @@ session_start();
                                                       <button type="button" class="btn btn-danger btn-block btn-xl" data-toggle="modal" data-target="#cas" name="button"><i class="fas fa-tv"></i> Datos de caja digital</button>
                                                   </div>
                                                   <div class="col-md-2">
-                                                      <label for="mesesContratoCable">Meses de contrato</label>
-                                                      <input class="form-control input-sm cable" type="text" id="mesesContratoCable" name="mesesContratoCable" onchange="setVencimientoCable()" value="<?php echo $periodoContratoCable; ?>" readonly>
+                                                      <label for="diaGenerarFacturaCable"><span style="color:red;font-size:18px;">**</span>Día cobro</label>
+                                                      <input class="form-control input-sm cable" type="text" name="diaGenerarFacturaCable" value="<?php echo $diaCobro; ?>" readonly>
                                                   </div>
                                               </div>
                                               <div class="row">
@@ -1234,9 +1268,13 @@ session_start();
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="fechaPrimerFacturaInternet">Fecha primer factura</label>
-                                                      <input class="form-control input-sm internet" type="text" id="fechaPrimerFacturaInternet" name="fechaPrimerFacturaInternet" value="<?php echo $fechaPrimerFacturaInter; ?>" readonly>
+                                                      <input class="form-control input-sm internet" type="text" id="fechaPrimerFacturaInternet" name="fechaPrimerFacturaInternet" onchange="setVencimientoInternet()" value="<?php echo $fechaPrimerFacturaInter; ?>" readonly>
                                                   </div>
                                                   <div class="col-md-2">
+                                                      <label for="mesesContratoInternet">Meses de contrato</label>
+                                                      <input class="form-control input-sm internet" type="text" id="mesesContratoInternet" name="mesesContratoInternet" onchange="setVencimientoInternet()" value="<?php echo $periodoContratoInternet; ?>" readonly>
+                                                  </div>
+                                                  <div class="col-md-3">
                                                       <label for="tipoServicioInternet">Tipo de servicio</label>
                                                       <select class="form-control input-sm internet" name="tipoServicioInternet" disabled>
                                                           <option value="" selected>Seleccionar</option>
@@ -1252,10 +1290,6 @@ session_start();
                                                           }
                                                            ?>
                                                       </select>
-                                                  </div>
-                                                  <div class="col-md-3">
-                                                      <label for="mesesContratoInternet">Meses de contrato</label>
-                                                      <input class="form-control input-sm internet" type="text" id="mesesContratoInternet" name="mesesContratoInternet" onchange="setVencimientoInternet()" value="<?php echo $periodoContratoInternet; ?>" readonly>
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="diaGenerarFacturaInternet"><span style="color:red;font-size:18px;">**</span>Día para generar factura</label>
@@ -1954,6 +1988,87 @@ session_start();
         <!-- /#page-wrapper -->
     </div>
 
+        <!-- Modal BUSCAR CLIENTE -->
+        <div id="buscarCliente" class="modal fade" role="dialog">
+            <div class="modal-dialog modal-lg">
+
+                <!-- Modal content-->
+                <div class="modal-content">
+                    <div style="background-color: #d32f2f; color:white; padding: 10px;" class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span style=" font-size: 30px;">&times;</span></button>
+                        <h4 class="modal-title">Buscar cliente</h4>
+                    </div>
+                        <div style="font-size: 11px;" class="modal-body">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <label for="municipio2">Municipio</label>
+                                    <select class="form-control input-sm" id="municipio2" name="municipio2">
+                                        <option value="" selected>Seleccionar</option>
+                                        <?php
+                                        foreach ($arrMunicipiosSearch as $key) {
+                                            echo "<option value=".$key['idMunicipio'].">".$key['nombreMunicipio']."</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                    <br>
+                                </div>
+                                <div class="col-md-3">
+                                    <label for="colonia2">Colonia</label>
+                                    <select class="form-control input-sm" id="colonia2" name="colonia2">
+                                        <option value="" selected>Seleccionar</option>
+
+                                    </select>
+                                    <br>
+                                </div>
+                                <div class="col-md-3">
+                                    <label style="font-size: 12px;" class="label label-success" for="cable">CABLE</label>
+                                    <br>
+                                    <br>
+                                    <fieldset>
+                                        <input type="radio" name="cableSearch" value="t" checked>
+                                        <label for="cableSearch">Todos</label>
+                                        <input type="radio" name="cableSearch" value="a">
+                                        <label for="cableSearch">Activos</label>
+                                        <input type="radio" name="cableSearch" value="s">
+                                        <label for="cableSearch">Suspendidos</label>
+                                        <input type="radio" name="cableSearch" value="na">
+                                        <label for="cableSearch">Sin servicio</label>
+                                    </fieldset>
+                                    <br>
+                                </div>
+                                <div class="col-md-3">
+                                    <label style="font-size: 12px;" for="internet" class="label label-primary">INTERNET</label>
+                                    <br>
+                                    <br>
+                                    <fieldset>
+                                        <input type="radio" name="interSearch" value="t" checked>
+                                        <label for="interSearch">Todos</label>
+                                        <input type="radio" name="interSearch" value="a">
+                                        <label for="interSearch">Activos</label>
+                                        <input type="radio" name="interSearch" value="s">
+                                        <label for="interSearch">Suspendidos</label>
+                                        <input type="radio" name="interSearch" value="na">
+                                        <label for="interSearch">Sin servicio</label>
+                                    </fieldset>
+                                    <br>
+                                </div>
+                                <div class="col-md-12">
+                                    <input class="form-control input-sm" type="text" name="caja_busqueda" id="caja_busqueda" value="" placeholder="Código, DUI, Nombre, Dirección, MAC">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div id="datos">
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+            </div>
+        </div>
+    </div><!-- Fin Modal BUSCAR CLIENTE-->
+
     <!-- /#wrapper -->
 
     <!-- jQuery -->
@@ -1966,18 +2081,25 @@ session_start();
     <script src="../../vendor/metisMenu/metisMenu.min.js"></script>
 
     <!-- DataTables JavaScript -->
-    <script src="../../vendor/datatables/js/dataTables.bootstrap.js"></script>
+    <!--<script src="../../vendor/datatables/js/dataTables.bootstrap.js"></script>
     <script src="../../vendor/datatables/js/jquery.dataTables.min.js"></script>
     <script src="../../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
-    <script src="../../vendor/datatables-responsive/dataTables.responsive.js"></script>
+    <script src="../../vendor/datatables-responsive/dataTables.responsive.js"></script>-->
 
     <script src="../../vendor/jQuery-Mask-Plugin-master/dist/jquery.mask.min.js"></script>
 
 
     <!-- Custom Theme JavaScript -->
     <script src="js/clientes.js"></script>
-    <script src="js/searchmun.js"></script>
+        <?php
+        if(isset($_GET['action'])){
+            echo '<script src="js/searchmun.js"></script>';
+        }else{
 
+        }
+        ?>
+    <script src="js/searchMun2.js"></script>;
+    <script src="js/search.js"></script>
     <script src="../../dist/js/sb-admin-2.js"></script>
     <script type="text/javascript">
         var permisos = '<?php echo $permisosUsuario;?>'

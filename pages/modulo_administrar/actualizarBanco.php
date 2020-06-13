@@ -1,5 +1,10 @@
 <?php
-    session_start();
+if(!isset($_SESSION))
+{
+    session_start([
+        'cookie_lifetime' => 86400,
+    ]);
+}
     require("../../php/connection.php");
  ?>
 <!DOCTYPE html>
@@ -160,7 +165,7 @@
 
     //include database connection
     $obj = new ConectionDB($_SESSION['db']);
-    $con = $obj->dbConnect;
+    $con = $obj->ConectionDB($_SESSION['db']);
 
     // read current record's data
     try {

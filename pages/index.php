@@ -1,6 +1,11 @@
 <?php
 
-    session_start();
+if(!isset($_SESSION))
+{
+    session_start([
+        'cookie_lifetime' => 86400,
+    ]);
+}
     if (!isset($_SESSION["user"])) {
         header('Location: login.php');
     }

@@ -50,6 +50,48 @@
       $libroDetallado = 1;
   }
 
+$mesGenerarLetra = null;
+switch ($mesGenerar) {
+    case '1':
+        $mesGenerarLetra = "ENERO";
+        break;
+    case '2':
+        $mesGenerarLetra = "FEBRERO";
+        break;
+    case '3':
+        $mesGenerarLetra = "MARZO";
+        break;
+    case '4':
+        $mesGenerarLetra = "ABRIL";
+        break;
+    case '5':
+        $mesGenerarLetra = "MAYO";
+        break;
+    case '6':
+        $mesGenerarLetra = "JUNIO";
+        break;
+    case '7':
+        $mesGenerarLetra = "JULIO";
+        break;
+    case '8':
+        $mesGenerarLetra = "AGOSTO";
+        break;
+    case '9':
+        $mesGenerarLetra = "SEPTIEMBRE";
+        break;
+    case '10':
+        $mesGenerarLetra = "OCTUBRE";
+        break;
+    case '11':
+        $mesGenerarLetra = "NOVIEMBRE";
+        break;
+    case '12':
+        $mesGenerarLetra = "DICIEMBRE";
+        break;
+    default:
+        $mesGenerarLetra = "N/A";
+}
+
   //$filtroServicio = $_POST['filtroServicio'];
 
   $totalSinIva=0;
@@ -92,7 +134,7 @@ $totalesInter2 = 0;
 $totalesCescInter2 = 0;
 
   function libroConsumidorFinal(){
-	  global $mysqli, $mesGenerar, $anoGenerar, $tipoFacturaGenerar, $encabezados, $numPag, $libroDetallado, $ex, $iva, $cesc, $filtroServicio;
+	  global $mysqli, $mesGenerar, $anoGenerar, $mesGenerarLetra, $tipoFacturaGenerar, $encabezados, $numPag, $libroDetallado, $ex, $iva, $cesc, $filtroServicio;
       global $totalSinIva,$totalConIva,$totalSinIvaEx,$totalConIvaEx,$totalSoloIva,$totalSoloCesc,$totalesCable,$totalesCescCable,$totalesInter,$totalesCescInter;
       global $totalSinIva1,$totalConIva1,$totalSinIvaEx1,$totalConIvaEx1,$totalSoloIva1,$totalSoloCesc1;
       global $totalSinIva2,$totalConIva2,$totalSinIvaEx2,$totalConIvaEx2,$totalSoloIva2,$totalSoloCesc2,$totalesCable2,$totalesCescCable2,$totalesInter2,$totalesCescInter2;
@@ -103,12 +145,24 @@ $totalesCescInter2 = 0;
       /*********************************COMIENZO DE LA MASACRE***********************************/
         if ($libroDetallado == 1) {
             $pdf->AddPage('P','Letter');
+            $pdf->SetFont('Times','B',6);
+            //###########################################Paginación y último usuario que imprime
+            date_default_timezone_set('America/El_Salvador');
+            if ($numPag == 1){$pdf->Cell(200,6,utf8_decode("Página ".str_pad($pdf->pageNo(),4,"0",STR_PAD_LEFT)),0,1,'R');}
 
-            $pdf->SetFont('Times','B',10);
-            $pdf->Cell(190,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE FACTURAS'),0,0,'C');
-            $pdf->Ln(5);
-            $pdf->SetFont('Times','B',8);
-            $pdf->Cell(190,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,0,'C');
+            //$pdf->Cell(260,4,utf8_decode("IMPRESO POR: ".strtoupper($_SESSION['nombres'])." ".strtoupper($_SESSION['apellidos']). " ".date('d/m/Y h:i:s')),"",1,'R');
+            //##################################################################################
+            //######################################################################## MESE A GENERAR
+            if ($encabezados == 1){
+                $pdf->SetFont('Times','B',10);
+                $pdf->Cell(190,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE FACTURAS'),0,0,'C');
+                $pdf->Ln(5);
+                $pdf->SetFont('Times','B',8);
+                $pdf->Cell(190,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,1,'C');
+                $pdf->Cell(190,3,utf8_decode($mesGenerarLetra." ".$anoGenerar),0,0,'C');
+            }
+            //####################################################################################################
+
             $pdf->Ln(10);
 
             $pdf->SetFont('Times','B',10);
@@ -246,12 +300,23 @@ $totalesCescInter2 = 0;
                             //var_dump("llegamos aca");
                             // DESPUES DE TODOS LOS CICLOS
                             $pdf->AddPage('P','Letter');
+                            $pdf->SetFont('Times','B',6);
+                            //###########################################Paginación y último usuario que imprime
+                            date_default_timezone_set('America/El_Salvador');
+                            if ($numPag == 1){$pdf->Cell(200,6,utf8_decode("Página ".str_pad($pdf->pageNo(),4,"0",STR_PAD_LEFT)),0,1,'R');}
 
-                            $pdf->SetFont('Times','B',10);
-                            $pdf->Cell(190,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE FACTURAS'),0,0,'C');
-                            $pdf->Ln(5);
-                            $pdf->SetFont('Times','B',8);
-                            $pdf->Cell(190,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,0,'C');
+                            //$pdf->Cell(260,4,utf8_decode("IMPRESO POR: ".strtoupper($_SESSION['nombres'])." ".strtoupper($_SESSION['apellidos']). " ".date('d/m/Y h:i:s')),"",1,'R');
+                            //##################################################################################
+                            //######################################################################## MESE A GENERAR
+                            if ($encabezados == 1){
+                                $pdf->SetFont('Times','B',10);
+                                $pdf->Cell(190,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE FACTURAS'),0,0,'C');
+                                $pdf->Ln(5);
+                                $pdf->SetFont('Times','B',8);
+                                $pdf->Cell(190,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,1,'C');
+                                $pdf->Cell(190,3,utf8_decode($mesGenerarLetra." ".$anoGenerar),0,0,'C');
+                            }
+                            //####################################################################################################
                             $pdf->Ln(10);
 
                             $pdf->SetFont('Times','B',10);
@@ -356,12 +421,23 @@ $totalesCescInter2 = 0;
                             //var_dump("llegamos aca");
                             // DESPUES DE TODOS LOS CICLOS
                             $pdf->AddPage('P','Letter');
+                            $pdf->SetFont('Times','B',6);
+                            //###########################################Paginación y último usuario que imprime
+                            date_default_timezone_set('America/El_Salvador');
+                            if ($numPag == 1){$pdf->Cell(200,6,utf8_decode("Página ".str_pad($pdf->pageNo(),4,"0",STR_PAD_LEFT)),0,1,'R');}
 
-                            $pdf->SetFont('Times','B',10);
-                            $pdf->Cell(190,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE FACTURAS'),0,0,'C');
-                            $pdf->Ln(5);
-                            $pdf->SetFont('Times','B',8);
-                            $pdf->Cell(190,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,0,'C');
+                            //$pdf->Cell(260,4,utf8_decode("IMPRESO POR: ".strtoupper($_SESSION['nombres'])." ".strtoupper($_SESSION['apellidos']). " ".date('d/m/Y h:i:s')),"",1,'R');
+                            //##################################################################################
+                            //######################################################################## MESE A GENERAR
+                            if ($encabezados == 1){
+                                $pdf->SetFont('Times','B',10);
+                                $pdf->Cell(190,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE FACTURAS'),0,0,'C');
+                                $pdf->Ln(5);
+                                $pdf->SetFont('Times','B',8);
+                                $pdf->Cell(190,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,1,'C');
+                                $pdf->Cell(190,3,utf8_decode($mesGenerarLetra." ".$anoGenerar),0,0,'C');
+                            }
+                            //####################################################################################################
                             $pdf->Ln(10);
 
                             $pdf->SetFont('Times','B',10);
@@ -419,7 +495,10 @@ $totalesCescInter2 = 0;
                         }else {
                             $montoCancelado3 = 0;
                         }
+
                         if ($result["tipoServicio"] == 'C'){
+                            $servicio = "CABLE";
+                            //var_dump();
                             $totalCesc3 = (($montoCancelado3/(1 + floatval($iva)))*$cesc);
                             //IVA
                             $separado3 = (floatval($montoCancelado3)/(1 + floatval($iva)));
@@ -434,7 +513,7 @@ $totalesCescInter2 = 0;
                             if ($ex->isExento($result["codigoCliente"])) {
                                 $pdf->Cell(20,1,utf8_decode($montoCancelado3),0,0,'L');
                                 $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
-                                $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
+                                $pdf->Cell(20,1,utf8_decode($servicio),0,0,'L');
                                 $totalSinIvaEx3 = $totalSinIvaEx3 + $sinIva3;
                                 $totalConIvaEx3 = $totalConIvaEx3 + $montoCancelado3;
                             }
@@ -442,7 +521,7 @@ $totalesCescInter2 = 0;
                             else {
                                 $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
                                 $pdf->Cell(20,1,utf8_decode(number_format($montoCancelado3,2)),0,0,'L');
-                                $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
+                                $pdf->Cell(20,1,utf8_decode($servicio),0,0,'L');
                                 $totalSinIva3 = $totalSinIva3 +$sinIva3;
                                 $totalConIva3 = $totalConIva3 + $montoCancelado3;
                                 $totalesCable2 = $totalesCable2 + $montoCancelado3;
@@ -450,7 +529,7 @@ $totalesCescInter2 = 0;
 
                             $totalSoloIva3 = $totalSoloIva3 + $totalIva3;
                             $totalSoloCesc3 = $totalSoloCesc3 + $totalCesc3;
-                            $totalesCescCable2 = $totalesCescCable2 + $totalSoloCesc3;
+                            $totalesCescCable2 = $totalesCescCable2 + $totalCesc3;
                             //$pdf->Cell(20,1,utf8_decode($montoCancelado),0,1,'L');
                             $pdf->Cell(15,1,utf8_decode(number_format($montoCancelado3,2)),0,0,'L');
                             $pdf->Cell(15,1,utf8_decode(number_format($result["impuesto"],2)),0,0,'L');
@@ -459,12 +538,23 @@ $totalesCescInter2 = 0;
 
                             if ($counter2 > 50){
                                 $pdf->AddPage('L','Letter');
+                                $pdf->SetFont('Times','B',6);
+                                //###########################################Paginación y último usuario que imprime
+                                date_default_timezone_set('America/El_Salvador');
+                                if ($numPag == 1){$pdf->Cell(200,6,utf8_decode("Página ".str_pad($pdf->pageNo(),4,"0",STR_PAD_LEFT)),0,1,'R');}
 
-                                $pdf->SetFont('Times','B',10);
-                                $pdf->Cell(260,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE CREDITO FISCAL'),0,0,'C');
-                                $pdf->Ln(5);
-                                $pdf->SetFont('Times','B',8);
-                                $pdf->Cell(260,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,0,'C');
+                                //$pdf->Cell(260,4,utf8_decode("IMPRESO POR: ".strtoupper($_SESSION['nombres'])." ".strtoupper($_SESSION['apellidos']). " ".date('d/m/Y h:i:s')),"",1,'R');
+                                //##################################################################################
+                                //######################################################################## MESE A GENERAR
+                                if ($encabezados == 1){
+                                    $pdf->SetFont('Times','B',10);
+                                    $pdf->Cell(190,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE FACTURAS'),0,0,'C');
+                                    $pdf->Ln(5);
+                                    $pdf->SetFont('Times','B',8);
+                                    $pdf->Cell(190,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,1,'C');
+                                    $pdf->Cell(190,3,utf8_decode($mesGenerarLetra." ".$anoGenerar),0,0,'C');
+                                }
+                                //####################################################################################################
                                 $pdf->Ln(10);
 
                                 $pdf->SetFont('Times','B',10);
@@ -527,7 +617,7 @@ $totalesCescInter2 = 0;
                             //IVA
                             $separado3 = (floatval($montoCancelado3)/(1 + floatval($iva)));
                             $totalIva3 = (doubleval($separado3) * doubleval($iva));
-
+                            $servicio = "INTERNET";
 
                             $pdf->Cell(5,1,utf8_decode(date("d", strtotime($result['fechaComprobante']))),0,0,'L');
                             $pdf->Cell(20,1,utf8_decode($result['prefijo'] . $result['numeroComprobante']),0,0,'L');
@@ -537,7 +627,7 @@ $totalesCescInter2 = 0;
                             if ($ex->isExento($result["codigoCliente"])) {
                                 $pdf->Cell(20,1,utf8_decode($montoCancelado3),0,0,'L');
                                 $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
-                                $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
+                                $pdf->Cell(20,1,utf8_decode($servicio),0,0,'L');
                                 $totalSinIvaEx3 = $totalSinIvaEx3 + $sinIva3;
                                 $totalConIvaEx3 = $totalConIvaEx3 + $montoCancelado3;
                             }
@@ -545,7 +635,7 @@ $totalesCescInter2 = 0;
                             else {
                                 $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
                                 $pdf->Cell(20,1,utf8_decode(number_format($montoCancelado3,2)),0,0,'L');
-                                $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
+                                $pdf->Cell(20,1,utf8_decode($servicio),0,0,'L');
                                 $totalSinIva3 = $totalSinIva3 +$sinIva3;
                                 $totalConIva3 = $totalConIva3 + $montoCancelado3;
                                 $totalesInter2 = $totalesInter2 + $montoCancelado3;
@@ -553,7 +643,7 @@ $totalesCescInter2 = 0;
 
                             $totalSoloIva3 = $totalSoloIva3 + $totalIva3;
                             $totalSoloCesc3 = $totalSoloCesc3 + $totalCesc3;
-                            $totalesCescInter2 = $totalesCescInter2 + $totalSoloCesc3;
+                            $totalesCescInter2 = $totalesCescInter2 + $totalCesc3;
                             //$pdf->Cell(20,1,utf8_decode($montoCancelado),0,1,'L');
                             $pdf->Cell(15,1,utf8_decode(number_format($montoCancelado3,2)),0,0,'L');
                             $pdf->Cell(15,1,utf8_decode(number_format($result["impuesto"],2)),0,0,'L');
@@ -562,12 +652,23 @@ $totalesCescInter2 = 0;
 
                             if ($counter2 > 50){
                                 $pdf->AddPage('L','Letter');
+                                $pdf->SetFont('Times','B',6);
+                                //###########################################Paginación y último usuario que imprime
+                                date_default_timezone_set('America/El_Salvador');
+                                if ($numPag == 1){$pdf->Cell(200,6,utf8_decode("Página ".str_pad($pdf->pageNo(),4,"0",STR_PAD_LEFT)),0,1,'R');}
 
-                                $pdf->SetFont('Times','B',10);
-                                $pdf->Cell(260,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE CREDITO FISCAL'),0,0,'C');
-                                $pdf->Ln(5);
-                                $pdf->SetFont('Times','B',8);
-                                $pdf->Cell(260,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,0,'C');
+                                //$pdf->Cell(260,4,utf8_decode("IMPRESO POR: ".strtoupper($_SESSION['nombres'])." ".strtoupper($_SESSION['apellidos']). " ".date('d/m/Y h:i:s')),"",1,'R');
+                                //##################################################################################
+                                //######################################################################## MESE A GENERAR
+                                if ($encabezados == 1){
+                                    $pdf->SetFont('Times','B',10);
+                                    $pdf->Cell(190,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE FACTURAS'),0,0,'C');
+                                    $pdf->Ln(5);
+                                    $pdf->SetFont('Times','B',8);
+                                    $pdf->Cell(190,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,1,'C');
+                                    $pdf->Cell(190,3,utf8_decode($mesGenerarLetra." ".$anoGenerar),0,0,'C');
+                                }
+                                //####################################################################################################
                                 $pdf->Ln(10);
 
                                 $pdf->SetFont('Times','B',10);
@@ -664,12 +765,23 @@ $totalesCescInter2 = 0;
 
                             if ($counter2 > 50){
                                 $pdf->AddPage('L','Letter');
+                                $pdf->SetFont('Times','B',6);
+                                //###########################################Paginación y último usuario que imprime
+                                date_default_timezone_set('America/El_Salvador');
+                                if ($numPag == 1){$pdf->Cell(200,6,utf8_decode("Página ".str_pad($pdf->pageNo(),4,"0",STR_PAD_LEFT)),0,1,'R');}
 
-                                $pdf->SetFont('Times','B',10);
-                                $pdf->Cell(260,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE CREDITO FISCAL'),0,0,'C');
-                                $pdf->Ln(5);
-                                $pdf->SetFont('Times','B',8);
-                                $pdf->Cell(260,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,0,'C');
+                                //$pdf->Cell(260,4,utf8_decode("IMPRESO POR: ".strtoupper($_SESSION['nombres'])." ".strtoupper($_SESSION['apellidos']). " ".date('d/m/Y h:i:s')),"",1,'R');
+                                //##################################################################################
+                                //######################################################################## MESE A GENERAR
+                                if ($encabezados == 1){
+                                    $pdf->SetFont('Times','B',10);
+                                    $pdf->Cell(190,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE FACTURAS'),0,0,'C');
+                                    $pdf->Ln(5);
+                                    $pdf->SetFont('Times','B',8);
+                                    $pdf->Cell(190,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,1,'C');
+                                    $pdf->Cell(190,3,utf8_decode($mesGenerarLetra." ".$anoGenerar),0,0,'C');
+                                }
+                                //####################################################################################################
                                 $pdf->Ln(10);
 
                                 $pdf->SetFont('Times','B',10);
@@ -786,12 +898,23 @@ $totalesCescInter2 = 0;
                             //var_dump("llegamos aca");
                             // DESPUES DE TODOS LOS CICLOS
                             $pdf->AddPage('P','Letter');
+                            $pdf->SetFont('Times','B',6);
+                            //###########################################Paginación y último usuario que imprime
+                            date_default_timezone_set('America/El_Salvador');
+                            if ($numPag == 1){$pdf->Cell(200,6,utf8_decode("Página ".str_pad($pdf->pageNo(),4,"0",STR_PAD_LEFT)),0,1,'R');}
 
-                            $pdf->SetFont('Times','B',10);
-                            $pdf->Cell(190,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE FACTURAS'),0,0,'C');
-                            $pdf->Ln(5);
-                            $pdf->SetFont('Times','B',8);
-                            $pdf->Cell(190,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,0,'C');
+                            //$pdf->Cell(260,4,utf8_decode("IMPRESO POR: ".strtoupper($_SESSION['nombres'])." ".strtoupper($_SESSION['apellidos']). " ".date('d/m/Y h:i:s')),"",1,'R');
+                            //##################################################################################
+                            //######################################################################## MESE A GENERAR
+                            if ($encabezados == 1){
+                                $pdf->SetFont('Times','B',10);
+                                $pdf->Cell(190,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE FACTURAS'),0,0,'C');
+                                $pdf->Ln(5);
+                                $pdf->SetFont('Times','B',8);
+                                $pdf->Cell(190,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,1,'C');
+                                $pdf->Cell(190,3,utf8_decode($mesGenerarLetra." ".$anoGenerar),0,0,'C');
+                            }
+                            //####################################################################################################
                             $pdf->Ln(10);
 
                             $pdf->SetFont('Times','B',10);
@@ -892,12 +1015,23 @@ $totalesCescInter2 = 0;
                             //var_dump("llegamos aca");
                             // DESPUES DE TODOS LOS CICLOS
                             $pdf->AddPage('P','Letter');
+                            $pdf->SetFont('Times','B',6);
+                            //###########################################Paginación y último usuario que imprime
+                            date_default_timezone_set('America/El_Salvador');
+                            if ($numPag == 1){$pdf->Cell(200,6,utf8_decode("Página ".str_pad($pdf->pageNo(),4,"0",STR_PAD_LEFT)),0,1,'R');}
 
-                            $pdf->SetFont('Times','B',10);
-                            $pdf->Cell(190,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE FACTURAS'),0,0,'C');
-                            $pdf->Ln(5);
-                            $pdf->SetFont('Times','B',8);
-                            $pdf->Cell(190,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,0,'C');
+                            //$pdf->Cell(260,4,utf8_decode("IMPRESO POR: ".strtoupper($_SESSION['nombres'])." ".strtoupper($_SESSION['apellidos']). " ".date('d/m/Y h:i:s')),"",1,'R');
+                            //##################################################################################
+                            //######################################################################## MESE A GENERAR
+                            if ($encabezados == 1){
+                                $pdf->SetFont('Times','B',10);
+                                $pdf->Cell(190,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE FACTURAS'),0,0,'C');
+                                $pdf->Ln(5);
+                                $pdf->SetFont('Times','B',8);
+                                $pdf->Cell(190,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,1,'C');
+                                $pdf->Cell(190,3,utf8_decode($mesGenerarLetra." ".$anoGenerar),0,0,'C');
+                            }
+                            //####################################################################################################
                             $pdf->Ln(10);
 
                             $pdf->SetFont('Times','B',10);
@@ -999,12 +1133,23 @@ $totalesCescInter2 = 0;
                             //var_dump("llegamos aca");
                             // DESPUES DE TODOS LOS CICLOS
                             $pdf->AddPage('P','Letter');
+                            $pdf->SetFont('Times','B',6);
+                            //###########################################Paginación y último usuario que imprime
+                            date_default_timezone_set('America/El_Salvador');
+                            if ($numPag == 1){$pdf->Cell(200,6,utf8_decode("Página ".str_pad($pdf->pageNo(),4,"0",STR_PAD_LEFT)),0,1,'R');}
 
-                            $pdf->SetFont('Times','B',10);
-                            $pdf->Cell(190,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE FACTURAS'),0,0,'C');
-                            $pdf->Ln(5);
-                            $pdf->SetFont('Times','B',8);
-                            $pdf->Cell(190,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,0,'C');
+                            //$pdf->Cell(260,4,utf8_decode("IMPRESO POR: ".strtoupper($_SESSION['nombres'])." ".strtoupper($_SESSION['apellidos']). " ".date('d/m/Y h:i:s')),"",1,'R');
+                            //##################################################################################
+                            //######################################################################## MESE A GENERAR
+                            if ($encabezados == 1){
+                                $pdf->SetFont('Times','B',10);
+                                $pdf->Cell(190,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE FACTURAS'),0,0,'C');
+                                $pdf->Ln(5);
+                                $pdf->SetFont('Times','B',8);
+                                $pdf->Cell(190,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,1,'C');
+                                $pdf->Cell(190,3,utf8_decode($mesGenerarLetra." ".$anoGenerar),0,0,'C');
+                            }
+                            //####################################################################################################
                             $pdf->Ln(10);
 
                             $pdf->SetFont('Times','B',10);
@@ -1070,21 +1215,21 @@ $totalesCescInter2 = 0;
                 $pdf->Cell(15,6,utf8_decode(number_format(($totalConIva1 + $totalSoloCesc1),2)),"T",0,'C');
 
                 $pdf->Ln(10);
-                $pdf->SetFont('Times','B',10);
-                $pdf->Cell(40,6,utf8_decode('RESUMEN'),0,1,'L');
-                $pdf->Cell(40,6,utf8_decode('Ventas exentas'),0,0,'L');
-                $pdf->Cell(40,6,utf8_decode(number_format($totalConIvaEx1,2)),0,1,'L');
-                $pdf->Cell(40,6,utf8_decode('Ventas netas gravadas'),0,0,'L');
-                $pdf->Cell(40,6,utf8_decode(number_format($totalSinIva1,2)),0,1,'L');
-                $pdf->Cell(40,6,utf8_decode('13% de IVA'),0,0,'L');
-                $pdf->Cell(40,6,utf8_decode(number_format($totalSoloIva1,2)),0,1,'L');
-                $pdf->Cell(40,6,utf8_decode('5% CESC'),0,0,'L');
-                $pdf->Cell(40,6,utf8_decode(number_format($totalSoloCesc1,2)),0,1,'L');
-                $pdf->Cell(40,6,utf8_decode('Exportaciones'),0,0,'L');
-                $pdf->Cell(40,6,utf8_decode('0.00'),0,1,'L');
-                $pdf->Cell(60,6,utf8_decode(''),"T",1,'C');
-                $pdf->Cell(40,6,utf8_decode("VENTAS TOTALES:"),"",0,'L');
-                $pdf->Cell(20,6,utf8_decode(number_format(($totalConIvaEx1+$totalSinIva1+$totalSoloIva1+$totalSoloCesc1),2)),"",1,'L');
+                $pdf->SetFont('Times','B',7);
+                $pdf->Cell(40,3.5,utf8_decode('RESUMEN'),0,1,'L');
+                $pdf->Cell(40,3.5,utf8_decode('Ventas exentas'),0,0,'L');
+                $pdf->Cell(40,3.5,utf8_decode(number_format($totalConIvaEx1,2)),0,1,'L');
+                $pdf->Cell(40,3.5,utf8_decode('Ventas netas gravadas'),0,0,'L');
+                $pdf->Cell(40,3.5,utf8_decode(number_format($totalSinIva1,2)),0,1,'L');
+                $pdf->Cell(40,3.5,utf8_decode('13% de IVA'),0,0,'L');
+                $pdf->Cell(40,3.5,utf8_decode(number_format($totalSoloIva1,2)),0,1,'L');
+                $pdf->Cell(40,3.5,utf8_decode('5% CESC'),0,0,'L');
+                $pdf->Cell(40,3.5,utf8_decode(number_format($totalSoloCesc1,2)),0,1,'L');
+                $pdf->Cell(40,3.5,utf8_decode('Exportaciones'),0,0,'L');
+                $pdf->Cell(40,3.5,utf8_decode('0.00'),0,1,'L');
+                $pdf->Cell(60,3.5,utf8_decode(''),"T",1,'C');
+                $pdf->Cell(40,3.5,utf8_decode("VENTAS TOTALES:"),"",0,'L');
+                $pdf->Cell(20,3.5,utf8_decode(number_format(($totalConIvaEx1+$totalSinIva1+$totalSoloIva1+$totalSoloCesc1),2)),"",1,'L');
 
                 $pdf->Ln(20);
                 $pdf->Cell(70,3,utf8_decode(''),"T",1,'C');
@@ -1143,14 +1288,14 @@ $totalesCescInter2 = 0;
                 $pdf->Cell(20,6,utf8_decode(number_format(($totalConIvaEx3+$totalSinIva3+$totalSoloIva3+$totalSoloCesc3),2)),"B",1,'L');
 
                 $pdf->Cell(40,6,utf8_decode('Total solo cable'),0,0,'L');
-                $pdf->Cell(40,6,utf8_decode(number_format($totalesCable,2)),0,1,'L');
+                $pdf->Cell(40,6,utf8_decode(number_format($totalesCable2,2)),0,1,'L');
                 $pdf->Cell(40,6,utf8_decode('Total CESC cable'),"B",0,'L');
-                $pdf->Cell(20,6,utf8_decode(number_format($totalesCescCable,2)),"B",1,'L');
+                $pdf->Cell(20,6,utf8_decode(number_format($totalesCescCable2,2)),"B",1,'L');
 
                 $pdf->Cell(40,6,utf8_decode('Total solo internet'),0,0,'L');
-                $pdf->Cell(40,6,utf8_decode(number_format($totalesInter,2)),0,1,'L');
+                $pdf->Cell(40,6,utf8_decode(number_format($totalesInter2,2)),0,1,'L');
                 $pdf->Cell(40,6,utf8_decode('Total CESC internet'),"",0,'L');
-                $pdf->Cell(20,6,utf8_decode(number_format($totalesCescInter,2)),"",1,'L');
+                $pdf->Cell(20,6,utf8_decode(number_format($totalesCescInter2,2)),"",1,'L');
 
                 $pdf->Ln(15);
                 $pdf->Cell(70,3,utf8_decode(''),"T",1,'C');
@@ -1191,14 +1336,25 @@ $totalesCescInter2 = 0;
 
 
         }
-        elseif ($libroDetallado == null) { // GENERAL
+        elseif ($libroDetallado == null) { // GENERAL***********************************************************************************
             $pdf->AddPage('P','Letter');
+            $pdf->SetFont('Times','B',6);
+            //###########################################Paginación y último usuario que imprime
+            date_default_timezone_set('America/El_Salvador');
+            if ($numPag == 1){$pdf->Cell(200,6,utf8_decode("Página ".str_pad($pdf->pageNo(),4,"0",STR_PAD_LEFT)),0,1,'R');}
 
-            $pdf->SetFont('Times','B',10);
-            $pdf->Cell(190,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE FACTURAS'),0,0,'C');
-            $pdf->Ln(5);
-            $pdf->SetFont('Times','B',8);
-            $pdf->Cell(190,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,0,'C');
+            //$pdf->Cell(260,4,utf8_decode("IMPRESO POR: ".strtoupper($_SESSION['nombres'])." ".strtoupper($_SESSION['apellidos']). " ".date('d/m/Y h:i:s')),"",1,'R');
+            //##################################################################################
+            //######################################################################## MESE A GENERAR
+            if ($encabezados == 1){
+                $pdf->SetFont('Times','B',10);
+                $pdf->Cell(190,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE FACTURAS'),0,0,'C');
+                $pdf->Ln(5);
+                $pdf->SetFont('Times','B',8);
+                $pdf->Cell(190,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,1,'C');
+                $pdf->Cell(190,3,utf8_decode($mesGenerarLetra." ".$anoGenerar),0,0,'C');
+            }
+            //####################################################################################################
             $pdf->Ln(10);
 
             $pdf->SetFont('Times','B',10);

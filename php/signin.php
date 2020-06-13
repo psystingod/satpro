@@ -56,7 +56,9 @@
 
                     if ($loginRow != false) {
                         // Inicia sesión solo si el usuario existe en la base de datos
-                        session_start();
+                        session_start([
+                            'cookie_lifetime' => 86400,
+                        ]);
                         // Almacenamos los datos del usuario en la sesión
                         $_SESSION['id_usuario'] = $loginRow['idUsuario'];
                         $_SESSION['nombres'] = $loginRow['nombre'];

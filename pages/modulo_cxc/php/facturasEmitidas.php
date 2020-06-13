@@ -113,6 +113,7 @@ function abonos()
     $pdf = new FPDF();
 
     $pdf->AddPage('L', 'Letter');
+    $pdf->SetAutoPageBreak(false, 10);
     $pdf->SetFont('Arial', '', 6);
     $pdf->Cell(260, 6, utf8_decode("Página " . str_pad($pdf->pageNo(), 4, "0", STR_PAD_LEFT)), 0, 1, 'R');
     $pdf->Image('../../../images/logo.png', 10, 10, 20, 18);
@@ -150,7 +151,7 @@ function abonos()
     $pdf->Cell(15, 5, utf8_decode('N°'), 1, 0, 'L');
     $pdf->Cell(30, 5, utf8_decode('N° de factura'), 1, 0, 'L');
     $pdf->Cell(20, 5, utf8_decode('Fecha'), 1, 0, 'L');
-    $pdf->Cell(70, 5, utf8_decode('Cliente'), 1, 0, 'L');
+    $pdf->Cell(75, 5, utf8_decode('Cliente'), 1, 0, 'L');
     $pdf->Cell(16, 5, utf8_decode('Mensualidad'), 1, 0, 'L');
     $pdf->Cell(10, 5, utf8_decode('Día cob'), 1, 0, 'L');
     $pdf->Cell(15, 5, utf8_decode('Servicio'), 1, 0, 'L');
@@ -158,7 +159,7 @@ function abonos()
     $pdf->Cell(10, 5, utf8_decode('IVA'), 1, 0, 'L');
     $pdf->Cell(15, 5, utf8_decode('Neto'), 1, 0, 'L');
     $pdf->Cell(15, 5, utf8_decode('CESC'), 1, 0, 'L');
-    $pdf->Cell(20, 5, utf8_decode('Total factura'), 1, 1, 'L');
+    $pdf->Cell(15, 5, utf8_decode('Total factura'), 1, 1, 'L');
     //$pdf->Ln(2);
 
     if ($codigoCobrador === "todos") {
@@ -208,6 +209,7 @@ function abonos()
                 while ($row = $resultado->fetch_assoc()) {
 
                     if ($row["codigoCobrador"] == $cobradores["codigoCobrador"] && $controlCobrador != $cobradores["codigoCobrador"]) {
+                        $pdf->Ln(1);
                         $pdf->SetFont('Arial', 'B', 8);
                         $pdf->Cell(250, 3, utf8_decode($cobradores['nombreCobrador']), "B", 1, 'L');
                         $controlCobrador = $cobradores['codigoCobrador'];
@@ -250,13 +252,13 @@ function abonos()
                         }
                     }
 
-                    $pdf->Ln(3);
+                    $pdf->Ln(2);
                     $pdf->SetFont('Arial', '', 6.7);
                     $pdf->Cell(15, 1, utf8_decode($contador), 0, 0, 'L');
                     //$pdf->Cell(15, 1, utf8_decode($row['idFactura']), 0, 0, 'L');
                     $pdf->Cell(30, 1, utf8_decode($row['numeroFactura']), 0, 0, 'L');
                     $pdf->Cell(20, 1, utf8_decode($row['fechaFactura']), 0, 0, 'L');
-                    $pdf->Cell(70, 1, utf8_decode(strtoupper($row['codigoCliente'] . "  " . $row['nombre'])), 0, 0, 'L');
+                    $pdf->Cell(75, 1, utf8_decode(strtoupper($row['codigoCliente'] . "  " . $row['nombre'])), 0, 0, 'L');
                     $pdf->Cell(16, 1, utf8_decode($row['mesCargo']), 0, 0, 'L');
                     $pdf->Cell(10, 1, utf8_decode($diaCobro), 0, 0, 'L');
                     $pdf->Cell(15, 1, utf8_decode($row['tipoServicio']), 0, 0, 'L');
@@ -274,7 +276,7 @@ function abonos()
                         $pdf->Cell(10, 1, utf8_decode(number_format($row["cuotaCable"]-$separado, 2)), 0, 0, 'L');
                         $pdf->Cell(15, 1, utf8_decode($row['cuotaCable']), 0, 0, 'L');
                         $pdf->Cell(15, 1, utf8_decode(number_format($row['totalImpuesto'],2)), 0, 0, 'L');
-                        $pdf->Cell(20, 1, utf8_decode(number_format(doubleval($row['cuotaCable']) + doubleval($row['totalImpuesto']), 2)), 0, 1, 'L');
+                        $pdf->Cell(15, 1, utf8_decode(number_format(doubleval($row['cuotaCable']) + doubleval($row['totalImpuesto']), 2)), 0, 1, 'L');
                         //$totalAnticipoSoloCable = doubleval($totalAnticipoSoloCable) + doubleval($row['cuotaCable']);
                         //$totalAnticipoCable = doubleval($totalAnticipoCable) + doubleval($row['cuotaCable']) + doubleval($row['totalImpuesto']);
                         //$totalAnticipoImpuestoC = doubleval($totalAnticipoImpuestoC) + doubleval($row['totalImpuesto']);
@@ -292,14 +294,15 @@ function abonos()
                         $pdf->Cell(10, 1, utf8_decode(number_format($row["cuotaInternet"]-$separado, 2)), 0, 0, 'L');
                         $pdf->Cell(15, 1, utf8_decode($row['cuotaInternet']), 0, 0, 'L');
                         $pdf->Cell(15, 1, utf8_decode(number_format($row['totalImpuesto'],2)), 0, 0, 'L');
-                        $pdf->Cell(20, 1, utf8_decode(number_format(doubleval($row['cuotaInternet']) + doubleval($row['totalImpuesto']), 2)), 0, 1, 'L');
+                        $pdf->Cell(15, 1, utf8_decode(number_format(doubleval($row['cuotaInternet']) + doubleval($row['totalImpuesto']), 2)), 0, 1, 'L');
                         //$totalAnticipoSoloInter = doubleval($totalAnticipoSoloInter) + doubleval($row['cuotaInternet']);
                         //$totalAnticipoInter = doubleval($totalAnticipoInter) + doubleval($row['cuotaInternet']) + doubleval($row['totalImpuesto']);
                         //$totalAnticipoImpuestoI = doubleval($totalAnticipoImpuestoI) + doubleval($row['totalImpuesto']);
                     }
                     $contador++;
-                    if($contador2 > 30){
+                    if($contador2 > 44){
                         $pdf->AddPage('L', 'Letter');
+                        $pdf->SetAutoPageBreak(false, 10);
                         $pdf->SetFont('Arial', '', 6);
                         $pdf->Cell(260, 6, utf8_decode("Página " . str_pad($pdf->pageNo(), 4, "0", STR_PAD_LEFT)), 0, 1, 'R');
                         $pdf->Image('../../../images/logo.png', 10, 10, 20, 18);
@@ -331,7 +334,7 @@ function abonos()
                         $pdf->Cell(15, 5, utf8_decode('N°'), 1, 0, 'L');
                         $pdf->Cell(30, 5, utf8_decode('N° de factura'), 1, 0, 'L');
                         $pdf->Cell(20, 5, utf8_decode('Fecha'), 1, 0, 'L');
-                        $pdf->Cell(70, 5, utf8_decode('Cliente'), 1, 0, 'L');
+                        $pdf->Cell(75, 5, utf8_decode('Cliente'), 1, 0, 'L');
                         $pdf->Cell(16, 5, utf8_decode('Mensualidad'), 1, 0, 'L');
                         $pdf->Cell(10, 5, utf8_decode('Día cob'), 1, 0, 'L');
                         $pdf->Cell(15, 5, utf8_decode('Servicio'), 1, 0, 'L');
@@ -339,7 +342,7 @@ function abonos()
                         $pdf->Cell(10, 5, utf8_decode('IVA'), 1, 0, 'L');
                         $pdf->Cell(15, 5, utf8_decode('Neto'), 1, 0, 'L');
                         $pdf->Cell(15, 5, utf8_decode('CESC'), 1, 0, 'L');
-                        $pdf->Cell(20, 5, utf8_decode('Total factura'), 1, 1, 'L');
+                        $pdf->Cell(15, 5, utf8_decode('Total factura'), 1, 1, 'L');
                         $contador2=1;
                     }
                     $contador2++;
@@ -397,8 +400,8 @@ function abonos()
             }
             //var_dump($query);
             while ($row = $resultado->fetch_assoc()) {
-
                 if ($row["codigoCobrador"] == $cobradores["codigoCobrador"] && $controlCobrador != $cobradores["codigoCobrador"]) {
+                    $pdf->Ln(1);
                     $pdf->SetFont('Arial', 'B', 8);
                     $pdf->Cell(250, 3, utf8_decode($cobradores['nombreCobrador']), "B", 1, 'L');
                     $controlCobrador = $cobradores['codigoCobrador'];
@@ -441,13 +444,13 @@ function abonos()
                     }
                 }
 
-                $pdf->Ln(3);
+                $pdf->Ln(2);
                 $pdf->SetFont('Arial', '', 6.7);
                 $pdf->Cell(15, 1, utf8_decode($contador), 0, 0, 'L');
                 //$pdf->Cell(15, 1, utf8_decode($row['idFactura']), 0, 0, 'L');
                 $pdf->Cell(30, 1, utf8_decode($row['numeroFactura']), 0, 0, 'L');
                 $pdf->Cell(20, 1, utf8_decode($row['fechaFactura']), 0, 0, 'L');
-                $pdf->Cell(70, 1, utf8_decode(strtoupper($row['codigoCliente'] . "  " . $row['nombre'])), 0, 0, 'L');
+                $pdf->Cell(75, 1, utf8_decode(strtoupper($row['codigoCliente'] . "  " . $row['nombre'])), 0, 0, 'L');
                 $pdf->Cell(16, 1, utf8_decode($row['mesCargo']), 0, 0, 'L');
                 $pdf->Cell(10, 1, utf8_decode($diaCobro), 0, 0, 'L');
                 $pdf->Cell(15, 1, utf8_decode($row['tipoServicio']), 0, 0, 'L');
@@ -465,7 +468,7 @@ function abonos()
                     $pdf->Cell(10, 1, utf8_decode(number_format($row["cuotaCable"]-$separado, 2)), 0, 0, 'L');
                     $pdf->Cell(15, 1, utf8_decode($row['cuotaCable']), 0, 0, 'L');
                     $pdf->Cell(15, 1, utf8_decode(number_format($row['totalImpuesto'],2)), 0, 0, 'L');
-                    $pdf->Cell(20, 1, utf8_decode(number_format(doubleval($row['cuotaCable']) + doubleval($row['totalImpuesto']), 2)), 0, 1, 'L');
+                    $pdf->Cell(15, 1, utf8_decode(number_format(doubleval($row['cuotaCable']) + doubleval($row['totalImpuesto']), 2)), 0, 1, 'L');
                     //$totalAnticipoSoloCable = doubleval($totalAnticipoSoloCable) + doubleval($row['cuotaCable']);
                     //$totalAnticipoCable = doubleval($totalAnticipoCable) + doubleval($row['cuotaCable']) + doubleval($row['totalImpuesto']);
                     //$totalAnticipoImpuestoC = doubleval($totalAnticipoImpuestoC) + doubleval($row['totalImpuesto']);
@@ -487,15 +490,16 @@ function abonos()
                     $pdf->Cell(10, 1, utf8_decode(number_format(doubleval($totalIva), 2)), 0, 0, 'L');
                     $pdf->Cell(15, 1, utf8_decode($row['cuotaInternet']), 0, 0, 'L');
                     $pdf->Cell(15, 1, utf8_decode(number_format($row['totalImpuesto'],2)), 0, 0, 'L');
-                    $pdf->Cell(20, 1, utf8_decode(number_format(doubleval($row['cuotaInternet']) + doubleval($row['totalImpuesto']), 2)), 0, 1, 'L');
+                    $pdf->Cell(15, 1, utf8_decode(number_format(doubleval($row['cuotaInternet']) + doubleval($row['totalImpuesto']), 2)), 0, 1, 'L');
                     //$totalAnticipoSoloInter = doubleval($totalAnticipoSoloInter) + doubleval($row['cuotaInternet']);
                     //$totalAnticipoInter = doubleval($totalAnticipoInter) + doubleval($row['cuotaInternet']) + doubleval($row['totalImpuesto']);
                     //$totalAnticipoImpuestoI = doubleval($totalAnticipoImpuestoI) + doubleval($row['totalImpuesto']);
                 }
                 $contador++;
 
-                if($contador2 > 30){
+                if($contador2 > 44){
                     $pdf->AddPage('L', 'Letter');
+                    $pdf->SetAutoPageBreak(false, 10);
                     $pdf->SetFont('Arial', '', 6);
                     $pdf->Cell(260, 6, utf8_decode("Página " . str_pad($pdf->pageNo(), 4, "0", STR_PAD_LEFT)), 0, 1, 'R');
                     $pdf->Image('../../../images/logo.png', 10, 10, 20, 18);
@@ -527,7 +531,7 @@ function abonos()
                     $pdf->Cell(15, 5, utf8_decode('N°'), 1, 0, 'L');
                     $pdf->Cell(30, 5, utf8_decode('N° de factura'), 1, 0, 'L');
                     $pdf->Cell(20, 5, utf8_decode('Fecha'), 1, 0, 'L');
-                    $pdf->Cell(70, 5, utf8_decode('Cliente'), 1, 0, 'L');
+                    $pdf->Cell(75, 5, utf8_decode('Cliente'), 1, 0, 'L');
                     $pdf->Cell(16, 5, utf8_decode('Mensualidad'), 1, 0, 'L');
                     $pdf->Cell(10, 5, utf8_decode('Día cob'), 1, 0, 'L');
                     $pdf->Cell(15, 5, utf8_decode('Servicio'), 1, 0, 'L');
@@ -535,7 +539,7 @@ function abonos()
                     $pdf->Cell(10, 5, utf8_decode('IVA'), 1, 0, 'L');
                     $pdf->Cell(15, 5, utf8_decode('Neto'), 1, 0, 'L');
                     $pdf->Cell(15, 5, utf8_decode('CESC'), 1, 0, 'L');
-                    $pdf->Cell(20, 5, utf8_decode('Total factura'), 1, 1, 'L');
+                    $pdf->Cell(15, 5, utf8_decode('Total factura'), 1, 1, 'L');
                     $contador2=1;
                 }
                 $contador2++;
@@ -545,7 +549,7 @@ function abonos()
         }
     }
 
-        $pdf->AddPage('L', 'Letter');
+        /*$pdf->AddPage('L', 'Letter');
         $pdf->SetFont('Arial', '', 6);
         $pdf->Cell(260, 6, utf8_decode("Página " . str_pad($pdf->pageNo(), 4, "0", STR_PAD_LEFT)), 0, 1, 'R');
         $pdf->Image('../../../images/logo.png', 10, 10, 20, 18);
@@ -577,7 +581,7 @@ function abonos()
         $pdf->Cell(15, 5, utf8_decode('N°'), 1, 0, 'L');
         $pdf->Cell(30, 5, utf8_decode('N° de factura'), 1, 0, 'L');
         $pdf->Cell(20, 5, utf8_decode('Fecha'), 1, 0, 'L');
-        $pdf->Cell(70, 5, utf8_decode('Cliente'), 1, 0, 'L');
+        $pdf->Cell(75, 5, utf8_decode('Cliente'), 1, 0, 'L');
         $pdf->Cell(16, 5, utf8_decode('Mensualidad'), 1, 0, 'L');
         $pdf->Cell(10, 5, utf8_decode('Día cob'), 1, 0, 'L');
         $pdf->Cell(15, 5, utf8_decode('Servicio'), 1, 0, 'L');
@@ -585,10 +589,10 @@ function abonos()
         $pdf->Cell(10, 5, utf8_decode('IVA'), 1, 0, 'L');
         $pdf->Cell(15, 5, utf8_decode('Neto'), 1, 0, 'L');
         $pdf->Cell(15, 5, utf8_decode('CESC'), 1, 0, 'L');
-        $pdf->Cell(20, 5, utf8_decode('Total factura'), 1, 1, 'L');
+        $pdf->Cell(15, 5, utf8_decode('Total factura'), 1, 1, 'L');
 
     $pdf->Cell(185, 5, utf8_decode(''), 0, 0, 'R');
-    $pdf->Cell(75, 5, utf8_decode(''), "", 1, 'R');
+    $pdf->Cell(75, 5, utf8_decode(''), "", 1, 'R');*/
 
     //$pdf->AddPage('L','Letter');
     $pdf->SetFont('Arial', 'B', 8);

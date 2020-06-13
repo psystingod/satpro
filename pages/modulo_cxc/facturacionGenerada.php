@@ -1,6 +1,11 @@
 <?php
 require("php/facturasGeneradas.php");
-session_start();
+if(!isset($_SESSION))
+{
+    session_start([
+        'cookie_lifetime' => 86400,
+    ]);
+}
 if ($_SESSION['rol'] != "administracion") {
     header("Location:../../../php/logut.php");
 }

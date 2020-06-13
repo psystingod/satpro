@@ -39,7 +39,7 @@
 	  //echo strftime("El año es %Y y el mes es %B");
       putenv("LANG='es_ES.UTF-8'");
       setlocale(LC_ALL, 'es_ES.UTF-8');
-      $pdf->Ln(16);
+      $pdf->Ln(12);
 	  while($row = $resultado->fetch_assoc())
 	  {
 
@@ -62,11 +62,20 @@
     	  while ($result2 = $statement2->fetch_assoc()) {
     		  $velocidad = $result2['nombreVelocidad'];
     	  }
+            // SQL query para traer datos del servicio de cable de la tabla clientes
+            $query3 = "SELECT dire_telefonia FROM clientes WHERE cod_cliente= ".$row["codigoCliente"];
+            // Preparación de sentencia
+            $statement3 = $mysqli->query($query3);
+            //$statement->execute();
+            while ($result3 = $statement3->fetch_assoc()) {
+                $nodo = $result3['dire_telefonia'];
+            }
             $pdf->SetFont('Arial','B',12);
             $pdf->Cell(190,6,'TRASLADO DE SERVICIO',0,1,'C');
+            $pdf->Cell(190,6,$nodo,0,1,'C');
             $pdf->SetFont('Arial','B',9);
-            $pdf->Cell(95,1,'Dia de cobro: '.$row["diaCobro"],0,0,'L');
-            $pdf->Cell(90,6,utf8_decode('N° ').$row["idOrdenTraslado"],0,1,'R');
+            $pdf->Cell(165,1,'Dia de cobro: '.$row["diaCobro"],0,0,'L');
+            $pdf->Cell(20,6,utf8_decode('N° ').$row["idOrdenTraslado"],1,1,'C');
             $pdf->Ln(10);
             $pdf->SetFont('Arial','UB',9);
             $pdf->Cell(40,3,'Fecha: '.$row["fechaOrden"],0,0,'L');
@@ -114,8 +123,17 @@
       	  while ($result1 = $statement1->fetch_assoc()) {
       		  $tecnico = $result1['nombreTecnico'];
       	  }
+            // SQL query para traer datos del servicio de cable de la tabla clientes
+            $query3 = "SELECT dire_telefonia FROM clientes WHERE cod_cliente= ".$row["codigoCliente"];
+            // Preparación de sentencia
+            $statement3 = $mysqli->query($query3);
+            //$statement->execute();
+            while ($result3 = $statement3->fetch_assoc()) {
+                $nodo = $result3['dire_telefonia'];
+            }
             $pdf->SetFont('Arial','B',12);
             $pdf->Cell(190,6,'TRASLADO DE SERVICIO',0,1,'C');
+            $pdf->Cell(190,6,$nodo,0,1,'C');
             $pdf->SetFont('Arial','B',9);
             $pdf->Cell(170,6,'Dia de cobro: '.$row["diaCobro"],0,0,'L');
             $pdf->Cell(20,6,utf8_decode('N° ').$row["idOrdenTraslado"],1,1,'R');

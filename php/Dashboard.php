@@ -117,8 +117,10 @@
         public function getTotalOrders()
         {
             try {
-                    $query = "SELECT COUNT(*) FROM tbl_ordenes_trabajo";
+                    $date = date("Y-m-d");
+                    $query = "SELECT COUNT(*) FROM tbl_ordenes_trabajo WHERE MONTH(:fecha) = MONTH(fechaOrdenTrabajo)";
                     $statement = $this->dbConnect->prepare($query);
+                    $statement->bindParam(':fecha', $date);
                     $statement->execute();
                     $result1 = $statement->fetchColumn();
                     return $result1;
@@ -179,6 +181,67 @@
                     $statement->execute();
                     $result1 = $statement->fetchColumn();
                     return $result1;
+
+            } catch (Exception $e) {
+                print "!Error¡: " . $e->getMessage() . "</br>";
+                die();
+            }
+        }
+        public function getGraphics()
+        {
+            try {
+                date_default_timezone_set('America/El_Salvador');
+                $date = date("Y-m-d");
+                //$query = "SELECT SUM(cuotaCable + totalImpuesto) FROM tbl_abonos WHERE tipoServicio = 'C' AND anulada = 0 AND DAY(:fecha) = DAY(fechaAbonado)";
+                $query = "SELECT count(*) FROM tbl_ordenes_trabajo WHERE (actividadCable ='Instalación' OR actividadInter ='Instalación') AND MONTH(:fecha) = MONTH(fechaOrdenTrabajo) AND YEAR(:fecha) = YEAR(fechaOrdenTrabajo)";
+                $statement = $this->dbConnect->prepare($query);
+                $statement->bindParam(':fecha', $date);
+                //ini_set('memory_limit', '-1');
+                $statement->execute();
+                $result1 = $statement->fetchColumn();
+
+                return $result1;
+
+            } catch (Exception $e) {
+                print "!Error¡: " . $e->getMessage() . "</br>";
+                die();
+            }
+        }
+        public function getGraphics2()
+        {
+            try {
+                date_default_timezone_set('America/El_Salvador');
+                $date = date("Y-m-d");
+
+                //$query = "SELECT SUM(cuotaInternet + totalImpuesto) FROM tbl_abonos WHERE tipoServicio = 'I' AND anulada = 0 AND DAY(:fecha) = DAY(fechaAbonado)";
+                $query = "SELECT count(*) FROM tbl_ordenes_trabajo WHERE (actividadCable ='Renovacion de contrato' OR actividadInter ='Renovacion de contrato') AND MONTH(:fecha) = MONTH(fechaOrdenTrabajo) AND YEAR(:fecha) = YEAR(fechaOrdenTrabajo)";
+                $statement = $this->dbConnect->prepare($query);
+                $statement->bindParam(':fecha', $date);
+                //ini_set('memory_limit', '-1');
+                $statement->execute();
+                $result2 = $statement->fetchColumn();
+
+                return $result2;
+
+            } catch (Exception $e) {
+                print "!Error¡: " . $e->getMessage() . "</br>";
+                die();
+            }
+        }
+        public function getGraphics3()
+        {
+            try {
+                date_default_timezone_set('America/El_Salvador');
+                $date = date("Y-m-d");
+                //$query = "SELECT SUM(montoCable + montoInternet + impuesto) FROM tbl_ventas_manuales WHERE anulada = 0 AND DAY(:fecha) = DAY(fechaComprobante)";
+                $query = "SELECT COUNT(*) FROM tbl_ordenes_suspension WHERE MONTH(:fecha) = MONTH(fechaOrden) AND YEAR(:fecha) = YEAR(fechaOrden)";
+                $statement = $this->dbConnect->prepare($query);
+                $statement->bindParam(':fecha', $date);
+                //ini_set('memory_limit', '-1');
+                $statement->execute();
+                $result3 = $statement->fetchColumn();
+
+                return $result3;
 
             } catch (Exception $e) {
                 print "!Error¡: " . $e->getMessage() . "</br>";
