@@ -114,6 +114,7 @@ if(!isset($_SESSION))
             $calidad = $row['entrega_calidad'];
             $observaciones = $row['observaciones'];
             //var_dump($calidad);
+            $nAnexo = $row['Anexo'];
 
             /****************** OTROS DATOS ***********************/
             $cobrador = $row['cod_cobrador'];
@@ -395,6 +396,7 @@ if(!isset($_SESSION))
         $ruido = "";
         $wifiClave = "";
         $counter = 1;
+        $nAnexo = "";
     }
  ?>
  <?php
@@ -701,7 +703,6 @@ if(!isset($_SESSION))
                             <td colspan="2"><button class="btn btn-info btn-block" style="font-size: 16px; ;">Compromiso de internet</button></td>
 
                         </tr>-->
-
                     </table>
                 </div>
                 <div class="col-md-4">
@@ -777,6 +778,7 @@ if(!isset($_SESSION))
                         ?>
                     </table>
                 </div>
+
             </div>
             <div class="row">
                 <div class="col-md-12">
@@ -817,17 +819,21 @@ if(!isset($_SESSION))
                                 <div class="tab-pane fade in active" id="datos-generales">
                                     <br>
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label for="codigo">Código del cliente</label>
                                             <input class="form-control input-sm" type="text" name="codigo" value="<?php echo $codigo; ?>" readonly>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label for="contrato">N° de contrato (CABLE)</label>
                                             <input class="form-control input-sm alert-danger" type="text" name="contrato" value="<?php echo $nContrato; ?>" readonly>
                                         </div>
-                                        <div class="col-md-4">
+                                        <div class="col-md-3">
                                             <label for="factura">Número de factura</label>
                                             <input class="form-control input-sm" type="text" name="factura" value="<?php echo $nFactura; ?>" readonly>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="nAnexo">Número de anexo</label>
+                                            <input class="form-control input-sm alert-danger" type="text" name="nAnexo" value="<?php echo $nAnexo; ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -845,7 +851,6 @@ if(!isset($_SESSION))
                                             <label for="empresa">Empresa</label>
                                             <input class="form-control input-sm" type="text" name="empresa" value="<?php //echo $empresa; ?>" readonly>
                                         </div>-->
-
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6">
@@ -1484,11 +1489,11 @@ if(!isset($_SESSION))
                                                   </div>
                                                   <div class="col-md-6">
                                                       <br>
-                                                      <button class="btn btn-success btn-block" type="button" name="agregar" style="font-size:16px">Activar servicio</button>
+                                                      <button class="btn btn-success btn-block" type="button" name="agregar" onclick="activarMac();" style="font-size:16px">Activar servicio</button>
                                                   </div>
                                                   <div class="col-md-6">
                                                       <br>
-                                                      <button class="btn btn-danger btn-block" type="button" name="eliminar" style="font-size:16px">Desactivar servicio</button>
+                                                      <button class="btn btn-danger btn-block" type="button" name="eliminar" onclick="eliminarMac();" style="font-size:16px">Desactivar servicio</button>
                                                   </div>
                                               </div>
                                               <hr style="border-top: 1px solid #0288D1;">
@@ -2000,69 +2005,90 @@ if(!isset($_SESSION))
                     </div>
                         <div style="font-size: 11px;" class="modal-body">
                             <div class="row">
-                                <div class="col-md-3">
-                                    <label for="municipio2">Municipio</label>
-                                    <select class="form-control input-sm" id="municipio2" name="municipio2">
-                                        <option value="" selected>Seleccionar</option>
-                                        <?php
-                                        foreach ($arrMunicipiosSearch as $key) {
-                                            echo "<option value=".$key['idMunicipio'].">".$key['nombreMunicipio']."</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                    <br>
-                                </div>
-                                <div class="col-md-3">
-                                    <label for="colonia2">Colonia</label>
-                                    <select class="form-control input-sm" id="colonia2" name="colonia2">
-                                        <option value="" selected>Seleccionar</option>
+                                <ul class="nav nav-tabs red">
+                                    <li class="active"><a style="color: #CC0000;" href="#busquedaSimple" data-toggle="tab">Búsqueda simple</a>
+                                    </li>
+                                    <li><a style="color: #CC0000;" href="#busquedaAvanzada" data-toggle="tab">Búsqueda avanzada</a>
+                                    </li>
+                                </ul>
+                                <!-- Tab panes -->
+                                <div class="tab-content">
+                                    <div class="tab-pane fade in active" id="busquedaSimple">
+                                        <div class="col-md-12">
+                                            <input class="form-control input-sm" type="text" name="caja_busqueda2" id="caja_busqueda2" value="" placeholder="Código, DUI, Nombre, Dirección, MAC">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div id="datos2">
 
-                                    </select>
-                                    <br>
-                                </div>
-                                <div class="col-md-3">
-                                    <label style="font-size: 12px;" class="label label-success" for="cable">CABLE</label>
-                                    <br>
-                                    <br>
-                                    <fieldset>
-                                        <input type="radio" name="cableSearch" value="t" checked>
-                                        <label for="cableSearch">Todos</label>
-                                        <input type="radio" name="cableSearch" value="a">
-                                        <label for="cableSearch">Activos</label>
-                                        <input type="radio" name="cableSearch" value="s">
-                                        <label for="cableSearch">Suspendidos</label>
-                                        <input type="radio" name="cableSearch" value="na">
-                                        <label for="cableSearch">Sin servicio</label>
-                                    </fieldset>
-                                    <br>
-                                </div>
-                                <div class="col-md-3">
-                                    <label style="font-size: 12px;" for="internet" class="label label-primary">INTERNET</label>
-                                    <br>
-                                    <br>
-                                    <fieldset>
-                                        <input type="radio" name="interSearch" value="t" checked>
-                                        <label for="interSearch">Todos</label>
-                                        <input type="radio" name="interSearch" value="a">
-                                        <label for="interSearch">Activos</label>
-                                        <input type="radio" name="interSearch" value="s">
-                                        <label for="interSearch">Suspendidos</label>
-                                        <input type="radio" name="interSearch" value="na">
-                                        <label for="interSearch">Sin servicio</label>
-                                    </fieldset>
-                                    <br>
-                                </div>
-                                <div class="col-md-12">
-                                    <input class="form-control input-sm" type="text" name="caja_busqueda" id="caja_busqueda" value="" placeholder="Código, DUI, Nombre, Dirección, MAC">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div id="datos">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="tab-pane fade in" id="busquedaAvanzada">
+                                        <div class="col-md-3">
+                                            <label for="municipio2">Municipio</label>
+                                            <select class="form-control input-sm" id="municipio2" name="municipio2">
+                                                <option value="" selected>Seleccionar</option>
+                                                <?php
+                                                foreach ($arrMunicipiosSearch as $key) {
+                                                    echo "<option value=".$key['idMunicipio'].">".$key['nombreMunicipio']."</option>";
+                                                }
+                                                ?>
+                                            </select>
+                                            <br>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="colonia2">Colonia</label>
+                                            <select class="form-control input-sm" id="colonia2" name="colonia2">
+                                                <option value="" selected>Seleccionar</option>
 
+                                            </select>
+                                            <br>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label style="font-size: 12px;" class="label label-success" for="cable">CABLE</label>
+                                            <br>
+                                            <br>
+                                            <fieldset>
+                                                <input type="radio" name="cableSearch" value="t" checked>
+                                                <label for="cableSearch">Todos</label>
+                                                <input type="radio" name="cableSearch" value="a">
+                                                <label for="cableSearch">Activos</label>
+                                                <input type="radio" name="cableSearch" value="s">
+                                                <label for="cableSearch">Suspendidos</label>
+                                                <input type="radio" name="cableSearch" value="na">
+                                                <label for="cableSearch">Sin servicio</label>
+                                            </fieldset>
+                                            <br>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label style="font-size: 12px;" for="internet" class="label label-primary">INTERNET</label>
+                                            <br>
+                                            <br>
+                                            <fieldset>
+                                                <input type="radio" name="interSearch" value="t" checked>
+                                                <label for="interSearch">Todos</label>
+                                                <input type="radio" name="interSearch" value="a">
+                                                <label for="interSearch">Activos</label>
+                                                <input type="radio" name="interSearch" value="s">
+                                                <label for="interSearch">Suspendidos</label>
+                                                <input type="radio" name="interSearch" value="na">
+                                                <label for="interSearch">Sin servicio</label>
+                                            </fieldset>
+                                            <br>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <input class="form-control input-sm" type="text" name="caja_busqueda" id="caja_busqueda" value="" placeholder="Código, DUI, Nombre, Dirección, MAC">
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div id="datos">
+
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+
                             </div>
+
                         </div>
 
             </div>
@@ -2100,6 +2126,7 @@ if(!isset($_SESSION))
         ?>
     <script src="js/searchMun2.js"></script>;
     <script src="js/search.js"></script>
+    <script src="js/searchSimple.js"></script>
     <script src="../../dist/js/sb-admin-2.js"></script>
     <script type="text/javascript">
         var permisos = '<?php echo $permisosUsuario;?>'
@@ -2256,6 +2283,35 @@ if(!isset($_SESSION))
             //$('#mac').mask({pattern: /[a-zA-Z0-9]/}, {placeholder: ":  :  :  :  :"});
             //$('#phone-number').mask('0000-0000');
         });
+    </script>
+    <script>
+        function eliminarMac(){
+            var con = confirm("¿Está seguro de DESACTIVAR este modem?");
+            if (con == true) {
+                var mac = document.getElementById("mac").value;
+                if (mac.length < 17 || mac.length > 17){
+                    alert("MAC errónea");
+                }else{
+                    window.open("http://172.16.1.1:7637/camsys/command/deletecm.php?login=admin&pass=CableS4t&cmmac="+mac);
+                }
+            } else {
+                alert("Operación cancelada.");
+            }
+        }
+
+        function activarMac(){
+            var con = confirm("¿Está seguro de ACTIVAR este modem?");
+            if (con == true) {
+                var mac = document.getElementById("mac").value;
+                if (mac.length < 17 || mac.length > 17){
+                    alert("MAC errónea");
+                }else{
+                    window.open("http://172.16.1.1:7637/camsys/command/deletecm.php?login=admin&pass=CableS4t&cmmac="+mac);
+                }
+            } else {
+                alert("Operación cancelada.");
+            }
+        }
     </script>
 </body>
 

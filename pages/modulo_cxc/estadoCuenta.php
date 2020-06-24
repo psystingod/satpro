@@ -80,7 +80,7 @@ if (isset($_GET['codigoCliente'])) {
     // read current record's data
     try {
         // prepare select query
-        $query = "SELECT cod_cliente, nombre, direccion, telefonos, dia_cobro, fecha_ult_pago, id_municipio, prepago, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, mac_modem, serie_modem, id_velocidad, dire_telefonia, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia, saldoCable, saldoInternet FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
+        $query = "SELECT cod_cliente, nombre, direccion, telefonos, dia_cobro, fecha_ult_pago, id_municipio, prepago, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, mac_modem, serie_modem, id_velocidad, dire_telefonia, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia, saldoCable, saldoInternet, M1, M2, M3, Pago1, Pago2, Pago3, Pago4, Pago5, Pago6 FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
         $stmt = $con->prepare( $query );
 
         // this is the first question mark
@@ -128,6 +128,15 @@ if (isset($_GET['codigoCliente'])) {
         $nodo = $row['dire_telefonia'];
         $idVendedor = "";
         $recepcionTv = "";
+        $m1 = $row['M1'];
+        $m2 = $row['M2'];
+        $m3 = $row['M3'];
+        $pago1 = $row['Pago1'];
+        $pago2 = $row['Pago2'];
+        $pago3 = $row['Pago3'];
+        $pago4 = $row['Pago4'];
+        $pago5 = $row['Pago5'];
+        $pago6 = $row['Pago6'];
 
     }
 
@@ -283,56 +292,146 @@ if(!isset($_SESSION["user"])) {
     <div id="page-wrapper">
         <div class="container-fluid">
             <div class="row">
-                <div class="col-lg-12">
-                    <h3 class="page-header text-center" style="border: none;"><b>Estado de cuenta</b></h3>
-                    <button onclick="history.back()" class="btn btn-danger pull-right"><i class="fas fa-arrow-alt-circle-left"></i> Regresar</button>
-                    <br>
-                    <br>
-                    <table class="table table-responsive table-condensed" style="border: none; font-size:12px;">
-                        <tbody class="">
+                <h3 class="page-header text-center" style="border: none; padding: 0; margin: 0; margin-top: 5px;"><b>Estado de cuenta</b></h3>
+                <button onclick="history.back()" class="btn btn-danger pull-right"><i class="fas fa-arrow-alt-circle-left"></i> Regresar</button>
+                    <div class="col-md-9">
                         <tr>
-                            <th>Código</th>
+                            <b>Código</b>
                             <td><span class="label label-danger" style="font-size: 12px;"><?php echo $_GET['codigoCliente']; ?></span></td>
-                            <?php
-                            if ($servicioC == "Activo"){
-                                echo '<td>CABLE: <span class="label label-success" style="font-size: 12px;">Activo</span></td>';
-                            }elseif ($servicioC == "Sin servicio"){
-                                echo '<td>CABLE: <span class="label label-default" style="font-size: 12px;">Sin servicio</span></td>';
-                            }elseif ($servicioC == "Suspendido"){
-                                echo '<td>CABLE: <span class="label label-danger" style="font-size: 12px;">Suspendido</span></td>';
-                            }
-                            ?>
-
-                            <?php
-                            if ($servicioI == "Activo"){
-                                echo '<td>INTERNET: <span class="label label-success" style="font-size: 12px;">Activo</span></td>';
-                            }elseif ($servicioI == "Sin servicio"){
-                                echo '<td>INTERNET: <span class="label label-default" style="font-size: 12px;">Sin servicio</span></td>';
-                            }elseif ($servicioI == "Suspendido"){
-                                echo '<td>INTERNET: <span class="label label-danger" style="font-size: 12px;">Suspendido</span></td>';
-                            }
-                            ?>
+                            <br>
                         </tr>
                         <tr>
-                            <th>Nombre</th>
+                            <b>Nombre</b>
                             <td><?php echo $nombreCliente; ?></td>
-                            <th>Fecha</th>
-                            <td><?php date_default_timezone_set('America/El_Salvador'); echo date('d/m/Y H:i:s') ?></td>
+                            <br>
                         </tr>
                         <tr>
-                            <th>Domicilio</th>
+                            <b>Domicilio</b>
                             <td><?php echo substr($direccion, 0, 135); ?></td>
-                            <th>Día de cobro</th>
-                            <td><?php echo $diaCobro; ?></td>
+                            <br>
                         </tr>
                         <tr>
-                            <th>Teléfonos</th>
+                            <b>Teléfonos</b>
                             <td><?php echo $telefonos?></td>
-                            <th>último mes cancelado</th>
-                            <td><span class="label label-danger" style="font-size:12px;"><?php echo $fechaUltPago ?></span></td>
                         </tr>
-                        </tbody>
-                    </table>
+                        <form action="php/editarEstadoCuenta.php?codigoCliente=<?php echo $_GET['codigoCliente'] ?>" method="POST">
+                            <tr>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <b>C</b>&nbsp;&nbsp;
+                                <b>I</b>
+                                <br>
+                            </tr>
+                            <tr>
+                                <b>MARZO </b>&nbsp;
+                                <?php
+                                if ($m1 === "T"){
+                                    echo '<td><input type="checkbox" name="m1" value="T" checked>&nbsp;</td>';
+                                }else{
+                                    echo '<td><input type="checkbox" name="m1" value="T">&nbsp;</td>';
+                                }
+                                if ($pago1 === "T"){
+                                    echo '<td><input type="checkbox" name="pago1" value="T" checked>&nbsp;</td>';
+                                }else{
+                                    echo '<td><input type="checkbox" name="pago1" value="T">&nbsp;</td>';
+                                }
+                                if ($pago4 === "T"){
+                                    echo '<td><input type="checkbox" name="pago4" value="T" checked>&nbsp;</td>';
+                                }else{
+                                    echo '<td><input type="checkbox" name="pago4" value="T">&nbsp;</td>';
+                                }
+                                ?>
+                                <br>
+                            </tr>
+                            <tr>
+                                <b>ABRIL </b>&nbsp;&nbsp;&nbsp;
+                                <?php
+                                if ($m2 === "T"){
+                                    echo '<td><input type="checkbox" name="m2" value="T" checked>&nbsp;</td>';
+                                }else{
+                                    echo '<td><input type="checkbox" name="m2" value="T">&nbsp;</td>';
+                                }
+                                if ($pago2 === "T"){
+                                    echo '<td><input type="checkbox" name="pago2" value="T" checked>&nbsp;</td>';
+                                }else{
+                                    echo '<td><input type="checkbox" name="pago2" value="T">&nbsp;</td>';
+                                }
+                                if ($pago5 === "T"){
+                                    echo '<td><input type="checkbox" name="pago5" value="T" checked>&nbsp;</td>';
+                                }else{
+                                    echo '<td><input type="checkbox" name="pago5" value="T">&nbsp;</td>';
+                                }
+                                ?>
+                                <br>
+                            </tr>
+                            <tr>
+                                <b>MAYO </b>&nbsp;&nbsp;&nbsp;&nbsp;
+                                <?php
+                                if ($m3 === "T"){
+                                    echo '<td><input type="checkbox" name="m3" value="T" checked>&nbsp;</td>';
+                                }else{
+                                    echo '<td><input type="checkbox" name="m3" value="T">&nbsp;</td>';
+                                }
+                                if ($pago3 === "T"){
+                                    echo '<td><input type="checkbox" name="pago3" value="T" checked>&nbsp;</td>';
+                                }else{
+                                    echo '<td><input type="checkbox" name="pago3" value="T">&nbsp;</td>';
+                                }
+                                if ($pago6 === "T"){
+                                    echo '<td><input type="checkbox" name="pago6" value="T" checked>&nbsp;</td>';
+                                }else{
+                                    echo '<td><input type="checkbox" name="pago6" value="T">&nbsp;</td>';
+                                }
+                                ?>
+                                <br>
+                            </tr>
+                            <tr>
+                                <td colspan="3"><input class="btn btn-default" type="submit" value="actualizar"></td>
+                            </tr>
+                        </form>
+                    </div><!--ACA TERMINA COLUMNA 9-->
+                    <div class="col-md-3">
+                        <table class="table table-responsive table-condensed" style="border: none; font-size:12px;">
+                            <tbody class="">
+                            <tr>
+                                <?php
+                                if ($servicioC == "Activo"){
+                                    echo '<td>CABLE: <span class="label label-success" style="font-size: 12px;">Activo</span></td>';
+                                }elseif ($servicioC == "Sin servicio"){
+                                    echo '<td>CABLE: <span class="label label-default" style="font-size: 12px;">Sin servicio</span></td>';
+                                }elseif ($servicioC == "Suspendido"){
+                                    echo '<td>CABLE: <span class="label label-danger" style="font-size: 12px;">Suspendido</span></td>';
+                                }
+                                ?>
+
+                                <?php
+                                if ($servicioI == "Activo"){
+                                    echo '<td>INTERNET: <span class="label label-success" style="font-size: 12px;">Activo</span></td>';
+                                }elseif ($servicioI == "Sin servicio"){
+                                    echo '<td>INTERNET: <span class="label label-default" style="font-size: 12px;">Sin servicio</span></td>';
+                                }elseif ($servicioI == "Suspendido"){
+                                    echo '<td>INTERNET: <span class="label label-danger" style="font-size: 12px;">Suspendido</span></td>';
+                                }
+                                ?>
+                            </tr>
+                            <tr>
+                                <th>Fecha</th>
+                                <td><?php date_default_timezone_set('America/El_Salvador'); echo date('d/m/Y H:i:s') ?></td>
+                                <br>
+                            </tr>
+                            <tr>
+                                <th>Día de cobro</th>
+                                <td><?php echo $diaCobro; ?></td>
+                                <br>
+                            </tr>
+                            <tr>
+                                <th>último mes cancelado</th>
+                                <td><span class="label label-danger" style="font-size:12px;"><?php echo $fechaUltPago ?></span></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div><!--ACA TERMINA COLUMNA 3-->
+
+                <div class="col-lg-12">
                     <ul class="nav nav-tabs nav-justified mt-5" id="pills-tab" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" id="pills-home-tab" data-toggle="pill" href="#cable" role="tab" aria-controls="pills-home" aria-selected="true"><b>CABLE</b></a>

@@ -13,8 +13,9 @@ $mysqli = new mysqli($host, $user, $password, $database);
 $searchCable = '%';
 $searchInter = '%';
 $salida = "";
+/*$filtroBusqueda = $_POST["filtroBusqueda"];*/
 
-$query = "SELECT cod_cliente, numero_dui, nombre, direccion, telefonos, Mac_modem, Serie_modem, Dire_telefonia FROM clientes where cod_cliente <> '00000' AND (servicio_suspendido IS NULL OR servicio_suspendido LIKE '{$searchCable}' OR servicio_suspendido LIKE '{$searchCable}') ORDER BY cod_cliente LIMIT 20";
+$query = "SELECT cod_cliente, numero_dui, nombre, direccion, telefonos, Mac_modem, Serie_modem, Dire_telefonia FROM clientes where cod_cliente <> '00000' AND (servicio_suspendido IS NULL OR servicio_suspendido LIKE '{$searchCable}' OR servicio_suspendido LIKE '{$searchCable}') ORDER BY cod_cliente LIMIT 7";
 
  if (isset($_POST['consulta']) && isset($_POST['mun']) && isset($_POST['col']) && isset($_POST['cable']) && isset($_POST['inter'])) {
  	$q = $mysqli->real_escape_string($_POST['consulta']);
