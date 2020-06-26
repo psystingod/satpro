@@ -2,12 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9b434152-df7c-48b6-9360-8012b48f8529" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/editarEstadoCuenta.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/estadoCuenta.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/estadoCuenta.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/infoCliente.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/infoCliente.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/js/clientes.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/js/clientes.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/editarCliente.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/editarCliente.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/search.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/search.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/generarFacturas.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/generarFacturas.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -196,7 +195,9 @@
       <workItem from="1592831130052" duration="7837000" />
       <workItem from="1592918080057" duration="14222000" />
       <workItem from="1593003705024" duration="3517000" />
-      <workItem from="1593007666597" duration="10509000" />
+      <workItem from="1593007666597" duration="18293000" />
+      <workItem from="1593091717869" duration="13157000" />
+      <workItem from="1593179975507" duration="15256000" />
     </task>
     <servers />
   </component>

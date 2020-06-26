@@ -330,3 +330,46 @@ function selectTipoComp(){
         }
     }
 }
+
+function fechaCovidCable(){
+    var covidDesdeC = document.getElementById("covidDesdeC").value;
+    var covidHastaC = document.getElementById("covidHastaC").value;
+    console.log(covidDesdeC);
+    console.log(covidHastaC);
+    if (covidDesdeC.length > 0) {
+        document.getElementById('covidDesdeC').required = true;
+        document.getElementById('covidHastaC').required = true;
+        document.getElementById('cuotaCovidC').required = true;
+    }else if(covidHastaC.length > 0) {
+        document.getElementById('covidDesdeC').required = true;
+        document.getElementById('covidHastaC').required = true;
+        document.getElementById('cuotaCovidC').required = true;
+    }else{
+        document.getElementById('covidDesdeC').required = false;
+        document.getElementById('covidHastaC').required = false;
+        document.getElementById('cuotaCovidC').required = false;
+    }
+
+}
+
+function fechaCovidInter(){
+    var covidDesdeI = document.getElementById("covidDesdeI").value;
+    var covidHastaI = document.getElementById("covidHastaI").value;
+    console.log(covidDesdeI);
+    console.log(covidHastaI);
+
+    if (covidDesdeI.length > 0) {
+        document.getElementById('covidDesdeI').required = true;
+        document.getElementById('covidHastaI').required = true;
+        document.getElementById('cuotaCovidI').required = true;
+    }else if(covidHastaI.length > 0) {
+        document.getElementById('covidDesdeI').required = true;
+        document.getElementById('covidHastaI').required = true;
+        document.getElementById('cuotaCovidI').required = true;
+    }else{
+        document.getElementById('covidDesdeI').required = false;
+        document.getElementById('covidHastaI').required = false;
+        document.getElementById('cuotaCovidI').required = false;
+    }
+
+}

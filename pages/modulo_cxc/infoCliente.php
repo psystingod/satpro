@@ -288,6 +288,41 @@ if(!isset($_SESSION))
             $wifiClave = $row['clave_modem'];
             $costoInstalacionIn = $row['costo_instalacion_in'];
 
+            /**********************COVID19***********************/
+            $cuotaCovidC = $row['cuotaCovidC'];
+
+            if (strlen($row['covidDesdeC']) < 8) {
+                $covidDesdeC = "";
+            }else {
+                $covidDesdeC = DateTime::createFromFormat('Y-m-d', trim($row['covidDesdeC']));
+                $covidDesdeC = $covidDesdeC->format('d/m/Y');
+            }
+            if (strlen($row['covidHastaC']) < 8) {
+                $covidHastaC = "";
+            }else {
+                $covidHastaC = DateTime::createFromFormat('Y-m-d', trim($row['covidHastaC']));
+                $covidHastaC = $covidHastaC->format('d/m/Y');
+            }
+            //$covidDesdeC = $row['covidDesdeC'];
+            //$covidHastaC = $row['covidHastaC'];
+
+            $cuotaCovidI = $row['cuotaCovidI'];
+
+            if (strlen($row['covidDesdeI']) < 8) {
+                $covidDesdeI = "";
+            }else {
+                $covidDesdeI = DateTime::createFromFormat('Y-m-d', trim($row['covidDesdeI']));
+                $covidDesdeI = $covidDesdeI->format('d/m/Y');
+            }
+            if (strlen($row['covidHastaI']) < 8) {
+                $covidHastaI = "";
+            }else {
+                $covidHastaI = DateTime::createFromFormat('Y-m-d', trim($row['covidHastaI']));
+                $covidHastaI = $covidHastaI->format('d/m/Y');
+            }
+            //$covidDesdeI = $row['covidDesdeI'];
+            //$covidHastaI = $row['covidHastaI'];
+
         }
 
         // show error
@@ -1239,6 +1274,20 @@ if(!isset($_SESSION))
                                                   </div>
                                               </div>
                                               <div class="row">
+                                                  <div class="col-md-4">
+                                                      <label style="color: #CC0000" for="cuotaCovidC">Cuota COVID-19</label>
+                                                      <input class="form-control input-sm cable" type="text" id="cuotaCovidC" name="cuotaCovidC" value="<?php echo htmlentities($cuotaCovidC); ?>" readonly>
+                                                  </div>
+                                                  <div class="col-md-4">
+                                                      <label style="color: #CC0000" for="covidDesdeC">Desde</label>
+                                                      <input class="form-control input-sm cable" type="text" id="covidDesdeC" name="covidDesdeC" onkeyup="fechaCovidCable();" value="<?php echo htmlentities($covidDesdeC); ?>" readonly>
+                                                  </div>
+                                                  <div class="col-md-4">
+                                                      <label style="color: #CC0000" for="covidHastaC">Hasta</label>
+                                                      <input class="form-control input-sm cable" type="text" id="covidHastaC" name="covidHastaC" onkeyup="fechaCovidCable();" value="<?php echo htmlentities($covidHastaC); ?>" readonly>
+                                                  </div>
+                                              </div>
+                                              <div class="row">
                                                   <div class="col-md-12">
                                                       <label for="direccionCable">Dirección</label>
                                                       <input class="form-control input-sm cable" type="text" name="direccionCable" value="<?php echo htmlentities($direccionCable); ?>" readonly>
@@ -1425,6 +1474,20 @@ if(!isset($_SESSION))
                                                   <div class="col-md-3">
                                                       <label for="costoInstalacionIn">Costo de instalación</label>
                                                       <input class="form-control input-sm" type="text" name="costoInstalacionIn" value="<?php echo $costoInstalacionIn; ?>" readonly>
+                                                  </div>
+                                              </div>
+                                              <div class="row">
+                                                  <div class="col-md-4">
+                                                      <label style="color: #CC0000" for="cuotaCovidI">Cuota COVID-19</label>
+                                                      <input class="form-control input-sm internet" type="text" id="cuotaCovidI" name="cuotaCovidI" value="<?php echo htmlentities($cuotaCovidI); ?>" readonly>
+                                                  </div>
+                                                  <div class="col-md-4">
+                                                      <label style="color: #CC0000" for="covidDesdeI">Desde</label>
+                                                      <input class="form-control input-sm internet" type="text" id="covidDesdeI" name="covidDesdeI" onkeyup="fechaCovidInter();" value="<?php echo htmlentities($covidDesdeI); ?>" readonly>
+                                                  </div>
+                                                  <div class="col-md-4">
+                                                      <label style="color: #CC0000" for="covidHastaI">Hasta</label>
+                                                      <input class="form-control input-sm internet" type="text" id="covidHastaI" name="covidHastaI" onkeyup="fechaCovidInter();" value="<?php echo htmlentities($covidHastaI); ?>" readonly>
                                                   </div>
                                               </div>
                                               <div class="row">
@@ -2271,6 +2334,8 @@ if(!isset($_SESSION))
             $('#vencimientoContratoCable').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
             $('#fechaReconexionCable').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
             $('#fechaSuspensionCable').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+            $('#covidDesdeC').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+            $('#covidHastaC').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
 
             $('#fechaInstalacionInternet').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
             $('#fechaPrimerFacturaInternet').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
@@ -2278,6 +2343,8 @@ if(!isset($_SESSION))
             $('#ultimaRenovacionInternet').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
             $('#fechaSuspencionInternet').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
             $('#fechaReconexionInternet').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+            $('#covidDesdeI').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+            $('#covidHastaI').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
 
             //$('#wanip').mask("099.099.099.099", {placeholder: ".  .  .  ."});
             //$('#mac').mask({pattern: /[a-zA-Z0-9]/}, {placeholder: ":  :  :  :  :"});
