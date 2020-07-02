@@ -250,7 +250,6 @@
                                                           ':tipoServicio' => $ts
                                                       ));*/
 
-
                                                  //ACA HACER ACTUALIZACION DE SALDO EN TABLA CLIENTES
                                                  $qry3 = "UPDATE clientes SET saldoCable= saldoCable + :cuotaCable WHERE cod_cliente=:codigoCliente";
 

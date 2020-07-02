@@ -217,6 +217,33 @@ if(!isset($_SESSION))
             $nodo = $row['dire_telefonia'];
             $wifiClave = $row['clave_modem'];
 
+            /**********************COVID19***********************/
+            $cuotaCovidC = $row['cuotaCovidC'];
+
+            if (strlen($row['covidDesdeC']) < 8) {
+                $covidDesdeC = "";
+            }else {
+                $covidDesdeC = $row['covidDesdeC'];
+            }
+            if (strlen($row['covidHastaC']) < 8) {
+                $covidHastaC = "";
+            }else {
+                $covidHastaC = $row['covidHastaC'];
+            }
+
+            $cuotaCovidI = $row['cuotaCovidI'];
+
+            if (strlen($row['covidDesdeI']) < 8) {
+                $covidDesdeI = "";
+            }else {
+                $covidDesdeI = $row['covidDesdeI'];
+            }
+            if (strlen($row['covidHastaI']) < 8) {
+                $covidHastaI = "";
+            }else {
+                $covidHastaI = $row['covidHastaI'];
+            }
+
             if ($_GET['tipoServicio'] == "c") {
                 $diaC = $row['dia_cobro'];
                 $fechapf = $row['fecha_primer_factura'];
@@ -263,6 +290,48 @@ if(!isset($_SESSION))
             //$mesPendiente = date_format(date_create($mesPendiente),'d/m/Y');
             //var_dump($mesPendiente);
             //$mesPendiente = date('m-Y', strtotime("+1 months", strtotime($mesPendiente)));
+
+            if ($_GET['tipoServicio'] == "c") {
+                //SACAR ÚLTIMO MES PAGADO DEL CLIENTE
+                $query = "SELECT fechaCobro FROM tbl_cargos WHERE codigoCliente=:codigoCliente AND estado=:estado AND tipoServicio=:tipoServicio AND anulada=0 ORDER BY CAST(CONCAT(substring(mesCargo,4,4), '-', substring(mesCargo,1,2),'-', '01') AS DATE) DESC LIMIT 1";
+                $stmt = $con->prepare($query);
+                $estado = "pendiente";
+                // this is the first question mark
+                $stmt->bindParam(':codigoCliente', $id);
+                $stmt->bindParam(':estado', $estado);
+                $stmt->bindParam(':tipoServicio', $_GET['tipoServicio']);
+
+            }elseif ($_GET['tipoServicio'] == "i") {
+                //SACAR ÚLTIMO MES PAGADO DEL CLIENTE
+                $query = "SELECT fechaCobro FROM tbl_cargos WHERE codigoCliente=:codigoCliente AND estado=:estado AND tipoServicio=:tipoServicio AND anulada=0 ORDER BY CAST(CONCAT(substring(mesCargo,4,4), '-', substring(mesCargo,1,2),'-', '01') AS DATE) DESC LIMIT 1";
+                $stmt = $con->prepare($query);
+                $estado = "pendiente";
+                // this is the first question mark
+                $stmt->bindParam(':codigoCliente', $id);
+                $stmt->bindParam(':estado', $estado);
+                $stmt->bindParam(':tipoServicio', $_GET['tipoServicio']);
+            }
+
+            // execute our query
+            $stmt->execute();
+            // store retrieved row to a variable
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            //var_dump($row["mesCargo"]);
+            if($row["fechaCobro"]){
+                $mesACbobrar = $row['fechaCobro'];
+
+                if ($_GET['tipoServicio'] == "c") {
+                    if ($mesACbobrar >= $covidDesdeC && $mesACbobrar <= $covidHastaC){
+                        $cuotaCable = $cuotaCovidC;
+                    }
+
+                }elseif ($_GET['tipoServicio'] == "i") {
+                    if ($mesACbobrar >= $covidDesdeI && $mesACbobrar <= $covidHastaI){
+                        $cuotaInter = $cuotaCovidI;
+                    }
+                }
+
+            }
 
         }
 
@@ -1159,7 +1228,8 @@ $stmt->bindParam(':codigoCobrador', $_GET['cobrador']);
         var impSeg = document.getElementById("impSeg").value;
         //document.getElementById("totalAbonoImpSeg").value = Number(String(parseFloat(totalPagar)+parseFloat(impSeg)).substring(0, 5)).toFixed(2);
         //console.log(document.getElementById("totalAbonoImpSeg").value)
-        cargoTotal = document.getElementById("totalAbonoImpSeg").value = Number(String(parseFloat(totalPagar)+parseFloat(impSeg)).substring(0, 5)).toFixed(2);
+        var totalPagar2 = document.getElementById("totalPagar").value
+        cargoTotal = document.getElementById("totalAbonoImpSeg").value = (parseFloat(totalPagar2)+parseFloat(impSeg)).toFixed(2);
         var mesPendiente = document.getElementById("mesPendiente").value;
         var mesPendienteFinal = String(mesPendiente).substring(3, 10);
         document.getElementById("meses").value = mesPendienteFinal;

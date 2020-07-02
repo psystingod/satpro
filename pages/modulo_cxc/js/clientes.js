@@ -355,8 +355,8 @@ function fechaCovidCable(){
 function fechaCovidInter(){
     var covidDesdeI = document.getElementById("covidDesdeI").value;
     var covidHastaI = document.getElementById("covidHastaI").value;
-    console.log(covidDesdeI);
-    console.log(covidHastaI);
+    //console.log(covidDesdeI);
+    //console.log(covidHastaI);
 
     if (covidDesdeI.length > 0) {
         document.getElementById('covidDesdeI').required = true;

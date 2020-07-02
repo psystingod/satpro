@@ -3,10 +3,12 @@
   <component name="ChangeListManager">
     <list default="true" id="9b434152-df7c-48b6-9360-8012b48f8529" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/abonos.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/abonos.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/infoCliente.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/infoCliente.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/js/clientes.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/js/clientes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/editarCliente.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/editarCliente.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/generarFacturas.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/generarFacturas.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/listaDeClientes.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/listaDeClientes.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/modulo_cxc/php/searchSimple.php" beforeDir="false" afterPath="$PROJECT_DIR$/pages/modulo_cxc/php/searchSimple.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -197,7 +199,11 @@
       <workItem from="1593003705024" duration="3517000" />
       <workItem from="1593007666597" duration="18293000" />
       <workItem from="1593091717869" duration="13157000" />
-      <workItem from="1593179975507" duration="15256000" />
+      <workItem from="1593179975507" duration="17228000" />
+      <workItem from="1593263088987" duration="15220000" />
+      <workItem from="1593295371002" duration="1000" />
+      <workItem from="1593440585548" duration="5409000" />
+      <workItem from="1593533893489" duration="1023000" />
     </task>
     <servers />
   </component>

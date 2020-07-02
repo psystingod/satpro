@@ -542,10 +542,10 @@ $x=0;
             $FiltroColonia="  order by /*cod_cliente*/id_colonia,servicio ";
             $FiltroServicio="/*clientes solo cable activos*/
             select cod_cliente, nombre, direccion_cobro, id_colonia, dia_cobro,'Cable' as servicio, telefonos, fecha_ult_pago, cod_cobrador,valor_cuota,cuota_in
-            from clientes WHERE (servicio_suspendido='F' OR servicio_suspendido is null or servicio_suspendido='')  AND sin_servicio='F' AND estado_cliente_in = 3 AND cod_cliente<>'00000' AND (fecha_ult_pago LIKE '{$ultimoMesHelper}' OR fecha_ult_nota LIKE '{$ultimoMesHelper}')
+            from clientes WHERE (servicio_suspendido='F' OR servicio_suspendido is null or servicio_suspendido='')  AND sin_servicio='F' AND estado_cliente_in = 3 AND cod_cliente<>'00000' AND (fecha_ult_pago LIKE '{$ultimoMesHelper}'/* OR fecha_ult_nota LIKE '{$ultimoMesHelper}'*/)
             /*fin clientes solo cable activos*/".$filtroCobrador.$filtroDiaDeCobro." UNION "."/*clientes solo Internet activos */
             select cod_cliente, nombre, direccion_cobro, id_colonia, (dia_corbo_in) as dia_cobro,'Internet' as servicio, telefonos, fecha_ult_pago, cod_cobrador,valor_cuota,cuota_in
-            from clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null or servicio_suspendido='') and sin_servicio='T' AND estado_cliente_in = 1 AND cod_cliente<>'00000' AND (fecha_ult_pago LIKE '{$ultimoMesHelper}' OR fecha_ult_nota LIKE '{$ultimoMesHelper}')
+            from clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null or servicio_suspendido='') and sin_servicio='T' AND estado_cliente_in = 1 AND cod_cliente<>'00000' AND (/*fecha_ult_pago LIKE '{$ultimoMesHelper}' OR */fecha_ult_nota LIKE '{$ultimoMesHelper}')
             /*fin clientes solo Internet activos */".$filtroCobrador.$filtroDiaDeCobro." UNION "."/*clientes paquete activos*/
             select cod_cliente, nombre, direccion_cobro, id_colonia, dia_cobro,'Paquete' as servicio, telefonos, fecha_ult_pago, cod_cobrador,valor_cuota,cuota_in
             from clientes WHERE (servicio_suspendido='F' OR servicio_suspendido is null or servicio_suspendido='')  AND sin_servicio='F' AND estado_cliente_in = 1 AND cod_cliente<>'00000' AND (fecha_ult_pago LIKE '{$ultimoMesHelper}' OR fecha_ult_nota LIKE '{$ultimoMesHelper}')

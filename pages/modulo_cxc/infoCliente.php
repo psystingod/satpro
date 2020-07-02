@@ -432,6 +432,14 @@ if(!isset($_SESSION))
         $wifiClave = "";
         $counter = 1;
         $nAnexo = "";
+
+        /**********************COVID19***********************/
+        $cuotaCovidC = "";
+        $covidDesdeC = "";
+        $covidHastaC = "";
+        $cuotaCovidI = "";
+        $covidDesdeI = "";
+        $covidHastaI = "";
     }
  ?>
  <?php
@@ -2290,6 +2298,9 @@ if(!isset($_SESSION))
                 else{
                     reqInputs[i].required = false;
                 }
+                document.getElementById("cuotaCovidC").required = false;
+                document.getElementById("covidDesdeC").required = false;
+                document.getElementById("covidHastaC").required = false;
             }
         }
         function internetTrue(){
@@ -2306,12 +2317,15 @@ if(!isset($_SESSION))
                 else{
                     reqInputs[i].required = false;
                 }
+                document.getElementById("cuotaCovidI").required = false;
+                document.getElementById("covidDesdeI").required = false;
+                document.getElementById("covidHastaI").required = false;
             }
         }
 
         function cableFalse(){
             var reqInputs = document.getElementsByClassName("cable");
-            //alert("Holaaaaaaaaaaaa");
+            //alert("");
             for (var i = 0; i < reqInputs.length; i++) {
 
                 reqInputs[i].required = false;

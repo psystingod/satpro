@@ -37,7 +37,7 @@ $query = "SELECT cod_cliente, numero_dui, nombre, direccion, telefonos, wanip, M
 				<tbody>";
 	while ($fila = $resultado->fetch_assoc()) {
 		$salida.= "<tr>
-			<td>"."<a class='btn btn-danger btn-sm' href=infoCliente.php?id={$fila['cod_cliente']} target='_blank'>".$fila['cod_cliente']."<a></td>
+			<td>"."<a class='btn btn-danger btn-sm' href=infoCliente.php?id={$fila['cod_cliente']} target='_self'>".$fila['cod_cliente']."<a></td>
 			<td>".$fila['numero_dui']."</td>
 			<td>".$fila['nombre']."</td>
 			<td>".$fila['direccion']."</td>
