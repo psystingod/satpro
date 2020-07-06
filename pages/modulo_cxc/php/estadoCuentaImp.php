@@ -432,7 +432,7 @@ function abonos(){
                             $pdf->Cell(20,5,utf8_decode($abonoI['fechaAbonado']),0,0,'L');
                             $pdf->Cell(25,5,utf8_decode($abonoI['fechaVencimiento']),0,0,'L');
                             $pdf->Cell(20,5,utf8_decode('0.00'),0,0,'L');
-                            $pdf->Cell(20,5,utf8_decode($abonoI['cuotaCable']),0,0,'L');
+                            $pdf->Cell(20,5,utf8_decode($abonoI['cuotaInternet']),0,0,'L');
                             $pdf->Cell(25,5,utf8_decode('0.00'),0,0,'L');
                             $pdf->Cell(25,5,number_format($abonoI['totalImpuesto'],2),0,0,'L');
                             $pdf->Cell(20,5,number_format((doubleval($abonoI['cuotaInternet'])+doubleval($abonoI['totalImpuesto'])),2),0,1,'L');
@@ -445,7 +445,7 @@ function abonos(){
                             $pdf->Cell(20,5,utf8_decode($cargoI['fechaAbonado']),0,0,'L');
                             $pdf->Cell(25,5,utf8_decode($cargoI['fechaVencimiento']),0,0,'L');
                             $pdf->Cell(20,5,utf8_decode('0.00'),0,0,'L');
-                            $pdf->Cell(20,5,utf8_decode($cargoI['cuotaCable']),0,0,'L');
+                            $pdf->Cell(20,5,utf8_decode($cargoI['cuotaInternet']),0,0,'L');
                             $pdf->Cell(25,5,utf8_decode('0.00'),0,0,'L');
                             $pdf->Cell(25,5,number_format($cargoI['totalImpuesto'],2),0,0,'L');
                             $pdf->Cell(20,5,number_format((doubleval($cargoI['cuotaInternet'])+doubleval($cargoI['totalImpuesto'])),2),0,1,'L');
