@@ -593,7 +593,7 @@ if(!isset($_SESSION))
                             <input type="checkbox" name="cesc" value="1" checked>
                             <br><br>
                             <label style="color: #FF0000;" for="covid19">COVID-19</label>
-                            <input type="checkbox" name="covid19" value="1">
+                            <input type="checkbox" name="covid19" value="1" checked>
                         </div>
                     </div>
                   </div>

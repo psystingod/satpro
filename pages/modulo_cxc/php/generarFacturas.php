@@ -110,7 +110,7 @@
                            (servicio_suspendido IS NULL OR servicio_suspendido = 'F' OR servicio_suspendido = '') AND sin_servicio = 'F' AND (servicio_cortesia IS NULL OR servicio_cortesia = 'F') AND dia_cobro = :diaCobro AND fecha_primer_factura <= :fechaGenerar AND (estado_cliente_in=3 OR estado_cliente_in=1) AND tipo_comprobante =:tipoComprobante";
                        }else{
                            $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_colonia, id_departamento, numero_nit, giro, valor_cuota, prepago, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento, servicio_cortesia, cuotaCovidC, covidDesdeC, covidHastaC FROM clientes WHERE
-                       (servicio_suspendido IS NULL OR servicio_suspendido = 'F' OR servicio_suspendido = '') AND sin_servicio = 'F' AND (servicio_cortesia IS NULL OR servicio_cortesia = 'F') AND dia_cobro = :diaCobro AND fecha_primer_factura <= :fechaGenerar AND (estado_cliente_in=3 OR estado_cliente_in=1) AND tipo_comprobante =:tipoComprobante AND /*id_cuenta <> 'covid19'*/(fecha_ult_pago <> '01/2020' AND fecha_ult_pago <> '02/2020')/* OR (fecha_ult_nota <> '01/2020' AND fecha_ult_nota <> '02/2020')*/";
+                       (servicio_suspendido IS NULL OR servicio_suspendido = 'F' OR servicio_suspendido = '') AND sin_servicio = 'F' AND (servicio_cortesia IS NULL OR servicio_cortesia = 'F') AND dia_cobro = :diaCobro AND fecha_primer_factura <= :fechaGenerar AND (estado_cliente_in=3 OR estado_cliente_in=1) AND tipo_comprobante =:tipoComprobante";
                        }
 
                        // Preparación de sentencia
@@ -473,7 +473,7 @@
                        if ($covid19 == false){
                            $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_colonia, id_departamento, numero_nit, giro, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento FROM clientes WHERE estado_cliente_in=1 AND dia_corbo_in = :diaCobro AND fecha_primer_factura_in <= :fechaGenerar AND tipo_comprobante =:tipoComprobante";
                        }else{
-                           $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_colonia, id_departamento, numero_nit, giro, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento, cuotaCovidI, covidDesdeI, covidHastaI FROM clientes WHERE estado_cliente_in=1 AND dia_corbo_in = :diaCobro AND fecha_primer_factura_in <= :fechaGenerar AND tipo_comprobante =:tipoComprobante AND /*id_cuenta <> 'covid19'*/(fecha_ult_nota <> '01/2020' AND fecha_ult_nota <> '02/2020')";
+                           $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_colonia, id_departamento, numero_nit, giro, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento, cuotaCovidI, covidDesdeI, covidHastaI FROM clientes WHERE estado_cliente_in=1 AND dia_corbo_in = :diaCobro AND fecha_primer_factura_in <= :fechaGenerar AND tipo_comprobante =:tipoComprobante";
                        }
 
                        // Preparación de sentencia
@@ -650,7 +650,7 @@
                        if ($covid19 == false){
                            $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_colonia, id_departamento, numero_nit, giro, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento FROM clientes WHERE estado_cliente_in=1 AND dia_corbo_in = :diaCobro AND fecha_primer_factura_in <= :fechaGenerar AND tipo_comprobante =:tipoComprobante";
                        }else{
-                           $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_colonia, id_departamento, numero_nit, giro, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento, cuotaCovidI, covidDesdeI, covidHastaI FROM clientes WHERE estado_cliente_in=1 AND dia_corbo_in = :diaCobro AND fecha_primer_factura_in <= :fechaGenerar AND tipo_comprobante =:tipoComprobante AND /*id_cuenta <> 'covid19'*/(fecha_ult_nota <> '01/2020' AND fecha_ult_nota <> '02/2020')";
+                           $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_colonia, id_departamento, numero_nit, giro, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento, cuotaCovidI, covidDesdeI, covidHastaI FROM clientes WHERE estado_cliente_in=1 AND dia_corbo_in = :diaCobro AND fecha_primer_factura_in <= :fechaGenerar AND tipo_comprobante =:tipoComprobante";
                        }
 
                        // Preparación de sentencia

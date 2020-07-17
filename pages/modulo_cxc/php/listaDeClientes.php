@@ -541,13 +541,13 @@ $x=0;
             $servicioReporte="TODOS";
             $FiltroColonia="  order by /*cod_cliente*/id_colonia,servicio ";
             $FiltroServicio="/*clientes solo cable activos*/
-            select cod_cliente, nombre, direccion_cobro, id_colonia, dia_cobro,'Cable' as servicio, telefonos, fecha_ult_pago, cod_cobrador,valor_cuota,cuota_in
+            select cod_cliente, nombre, direccion_cobro, id_colonia, dia_cobro,'Cable' as servicio, telefonos, fecha_ult_pago, cod_cobrador,valor_cuota,cuota_in,cuotaCovidC,cuotaCovidI
             from clientes WHERE (servicio_suspendido='F' OR servicio_suspendido is null or servicio_suspendido='')  AND sin_servicio='F' AND estado_cliente_in = 3 AND cod_cliente<>'00000' AND (fecha_ult_pago LIKE '{$ultimoMesHelper}'/* OR fecha_ult_nota LIKE '{$ultimoMesHelper}'*/)
             /*fin clientes solo cable activos*/".$filtroCobrador.$filtroDiaDeCobro." UNION "."/*clientes solo Internet activos */
-            select cod_cliente, nombre, direccion_cobro, id_colonia, (dia_corbo_in) as dia_cobro,'Internet' as servicio, telefonos, fecha_ult_pago, cod_cobrador,valor_cuota,cuota_in
+            select cod_cliente, nombre, direccion_cobro, id_colonia, (dia_corbo_in) as dia_cobro,'Internet' as servicio, telefonos, fecha_ult_pago, cod_cobrador,valor_cuota,cuota_in,cuotaCovidC,cuotaCovidI
             from clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null or servicio_suspendido='') and sin_servicio='T' AND estado_cliente_in = 1 AND cod_cliente<>'00000' AND (/*fecha_ult_pago LIKE '{$ultimoMesHelper}' OR */fecha_ult_nota LIKE '{$ultimoMesHelper}')
             /*fin clientes solo Internet activos */".$filtroCobrador.$filtroDiaDeCobro." UNION "."/*clientes paquete activos*/
-            select cod_cliente, nombre, direccion_cobro, id_colonia, dia_cobro,'Paquete' as servicio, telefonos, fecha_ult_pago, cod_cobrador,valor_cuota,cuota_in
+            select cod_cliente, nombre, direccion_cobro, id_colonia, dia_cobro,'Paquete' as servicio, telefonos, fecha_ult_pago, cod_cobrador,valor_cuota,cuota_in,cuotaCovidC,cuotaCovidI
             from clientes WHERE (servicio_suspendido='F' OR servicio_suspendido is null or servicio_suspendido='')  AND sin_servicio='F' AND estado_cliente_in = 1 AND cod_cliente<>'00000' AND (fecha_ult_pago LIKE '{$ultimoMesHelper}' OR fecha_ult_nota LIKE '{$ultimoMesHelper}')
             /*fin clientes paquete activos*/";
             break;
@@ -629,13 +629,29 @@ $x=0;
                       $mesI = $result['mesCargo'];
                     }
 
-                    $totalCescC = substr((($row['valor_cuota']/(1 + floatval($iva)))*$cesc),0,4);
-                    $totalCescI = substr((($row['cuota_in']/(1 + floatval($iva)))*$cesc),0,4);
+                    if ($row['cuotaCovidC'] > 0){
+                      $totalCescC = substr((($row['cuotaCovidC']/(1 + floatval($iva)))*$cesc),0,4);
+                      $totalCanceladoC = number_format(doubleval($row['cuotaCovidC']) + doubleval(str_replace(',', '.', $totalCescC)),2);
+                    }else{
+                      $totalCescC = substr((($row['valor_cuota']/(1 + floatval($iva)))*$cesc),0,4);
+                      $totalCanceladoC = number_format(doubleval($row['valor_cuota']) + doubleval(str_replace(',', '.', $totalCescC)),2);
+                    }
+
+                    if ($row['cuotaCovidI'] > 0){
+                      $totalCescI = substr((($row['cuotaCovidI']/(1 + floatval($iva)))*$cesc),0,4);
+                      $totalCanceladoI = number_format(doubleval($row['cuotaCovidI']) + doubleval(str_replace(',', '.', $totalCescI)),2);
+                    }else{
+                      $totalCescI = substr((($row['cuota_in']/(1 + floatval($iva)))*$cesc),0,4);
+                      $totalCanceladoI = number_format(doubleval($row['cuota_in']) + doubleval(str_replace(',', '.', $totalCescI)),2);
+                    }
+
+                    //$totalCescC = substr((($row['valor_cuota']/(1 + floatval($iva)))*$cesc),0,4);
+                    //$totalCescI = substr((($row['cuota_in']/(1 + floatval($iva)))*$cesc),0,4);
                     //var_dump($totalCescC);
                   //var_dump($totalCescI);
 
-                    $totalCanceladoC = number_format(doubleval($row['valor_cuota']) + doubleval(str_replace(',', '.', $totalCescC)),2);
-                    $totalCanceladoI = number_format(doubleval($row['cuota_in']) + doubleval(str_replace(',', '.', $totalCescI)),2);
+                    //$totalCanceladoC = number_format(doubleval($row['valor_cuota']) + doubleval(str_replace(',', '.', $totalCescC)),2);
+                    //$totalCanceladoI = number_format(doubleval($row['cuota_in']) + doubleval(str_replace(',', '.', $totalCescI)),2);
 
                   if($mostrarEncabezadoCobrador){
                     $pdf->Ln(3);
