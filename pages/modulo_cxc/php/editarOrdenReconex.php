@@ -76,7 +76,11 @@ var_dump($_POST['servRecox']);
 
                     //$Fecha = date('Y/m/d g:i');
                     $query = "UPDATE tbl_ordenes_reconexion SET codigoCliente=:codigoCliente, fechaOrden=:fechaOrden, tipoOrden=:tipoOrden, tipoReconexCable=:tipoReconexCable, saldoCable=:saldoCable, diaCobro=:diaCobro, nombreCliente=:nombreCliente, direccion=:direccion, telefonos=:telefonos,
+<<<<<<< HEAD
                                      colilla=:colilla, fechaReconexCable=:fechaReconexCable, ultSuspCable=:ultSuspCable, idTecnico=:idTecnico, mactv=:mactv, observaciones=:observaciones, tipoServicio=:tipoServicio,coordenadas=:coordenadas, creadoPor=:creadoPor, servRecox=:servRecox WHERE idOrdenReconex=:idOrdenReconex";
+=======
+                                     colilla=:colilla, fechaReconexCable=:fechaReconexCable, ultSuspCable=:ultSuspCable, idTecnico=:idTecnico, mactv=:mactv, observaciones=:observaciones, tipoServicio=:tipoServicio,coordenadas=:coordenadas, creadoPor=:creadoPor WHERE idOrdenReconex=:idOrdenReconex";
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
@@ -162,6 +166,7 @@ var_dump($_POST['servRecox']);
                     $macModem = $_POST['macModem'];
                     $velocidad = $_POST['velocidad'];
                     $coordenadas = $_POST['coordenadas'];
+<<<<<<< HEAD
                     $servRecox = $_POST['servRecox'];
 
                     if (isset($_POST['servRecox'])){
@@ -174,11 +179,17 @@ var_dump($_POST['servRecox']);
                         $servRecox = 0;
                     }
 
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
                     //$Fecha = date('Y/m/d g:i');
 
                     $query = "UPDATE tbl_ordenes_reconexion SET codigoCliente=:codigoCliente, fechaOrden=:fechaOrden, tipoOrden=:tipoOrden, tipoReconexInter=:tipoReconexInter, saldoInter=:saldoInter, diaCobro=:diaCobro, nombreCliente=:nombreCliente, direccion=:direccion, telefonos=:telefonos, macModem=:macModem, serieModem=:serieModem,
+<<<<<<< HEAD
                                      velocidad=:velocidad, colilla=:colilla, fechaReconexInter=:fechaReconexInter, ultSuspInter=:ultSuspInter, idTecnico=:idTecnico, observaciones=:observaciones, tipoServicio=:tipoServicio,coordenadas=:coordenadas, creadoPor=:creadoPor, servRecox=:servRecox WHERE idOrdenReconex=:idOrdenReconex";
+=======
+                                     velocidad=:velocidad, colilla=:colilla, fechaReconexInter=:fechaReconexInter, ultSuspInter=:ultSuspInter, idTecnico=:idTecnico, observaciones=:observaciones, tipoServicio=:tipoServicio,coordenadas=:coordenadas, creadoPor=:creadoPor WHERE idOrdenReconex=:idOrdenReconex";
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(

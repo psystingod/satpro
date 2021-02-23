@@ -146,6 +146,7 @@ if(!isset($_SESSION))
             if ($diaCobro == 0){
                 $diaCobro = "";
             }
+<<<<<<< HEAD
 
             $cortesia = $row['servicio_cortesia'];
             $cuotaMensualCable = number_format($row['valor_cuota'],2);
@@ -160,6 +161,17 @@ if(!isset($_SESSION))
             if ($prepago_in == 0){
                 $prepago_in = "";
             }
+=======
+            $cortesia = $row['servicio_cortesia'];
+            $cuotaMensualCable = $row['valor_cuota'];
+            if ($cuotaMensualCable == 0){
+                $cuotaMensualCable = "";
+            }
+            $prepago = $row['prepago'];
+            if ($prepago == 0){
+                $prepago = "";
+            }
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
             $tipoComprobante = $row['tipo_comprobante'];
             $tipoServicio = $row['tipo_servicio'];
             $mactv = $row['mactv'];
@@ -234,7 +246,11 @@ if(!isset($_SESSION))
                 $diaCobroInter = "";
             }
             $velocidadInter = $row['id_velocidad'];
+<<<<<<< HEAD
             $cuotaMensualInter = number_format($row['cuota_in'],2);
+=======
+            $cuotaMensualInter = $row['cuota_in'];
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
             if ($cuotaMensualInter == 0){
                 $cuotaMensualInter = "";
             }
@@ -300,7 +316,11 @@ if(!isset($_SESSION))
             $costoInstalacionIn = $row['costo_instalacion_in'];
 
             /**********************COVID19***********************/
+<<<<<<< HEAD
             $cuotaCovidC = number_format($row['cuotaCovidC'],2);
+=======
+            $cuotaCovidC = $row['cuotaCovidC'];
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
             if (strlen($row['covidDesdeC']) < 8) {
                 $covidDesdeC = "";
@@ -317,7 +337,11 @@ if(!isset($_SESSION))
             //$covidDesdeC = $row['covidDesdeC'];
             //$covidHastaC = $row['covidHastaC'];
 
+<<<<<<< HEAD
             $cuotaCovidI = number_format($row['cuotaCovidI'],2);
+=======
+            $cuotaCovidI = $row['cuotaCovidI'];
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
             if (strlen($row['covidDesdeI']) < 8) {
                 $covidDesdeI = "";
@@ -528,8 +552,13 @@ if(!isset($_SESSION))
     <style media="screen">
     .form-control {
         color: #212121;
+<<<<<<< HEAD
         font-size: 17px;
         font-weight: normal;
+=======
+        font-size: 15px;
+        font-weight: bold;
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
     }
     .nav>li>a {
@@ -747,6 +776,7 @@ if(!isset($_SESSION))
                         </tr>
 
                         <tr>
+<<<<<<< HEAD
                             <td><a onclick="window.open('php/contratoCable.php<?php echo "?id=".$id; ?>','','height=600,width=1000,top=-300,left=200')" class="btn btn-danger btn-block" style="font-size: 16px;"><i class="far fa-file-alt"></i> Gestion de Contratos C</a></td>
                             <!-- -->
                             <td><button name="gestionCont" class="btn btn-danger btn-block" data-toggle="modal" data-target="#nuevoContratoI"><i class="far fa-file-alt" style=" font-size: 20px;" disabled></i> Gestion de Contratos I</button></td>
@@ -763,6 +793,15 @@ if(!isset($_SESSION))
 
  Fin Prueba para ingresar nuevos contratos -->
                         <tr>
+=======
+                            <td><a onclick="window.open('php/contratoCable.php<?php echo "?id=".$id; ?>','','height=600,width=1000,top=-300,left=200')" class="btn btn-danger btn-block" style="font-size: 16px;"><i class="far fa-file-alt"></i> Contrato de cable</a></td>
+                            <td><a onclick="window.open('php/contratoInter.php<?php echo "?id=".$id; ?>','','height=600,width=1000,top=-300,left=200')" class="btn btn-danger btn-block" style="font-size: 16px;"><i class="far fa-file-alt"></i> Contrato de internet</a></td>
+                            <td><a onclick="window.location='estadoCuenta.php?codigoCliente=<?php echo $codigo; ?>'" ><button class="btn btn-danger btn-block" style="font-size: 16px;"><i class="fas fa-file-invoice-dollar"></i> Estado de cuenta</button></a></td>
+                <form id="formClientes" class="" action="#" method="POST">
+                            <td><button id="btn-guardar" class="btn btn-danger btn-block" title="Guardar" disabled><i class="fas fa-save fa-2x"></i></button></td>
+                        </tr>
+                        <tr>
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                             <td colspan="8"><textarea class="form-control alert-warning input-sm" name="notas" rows="2" cols="40" placeholder="Observaciones" readOnly><?php echo $observaciones; ?></textarea></td>
                         </tr>
                         <!--<tr>
@@ -906,11 +945,16 @@ if(!isset($_SESSION))
                                     <div class="row">
                                         <div class="col-md-9">
                                             <label for="nombre"><span style="color:red;font-size:18px;">**</span>Nombre</label>
+<<<<<<< HEAD
                                             <input class="form-control input-sm alert-danger" type="text" name="nombre" value="<?php echo $nombre; ?>" readonly required>
+=======
+                                            <input class="form-control input-sm" type="text" name="nombre" value="<?php echo $nombre; ?>" readonly required>
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                         </div>
                                         <div class="col-md-3">
                                             <label for="ncr">Número de registro</label>
                                             <input class="form-control input-sm" type="text" id="nrc" name="nrc" value="<?php echo $nRegistro; ?>" readonly>
+<<<<<<< HEAD
                                         </div>
                                     </div>
                                     <div class="row">
@@ -921,6 +965,8 @@ if(!isset($_SESSION))
                                         <div class="col-md-3">
                                             <label for="nacionalidad"><span style="color:red;font-size:18px;">**</span>Nacionalidad</label>
                                             <input class="form-control input-sm alert-danger" type="text" id="nacionalidad" name="nacionalidad" value="<?php echo $nacionalidad; ?>" readonly required>
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                         </div>
                                     </div>
                                     <div class="row">
@@ -942,7 +988,11 @@ if(!isset($_SESSION))
                                     <div class="row">
                                         <div class="col-md-2">
                                             <label for="dui"><span style="color:red;font-size:18px;">**</span>DUI</label>
+<<<<<<< HEAD
                                             <input class="form-control input-sm alert-danger" type="text" id="dui" name="dui" pattern="[0-9]{8}-[0-9]{1}" value="<?php echo $dui; ?>" readonly required>
+=======
+                                            <input class="form-control input-sm" type="text" id="dui" name="dui" pattern="[0-9]{8}-[0-9]{1}" value="<?php echo $dui; ?>" readonly required>
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                         </div>
                                         <div class="col-md-4">
                                             <label for="expedicion">Lugar y fecha de expedición</label>
@@ -966,7 +1016,11 @@ if(!isset($_SESSION))
                                     <div class="row">
                                         <div class="col-md-3">
                                             <label for="departamento"><span style="color:red;font-size:18px;">**</span>Departamento</label>
+<<<<<<< HEAD
                                             <select class="form-control input-sm alert-danger" id="departamento" name="departamento" disabled required>
+=======
+                                            <select class="form-control input-sm" id="departamento" name="departamento" disabled required>
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                                 <option value="" selected>Seleccionar</option>
                                                 <?php
                                                 foreach ($arrDepartamentos as $key) {
@@ -983,7 +1037,11 @@ if(!isset($_SESSION))
                                         </div>
                                         <div class="col-md-4">
                                             <label for="municipio"><span style="color:red;font-size:18px;">**</span>Municipio</label>
+<<<<<<< HEAD
                                             <select class="form-control input-sm alert-danger" id="municipio" name="municipio" disabled required>
+=======
+                                            <select class="form-control input-sm" id="municipio" name="municipio" disabled required>
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                                 <option value="" selected>Seleccionar</option>
                                                 <?php
                                                 foreach ($arrMunicipios as $key) {
@@ -1000,7 +1058,11 @@ if(!isset($_SESSION))
                                         </div>
                                         <div class="col-md-5">
                                             <label for="colonia"><span style="color:red;font-size:18px;">**</span>Barrio o colonia</label>
+<<<<<<< HEAD
                                             <select class="form-control input-sm alert-danger" id="colonia" name="colonia" disabled required>
+=======
+                                            <select class="form-control input-sm" id="colonia" name="colonia" disabled required>
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                                 <option value="" selected>Seleccionar</option>
                                                 <?php
                                                 foreach ($arrColonias as $key) {
@@ -1025,7 +1087,11 @@ if(!isset($_SESSION))
                                     <div class="row">
                                         <div class="col-md-4">
                                             <label for="telefono"><span style="color:red;font-size:18px;">**</span>Teléfono</label>
+<<<<<<< HEAD
                                             <input class="form-control input-sm alert-danger" type="text" name="telefono" value="<?php echo $telefonos; ?>" readonly required>
+=======
+                                            <input class="form-control input-sm" type="text" name="telefono" value="<?php echo $telefonos; ?>" readonly required>
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                         </div>
                                         <div class="col-md-4">
                                             <label for="telefonoTrabajo">Teléfono de trabajo</label>
@@ -1060,7 +1126,11 @@ if(!isset($_SESSION))
                                         </div>
                                         <div class="col-md-4">
                                             <label for="tipoComprobante"><span style="color:red;font-size:18px;">**</span>Tipo de comprobante</label>
+<<<<<<< HEAD
                                             <select class="form-control input-sm alert-danger" onchange="selectTipoComp();" id="tipoComprobante" name="tipoComprobante" disabled required>
+=======
+                                            <select class="form-control input-sm" onchange="selectTipoComp();" id="tipoComprobante" name="tipoComprobante" disabled required>
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                                 <option value="" selected>Seleccionar</option>
                                                 <?php
 
@@ -1107,7 +1177,11 @@ if(!isset($_SESSION))
                                     <div class="row">
                                         <div class="col-md-12">
                                             <label for="cobrador"><span style="color:red;font-size:18px;">**</span>Cobrador que lo atiende</label>
+<<<<<<< HEAD
                                             <select class="form-control input-sm alert-danger" name="cobrador" disabled required>
+=======
+                                            <select class="form-control input-sm" name="cobrador" disabled required>
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                                 <option value="">Seleccionar</option>
                                                 <?php
                                                 foreach ($arrCobradores as $key) {
@@ -1241,11 +1315,19 @@ if(!isset($_SESSION))
                                               <div class="row">
                                                   <div class="col-md-2">
                                                       <label for="cuotaMensualCable"><span style="color:red;font-size:18px;">**</span>Cuota mensual</label>
+<<<<<<< HEAD
                                                       <input class="form-control input-sm alert-danger cable" type="text" name="cuotaMensualCable" value="<?php echo $cuotaMensualCable; ?>" readonly>
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="prepago">Prepago</label>
                                                       <input class="form-control input-sm cable" type="text" name="prepago" value="<?php echo round($prepago,2); ?>" readonly>
+=======
+                                                      <input class="form-control input-sm cable" type="text" name="cuotaMensualCable" value="<?php echo $cuotaMensualCable; ?>" readonly>
+                                                  </div>
+                                                  <div class="col-md-2">
+                                                      <label for="prepago"><span style="color:red;font-size:18px;">**</span>Prepago</label>
+                                                      <input class="form-control input-sm cable" type="text" name="prepago" value="<?php echo $prepago; ?>" readonly>
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="tipoServicio">Tipo de servicio</label>
@@ -1271,7 +1353,11 @@ if(!isset($_SESSION))
                                                   </div>
                                                   <div class="col-md-2">
                                                       <label for="diaGenerarFacturaCable"><span style="color:red;font-size:18px;">**</span>Día cobro</label>
+<<<<<<< HEAD
                                                       <input class="form-control input-sm alert-danger cable" type="text" name="diaGenerarFacturaCable" value="<?php echo $diaCobro; ?>" readonly>
+=======
+                                                      <input class="form-control input-sm cable" type="text" name="diaGenerarFacturaCable" value="<?php echo $diaCobro; ?>" readonly>
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                                   </div>
                                               </div>
                                               <div class="row">
@@ -1299,7 +1385,11 @@ if(!isset($_SESSION))
                                               <div class="row">
                                                   <div class="col-md-12">
                                                       <label for="encargadoInstalacionCable"><span style="color:red;font-size:18px;">**</span>Técnico que realizó la instalación</label>
+<<<<<<< HEAD
                                                       <select class="form-control input-sm alert-danger cable" name="encargadoInstalacionCable" disabled>
+=======
+                                                      <select class="form-control input-sm cable" name="encargadoInstalacionCable" disabled>
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                                           <option value="">Seleccionar</option>
                                                           <?php
                                                           foreach ($arrTecnicos as $key) {
@@ -1389,7 +1479,11 @@ if(!isset($_SESSION))
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="diaGenerarFacturaInternet"><span style="color:red;font-size:18px;">**</span>Día para generar factura</label>
+<<<<<<< HEAD
                                                       <input class="form-control input-sm alert-danger internet" type="text" name="diaGenerarFacturaInternet" value="<?php echo $diaCobroInter; ?>" readonly>
+=======
+                                                      <input class="form-control input-sm internet" type="text" name="diaGenerarFacturaInternet" value="<?php echo $diaCobroInter; ?>" readonly>
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                                   </div>
                                               </div>
                                               <div class="row">
@@ -1411,12 +1505,17 @@ if(!isset($_SESSION))
                                                       </select>
                                                   </div>
                                                   <div class="col-md-3">
+<<<<<<< HEAD
                                                       <label for="cuotaMensualInternet"><span style="color:red;font-size:18px;">**</span>Cuota mensual</label>
                                                       <input class="form-control input-sm alert-danger internet" type="text" name="cuotaMensualInternet" value="<?php echo $cuotaMensualInter; ?>" readonly>
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="prepago_in">Prepago</label>
                                                       <input class="form-control input-sm internet" type="text" name="prepago_in" value="<?php echo round($prepago_in,2); ?>" readonly>
+=======
+                                                      <label for="cuotaMensualInternet">Cuota mensual</label>
+                                                      <input class="form-control input-sm internet" type="text" name="cuotaMensualInternet" value="<?php echo $cuotaMensualInter; ?>" readonly>
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                                   </div>
                                                   <div class="col-md-3">
                                                       <label for="tipoCliente">Tipo de cliente</label>
@@ -1455,6 +1554,7 @@ if(!isset($_SESSION))
                                                            ?>
                                                       </select>
                                                   </div>
+<<<<<<< HEAD
                                                   <div class="col-md-6">
                                                       <label for="enCalidad"><span style="color:red;font-size:18px;">**</span>En calidad de</label>
                                                       <input class="form-control input-sm alert-danger internet" type="text" name="enCalidad" value="<?php echo $calidad; ?>" readonly>
@@ -1468,6 +1568,13 @@ if(!isset($_SESSION))
                                                           <option value="Reconexion">Reconexión</option>
                                                           <option value="Renovacion">Renovación</option>
                                                       </select>
+=======
+                                              </div>
+                                              <div class="row">
+                                                  <div class="col-md-12">
+                                                      <label for="enCalidad"><span style="color:red;font-size:18px;">**</span>En calidad de</label>
+                                                      <input class="form-control input-sm internet" type="text" name="enCalidad" value="<?php echo $calidad; ?>" readonly>
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                                   </div>
                                               </div>
                                               <div class="row">
@@ -1513,7 +1620,11 @@ if(!isset($_SESSION))
                                               <div class="row">
                                                   <div class="col-md-9">
                                                       <label for="encargadoInstalacionInter"><span style="color:red;font-size:18px;">**</span>Técnico que realizó la instalación</label>
+<<<<<<< HEAD
                                                       <select class="form-control input-sm alert-danger internet" name="encargadoInstalacionInter" disabled>
+=======
+                                                      <select class="form-control input-sm internet" name="encargadoInstalacionInter" disabled>
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                                           <option value="">Seleccionar</option>
                                                           <?php
                                                           foreach ($arrTecnicos as $key) {
@@ -2214,6 +2325,7 @@ if(!isset($_SESSION))
             </div>
         </div>
     </div><!-- Fin Modal BUSCAR CLIENTE-->
+<<<<<<< HEAD
 <!-- Fin Modal nuevo contrato internet-->
     <style>
     /*
@@ -2292,6 +2404,8 @@ Full screen Modal
             </div>
               </div>
               <!-- Fin Modal IMPRIMIR FACTURAS -->
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
     <!-- /#wrapper -->
 
@@ -2449,12 +2563,21 @@ Full screen Modal
                 document.getElementById("covidHastaI").required = false;
             }
         }
+<<<<<<< HEAD
 
         function cableFalse(){
             var reqInputs = document.getElementsByClassName("cable");
             //alert("Holaaaaaaaaaaaa");
             for (var i = 0; i < reqInputs.length; i++) {
 
+=======
+
+        function cableFalse(){
+            var reqInputs = document.getElementsByClassName("cable");
+            //alert("");
+            for (var i = 0; i < reqInputs.length; i++) {
+
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                 reqInputs[i].required = false;
             }
         }

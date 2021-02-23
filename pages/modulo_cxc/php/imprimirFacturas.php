@@ -22,6 +22,7 @@ $fechaGenerada = $_POST['fechaImp'];
 $tipoServicio = $_POST['tipoServicioImp'];
 $tipoComprobante = $_POST['tipoComprobanteImp'];
 $dataInfo = new GetAllInfo();
+<<<<<<< HEAD
 $nDesde = $_POST['desdeImp'];
 $nHasta = $_POST['hastaImp'];
 //$codigo = $_GET['id'];
@@ -61,6 +62,34 @@ if (!empty($nDesde) && !empty($nHasta)){
 
     }
 
+=======
+//$codigo = $_GET['id'];
+
+if (isset($_POST['desdeImp']) && isset($_POST['hastaImp'])) {
+    $nDesde = $_POST['desdeImp'];
+    $nHasta = $_POST['hastaImp'];
+
+    switch ($cobrador) {
+        case 'todos':
+            $query = "SELECT * FROM tbl_cargos WHERE SUBSTRING(fechaCobro, 9, 10) = '".$diaCobro."' AND fechaFactura = '".$fechaGenerada."' AND tipoFactura = '".$tipoComprobante."' AND tipoServicio = '".$tipoServicio."'";
+            break;
+
+        default:
+            $query = "SELECT * FROM tbl_cargos WHERE SUBSTRING(fechaCobro, 9, 10) = '".$diaCobro."' AND codigoCobrador = '".$cobrador."' AND fechaFactura = '".$fechaGenerada."' AND tipoFactura = '".$tipoComprobante."' AND tipoServicio = '".$tipoServicio."'";
+            break;
+    }
+}
+else {
+    switch ($cobrador) {
+        case 'todos':
+            $query = "SELECT * FROM tbl_cargos WHERE SUBSTRING(fechaCobro, 9, 10) = '".$diaCobro."' AND fechaFactura = '".$fechaGenerada."' AND tipoFactura = '".$tipoComprobante."' AND tipoServicio = '".$tipoServicio."'";
+            break;
+
+        default:
+            $query = "SELECT * FROM tbl_cargos WHERE SUBSTRING(fechaCobro, 9, 10) = '".$diaCobro."' AND codigoCobrador = '".$cobrador."' AND fechaFactura = '".$fechaGenerada."' AND tipoFactura = '".$tipoComprobante."' AND tipoServicio = '".$tipoServicio."'";
+            break;
+    }
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 }
 
 $resultado = $mysqli->query($query);
@@ -70,16 +99,22 @@ if ($tipoComprobante == 2) {
     //*******************************FACTURA NORMAL**********************************
       //$pdf = new FPDF();
       $pdf = new FPDF('L','mm',array(215,330));
+<<<<<<< HEAD
 
       #Establecemos los márgenes arriba:
       $pdf->SetTopMargin(0.5);
       #Establecemos los márgenes izquierda:
       $pdf->SetLeftMargin(10.5);
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
       date_default_timezone_set('America/El_Salvador');
 
       setlocale(LC_ALL,"es_ES");
       $pdf->SetFont('Arial','',7);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
       while($row = $resultado->fetch_assoc())
       {    //if ($row['idMunicipio'] != "0301"){var_dump($row["codigoCliente"]." ".$row["idMunicipio"]);}
 
@@ -94,16 +129,27 @@ if ($tipoComprobante == 2) {
 
         $pdf->AliasNbPages();
         $pdf->AddPage();
+<<<<<<< HEAD
         $pdf->Image('../../../images/comp.png',155,110, 45, 10);//120
+=======
+        $pdf->Image('../../../images/comp.png',155,120, 45, 10);
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
         if ($row["anulada"] == 1){
             //$pdf->Image('../../../images/anulada.png',155,120);
             $pdf->Image('../../../images/anulada.png',135,70);
             $pdf->Image('../../../images/anulada.png',20,70);
         }
+<<<<<<< HEAD
         if ($row['tipoServicio'] == "C") {
             $pdf->Image('../../../images/cable.png',45,90, 15, 17);//100
             $pdf->Image('../../../images/cable.png',160,90, 15, 17);//100
             $pdf->Image('../../../images/cable.png',290,90, 15, 17);//100
+=======
+        if ($tipoServicio == "C") {
+            $pdf->Image('../../../images/cable.png',45,100, 15, 17);
+            $pdf->Image('../../../images/cable.png',160,100, 15, 17);
+            $pdf->Image('../../../images/cable.png',290,100, 15, 17);
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
             $unitario = $row['cuotaCable'];
             $monto = $dataInfo->getTotalCobrarCableImp('tbl_cargos', $row['codigoCliente'], 'pendiente', 0, $row['fechaCobro'], 'i');
             $montoSinImpuestos = $dataInfo->getTotalCobrarCableImp('tbl_cargos', $row['codigoCliente'], 'pendiente', 0, $row['fechaCobro'], 's');
@@ -121,10 +167,17 @@ if ($tipoComprobante == 2) {
                 $direccion = $row['direccion'];
             }
         }
+<<<<<<< HEAD
         elseif ($row['tipoServicio'] == "I") {
             $pdf->Image('../../../images/inter.png',45,90, 15, 17);
             $pdf->Image('../../../images/inter.png',160,90, 15, 17);
             $pdf->Image('../../../images/inter.png',290,90, 15, 17);
+=======
+        elseif ($tipoServicio == "I") {
+            $pdf->Image('../../../images/inter.png',45,100, 15, 17);
+            $pdf->Image('../../../images/inter.png',160,100, 15, 17);
+            $pdf->Image('../../../images/inter.png',290,100, 15, 17);
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
             $unitario = $row['cuotaInternet'];
             $monto = $dataInfo->getTotalCobrarInterImp('tbl_cargos', $row['codigoCliente'], 'pendiente', 0, $row['fechaFactura'], 'i');
             $montoSinImpuestos = $dataInfo->getTotalCobrarInterImp('tbl_cargos', $row['codigoCliente'], 'pendiente', 0, $row['fechaFactura'], 's');
@@ -148,10 +201,17 @@ if ($tipoComprobante == 2) {
         $pdf->Cell(50,6,utf8_decode(''),0,0,'L');
         $pdf->Cell(70,6,utf8_decode(strtoupper($row['numeroFactura'])),0,0,'L');
         $pdf->Cell(25,6,utf8_decode(''),0,0,'L');
+<<<<<<< HEAD
         $pdf->Cell(70,6,utf8_decode(strtoupper($row['numeroFactura'])),0,1,'L');//70,-5
 
         //DATOS DEL CLIENTE
         $pdf->Ln(18.5);//29.5
+=======
+        $pdf->Cell(70,-5,utf8_decode(strtoupper($row['numeroFactura'])),0,1,'L');
+
+        //DATOS DEL CLIENTE
+        $pdf->Ln(29.5);
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
         $pdf->Cell(10,6,utf8_decode(''),0,0,'L');
         $pdf->Cell(70,6,utf8_decode($row['codigoCliente']),0,0,'L');
         $pdf->Cell(70,6,utf8_decode(strftime('%d', strtotime($row['fechaFactura']))." de ".strftime('%B', strtotime($row['fechaFactura'])). " de ".strftime('%G', strtotime($row['fechaFactura']))),0,0,'L');
@@ -269,7 +329,11 @@ if ($tipoComprobante == 2) {
         $pdf->Cell(70,-45,utf8_decode($totalFactura),0,1,'L'); // MONTO TOTAL QUE APARECE EN COLUMNA 3
         $pdf->Cell(285,6,utf8_decode(''),0,0,'L');
         $pdf->SetFont('Arial','',7);
+<<<<<<< HEAD
         $pdf->Cell(70,63,utf8_decode('VENCE: '.date_format(date_create($row['fechaVencimiento']), 'd/m/Y')),0,1,'L');
+=======
+        $pdf->Cell(70,60,utf8_decode('VENCE: '.date_format(date_create($row['fechaVencimiento']), 'd/m/Y')),0,1,'L');
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
         //$pdf->Ln(55);
         $pdf->SetFont('Arial','B',10);
 
@@ -390,6 +454,7 @@ if ($tipoComprobante == 2) {
 }
 // CREDITO FISCAL
 elseif ($tipoComprobante == 1) {
+<<<<<<< HEAD
     //INICIO IMPRESIÓN DE FACTURACIÓN CREDITO FISCAL
     //*******************************FACTURA CRÉDITO FISCAL********************************
       $pdf = new FPDF('L','mm',array(216,356));
@@ -399,6 +464,12 @@ elseif ($tipoComprobante == 1) {
       #Establecemos los márgenes izquierda:
       $pdf->SetLeftMargin(8);
 
+=======
+    //INICIO IMPRESIÓN DE FACTURACIÓN NORMAL
+    //*******************************FACTURA CRÉDITO FISCAL********************************
+      $pdf = new FPDF('L','mm',array(216,356));
+      //$pdf = new FPDF();
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
       date_default_timezone_set('America/El_Salvador');
 
       setlocale(LC_ALL,"es_ES");
@@ -453,7 +524,11 @@ elseif ($tipoComprobante == 1) {
               $pdf->Image('../../../images/anulada.png',135,70);
               $pdf->Image('../../../images/anulada.png',20,70);
           }
+<<<<<<< HEAD
         if ($row['tipoServicio'] == "C") {
+=======
+        if ($tipoServicio == "C") {
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
             $pdf->Image('../../../images/cable.png',40,90, 15, 17);
             $pdf->Image('../../../images/cable.png',160,88, 15, 17);
             $pdf->Image('../../../images/cable.png',285,90, 15, 17);
@@ -479,7 +554,11 @@ elseif ($tipoComprobante == 1) {
                 $direccion = $row['direccion'];
             }
         }
+<<<<<<< HEAD
         elseif ($row['tipoServicio'] == "I") {
+=======
+        elseif ($tipoServicio == "I") {
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
             $pdf->Image('../../../images/inter.png',40,90, 15, 17);
             $pdf->Image('../../../images/inter.png',160,88, 15, 17);
             $pdf->Image('../../../images/inter.png',285,90, 15, 17);

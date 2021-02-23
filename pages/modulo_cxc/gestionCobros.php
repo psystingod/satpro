@@ -228,6 +228,7 @@ if(!isset($_SESSION))
 
         .nav-pills>li>a{
             color: #d32f2f;
+<<<<<<< HEAD
 
         }
 
@@ -243,6 +244,23 @@ if(!isset($_SESSION))
             background-color: #d32f2f;
         }
 
+=======
+
+        }
+
+        .btn-danger {
+            color: #fff;
+            background-color: #d32f2f;
+            border-color: #d43f3a;
+        }
+        a:hover {
+            text-decoration: none;
+        }
+        .label-danger {
+            background-color: #d32f2f;
+        }
+
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
         .panel-danger>.panel-heading {
             color: #fff;
             background-color: #212121;

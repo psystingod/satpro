@@ -187,6 +187,7 @@
                 die();
             }
         }
+<<<<<<< HEAD
         public function getTotalMegas()
         {
             try {
@@ -201,6 +202,8 @@
                 die();
             }
         }
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
         public function getGraphics()
         {
             try {
@@ -221,7 +224,10 @@
                 die();
             }
         }
+<<<<<<< HEAD
         
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
         public function getGraphics2()
         {
             try {

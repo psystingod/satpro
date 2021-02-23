@@ -109,7 +109,11 @@ if(!isset($_SESSION))
         // read current record's data
         try {
             // prepare select query
+<<<<<<< HEAD
             $query = "SELECT idOrdenReconex, codigoCliente, fechaOrden, tipoOrden, tipoReconexCable, tipoReconexInter, diaCobro, telefonos, nombreCliente, direccion, fechaReconexCable, saldoCable, fechaReconexInter, saldoInter, ultSuspCable, ultSuspInter, macModem, serieModem, velocidad, colilla, fechaReconex, idTecnico, mactv, observaciones, tipoServicio,coordenadas, creadoPor, servRecox  FROM tbl_ordenes_reconexion WHERE idOrdenReconex = ? LIMIT 0,1";
+=======
+            $query = "SELECT idOrdenReconex, codigoCliente, fechaOrden, tipoOrden, tipoReconexCable, tipoReconexInter, diaCobro, telefonos, nombreCliente, direccion, fechaReconexCable, saldoCable, fechaReconexInter, saldoInter, ultSuspCable, ultSuspInter, macModem, serieModem, velocidad, colilla, fechaReconex, idTecnico, mactv, observaciones, tipoServicio,coordenadas, creadoPor  FROM tbl_ordenes_reconexion WHERE idOrdenReconex = ? LIMIT 0,1";
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -205,7 +209,10 @@ if(!isset($_SESSION))
         //$hora="";
         $observaciones="";
         $coordenadas="";
+<<<<<<< HEAD
         $servRecox="";
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
         //$tipoServicio = "";
         //$creadoPor = "";
         //$nodo="";
@@ -288,7 +295,10 @@ if(!isset($_SESSION))
         .panel{
             border-color: #212121;
         }
+<<<<<<< HEAD
         
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
     </style>
 </head>
 
@@ -380,7 +390,10 @@ if(!isset($_SESSION))
                                       <label for="coordenadas">coordenadas</label>
                                       <input id="coordenadas" class="form-control input-sm" type="text" name="coordenadas" value="<?php echo $coordenadas; ?>" readonly>
                                   </div>
+<<<<<<< HEAD
                                 
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                               </div>
                               <div class="form-row">
                                   <div class="col-md-12">

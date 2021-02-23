@@ -180,6 +180,7 @@ function changeActividad() {
         document.getElementById('vendedor').required = true;
     }else {
         document.getElementById('vendedor').required = false;
+<<<<<<< HEAD
         if (actividadInter == 'No tiene señal' || actividadInter == 'Mala señal' || actividadInter == 'Cambio de contraseña' || actividadInter == 'Posible fuente quemada' || actividadInter == 'Internet lento') {
             document.getElementById("checksoporte").checked = true;
             document.getElementById("checksoporte").value = 1;
@@ -187,5 +188,7 @@ function changeActividad() {
             document.getElementById("checksoporte").checked = false;
             document.getElementById("checksoporte").value = 0;
         }
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
     }
 }

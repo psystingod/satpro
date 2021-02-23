@@ -7,13 +7,32 @@
     {
         public function EnterProduct()
         {
+<<<<<<< HEAD
             session_start();
+=======
+            if(!isset($_SESSION))
+            {
+                session_start([
+                    'cookie_lifetime' => 86400,
+                ]);
+            }
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
             parent::__construct ($_SESSION['db']);
         }
         public function enter()
         {
             try {
+<<<<<<< HEAD
                 $nombreProducto = $_POST["nombreProducto"];
+=======
+                $queryVen = "SELECT IdArticulo FROM tbl_articulointernet order by IdArticulo DESC LIMIT 0, 1";
+                // Preparación de sentencia
+                $statementVen = $this->dbConnect->prepare($queryVen);
+                $statementVen->execute();
+                $resultVen = $statementVen->fetch(PDO::FETCH_ASSOC);
+                $ultimoArticulo = $resultVen["IdArticulo"]; //ULTIMO ARTICULO
+
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                 $mac = $_POST["mac"];
                 $serie = $_POST["serie"];
                 $estado = $_POST["estado"];
@@ -31,8 +50,13 @@
                 $Garantia = $_POST["Garantia"];
                 $nFactura =$_POST["nFactura"];
                 date_default_timezone_set('America/El_Salvador');
+<<<<<<< HEAD
                 
                 
+=======
+                $fechaForm = $_POST["fecha"];
+                //$Fecha = date('Y/m/d g:i');
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                 $query = "SELECT count(*) FROM tbl_articulointernet where Mac='".$mac."' or  serie='".$serie."'";
                 $statement = $this->dbConnect->query($query);
 
@@ -42,6 +66,7 @@
                 }
                 else
                 {
+<<<<<<< HEAD
 
                     $query = "INSERT into tbl_articulointernet(nombreProducto,Mac,Serie,Estado,IdBodega,Marca,Modelo,Descripcion,Proveedor,Fabricante,Categoria,Tecnologia,fecha,condicion,Garantia,nFactura)
                     values (:nombreProducto,:mac,:serie,:estado,(SELECT idBodega FROM tbl_bodega where NombreBodega=:idBodega),:marca,:modelo,:descripcion,(SELECT Nombre FROM tbl_proveedor where IdProveedor = :proveedor),:Fabricante,:Categoria,:Tecnologia,:fecha,:condicion,:Garantia,:nFactura)";
@@ -49,6 +74,16 @@
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
                     ':nombreProducto' => $nombreProducto,
+=======
+                    $ultimoArticulo = $ultimoArticulo + 1;
+                    $query = "INSERT into tbl_articulointernet(IdArticulo,Mac,Serie,Estado,IdBodega,Marca,Modelo,Descripcion,Proveedor,fecha,docsis,nosh,condicion)
+                    values (:idArticulo,:mac,:serie,:estado,(SELECT idBodega FROM tbl_bodega where NombreBodega=:idBodega),:marca,:modelo,:descripcion,(SELECT Nombre FROM tbl_proveedor where IdProveedor = :proveedor),:fecha,:docsis,:nosh,:condicion)";
+                    // Preparación de sentencia
+                    $statement = $this->dbConnect->prepare($query);
+                    $statement->execute(array(
+                    ':idArticulo' => $ultimoArticulo,
+                    ':fecha' => $fechaForm,
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                     ':mac' => $mac,
                     ':serie' => $serie,
                     ':estado' => $estado,

@@ -7,7 +7,16 @@
     {
         public function GetInventoryPDF()
         {
+<<<<<<< HEAD
             //session_start();
+=======
+            if(!isset($_SESSION))
+            {
+                session_start([
+                    'cookie_lifetime' => 86400,
+                ]);
+            }
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
             parent::__construct ($_SESSION['db']);
         }
         public function getInventoryTranslateReport($Bodega, $Proveedor)

@@ -25,7 +25,10 @@ $mysqliFacturasPendientes  = new mysqli($host, $user, $password, $database);
 $mysqliColonias  = new mysqli($host, $user, $password, $database);
 $ultimoMesPagado = $_POST["ultimoMesCancelado"];
 $ultimoAnioPagado = $_POST["ultimoAnioCancelado"];
+<<<<<<< HEAD
 $tecnologia = $_POST["tecnologia"];
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
 //Verificamos el último mes que el cliente ha pagado
 if ($ultimoMesPagado == "0"){
@@ -34,6 +37,7 @@ if ($ultimoMesPagado == "0"){
   $ultimoMesHelper = '%'.$ultimoMesPagado.'/'.$ultimoAnioPagado.'%';
 }
 
+<<<<<<< HEAD
 //Verificamos el tipo de técología
 if ($tecnologia == "0"){
   $tec = "TODAS";
@@ -49,6 +53,8 @@ if ($tecnologia == "0"){
   $tecnoHelper = '%'.'INALAMBRICO'.'%';
 }
 
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 $colonia = new GetInfo2();
 
 $totalCantidadDeFacturasReporte=0;
@@ -113,7 +119,11 @@ function facturasGeneradasDosMesesOrdenadaPorColonias(){
   global $totalCantidadDeFacturasPaquete,$totalCantidadDeClientesPaquete;
   global $totalCantidadDefacturasCableDePaquete, $totalCantidadDeClientesCableDePaquete, $totalDeudaCableDePaquete;
   global $totalCantidadDefacturasInterDePaquete, $totalDeudaInternetDePaquete,$totalCantidadDeClientesInternetPaquete;
+<<<<<<< HEAD
   global $colonia, $iva, $cesc, $ultimoMesHelper, $tecnoHelper, $tec;
+=======
+  global $colonia, $iva, $cesc, $ultimoMesHelper;
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
   global $totalCantidadDeFacturasReporteTC,$totalCantidadDeFacturasReporteTI,$totalCantidadDeFacturasReporteTP, $totalDeudaReporteTP, $totalDeudaReporteTC,$totalDeudaReporteTI;
   global $totalCantidadDeFacturasSoloCableTPC,$totalCantidadDeClientesSoloCableTPI,$totalDeudaSoloCableTPC;
 
@@ -536,21 +546,33 @@ $x=0;
             $servicioReporte="CABLE";
             $FiltroServicio="/*clientes solo cable activos*/
             select cod_cliente, nombre, direccion_cobro, id_colonia, dia_cobro,'Cable' as servicio, telefonos, fecha_ult_pago, cod_cobrador,valor_cuota,cuota_in
+<<<<<<< HEAD
             from clientes WHERE (servicio_suspendido='F' OR servicio_suspendido is null or servicio_suspendido='')  AND sin_servicio='F' AND estado_cliente_in = 3 AND cod_cliente<>'00000' AND fecha_ult_pago LIKE '{$ultimoMesHelper} AND tecnologia LIKE '{$tecnoHelper}'
+=======
+            from clientes WHERE (servicio_suspendido='F' OR servicio_suspendido is null or servicio_suspendido='')  AND sin_servicio='F' AND estado_cliente_in = 3 AND cod_cliente<>'00000' AND fecha_ult_pago LIKE '{$ultimoMesHelper}'
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
             /*fin clientes solo cable activos*/";
             break;
             case "I":
             $servicioReporte="INTERNET";
             $FiltroServicio="/*clientes solo Internet activos */
             select cod_cliente, nombre, direccion_cobro, id_colonia, (dia_corbo_in) as dia_cobro,'Internet' as servicio, telefonos, fecha_ult_pago, cod_cobrador,valor_cuota,cuota_in
+<<<<<<< HEAD
             from clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null or servicio_suspendido='') and sin_servicio='T' AND estado_cliente_in = 1 AND cod_cliente<>'00000' AND fecha_ult_nota LIKE '{$ultimoMesHelper} AND tecnologia LIKE '{$tecnoHelper}''
+=======
+            from clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null or servicio_suspendido='') and sin_servicio='T' AND estado_cliente_in = 1 AND cod_cliente<>'00000' AND fecha_ult_nota LIKE '{$ultimoMesHelper}'
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
             /*fin clientes solo Internet activos */";
             break;
             case "A":
             $servicioReporte="PAQUETE";
             $FiltroServicio="/*clientes paquete activos*/
             select cod_cliente, nombre, direccion_cobro, id_colonia, dia_cobro,'Paquete' as servicio, telefonos, fecha_ult_pago, cod_cobrador,valor_cuota,cuota_in
+<<<<<<< HEAD
             from clientes WHERE (servicio_suspendido='F' OR servicio_suspendido is null or servicio_suspendido='')  AND sin_servicio='F' AND estado_cliente_in = 1 AND cod_cliente<>'00000' AND (fecha_ult_pago LIKE '{$ultimoMesHelper}' OR fecha_ult_nota LIKE '{$ultimoMesHelper}') AND tecnologia LIKE '{$tecnoHelper}'
+=======
+            from clientes WHERE (servicio_suspendido='F' OR servicio_suspendido is null or servicio_suspendido='')  AND sin_servicio='F' AND estado_cliente_in = 1 AND cod_cliente<>'00000' AND (fecha_ult_pago LIKE '{$ultimoMesHelper}' OR fecha_ult_nota LIKE '{$ultimoMesHelper}')
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
             /*fin clientes paquete activos*/";
             break;
             case "T":
@@ -558,6 +580,7 @@ $x=0;
             $FiltroColonia="  order by /*cod_cliente*/id_colonia,servicio ";
             $FiltroServicio="/*clientes solo cable activos*/
             select cod_cliente, nombre, direccion_cobro, id_colonia, dia_cobro,'Cable' as servicio, telefonos, fecha_ult_pago, cod_cobrador,valor_cuota,cuota_in,cuotaCovidC,cuotaCovidI
+<<<<<<< HEAD
             from clientes WHERE (servicio_suspendido='F' OR servicio_suspendido is null or servicio_suspendido='')  AND sin_servicio='F' AND estado_cliente_in = 3 AND cod_cliente<>'00000' AND (fecha_ult_pago LIKE '{$ultimoMesHelper}'/* OR fecha_ult_nota LIKE '{$ultimoMesHelper}'*/) AND tecnologia LIKE '{$tecnoHelper}'
             /*fin clientes solo cable activos*/".$filtroCobrador.$filtroDiaDeCobro." UNION "."/*clientes solo Internet activos */
             select cod_cliente, nombre, direccion_cobro, id_colonia, (dia_corbo_in) as dia_cobro,'Internet' as servicio, telefonos, fecha_ult_pago, cod_cobrador,valor_cuota,cuota_in,cuotaCovidC,cuotaCovidI
@@ -565,6 +588,15 @@ $x=0;
             /*fin clientes solo Internet activos */".$filtroCobrador.$filtroDiaDeCobro." UNION "."/*clientes paquete activos*/
             select cod_cliente, nombre, direccion_cobro, id_colonia, dia_cobro,'Paquete' as servicio, telefonos, fecha_ult_pago, cod_cobrador,valor_cuota,cuota_in,cuotaCovidC,cuotaCovidI
             from clientes WHERE (servicio_suspendido='F' OR servicio_suspendido is null or servicio_suspendido='')  AND sin_servicio='F' AND estado_cliente_in = 1 AND cod_cliente<>'00000' AND (fecha_ult_pago LIKE '{$ultimoMesHelper}' OR fecha_ult_nota LIKE '{$ultimoMesHelper}') AND tecnologia LIKE '{$tecnoHelper}'
+=======
+            from clientes WHERE (servicio_suspendido='F' OR servicio_suspendido is null or servicio_suspendido='')  AND sin_servicio='F' AND estado_cliente_in = 3 AND cod_cliente<>'00000' AND (fecha_ult_pago LIKE '{$ultimoMesHelper}'/* OR fecha_ult_nota LIKE '{$ultimoMesHelper}'*/)
+            /*fin clientes solo cable activos*/".$filtroCobrador.$filtroDiaDeCobro." UNION "."/*clientes solo Internet activos */
+            select cod_cliente, nombre, direccion_cobro, id_colonia, (dia_corbo_in) as dia_cobro,'Internet' as servicio, telefonos, fecha_ult_pago, cod_cobrador,valor_cuota,cuota_in,cuotaCovidC,cuotaCovidI
+            from clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null or servicio_suspendido='') and sin_servicio='T' AND estado_cliente_in = 1 AND cod_cliente<>'00000' AND (/*fecha_ult_pago LIKE '{$ultimoMesHelper}' OR */fecha_ult_nota LIKE '{$ultimoMesHelper}')
+            /*fin clientes solo Internet activos */".$filtroCobrador.$filtroDiaDeCobro." UNION "."/*clientes paquete activos*/
+            select cod_cliente, nombre, direccion_cobro, id_colonia, dia_cobro,'Paquete' as servicio, telefonos, fecha_ult_pago, cod_cobrador,valor_cuota,cuota_in,cuotaCovidC,cuotaCovidI
+            from clientes WHERE (servicio_suspendido='F' OR servicio_suspendido is null or servicio_suspendido='')  AND sin_servicio='F' AND estado_cliente_in = 1 AND cod_cliente<>'00000' AND (fecha_ult_pago LIKE '{$ultimoMesHelper}' OR fecha_ult_nota LIKE '{$ultimoMesHelper}')
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
             /*fin clientes paquete activos*/";
             break;
             default:
@@ -588,7 +620,10 @@ $x=0;
                 $pdf->Cell(260,3,utf8_decode("Barrio/Colonia: ".$coloniaReporte),0,1,'L');
                 //filtro servicio del diaCobro
                 $pdf->Cell(260,3,utf8_decode("Dia de cobro: ".$diaDeCobroReporte),0,1,'L');
+<<<<<<< HEAD
                 $pdf->Cell(260,3,utf8_decode("Tecnología: ".$tec),0,1,'L');
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                 $pdf->SetFont('Arial','B',11);
                 date_default_timezone_set('America/El_Salvador');
                 //echo strftime("El año es %Y y el mes es %B");

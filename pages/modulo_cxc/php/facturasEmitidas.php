@@ -607,7 +607,11 @@ function abonos()
     //TOTAL INTERNET
     $pdf->Cell(170, 5, utf8_decode('TOTAL INTERNET: '), 0, 0, 'R');
     $pdf->Cell(20, 5, number_format($totalSoloIvaInter, 2), "T", 0, 'L');
+<<<<<<< HEAD
     $pdf->Cell(20, 5, number_format($totalConIvaInter-$totalSoloIvaInter, 2), "T", 0, 'L');
+=======
+    $pdf->Cell(20, 5, number_format($totalConIvaInter, 2), "T", 0, 'L');
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
     $pdf->Cell(20, 5, number_format($totalSoloCescInter, 2), "T", 0, 'L');
     $pdf->Cell(20, 5, number_format($totalConCescInter, 2), "T", 1, 'L');
@@ -617,7 +621,11 @@ function abonos()
     //TOTAL CABLE
     $pdf->Cell(170, 5, utf8_decode('TOTAL CABLE: '), 0, 0, 'R');
     $pdf->Cell(20, 5, number_format($totalSoloIvaCable, 2), "T", 0, 'L');
+<<<<<<< HEAD
     $pdf->Cell(20, 5, number_format($totalConIvaCable-$totalSoloIvaCable, 2), "T", 0, 'L');
+=======
+    $pdf->Cell(20, 5, number_format($totalConIvaCable, 2), "T", 0, 'L');
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
     $pdf->Cell(20, 5, number_format($totalSoloCescCable, 2), "T", 0, 'L');
     $pdf->Cell(20, 5, number_format($totalConCescCable, 2), "T", 1, 'L');
     //$pdf->Cell(15, 5, number_format(($totalAnticipoImpuestoC + $totalImpuestoC), 2), "T", 0, 'L');
@@ -626,7 +634,11 @@ function abonos()
     //TOTAL IMPUESTO
     $pdf->Cell(170, 5, utf8_decode('TOTAL GENERAL: '), "", 0, 'R');
     $pdf->Cell(20, 5, number_format(($totalSoloIvaCable + $totalSoloIvaInter), 2), "T", 0, 'L');
+<<<<<<< HEAD
     $pdf->Cell(20, 5, number_format(($totalConIvaCable + $totalConIvaInter - ($totalSoloIvaCable + $totalSoloIvaInter)), 2), "T", 0, 'L');
+=======
+    $pdf->Cell(20, 5, number_format(($totalConIvaCable + $totalConIvaInter), 2), "T", 0, 'L');
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
     $pdf->Cell(20, 5, number_format(($totalSoloCescCable + $totalSoloCescInter), 2), "T", 0, 'L');
     $pdf->Cell(20, 5, number_format(($totalConCescCable + $totalConCescInter), 2), "T", 1, 'L');
     //$pdf->Cell(15, 5, utf8_decode(number_format(($totalAnticipoImpuestoC + $totalImpuestoC + $totalAnticipoImpuestoI + $totalImpuestoI), 2)), "T", 0, 'L');

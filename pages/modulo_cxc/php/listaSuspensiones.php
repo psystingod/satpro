@@ -68,7 +68,11 @@
       if ($_POST["susServicio"] == "C") {
         $servicioReporte="Cable";
         if($_POST["susCobrador"]=="todos"){//cable y todos los cobradores
+<<<<<<< HEAD
           $query = "SELECT codigoCliente, codigoCobrador, nombre, direccion, tipoServicio,'C' as filtro, COUNT(*) as cantidadDeFacturasVencidas, fechaVencimiento, SUM(cuotaCable + totalImpuesto) as totalDeuda
+=======
+          $query = "SELECT codigoCliente, nombre, direccion, tipoServicio,'C' as filtro, COUNT(*) as cantidadDeFacturasVencidas, fechaVencimiento, SUM(cuotaCable + totalImpuesto) as totalDeuda
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW())
 AND codigoCliente NOT IN (
 	/*--Internet en general*/
@@ -106,7 +110,11 @@ AND codigoCliente NOT IN (
 ) group by `codigoCliente` HAVING COUNT(*) >= 2";
           $resultado = $mysqli->query($query) ;
         }else{//cable y cobrador espercifico
+<<<<<<< HEAD
            $query = "SELECT codigoCliente, codigoCobrador, nombre, direccion, tipoServicio,'C' as filtro, COUNT(*) as cantidadDeFacturasVencidas, fechaVencimiento, SUM(cuotaCable + totalImpuesto) as totalDeuda
+=======
+           $query = "SELECT codigoCliente, nombre, direccion, tipoServicio,'C' as filtro, COUNT(*) as cantidadDeFacturasVencidas, fechaVencimiento, SUM(cuotaCable + totalImpuesto) as totalDeuda
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
 AND codigoCliente NOT IN (
 	/*--Internet en general*/
@@ -147,7 +155,11 @@ AND codigoCliente NOT IN (
     }elseif ($_POST["susServicio"] == "I") {//internet
       $servicioReporte="Internet";
         if($_POST["susCobrador"]=="todos"){//internet y todos los cobradores
+<<<<<<< HEAD
           $query = "SELECT codigoCliente, codigoCobrador, nombre, direccion, tipoServicio,'I' as filtro, COUNT(*) as cantidadDeFacturasVencidas, fechaVencimiento, SUM(cuotaInternet + totalImpuesto) as totalDeuda
+=======
+          $query = "SELECT codigoCliente, nombre, direccion, tipoServicio,'I' as filtro, COUNT(*) as cantidadDeFacturasVencidas, fechaVencimiento, SUM(cuotaInternet + totalImpuesto) as totalDeuda
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW())
 AND codigoCliente NOT IN (
 	/*--Cable en general*/
@@ -185,7 +197,11 @@ AND codigoCliente NOT IN (
 ) group by `codigoCliente` HAVING COUNT(*) >= 2";
           $resultado = $mysqli->query($query) ;
         }else{//INTERNET y cobrador espercifico
+<<<<<<< HEAD
            $query = "SELECT codigoCliente, codigoCobrador, nombre, direccion, tipoServicio,'I' as filtro, COUNT(*) as cantidadDeFacturasVencidas, fechaVencimiento, SUM(cuotaInternet + totalImpuesto) as totalDeuda
+=======
+           $query = "SELECT codigoCliente, nombre, direccion, tipoServicio,'I' as filtro, COUNT(*) as cantidadDeFacturasVencidas, fechaVencimiento, SUM(cuotaInternet + totalImpuesto) as totalDeuda
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
 AND codigoCliente NOT IN (
 	/*--Cable en general*/
@@ -221,12 +237,17 @@ AND codigoCliente NOT IN (
 		/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
 		/**Todos Los Clientes Suspendidos**/
 ) group by `codigoCliente` HAVING COUNT(*) >= 2";
+<<<<<<< HEAD
           $resultado = $mysqli->query($query);
+=======
+          $resultado = $mysqli->query($query) ;
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
         }
 
     }else if($_POST["susServicio"]=="P") { //paquete
       $servicioReporte="Paquete";
        if($_POST["susCobrador"]=="todos"){//paquete y todos los cobradores
+<<<<<<< HEAD
           $query = "SELECT codigoCliente, codigoCobrador, nombre, direccion, tipoServicio,'P' as filtro, COUNT(*) as cantidadDeFacturasVencidas, fechaVencimiento, SUM(cuotaCable + cuotaInternet + totalImpuesto) as totalDeuda
 FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 /* AND   tipoServicio='C' AND tipoServicio='I' */ AND  fechaVencimiento < DATE(NOW())
 AND codigoCliente NOT IN (
@@ -249,6 +270,86 @@ AND codigoCliente NOT IN (
 					/*--fin Cable en general*/
 				) group by `codigoCliente` HAVING COUNT(*) >= 2
 			/*---FIN SOLO INTERNET TODOS LOS COBRADORES con >= 1 facturas vencidas*/
+=======
+          $query = "SELECT codigoCliente, nombre, direccion, tipoServicio,'P' as filtro, COUNT(*) as cantidadDeFacturasVencidas, fechaVencimiento, SUM(cuotaCable + cuotaInternet + totalImpuesto) as totalDeuda
+FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < DATE(NOW())
+AND codigoCliente NOT IN (
+            /*---SOLO CABLE TODOS LOS COBRADORES*/
+				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW())
+				AND codigoCliente NOT IN (
+					/*--Internet en general*/
+					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW())
+					AND codigoCliente NOT IN (
+						/**Todos Los Clientes Suspendidos**/
+						/**clientes de solo cable ya suspendidos*/
+						SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 3
+						/**fin clientes de solo cable ya suspendidos*/
+						UNION
+						/**clientes de solo internet ya suspendidos*/
+						SELECT cod_cliente as codigoCliente FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='T' AND estado_cliente_in = 2
+						/**Fin clientes de solo internet ya suspendidos*/
+						UNION
+						/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+						SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 2
+						/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+						/**Todos Los Clientes Suspendidos**/
+					) group by `codigoCliente` HAVING COUNT(*) >= 2
+					/*--fin Internet en general*/
+					UNION
+						/**Todos Los Clientes Suspendidos**/
+						/**clientes de solo cable ya suspendidos*/
+						SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 3
+						/**fin clientes de solo cable ya suspendidos*/
+						UNION
+						/**clientes de solo internet ya suspendidos*/
+						SELECT cod_cliente as codigoCliente FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='T' AND estado_cliente_in = 2
+						/**Fin clientes de solo internet ya suspendidos*/
+						UNION
+						/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+						SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 2
+						/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+						/**Todos Los Clientes Suspendidos**/
+				) group by `codigoCliente` HAVING COUNT(*) >= 2
+			/*---FIN SOLO CABLE TODOS LOS COBRADORES*/
+              UNION
+			/*---SOLO INTERNET TODOS LOS COBRADORES*/
+						SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW())
+			AND codigoCliente NOT IN (
+				/*--Cable en general*/
+				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW())
+				AND codigoCliente  NOT IN(
+						/**Todos Los Clientes Suspendidos**/
+						/**clientes de solo cable ya suspendidos*/
+						SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 3
+						/**fin clientes de solo cable ya suspendidos*/
+						UNION
+						/**clientes de solo internet ya suspendidos*/
+						SELECT cod_cliente as codigoCliente FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='T' AND estado_cliente_in = 2
+						/**Fin clientes de solo internet ya suspendidos*/
+						UNION
+						/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+						SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 2
+						/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+						/**Todos Los Clientes Suspendidos**/
+				)group by `codigoCliente` HAVING COUNT(*) >= 2
+				/*--fin Cable en general*/
+				UNION
+					/**Todos Los Clientes Suspendidos**/
+					/**clientes de solo cable ya suspendidos*/
+					SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 3
+					/**fin clientes de solo cable ya suspendidos*/
+					UNION
+					/**clientes de solo internet ya suspendidos*/
+					SELECT cod_cliente as codigoCliente FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='T' AND estado_cliente_in = 2
+					/**Fin clientes de solo internet ya suspendidos*/
+					UNION
+					/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+					SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 2
+					/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+					/**Todos Los Clientes Suspendidos**/
+			) group by `codigoCliente` HAVING COUNT(*) >= 2
+			/*---FIN SOLO INTERNET TODOS LOS COBRADORES*/
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
             UNION
 					/**Todos Los Clientes Suspendidos**/
 					/**clientes de solo cable ya suspendidos*/
@@ -274,6 +375,7 @@ AND codigoCliente IN (
 /*-----PAQUETES*/
 SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < DATE(NOW())
 AND codigoCliente NOT IN (
+<<<<<<< HEAD
             /*---SOLO CABLE TODOS LOS COBRADORES con >= 2 facturas vencidas*/
 				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW())
 				AND codigoCliente NOT IN (
@@ -291,6 +393,83 @@ AND codigoCliente NOT IN (
 					/*--fin Cable en general*/
 				) group by `codigoCliente` HAVING COUNT(*) >= 2
 			/*---FIN SOLO INTERNET TODOS LOS COBRADORES con >= 2 facturas vencidas*/
+=======
+            /*---SOLO CABLE TODOS LOS COBRADORES*/
+				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW())
+				AND codigoCliente NOT IN (
+					/*--Internet en general*/
+					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW())
+					AND codigoCliente NOT IN (
+						/**Todos Los Clientes Suspendidos**/
+						/**clientes de solo cable ya suspendidos*/
+						SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 3
+						/**fin clientes de solo cable ya suspendidos*/
+						UNION
+						/**clientes de solo internet ya suspendidos*/
+						SELECT cod_cliente as codigoCliente FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='T' AND estado_cliente_in = 2
+						/**Fin clientes de solo internet ya suspendidos*/
+						UNION
+						/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+						SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 2
+						/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+						/**Todos Los Clientes Suspendidos**/
+					) group by `codigoCliente` HAVING COUNT(*) >= 2
+					/*--fin Internet en general*/
+					UNION
+						/**Todos Los Clientes Suspendidos**/
+						/**clientes de solo cable ya suspendidos*/
+						SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 3
+						/**fin clientes de solo cable ya suspendidos*/
+						UNION
+						/**clientes de solo internet ya suspendidos*/
+						SELECT cod_cliente as codigoCliente FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='T' AND estado_cliente_in = 2
+						/**Fin clientes de solo internet ya suspendidos*/
+						UNION
+						/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+						SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 2
+						/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+						/**Todos Los Clientes Suspendidos**/
+				) group by `codigoCliente` HAVING COUNT(*) >= 2
+			/*---FIN SOLO CABLE TODOS LOS COBRADORES*/
+              UNION
+			/*---SOLO INTERNET TODOS LOS COBRADORES*/
+						SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW())
+			AND codigoCliente NOT IN (
+				/*--Cable en general*/
+				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW())
+				AND codigoCliente  NOT IN(
+						/**Todos Los Clientes Suspendidos**/
+						/**clientes de solo cable ya suspendidos*/
+						SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 3
+						/**fin clientes de solo cable ya suspendidos*/
+						UNION
+						/**clientes de solo internet ya suspendidos*/
+						SELECT cod_cliente as codigoCliente FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='T' AND estado_cliente_in = 2
+						/**Fin clientes de solo internet ya suspendidos*/
+						UNION
+						/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+						SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 2
+						/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+						/**Todos Los Clientes Suspendidos**/
+				)group by `codigoCliente` HAVING COUNT(*) >= 2
+				/*--fin Cable en general*/
+				UNION
+					/**Todos Los Clientes Suspendidos**/
+					/**clientes de solo cable ya suspendidos*/
+					SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 3
+					/**fin clientes de solo cable ya suspendidos*/
+					UNION
+					/**clientes de solo internet ya suspendidos*/
+					SELECT cod_cliente as codigoCliente FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='T' AND estado_cliente_in = 2
+					/**Fin clientes de solo internet ya suspendidos*/
+					UNION
+					/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+					SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 2
+					/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+					/**Todos Los Clientes Suspendidos**/
+			) group by `codigoCliente` HAVING COUNT(*) >= 2
+			/*---FIN SOLO INTERNET TODOS LOS COBRADORES*/
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
             UNION
 					/**Todos Los Clientes Suspendidos**/
 					/**clientes de solo cable ya suspendidos*/
@@ -322,6 +501,7 @@ AND codigoCliente IN (
 /*-----PAQUETES*/
 SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < DATE(NOW())
 AND codigoCliente NOT IN (
+<<<<<<< HEAD
             /*---SOLO CABLE TODOS LOS COBRADORES con >=2 facturas vencidas*/
 				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW())
 				AND codigoCliente NOT IN (
@@ -339,6 +519,83 @@ AND codigoCliente NOT IN (
 					/*--fin Cable en general*/
 				) group by `codigoCliente` HAVING COUNT(*) >=2
 			/*---FIN SOLO INTERNET TODOS LOS COBRADORES con >=2 facturas vencidas*/
+=======
+            /*---SOLO CABLE TODOS LOS COBRADORES*/
+				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW())
+				AND codigoCliente NOT IN (
+					/*--Internet en general*/
+					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW())
+					AND codigoCliente NOT IN (
+						/**Todos Los Clientes Suspendidos**/
+						/**clientes de solo cable ya suspendidos*/
+						SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 3
+						/**fin clientes de solo cable ya suspendidos*/
+						UNION
+						/**clientes de solo internet ya suspendidos*/
+						SELECT cod_cliente as codigoCliente FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='T' AND estado_cliente_in = 2
+						/**Fin clientes de solo internet ya suspendidos*/
+						UNION
+						/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+						SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 2
+						/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+						/**Todos Los Clientes Suspendidos**/
+					) group by `codigoCliente` HAVING COUNT(*) >= 2
+					/*--fin Internet en general*/
+					UNION
+						/**Todos Los Clientes Suspendidos**/
+						/**clientes de solo cable ya suspendidos*/
+						SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 3
+						/**fin clientes de solo cable ya suspendidos*/
+						UNION
+						/**clientes de solo internet ya suspendidos*/
+						SELECT cod_cliente as codigoCliente FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='T' AND estado_cliente_in = 2
+						/**Fin clientes de solo internet ya suspendidos*/
+						UNION
+						/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+						SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 2
+						/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+						/**Todos Los Clientes Suspendidos**/
+				) group by `codigoCliente` HAVING COUNT(*) >= 2
+			/*---FIN SOLO CABLE TODOS LOS COBRADORES*/
+              UNION
+			/*---SOLO INTERNET TODOS LOS COBRADORES*/
+						SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW())
+			AND codigoCliente NOT IN (
+				/*--Cable en general*/
+				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW())
+				AND codigoCliente  NOT IN(
+						/**Todos Los Clientes Suspendidos**/
+						/**clientes de solo cable ya suspendidos*/
+						SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 3
+						/**fin clientes de solo cable ya suspendidos*/
+						UNION
+						/**clientes de solo internet ya suspendidos*/
+						SELECT cod_cliente as codigoCliente FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='T' AND estado_cliente_in = 2
+						/**Fin clientes de solo internet ya suspendidos*/
+						UNION
+						/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+						SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 2
+						/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+						/**Todos Los Clientes Suspendidos**/
+				)group by `codigoCliente` HAVING COUNT(*) >= 2
+				/*--fin Cable en general*/
+				UNION
+					/**Todos Los Clientes Suspendidos**/
+					/**clientes de solo cable ya suspendidos*/
+					SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 3
+					/**fin clientes de solo cable ya suspendidos*/
+					UNION
+					/**clientes de solo internet ya suspendidos*/
+					SELECT cod_cliente as codigoCliente FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='T' AND estado_cliente_in = 2
+					/**Fin clientes de solo internet ya suspendidos*/
+					UNION
+					/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+					SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 2
+					/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+					/**Todos Los Clientes Suspendidos**/
+			) group by `codigoCliente` HAVING COUNT(*) >= 2
+			/*---FIN SOLO INTERNET TODOS LOS COBRADORES*/
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
             UNION
 					/**Todos Los Clientes Suspendidos**/
 					/**clientes de solo cable ya suspendidos*/
@@ -365,6 +622,7 @@ AND codigoCliente NOT IN (
 
 
         }else{//paquete y cobrador espercifico
+<<<<<<< HEAD
             $query = "SELECT codigoCliente, codigoCobrador, nombre, direccion, tipoServicio,'P' as filtro, COUNT(*) as cantidadDeFacturasVencidas, fechaVencimiento, SUM(cuotaCable + cuotaInternet + totalImpuesto) as totalDeuda
 FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
             AND codigoCliente NOT IN (
@@ -388,6 +646,33 @@ FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < D
 					) group by `codigoCliente` HAVING COUNT(*) >=2
 			  /*---FIN SOLO INTERNET POR COBRADOR ESPECIFICO*/
                UNION
+=======
+            $query = "SELECT codigoCliente, nombre, direccion, tipoServicio,'P' as filtro, COUNT(*) as cantidadDeFacturasVencidas, fechaVencimiento, SUM(cuotaCable + cuotaInternet + totalImpuesto) as totalDeuda
+FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
+            AND codigoCliente NOT IN (
+              /*---SOLO CABLE POR COBRADOR ESPECIFICO*/
+				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
+				AND codigoCliente NOT IN (
+					/*--Internet en general*/
+					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
+					AND codigoCliente NOT IN (
+							/**Todos Los Clientes Suspendidos**/
+							/**clientes de solo cable ya suspendidos*/
+							SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 3
+							/**fin clientes de solo cable ya suspendidos*/
+							UNION
+							/**clientes de solo internet ya suspendidos*/
+							SELECT cod_cliente as codigoCliente FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='T' AND estado_cliente_in = 2
+							/**Fin clientes de solo internet ya suspendidos*/
+							UNION
+							/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+							SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 2
+							/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+							/**Todos Los Clientes Suspendidos**/
+					) group by `codigoCliente` HAVING COUNT(*) >= 2
+					/*--fin Internet en general*/
+					UNION
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 						/**Todos Los Clientes Suspendidos**/
 						/**clientes de solo cable ya suspendidos*/
 						SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 3
@@ -401,6 +686,7 @@ FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < D
 						SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 2
 						/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
 						/**Todos Los Clientes Suspendidos**/
+<<<<<<< HEAD
 ) group by `codigoCliente` HAVING COUNT(*) >= 4";
           $resultado = $mysqli->query($query) ;
 
@@ -430,6 +716,47 @@ SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND
 						group by `codigoCliente` HAVING COUNT(*) >=2
 						/*--fin Cable en general*/
 					) group by `codigoCliente` HAVING COUNT(*) >=2
+=======
+				) group by `codigoCliente` HAVING COUNT(*) >= 2
+              /*---FIN SOLO CABLE POR COBRADOR ESPECIFICO*/
+              UNION
+              /*---SOLO INTERNET POR COBRADOR ESPECIFICO*/
+				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
+				AND codigoCliente NOT IN (
+					/*--Cable en general*/
+					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
+					AND codigoCliente NOT IN (
+							/**Todos Los Clientes Suspendidos**/
+							/**clientes de solo cable ya suspendidos*/
+							SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 3
+							/**fin clientes de solo cable ya suspendidos*/
+							UNION
+							/**clientes de solo internet ya suspendidos*/
+							SELECT cod_cliente as codigoCliente FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='T' AND estado_cliente_in = 2
+							/**Fin clientes de solo internet ya suspendidos*/
+							UNION
+							/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+							SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 2
+							/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+							/**Todos Los Clientes Suspendidos**/
+					) group by `codigoCliente` HAVING COUNT(*) >= 2
+					/*--fin Cable en general*/
+					UNION
+						/**Todos Los Clientes Suspendidos**/
+						/**clientes de solo cable ya suspendidos*/
+						SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 3
+						/**fin clientes de solo cable ya suspendidos*/
+						UNION
+						/**clientes de solo internet ya suspendidos*/
+						SELECT cod_cliente as codigoCliente FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='T' AND estado_cliente_in = 2
+						/**Fin clientes de solo internet ya suspendidos*/
+						UNION
+						/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+						SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 2
+						/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+						/**Todos Los Clientes Suspendidos**/
+				) group by `codigoCliente` HAVING COUNT(*) >= 2
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 			  /*---FIN SOLO INTERNET POR COBRADOR ESPECIFICO*/
                UNION
 						/**Todos Los Clientes Suspendidos**/
@@ -445,8 +772,113 @@ SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND
 						SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 2
 						/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
 						/**Todos Los Clientes Suspendidos**/
+<<<<<<< HEAD
 ) group by `codigoCliente` HAVING COUNT(*) >= 4
     /*fin de todos los clientes que tienen los dos servicios y ya estan vencidas las 2 facturas*/
+=======
+) group by `codigoCliente` HAVING COUNT(*) >= 4";
+          $resultado = $mysqli->query($query) ;
+
+
+     //Contar cuantas facturas de cable hay en los paquetes por cobrador
+      $queryCableDelPaquete="select SUM(cantidadDeFacturasVencidas) as cantidadFacturasCableDePaquete, SUM(totalDeuda) as totalDeudaCableDePaquete FROM(
+  SELECT COUNT(*) as cantidadDeFacturasVencidas , SUM(cuotaCable + totalImpuesto) as totalDeuda FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
+    AND codigoCliente IN (
+    /*todos los clientes que tienen los dos servicios y ya estan vencidas las 4 facturas*/
+		SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
+					AND codigoCliente NOT IN (
+					  /*---SOLO CABLE POR COBRADOR ESPECIFICO*/
+						SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
+						AND codigoCliente NOT IN (
+							/*--Internet en general*/
+							SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
+							AND codigoCliente NOT IN (
+									/**Todos Los Clientes Suspendidos**/
+									/**clientes de solo cable ya suspendidos*/
+									SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 3
+									/**fin clientes de solo cable ya suspendidos*/
+									UNION
+									/**clientes de solo internet ya suspendidos*/
+									SELECT cod_cliente as codigoCliente FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='T' AND estado_cliente_in = 2
+									/**Fin clientes de solo internet ya suspendidos*/
+									UNION
+									/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+									SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 2
+									/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+									/**Todos Los Clientes Suspendidos**/
+							) group by `codigoCliente` HAVING COUNT(*) >= 2
+							/*--fin Internet en general*/
+							UNION
+								/**Todos Los Clientes Suspendidos**/
+								/**clientes de solo cable ya suspendidos*/
+								SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 3
+								/**fin clientes de solo cable ya suspendidos*/
+								UNION
+								/**clientes de solo internet ya suspendidos*/
+								SELECT cod_cliente as codigoCliente FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='T' AND estado_cliente_in = 2
+								/**Fin clientes de solo internet ya suspendidos*/
+								UNION
+								/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+								SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 2
+								/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+								/**Todos Los Clientes Suspendidos**/
+						) group by `codigoCliente` HAVING COUNT(*) >= 2
+					  /*---FIN SOLO CABLE POR COBRADOR ESPECIFICO*/
+					  UNION
+					  /*---SOLO INTERNET POR COBRADOR ESPECIFICO*/
+						SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
+						AND codigoCliente NOT IN (
+							/*--Cable en general*/
+							SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
+							AND codigoCliente NOT IN (
+									/**Todos Los Clientes Suspendidos**/
+									/**clientes de solo cable ya suspendidos*/
+									SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 3
+									/**fin clientes de solo cable ya suspendidos*/
+									UNION
+									/**clientes de solo internet ya suspendidos*/
+									SELECT cod_cliente as codigoCliente FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='T' AND estado_cliente_in = 2
+									/**Fin clientes de solo internet ya suspendidos*/
+									UNION
+									/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+									SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 2
+									/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+									/**Todos Los Clientes Suspendidos**/
+							) group by `codigoCliente` HAVING COUNT(*) >= 2
+							/*--fin Cable en general*/
+							UNION
+								/**Todos Los Clientes Suspendidos**/
+								/**clientes de solo cable ya suspendidos*/
+								SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 3
+								/**fin clientes de solo cable ya suspendidos*/
+								UNION
+								/**clientes de solo internet ya suspendidos*/
+								SELECT cod_cliente as codigoCliente FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='T' AND estado_cliente_in = 2
+								/**Fin clientes de solo internet ya suspendidos*/
+								UNION
+								/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+								SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 2
+								/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+								/**Todos Los Clientes Suspendidos**/
+						) group by `codigoCliente` HAVING COUNT(*) >= 2
+					  /*---FIN SOLO INTERNET POR COBRADOR ESPECIFICO*/
+					   UNION
+								/**Todos Los Clientes Suspendidos**/
+								/**clientes de solo cable ya suspendidos*/
+								SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 3
+								/**fin clientes de solo cable ya suspendidos*/
+								UNION
+								/**clientes de solo internet ya suspendidos*/
+								SELECT cod_cliente as codigoCliente FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='T' AND estado_cliente_in = 2
+								/**Fin clientes de solo internet ya suspendidos*/
+								UNION
+								/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+								SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 2
+								/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+								/**Todos Los Clientes Suspendidos**/
+		) group by `codigoCliente` HAVING COUNT(*) >= 4
+    /*fin de todos los clientes que tienen los dos servicios y ya estan vencidas las 4 facturas*/
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 )  group by `codigoCliente` HAVING COUNT(*) >= 2) as facturasCable;";
       $resultadoCableDelPaquete= $mysqliCableDePaquete->query($queryCableDelPaquete) ;
       while($row = $resultadoCableDelPaquete->fetch_assoc()){
@@ -459,6 +891,7 @@ SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND
       $queryInternetDelPaquete="select SUM(cantidadDeFacturasVencidas) as cantidadFacturasInternetDePaquete, SUM(totalDeuda) as totalDeudaInternetDePaquete FROM(
   SELECT COUNT(*) as cantidadDeFacturasVencidas , SUM(cuotaInternet + totalImpuesto) as totalDeuda FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
     AND codigoCliente IN (
+<<<<<<< HEAD
     /*todos los clientes que tienen los dos servicios y ya estan vencidas  2 facturas*/
     SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
             AND codigoCliente NOT IN (
@@ -480,6 +913,85 @@ SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND
 						group by `codigoCliente` HAVING COUNT(*) >=2
 						/*--fin Cable en general*/
 					) group by `codigoCliente` HAVING COUNT(*) >=2
+=======
+    /*todos los clientes que tienen los dos servicios y ya estan vencidas las 4 facturas*/
+     SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
+            AND codigoCliente NOT IN (
+              /*---SOLO CABLE POR COBRADOR ESPECIFICO*/
+				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
+				AND codigoCliente NOT IN (
+					/*--Internet en general*/
+					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
+					AND codigoCliente NOT IN (
+							/**Todos Los Clientes Suspendidos**/
+							/**clientes de solo cable ya suspendidos*/
+							SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 3
+							/**fin clientes de solo cable ya suspendidos*/
+							UNION
+							/**clientes de solo internet ya suspendidos*/
+							SELECT cod_cliente as codigoCliente FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='T' AND estado_cliente_in = 2
+							/**Fin clientes de solo internet ya suspendidos*/
+							UNION
+							/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+							SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 2
+							/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+							/**Todos Los Clientes Suspendidos**/
+					) group by `codigoCliente` HAVING COUNT(*) >= 2
+					/*--fin Internet en general*/
+					UNION
+						/**Todos Los Clientes Suspendidos**/
+						/**clientes de solo cable ya suspendidos*/
+						SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 3
+						/**fin clientes de solo cable ya suspendidos*/
+						UNION
+						/**clientes de solo internet ya suspendidos*/
+						SELECT cod_cliente as codigoCliente FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='T' AND estado_cliente_in = 2
+						/**Fin clientes de solo internet ya suspendidos*/
+						UNION
+						/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+						SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 2
+						/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+						/**Todos Los Clientes Suspendidos**/
+				) group by `codigoCliente` HAVING COUNT(*) >= 2
+              /*---FIN SOLO CABLE POR COBRADOR ESPECIFICO*/
+              UNION
+              /*---SOLO INTERNET POR COBRADOR ESPECIFICO*/
+				SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='I' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
+				AND codigoCliente NOT IN (
+					/*--Cable en general*/
+					SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND tipoServicio='C' AND fechaVencimiento < DATE(NOW()) AND codigoCobrador=".$_POST["susCobrador"]."
+					AND codigoCliente NOT IN (
+							/**Todos Los Clientes Suspendidos**/
+							/**clientes de solo cable ya suspendidos*/
+							SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 3
+							/**fin clientes de solo cable ya suspendidos*/
+							UNION
+							/**clientes de solo internet ya suspendidos*/
+							SELECT cod_cliente as codigoCliente FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='T' AND estado_cliente_in = 2
+							/**Fin clientes de solo internet ya suspendidos*/
+							UNION
+							/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+							SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 2
+							/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+							/**Todos Los Clientes Suspendidos**/
+					) group by `codigoCliente` HAVING COUNT(*) >= 2
+					/*--fin Cable en general*/
+					UNION
+						/**Todos Los Clientes Suspendidos**/
+						/**clientes de solo cable ya suspendidos*/
+						SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 3
+						/**fin clientes de solo cable ya suspendidos*/
+						UNION
+						/**clientes de solo internet ya suspendidos*/
+						SELECT cod_cliente as codigoCliente FROM clientes WHERE (servicio_suspendido='F' or servicio_suspendido is null) and sin_servicio='T' AND estado_cliente_in = 2
+						/**Fin clientes de solo internet ya suspendidos*/
+						UNION
+						/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+						SELECT cod_cliente FROM clientes WHERE servicio_suspendido='T' AND sin_servicio='F' AND estado_cliente_in = 2
+						/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
+						/**Todos Los Clientes Suspendidos**/
+				) group by `codigoCliente` HAVING COUNT(*) >= 2
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 			  /*---FIN SOLO INTERNET POR COBRADOR ESPECIFICO*/
                UNION
 						/**Todos Los Clientes Suspendidos**/
@@ -496,7 +1008,11 @@ SELECT codigoCliente FROM tbl_cargos WHERE estado ='pendiente' AND anulada=0 AND
 						/**CLIENTES DE PAQUETE YA SUSPENDIDOS*/
 						/**Todos Los Clientes Suspendidos**/
 ) group by `codigoCliente` HAVING COUNT(*) >= 4
+<<<<<<< HEAD
     /*fin de todos los clientes que tienen los dos servicios y ya estan vencidas  2 facturas*/
+=======
+    /*fin de todos los clientes que tienen los dos servicios y ya estan vencidas las 4 facturas*/
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 )  group by `codigoCliente` HAVING COUNT(*) >= 2) as facturasInternet;";
       $resultadoInternetDelPaquete= $mysqliInternetDePaquete->query($queryInternetDelPaquete) ;
       while($row = $resultadoInternetDelPaquete->fetch_assoc()){
@@ -1313,7 +1829,11 @@ $pdf->AddPage('L','Letter');
         $pdf->Cell(260,6,utf8_decode("CABLE VISION POR SATELITE, S.A DE C.V "),0,1,'C');
       $pdf->Image('../../../images/logo.png',10,10, 20, 18);
 
+<<<<<<< HEAD
       $pdf->Ln(1);
+=======
+      $pdf->Ln(4);
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
       $pdf->SetFont('Arial','',8);
       $pdf->Cell(260,6,utf8_decode("INFORME DE CLIENTES A SUSPENDER "),0,1,'L');
       //filtro cobrador del reporte
@@ -1329,12 +1849,21 @@ $pdf->AddPage('L','Letter');
       putenv("LANG='es_ES.UTF-8'");
       setlocale(LC_ALL, 'es_ES.UTF-8');
 	  $pdf->SetFont('Arial','B',8);
+<<<<<<< HEAD
 $pdf->Ln(1);
       $pdf->Cell(10,6,utf8_decode('N°'),1,0,'L');
       $pdf->Cell(65,6,utf8_decode('Cliente'),1,0,'L');
       $pdf->Cell(120,6,utf8_decode('Direccion'),1,0,'L');
       $pdf->Cell(22,6,utf8_decode('Tipo Servicio'),1,0,'L');
       $pdf->Cell(30,6,utf8_decode('Cant. Fact. Vencidas'),1,0,'L');
+=======
+$pdf->Ln(6);
+      $pdf->Cell(10,6,utf8_decode('N°'),1,0,'L');
+      $pdf->Cell(80,6,utf8_decode('Cliente'),1,0,'L');
+      $pdf->Cell(92,6,utf8_decode('Direccion'),1,0,'L');
+      $pdf->Cell(22,6,utf8_decode('Tipo Servicio'),1,0,'L');
+      $pdf->Cell(32,6,utf8_decode('Cant. Fact. Vencidas'),1,0,'L');
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
       $pdf->Cell(20,6,utf8_decode('Deuda Total'),1,0,'L');
       $pdf->Ln(6);
 
@@ -1357,6 +1886,7 @@ $pdf->Ln(1);
                 $tipoServicioTemp="Paquete";
               }//endPaquete
 
+<<<<<<< HEAD
                 $pdf->Ln(1);
                 $pdf->SetFont('Arial','',5);
                 $pdf->Cell(10,3,utf8_decode($contadorDeFilas),0,0,'L');
@@ -1376,6 +1906,18 @@ $pdf->Ln(1);
                 $pdf->Cell(30,3,utf8_decode($row['cantidadDeFacturasVencidas']),0,0,'C');
                 $pdf->Cell(20,3,utf8_decode("$ ".number_format($row['totalDeuda'],2)),0,0,'L');
                  $pdf->Ln(4);
+=======
+                $pdf->Ln(3);
+                $pdf->SetFont('Arial','',6);
+                $pdf->Cell(10,3,utf8_decode($contadorDeFilas),0,0,'L');
+                $contadorDeFilas++;
+                $pdf->Cell(80,3,utf8_decode(strtoupper($row['codigoCliente']."  ".$row['nombre'])),0,0,'L');
+                $pdf->Cell(92,3,utf8_decode($row['direccion']),0,0,'L');
+                $pdf->Cell(22,3,utf8_decode($tipoServicioTemp),0,0,'L');
+                $pdf->Cell(32,3,utf8_decode($row['cantidadDeFacturasVencidas']),0,0,'C');
+                $pdf->Cell(20,3,utf8_decode("$ ".number_format($row['totalDeuda'],2)),0,0,'L');
+                 $pdf->Ln(3);
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
     	  }
 
 
@@ -1387,8 +1929,13 @@ $pdf->Ln(1);
         $pdf->SetFont('Arial','',8);
 
         //TOTAL Ventas
+<<<<<<< HEAD
         $pdf->Cell(214,5,utf8_decode('TOTAL: '),0,0,'R');
         $pdf->Cell(30,5,$totalCantidadDeFacturasReporte,"T",0,'C');
+=======
+        $pdf->Cell(204,5,utf8_decode('TOTAL: '),0,0,'R');
+        $pdf->Cell(32,5,$totalCantidadDeFacturasReporte,"T",0,'C');
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
         $pdf->Cell(20,5,"$ ".number_format($totalDeudaReporte,2),"T",0,'L');
         $pdf->Ln(10);
 

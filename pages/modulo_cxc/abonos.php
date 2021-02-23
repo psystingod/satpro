@@ -220,8 +220,12 @@ if(!isset($_SESSION))
             $wifiClave = $row['clave_modem'];
 
             /**********************COVID19***********************/
+<<<<<<< HEAD
 
             $cuotaCovidC = number_format($row['cuotaCovidC'],2);
+=======
+            $cuotaCovidC = $row['cuotaCovidC'];
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
             if (strlen($row['covidDesdeC']) < 8) {
                 $covidDesdeC = "";
@@ -234,7 +238,11 @@ if(!isset($_SESSION))
                 $covidHastaC = $row['covidHastaC'];
             }
 
+<<<<<<< HEAD
             $cuotaCovidI = number_format($row['cuotaCovidI'],2);
+=======
+            $cuotaCovidI = $row['cuotaCovidI'];
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
             if (strlen($row['covidDesdeI']) < 8) {
                 $covidDesdeI = "";
@@ -334,6 +342,7 @@ if(!isset($_SESSION))
                     }
                 }
 
+<<<<<<< HEAD
             }else{
                 if ($_GET['tipoServicio'] == "c") {
                     if ($cuotaCovidC > 0){
@@ -345,6 +354,8 @@ if(!isset($_SESSION))
                         $cuotaInter = $cuotaCovidI;
                     }
                 }
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
             }
 
         }
@@ -913,8 +924,11 @@ $stmt->bindParam(':codigoCobrador', $_GET['cobrador']);
                                       <label for="valorCuota">Valor de la cuota</label>
                                       <input id="cuotaCable" type="hidden" name="cuotaCable" value="<?php echo $cuotaCable; ?>">
                                       <input id="cuotaInter" type="hidden" name="cuotaInter" value="<?php echo $cuotaInter; ?>">
+<<<<<<< HEAD
                                       <input id="prepagoCable" type="hidden" name="prepagoCable" value="<?php echo $prepagoCable; ?>">
                                       <input id="prepagoInter" type="hidden" name="prepagoInter" value="<?php echo $prepagoInter; ?>">
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                       <input id="valorCuota" class="form-control input-sm alert-danger" type="text" name="valorCuota" value="0.00" style="font-weight: bold;">
                                   </div>
                               </div>

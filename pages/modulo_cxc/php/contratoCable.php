@@ -18,7 +18,11 @@
 	  global $codigo, $mysqli;
 	  $query = "SELECT cod_cliente, nombre, direccion, numero_dui, num_registro, telefonos, lugar_exp, fecha_nacimiento, lugar_trabajo, tel_trabajo, numero_nit, valor_cuota, tipo_servicio, periodo_contrato_ca FROM clientes WHERE cod_cliente = ".$codigo;
 	  $resultado = $mysqli->query($query);
+<<<<<<< HEAD
 /*
+=======
+
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 	  // SQL query para traer datos del servicio de cable de la tabla clientes
 	  $query = "SELECT valorImpuesto FROM tbl_impuestos WHERE siglasImpuesto = 'CESC'";
 	  // PreparaciÃ³n de sentencia
@@ -36,7 +40,11 @@
 	  while ($result = $statement->fetch_assoc()) {
 		  $iva = floatval($result['valorImpuesto']);
 	  }
+<<<<<<< HEAD
 */
+=======
+
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
 	  $pdf = new FPDF();
 	  $pdf->AliasNbPages();
@@ -100,6 +108,7 @@
           $pdf->Cell(49,6,'',0,0,'L');
           $pdf->Cell(115,6,$tipoServicio,0,0,'L');
 
+<<<<<<< HEAD
 /*
 	    $imp = substr((($row['valor_cuota']/(1 + floatval($iva)))*$cesc),0,4);
   	    $imp = str_replace(',','.', $imp);
@@ -107,6 +116,14 @@
   	    //var_dump($imp);
 
   	    $cantidad = (doubleval($row['valor_cuota']));
+=======
+
+	    $imp = substr((($row['valor_cuota']/(1 + floatval($iva)))*$cesc),0,4);
+  	    $imp = str_replace(',','.', $imp);
+  	    //var_dump($imp);
+
+  	    $cantidad = (doubleval($row['valor_cuota']) + doubleval($imp));
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
         $pdf->Cell(20,6,'$'.number_format($cantidad,2),0,1,'L');
         $pdf->Ln(10);

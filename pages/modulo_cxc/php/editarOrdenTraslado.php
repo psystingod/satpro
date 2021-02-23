@@ -108,7 +108,11 @@
 
                     if (isset($_POST["actualizarDireccion"])){
                         if ($_POST["actualizarDireccion"] == '1'){
+<<<<<<< HEAD
                             $query = "UPDATE clientes SET direccion=:nuevaDireccion,direccion_cobro=:nuevaDireccion,dire_cable=:nuevaDireccion,coordenadas=:coordenadasNuevas WHERE cod_cliente=:codigoCliente";
+=======
+                            $query = "UPDATE clientes SET direccion=:nuevaDireccion,coordenadas=:coordenadasNuevas WHERE cod_cliente=:codigoCliente";
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
                             $statement = $this->dbConnect->prepare($query);
                             $statement->execute(array(
@@ -233,7 +237,11 @@
 
                     if (isset($_POST["actualizarDireccion"])){
                         if ($_POST["actualizarDireccion"] == '1'){
+<<<<<<< HEAD
                             $query = "UPDATE clientes SET direccion=:nuevaDireccion,direccion_cobro=:nuevaDireccion,dire_internet=:nuevaDireccion,coordenadas=:coordenadasNuevas WHERE cod_cliente=:codigoCliente";
+=======
+                            $query = "UPDATE clientes SET direccion=:nuevaDireccion,coordenadas=:coordenadasNuevas WHERE cod_cliente=:codigoCliente";
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
                             $statement = $this->dbConnect->prepare($query);
                             $statement->execute(array(

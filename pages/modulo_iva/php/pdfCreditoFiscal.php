@@ -106,6 +106,7 @@ $totalConIvaEx1=0;
 $totalSoloIva1=0;
 $totalSoloCesc1=0;
 
+<<<<<<< HEAD
 $totalSinIva1a=0;
 $totalConIva1a=0;
 $totalSinIvaEx1a=0;
@@ -113,6 +114,8 @@ $totalConIvaEx1a=0;
 $totalSoloIva1a=0;
 $totalSoloCesc1a=0;
 
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 $totalSinIva2=0;
 $totalConIva2=0;
 $totalSinIvaEx2=0;
@@ -141,7 +144,10 @@ function libroConsumidorFinal(){
     global $mysqli, $mesGenerar, $anoGenerar, $mesGenerarLetra, $tipoFacturaGenerar, $encabezados, $numPag, $libroDetallado, $ex, $iva, $cesc;
     global $totalSinIva,$totalConIva,$totalSinIvaEx,$totalConIvaEx,$totalSoloIva,$totalSoloCesc,$totalesCable,$totalesCescCable,$totalesInter,$totalesCescInter;
     global $totalSinIva1,$totalConIva1,$totalSinIvaEx1,$totalConIvaEx1,$totalSoloIva1,$totalSoloCesc1;
+<<<<<<< HEAD
     global $totalSinIva1a,$totalConIva1a,$totalSinIvaEx1a,$totalConIvaEx1a,$totalSoloIva1a,$totalSoloCesc1a;
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
     global $totalSinIva2,$totalConIva2,$totalSinIvaEx2,$totalConIvaEx2,$totalSoloIva2,$totalSoloCesc2,$totalesCable2,$totalesCescCable2,$totalesInter2,$totalesCescInter2;
     global $totalSinIva3,$totalConIva3,$totalSinIvaEx3,$totalConIvaEx3,$totalSoloIva3,$totalSoloCesc3;
     $pdf = new FPDF();
@@ -154,7 +160,10 @@ function libroConsumidorFinal(){
             $pdf->Ln(12);
         }
         $pdf->SetFont('Times','B',6);
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
         //###########################################Paginación y último usuario que imprime
         date_default_timezone_set('America/El_Salvador');
         if ($numPag == 1){$pdf->Cell(260,6,utf8_decode("Página ".str_pad($pdf->pageNo(),4,"0",STR_PAD_LEFT)),0,1,'R');}
@@ -166,11 +175,21 @@ function libroConsumidorFinal(){
             $pdf->SetFont('Times','B',10);
             $pdf->Cell(260,6,utf8_decode('LIBRO O REGISTRO DE OPERACIONES CON EMISION DE CREDITO FISCAL'),0,0,'C');
             $pdf->Ln(5);
+<<<<<<< HEAD
         }
         $pdf->SetFont('Times','B',8);
         //####################################################################################################
         $pdf->Ln(6);
         $pdf->Cell(260,6,utf8_decode($mesGenerarLetra." ".$anoGenerar. " ". '( VALORES EXPRESADOS EN US DOLARES )'),0,1,'C');
+=======
+            $pdf->SetFont('Times','B',8);
+            $pdf->Cell(260,6,utf8_decode('VALORES EXPRESADOS EN US DOLARES'),0,1,'C');
+            $pdf->Cell(260,3,utf8_decode($mesGenerarLetra." ".$anoGenerar),0,0,'C');
+        }
+        //####################################################################################################
+        $pdf->Ln(6);
+
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
         $pdf->SetFont('Times','B',10);
         //FILA 1
         $pdf->Cell(50,6,utf8_decode(''),"TLR",0,'C');
@@ -198,7 +217,11 @@ function libroConsumidorFinal(){
 
         //FILA 3
         $pdf->SetFont('Times','B',5);
+<<<<<<< HEAD
         $pdf->Cell(10,6,utf8_decode('N°'),1,0,'C');
+=======
+        $pdf->Cell(10,6,utf8_decode('DIA'),1,0,'C');
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
         $pdf->SetFont('Times','B',4.5);
         $pdf->Cell(20,6,utf8_decode('FECHA DE EMISION'),1,0,'C');
         $pdf->SetFont('Times','B',4.5);
@@ -242,7 +265,10 @@ function libroConsumidorFinal(){
         $pdf->SetFont('Times','',7);
         $counter = 1;
         $counter2 = 1;
+<<<<<<< HEAD
         $counterLine = 1;
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
         while ($counter <= 31) {
             if ($tipoFacturaGenerar == 1) {
                 $sql = "SELECT *, (SELECT num_registro FROM clientes WHERE clientes.cod_cliente=tbl_cargos.codigoCliente) AS nRegistro FROM tbl_cargos WHERE DAY(fechaFactura) =".$counter." AND MONTH(fechaFactura)=".$mesGenerar." AND YEAR(fechaFactura)=".$anoGenerar." AND tipoFactura = 1";
@@ -255,7 +281,11 @@ function libroConsumidorFinal(){
                         $separado1 = (doubleval($montoCancelado1)/(1 + doubleval($iva)));
                         $totalIva1 = substr(doubleval($separado1) * doubleval($iva),0,7);
 
+<<<<<<< HEAD
                         $pdf->Cell(10,1,utf8_decode($counterLine),0,0,'L');
+=======
+                        $pdf->Cell(10,1,utf8_decode(date("d", strtotime($result['fechaFactura']))),0,0,'L');
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                         $pdf->Cell(20,1,utf8_decode($result['fechaFactura']),0,0,'L');
                         $pdf->Cell(20,1,utf8_decode(substr($result['numeroFactura'],9,7)),0,0,'L');
                         $pdf->Cell(15,1,utf8_decode(0),0,0,'L');
@@ -306,7 +336,10 @@ function libroConsumidorFinal(){
                         //$pdf->Cell(15,1,utf8_decode(number_format($result["totalImpuesto"],2)),0,0,'L');
                         $pdf->Cell(15,1,utf8_decode(number_format(doubleval($montoCancelado1)/*+doubleval($result["totalImpuesto"])*/,2)),0,1,'L');
                         $pdf->Ln(3);
+<<<<<<< HEAD
                         $counterLine++;
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
                         if ($counter2 > 50){
                             $pdf->AddPage('L','Letter');
@@ -346,7 +379,11 @@ function libroConsumidorFinal(){
 
                             //FILA 3
                             $pdf->SetFont('Times','B',5);
+<<<<<<< HEAD
                             $pdf->Cell(10,6,utf8_decode('N°'),1,0,'C');
+=======
+                            $pdf->Cell(10,6,utf8_decode('DIA'),1,0,'C');
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                             $pdf->SetFont('Times','B',4.5);
                             $pdf->Cell(20,6,utf8_decode('FECHA DE EMISION'),1,0,'C');
                             $pdf->SetFont('Times','B',4.5);
@@ -378,7 +415,11 @@ function libroConsumidorFinal(){
                         $separado1 = (doubleval($montoCancelado1)/(1 + doubleval($iva)));
                         $totalIva1 = substr(doubleval($separado1) * doubleval($iva),0,7);
 
+<<<<<<< HEAD
                         $pdf->Cell(10,1,utf8_decode($counterLine),0,0,'L');
+=======
+                        $pdf->Cell(10,1,utf8_decode(date("d", strtotime($result['fechaFactura']))),0,0,'L');
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                         $pdf->Cell(20,1,utf8_decode($result['fechaFactura']),0,0,'L');
                         $pdf->Cell(20,1,utf8_decode(substr($result['numeroFactura'],9,7)),0,0,'L');
                         $pdf->Cell(15,1,utf8_decode(0),0,0,'L');
@@ -430,7 +471,10 @@ function libroConsumidorFinal(){
                         //$pdf->Cell(15,1,utf8_decode(number_format($result["totalImpuesto"],2)),0,0,'L');
                         $pdf->Cell(15,1,utf8_decode(number_format(doubleval($montoCancelado1)/*+doubleval($result["totalImpuesto"])*/,2)),0,1,'L');
                         $pdf->Ln(3);
+<<<<<<< HEAD
                         $counterLine++;
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
                         if ($counter2 > 50){
                             $pdf->AddPage('L','Letter');
@@ -470,7 +514,11 @@ function libroConsumidorFinal(){
 
                             //FILA 3
                             $pdf->SetFont('Times','B',5);
+<<<<<<< HEAD
                             $pdf->Cell(10,6,utf8_decode('N°'),1,0,'C');
+=======
+                            $pdf->Cell(10,6,utf8_decode('DIA'),1,0,'C');
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                             $pdf->SetFont('Times','B',4.5);
                             $pdf->Cell(20,6,utf8_decode('FECHA DE EMISION'),1,0,'C');
                             $pdf->SetFont('Times','B',4.5);
@@ -494,7 +542,10 @@ function libroConsumidorFinal(){
                             $pdf->Cell(15,6,utf8_decode(''),'BLR',1,'C');
                             $pdf->SetFont('Times','B',5);
                             $counter2++;
+<<<<<<< HEAD
                             
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                             $pdf->Ln(3);
                             $pdf->SetFont('Times','',7);
                         }
@@ -507,6 +558,7 @@ function libroConsumidorFinal(){
                     //IVA
 
                 }
+<<<<<<< HEAD
                 /////////////////////////////////////////////////////////////////////
                 //*******************************************************************
                                 $sql = "SELECT * FROM tbl_cargos WHERE DAY(fechaFactura) =".$counter." AND MONTH(fechaFactura)=".$mesGenerar." AND YEAR(fechaFactura)=".$anoGenerar." AND tipoFactura = 2 AND anulada=0";
@@ -616,6 +668,8 @@ function libroConsumidorFinal(){
                     }
                 //*******************************************************************
                 /////////////////////////////////////////////////////////////////////
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
             }
             elseif ($tipoFacturaGenerar == 2) {
                 $sql = "SELECT * FROM tbl_ventas_manuales WHERE DAY(fechaComprobante) =".$counter." AND MONTH(fechaComprobante)=".$mesGenerar." AND YEAR(fechaComprobante)=".$anoGenerar." AND tipoComprobante = 1 ORDER BY idVenta ASC";
@@ -706,7 +760,11 @@ function libroConsumidorFinal(){
 
                         //FILA 3
                         $pdf->SetFont('Times','B',5);
+<<<<<<< HEAD
                         $pdf->Cell(10,6,utf8_decode('N°'),1,0,'C');
+=======
+                        $pdf->Cell(10,6,utf8_decode('DIA'),1,0,'C');
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                         $pdf->SetFont('Times','B',4);
                         $pdf->Cell(20,6,utf8_decode('FECHA DE EMISION'),1,0,'C');
                         $pdf->SetFont('Times','B',4);
@@ -755,7 +813,11 @@ function libroConsumidorFinal(){
                         $totalIva3 = (doubleval($separado3) * doubleval($iva));
 
 
+<<<<<<< HEAD
                         $pdf->Cell(5,1,utf8_decode($counterLine),0,0,'L');
+=======
+                        $pdf->Cell(5,1,utf8_decode(date("d", strtotime($result['fechaComprobante']))),0,0,'L');
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                         $pdf->Cell(20,1,utf8_decode($result['prefijo'] . $result['numeroComprobante']),0,0,'L');
                         $pdf->Cell(15,1,utf8_decode(0),0,0,'L');
                         $pdf->Cell(60,1,utf8_decode($result["nombreCliente"]),0,0,'L');
@@ -785,7 +847,10 @@ function libroConsumidorFinal(){
                         $pdf->Cell(15,1,utf8_decode(number_format($result["impuesto"],2)),0,0,'L');
                         $pdf->Cell(15,1,utf8_decode(number_format(doubleval($montoCancelado3)+doubleval($result["impuesto"]),2)),0,0,'L');
                         $pdf->Ln(4);
+<<<<<<< HEAD
                         $counterLine++;
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
                         if ($counter2 > 50){
                             $pdf->AddPage('L','Letter');
@@ -825,7 +890,11 @@ function libroConsumidorFinal(){
 
                             //FILA 3
                             $pdf->SetFont('Times','B',5);
+<<<<<<< HEAD
                             $pdf->Cell(10,6,utf8_decode('N°'),1,0,'C');
+=======
+                            $pdf->Cell(10,6,utf8_decode('DIA'),1,0,'C');
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                             $pdf->SetFont('Times','B',4);
                             $pdf->Cell(20,6,utf8_decode('FECHA DE EMISION'),1,0,'C');
                             $pdf->SetFont('Times','B',4);
@@ -890,7 +959,10 @@ function libroConsumidorFinal(){
                         $pdf->Cell(15,1,utf8_decode(number_format($result["impuesto"],2)),0,0,'L');
                         $pdf->Cell(15,1,utf8_decode(number_format(doubleval($montoCancelado3)+doubleval($result["impuesto"]),2)),0,0,'L');
                         $pdf->Ln(4);
+<<<<<<< HEAD
                         $counterLine++;
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
                         if ($counter2 > 50){
                             $pdf->AddPage('L','Letter');
@@ -930,7 +1002,11 @@ function libroConsumidorFinal(){
 
                             //FILA 3
                             $pdf->SetFont('Times','B',5);
+<<<<<<< HEAD
                             $pdf->Cell(10,6,utf8_decode('N°'),1,0,'C');
+=======
+                            $pdf->Cell(10,6,utf8_decode('DIA'),1,0,'C');
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                             $pdf->SetFont('Times','B',4);
                             $pdf->Cell(20,6,utf8_decode('FECHA DE EMISION'),1,0,'C');
                             $pdf->SetFont('Times','B',4);
@@ -1033,7 +1109,11 @@ function libroConsumidorFinal(){
 
                             //FILA 3
                             $pdf->SetFont('Times','B',5);
+<<<<<<< HEAD
                             $pdf->Cell(10,6,utf8_decode('N°'),1,0,'C');
+=======
+                            $pdf->Cell(10,6,utf8_decode('DIA'),1,0,'C');
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                             $pdf->SetFont('Times','B',4);
                             $pdf->Cell(20,6,utf8_decode('FECHA DE EMISION'),1,0,'C');
                             $pdf->SetFont('Times','B',4);
@@ -1081,7 +1161,11 @@ function libroConsumidorFinal(){
                         $montoCancelado1 = doubleval($result["cuotaInternet"]);
                     }
                     //IVA
+<<<<<<< HEAD
                     //$separado1a = (floatval($montoCancelado1)/(1 + floatval($iva)));
+=======
+                    //$separado1 = (floatval($montoCancelado1)/(1 + floatval($iva)));
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                     //var_dump($separado);
                     //$totalIva1 = round((floatval($separado1) * floatval($iva)),2);
 
@@ -1177,7 +1261,11 @@ function libroConsumidorFinal(){
 
                         //FILA 3
                         $pdf->SetFont('Times','B',5);
+<<<<<<< HEAD
                         $pdf->Cell(10,6,utf8_decode('N°'),1,0,'C');
+=======
+                        $pdf->Cell(10,6,utf8_decode('DIA'),1,0,'C');
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                         $pdf->SetFont('Times','B',4);
                         $pdf->Cell(20,6,utf8_decode('FECHA DE EMISION'),1,0,'C');
                         $pdf->SetFont('Times','B',4);
@@ -1293,7 +1381,11 @@ function libroConsumidorFinal(){
 
                         //FILA 3
                         $pdf->SetFont('Times','B',5);
+<<<<<<< HEAD
                         $pdf->Cell(10,6,utf8_decode('N°'),1,0,'C');
+=======
+                        $pdf->Cell(10,6,utf8_decode('DIA'),1,0,'C');
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                         $pdf->SetFont('Times','B',4);
                         $pdf->Cell(20,6,utf8_decode('FECHA DE EMISION'),1,0,'C');
                         $pdf->SetFont('Times','B',4);
@@ -1410,7 +1502,11 @@ function libroConsumidorFinal(){
 
                         //FILA 3
                         $pdf->SetFont('Times','B',5);
+<<<<<<< HEAD
                         $pdf->Cell(10,6,utf8_decode('N°'),1,0,'C');
+=======
+                        $pdf->Cell(10,6,utf8_decode('DIA'),1,0,'C');
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                         $pdf->SetFont('Times','B',4);
                         $pdf->Cell(20,6,utf8_decode('FECHA DE EMISION'),1,0,'C');
                         $pdf->SetFont('Times','B',4);
@@ -1481,7 +1577,11 @@ function libroConsumidorFinal(){
 
         //FILA 3
         $pdf->SetFont('Times','B',5);
+<<<<<<< HEAD
         $pdf->Cell(10,6,utf8_decode('N°'),1,0,'C');
+=======
+        $pdf->Cell(10,6,utf8_decode('DIA'),1,0,'C');
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
         $pdf->SetFont('Times','B',4);
         $pdf->Cell(20,6,utf8_decode('FECHA DE EMISION'),1,0,'C');
         $pdf->SetFont('Times','B',4);
@@ -1507,7 +1607,11 @@ function libroConsumidorFinal(){
 
         $pdf->Ln(1);
         $pdf->SetFont('Times','B',7);
+<<<<<<< HEAD
         $pdf->Cell(60,6,utf8_decode(''),'T',0,'C');
+=======
+        $pdf->Cell(60,6,utf8_decode(''),0,0,'C');
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
         $pdf->Cell(60,6,utf8_decode('TOTALES DEL MES'),"T",0,'C');
         if ($tipoFacturaGenerar == 1) {
             $pdf->Cell(20,6,utf8_decode(''),"T",0,'L');
@@ -1522,6 +1626,7 @@ function libroConsumidorFinal(){
 
             $pdf->Ln(20);
             $pdf->SetFont('Times','B',7);
+<<<<<<< HEAD
             $pdf->Cell(40,6,utf8_decode('RESUMEN'),0,0,'L');
             $pdf->Cell(45,6,utf8_decode('RESUMEN DE VENTAS (CCF)'),0,0,'L');
             $pdf->Cell(65,6,utf8_decode('RESUMEN DE VENTAS A CONSUMIDOR FINAL'),0,0,'L');
@@ -1566,6 +1671,36 @@ function libroConsumidorFinal(){
                 $pdf->Ln(20);
                 $pdf->Cell(70,3,utf8_decode(''),"T",1,'C');
                 $pdf->Cell(40,1,utf8_decode("Nombre y firma del contador:"),"",0,'L');
+=======
+            $pdf->Cell(40,3.5,utf8_decode('RESUMEN'),0,1,'L');
+            $pdf->Cell(40,3.5,utf8_decode('Ventas exentas'),0,0,'L');
+            $pdf->Cell(40,3.5,utf8_decode(number_format($totalConIvaEx1,2)),0,1,'L');
+            $pdf->Cell(40,3.5,utf8_decode('Ventas netas gravadas'),0,0,'L');
+            $pdf->Cell(40,3.5,utf8_decode(number_format($totalSinIva1,2)),0,1,'L');
+            $pdf->Cell(40,3.5,utf8_decode('13% de IVA'),0,0,'L');
+            $pdf->Cell(40,3.5,utf8_decode(number_format($totalSoloIva1,2)),0,1,'L');
+            $pdf->Cell(40,3.5,utf8_decode('5% CESC'),0,0,'L');
+            $pdf->Cell(40,3.5,utf8_decode(number_format($totalSoloCesc1,2)),0,1,'L');
+            $pdf->Cell(40,3.5,utf8_decode('Exportaciones'),0,0,'L');
+            $pdf->Cell(40,3.5,utf8_decode('0.00'),0,1,'L');
+            $pdf->Cell(60,1,utf8_decode(''),"T",1,'C');
+            $pdf->Cell(40,3.5,utf8_decode("VENTAS TOTALES:"),"B",0,'L');
+            $pdf->Cell(20,3.5,utf8_decode(number_format(($totalConIvaEx1+$totalSinIva1+$totalSoloIva1+$totalSoloCesc1),2)),"B",1,'L');
+
+            /*$pdf->Cell(40,6,utf8_decode('Total solo cable'),0,0,'L');
+            $pdf->Cell(40,6,utf8_decode(number_format($totalesCable,2)),0,1,'L');
+            $pdf->Cell(40,6,utf8_decode('Total CESC cable'),"B",0,'L');
+            $pdf->Cell(20,6,utf8_decode(number_format($totalesCescCable,2)),"B",1,'L');
+
+            $pdf->Cell(40,6,utf8_decode('Total solo internet'),0,0,'L');
+            $pdf->Cell(40,6,utf8_decode(number_format($totalesInter,2)),0,1,'L');
+            $pdf->Cell(40,6,utf8_decode('Total CESC internet'),"",0,'L');
+            $pdf->Cell(20,6,utf8_decode(number_format($totalesCescInter,2)),"",1,'L');*/
+
+            $pdf->Ln(20);
+            $pdf->Cell(70,3,utf8_decode(''),"T",1,'C');
+            $pdf->Cell(40,1,utf8_decode("Nombre y firma del contador:"),"",0,'L');
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
         }elseif ($tipoFacturaGenerar == 2) {
             $pdf->Cell(20,6,utf8_decode(''),"T",0,'L');
             $pdf->Cell(12.5,6,utf8_decode(number_format($totalSinIvaEx2,2)),"T",0,'L');
@@ -1727,7 +1862,11 @@ function libroConsumidorFinal(){
 
         //FILA 3
         $pdf->SetFont('Times','B',5);
+<<<<<<< HEAD
         $pdf->Cell(10,6,utf8_decode('N°'),1,0,'C');
+=======
+        $pdf->Cell(10,6,utf8_decode('DIA'),1,0,'C');
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
         $pdf->SetFont('Times','B',4);
         $pdf->Cell(20,6,utf8_decode('FECHA DE EMISION'),1,0,'C');
         $pdf->SetFont('Times','B',4);
@@ -2131,7 +2270,11 @@ function libroConsumidorFinal(){
 
         //FILA 3
         $pdf->SetFont('Times','B',5);
+<<<<<<< HEAD
         $pdf->Cell(10,6,utf8_decode('N°'),1,0,'C');
+=======
+        $pdf->Cell(10,6,utf8_decode('DIA'),1,0,'C');
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
         $pdf->SetFont('Times','B',4);
         $pdf->Cell(20,6,utf8_decode('FECHA DE EMISION'),1,0,'C');
         $pdf->SetFont('Times','B',4);

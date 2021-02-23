@@ -17,10 +17,17 @@
 
             } /*catch (Exception $e) {
                 print "<h1>" . "No existe la sucursal que solicita." . "</h1>";
+<<<<<<< HEAD
                 print "<a href='../pages/login.php'>" . "<h2>Volver atrÃ¡s</h2>" . "</a>";
                 die();
             }*/catch (Exception $e) {
                 print "!ErrorÂ¡: " . $e->getMessage() . "</br>";
+=======
+                print "<a href='../pages/login.php'>" . "<h2>Volver atrás</h2>" . "</a>";
+                die();
+            }*/catch (Exception $e) {
+                print "!Error¡: " . $e->getMessage() . "</br>";
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                 die();
             }
         }

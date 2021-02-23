@@ -3,9 +3,14 @@ DROP TABLE IF EXISTS tbl_abonos;
 DROP TABLE IF EXISTS tbl_cargos;
 CREATE TABLE tbl_cargos (
   idFactura INT(11) NOT NULL AUTO_INCREMENT,
-  numeroFactura VARCHAR(30) DEFAULT NULL,
-  tipoFactura TINYINT(1) NOT NULL,
-  numeroRecibo VARCHAR(30) DEFAULT NULL,
+  nombre VARCHAR(70) DEFAULT NULL,
+  direccion VARCHAR(200) DEFAULT NULL,
+  idMunicipio VARCHAR(40) DEFAULT NULL,
+  idColonia VARCHAR(20) DEFAULT NULL,
+  /*prefijo VARCHAR(20) DEFAULT NULL,*/
+  numeroFactura VARCHAR(50) DEFAULT NULL,
+  tipoFactura TINYINT(1) DEFAULT NULL,
+  numeroRecibo VARCHAR(50) DEFAULT NULL,
   codigoCliente VARCHAR(6) NOT NULL,
   codigoCobrador VARCHAR(6) NOT NULL,
   cuotaCable DOUBLE DEFAULT NULL,
@@ -18,13 +23,16 @@ CREATE TABLE tbl_cargos (
   /*montoCancelado DOUBLE DEFAULT 0,*/
   fechaAbonado DATE DEFAULT NULL,
   mesCargo VARCHAR(10) DEFAULT '',
-  anticipo CHAR(1) DEFAULT '',
+  anticipo DOUBLE DEFAULT NULL,
   formaPago VARCHAR(10) DEFAULT '',
   tipoServicio CHAR NOT NULL,
   estado VARCHAR(9) DEFAULT '',
-  /*anticipado TINYINT(1) DEFAULT 0,*/
+  anticipado CHAR(2) DEFAULT NULL,
   cargoImpuesto DOUBLE DEFAULT NULL,
   totalImpuesto DOUBLE DEFAULT NULL,
+  cargoIva DOUBLE DEFAULT NULL,
+  totalIva DOUBLE DEFAULT NULL,
+  recargo DOUBLE DEFAULT 0,
   exento VARCHAR(2) DEFAULT NULL,
   anulada TINYINT(1) DEFAULT FALSE,
   PRIMARY KEY(idFactura)
@@ -38,11 +46,17 @@ CREATE TABLE tbl_cargos (
 DROP TABLE IF EXISTS tbl_abonos;
 CREATE TABLE tbl_abonos (
   idAbono INT(11) NOT NULL AUTO_INCREMENT,
-  numeroFactura VARCHAR(30) DEFAULT NULL,
+  nombre VARCHAR(70) DEFAULT NULL,
+  direccion VARCHAR(200) DEFAULT NULL,
+  idMunicipio VARCHAR(40) DEFAULT NULL,
+  idColonia VARCHAR(20) DEFAULT NULL,
+  /*prefijo VARCHAR(20) NOT NULL,*/
+  numeroFactura VARCHAR(50) DEFAULT NULL,
   tipoFactura TINYINT(1) NOT NULL,
-  numeroRecibo VARCHAR(30) DEFAULT NULL,
+  numeroRecibo VARCHAR(50) DEFAULT NULL,
   codigoCliente VARCHAR(6) NOT NULL,
   codigoCobrador VARCHAR(6) NOT NULL,
+  cobradoPor VARCHAR(6) NOT NULL,
   cuotaCable DOUBLE DEFAULT NULL,
   cuotaInternet DOUBLE DEFAULT NULL,
   saldoCable DOUBLE DEFAULT 0,
@@ -53,15 +67,16 @@ CREATE TABLE tbl_abonos (
   /*montoCancelado DOUBLE DEFAULT 0,*/
   fechaAbonado DATE DEFAULT NULL,
   mesCargo VARCHAR(10) DEFAULT '',
-  anticipo CHAR(1) DEFAULT '',
+  anticipo DOUBLE NOT NULL,
   formaPago VARCHAR(10) DEFAULT '',
   tipoServicio CHAR NOT NULL,
   estado VARCHAR(9) DEFAULT '',
-  /*anticipado TINYINT(1) DEFAULT 0,*/
+  anticipado CHAR(2) DEFAULT NULL,
   cargoImpuesto DOUBLE DEFAULT NULL,
   totalImpuesto DOUBLE DEFAULT NULL,
   cargoIva DOUBLE DEFAULT NULL,
   totalIva DOUBLE DEFAULT NULL,
+  recargo DOUBLE DEFAULT 0,
   exento VARCHAR(2) DEFAULT NULL,
   anulada TINYINT(1) DEFAULT FALSE,
   idFactura INT(11) DEFAULT NULL,

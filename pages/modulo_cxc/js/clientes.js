@@ -153,6 +153,7 @@ function changeAction(action){
 }
 //FUNCIONES PARA BOTONES
 function todoAtras1(codigo){
+<<<<<<< HEAD
     window.open("infoCliente.php?id="+String(codigo).padStart(5,"0"),"_self");
 }
 
@@ -162,11 +163,26 @@ function atras1(codigo){
 
 function adelante1(codigo){
     window.open("infoCliente.php?id="+String(parseInt(codigo)+1).padStart(5,"0"),"_self");
+=======
+    window.open("infoCliente.php?id="+codigo,"_self");
+}
+
+function atras1(codigo){
+    window.open("infoCliente.php?id="+(parseInt(codigo)-1),"_self");
+}
+
+function adelante1(codigo){
+    window.open("infoCliente.php?id="+(parseInt(codigo)+1),"_self");
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 }
 
 function todoAdelante1(codigo){
     console.log(codigo);
+<<<<<<< HEAD
     window.open("infoCliente.php?id="+String(codigo).padStart(5,"0"),"_self");
+=======
+    window.open("infoCliente.php?id="+codigo,"_self");
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 }
 
 
@@ -328,6 +344,7 @@ function selectTipoComp(){
         if (nrc.length < 3){
             document.getElementById("nrc").focus();
         }
+<<<<<<< HEAD
     }else{
         document.getElementById("nrc").required = false;
 
@@ -345,6 +362,11 @@ function contratoI(){
     }
 }
 */
+=======
+    }
+}
+
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 function fechaCovidCable(){
     var covidDesdeC = document.getElementById("covidDesdeC").value;
     var covidHastaC = document.getElementById("covidHastaC").value;

@@ -191,7 +191,10 @@ if ((document.getElementById("mesx1") != null && document.getElementById("mesx2"
 
 function xmesesCancelar(){
     if (document.getElementById("mesx1") != null && document.getElementById("mesx2") != null){
+<<<<<<< HEAD
         
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
         var nextM = (document.getElementById("meses").value).substring(0,7);
         //console.log("valor de meses "+nextM);
         nextM = nextM.replace("/", "-");
@@ -200,6 +203,7 @@ function xmesesCancelar(){
         var d = new Date(joinArray+'T00:00');
         console.log("valor de joinArray "+joinArray);
         console.log("valor de Date joinArray "+d);
+<<<<<<< HEAD
         //// variables para el calculo al seleccionar xmeses para calculos de meses 
         var xmeses = document.getElementById("xmeses").value;
         var totalCesc = document.getElementById("impSeg").value;
@@ -217,6 +221,15 @@ function xmesesCancelar(){
         //var month = (newDate.getMonth())+2;
         //console.log("FUERA DEL LOOP "+newDate.getMonth());
         var vueltas = 1;
+=======
+        var xmeses = document.getElementById("xmeses").value;
+
+        //d.setMonth(d.getMonth());
+        var newDate = new Date(d.setMonth(d.getMonth()+1));
+        //var month = (newDate.getMonth())+2;
+        //console.log("FUERA DEL LOOP "+newDate.getMonth());
+        var vueltas = 2;
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
         for (var i = 1; i < xmeses; i++) {
             //console.log("EN EL LOOP "+newDate.getMonth());
             //var newDate = new Date(d.setMonth(d.getMonth()+2));
@@ -323,7 +336,10 @@ function xmesesCancelar(){
         var xmeses = document.getElementById("xmeses").value;
         //d.setMonth(d.getMonth());
         var newDate = new Date(d.setMonth(d.getMonth()+1));
+<<<<<<< HEAD
         var newDate2 = new Date(d.setMonth(d.getMonth()+1));
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
         //var month = (newDate.getMonth())+2;
         //console.log("FUERA DEL LOOP "+newDate.getMonth());
         var vueltas = 1;
@@ -428,8 +444,12 @@ function xmesesCancelar(){
                 //console.log(document.getElementById("impSeg").value);
                 //console.log(document.getElementById("xmeses").value);
                 document.getElementById("impSeg").value = Number(parseFloat(impuestox) * document.getElementById("xmeses").value).toFixed(2);
+<<<<<<< HEAD
 
                 document.getElementById("totalAbonoImpSeg").value = Number(parseFloat(totalPagar1) + parseFloat(document.getElementById("impSeg").value)).toFixed(2);
+=======
+                document.getElementById("totalAbonoImpSeg").value = Number(parseFloat(totalPagar1)+parseFloat(document.getElementById("impSeg").value)).toFixed(2);
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                 //console.log(document.getElementById("totalPagar").value);
                 //console.log(document.getElementById("xmeses").value);
                 // FIN CALCULO PARA MOSTRAR EL TOTAL A PAGAR

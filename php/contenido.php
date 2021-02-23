@@ -66,10 +66,16 @@ $dashboardAdministracion = "<div id='page-wrapper'>
                         <div class='value'>".number_format($dashboard->getActiveClients())."</div>
                         <div class='name'>Clientes activos</div>
                     </div>
+<<<<<<< HEAD
                     <div class=''><a href='../pages/modulo_cxc/php/listaDeClientesC1.php' class='label label-success'>CABLE</a> ".number_format($dashboard->getTotalClientsC())."</div>
                     <div class=''><a href='../pages/modulo_cxc/php/listaDeClientesI1.php'  class='label label-primary'>INTERNET</a> ".number_format($dashboard->getTotalClientsI())."</div>
                     <div class=''><a href='../pages/modulo_cxc/php/listaDeClientesCI1.php'  class='label label-danger'>PAQUETE</a> ".number_format($dashboard->getTotalClientsCI())."</div>
                     <div class=''><a href='../pages/modulo_cxc/php/reporteMegas.php' class='label label-warning'>Reporte de ancho de banda vendido</a></div>
+=======
+                    <div class=''><span class='label label-success'>CABLE</span> ".number_format($dashboard->getTotalClientsC())."</div>
+                    <div class=''><span class='label label-primary'>INTERNET</span> ".number_format($dashboard->getTotalClientsI())."</div>
+                    <div class=''><span class='label label-danger'>PAQUETE</span> ".number_format($dashboard->getTotalClientsCI())."</div>
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                 </div>
                 <div class='col-lg-6'>
                     <a href='#'><div class='stat-icon btn btn-default' style='color:#8e44ad'>

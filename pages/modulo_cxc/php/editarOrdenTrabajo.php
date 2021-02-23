@@ -62,7 +62,11 @@
 
                     //$Fecha = date('Y/m/d g:i');
 
+<<<<<<< HEAD
                     $query = "UPDATE tbl_ordenes_trabajo SET codigoCliente=:codigoCliente, fechaOrdenTrabajo=:fechaOrdenTrabajo, tipoOrdenTrabajo=:tipoOrdenTrabajo, diaCobro=:diaCobro, nombreCliente=:nombreCliente, telefonos=:telefonos, idMunicipio=:idMunicipio, actividadCable=:idActividadCable, saldoCable=:saldoCable, direccionCable=:direccionCable, fechaTrabajo=:fechaTrabajo, hora=:hora, fechaProgramacion=:fechaProgramacion, idTecnico=:idTecnico, mactv=:mactv, observaciones=:observaciones, idVendedor=:idVendedor, tecnologia=:tecnologia, recepcionTv=:recepcionTv, tipoServicio=:tipoServicio, coordenadas=:coordenadas, nodo=:nodo, creadoPor=:creadoPor, checksoporte=:checksoporte WHERE idOrdenTrabajo=:idOrdenTrabajo";
+=======
+                    $query = "UPDATE tbl_ordenes_trabajo SET codigoCliente=:codigoCliente, fechaOrdenTrabajo=:fechaOrdenTrabajo, tipoOrdenTrabajo=:tipoOrdenTrabajo, diaCobro=:diaCobro, nombreCliente=:nombreCliente, telefonos=:telefonos, idMunicipio=:idMunicipio, actividadCable=:idActividadCable, saldoCable=:saldoCable, direccionCable=:direccionCable, fechaTrabajo=:fechaTrabajo, hora=:hora, fechaProgramacion=:fechaProgramacion, idTecnico=:idTecnico, mactv=:mactv, observaciones=:observaciones, idVendedor=:idVendedor, tecnologia=:tecnologia, recepcionTv=:recepcionTv, tipoServicio=:tipoServicio, coordenadas=:coordenadas, nodo=:nodo, creadoPor=:creadoPor WHERE idOrdenTrabajo=:idOrdenTrabajo";
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(

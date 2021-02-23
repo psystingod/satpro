@@ -280,7 +280,11 @@ $totalesCescInter2 = 0;
                                 $tipoServ = 'INTERNET';
                             }
                             $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
+<<<<<<< HEAD
                             $pdf->Cell(20,1,utf8_decode(number_format($montoCancelado1,2)),0,0,'L');
+=======
+                            $pdf->Cell(20,1,utf8_decode(number_format($sinIva1,2)),0,0,'L');
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                             $pdf->Cell(20,1,utf8_decode($tipoServ),0,0,'L');
                             $totalSinIva1 = $totalSinIva1 +$sinIva1;
                             $totalConIva1 = $totalConIva1 + $montoCancelado1;
@@ -880,7 +884,11 @@ $totalesCescInter2 = 0;
 
                         else {
                             $pdf->Cell(20,1,utf8_decode("0.00"),0,0,'L');
+<<<<<<< HEAD
                             $pdf->Cell(20,1,utf8_decode(number_format($montoCancelado1,2)),0,0,'L');//APARENTEMENTE TIENE IVA Y FALTA CESC
+=======
+                            $pdf->Cell(20,1,utf8_decode(number_format($sinIva1,2)),0,0,'L');//APARENTEMENTE TIENE IVA Y FALTA CESC
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                             $pdf->Cell(20,1,utf8_decode($tipoServ),0,0,'L');
                             $totalSinIva1 = $totalSinIva1 +$sinIva1;
                             $totalConIva1 = $totalConIva1 + $montoCancelado1;
@@ -1210,7 +1218,11 @@ $totalesCescInter2 = 0;
             $pdf->Cell(60,6,utf8_decode('TOTALES DEL MES'),"T",0,'C');
             if ($tipoFacturaGenerar == 1) {
                 $pdf->Cell(20,6,utf8_decode(number_format($totalSinIvaEx1,2)),"T",0,'C');
+<<<<<<< HEAD
                 $pdf->Cell(20,6,utf8_decode(number_format($totalConIva1,2)),"T",0,'C');
+=======
+                $pdf->Cell(20,6,utf8_decode(number_format($totalSinIva1,2)),"T",0,'C');
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                 $pdf->Cell(20,6,utf8_decode('0.00'),"T",0,'C');
                 $pdf->Cell(15,6,utf8_decode(number_format($totalConIva1,2)),"T",0,'C');
                 $pdf->Cell(10,6,utf8_decode(number_format($totalSoloCesc1,2)),"T",0,'C');
@@ -1238,7 +1250,11 @@ $totalesCescInter2 = 0;
                 $pdf->Cell(40,1,utf8_decode("Nombre y firma del contador"),"",0,'L');
             }elseif ($tipoFacturaGenerar == 2) {
                 $pdf->Cell(20,6,utf8_decode(number_format($totalSinIvaEx2,2)),"T",0,'C');
+<<<<<<< HEAD
                 $pdf->Cell(20,6,utf8_decode(number_format($totalConIva2,2)),"T",0,'C');
+=======
+                $pdf->Cell(20,6,utf8_decode(number_format($totalSinIva2,2)),"T",0,'C');
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                 $pdf->Cell(20,6,utf8_decode('0.00'),"T",0,'C');
                 $pdf->Cell(15,6,utf8_decode(number_format($totalConIva2,2)),"T",0,'C');
                 $pdf->Cell(10,6,utf8_decode(number_format($totalSoloCesc2,2)),"T",0,'C');
@@ -1266,7 +1282,11 @@ $totalesCescInter2 = 0;
                 $pdf->Cell(40,1,utf8_decode("Nombre y firma del contador o contribuyente:"),"",0,'L');
             }elseif ($tipoFacturaGenerar == 3) {
                 $pdf->Cell(20,6,utf8_decode(number_format($totalSinIvaEx3,2)),"T",0,'C');
+<<<<<<< HEAD
                 $pdf->Cell(20,6,utf8_decode(number_format($totalConIva3,2)),"T",0,'C');
+=======
+                $pdf->Cell(20,6,utf8_decode(number_format($totalSinIva3,2)),"T",0,'C');
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                 $pdf->Cell(20,6,utf8_decode('0.00'),"T",0,'C');
                 $pdf->Cell(15,6,utf8_decode(number_format($totalConIva3,2)),"T",0,'C');
                 $pdf->Cell(10,6,utf8_decode(number_format($totalSoloCesc3,2)),"T",0,'C');
@@ -1305,7 +1325,11 @@ $totalesCescInter2 = 0;
 
             }elseif ($tipoFacturaGenerar == 4) {
                 $pdf->Cell(20,6,utf8_decode(number_format(($totalSinIvaEx1+$totalSinIvaEx2-$totalSinIvaEx3),2)),"T",0,'C');
+<<<<<<< HEAD
                 $pdf->Cell(20,6,utf8_decode(number_format(($totalConIva1+$totalConIva2-$totalConIva3),2)),"T",0,'C');
+=======
+                $pdf->Cell(20,6,utf8_decode(number_format(($totalSinIva1+$totalSinIva2-$totalSinIva3),2)),"T",0,'C');
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                 $pdf->Cell(20,6,utf8_decode('0.00'),"T",0,'C');
                 $pdf->Cell(15,6,utf8_decode(number_format(($totalConIva1+$totalConIva2-$totalConIva3),2)),"T",0,'C');
                 $pdf->Cell(10,6,utf8_decode(number_format(($totalSoloCesc1+$totalSoloCesc2-$totalSoloCesc3),2)),"T",0,'C');
@@ -1519,7 +1543,11 @@ $totalesCescInter2 = 0;
                         }
 
                         //IVA
+<<<<<<< HEAD
                         $totalCesc = substr((($montoCancelado/(1 + floatval($iva)))*$cesc),0,4);
+=======
+                        $totalCesc = substr((($montoCancelado/(1 + floatval($iva)))*$cesc),0,7);
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
 
                         //IVA

@@ -138,7 +138,10 @@ function abonos()
     setlocale(LC_ALL, 'es_ES.UTF-8');
     $pdf->SetFont('Arial', 'B', 6.5);
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
     $pdf->Cell(10, 5, utf8_decode('N°'), 1, 0, 'L');
     $pdf->Cell(20, 5, utf8_decode('N° de orden'), 1, 0, 'L');
     //$pdf->Cell(20, 5, utf8_decode('Fecha'), 1, 0, 'L');
@@ -228,7 +231,10 @@ function abonos()
                     }
                 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                 if ($row["tipoServicio"] == "C") {
                     $query3 = "SELECT dia_cobro FROM clientes WHERE cod_cliente= " . $row['codigoCliente'];
                     // Preparación de sentencia

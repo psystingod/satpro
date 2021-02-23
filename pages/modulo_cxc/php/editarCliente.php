@@ -41,9 +41,12 @@ class EditarCliente extends ConectionDB
             $nContrato = $_POST['contrato'];
             $nFactura = $_POST['factura'];
             $nombre = strtoupper($_POST['nombre']);
+<<<<<<< HEAD
             $nombre_comercial = $_POST['nombre_comercial'];
             $nacionalidad = $_POST['nacionalidad'];
             $tipo_de_contrato = $_POST["tipo_de_contrato"];
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
             /*$empresa = $_POST["empresa"];*/
              $tipoComprobante = $_POST['tipoComprobante']; //Credito fiscal o consumidor final
              if ($tipoComprobante == '1') {
@@ -155,6 +158,7 @@ class EditarCliente extends ConectionDB
                     $date2 = str_replace('/', '-', $date1);
                     $fechaReinstalacionCable = date("Y-m-d", strtotime($date2));
                 }
+<<<<<<< HEAD
 
             }else {
 
@@ -166,6 +170,19 @@ class EditarCliente extends ConectionDB
 
               $vencimientoCable = "";
 
+=======
+
+            }else {
+
+              $fechaInstalacion = "";
+
+              $fechaPrimerFactura = "";
+
+              $fechaSuspensionCable = "";
+
+              $vencimientoCable = "";
+
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
               $fechaInicioContratoCable = "";
 
               $fechaReinstalacionCable = "";
@@ -209,6 +226,7 @@ class EditarCliente extends ConectionDB
                     $date2 = str_replace('/', '-', $date1);
                     $fechaInstalacionInter = date("Y-m-d", strtotime($date2));
                 }
+<<<<<<< HEAD
 
                 if (strlen($_POST['fechaPrimerFacturaInternet']) < 8) {
                     $fechaPrimerFacturaInter = "";
@@ -276,6 +294,74 @@ class EditarCliente extends ConectionDB
             $tecnologia = $_POST['tecnologia'];
             //$nContratoInter = $_POST['nContratoVigente'];
 
+=======
+
+                if (strlen($_POST['fechaPrimerFacturaInternet']) < 8) {
+                    $fechaPrimerFacturaInter = "";
+                }else {
+                    $date1 = trim($_POST['fechaPrimerFacturaInternet']);
+                    $date2 = str_replace('/', '-', $date1);
+                    $fechaPrimerFacturaInter = date("Y-m-d", strtotime($date2));
+                }
+
+                if (strlen($_POST['vencimientoContratoInternet']) < 8) {
+                    $vencimientoInternet = "";
+                }else {
+                    $date1 = trim($_POST['vencimientoContratoInternet']);
+                    $date2 = str_replace('/', '-', $date1);
+                    $vencimientoInternet = date("Y-m-d", strtotime($date2));
+                }
+
+                if (strlen($_POST['ultimaRenovacionInternet']) < 8) {
+                    $ultimaRenovacionInternet = "";
+                }else {
+                    $date1 = trim($_POST['ultimaRenovacionInternet']);
+                    $date2 = str_replace('/', '-', $date1);
+                    $ultimaRenovacionInternet = date("Y-m-d", strtotime($date2));
+                }
+
+                if (strlen($_POST['fechaSuspencionInternet']) < 8) {
+                    $fechaSuspencionInternet = "";
+                }else {
+                    $date1 = trim($_POST['fechaSuspencionInternet']);
+                    $date2 = str_replace('/', '-', $date1);
+                    $fechaSuspencionInternet = date("Y-m-d", strtotime($date2));
+                }
+
+                if (strlen($_POST['fechaReconexionInternet']) < 8) {
+                    $fechaReconexionInternet = "";
+                }else {
+                    $date1 = trim($_POST['fechaReconexionInternet']);
+                    $date2 = str_replace('/', '-', $date1);
+                    $fechaReconexionInternet = date("Y-m-d", strtotime($date2));
+                }
+
+              $costoInstalacionIn = trim($_POST['costoInstalacionIn']);
+            }else {
+
+              $fechaInstalacionInter = "";
+
+              $fechaPrimerFacturaInter = "";
+
+              $vencimientoInternet = "";
+
+              $ultimaRenovacionInternet = "";
+
+              $fechaSuspencionInternet = "";
+
+              $fechaReconexionInternet = "";
+            }
+
+            $tipoServicioInternet = $_POST['tipoServicioInternet']; //Prepago o pospago
+            $periodoContratoInternet = trim($_POST['mesesContratoInternet']);
+            $diaCobroInter = trim($_POST['diaGenerarFacturaInternet']);
+            $velocidadInter = $_POST['velocidadInternet'];
+            $cuotaMensualInter = trim($_POST['cuotaMensualInternet']);
+            $tipoClienteInter = $_POST['tipoCliente'];
+            $tecnologia = $_POST['tecnologia'];
+            $nContratoInter = $_POST['nContratoVigente'];
+
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
             $promocion = $_POST['promocion'];
             //$promocionDesde = $_POST['promocionDesde'];
             if (strlen($_POST['promocionDesde']) < 8) {
@@ -303,6 +389,7 @@ class EditarCliente extends ConectionDB
             $fechaHora = date('d/m/Y h:i:s');
             //var_dump($aplicaCovid);
             $cuotaCovidC = $_POST["cuotaCovidC"];
+<<<<<<< HEAD
 
             if (strlen($_POST["covidDesdeC"]) < 8) {
                 $covidDesdeC = "";
@@ -322,6 +409,27 @@ class EditarCliente extends ConectionDB
             //$covidHastaC = $_POST["covidHastaC"];
             $cuotaCovidI = $_POST["cuotaCovidI"];
 
+=======
+
+            if (strlen($_POST["covidDesdeC"]) < 8) {
+                $covidDesdeC = "";
+            }else {
+                $date1 = trim($_POST["covidDesdeC"]);
+                $date2 = str_replace('/', '-', $date1);
+                $covidDesdeC = date("Y-m-d", strtotime($date2));
+            }
+            if (strlen($_POST["covidHastaC"]) < 8) {
+                $covidHastaC = "";
+            }else {
+                $date1 = trim($_POST["covidHastaC"]);
+                $date2 = str_replace('/', '-', $date1);
+                $covidHastaC = date("Y-m-d", strtotime($date2));
+            }
+            //$covidDesdeC = $_POST["covidDesdeC"];
+            //$covidHastaC = $_POST["covidHastaC"];
+            $cuotaCovidI = $_POST["cuotaCovidI"];
+
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
             if (strlen($_POST["covidDesdeI"]) < 8) {
                 $covidDesdeI = "";
             }else {
@@ -339,6 +447,7 @@ class EditarCliente extends ConectionDB
             //$covidDesdeI = $_POST["covidDesdeI"];
             //$covidHastaI = $_POST["covidHastaI"];
 
+<<<<<<< HEAD
             $query = "UPDATE clientes SET servicio_suspendido=:servicioSuspendido, sin_servicio=:sinServicio, estado_cliente_in=:estadoClienteIn, numero_contrato=:nContrato, num_factura=:nFactura, nombre=:nombre, nombre_comercial=:nombre_comercial, nacionalidad=:nacionalidad, tipo_de_contrato=:tipo_de_contrato,/*empresa=:empresa,*/ Anexo=:anexo, numero_nit=:nit, numero_dui=:dui, lugar_exp=:lugarExp, num_registro=:nrc, saldoCable=:saldoCable, saldoInternet=:saldoInter, direccion_cobro=:dirCobro, direccion=:dir,
                       fecha_nacimiento=:fechaNacimiento, id_departamento=:idDepartamento, id_municipio=:idMunicipio, id_colonia=:idColonia, telefonos=:telefonos, tel_trabajo=:telTrabajo, correo_electronico=:email, profesion=:ocupacion, id_cuenta=:cuentaContable, forma_pago=:formaPago, tipo_comprobante=:tipoComprobante, saldo_actual=:saldoActual, facebook=:facebook, contactos=:contactos, contacto2=:contacto2, contacto3=:contacto3,
                       telcon1=:telcon1, telcon2=:telcon2, telcon3=:telcon3, paren1=:paren1, paren2=:paren2, paren3=:paren3, dir1=:dir1, dir2=:dir2, dir3=:dir3,observaciones=:observaciones,
@@ -347,6 +456,15 @@ class EditarCliente extends ConectionDB
                       vencimiento_in=:vencimientoContratoIn, ult_ren_in=:ultRenIn, fecha_suspencion_in=:fechaSuspensionIn, fecha_reconexion_in=:fechaReconexIn, id_promocion=:promoIn, dese_promocion_in=:promoInDesde, hasta_promocion_in=:promoInHasta, cuota_promocion=:cuotaPromoIn, dire_internet=:direInter, id_tecnico_in=:idTecnicoIn, costo_instalacion_in=:costoInstalacionIn, colilla=:colilla, marca_modem=:modelo, recep_modem=:recepcion, wanip=:wanip, mac_modem=:macModem, trans_modem=:trans, coordenadas=:coordenadas, serie_modem=:serieModem, ruido_modem=:ruido, dire_telefonia=:nodo, clave_modem=:claveWifi, ult_usuario=:ultUser, id_cuenta=:idCuenta,
                       cuotaCovidC=:cuotaCovidC, covidDesdeC=:covidDesdeC, covidHastaC=:covidHastaC, cuotaCovidI=:cuotaCovidI, covidDesdeI=:covidDesdeI, covidHastaI=:covidHastaI WHERE cod_cliente = :codigo";
 
+=======
+            $query = "UPDATE clientes SET servicio_suspendido=:servicioSuspendido, sin_servicio=:sinServicio, estado_cliente_in=:estadoClienteIn, numero_contrato=:nContrato, num_factura=:nFactura, nombre=:nombre, /*empresa=:empresa,*/ Anexo=:anexo, numero_nit=:nit, numero_dui=:dui, lugar_exp=:lugarExp, num_registro=:nrc, saldoCable=:saldoCable, saldoInternet=:saldoInter, direccion_cobro=:dirCobro, direccion=:dir,
+                      fecha_nacimiento=:fechaNacimiento, id_departamento=:idDepartamento, id_municipio=:idMunicipio, id_colonia=:idColonia, telefonos=:telefonos, tel_trabajo=:telTrabajo, correo_electronico=:email, profesion=:ocupacion, id_cuenta=:cuentaContable, forma_pago=:formaPago, tipo_comprobante=:tipoComprobante, saldo_actual=:saldoActual, facebook=:facebook, contactos=:contactos, contacto2=:contacto2, contacto3=:contacto3,
+                      telcon1=:telcon1, telcon2=:telcon2, telcon3=:telcon3, paren1=:paren1, paren2=:paren2, paren3=:paren3, dir1=:dir1, dir2=:dir2, dir3=:dir3,observaciones=:observaciones,
+                      fecha_instalacion=:fechaInstalacionCable, fecha_primer_factura=:fechaPrimerFacturaCable, fecha_suspencion=:fechaSuspensionCable, exento=:exento, dia_cobro=:diaCobro, servicio_cortesia=:servicioCortesia, valor_cuota=:cuotaCable, prepago=:prepago, tipo_servicio=:tipoServicio, mactv=:mactv, periodo_contrato_ca=:periodoContratoCable, vencimiento_ca=:vencimientoCable, fecha_reinstalacion=:fechaReconexCable, id_tecnico=:idTecnico, cod_cobrador=:codigoCobrador, numero_derivaciones=:nDerivaciones, dire_cable=:direCable, fecha_instalacion_in=:fechaInstalacionIn, fecha_primer_factura_in=:fechaPrimerFacturaIn, tipo_servicio_in=:tipoServicioIn, periodo_contrato_int=:periodoContratoIn, dia_corbo_in=:diaCobroIn, id_velocidad=:idVelocidadIn, cuota_in=:cuotaIn, id_tipo_cliente=:tipoClienteIn,
+                      tecnologia=:tecnologia, entrega_calidad=:enCalidad, no_contrato_inter=:noContratoIn,
+                      vencimiento_in=:vencimientoContratoIn, ult_ren_in=:ultRenIn, fecha_suspencion_in=:fechaSuspensionIn, fecha_reconexion_in=:fechaReconexIn, id_promocion=:promoIn, dese_promocion_in=:promoInDesde, hasta_promocion_in=:promoInHasta, cuota_promocion=:cuotaPromoIn, dire_internet=:direInter, id_tecnico_in=:idTecnicoIn, costo_instalacion_in=:costoInstalacionIn, colilla=:colilla, marca_modem=:modelo, recep_modem=:recepcion, wanip=:wanip, mac_modem=:macModem, trans_modem=:trans, coordenadas=:coordenadas, serie_modem=:serieModem, ruido_modem=:ruido, dire_telefonia=:nodo, clave_modem=:claveWifi, ult_usuario=:ultUser, id_cuenta=:idCuenta,
+                      cuotaCovidC=:cuotaCovidC, covidDesdeC=:covidDesdeC, covidHastaC=:covidHastaC, cuotaCovidI=:cuotaCovidI, covidDesdeI=:covidDesdeI, covidHastaI=:covidHastaI WHERE cod_cliente = :codigo";
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
             $stmt = $this->dbConnect->prepare($query);
             $stmt->execute(array(
@@ -356,9 +474,12 @@ class EditarCliente extends ConectionDB
                         ':nContrato' => $nContrato,
                         ':nFactura' => $nFactura,
                         ':nombre' => $nombre,
+<<<<<<< HEAD
                         ':nombre_comercial' => $nombre_comercial,
                         ':nacionalidad' => $nacionalidad,
                         ':tipo_de_contrato' => $tipo_de_contrato,
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                         ':anexo' => $nAnexo,
                         /*':empresa' => $empresa,*/
                         ':nit' => $nit,

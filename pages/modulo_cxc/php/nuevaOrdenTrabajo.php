@@ -62,8 +62,13 @@
 
                     //$Fecha = date('Y/m/d g:i');
 
+<<<<<<< HEAD
                     $query = "INSERT INTO tbl_ordenes_trabajo(codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, diaCobro, nombreCliente, telefonos, idMunicipio, actividadCable, saldoCable, direccionCable, fechaTrabajo, hora, fechaProgramacion, idTecnico, mactv, observaciones, idVendedor, tecnologia, recepcionTv, tipoServicio, nodo, coordenadas, creadoPor, checksoporte                                                                                              )
                               VALUES(:codigoCliente, :fechaOrdenTrabajo, :tipoOrdenTrabajo, :diaCobro, :nombreCliente, :telefonos, :idMunicipio, :idActividadCable, :saldoCable, :direccionCable, :fechaTrabajo, :hora, :fechaProgramacion, :idTecnico, :mactv, :observaciones, :idVendedor, :tecnologia, :recepcionTv, :tipoServicio, :nodo, :coordenadas, :creadoPor, :checksoporte)";
+=======
+                    $query = "INSERT INTO tbl_ordenes_trabajo(codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, diaCobro, nombreCliente, telefonos, idMunicipio, actividadCable, saldoCable, direccionCable, fechaTrabajo, hora, fechaProgramacion, idTecnico, mactv, observaciones, idVendedor, tecnologia, recepcionTv, tipoServicio, nodo, coordenadas, creadoPor                                                                                              )
+                              VALUES(:codigoCliente, :fechaOrdenTrabajo, :tipoOrdenTrabajo, :diaCobro, :nombreCliente, :telefonos, :idMunicipio, :idActividadCable, :saldoCable, :direccionCable, :fechaTrabajo, :hora, :fechaProgramacion, :idTecnico, :mactv, :observaciones, :idVendedor, :tecnologia, :recepcionTv, :tipoServicio, :nodo, :coordenadas, :creadoPor)";
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
@@ -89,8 +94,12 @@
                                 ':tipoServicio' => $tipoServicio,
                                 ':coordenadas' => $coor,
                                 ':nodo' => $nodo,
+<<<<<<< HEAD
                                 ':creadoPor' => $creadoPor,
                                 ':checksoporte' => $checksoporte
+=======
+                                ':creadoPor' => $creadoPor
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                 ));
                     $numeroOrden = $this->dbConnect->lastInsertId();
                     header('Location: ../ordenTrabajo.php?nOrden='.$numeroOrden);
@@ -158,8 +167,13 @@
 
                     //$Fecha = date('Y/m/d g:i');
 
+<<<<<<< HEAD
                     $query = "INSERT INTO tbl_ordenes_trabajo(codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, diaCobro, nombreCliente, telefonos, idMunicipio, actividadInter, saldoInter, direccionInter, macModem, serieModem, velocidad, rx, tx, snr, colilla, fechaTrabajo, hora, fechaProgramacion, idTecnico, coordenadas, observaciones, marcaModelo, tecnologia, idVendedor, tipoServicio, nodo, creadoPor, checksoporte)
                               VALUES(:codigoCliente, :fechaOrdenTrabajo, :tipoOrdenTrabajo, :diaCobro, :nombreCliente, :telefonos, :idMunicipio, :idActividadInter, :saldoInter, :direccionInter, :macModem, :serieModem, :velocidad, :rx, :tx, :snr, :colilla, :fechaTrabajo, :hora, :fechaProgramacion, :idTecnico, :coordenadas, :observaciones, :marcaModelo, :tecnologia, :idVendedor, :tipoServicio, :nodo, :creadoPor, :checksoporte)";
+=======
+                    $query = "INSERT INTO tbl_ordenes_trabajo(codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, diaCobro, nombreCliente, telefonos, idMunicipio, actividadInter, saldoInter, direccionInter, macModem, serieModem, velocidad, rx, tx, snr, colilla, fechaTrabajo, hora, fechaProgramacion, idTecnico, coordenadas, observaciones, marcaModelo, tecnologia, idVendedor, tipoServicio, nodo, creadoPor)
+                              VALUES(:codigoCliente, :fechaOrdenTrabajo, :tipoOrdenTrabajo, :diaCobro, :nombreCliente, :telefonos, :idMunicipio, :idActividadInter, :saldoInter, :direccionInter, :macModem, :serieModem, :velocidad, :rx, :tx, :snr, :colilla, :fechaTrabajo, :hora, :fechaProgramacion, :idTecnico, :coordenadas, :observaciones, :marcaModelo, :tecnologia, :idVendedor, :tipoServicio, :nodo, :creadoPor)";
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(

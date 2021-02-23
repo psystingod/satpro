@@ -35,6 +35,7 @@ class NuevoCliente extends ConectionDB
             $nContrato = $_POST['contrato'];
             $nFactura = $_POST['factura'];
             $nombre = strtoupper($_POST['nombre']);
+<<<<<<< HEAD
              $nombre_comercial = $_POST['nombre_comercial'];
             $nacionalidad = $_POST['nacionalidad'];
             $tipo_de_contrato = $_POST["tipo_de_contrato"];
@@ -45,6 +46,10 @@ class NuevoCliente extends ConectionDB
              }else{
                  $nRegistro = "";
              }
+=======
+            /*$empresa = $_POST["empresa"]*/;
+            $nRegistro = $_POST['nrc'];
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
             $dui = $_POST['dui'];
             $lugarExp = $_POST['expedicion'];
             $nit = $_POST['nit'];
@@ -291,7 +296,10 @@ class NuevoCliente extends ConectionDB
             $diaCobroInter = trim($_POST['diaGenerarFacturaInternet']);
             $velocidadInter = $_POST['velocidadInternet'];
             $cuotaMensualInter = trim($_POST['cuotaMensualInternet']);
+<<<<<<< HEAD
             $prepago_in = trim($_POST['prepago_in']);
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
             $tipoClienteInter = $_POST['tipoCliente'];
             $tecnologia = $_POST['tecnologia'];
             $nContratoInter = $_POST['nContratoVigente'];
@@ -315,6 +323,7 @@ class NuevoCliente extends ConectionDB
             $creadoPor = $_SESSION['nombres']." ".$_SESSION['apellidos'];
             $fechaHora = date('d/m/Y h:i:s');
 
+<<<<<<< HEAD
 
 
  $nombre_comercial = $_POST['nombre_comercial'];
@@ -328,6 +337,15 @@ class NuevoCliente extends ConectionDB
                       vencimiento_in, ult_ren_in, fecha_suspencion_in, fecha_reconexion_in, id_promocion, dese_promocion_in, hasta_promocion_in, cuota_promocion, entrega_calidad, dire_internet, id_tecnico_in, costo_instalacion_in, colilla, marca_modem, recep_modem, wanip, mac_modem, trans_modem, coordenadas, serie_modem, ruido_modem, dire_telefonia, clave_modem, creado_por, fecha_hora_creacion)
                       VALUES(:servicioSuspendido, :sinServicio, :estadoClienteIn, :nContrato, :nFactura, :nombre, :nombre_comercial, :nacionalidad, :tipo_de_contrato,/*:empresa,*/ :nit, :dui, :lugarExp, :nrc, :saldoCable, :saldoInter, :dirCobro, :dir, :fechaNacimiento, :idDepartamento, :idMunicipio, :idColonia, :telefonos, :telTrabajo, :email, :ocupacion, :cuentaContable, :formaPago, :tipoComprobante, :saldoActual, :facebook, :contactos, :contacto2, :contacto3, :telcon1, :telcon2, :telcon3, :paren1, :paren2, :paren3, :dir1, :dir2, :dir3,
                       :observaciones,:fechaInstalacionCable, :fechaPrimerFacturaCable, :fechaSuspensionCable, :exento, :diaCobro, :servicioCortesia, :cuotaCable, :prepago, :tipoServicio, :mactv, :periodoContratoCable, :vencimientoCable, :fechaReconexCable, :idTecnico, :codigoCobrador, :nDerivaciones, :direCable, :fechaInstalacionIn, :fechaPrimerFacturaIn, :tipoServicioIn, :periodoContratoIn, :diaCobroIn, :idVelocidadIn, :cuotaIn, :prepago_in, :tipoClienteIn, :tecnologia, :noContratoIn,
+=======
+            $this->dbConnect->beginTransaction();
+            $query = "INSERT INTO clientes(servicio_suspendido, sin_servicio, estado_cliente_in, numero_contrato, num_factura, nombre, /*empresa,*/ numero_nit, numero_dui, lugar_exp, num_registro, saldoCable, saldoInternet, direccion_cobro, direccion, fecha_nacimiento, id_departamento, id_municipio, id_colonia, telefonos, tel_trabajo, correo_electronico, profesion, id_cuenta, forma_pago, tipo_comprobante, saldo_actual, facebook, contactos, contacto2, contacto3,
+                      telcon1, telcon2, telcon3, paren1, paren2, paren3, dir1, dir2, dir3,observaciones,
+                      fecha_instalacion, fecha_primer_factura, fecha_suspencion, exento, dia_cobro, servicio_cortesia, valor_cuota, prepago, tipo_servicio, mactv, periodo_contrato_ca, vencimiento_ca, fecha_reinstalacion, id_tecnico, cod_cobrador, numero_derivaciones, dire_cable, fecha_instalacion_in, fecha_primer_factura_in, tipo_servicio_in, periodo_contrato_int, dia_corbo_in, id_velocidad, cuota_in, id_tipo_cliente, tecnologia, no_contrato_inter,
+                      vencimiento_in, ult_ren_in, fecha_suspencion_in, fecha_reconexion_in, id_promocion, dese_promocion_in, hasta_promocion_in, cuota_promocion, entrega_calidad, dire_internet, id_tecnico_in, costo_instalacion_in, colilla, marca_modem, recep_modem, wanip, mac_modem, trans_modem, coordenadas, serie_modem, ruido_modem, dire_telefonia, clave_modem, creado_por, fecha_hora_creacion)
+                      VALUES(:servicioSuspendido, :sinServicio, :estadoClienteIn, :nContrato, :nFactura, :nombre, /*:empresa,*/ :nit, :dui, :lugarExp, :nrc, :saldoCable, :saldoInter, :dirCobro, :dir, :fechaNacimiento, :idDepartamento, :idMunicipio, :idColonia, :telefonos, :telTrabajo, :email, :ocupacion, :cuentaContable, :formaPago, :tipoComprobante, :saldoActual, :facebook, :contactos, :contacto2, :contacto3, :telcon1, :telcon2, :telcon3, :paren1, :paren2, :paren3, :dir1, :dir2, :dir3,
+                      :observaciones,:fechaInstalacionCable, :fechaPrimerFacturaCable, :fechaSuspensionCable, :exento, :diaCobro, :servicioCortesia, :cuotaCable, :prepago, :tipoServicio, :mactv, :periodoContratoCable, :vencimientoCable, :fechaReconexCable, :idTecnico, :codigoCobrador, :nDerivaciones, :direCable, :fechaInstalacionIn, :fechaPrimerFacturaIn, :tipoServicioIn, :periodoContratoIn, :diaCobroIn, :idVelocidadIn, :cuotaIn, :tipoClienteIn, :tecnologia, :noContratoIn,
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                       :vencimientoContratoIn, :ultRenIn, :fechaSuspensionIn, :fechaReconexIn, :promoIn, :promoInDesde, :promoInHasta, :cuotaPromoIn, :enCalidad, :direInter, :idTecnicoIn, :costoInstalacionIn, :colilla, :modelo, :recepcion, :wanip, :macModem, :trans, :coordenadas, :serieModem, :ruido, :nodo, :claveWifi, :creadoPor, :fechaHoraCreado)";
 
             $stmt = $this->dbConnect->prepare($query);

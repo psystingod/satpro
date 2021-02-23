@@ -161,7 +161,11 @@
                                        $ultimaFiscal = $ultimaFiscal + 1;
                                        $numeroFactura = $prefijoFiscal ."-". strval(str_pad($ultimaFiscal, 7, "0", STR_PAD_LEFT));
                                        if ($fechaGenerar1 >= $i['covidDesdeC'] && $fechaGenerar1 <= $i['covidHastaC']){
+<<<<<<< HEAD
                                            $valorCuota = number_format($i['cuotaCovidC'],2);
+=======
+                                           $valorCuota = $i['cuotaCovidC'];
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                            //CESC
                                            $implus = substr((($valorCuota/(1 + floatval($iva)))*$cesc),0,4);
                                            //IVA
@@ -169,7 +173,11 @@
                                            $totalIva = (floatval($separado) * floatval($iva));
                                            $totalIva = number_format($totalIva,2);
                                        }else{
+<<<<<<< HEAD
                                            $valorCuota = number_format($i['valor_cuota'],2);
+=======
+                                           $valorCuota = $i['valor_cuota'];
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                            //CESC
                                            $implus = substr((($valorCuota/(1 + floatval($iva)))*$cesc),0,4);
                                            //IVA
@@ -177,6 +185,7 @@
                                            $totalIva = (floatval($separado) * floatval($iva));
                                            $totalIva = number_format($totalIva,2);
                                        }
+<<<<<<< HEAD
                                        $prepago = $i['prepago'];
                                        $prepago_cargos = number_format($prepago,2);
                                        // ':prepago_cargos' => $prepago_cargos,
@@ -184,6 +193,12 @@
                                        //$this->dbConnect->beginTransaction(); $this->dbConnect->exec('LOCK TABLES tbl_cargos, tbl_abonos, clientes, tbl_facturas_config WRITE');
                                        $this->dbConnect->beginTransaction();
                                        $qry = "INSERT INTO tbl_cargos(nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroFactura, /*prefijo,*/ numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, prepago_cargos ,fechaCobro, fechaVencimiento, fechaFactura, mesCargo, anticipo, tipoServicio, estado, cargoImpuesto, totalImpuesto, cargoIva, totalIva, exento)VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroFactura, /*:prefijo,*/ :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :prepago_cargos, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :anticipo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva, :exento)";
+=======
+
+                                       //$this->dbConnect->beginTransaction(); $this->dbConnect->exec('LOCK TABLES tbl_cargos, tbl_abonos, clientes, tbl_facturas_config WRITE');
+                                       $this->dbConnect->beginTransaction();
+                                       $qry = "INSERT INTO tbl_cargos(nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroFactura, /*prefijo,*/ numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, anticipo, tipoServicio, estado, cargoImpuesto, totalImpuesto, cargoIva, totalIva, exento)VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroFactura, /*:prefijo,*/ :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :anticipo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva, :exento)";
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
                                        $stmt = $this->dbConnect->prepare($qry);
                                        $stmt->execute(
@@ -204,8 +219,12 @@
                                                  ':fechaFactura' => $fechaComprobante,
                                                  ':fechaVencimiento' => $fechaVencimiento,
                                                  ':mesCargo' => $mesCargo,
+<<<<<<< HEAD
                                                  ':anticipo' => $prepago_cargos,
                                                  ':prepago_cargos' => $prepago_cargos,
+=======
+                                                 ':anticipo' => $i['prepago'],
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                                  ':tipoServicio' => $ts,
                                                  ':estado' => $estado,
                                                  ':cargoImpuesto' => $cesc,
@@ -346,7 +365,11 @@
                                        $ultimaFactura = $ultimaFactura + 1;
                                        $numeroFactura = strval($prefijoFactura) ."-". strval(str_pad($ultimaFactura, 7, "0", STR_PAD_LEFT));
                                        if ($fechaGenerar1 >= $i['covidDesdeC'] && $fechaGenerar1 <= $i['covidHastaC']){
+<<<<<<< HEAD
                                            $valorCuota = number_format($i['cuotaCovidC'],2);
+=======
+                                           $valorCuota = $i['cuotaCovidC'];
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                            //CESC
                                            $implus = substr((($valorCuota/(1 + floatval($iva)))*$cesc),0,4);
                                            //IVA
@@ -354,7 +377,11 @@
                                            $totalIva = (floatval($separado) * floatval($iva));
                                            $totalIva = number_format($totalIva,2);
                                        }else{
+<<<<<<< HEAD
                                            $valorCuota = number_format($i['valor_cuota'],2);
+=======
+                                           $valorCuota = $i['valor_cuota'];
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                            //CESC
                                            $implus = substr((($valorCuota/(1 + floatval($iva)))*$cesc),0,4);
                                            //IVA
@@ -362,12 +389,18 @@
                                            $totalIva = (floatval($separado) * floatval($iva));
                                            $totalIva = number_format($totalIva,2);
                                        }
+<<<<<<< HEAD
                                        $prepago = $i['prepago'];
                                        $prepago_cargos = number_format($prepago,2);
                                        // ':prepago_cargos' => $prepago_cargos,
 
                                        $this->dbConnect->beginTransaction();
                                        $qry = "INSERT INTO tbl_cargos(nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroFactura, /*prefijo,*/ numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, prepago_cargos, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, anticipo, tipoServicio, estado, cargoImpuesto, totalImpuesto, cargoIva, totalIva, exento)VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroFactura, /*:prefijo,*/ :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :prepago_cargos, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :anticipo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva, :exento)";
+=======
+
+                                       $this->dbConnect->beginTransaction();
+                                       $qry = "INSERT INTO tbl_cargos(nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroFactura, /*prefijo,*/ numeroRecibo, codigoCliente, codigoCobrador, cuotaCable, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, anticipo, tipoServicio, estado, cargoImpuesto, totalImpuesto, cargoIva, totalIva, exento)VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroFactura, /*:prefijo,*/ :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaCable, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :anticipo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva, :exento)";
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
                                        $stmt = $this->dbConnect->prepare($qry);
                                        $stmt->execute(
@@ -383,13 +416,20 @@
                                                  ':codigoCliente' => $i["cod_cliente"],
                                                  ':codigoCobrador' => $i["cod_cobrador"],
                                                  ':cuotaCable' => $valorCuota,
+<<<<<<< HEAD
                                                  ':prepago_cargos' => $prepago_cargos,
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                                  //':cuotaInternet' => $i['cuota_in'],
                                                  ':fechaCobro' => $fechaGenerar1,
                                                  ':fechaFactura' => $fechaComprobante,
                                                  ':fechaVencimiento' => $fechaVencimiento,
                                                  ':mesCargo' => $mesCargo,
+<<<<<<< HEAD
                                                  ':anticipo' => $prepago_cargos,
+=======
+                                                 ':anticipo' => $i['prepago'],
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                                  ':tipoServicio' => $ts,
                                                  ':estado' => $estado,
                                                  ':cargoImpuesto' => $cesc,
@@ -479,9 +519,15 @@
                    if ($tipoComprobante == 1) {
                        // SQL query para traer datos del servicio de cable de la tabla clientes
                        if ($covid19 == false){
+<<<<<<< HEAD
                            $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_colonia, id_departamento, numero_nit, giro, cuota_in, prepago_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento FROM clientes WHERE estado_cliente_in=1 AND dia_corbo_in = :diaCobro AND fecha_primer_factura_in <= :fechaGenerar AND tipo_comprobante =:tipoComprobante";
                        }else{
                            $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_colonia, id_departamento, numero_nit, giro, cuota_in, prepago_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento, cuotaCovidI, covidDesdeI, covidHastaI FROM clientes WHERE estado_cliente_in=1 AND dia_corbo_in = :diaCobro AND fecha_primer_factura_in <= :fechaGenerar AND tipo_comprobante =:tipoComprobante";
+=======
+                           $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_colonia, id_departamento, numero_nit, giro, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento FROM clientes WHERE estado_cliente_in=1 AND dia_corbo_in = :diaCobro AND fecha_primer_factura_in <= :fechaGenerar AND tipo_comprobante =:tipoComprobante";
+                       }else{
+                           $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_colonia, id_departamento, numero_nit, giro, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento, cuotaCovidI, covidDesdeI, covidHastaI FROM clientes WHERE estado_cliente_in=1 AND dia_corbo_in = :diaCobro AND fecha_primer_factura_in <= :fechaGenerar AND tipo_comprobante =:tipoComprobante";
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                        }
 
                        // Preparación de sentencia
@@ -529,7 +575,11 @@
                                        $ultimaFiscal = $ultimaFiscal + 1;
                                        $numeroFactura = $prefijoFiscal ."-". strval(str_pad($ultimaFiscal, 7, "0", STR_PAD_LEFT));
                                        if ($fechaGenerar1 >= $i['covidDesdeI'] && $fechaGenerar1 <= $i['covidHastaI']){
+<<<<<<< HEAD
                                            $valorCuota = number_format($i['cuotaCovidI'],2);
+=======
+                                           $valorCuota = $i['cuotaCovidI'];
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                            //CESC
                                            $implus = substr((($valorCuota/(1 + floatval($iva)))*$cesc),0,4);
                                            //IVA
@@ -537,7 +587,11 @@
                                            $totalIva = (floatval($separado) * floatval($iva));
                                            $totalIva = number_format($totalIva,2);
                                        }else{
+<<<<<<< HEAD
                                            $valorCuota = number_format($i['cuota_in'],2);
+=======
+                                           $valorCuota = $i['cuota_in'];
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                            //CESC
                                            $implus = substr((($valorCuota/(1 + floatval($iva)))*$cesc),0,4);
                                            //IVA
@@ -545,6 +599,7 @@
                                            $totalIva = (floatval($separado) * floatval($iva));
                                            $totalIva = number_format($totalIva,2);
                                        }
+<<<<<<< HEAD
                                        $prepago_in = $i['prepago_in'];
                                        $prepago_cargos = number_format($prepago_in,2);
                                        $valorCuota2 = number_format($valorCuota,2);
@@ -553,6 +608,11 @@
                                        $this->dbConnect->beginTransaction();
                                        $qry = "INSERT INTO tbl_cargos(nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroFactura, /*prefijo,*/ numeroRecibo, codigoCliente, codigoCobrador, cuotaInternet, prepago_cargos, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, anticipo, tipoServicio, estado, cargoImpuesto, totalImpuesto, cargoIva, totalIva, exento)VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroFactura, /*:prefijo,*/ :numeroRecibo, :codigoCliente, :codigoCobrador,
                                               :cuotaInternet, :prepago_cargos, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :anticipo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva, :exento)";
+=======
+                                       $this->dbConnect->beginTransaction();
+                                       $qry = "INSERT INTO tbl_cargos(nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroFactura, /*prefijo,*/ numeroRecibo, codigoCliente, codigoCobrador, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, anticipo, tipoServicio, estado, cargoImpuesto, totalImpuesto, cargoIva, totalIva, exento)VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroFactura, /*:prefijo,*/ :numeroRecibo, :codigoCliente, :codigoCobrador,
+                                              :cuotaInternet, :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :anticipo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva, :exento)";
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
                                        $stmt = $this->dbConnect->prepare($qry);
                                        $stmt->execute(
@@ -569,12 +629,19 @@
                                                  ':codigoCobrador' => $i["cod_cobrador"],
                                                  //':cuotaCable' => $i['valor_cuota'],
                                                  ':cuotaInternet' => $valorCuota,
+<<<<<<< HEAD
                                                  ':prepago_cargos' => $prepago_cargos,
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                                  ':fechaCobro' => $fechaGenerar1,
                                                  ':fechaFactura' => $fechaComprobante,
                                                  ':fechaVencimiento' => $fechaVencimiento,
                                                  ':mesCargo' => $mesCargo,
+<<<<<<< HEAD
                                                  ':anticipo' => $valorCuota2,
+=======
+                                                 ':anticipo' => $i['cuota_in'],
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                                  ':tipoServicio' => $ts,
                                                  ':estado' => $estado,
                                                  ':cargoImpuesto' => $cesc,
@@ -662,9 +729,15 @@
                        // SQL query para traer datos del servicio de cable de la tabla clientes
 
                        if ($covid19 == false){
+<<<<<<< HEAD
                            $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_colonia, id_departamento, numero_nit, giro, cuota_in, prepago_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento FROM clientes WHERE estado_cliente_in=1 AND dia_corbo_in = :diaCobro AND fecha_primer_factura_in <= :fechaGenerar AND tipo_comprobante =:tipoComprobante";
                        }else{
                            $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_colonia, id_departamento, numero_nit, giro, cuota_in, prepago_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento, cuotaCovidI, covidDesdeI, covidHastaI FROM clientes WHERE estado_cliente_in=1 AND dia_corbo_in = :diaCobro AND fecha_primer_factura_in <= :fechaGenerar AND tipo_comprobante =:tipoComprobante";
+=======
+                           $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_colonia, id_departamento, numero_nit, giro, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento FROM clientes WHERE estado_cliente_in=1 AND dia_corbo_in = :diaCobro AND fecha_primer_factura_in <= :fechaGenerar AND tipo_comprobante =:tipoComprobante";
+                       }else{
+                           $query = "SELECT cod_cliente, nombre, num_registro, direccion, id_municipio, id_colonia, id_departamento, numero_nit, giro, cuota_in, dia_cobro, cod_cobrador, id_colonia, cod_vendedor, tipo_comprobante, tipo_facturacion, exento, cuotaCovidI, covidDesdeI, covidHastaI FROM clientes WHERE estado_cliente_in=1 AND dia_corbo_in = :diaCobro AND fecha_primer_factura_in <= :fechaGenerar AND tipo_comprobante =:tipoComprobante";
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                        }
 
                        // Preparación de sentencia
@@ -712,7 +785,11 @@
                                        $ultimaFactura = $ultimaFactura + 1;
                                        $numeroFactura = $prefijoFactura ."-". strval(str_pad($ultimaFactura, 7, "0", STR_PAD_LEFT));
                                        if ($fechaGenerar1 >= $i['covidDesdeI'] && $fechaGenerar1 <= $i['covidHastaI']){
+<<<<<<< HEAD
                                            $valorCuota = number_format($i['cuotaCovidI'],2);
+=======
+                                           $valorCuota = $i['cuotaCovidI'];
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                            //CESC
                                            $implus = substr((($valorCuota/(1 + floatval($iva)))*$cesc),0,4);
                                            //IVA
@@ -720,7 +797,11 @@
                                            $totalIva = (floatval($separado) * floatval($iva));
                                            $totalIva = number_format($totalIva,2);
                                        }else{
+<<<<<<< HEAD
                                            $valorCuota = number_format($i['cuota_in'],2);
+=======
+                                           $valorCuota = $i['cuota_in'];
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                            //CESC
                                            $implus = substr((($valorCuota/(1 + floatval($iva)))*$cesc),0,4);
                                            //IVA
@@ -728,6 +809,7 @@
                                            $totalIva = (floatval($separado) * floatval($iva));
                                            $totalIva = number_format($totalIva,2);
                                        }
+<<<<<<< HEAD
                                        $prepago_in = $i['prepago_in'];
                                        $prepago_cargos = number_format($prepago_in,2);
                                        $valorCuota2 = number_format($valorCuota,2);
@@ -735,6 +817,11 @@
 
                                        $this->dbConnect->beginTransaction();
                                        $qry = "INSERT INTO tbl_cargos(nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroFactura, /*prefijo,*/ numeroRecibo, codigoCliente, codigoCobrador, cuotaInternet, prepago_cargos, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, anticipo, tipoServicio, estado, cargoImpuesto, totalImpuesto, cargoIva, totalIva, exento)VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroFactura, /*:prefijo,*/ :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaInternet, :prepago_cargos,
+=======
+
+                                       $this->dbConnect->beginTransaction();
+                                       $qry = "INSERT INTO tbl_cargos(nombre, direccion, idMunicipio, idColonia, tipoFactura, numeroFactura, /*prefijo,*/ numeroRecibo, codigoCliente, codigoCobrador, cuotaInternet, fechaCobro, fechaVencimiento, fechaFactura, mesCargo, anticipo, tipoServicio, estado, cargoImpuesto, totalImpuesto, cargoIva, totalIva, exento)VALUES(:nombre, :direccion, :idMunicipio, :idColonia, :tipoComprobante, :numeroFactura, /*:prefijo,*/ :numeroRecibo, :codigoCliente, :codigoCobrador, :cuotaInternet,
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                                :fechaCobro, :fechaVencimiento, :fechaFactura, :mesCargo, :anticipo, :tipoServicio, :estado, :cargoImpuesto, :totalImpuesto, :cargoIva, :totalIva, :exento)";
 
                                        $stmt = $this->dbConnect->prepare($qry);
@@ -752,12 +839,19 @@
                                                  ':codigoCobrador' => $i["cod_cobrador"],
                                                  //':cuotaCable' => $i['valor_cuota'],
                                                  ':cuotaInternet' => $valorCuota,
+<<<<<<< HEAD
                                                  ':prepago_cargos' => $prepago_cargos,
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                                  ':fechaCobro' => $fechaGenerar1,
                                                  ':fechaFactura' => $fechaComprobante,
                                                  ':fechaVencimiento' => $fechaVencimiento,
                                                  ':mesCargo' => $mesCargo,
+<<<<<<< HEAD
                                                  ':anticipo' => $valorCuota2,
+=======
+                                                 ':anticipo' => $i['cuota_in'],
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                                  ':tipoServicio' => $ts,
                                                  ':estado' => $estado,
                                                  ':cargoImpuesto' => $cesc,

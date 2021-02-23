@@ -490,7 +490,11 @@ if(!isset($_SESSION["user"])) {
                                             echo "<span class='label label-default'>".$abonoC['fechaAbonado']."</span>"."</td><td class='text'>";
                                             echo "<span class='label label-default'>".$abonoC['fechaVencimiento']."</span>"."</td><td class='text'>";
                                             echo "0.00"."</td><td class='text'>";
+<<<<<<< HEAD
                                             echo number_format($abonoC['cuotaCable'],2)."</td><td class='text'>";
+=======
+                                            echo $abonoC['cuotaCable']."</td><td class='text'>";
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                             echo "0.00"."</td><td class='text'>";
                                             echo number_format($abonoC['totalImpuesto'],2)."</td><td class='text'>";
                                             echo number_format((doubleval($abonoC['cuotaCable'])+doubleval($abonoC['totalImpuesto'])),2)."</td></tr>";
@@ -505,7 +509,11 @@ if(!isset($_SESSION["user"])) {
                                             echo "<span class='label label-danger'>".$cargoC['mesCargo']."</span>"."</td><td class='text-danger'>";
                                             echo "<span class='label label-default'>".$cargoC['fechaFactura']."</span>"."</td><td class='text-danger'>";
                                             echo "<span class='label label-default'>".$cargoC['fechaVencimiento']."</span>"."</td><td class='text-danger'>";
+<<<<<<< HEAD
                                             echo number_format($cargoC['cuotaCable'],2)."</td><td class='text-danger'>";
+=======
+                                            echo $cargoC['cuotaCable']."</td><td class='text-danger'>";
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                             echo "0.00"."</td><td class='text-danger'>";
                                             echo number_format($cargoC['totalImpuesto'],2)."</td><td class='text-danger'>";
                                             echo "0.00"."</td><td class='text-danger'>";
@@ -524,7 +532,11 @@ if(!isset($_SESSION["user"])) {
                                                 echo "<span class='label label-danger'>".$estado['cargoCargo']./*" "."<i class='fas fa-arrow-down'></i>".*/"</span>"."</td><td class='text-danger'>";
                                                 echo "<span class='label label-default'>".$estado['fechaFacturaCargo']."</span>"."</td><td class='text-danger'>";
                                                 echo "<span class='label label-default'>".$estado['fechaVencimientoCargo']."</span>"."</td><td class='text-danger'>";
+<<<<<<< HEAD
                                                 echo number_format($estado['cuotaCableCargo'],2)."</td><td class='text-danger'>";
+=======
+                                                echo $estado['cuotaCableCargo']."</td><td class='text-danger'>";
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                                 echo "0.00"."</td><td class='text-danger'>";
                                                 echo number_format($estado['totalImpuestoCargo'],2)."</td><td class='text-danger'>";
 
@@ -539,7 +551,11 @@ if(!isset($_SESSION["user"])) {
                                                 echo "<span class='label label-default'>".$estado['fechaAbonadoAbono']."</span>"."</td><td class='text'>";
                                                 echo "<span class='label label-default'>".$estado['fechaVencimientoAbono']."</span>"."</td><td class='text'>";
                                                 echo "0.00"."</td><td class='text'>";
+<<<<<<< HEAD
                                                 echo number_format($estado['cuotaCableAbono'],2)."</td><td class='text'>";
+=======
+                                                echo $estado['cuotaCableAbono']."</td><td class='text'>";
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                                 echo "0.00"."</td><td class='text'>";
                                                 echo number_format($estado['totalImpuestoAbono'],2)."</td><td class='text'>";
                                                 echo number_format((doubleval($estado['cuotaCableAbono'])+doubleval($estado['totalImpuestoAbono'])),2)."</td></tr>";
@@ -601,7 +617,11 @@ if(!isset($_SESSION["user"])) {
                                             echo "<span class='label label-default'>".$abonoI['fechaAbonado']."</span>"."</td><td class='text'>";
                                             echo "<span class='label label-default'>".$abonoI['fechaVencimiento']."</span>"."</td><td class='text'>";
                                             echo "0.00"."</td><td class='text'>";
+<<<<<<< HEAD
                                             echo number_format($abonoI['cuotaInternet'],2)."</td><td class='text'>";
+=======
+                                            echo $abonoI['cuotaInternet']."</td><td class='text'>";
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                             echo "0.00"."</td><td class='text'>";
                                             echo number_format($abonoI['totalImpuesto'],2)."</td><td class='text'>";
                                             echo number_format((doubleval($abonoI['cuotaInternet'])+doubleval($abonoI['totalImpuesto'])),2)."</td></tr>";
@@ -616,7 +636,11 @@ if(!isset($_SESSION["user"])) {
                                             echo "<span class='label label-danger'>".$cargoI['mesCargo']."</span>"."</td><td class='text-danger'>";
                                             echo "<span class='label label-default'>".$cargoI['fechaFactura']."</span>"."</td><td class='text-danger'>";
                                             echo "<span class='label label-default'>".$cargoI['fechaVencimiento']."</span>"."</td><td class='text-danger'>";
+<<<<<<< HEAD
                                             echo number_format($cargoI['cuotaInternet'],2)."</td><td class='text-danger'>";
+=======
+                                            echo $cargoI['cuotaInternet']."</td><td class='text-danger'>";
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                             echo "0.00"."</td><td class='text-danger'>";
                                             echo number_format($cargoI['totalImpuesto'],2)."</td><td class='text-danger'>";
                                             echo "0.00"."</td><td class='text-danger'>";
@@ -635,7 +659,11 @@ if(!isset($_SESSION["user"])) {
                                                 echo "<span class='label label-danger'>".$estado['cargoCargo']."</span>"."</td><td class='text-danger'>";
                                                 echo "<span class='label label-default'>".$estado['fechaFacturaCargo']."</span>"."</td><td class='text-danger'>";
                                                 echo "<span class='label label-default'>".$estado['fechaVencimientoCargo']."</span>"."</td><td class='text-danger'>";
+<<<<<<< HEAD
                                                 echo number_format($estado['cuotaInterCargo'],2)."</td><td class='text-danger'>";
+=======
+                                                echo $estado['cuotaInterCargo']."</td><td class='text-danger'>";
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                                 echo "0.00"."</td><td class='text-danger'>";
                                                 echo number_format($estado['totalImpuestoCargo'],2)."</td><td class='text-danger'>";
 
@@ -650,7 +678,11 @@ if(!isset($_SESSION["user"])) {
                                                 echo "<span class='label label-default'>".$estado['fechaAbonadoAbono']."</span>"."</td><td class='text'>";
                                                 echo "<span class='label label-default'>".$estado['fechaVencimientoAbono']."</span>"."</td><td class='text'>";
                                                 echo "0.00"."</td><td class='text'>";
+<<<<<<< HEAD
                                                 echo number_format($estado['cuotaInterAbono'],2)."</td><td class='text'>";
+=======
+                                                echo $estado['cuotaInterAbono']."</td><td class='text'>";
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
                                                 echo "0.00"."</td><td class='text'>";
                                                 echo number_format($estado['totalImpuestoAbono'],2)."</td><td class='text'>";
                                                 echo number_format((doubleval($estado['cuotaInterAbono'])+doubleval($estado['totalImpuestoAbono'])),2)."</td></tr>";

@@ -2,7 +2,7 @@
 --
 -- Base de datos: `satpro`
 --
-USE satpro;
+USE satpro_sm;
 DROP TABLE IF EXISTS tbl_ordenes_trabajo;
 -- --------------------------------------------------------
 

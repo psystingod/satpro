@@ -27,7 +27,11 @@ $totalImpuestoIDelReporte=0;
 function generarReporteVentasManuales(){
 global $totalDeImpuestosDelReporte,$montoTotalDeRecibosDelReporte,$totalImpuestoCDelReporte,$totalImpuestoIDelReporte;
 
+<<<<<<< HEAD
 
+=======
+$contadorDeFilas=1;
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
 	   global $desde, $hasta,$tipoServicio, $mysqli, $statement1;
 
@@ -272,6 +276,7 @@ ORDER BY ".$_POST['ordenamiento']." ASC;";
       switch ($_POST['lServicio']) {
         case "C":
           $pdf->Cell(260,3,utf8_decode("Servicio: Cable "),0,1,'L');
+<<<<<<< HEAD
           $tipo_servicio = 'Servicio: Cable';
           break;
         case "I":
@@ -281,12 +286,21 @@ ORDER BY ".$_POST['ordenamiento']." ASC;";
         default:
           $pdf->Cell(260,3,utf8_decode("Servicio: Todos"),0,1,'L');
           $tipo_servicio = 'Servicio: Todos';
+=======
+          break;
+        case "I":
+          $pdf->Cell(260,3,utf8_decode("Servicio: Internet "),0,1,'L');
+            break;
+        default:
+          $pdf->Cell(260,3,utf8_decode("Servicio: Todos"),0,1,'L');
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
           break;
       }
 
       //tipo de ventas del filtrado
       switch ($_POST['tipoVenta']) {
         case 0:
+<<<<<<< HEAD
         $pdf->Cell(260,3,utf8_decode("Tipo de Venta: Todas"),0,1,'L');
         $tipo_venta = 'Tipo de Venta: Todas';
           break;
@@ -317,6 +331,30 @@ ORDER BY ".$_POST['ordenamiento']." ASC;";
         case 7:
         $pdf->Cell(260,3,utf8_decode("Tipo de Venta: Reconexión"),0,1,'L');
         $tipo_venta = 'Tipo de Venta: Reconexión';
+=======
+        $pdf->Cell(260,6,utf8_decode("Tipo de Venta: Todas"),0,1,'L');
+          break;
+        case 1:
+        $pdf->Cell(260,6,utf8_decode("Tipo de Venta: Anulada"),0,1,'L');
+          break;
+        case 2:
+        $pdf->Cell(260,6,utf8_decode("Tipo de Venta: Cable extra"),0,1,'L');
+            break;
+        case 3:
+        $pdf->Cell(260,6,utf8_decode("Tipo de Venta: Decodificador "),0,1,'L');
+          break;
+        case 4:
+        $pdf->Cell(260,6,utf8_decode("Tipo de Venta: Derivacion "),0,1,'L');
+          break;
+        case 5:
+        $pdf->Cell(260,6,utf8_decode("Tipo de Venta: Instalación temporal"),0,1,'L');
+          break;
+        case 6:
+        $pdf->Cell(260,6,utf8_decode("Tipo de Venta: Pagotardío"),0,1,'L');
+            break;
+        case 7:
+        $pdf->Cell(260,6,utf8_decode("Tipo de Venta: Reconexión"),0,1,'L');
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
             break;
         default:
           // code...
@@ -324,7 +362,11 @@ ORDER BY ".$_POST['ordenamiento']." ASC;";
       }
 
 
+<<<<<<< HEAD
       $pdf->Ln(2);
+=======
+      $pdf->Ln(10);
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
       $pdf->SetFont('Arial','B',11);
 
@@ -345,8 +387,11 @@ ORDER BY ".$_POST['ordenamiento']." ASC;";
         $pdf->Cell(22,6,utf8_decode('Total recibo'),1,0,'L');
         $pdf->Cell(31,6,utf8_decode('Emisor'),1,1,'L');
         $pdf->Ln(3);
+<<<<<<< HEAD
         $contadorDeFilas=1;
         $contadorDeFilas2=1;
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
         //_____________________________________
         /*echo($_POST['lServicio']." lServicio");
@@ -420,7 +465,10 @@ ORDER BY ".$_POST['ordenamiento']." ASC;";
                 //$pdf->Cell(10,3,utf8_decode($row['idVenta']),0,0,'L');
                 $pdf->Cell(10,3,utf8_decode($contadorDeFilas),0,0,'L');
                 $contadorDeFilas++;
+<<<<<<< HEAD
                 $contadorDeFilas2++;
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
               $pdf->Cell(20,3,utf8_decode($row['numeroDeRecibo']),0,0,'L');
               $pdf->Cell(22,3,utf8_decode($row['fecha']),0,0,'L');
               $pdf->Cell(84,3,utf8_decode($row['cliente']),0,0,'L');
@@ -445,7 +493,10 @@ ORDER BY ".$_POST['ordenamiento']." ASC;";
               //$pdf->Cell(10,3,utf8_decode($row['idVenta']),0,0,'L');
               $pdf->Cell(10,3,utf8_decode($contadorDeFilas),0,0,'L');
               $contadorDeFilas++;
+<<<<<<< HEAD
               $contadorDeFilas2++;
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
             $pdf->Cell(20,3,utf8_decode($row['numeroDeRecibo']),0,0,'L');
             $pdf->Cell(22,3,utf8_decode($row['fecha']),0,0,'L');
             $pdf->Cell(84,3,utf8_decode($row['cliente']),0,0,'L');
@@ -457,6 +508,7 @@ ORDER BY ".$_POST['ordenamiento']." ASC;";
 
               break;
             }
+<<<<<<< HEAD
 
             if ($contadorDeFilas2 > 19){
               ////////////////////////
@@ -511,6 +563,8 @@ ORDER BY ".$_POST['ordenamiento']." ASC;";
 
             }
 
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
         }
 
 

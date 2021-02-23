@@ -217,12 +217,19 @@ if(!isset($_SESSION))
         $nodo = $row['dire_telefonia'];
         $idVendedor = "";
         $recepcionTv = "";
+<<<<<<< HEAD
         $checksoporte = "";
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
         // DATOS DE LA ORDEN EN SÍ
         $id=isset($_GET['nOrden']) ? $_GET['nOrden'] : die('ERROR: Record no encontrado.');
         // prepare select query
+<<<<<<< HEAD
         $query = "SELECT idOrdenTrabajo, codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, diaCobro, nombreCliente, telefonos, idMunicipio, actividadCable, saldoCable, direccionCable, actividadInter, saldoInter, direccionInter, saldoInter, direccionInter, macModem, serieModem, velocidad, rx, tx, snr, colilla, fechaTrabajo, hora, fechaProgramacion, idTecnico, mactv, coordenadas, observaciones, nodo, marcaModelo, tecnologia, idVendedor, recepcionTv, tipoServicio, creadoPor, checksoporte  FROM tbl_ordenes_trabajo WHERE idOrdenTrabajo = ? LIMIT 0,1";
+=======
+        $query = "SELECT idOrdenTrabajo, codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, diaCobro, nombreCliente, telefonos, idMunicipio, actividadCable, saldoCable, direccionCable, actividadInter, saldoInter, direccionInter, saldoInter, direccionInter, macModem, serieModem, velocidad, rx, tx, snr, colilla, fechaTrabajo, hora, fechaProgramacion, idTecnico, mactv, coordenadas, observaciones, nodo, marcaModelo, tecnologia, idVendedor, recepcionTv, tipoServicio, creadoPor  FROM tbl_ordenes_trabajo WHERE idOrdenTrabajo = ? LIMIT 0,1";
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
         $stmt = $con->prepare( $query );
 
         // this is the first question mark
@@ -284,7 +291,10 @@ if(!isset($_SESSION))
         //$recepcionTv = $row['recepcionTv'];
         $tipoServicio = $row['tipoServicio'];
         $creadoPor = $row['creadoPor'];
+<<<<<<< HEAD
         $checksoporteorden = $row['checksoporte'];
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
         //creadoPor
 
     }
@@ -364,7 +374,11 @@ if(!isset($_SESSION))
         .form-control {
             color: #212121;
             font-size: 15px;
+<<<<<<< HEAD
             font-weight: normal;
+=======
+            font-weight: bold;
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
         }
         .nav>li>a {
@@ -374,10 +388,13 @@ if(!isset($_SESSION))
             color: #fff;
             background-color: #212121;
         }
+<<<<<<< HEAD
         .check{
             width:30px;
             height:25px;
         }
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
     </style>
 
     <style media="screen">
@@ -661,12 +678,20 @@ if(!isset($_SESSION))
                                   </div>
                               </div>
                               <div class="form-row">
+<<<<<<< HEAD
                                   <div class="col-md-4">
+=======
+                                  <div class="col-md-3">
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
                                       <label for="mactv">MAC TV</label>
                                       <input id="mactv" class="form-control input-sm cable" type="text" name="mactv" value="<?php echo $mactv ?>" readonly>
                                   </div>
+<<<<<<< HEAD
                                   <div class="col-md-6">
+=======
+                                  <div class="col-md-9">
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
                                       <label for="coordenadas">Coordenadas/otros datos</label>
                                       <input class="form-control input-sm" type="text" name="coordenadas" value="<?php echo $coordenadas; ?>" readonly>
@@ -854,8 +879,23 @@ if(!isset($_SESSION))
             time = hour + ':' + minutes + ':' + seconds;
             document.getElementById('hora').value = time;
             
+<<<<<<< HEAD
+=======
         </script>";
     }
+    if (isset($_GET['nOrden']) && !isset($_GET['codigoCliente'])) {
+        echo "<script>
+        var tipoServicio = document.getElementById('tipoServicio').value
+        if (tipoServicio == 'C') {
+            document.getElementById('nombreOrden').innerHTML = 'CABLE';
+        }else if (tipoServicio == 'I') {
+            document.getElementById('nombreOrden').innerHTML = 'INTERNET';
+        }
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
+        </script>";
+
+    }
+<<<<<<< HEAD
     if (isset($_GET['nOrden']) && !isset($_GET['codigoCliente'])) {
         echo "<script>
         var tipoServicio = document.getElementById('tipoServicio').value
@@ -867,6 +907,8 @@ if(!isset($_SESSION))
         </script>";
 
     }
+=======
+>>>>>>> 5217f37d1bac7a0cef4ccc090dacd613611b185a
 
     if (isset($_GET['nOrden']) && isset($_GET['codigoCliente'])) {
         echo "<script>
