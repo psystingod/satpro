@@ -1,16 +1,19 @@
 <?php
 
 require_once("../../../php/config.php");
-
+if(!isset($_SESSION))
+{
+    session_start();
+}
 $host = DB_HOST;
 $user = DB_USER;
 $password = DB_PASSWORD;
-$database = DB_NAME;
+$database = $_SESSION['db'];
 
 $mysqli = new mysqli($host, $user, $password, $database);
 
 $salida = "";
-$query = "SELECT idOrdenTrabajo, codigoCliente, nombreCliente, direccionCable, direccionInter, fechaOrdenTrabajo, macModem, mactv, serieModem, observaciones FROM tbl_ordenes_trabajo ORDER BY idOrdenTrabajo LIMIT 0";
+$query = "SELECT idOrdenTrabajo, codigoCliente, nombreCliente, direccionCable, direccionInter, fechaOrdenTrabajo, macModem, mactv, serieModem, observaciones FROM tbl_ordenes_trabajo ORDER BY idOrdenTrabajo LIMIT 7";
  if (isset($_POST['consulta'])) {
  	$q = $mysqli->real_escape_string($_POST['consulta']);
 	$query = "SELECT idOrdenTrabajo, codigoCliente, nombreCliente, direccionCable, direccionInter, fechaOrdenTrabajo, macModem, mactv, serieModem, observaciones FROM tbl_ordenes_trabajo

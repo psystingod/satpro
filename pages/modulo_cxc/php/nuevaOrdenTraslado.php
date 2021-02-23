@@ -7,7 +7,11 @@
     {
         public function GuardarOrden()
         {
-            parent::__construct ();
+            if(!isset($_SESSION))
+            {
+          	  session_start();
+            }
+            parent::__construct ($_SESSION['db']);
         }
         public function guardar()
         {
@@ -23,16 +27,6 @@
                         $fechaOrden = "";
                     }
 
-                    /*if (!empty($_POST["ultSuspCable"])) {
-                        $str1 = $_POST["ultSuspCable"];
-                        $date1 = DateTime::createFromFormat('d/m/Y', $str1);
-                        $ultSuspCable = $date1->format('Y-m-d');
-                    }
-                    else {
-                        $ultSuspCable = "";
-                    }*/
-
-                    //$numeroOrden = $_POST["numeroTraslado"];
                     $diaCobro = $_POST["diaCobro"];
                     $idMunicipio = $_POST["municipio"];
                     $idColonia = $_POST["colonia"];
@@ -61,13 +55,15 @@
                     $responsable = $_POST["responsable"];
                     $observaciones = $_POST["observaciones"];
                     $tipoServicio = $_POST["tipoServicio"];
+                    $coordenadas = $_POST["coordenadas"];
+                    $coordenadasNuevas = $_POST["coordenadasNuevas"];
                     $creadoPor = $_POST['creadoPor'];
 
                     //$Fecha = date('Y/m/d g:i');
                     $this->dbConnect->beginTransaction();
-                    $query = "INSERT INTO tbl_ordenes_traslado (codigoCliente,fechaOrden,tipoOrden,saldoCable,diaCobro,nombreCliente,direccion,direccionTraslado,idDepartamento,idMunicipio,idColonia,telefonos,colilla,fechaTraslado,idTecnico,mactv,observaciones,tipoServicio,creadoPor)
+                    $query = "INSERT INTO tbl_ordenes_traslado (codigoCliente,fechaOrden,tipoOrden,saldoCable,diaCobro,nombreCliente,direccion,direccionTraslado,idDepartamento,idMunicipio,idColonia,telefonos,colilla,fechaTraslado,idTecnico,mactv,observaciones,tipoServicio, coordenadas, coordenadasNuevas, creadoPor)
                               VALUES (:codigoCliente, :fechaOrden, :tipoOrden, :saldoCable, :diaCobro, :nombreCliente, :direccion, :direccionTraslado, :idDepartamento, :idMunicipio, :idColonia, :telefonos,
-                              :colilla, :fechaTraslado, :idTecnico, :mactv, :observaciones, :tipoServicio, :creadoPor)";
+                              :colilla, :fechaTraslado, :idTecnico, :mactv, :observaciones, :tipoServicio, :coordenadas, :coordenadasNuevas, :creadoPor)";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
@@ -95,13 +91,31 @@
 
                                 ':observaciones' => $observaciones,
                                 ':tipoServicio' => $tipoServicio,
+                                ':coordenadas' => $coordenadas,
+                                ':coordenadasNuevas' => $coordenadasNuevas,
                                 ':creadoPor' => $creadoPor,
                                 //':idOrdenTraslado' => $numeroOrden,
                                 ));
                     sleep(0.5);
                     $numeroOrden = $this->dbConnect->lastInsertId();
-                    $this->dbConnect->commit();
-                    header('Location: ../ordenTraslado.php?nOrden='.$numeroOrden);
+                    if (isset($_POST["actualizarDireccion"])){
+                        if ($_POST["actualizarDireccion"] == '1'){
+                            $query = "UPDATE clientes SET direccion=:nuevaDireccion, coordenadas=:coordenadasNuevas WHERE cod_cliente=:codigoCliente";
+
+                            $statement = $this->dbConnect->prepare($query);
+                            $statement->execute(array(
+                                ':nuevaDireccion' => $direccionTraslado,
+                                ':coordenadasNuevas' => $coordenadasNuevas,
+                                ':codigoCliente' => $codigoCliente
+                            ));
+                            $this->dbConnect->commit();
+                            header('Location: ../ordenTraslado.php?nOrden='.$numeroOrden);
+                        }
+                    }else{
+                        $this->dbConnect->commit();
+                        header('Location: ../ordenTraslado.php?nOrden='.$numeroOrden);
+                    }
+
 
                 }
                 catch (Exception $e)
@@ -124,16 +138,6 @@
                         $fechaOrden = "";
                     }
 
-                    /*if (!empty($_POST["ultSuspCable"])) {
-                        $str1 = $_POST["ultSuspCable"];
-                        $date1 = DateTime::createFromFormat('d/m/Y', $str1);
-                        $ultSuspCable = $date1->format('Y-m-d');
-                    }
-                    else {
-                        $ultSuspCable = "";
-                    }*/
-
-                    //$numeroOrden = $_POST["numeroTraslado"];
                     $diaCobro = $_POST["diaCobro"];
                     $codigoCliente = $_POST["codigoCliente"];
                     $tipoOrden = "Traslado";
@@ -167,12 +171,14 @@
                     $idDepartamento = $_POST['departamento'];
                     $idMunicipio = $_POST['municipio'];
                     $idColonia = $_POST['colonia'];
+                    $coordenadas = $_POST["coordenadas"];
+                    $coordenadasNuevas = $_POST["coordenadasNuevas"];
 
                     //$Fecha = date('Y/m/d g:i');
                     $this->dbConnect->beginTransaction();
-                    $query = "INSERT INTO tbl_ordenes_traslado (codigoCliente,fechaOrden,tipoOrden,saldoInter,diaCobro,nombreCliente,direccion,direccionTraslado,idDepartamento,idMunicipio,idColonia,telefonos,macModem,serieModem,velocidad,colilla,fechaTraslado,idTecnico,observaciones,tipoServicio,creadoPor)
+                    $query = "INSERT INTO tbl_ordenes_traslado (codigoCliente,fechaOrden,tipoOrden,saldoInter,diaCobro,nombreCliente,direccion,direccionTraslado,idDepartamento,idMunicipio,idColonia,telefonos,macModem,serieModem,velocidad,colilla,fechaTraslado,idTecnico,observaciones,tipoServicio,coordenadas,coordenadasNuevas,creadoPor)
                               VALUES (:codigoCliente, :fechaOrden, :tipoOrden, :saldoInter, :diaCobro, :nombreCliente, :direccion, :direccionTraslado, :idDepartamento, :idMunicipio, :idColonia, :telefonos, :macModem, :serieModem, :velocidad,
-                              :colilla, :fechaTraslado, :idTecnico, :observaciones, :tipoServicio, :creadoPor)";
+                              :colilla, :fechaTraslado, :idTecnico, :observaciones, :tipoServicio,:coordenadas,:coordenadasNuevas, :creadoPor)";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
@@ -203,16 +209,31 @@
 
                                 ':observaciones' => $observaciones,
                                 ':tipoServicio' => $tipoServicio,
+                                ':coordenadas' => $coordenadas,
+                                ':coordenadasNuevas' => $coordenadasNuevas,
                                 ':creadoPor' => $creadoPor,
                                 //':idOrdenTraslado' => $numeroOrden,
                                 ));
 
                     sleep(0.5);
                     $numeroOrden = $this->dbConnect->lastInsertId();
-                    $this->dbConnect->commit();
+                    if (isset($_POST["actualizarDireccion"])){
+                        if ($_POST["actualizarDireccion"] == '1'){
+                            $query = "UPDATE clientes SET direccion=:nuevaDireccion, coordenadas=:nuevasCoordenadas WHERE cod_cliente=:codigoCliente";
 
-                    header('Location: ../ordenTraslado.php?nOrden='.$numeroOrden);
-
+                            $statement = $this->dbConnect->prepare($query);
+                            $statement->execute(array(
+                                ':nuevaDireccion' => $direccionTraslado,
+                                ':coordenadas' => $coordenadasNuevas,
+                                ':codigoCliente' => $codigoCliente
+                            ));
+                            $this->dbConnect->commit();
+                            header('Location: ../ordenTraslado.php?nOrden='.$numeroOrden);
+                        }
+                    }else{
+                        $this->dbConnect->commit();
+                        header('Location: ../ordenTraslado.php?nOrden='.$numeroOrden);
+                    }
                 }
                 catch (Exception $e)
                 {

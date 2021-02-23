@@ -7,7 +7,11 @@
    {
        public function OrdersInfo()
        {
-           parent::__construct ();
+           if(!isset($_SESSION))
+           {
+               session_start();
+           }
+           parent::__construct ($_SESSION['db']);
        }
 
         public function getTecnicos()
@@ -91,7 +95,25 @@
        {
            try {
                // SQL query para traer nombre de las categorías
-               $query = "SELECT idVendedor, nombresVendedor, apellidosVendedor FROM tbl_vendedores where state = 1";
+               $query = "SELECT idVendedor, nombresVendedor, apellidosVendedor FROM tbl_vendedores";
+               // Preparación de sentencia
+               $statement = $this->dbConnect->prepare($query);
+               $statement->execute();
+               $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+
+
+               return $result;
+
+           } catch (Exception $e) {
+               print "!Error¡: " . $e->getMessage() . "</br>";
+               die();
+           }
+       }
+       public function getCobradores()
+       {
+           try {
+               // SQL query para traer nombre de las categorías
+               $query = "SELECT * FROM tbl_cobradores";
                // Preparación de sentencia
                $statement = $this->dbConnect->prepare($query);
                $statement->execute();

@@ -5,7 +5,8 @@
     {
         public function saveDetailsAssign()
         {
-            parent::__construct ();
+           // parent::__construct ();
+             parent::__construct ($_SESSION['db']);
         }
         public function enter()
         {
@@ -19,7 +20,7 @@
                   $Fecha = date('Y/m/d g:i');
                   $Comentario = $_POST["Comentario"];
                   $State = 0;
-
+//var_dump($Apellido);
                    $query = "SELECT count(*) FROM tbl_reportead where IdDepartamento= (select IdDepartamento from tbl_departamento where NombreDepartamento='".$Departamento."') and State = 0";
                     $statement = $this->dbConnect->query($query);
                     if($statement->fetchColumn() > 0)
@@ -29,9 +30,10 @@
                     else
                     {
                       $Bodega = $_POST['Bodega'];
+
                             $query = "INSERT INTO tbl_reportead(IdDepartamento,IdBodega, IdEmpleadoEnvio, FechaEnvio, ComentarioEnvio, State) VALUES((Select IdDepartamento
-                              from tbl_departamento where NombreDepartamento=:Departamento),(Select IdBodega from tbl_bodega where NombreBodega=:Bodega),(SELECT IdEmpleado from tbl_empleado where
-                            Nombres=:Nombres and Apellidos=:Apellidos),:Fecha,:Comentario, :State)";
+                              from tbl_departamento where NombreDepartamento=:Departamento),(Select IdBodega from tbl_bodega where NombreBodega=:Bodega),(SELECT idUsuario from tbl_usuario where
+                            nombre=:Nombres and apellido=:Apellidos),:Fecha,:Comentario, :State)";
 
                                $statement = $this->dbConnect->prepare($query);
                                $statement->execute(array(
@@ -43,6 +45,7 @@
                                    ':Comentario' => $Comentario,
                                 ':State' => $State
                             ));
+
                             $IdFactura=$this->dbConnect->lastInsertId();
                              //Guardar Detalle de Traslado
                             function array_recibe($url_array)

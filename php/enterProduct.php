@@ -7,7 +7,8 @@
     {
         public function EnterProduct()
         {
-            parent::__construct ();
+            session_start();
+            parent::__construct ($_SESSION['db']);
         }
         public function enter()
         {
@@ -27,6 +28,8 @@
                 $um = $_POST["um"];
                 date_default_timezone_set('America/El_Salvador');
                 $Fecha = date('Y/m/d g:i');
+                $nFactura = $_POST['nFactura'];
+                $pGarantia = $_POST['pGarantia'];
 
 
                 //CONSULTAMOS LA CANTIDAD DE ARTICULOS EN LA CATEGORIA SELECCIONADA, PARA GENERAR UN NUEVO CODIGO CORRELATIVO
@@ -70,8 +73,8 @@
                        $NCate = $key['IdCategoria'];
                     }
                     //AGREGAMOS EL NUEVO ARTICULO CON EL CODIGO EXISTENTE
-                    $query = "INSERT INTO tbl_articulo(Codigo, NombreArticulo, Descripcion, Cantidad, PrecioCompra, PrecioVenta, FechaEntrada, IdUnidadMedida, IdTipoProducto, IdCategoria, IdProveedor, IdBodega)
-                    VALUES(:codigo, :nombre, :descripcion, :cantidad, :precioCompra, :precioVenta, :fechaEntrada,
+                    $query = "INSERT INTO tbl_articulo(Codigo, NombreArticulo, Descripcion, Cantidad, PrecioCompra, PrecioVenta, FechaEntrada, nFactura, pGarantia ,IdUnidadMedida, IdTipoProducto, IdCategoria, IdProveedor, IdBodega)
+                    VALUES(:codigo, :nombre, :descripcion, :cantidad, :precioCompra, :precioVenta, :fechaEntrada, :nFactura, :pGarantia ,
                     (SELECT IdUnidadMedida FROM tbl_unidadmedida WHERE NombreUnidadMedida = :idUm),
                     (SELECT tbl_tipoproducto.IdTipoProducto FROM tbl_tipoproducto WHERE tbl_tipoproducto.NombreTipoProducto = :idTip),
                     :idSubCat,
@@ -87,6 +90,8 @@
                     ':precioCompra' => $pCompra,
                     ':precioVenta' => $pVenta,
                     ':fechaEntrada' => $fechaEntrada,
+                    ':nFactura' => $nFactura,
+                    ':pGarantia' => $pGarantia,
                     ':idUm' => $um,
                     ':idTip' => $tipoProducto,
                     ':idSubCat' => $NCate,
@@ -119,8 +124,8 @@
                  else
                   {
                     //AGREGAMOS EL NUEVO ARTICULO
-                    $query = "INSERT INTO tbl_articulo(Codigo, NombreArticulo, Descripcion, Cantidad, PrecioCompra, PrecioVenta, FechaEntrada, IdUnidadMedida, IdTipoProducto, IdCategoria, IdProveedor, IdBodega)
-                    VALUES(:codigo, :nombre, :descripcion, :cantidad, :precioCompra, :precioVenta, :fechaEntrada,
+                    $query = "INSERT INTO tbl_articulo(Codigo, NombreArticulo, Descripcion, Cantidad, PrecioCompra, PrecioVenta, FechaEntrada, nFactura, pGarantia , IdUnidadMedida, IdTipoProducto, IdCategoria, IdProveedor, IdBodega)
+                    VALUES(:codigo, :nombre, :descripcion, :cantidad, :precioCompra, :precioVenta, :fechaEntrada, :nFactura, :pGarantia ,
                     (SELECT IdUnidadMedida FROM tbl_unidadmedida WHERE NombreUnidadMedida = :idUm),
                     (SELECT tbl_tipoproducto.IdTipoProducto FROM tbl_tipoproducto WHERE tbl_tipoproducto.NombreTipoProducto = :idTip),
                     (SELECT tbl_categoria.IdCategoria FROM tbl_categoria WHERE tbl_categoria.NombreCategoria = :idSubCat),
@@ -136,6 +141,8 @@
                     ':precioCompra' => $pCompra,
                     ':precioVenta' => $pVenta,
                     ':fechaEntrada' => $fechaEntrada,
+                    ':nFactura' => $nFactura,
+                    ':pGarantia' => $pGarantia,
                     ':idUm' => $um,
                     ':idTip' => $tipoProducto,
                     ':idSubCat' => $categoria,

@@ -1,14 +1,25 @@
 <?php
 
-    session_start();
+if(!isset($_SESSION))
+{
+    session_start([
+        'cookie_lifetime' => 86400,
+    ]);
+}
     require_once "php/getData.php";
     require_once "php/GetAllInfo.php";
+    require_once "php/getSaldoReal.php";
+
     require($_SERVER['DOCUMENT_ROOT'].'/satpro'.'/php/permissions.php');
     $permisos = new Permissions();
     $permisosUsuario = $permisos->getPermissions($_SESSION['id_usuario']);
     $dataInfo = new GetAllInfo();
     $arrMunicipios = $dataInfo->getData('tbl_municipios_cxc');
     $data = new OrdersInfo();
+
+    $saldos = new GetSaldoReal();
+
+    //var_dump($getSaldoCable);
     //$client = new GetClient();
     $arrayTecnicos = $data->getTecnicos();
     $arrayActividadesSusp = $data->getActividadesSusp();
@@ -23,11 +34,12 @@
     $arrGestion = $dataInfo->getDataGestion('tbl_gestion_clientes', $idGestion);
     //include database connection
     require_once('../../php/connection.php');
-    $precon = new ConectionDB();
-    $con = $precon->ConectionDB();
+    $precon = new ConectionDB($_SESSION['db']);
+    $con = $precon->ConectionDB($_SESSION['db']);
     /**************************************************/
     if (isset($_GET['codigoCliente'])) {
-
+        $getSaldoCable = $saldos->getSaldoCable($_GET['codigoCliente']);
+        $getSaldoInter = $saldos->getSaldoInter($_GET['codigoCliente']);
         // get passed parameter value, in this case, the record ID
         // isset() is a PHP function used to verify if a value is there or not
         $id=isset($_GET['codigoCliente']) ? $_GET['codigoCliente'] : die('ERROR: Record no encontrado.');
@@ -134,6 +146,10 @@
             $stmt->execute();
             // store retrieved row to a variable
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
+            //var_dump($codigoCliente);
+            $saldos = new GetSaldoReal();
+            $getSaldoCable = $saldos->getSaldoCable($codigoCliente);
+            $getSaldoInter = $saldos->getSaldoInter($codigoCliente);
 
             $saldoCable = $row["saldoCable"];
             $saldoInter = $row["saldoInternet"];
@@ -188,7 +204,54 @@
 
     <!-- Custom Fonts -->
     <link href="../../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <style media="screen">
+        .form-control {
+            color: #212121;
+            font-size: 15px;
+            font-weight: bold;
 
+        }
+        .nav>li>a {
+            color: #fff;
+        }
+        .dark{
+            color: #fff;
+            background-color: #212121;
+        }
+    </style>
+
+    <style media="screen">
+        .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+            color: #fff;
+            background-color: #d32f2f;
+        }
+
+        .nav-pills>li>a{
+            color: #d32f2f;
+
+        }
+
+        .btn-danger {
+            color: #fff;
+            background-color: #d32f2f;
+            border-color: #d43f3a;
+        }
+        a:hover {
+            text-decoration: none;
+        }
+        .label-danger {
+            background-color: #d32f2f;
+        }
+
+        .panel-danger>.panel-heading {
+            color: #fff;
+            background-color: #212121;
+            border-color: #212121;
+        }
+        .panel{
+            border-color: #212121;
+        }
+    </style>
 </head>
 
 <body>
@@ -304,14 +367,14 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <br>
-                        <div class="panel panel-primary">
+                        <div class="panel panel-danger">
                           <div class="panel-heading"><b>Gestión de cobro$ </b> <span id="nombreOrden" class="label label-danger"></span></div>
                           <form id="gestionCobros" action="" method="POST">
-                          <div class="panel-body" style="background-color:#C5CAE9;">
+                          <div class="panel-body" style="background-color:#E0E0E0;">
                               <div class="col-md-12">
                                   <button class="btn btn-default btn-sm" id="nuevaOrdenId" onclick="nuevaOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Nueva gestión"><i class="far fa-file"></i></button>
                                   <button class="btn btn-default btn-sm" id="editar" onclick="editarOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Editar gestión"><i class="far fa-edit"></i></button>
-                                  <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Ver cliente"><i class="far fa-eye"></i></button>
+                                  <button class="btn btn-default btn-sm" id="verClient" type="button" name="btn_nuevo" onclick="verCliente();" data-toggle="tooltip" data-placement="bottom" title="Ver cliente"><i class="far fa-eye"></i></button>
                                   <button class="btn btn-default btn-sm" type="button" id="guardar" name="btn_nuevo" onclick="guardarOrden()" data-toggle="tooltip" data-placement="bottom" title="Guardar gestión" disabled><i class="far fa-save"></i></button>
                                   <?php echo '<input style="display: none;" type="submit" id="guardar2" value="">'; ?>
                                   <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-placement="bottom" title="Buscar orden" data-toggle="modal" data-target="#buscarGestion"><i class="fas fa-search"></i></button>
@@ -321,7 +384,7 @@
                                       <!--<button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Estado de cuenta"><i class="far fa-file-alt"></i></button>
                                       <button id="btn-cable" class="btn btn-default btn-sm" onclick="ordenCable()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Orden de cable" disabled><i class="fas fa-tv"></i></button>
                                       <button id="btn-internet" class="btn btn-default btn-sm" onclick="ordenInternet()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Orden de internet" disabled><i class="fas fa-wifi"></i></button>-->
-                                      <button class="btn btn-success btn-circle btn-md pull-right" type="button" id="agregarGestion" name="agregarGestion" data-toggle="modal" data-target="#agregarGestionForm" disabled><i class="fas fa-plus"></i></button>
+                                      <button class="btn btn-danger btn-circle btn-md pull-right" type="button" id="agregarGestion" name="agregarGestion" data-toggle="modal" data-target="#agregarGestionForm" disabled><i class="fas fa-plus"></i></button>
                                   </div>
                               </div>
                               <div class="form-row">
@@ -348,12 +411,12 @@
                                   <div class="col-md-2 col-sm-2">
                                       <br>
                                       <label for="codigoCliente">Saldo cable</label>
-                                      <input id="saldoCable" class="form-control input-sm" type="text" name="saldoCable" value="<?php echo $saldoCable; ?>" readonly>
+                                      <input id="saldoCable" class="form-control input-sm" type="text" name="saldoCable" value="<?php echo $getSaldoCable; ?>" readonly>
                                   </div>
                                   <div class="col-md-2 col-sm-2">
                                       <br>
                                       <label for="codigoCliente">Saldo internet</label>
-                                      <input id="saldoInter" class="form-control input-sm" type="text" name="saldoInter" value="<?php echo $saldoInter; ?>" readonly>
+                                      <input id="saldoInter" class="form-control input-sm" type="text" name="saldoInter" value="<?php echo $getSaldoInter; ?>" readonly>
                                   </div>
                                   <div class="col-md-4 col-sm-4">
                                       <br>
@@ -400,14 +463,14 @@
 
                               </div>
                               <div class="form-row">
-                                  <div class="col-md-12 col-sm-12">
+                                  <div class="col-md-14 col-sm-12">
                                       <br>
                                       <table class="table table-bordered table-responsive">
                                           <thead>
                                               <th class="active">Fecha</th>
                                               <th class="active">Descripción</th>
-                                              <th class="active">Pagará</th>
-                                              <th class="active">suspensión</th>
+                                              <th class="active">Gestión</th>
+                                              <th class="active">Fecha final</th>
                                               <th class="active">Usuario</th>
                                               <th class="active">Servicio</th>
                                           </thead>
@@ -416,22 +479,38 @@
                                               foreach ($arrGestion as $gestion) {
                                                   if ($gestion['tipoServicio'] == "C") {
                                                       echo '<tr class="success">'.
-                                                          '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['fechaGestion'].'" readOnly></td>'.
-                                                          '<td><textarea cols="40" rows="2" class="form-control input-sm" type="text" readOnly>'.$gestion['descripcion'].'</textarea></td>'.
-                                                          '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['fechaPagara'].'" readOnly></td>'.
-                                                          '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['fechaSuspension'].'" readOnly></td>'.
-                                                          '<td width="150px"><input class="form-control input-sm" type="text" value="'.$gestion['creadoPor'].'" readOnly></td>'.
-                                                          '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['tipoServicio'].'" readOnly></td>'.
+                                                          '<td width="150px"><input class="form-control input-sm" type="text" value="'.$gestion['fechaGestion'].'" readOnly disabled></td>'.
+                                                          '<td><textarea cols="40" rows="2" class="form-control input-sm" type="text" readOnly disabled>'.$gestion['descripcion'].'</textarea></td>'.
+
+                                                          '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['fechaPagara'].'" readOnly disabled></td>'.
+                                                          '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['fechaSuspension'].'" readOnly disabled></td>'.
+
+                                                          '<td width="150px"><input class="form-control input-sm" type="text" value="'.$gestion['creadoPor'].'" readOnly disabled></td>'.
+                                                          '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['tipoServicio'].'" readOnly disabled></td>'.
                                                       '</tr>';
-                                                  }else {
+                                                  }elseif ($gestion['tipoServicio'] == "I") {
                                                       echo '<tr class="info">'.
-                                                          '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['fechaGestion'].'" readOnly></td>'.
-                                                          '<td><textarea cols="40" rows="2" class="form-control input-sm" type="text" readOnly>'.$gestion['descripcion'].'</textarea></td>'.
-                                                          '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['fechaPagara'].'" readOnly></td>'.
-                                                          '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['fechaSuspension'].'" readOnly></td>'.
-                                                          '<td width="150px"><input class="form-control input-sm" type="text" value="'.$gestion['creadoPor'].'" readOnly></td>'.
-                                                          '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['tipoServicio'].'" readOnly></td>'.
+                                                          '<td width="150px"><input class="form-control input-sm" type="text" value="'.$gestion['fechaGestion'].'" readOnly disabled></td>'.
+                                                          '<td><textarea cols="40" rows="2" class="form-control input-sm" type="text" readOnly disabled>'.$gestion['descripcion'].'</textarea></td>'.
+
+                                                          '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['fechaPagara'].'" readOnly disabled></td>'.
+                                                          '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['fechaSuspension'].'" readOnly disabled></td>'.
+
+                                                          '<td width="150px"><input class="form-control input-sm" type="text" value="'.$gestion['creadoPor'].'" readOnly disabled></td>'.
+                                                          '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['tipoServicio'].'" readOnly disabled></td>'.
                                                       '</tr>';
+                                                  }else{
+                                                    echo '<tr class="primary">'.
+                                                          '<td width="150px"><input class="form-control input-sm" type="text" value="'.$gestion['fechaGestion'].'" readOnly disabled></td>'.
+                                                          '<td><textarea cols="40" rows="2" class="form-control input-sm" type="text" readOnly disabled>'.$gestion['descripcion'].'</textarea></td>'.
+
+                                                          '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['fechaPagara'].'" readOnly disabled></td>'.
+                                                          '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['fechaSuspension'].'" readOnly disabled></td>'.
+
+                                                          '<td width="150px"><input class="form-control input-sm" type="text" value="'.$gestion['creadoPor'].'" readOnly disabled></td>'.
+                                                          '<td width="100px"><input class="form-control input-sm" type="text" value="'.$gestion['tipoServicio'].'" readOnly disabled></td>'.
+                                                      '</tr>';
+
                                                   }
                                               }
                                               ?>
@@ -465,28 +544,37 @@
                   <div class="row">
                       <div class="col-md-4">
                           <label for="fechaGestion">Fecha de la gestión</label>
-                          <input class="form-control input-sm" type="text" name="fechaGestion" value="<?php echo date('Y-m-d'); ?>">
+                          <input class="form-control" type="text" name="fechaGestion" value="<?php echo date('Y-m-d'); ?>" readonly>
                       </div>
                       <div class="col-md-4">
-                          <label for="fechaPagara">Fecha en la que pagará</label>
-                          <input class="form-control input-sm" type="text" name="fechaPagara" value="" placeholder="Utilice formato año-mes-dia">
+                          <label for="tipoGestion">Tipo de gestión</label>
+                          <select class="form-control input-sm" name="tipogestion" required>
+                              <option value="" selected>Seleccionar</option>
+                              <option value="0">Suspender servicio</option>
+                              <option value="1">Prórroga de 1 día</option>
+                              <option value="2">Prórroga de 2 día</option>
+                              <option value="3">Prórroga de 3 día</option>
+                              <option value="4">Prórroga de 4 día</option>
+                              <option value="5">Prórroga de 5 día</option>
+                          </select>
                       </div>
                       <div class="col-md-4">
-                          <label for="fechaSuspension">Fecha de suspensión</label>
-                          <input class="form-control input-sm" type="text" name="fechaSuspension" value="" placeholder="Utilice formato año-mes-dia">
+                          <label for="fechaSuspension">Fecha de suspensión o prórroga</label>
+                          <input class="form-control input-sm" type="text" name="fechaSuspension" value="">
                       </div>
                   </div>
                   <div class="row">
-                      <div class="col-md-10">
+                      <div class="col-md-8">
                           <label for="descripcion">Descripción</label>
                           <input class="form-control input-sm" type="text" name="descripcion" value="" required>
                       </div>
-                      <div class="col-md-2">
+                      <div class="col-md-4">
                           <label for="tipoServicio">Tipo servicio</label>
                           <select class="form-control input-sm" name="tipoServicio" required>
                               <option value="" selected>Seleccionar</option>
                               <option value="C">Cable</option>
                               <option value="I">Internet</option>
+                              <option value="P">Paquete</option>
                           </select>
                       </div>
                   </div>
@@ -617,6 +705,13 @@
 
     }*/
     ?>
+    echo "<script>
+        function verCliente(){
+            var cod = document.getElementById("codigoCliente").value;
+            window.open("infoCliente.php?id="+cod);
+        }
+
+    </script>";
 
 </body>
 

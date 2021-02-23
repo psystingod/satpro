@@ -1,6 +1,11 @@
 <?php
 
-    session_start();
+if(!isset($_SESSION))
+{
+    session_start([
+        'cookie_lifetime' => 86400,
+    ]);
+}
     require("php/getData.php");
     require("php/GetAllInfo.php");
     require($_SERVER['DOCUMENT_ROOT'].'/satpro'.'/php/permissions.php');
@@ -18,8 +23,8 @@
 
     //include database connection
     require_once('../../php/connection.php');
-    $precon = new ConectionDB();
-    $con = $precon->ConectionDB();
+    $precon = new ConectionDB($_SESSION['db']);
+    $con = $precon->ConectionDB($_SESSION['db']);
     /**************************************************/
     if (isset($_GET['codigoCliente'])) {
 
@@ -30,7 +35,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT cod_cliente, nombre, telefonos, direccion, saldoCable, mactv, saldoInternet, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, fecha_suspencion, fecha_suspencion_in, mac_modem, serie_modem, id_velocidad, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
+            $query = "SELECT cod_cliente, nombre, telefonos, direccion, saldoCable, mactv, saldoInternet, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, fecha_suspencion, fecha_suspencion_in, mac_modem, serie_modem, id_velocidad, recep_modem, trans_modem, ruido_modem, coordenadas, colilla, marca_modem, tecnologia, coordenadas, id_departamento, id_municipio, id_colonia FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -85,16 +90,19 @@
             $fechaReconexInter = "";
             $hora = "";
             $fechaProgramacion = "";
-            $coordenadas = "";
+            $coordenadas = $row['coordenadas'];
             $observaciones = "";
             $nodo = "";
             $idVendedor = "";
             $recepcionTv = "";
             $fechaTraslado = "";
             $direccionTraslado = "";
-            $idDepartamento = "";
-            $idMunicipio = "";
-            $idColonia = "";
+            $idDepartamento = ""/*$row["id_departamento"]*/;
+            $idMunicipio = ""/*$row["id_municipio"]*/;
+            $idColonia = ""/*$row["id_colonia"]*/;
+            $coor = $row['coordenadas'];
+            $coorNuevas = $row['coordenadas'];
+
 
         }
 
@@ -110,7 +118,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT idOrdenTraslado, codigoCliente, fechaOrden, tipoOrden, diaCobro, telefonos, nombreCliente, direccion, direccionTraslado, idDepartamento, idMunicipio, idColonia, saldoCable, fechaTraslado, saldoInter, macModem, serieModem, velocidad, colilla, idTecnico, mactv, observaciones, tipoServicio, creadoPor  FROM tbl_ordenes_traslado WHERE idOrdenTraslado = ? LIMIT 0,1";
+            $query = "SELECT idOrdenTraslado, codigoCliente, fechaOrden, tipoOrden, diaCobro, telefonos, nombreCliente, direccion, direccionTraslado, idDepartamento, idMunicipio, idColonia, saldoCable, fechaTraslado, saldoInter, macModem, serieModem, velocidad, colilla, idTecnico, coordenadas, mactv, observaciones, tipoServicio, creadoPor, coordenadas, coordenadasNuevas FROM tbl_ordenes_traslado WHERE idOrdenTraslado = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -130,7 +138,13 @@
             //$tipoReconexInter = $row["tipoReconexInter"];
             $diaCobro = $row["diaCobro"];
             $codigoCliente = $row["codigoCliente"];
-            $fechaTraslado = $row['fechaTraslado'];
+            //var_dump($fechaTraslado = $row["fechaTraslado"]);
+            if (strlen($row["fechaTraslado"]) > 8){
+                $fechaTraslado = date_format(date_create($row["fechaTraslado"]), 'd/m/Y');
+            }else{
+                $fechaTraslado = "";
+            }
+
             $direccionTraslado = $row['direccionTraslado'];
             if ($codigoCliente === "00000") {
                 $codigoCliente = "SC";
@@ -173,10 +187,13 @@
 
             //$hora = $row['hora'];
             $idTecnico = $row['idTecnico'];
+            var_dump($idTecnico);
             $mactv = $row['mactv'];
             $observaciones = $row['observaciones'];
             //$nodo = $row['nodo'];
             $tipoServicio = $row['tipoServicio'];
+            $coor = $row['coordenadas'];
+            $coorNuevas = $row['coordenadasNuevas'];
             $creadoPor = $row['creadoPor'];
             //creadoPor
         }
@@ -210,6 +227,8 @@
         $fechaReconexInter = "";
         //$hora="";
         $observaciones="";
+        $coor="";
+        $coorNuevas="";
         //$tipoServicio = "";
         //$creadoPor = "";
         //$nodo="";
@@ -239,7 +258,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
 
     <!-- Custom CSS -->
-    <link href="../../dist/css/sb-admin-2.css" rel="stylesheet">
+
     <link rel="stylesheet" href="../../dist/css/custom-principal.css">
 
     <!-- Morris Charts CSS -->
@@ -248,6 +267,51 @@
     <!-- Custom Fonts -->
     <link href="../../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+    <style media="screen">
+        .form-control {
+            color: #212121;
+            font-size: 15px;
+            font-weight: bold;
+
+        }
+        .nav>li>a {
+            color: #fff;
+        }
+        .dark{
+            color: #fff;
+            background-color: #212121;
+        }
+    </style>
+
+    <style media="screen">
+        .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+            color: #fff;
+            background-color: #d32f2f;
+        }
+
+        .nav-pills>li>a{
+            color: #d32f2f;
+
+        }
+
+        .btn-danger {
+            color: #fff;
+            background-color: #d32f2f;
+            border-color: #d43f3a;
+        }
+        .label-danger {
+            background-color: #d32f2f;
+        }
+
+        .panel-danger>.panel-heading {
+            color: #fff;
+            background-color: #212121;
+            border-color: #212121;
+        }
+        .panel{
+            border-color: #212121;
+        }
+    </style>
 </head>
 
 <body>
@@ -260,110 +324,13 @@
      ?>
     <div id="wrapper">
 
-        <!-- Navigation -->
-        <nav class="navbar navbar-inverse navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.php">Cablesat</a>
-            </div>
-            <!-- /.navbar-header -->
-
-            <ul class="nav navbar-top-links navbar-right">
-                <!-- /.dropdown -->
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <?php echo "<i class='far fa-user'></i>"." ".$_SESSION['nombres']." ".$_SESSION['apellidos'] ?> <i class="fas fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="perfil.php"><i class="fas fa-user-circle"></i> Perfil</a>
-                        </li>
-                        <li><a href="config.php"><i class="fas fa-cog"></i> Configuración</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="../../php/logout.php"><i class="fas fa-sign-out-alt"></i></i> Salir</a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-user -->
-                </li>
-                <!-- /.dropdown -->
-            </ul>
-            <!-- /.navbar-top-links -->
-
-            <div class="navbar-default sidebar" role="navigation">
-                <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav" id="side-menu">
-                        <li>
-                            <a href='../index.php'><i class='fas fa-home'></i> Principal</a>
-                        </li>
-                        <?php
-                        require('../../php/contenido.php');
-                        require('../../php/modulePermissions.php');
-
-                        if (setMenu($_SESSION['permisosTotalesModulos'], ADMINISTRADOR)) {
-                            echo "<li><a href='../modulo_administrar/administrar.php'><i class='fas fa-key'></i> Administrar</a></li>";
-                        }else {
-                            echo "";
-                        }
-                        if (setMenu($_SESSION['permisosTotalesModulos'], CONTABILIDAD)) {
-                            echo "<li><a href='../modulo_contabilidad/contabilidad.php'><i class='fas fa-money-check-alt'></i> Contabilidad</a></li>";
-                        }else {
-                            echo "";
-                        }
-                        if (setMenu($_SESSION['permisosTotalesModulos'], PLANILLA)) {
-                            echo "<li><a href='../modulo_planillas/planillas.php'><i class='fas fa-file-signature'></i> Planillas</a></li>";
-                        }else {
-                            echo "";
-                        }
-                        if (setMenu($_SESSION['permisosTotalesModulos'], ACTIVOFIJO)) {
-                            echo "<li><a href='../modulo_activoFijo/activoFijo.php'><i class='fas fa-building'></i> Activo fijo</a></li>";
-                        }else {
-                            echo "";
-                        }
-                        if (setMenu($_SESSION['permisosTotalesModulos'], INVENTARIO)) {
-                            echo "<li><a href='../moduloInventario.php'><i class='fas fa-scroll'></i> Inventario</a></li>";
-                        }else {
-                            echo "";
-                        }
-                        if (setMenu($_SESSION['permisosTotalesModulos'], IVA)) {
-                            echo "<li><a href='../modulo_iva/iva.php'><i class='fas fa-file-invoice-dollar'></i> IVA</a></li>";
-                        }else {
-                            echo "";
-                        }
-                        if (setMenu($_SESSION['permisosTotalesModulos'], BANCOS)) {
-                            echo "<li><a href='../modulo_bancos/bancos.php'><i class='fas fa-university'></i> Bancos</a></li>";
-                        }else {
-                            echo "";
-                        }
-                        if (setMenu($_SESSION['permisosTotalesModulos'], CXC)) {
-                            echo "<li><a href='cxc.php'><i class='fas fa-hand-holding-usd'></i> Cuentas por cobrar</a></li>";
-                        }else {
-                            echo "";
-                        }
-                        if (setMenu($_SESSION['permisosTotalesModulos'], CXP)) {
-                            echo "<li><a href='../modulo_cxp/cxp.php'><i class='fas fa-money-bill-wave'></i> Cuentas por pagar</a></li>";
-                        }else {
-                            echo "";
-                        }
-                        ?>
-                    </ul>
-                </div>
-                <!-- /.sidebar-collapse -->
-            </div>
-            <!-- /.navbar-static-side -->
-        </nav>
-
         <!-- Page Content -->
         <div id="page-wrapper">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <br>
-                        <div class="panel panel-info">
+
+                        <div class="panel panel-danger">
                           <div class="panel-heading"><b>Orden de Traslado</b> <span id="nombreOrden" class="label label-danger"></span></div>
                           <form id="ordenTraslado" action="" method="POST">
                           <div class="panel-body">
@@ -384,7 +351,7 @@
                               </div>
                               <div class="form-row">
                                   <div class="col-md-2">
-                                      <br>
+
                                       <?php
                                       if (isset($_GET['nOrden'])) {
                                          echo "<input id='creadoPor' class='form-control input-sm' type='hidden' name='creadoPor' value='{$creadoPor}'>";
@@ -399,22 +366,22 @@
                                       <input id="numeroTraslado" class="form-control input-sm" type="text" name="numeroTraslado" value="<?php echo $idOrdenTraslado; ?>" readonly>
                                   </div>
                                   <div class="col-md-2">
-                                      <br>
-                                      <label for="fechaElaborada">Fecha de elaborada</label>
+
+                                      <label for="fechaElaborada">Fecha elaborada</label>
                                       <input id="fechaOrden" class="form-control input-sm" type="text" name="fechaOrden" value="<?php echo $fechaOrden; ?>" readonly>
                                   </div>
                                   <div class="col-md-2">
-                                      <br>
+
                                       <label for="codigoCliente">Código del cliente</label>
                                       <input id="codigoCliente" class="form-control input-sm" type="text" name="codigoCliente" value="<?php echo $codigoCliente; ?>" readonly required>
                                   </div>
                                   <div class="col-md-5">
-                                      <br>
+
                                       <label for="nombreCliente">Nombre del cliente</label>
                                       <input id="nombreCliente" class="form-control input-sm" type="text" name="nombreCliente" value="<?php echo $nombreCliente; ?>" readonly required>
                                   </div>
                                   <div class="col-md-1">
-                                      <br>
+
                                       <label for="diaCobro">Día c</label>
                                       <input class="form-control input-sm" type="text" name="diaCobro" value="<?php echo $diaCobro; ?>" readonly>
                                   </div>
@@ -429,6 +396,20 @@
                                   <div class="col-md-12">
                                       <label for="direccionTraslado">Dirección de traslado</label>
                                       <textarea class="form-control input-sm" name="direccionTraslado" rows="2" cols="40" readonly required><?php echo $direccionTraslado; ?></textarea>
+                                  </div>
+                                  <div class="col-md-12">
+                                      <label style="font-weight: normal; text-decoration-line: underline; text-decoration-style: solid;" for="actualizarDireccion">Actualizar dirección en ficha</label>
+                                      <input type="checkbox" id="actualizarDireccion" name="actualizarDireccion" value="1">
+                                  </div>
+                              </div>
+                              <div class="form-row">
+                                  <div class="col-md-6">
+                                      <label for="coordenadas">Coordenadas anteriores</label>
+                                      <input class="form-control input-sm" type="text" name="coordenadas" value="<?php echo $coor; ?>" readonly>
+                                  </div>
+                                  <div class="col-md-6">
+                                      <label for="coordenadas">Nuevas coordenadas</label>
+                                      <input class="form-control input-sm" type="text" name="coordenadasNuevas" value="<?php echo "*".$coorNuevas."*"; ?>" readonly>
                                   </div>
                               </div>
                               <div class="form-row">
@@ -521,20 +502,20 @@
                                           }
                                           ?>
                                       </select>
-                                      <br>
+
                                   </div>
 
                               </div>
                               <div class="form-row">
                                   <div class="col-md-2">
                                       <label for="fechaTraslado">Fecha traslado</label>
-                                      <input id="fechaTraslado" class="form-control input-sm" type="text" name="fechaTraslado" value="<?php echo $fechaTraslado; ?>" readonly required>
+                                      <input id="fechaTraslado" class="form-control input-sm" type="text" name="fechaTraslado" value="<?php echo $fechaTraslado; ?>" readonly>
                                   </div>
                                   <div class="col-md-3">
                                       <label for="telefonos">Teléfono reciente</label>
                                       <input id="telefonos" class="form-control input-sm" type="text" name="telefonos" value="<?php echo $telefonos; ?>" readonly>
                                   </div>
-                                  <div class="col-md-5">
+                                  <div class="col-md-4">
                                       <label for="tecnico">Técnico</label>
                                       <select class="form-control input-sm" name="responsable" disabled required>
                                           <option value="" selected>Seleccionar</option>
@@ -548,7 +529,7 @@
                                           ?>
                                       </select>
                                   </div>
-                                  <div class="col-md-2">
+                                  <div class="col-md-3">
                                       <label for="colilla">Colilla</label>
                                       <input id="colilla" class="form-control input-sm" type="text" name="colilla" value="<?php echo $colilla; ?>" readonly required>
                                   </div>
@@ -612,6 +593,8 @@
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../../vendor/metisMenu/metisMenu.min.js"></script>
+
+    <script src="../../vendor/jQuery-Mask-Plugin-master/dist/jquery.mask.min.js"></script>
 
     <!-- Custom Theme JavaScript -->
     <script src="../../dist/js/sb-admin-2.js"></script>
@@ -686,6 +669,12 @@
 
     }
     ?>
+    <script>
+        $(document).ready(function(){
+            $('#fechaTraslado').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+            //$('#fechaPrimerFacturaCable').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+        });
+    </script>
 
 </body>
 

@@ -155,7 +155,7 @@
             $id=isset($_GET['id']) ? $_GET['id'] : die('ERROR: Registro no encontrado.');
 
             //include database connection
-            $obj = new ConectionDB();
+            $obj = new ConectionDB($_SESSION['db']);
             $con = $obj->dbConnect;
 
             // read current record's data

@@ -1,6 +1,11 @@
 <?php
 
-    session_start();
+if(!isset($_SESSION))
+{
+    session_start([
+        'cookie_lifetime' => 86400,
+    ]);
+}
     require("php/getData.php");
     require("php/GetAllInfo.php");
     require($_SERVER['DOCUMENT_ROOT'].'/satpro'.'/php/permissions.php');
@@ -18,11 +23,10 @@
 
     //include database connection
     require_once('../../php/connection.php');
-    $precon = new ConectionDB();
-    $con = $precon->ConectionDB();
+    $precon = new ConectionDB($_SESSION['db']);
+    $con = $precon->ConectionDB($_SESSION['db']);
     /**************************************************/
-    if (isset($_GET['codigoCliente'])) {
-
+    if (isset($_GET['codigoCliente']) && !isset($_GET['nOrden'])) {
         // get passed parameter value, in this case, the record ID
         // isset() is a PHP function used to verify if a value is there or not
         $id=isset($_GET['codigoCliente']) ? $_GET['codigoCliente'] : die('ERROR: Record no encontrado.');
@@ -30,7 +34,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT cod_cliente, nombre, telefonos, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, mac_modem, serie_modem, id_velocidad, dire_telefonia, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia, saldoCable, saldoInternet FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
+            $query = "SELECT cod_cliente, nombre, telefonos, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, mac_modem, serie_modem, id_velocidad, dire_telefonia, recep_modem, trans_modem, ruido_modem, wanip, coordenadas, colilla, marca_modem, tecnologia, saldoCable, saldoInternet FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -69,12 +73,13 @@
             $tecnologia = $row['tecnologia'];
             $fechaTrabajo = "";
             $hora = "";
-            $fechaProgramacion = "";
-            $coordenadas = "";
+            $fechaProgramacion = $row['wanip']; //SE MODIFICO
+            $coordenadas = $row['coordenadas']; //SE MODIFICO
             $observaciones = "";
             $nodo = $row['dire_telefonia'];
             $idVendedor = "";
             $recepcionTv = "";
+            $checksoporte = "";
 
         }
 
@@ -82,7 +87,7 @@
         catch(PDOException $exception){
             die('ERROR: ' . $exception->getMessage());
         }
-    }else if(isset($_GET['nOrden'])){
+    }else if(isset($_GET['nOrden']) && !isset($_GET['codigoCliente'])){
         // get passed parameter value, in this case, the record ID
         // isset() is a PHP function used to verify if a value is there or not
         $id=isset($_GET['nOrden']) ? $_GET['nOrden'] : die('ERROR: Record no encontrado.');
@@ -90,7 +95,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT idOrdenTrabajo, codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, diaCobro, nombreCliente, telefonos, idMunicipio, actividadCable, saldoCable, direccionCable, actividadInter, saldoInter, direccionInter, saldoInter, direccionInter, macModem, serieModem, velocidad, rx, tx, snr, colilla, fechaTrabajo, hora, fechaProgramacion, idTecnico, mactv, coordenadas, observaciones, nodo, marcaModelo, tecnologia, idVendedor, recepcionTv, tipoServicio, creadoPor  FROM tbl_ordenes_trabajo WHERE idOrdenTrabajo = ? LIMIT 0,1";
+            $query = "SELECT idOrdenTrabajo, codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, diaCobro, nombreCliente, telefonos, idMunicipio, actividadCable, saldoCable, direccionCable, actividadInter, saldoInter, direccionInter, saldoInter, direccionInter, macModem, serieModem, velocidad, rx, tx, snr, colilla, fechaTrabajo, hora, fechaProgramacion, idTecnico, mactv, coordenadas, observaciones, nodo, marcaModelo, tecnologia, idVendedor, recepcionTv, tipoServicio, creadoPor, checksoporte  FROM tbl_ordenes_trabajo WHERE idOrdenTrabajo = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -128,18 +133,19 @@
             $snr = $row['snr'];
             $colilla = $row['colilla'];
             if ($row["fechaTrabajo"] >= 7) {
-                $fechaTrabajo = date_format(date_create($row["fechaTrabajo"]), 'd/m/Y');
+                $date2 = DateTime::createFromFormat('Y-m-d', $row["fechaTrabajo"]);
+                $fechaTrabajo = $date2->format('d/m/Y');
             }else {
                 $fechaTrabajo = "";
             }
 
             $hora = $row['hora'];
-            if ($row["fechaProgramacion"] >= 7) {
+            /*if ($row["fechaProgramacion"] >= 7) {
                 $fechaProgramacion = date_format(date_create($row["fechaProgramacion"]), 'd/m/Y');
             }else {
                 $fechaProgramacion = "";
-            }
-
+            }*/
+            $fechaProgramacion = $row["fechaProgramacion"];
             $idTecnico = $row['idTecnico'];
             $mactv = $row['mactv'];
             $coordenadas = $row['coordenadas'];
@@ -151,12 +157,143 @@
             $recepcionTv = $row['recepcionTv'];
             $tipoServicio = $row['tipoServicio'];
             $creadoPor = $row['creadoPor'];
+            $checksoporte = $row['checksoporte'];
             //creadoPor
         }
         catch(PDOException $exception){
             die('ERROR: ' . $exception->getMessage());
         }
-    }else {
+    }elseif (isset($_GET['codigoCliente']) && isset($_GET['nOrden'])) {
+
+    // get passed parameter value, in this case, the record ID
+    // isset() is a PHP function used to verify if a value is there or not
+    $id=isset($_GET['codigoCliente']) ? $_GET['codigoCliente'] : die('ERROR: Record no encontrado.');
+
+    // read current record's data
+    try {
+        // prepare select query
+        $query = "SELECT cod_cliente, nombre, telefonos, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, mac_modem, serie_modem, id_velocidad, dire_telefonia, recep_modem, trans_modem, ruido_modem, wanip, coordenadas, colilla, marca_modem, tecnologia, saldoCable, saldoInternet FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
+        $stmt = $con->prepare( $query );
+
+        // this is the first question mark
+        $stmt->bindParam(1, $id);
+
+        // execute our query
+        $stmt->execute();
+
+        // store retrieved row to a variable
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        /****************** DATOS GENERALES ***********************/
+        date_default_timezone_set('America/El_Salvador');
+        $fechaOrdenTrabajo = date_format(date_create(date('Y-m-d')), 'd/m/Y');
+
+        //$tipoOrden = "Técnica";
+        $diaCobro = $row["dia_cobro"];
+        $telefonos = $row["telefonos"];
+        $codigoCliente = $row["cod_cliente"];
+        $nombreCliente = $row['nombre'];
+        $idMunicipio = $row["id_municipio"];
+        $saldoCable = $row["saldoCable"];
+        $saldoInter = $row["saldoInternet"];
+        $direccionCable = $row["dire_cable"];
+        $mactv = $row['mactv'];
+        $direccionInter = $row["dire_internet"];
+        $macModem = $row['mac_modem'];
+        $serieModem = $row['serie_modem'];
+        $idVelocidad = $row['id_velocidad'];
+        $rx = $row['recep_modem'];
+        $tx = $row['trans_modem'];
+        $snr = $row['ruido_modem'];
+        $velocidad = $row['id_velocidad'];
+        $colilla = $row['colilla'];
+        $marcaModelo = $row['marca_modem'];
+        $tecnologia = $row['tecnologia'];
+        $fechaTrabajo = "";
+        $hora = "";
+        $fechaProgramacion = $row['wanip']; //SE MODIFICO
+        $coordenadas = $row['coordenadas']; //SE MODIFICO
+        $observaciones = "";
+        $nodo = $row['dire_telefonia'];
+        $idVendedor = "";
+        $recepcionTv = "";
+        $checksoporte = "";
+
+        // DATOS DE LA ORDEN EN SÍ
+        $id=isset($_GET['nOrden']) ? $_GET['nOrden'] : die('ERROR: Record no encontrado.');
+        // prepare select query
+        $query = "SELECT idOrdenTrabajo, codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, diaCobro, nombreCliente, telefonos, idMunicipio, actividadCable, saldoCable, direccionCable, actividadInter, saldoInter, direccionInter, saldoInter, direccionInter, macModem, serieModem, velocidad, rx, tx, snr, colilla, fechaTrabajo, hora, fechaProgramacion, idTecnico, mactv, coordenadas, observaciones, nodo, marcaModelo, tecnologia, idVendedor, recepcionTv, tipoServicio, creadoPor, checksoporte  FROM tbl_ordenes_trabajo WHERE idOrdenTrabajo = ? LIMIT 0,1";
+        $stmt = $con->prepare( $query );
+
+        // this is the first question mark
+        $stmt->bindParam(1, $id);
+
+        // execute our query
+        $stmt->execute();
+
+        // store retrieved row to a variable
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        /****************** DATOS GENERALES ***********************/
+        $idOrdenTrabajo = $row["idOrdenTrabajo"];
+        $fechaOrdenTrabajo = date_format(date_create($row["fechaOrdenTrabajo"]), 'd/m/Y');
+        $tipoOrdenTrabajo = $row["tipoOrdenTrabajo"];
+        //$diaCobro = $row["diaCobro"];
+        //$codigoCliente = $row["codigoCliente"];
+        if ($codigoCliente === "00000") {
+            $codigoCliente = "SC";
+        }
+        $nombreCliente = $row['nombreCliente'];
+        $telefonos = $row["telefonos"];
+        //$idMunicipio = $row["idMunicipio"];
+        $idActividadCable = $row["actividadCable"];
+        //$saldoCable = $row["saldoCable"];
+        $direccionCable = $row["direccionCable"];
+        $idActividadInter = $row["actividadInter"];
+        //$saldoInter = $row["saldoInter"];
+        //$direccionInter = $row["direccionInter"];
+        //$macModem = $row['macModem'];
+        //$serieModem = $row['serieModem'];
+        //$velocidad = $row['velocidad'];
+        //$rx = $row['rx'];
+        //$tx = $row['tx'];
+        //$snr = $row['snr'];
+        //$colilla = $row['colilla'];
+        if ($row["fechaTrabajo"] >= 7) {
+            $date2 = DateTime::createFromFormat('Y-m-d', $row["fechaTrabajo"]);
+            $fechaTrabajo = $date2->format('d/m/Y');
+        }else {
+            $fechaTrabajo = "";
+        }
+
+        $hora = $row['hora'];
+        /*if ($row["fechaProgramacion"] >= 7) {
+            $fechaProgramacion = date_format(date_create($row["fechaProgramacion"]), 'd/m/Y');
+        }else {
+            $fechaProgramacion = "";
+        }*/
+        $fechaProgramacion = $row["fechaProgramacion"];
+        $idTecnico = $row['idTecnico'];
+        $mactv = $row['mactv'];
+        //$coordenadas = $row['coordenadas'];
+        $observaciones = $row['observaciones'];
+        //$nodo = $row['nodo'];
+        //$marcaModelo = $row['marcaModelo'];
+        //$tecnologia = $row['tecnologia'];
+        $idVendedor = $row['idVendedor'];
+        //$recepcionTv = $row['recepcionTv'];
+        $tipoServicio = $row['tipoServicio'];
+        $creadoPor = $row['creadoPor'];
+        $checksoporteorden = $row['checksoporte'];
+        //creadoPor
+
+    }
+
+        // show error
+    catch(PDOException $exception){
+        die('ERROR: ' . $exception->getMessage());
+    }
+}else {
         $fechaOrdenTrabajo = "";
         $idOrdenTrabajo = "";
         $codigoCliente = "";
@@ -186,6 +323,7 @@
         $marcaModelo="";
         $nodo="";
         $recepcionTv="";
+        $checksoporte="";
 
     }
 
@@ -213,7 +351,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
 
     <!-- Custom CSS -->
-    <link href="../../dist/css/sb-admin-2.css" rel="stylesheet">
+
     <link rel="stylesheet" href="../../dist/css/custom-principal.css">
 
     <!-- Morris Charts CSS -->
@@ -222,6 +360,55 @@
     <!-- Custom Fonts -->
     <link href="../../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+    <style media="screen">
+        .form-control {
+            color: #212121;
+            font-size: 15px;
+            font-weight: normal;
+
+        }
+        .nav>li>a {
+            color: #fff;
+        }
+        .dark{
+            color: #fff;
+            background-color: #212121;
+        }
+        .check{
+            width:30px;
+            height:25px;
+        }
+    </style>
+
+    <style media="screen">
+        .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+            color: #fff;
+            background-color: #d32f2f;
+        }
+
+        .nav-pills>li>a{
+            color: #d32f2f;
+
+        }
+
+        .btn-danger {
+            color: #fff;
+            background-color: #d32f2f;
+            border-color: #d43f3a;
+        }
+        .label-danger {
+            background-color: #d32f2f;
+        }
+
+        .panel-danger>.panel-heading {
+            color: #fff;
+            background-color: #212121;
+            border-color: #212121;
+        }
+        .panel{
+            border-color: #212121;
+        }
+    </style>
 </head>
 
 <body>
@@ -232,111 +419,12 @@
          }
      ?>
     <div id="wrapper">
-
-        <!-- Navigation -->
-        <nav class="navbar navbar-inverse navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.php">Cablesat</a>
-            </div>
-            <!-- /.navbar-header -->
-
-            <ul class="nav navbar-top-links navbar-right">
-                <!-- /.dropdown -->
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <?php echo "<i class='far fa-user'></i>"." ".$_SESSION['nombres']." ".$_SESSION['apellidos'] ?> <i class="fas fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="perfil.php"><i class="fas fa-user-circle"></i> Perfil</a>
-                        </li>
-                        <li><a href="config.php"><i class="fas fa-cog"></i> Configuración</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="../../php/logout.php"><i class="fas fa-sign-out-alt"></i></i> Salir</a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-user -->
-                </li>
-                <!-- /.dropdown -->
-            </ul>
-            <!-- /.navbar-top-links -->
-
-            <div class="navbar-default sidebar" role="navigation">
-                <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav" id="side-menu">
-                        <li>
-                            <a href='../index.php'><i class='fas fa-home'></i> Principal</a>
-                        </li>
-                        <?php
-                        require('../../php/contenido.php');
-                        require('../../php/modulePermissions.php');
-
-                        if (setMenu($_SESSION['permisosTotalesModulos'], ADMINISTRADOR)) {
-                            echo "<li><a href='../modulo_administrar/administrar.php'><i class='fas fa-key'></i> Administrar</a></li>";
-                        }else {
-                            echo "";
-                        }
-                        if (setMenu($_SESSION['permisosTotalesModulos'], CONTABILIDAD)) {
-                            echo "<li><a href='../modulo_contabilidad/contabilidad.php'><i class='fas fa-money-check-alt'></i> Contabilidad</a></li>";
-                        }else {
-                            echo "";
-                        }
-                        if (setMenu($_SESSION['permisosTotalesModulos'], PLANILLA)) {
-                            echo "<li><a href='../modulo_planillas/planillas.php'><i class='fas fa-file-signature'></i> Planillas</a></li>";
-                        }else {
-                            echo "";
-                        }
-                        if (setMenu($_SESSION['permisosTotalesModulos'], ACTIVOFIJO)) {
-                            echo "<li><a href='../modulo_activoFijo/activoFijo.php'><i class='fas fa-building'></i> Activo fijo</a></li>";
-                        }else {
-                            echo "";
-                        }
-                        if (setMenu($_SESSION['permisosTotalesModulos'], INVENTARIO)) {
-                            echo "<li><a href='../moduloInventario.php'><i class='fas fa-scroll'></i> Inventario</a></li>";
-                        }else {
-                            echo "";
-                        }
-                        if (setMenu($_SESSION['permisosTotalesModulos'], IVA)) {
-                            echo "<li><a href='../modulo_iva/iva.php'><i class='fas fa-file-invoice-dollar'></i> IVA</a></li>";
-                        }else {
-                            echo "";
-                        }
-                        if (setMenu($_SESSION['permisosTotalesModulos'], BANCOS)) {
-                            echo "<li><a href='../modulo_bancos/bancos.php'><i class='fas fa-university'></i> Bancos</a></li>";
-                        }else {
-                            echo "";
-                        }
-                        if (setMenu($_SESSION['permisosTotalesModulos'], CXC)) {
-                            echo "<li><a href='cxc.php'><i class='fas fa-hand-holding-usd'></i> Cuentas por cobrar</a></li>";
-                        }else {
-                            echo "";
-                        }
-                        if (setMenu($_SESSION['permisosTotalesModulos'], CXP)) {
-                            echo "<li><a href='../modulo_cxp/cxp.php'><i class='fas fa-money-bill-wave'></i> Cuentas por pagar</a></li>";
-                        }else {
-                            echo "";
-                        }
-                        ?>
-                    </ul>
-                </div>
-                <!-- /.sidebar-collapse -->
-            </div>
-            <!-- /.navbar-static-side -->
-        </nav>
-
         <!-- Page Content -->
         <div id="page-wrapper">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <br>
-                        <div class="panel panel-primary">
+                        <div class="panel panel-danger">
                           <div class="panel-heading"><b>Orden de trabajo</b> <span id="nombreOrden" class="label label-danger"></span></div>
                           <form id="ordenTrabajo" action="" method="POST">
                           <div class="panel-body">
@@ -350,6 +438,8 @@
                                   <button class="btn btn-default btn-sm" id="imprimir" onclick="imprimirOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Imprimir orden" ><i class="fas fa-print"></i></button>
                                   <div class="pull-right">
 
+                                  <button class="btn btn-danger input-sm" type="button" id="guardar" name="btn_crear_nuevo" onclick="nuevoCliente()" data-toggle="tooltip" data-placement="bottom" title="Para crear ficha debe ser cliente sin codigo" disabled><i class="fas fa-plus"></i></button>
+
                                       <button class="btn btn-default btn-sm" onclick="estadoCuenta();" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Estado de cuenta"><i class="far fa-file-alt"></i></button>
                                       <button id="btn-cable" class="btn btn-default btn-sm" onclick="ordenCable()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Orden de cable" disabled><i class="fas fa-tv"></i></button>
                                       <button id="btn-internet" class="btn btn-default btn-sm" onclick="ordenInternet()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Orden de internet" disabled><i class="fas fa-wifi"></i></button>
@@ -357,7 +447,7 @@
                               </div>
                               <div class="form-row">
                                   <div class="col-md-3">
-                                      <br>
+
                                       <?php
                                       if (isset($_GET['nOrden'])) {
                                          echo "<input id='creadoPor' class='form-control input-sm' type='hidden' name='creadoPor' value='{$creadoPor}'>";
@@ -370,42 +460,42 @@
                                       ?>
                                       <label for="fechaOrden">Fecha de orden</label>
                                       <input id="fechaOrden" class="form-control input-sm" type="text" name="fechaOrden" value="<?php echo $fechaOrdenTrabajo ?>" readonly>
+                                      <input id="nuevaEditar" class="form-control input-sm" type="hidden" name="nuevaEditar" value="<?php if(isset($_GET['key']))echo $_GET['key']; else echo ""; ?>">
                                   </div>
                                   <div class="col-md-2">
-                                      <br>
+
                                       <label for="numeroOrden">Número de orden</label>
                                       <input id="numeroOrden" class="form-control input-sm" type="text" name="numeroOrden" value="<?php echo $idOrdenTrabajo ?>" readonly>
                                   </div>
                                   <div class="col-md-3">
-                                      <br>
+
                                       <label for="codigoCliente">Código de cliente</label>
                                       <input id="codigoCliente" class="form-control input-sm" type="text" name="codigoCliente" value="<?php echo $codigoCliente; ?>" readonly>
                                   </div>
 
                                   <div class="col-md-3">
-                                      <br>
                                       <label for="tipoOrden">Tipo de orden</label>
                                       <input id="tipoOrden" class="form-control input-sm" type="text" name="tipoOrden" value="Técnica" readonly>
                                   </div>
                                   <div class="col-md-1">
-                                      <br>
+
                                       <label for="diaCobro">Día c</label>
                                       <input class="form-control input-sm" type="text" name="diaCobro" value="<?php echo $diaCobro; ?>" readonly>
                                   </div>
                               </div>
                               <div class="form-row">
                                   <div class="col-md-6">
-                                      <br>
+
                                       <label for="nombreCliente">Nombre del cliente</label>
                                       <input class="form-control input-sm input-sm" type="text" name="nombreCliente" value="<?php echo strtoupper($nombreCliente); ?>" readonly>
                                   </div>
                                   <div class="col-md-3">
-                                      <br>
+
                                       <label for="telefonos">Teléfonos</label>
                                       <input class="form-control input-sm input-sm" type="text" name="telefonos" value="<?php echo $telefonos; ?>" readonly>
                                   </div>
                                   <div class="col-md-3">
-                                      <br>
+
                                       <label for="municipio">Municipio</label>
                                       <select class="form-control input-sm" name="municipio" disabled>
                                           <option value="" selected>Seleccionar</option>
@@ -425,12 +515,12 @@
                               </div>
                               <div class="form-row">
                                   <div class="col-md-6">
-                                      <br>
-                                      <h4 class="alert alert-info cable"><strong>Cable</strong></h4>
+
+                                      <h4 class="alert btn-danger cable">Cable</h4>
                                       <div class="row">
-                                          <div class="col-md-8">
+                                          <div class="col-md-10">
                                               <label for="tipoActividadCable">Tipo de actividad</label>
-                                              <select id="tipoActividadCable" class="form-control input-sm cable" name="tipoActividadCable" disabled>
+                                              <select id="tipoActividadCable" onchange="changeActividad()" class="form-control input-sm cable" name="tipoActividadCable" disabled>
                                                   <option value="" selected>Seleccionar</option>
                                                   <?php
 
@@ -445,7 +535,7 @@
                                                   ?>
                                               </select>
                                           </div>
-                                          <div class="col-md-4">
+                                          <div class="col-md-2">
                                               <label for="saldoCable">Saldo</label>
                                               <input id="saldoCable" class="form-control input-sm cable" type="text" name="saldoCable" value="<?php echo $saldoCable; ?>" readonly="true">
                                           </div>
@@ -458,12 +548,12 @@
                                       </div>
                                   </div>
                                   <div class="col-md-6">
-                                      <br>
-                                      <h4 class="alert alert-info"><strong>Internet</strong></h4>
+
+                                      <h4 class="alert btn-danger">Internet</h4>
                                       <div class="row">
-                                          <div class="col-md-8">
+                                          <div class="col-md-10">
                                               <label for="tipoActividadInternet">Tipo de actividad</label>
-                                              <select id="tipoActividadInter" class="form-control input-sm internet" name="tipoActividadInternet" disabled>
+                                              <select id="tipoActividadInter" onchange="changeActividad()" class="form-control input-sm internet" name="tipoActividadInternet" disabled>
                                                   <option value="" selected>Seleccionar</option>
                                                   <?php
                                                   foreach ($arrayActividadesI as $key) {
@@ -476,7 +566,7 @@
                                                   ?>
                                               </select>
                                           </div>
-                                          <div class="col-md-4">
+                                          <div class="col-md-2">
                                               <label for="saldoInternet">Saldo</label>
                                               <input id="saldoInternet" class="form-control input-sm internet" type="text" name="saldoInternet" value="<?php echo $saldoInter; ?>" readonly>
                                           </div>
@@ -491,17 +581,17 @@
                               </div>
                               <div class="form-row">
                                   <div class="col-md-3">
-                                      <br>
+
                                       <label for="macModem">MAC del modem</label>
                                       <input id="macModem" class="form-control input-sm internet" type="text" name="macModem" value="<?php echo $macModem; ?>" readonly>
                                   </div>
                                   <div class="col-md-2">
-                                      <br>
+
                                       <label for="serieModem">Serie del modem</label>
                                       <input id="serieModem" class="form-control input-sm internet" type="text" name="serieModem" value="<?php echo $serieModem; ?>" readonly>
                                   </div>
                                   <div class="col-md-2">
-                                      <br>
+
                                       <label for="velocidad">Velocidad</label>
                                       <select id="velocidad" class="form-control input-sm internet" name="velocidad" disabled>
                                           <option value="" selected>Seleccionar</option>
@@ -518,46 +608,46 @@
                                       </select>
                                   </div>
                                   <div class="col-md-1">
-                                      <br>
+
                                       <label for="rx">Rx</label>
                                       <input id="rx" class="form-control input-sm internet" type="text" name="rx" value="<?php echo $rx; ?>" readonly>
                                   </div>
                                   <div class="col-md-1">
-                                      <br>
+
                                       <label for="tx">Tx</label>
                                       <input id="tx" class="form-control input-sm internet" type="text" name="tx" value="<?php echo $tx; ?>" readonly>
                                   </div>
                                   <div class="col-md-1">
-                                      <br>
+
                                       <label for="snr">SNR</label>
                                       <input id="snr" class="form-control input-sm internet" type="text" name="snr" value="<?php echo $snr; ?>" readonly>
                                   </div>
                                   <div class="col-md-2">
-                                      <br>
+
                                       <label for="colilla">Colilla</label>
                                       <input id="colilla" class="form-control input-sm internet" type="text" name="colilla" value="<?php echo $colilla; ?>" readonly>
                                   </div>
                               </div>
                               <div class="form-row">
                                   <div class="col-md-2">
-                                      <br>
+
                                       <label for="fechaTrabajo">Fecha de trabajo</label>
-                                      <input class="form-control input-sm" type="text" name="fechaTrabajo" value="<?php echo $fechaTrabajo; ?>" readonly>
+                                      <input class="form-control input-sm" type="text" id="fechaTrabajo" name="fechaTrabajo" value="<?php echo $fechaTrabajo; ?>" readonly>
                                   </div>
                                   <div class="col-md-2">
-                                      <br>
+
                                       <label for="hora">Hora</label>
                                       <input id="hora" class="form-control input-sm" type="text" name="hora" value="<?php echo $hora; ?>" readonly>
                                   </div>
                                   <div class="col-md-3">
-                                      <br>
-                                      <label for="fechaProgramacion">Fecha de programación</label>
+
+                                      <label for="fechaProgramacion">WAN IP</label>
                                       <input class="form-control input-sm" type="text" name="fechaProgramacion" value="<?php echo $fechaProgramacion; ?>" readonly>
                                   </div>
                                   <div class="col-md-5">
-                                      <br>
+
                                       <label for="responsable">Responsable</label>
-                                      <select class="form-control input-sm" name="responsable" disabled>
+                                      <select class="form-control input-sm" name="responsable" disabled required>
                                           <option value="" selected>Seleccionar</option>
                                           <?php
                                           foreach ($arrayTecnicos as $key) {
@@ -571,42 +661,53 @@
                                   </div>
                               </div>
                               <div class="form-row">
-                                  <div class="col-md-3">
-                                      <br>
+                                  <div class="col-md-4">
+
                                       <label for="mactv">MAC TV</label>
                                       <input id="mactv" class="form-control input-sm cable" type="text" name="mactv" value="<?php echo $mactv ?>" readonly>
                                   </div>
-                                  <div class="col-md-9">
-                                      <br>
+                                  <div class="col-md-6">
+
                                       <label for="coordenadas">Coordenadas/otros datos</label>
-                                      <input class="form-control input-sm internet" type="text" name="coordenadas" value="<?php echo $coordenadas; ?>" readonly>
+                                      <input class="form-control input-sm" type="text" name="coordenadas" value="<?php echo $coordenadas; ?>" readonly>
                                   </div>
+
+                                  <div class="col-md-2">
+                                    <label for="checksoport">Asistencia soporte</label>
+                                <?php
+                                if ($checksoporte == "1"){
+                                    echo '<input class="check" type="checkbox" name="checksoporte" id="checksoporte" checked>';
+                                }else{
+                                    echo '<input class="check" type="checkbox" name="checksoporte" id="checksoporte">';
+                                }
+                            ?>
+                                </div>
                               </div>
                               <div class="form-row">
                                   <div class="col-md-12">
-                                      <br>
+
                                       <label for="observaciones">Observaciones</label>
                                       <textarea class="form-control input-sm" name="observaciones" rows="2" cols="40" readonly><?php echo $observaciones; ?></textarea>
                                   </div>
                               </div>
                               <div class="form-row">
                                   <div class="col-md-2">
-                                      <br>
+
                                       <label for="nodo">Nodo</label>
                                       <input id="nodo" class="form-control input-sm" type="text" name="nodo" value="<?php echo $nodo ?>" readonly>
                                   </div>
                                   <div class="col-md-3">
-                                      <br>
+
                                       <label for="marcaModelo">Marca/modelo</label>
                                       <input id="marcaModelo" class="form-control input-sm internet" type="text" name="marcaModelo" value="<?php echo $marcaModelo ?>" readonly>
                                   </div>
                                   <div class="col-md-2">
-                                      <br>
+
                                       <label for="tecnologia">Tecnología</label>
                                       <input id="tecnologia" class="form-control input-sm" type="text" name="tecnologia" value="<?php echo $tecnologia ?>" readonly>
                                   </div>
                                   <div class="col-md-3">
-                                      <br>
+
                                       <label for="vendedor">Vendedor</label>
                                       <select id="vendedor" class="form-control input-sm" name="vendedor" disabled>
                                           <option value="" selected>Seleccionar</option>
@@ -622,7 +723,7 @@
                                       </select>
                                   </div>
                                   <div class="col-md-2">
-                                      <br>
+
                                       <label for="recepcionTv">Rx TV</label>
                                       <input class="form-control input-sm cable" type="text" name="recepcionTv" value="<?php echo $recepcionTv; ?>" readonly>
                                   </div>
@@ -680,6 +781,7 @@
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../../vendor/metisMenu/metisMenu.min.js"></script>
+    <script src="../../vendor/jQuery-Mask-Plugin-master/dist/jquery.mask.min.js"></script>
 
     <!-- Custom Theme JavaScript -->
     <script src="../../dist/js/sb-admin-2.js"></script>
@@ -692,7 +794,8 @@
     <script type="text/javascript">
         // Get the input field
         var cod = document.getElementById("codigoCliente");
-
+        var nOrden = '<?php if(isset($_GET["nOrden"])) echo $_GET["nOrden"]; else echo "";?>';
+        var nuevaEditar = document.getElementById("nuevaEditar").value;
         $('#ordenTrabajo').on('keyup keypress', function(e) {
           var keyCode = e.keyCode || e.which;
           if (keyCode === 13) {
@@ -705,18 +808,30 @@
         cod.addEventListener("keyup", function(event) {
         // Number 13 is the "Enter" key on the keyboard
         if (event.keyCode === 13) {
-        // Cancel the default action, if needed
-        event.preventDefault();
-        var codValue = document.getElementById("codigoCliente").value
-        // Trigger the button element with a click
-        window.location="ordenTrabajo.php?codigoCliente="+codValue;
+
+            // Cancel the default action, if needed
+            event.preventDefault();
+            var codValue = document.getElementById("codigoCliente").value
+            nuevaEditar = document.getElementById("nuevaEditar").value;
+            nOrden = '<?php if(isset($_GET["nOrden"])) echo $_GET["nOrden"]; else echo "";?>';
+            console.log(document.getElementById("nuevaEditar").value);
+            // Trigger the button element with a click
+            if(nOrden.length > 3 && nuevaEditar == 1){
+                window.location="ordenTrabajo.php?codigoCliente="+codValue+"&key="+nuevaEditar;
+            }else if (nOrden.length > 3 && nuevaEditar == 2){
+                window.location="ordenTrabajo.php?codigoCliente="+codValue+"&nOrden="+nOrden+"&key="+nuevaEditar;
+            }else{
+                window.location="ordenTrabajo.php?codigoCliente="+codValue+"&key="+nuevaEditar;
+            }
+
         }
         });
     </script>
     <?php
-    if (isset($_GET['codigoCliente'])) {
+    if (isset($_GET['codigoCliente']) && !isset($_GET['nOrden'])) {
         echo "<script>
             document.getElementById('ordenTrabajo').action = 'php/nuevaOrdenTrabajo.php';
+            document.getElementById('nuevaEditar').value = 1;
             document.getElementById('btn-cable').disabled = false;
             document.getElementById('btn-internet').disabled = false;
             document.getElementById('guardar').disabled = false;
@@ -738,9 +853,72 @@
             var hour = time.getHours();
             time = hour + ':' + minutes + ':' + seconds;
             document.getElementById('hora').value = time;
+            
         </script>";
     }
-    if (isset($_GET['nOrden'])) {
+    if (isset($_GET['nOrden']) && !isset($_GET['codigoCliente'])) {
+        echo "<script>
+        var tipoServicio = document.getElementById('tipoServicio').value
+        if (tipoServicio == 'C') {
+            document.getElementById('nombreOrden').innerHTML = 'CABLE';
+        }else if (tipoServicio == 'I') {
+            document.getElementById('nombreOrden').innerHTML = 'INTERNET';
+        }
+        </script>";
+
+    }
+
+    if (isset($_GET['nOrden']) && isset($_GET['codigoCliente'])) {
+        echo "<script>
+        document.getElementById('nuevaOrdenId').disabled = true;
+        document.getElementById('btn-cable').disabled = false;
+        document.getElementById('guardar').disabled = false;
+        document.getElementById('btn-internet').disabled = false;
+        document.getElementById('imprimir').disabled = true;
+    
+        var editInputs = document.getElementsByClassName('input-sm');
+        for (var i = 0; i < editInputs.length; i++) {
+            if (editInputs[i].readOnly == true) {
+                editInputs[i].readOnly = false;
+            }
+            else if (editInputs[i].disabled == true){
+                editInputs[i].disabled = false;
+            }
+        }
+        document.getElementById('numeroOrden').readOnly = true;
+        document.getElementById('saldoCable').readOnly = true;
+        document.getElementById('saldoInternet').readOnly = true;
+        document.getElementById('nodo').readOnly = true;
+        document.getElementById('colilla').readOnly = true;
+        document.getElementById('velocidad').readOnly = true;
+        document.getElementById('macModem').readOnly = true;
+        document.getElementById('serieModem').readOnly = true;
+    
+        document.getElementById('nombreOrden').style.display = 'run-in';
+        var tipoServicio = document.getElementById('tipoServicio').value;
+        if (tipoServicio == 'C') {
+            //document.getElementById('btn-internet').disabled = true;
+            document.getElementById('btn-cable').style.color='#4CAF50';
+            document.getElementById('tipoActividadInter').disabled=true;
+            document.getElementById('direccionInternet').readOnly=true;
+            document.getElementById('rx').readOnly=true;
+            document.getElementById('tx').readOnly=true;
+            document.getElementById('snr').readOnly=true;
+            document.getElementById('tecnologia').readOnly=true;
+        }else if (tipoServicio == 'I') {
+            //document.getElementById('btn-cable').disabled = true;
+            document.getElementById('btn-internet').style.color='#039BE5';
+    
+            document.getElementById('tipoActividadCable').disabled=true;
+            document.getElementById('direccionCable').readOnly=true;
+            document.getElementById('saldoCable').readOnly=true;
+            document.getElementById('tecnologia').readOnly=true;
+        }
+        changeAction('editar');
+        </script>";
+
+    }
+    if (isset($_GET['nOrden']) && isset($_GET['codigoCliente'])) {
         echo "<script>
         var tipoServicio = document.getElementById('tipoServicio').value
         if (tipoServicio == 'C') {
@@ -752,6 +930,13 @@
 
     }
     ?>
+
+    <script>
+        $(document).ready(function(){
+            $('#fechaTrabajo').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+            //$('#fechaPrimerFacturaCable').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+        });
+    </script>
 
 </body>
 

@@ -93,7 +93,6 @@ function editarOrden(){
     document.getElementById("guardar").disabled = false;
     //document.getElementById("btn-internet").disabled = false;
     document.getElementById("imprimir").disabled = true;
-
     var editInputs = document.getElementsByClassName("input-sm");
     for (var i = 0; i < editInputs.length; i++) {
         if (editInputs[i].readOnly == true) {

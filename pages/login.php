@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
 
@@ -32,6 +32,21 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <style>
+        img {
+            position: relative;
+            animation-name: example;
+            animation-duration: 3.2s;
+        }
+
+        @keyframes example {
+            0%   {left:0px; left:-800px;}
+            25%  {left:0px; left:50px;}
+            50%  {left:25px; left:0px;}
+            75%  {left:0px; right:-30px;}
+            100% {left:0px; right:0px;}
+        }
+    </style>
 </head>
 
 <body>
@@ -39,28 +54,38 @@
     <div class="container">
         <div class="row">
             <div class="col-md-4 col-md-offset-4">
-                <img class="img img-responsive center-block" src="../images/logo.png" alt="" width="150px" height="130px">
-                <div class="login-panel panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title text-center">Autenticación de usuario</h3>
+                <img class="img img-responsive center-block" src="../images/logo2.png" alt="" width="190px" height="170px">
+                <div class="login-panel panel panel-default" style="border-radius: 20px;">
+                    <div class="panel-heading" style="border-radius: 20px 20px 0px 0px;">
+                        <h3 class="panel-title text-center"><strong>Inicio de sesión</strong></h3>
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body" style="padding: 25px;">
                         <form action="../php/signin.php" method="POST" role="form">
                             <fieldset>
                                 <div class="input-group">
                                     <input class="form-control" placeholder="Usuario" name="user" type="text" autofocus>
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-user"></i></span>
+                                    <span class="input-group-addon danger"><i class="glyphicon glyphicon-user"></i></span>
                                 </div>
                                 <br>
                                 <div class="input-group">
                                     <input class="form-control" placeholder="Contraseña" name="pass" type="password">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-lock"></i></span>
+                                    <span class="input-group-addon danger"><i class="glyphicon glyphicon-lock"></i></span>
                                 </div>
-                                <div class="checkbox">
+                                <br>
+                                <div class="input-group">
+                                    <select class="form-control" name="sucursal" required>
+                                        <option value="1" selected>Sucursal Usulután</option>
+                                        <option value="2">Sucursal San Miguel</option>
+                                        <option value="3">Testing (NO USAR)</option>
+                                    </select>
+                                    <span class="input-group-addon danger"><i class="glyphicon glyphicon-home"></i></span>
+                                </div>
+                                <br>
+                                <!--<div class="checkbox">
                                     <label>
                                         <input name="remember" type="checkbox" value="Remember Me">Recuerdame
                                     </label>
-                                </div>
+                                </div>-->
                                 <!-- Change this to a button or input when using this as a form -->
                                 <button type="submit" class="btn btn-lg btn-danger btn-block" name="submit">Ingresar</button>
                             </fieldset>

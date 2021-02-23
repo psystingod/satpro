@@ -3,7 +3,7 @@
     require("../php/connection.php");
  ?>
 <?php
-    $obj = new ConectionDB();
+    $obj = new ConectionDB($_SESSION['db']);
     $con = $obj->dbConnect;
       try {
           $checkValues = $_GET['checkTraslado'];

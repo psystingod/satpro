@@ -7,7 +7,8 @@
     {
         public function Reporte()
         {
-            parent::__construct ();
+            session_start();
+            parent::__construct ($_SESSION['db']);
         }
         public function enter()
         {
@@ -23,8 +24,8 @@
                              date_default_timezone_set('America/El_Salvador');
                              $FechaDestino = date('Y/m/d g:i'); ;
                              $Comentario= $_POST["Comentario"];
-                             $query = "UPDATE tbl_reportead set State=:State, IdEmpleadoRecibe=(SELECT IdEmpleado from tbl_empleado where
-                             Nombres=:Nombres and Apellidos=:Apellidos), FechaRecibe=:FechaRecibe, ComentarioRecibe=:ComentarioRecibe where IdReportead=:IdReportead";
+                             $query = "UPDATE tbl_reportead set State=:State, IdEmpleadoRecibe=(SELECT idUsuario from tbl_usuario where
+                             nombre=:Nombres and apellido=:Apellidos), FechaRecibe=:FechaRecibe, ComentarioRecibe=:ComentarioRecibe where IdReportead=:IdReportead";
                              $statement = $this->dbConnect->prepare($query);
                              $statement->execute(array(
                               ':Nombres' => $Nombre,

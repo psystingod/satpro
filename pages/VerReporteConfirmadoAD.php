@@ -3,9 +3,10 @@
  ?>
 <?php
     require("../php/getViewA_D.php");
-    include 'SelecBodega.php';
+    //include 'SelecBodega.php';
     $detalleAsignacion = new GetViewA_D();
     $a=$_GET['v'];
+    var_dump($a);
     $detalleAsigna = $detalleAsignacion->detalleAsignacionesRealizadas($a);
 ?>
 <!DOCTYPE html>

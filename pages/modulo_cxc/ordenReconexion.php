@@ -1,6 +1,11 @@
 <?php
 
-    session_start();
+if(!isset($_SESSION))
+{
+    session_start([
+        'cookie_lifetime' => 86400,
+    ]);
+}
     require("php/getData.php");
     require("php/GetAllInfo.php");
     require($_SERVER['DOCUMENT_ROOT'].'/satpro'.'/php/permissions.php');
@@ -16,8 +21,8 @@
 
     //include database connection
     require_once('../../php/connection.php');
-    $precon = new ConectionDB();
-    $con = $precon->ConectionDB();
+    $precon = new ConectionDB($_SESSION['db']);
+    $con = $precon->ConectionDB($_SESSION['db']);
     /**************************************************/
     if (isset($_GET['codigoCliente'])) {
 
@@ -28,7 +33,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT cod_cliente, nombre, telefonos, direccion, saldoCable, mactv, saldoInternet, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, fecha_suspencion, fecha_suspencion_in, mac_modem, serie_modem, id_velocidad, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
+            $query = "SELECT cod_cliente, nombre, telefonos, direccion, saldoCable, mactv, saldoInternet, id_municipio, saldo_actual, telefonos, dire_cable, dia_cobro, dire_internet, mactv, fecha_suspencion, fecha_suspencion_in, mac_modem, serie_modem, id_velocidad, recep_modem, trans_modem, ruido_modem, colilla, marca_modem, tecnologia, coordenadas FROM clientes WHERE cod_cliente = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -83,11 +88,12 @@
             $fechaReconexInter = "";
             $hora = "";
             $fechaProgramacion = "";
-            $coordenadas = "";
+            $coordenadas = $row['coordenadas'];
             $observaciones = "";
             $nodo = "";
             $idVendedor = "";
             $recepcionTv = "";
+          
 
         }
 
@@ -103,7 +109,7 @@
         // read current record's data
         try {
             // prepare select query
-            $query = "SELECT idOrdenReconex, codigoCliente, fechaOrden, tipoOrden, tipoReconexCable, tipoReconexInter, diaCobro, telefonos, nombreCliente, direccion, fechaReconexCable, saldoCable, fechaReconexInter, saldoInter, ultSuspCable, ultSuspInter, macModem, serieModem, velocidad, colilla, fechaReconex, idTecnico, mactv, observaciones, tipoServicio, creadoPor  FROM tbl_ordenes_reconexion WHERE idOrdenReconex = ? LIMIT 0,1";
+            $query = "SELECT idOrdenReconex, codigoCliente, fechaOrden, tipoOrden, tipoReconexCable, tipoReconexInter, diaCobro, telefonos, nombreCliente, direccion, fechaReconexCable, saldoCable, fechaReconexInter, saldoInter, ultSuspCable, ultSuspInter, macModem, serieModem, velocidad, colilla, fechaReconex, idTecnico, mactv, observaciones, tipoServicio,coordenadas, creadoPor, servRecox  FROM tbl_ordenes_reconexion WHERE idOrdenReconex = ? LIMIT 0,1";
             $stmt = $con->prepare( $query );
 
             // this is the first question mark
@@ -163,9 +169,11 @@
             $idTecnico = $row['idTecnico'];
             $mactv = $row['mactv'];
             $observaciones = $row['observaciones'];
+            $coordenadas = $row['coordenadas'];
             //$nodo = $row['nodo'];
             $tipoServicio = $row['tipoServicio'];
             $creadoPor = $row['creadoPor'];
+            $servRecox = $row['servRecox'];
             //creadoPor
         }
         catch(PDOException $exception){
@@ -196,6 +204,8 @@
         $fechaReconexInter = "";
         //$hora="";
         $observaciones="";
+        $coordenadas="";
+        $servRecox="";
         //$tipoServicio = "";
         //$creadoPor = "";
         //$nodo="";
@@ -225,7 +235,7 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
 
     <!-- Custom CSS -->
-    <link href="../../dist/css/sb-admin-2.css" rel="stylesheet">
+
     <link rel="stylesheet" href="../../dist/css/custom-principal.css">
 
     <!-- Morris Charts CSS -->
@@ -234,6 +244,52 @@
     <!-- Custom Fonts -->
     <link href="../../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
+    <style media="screen">
+        .form-control {
+            color: #212121;
+            font-size: 15px;
+            font-weight: bold;
+
+        }
+        .nav>li>a {
+            color: #fff;
+        }
+        .dark{
+            color: #fff;
+            background-color: #212121;
+        }
+    </style>
+
+    <style media="screen">
+        .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+            color: #fff;
+            background-color: #d32f2f;
+        }
+
+        .nav-pills>li>a{
+            color: #d32f2f;
+
+        }
+
+        .btn-danger {
+            color: #fff;
+            background-color: #d32f2f;
+            border-color: #d43f3a;
+        }
+        .label-danger {
+            background-color: #d32f2f;
+        }
+
+        .panel-danger>.panel-heading {
+            color: #fff;
+            background-color: #212121;
+            border-color: #212121;
+        }
+        .panel{
+            border-color: #212121;
+        }
+        
+    </style>
 </head>
 
 <body>
@@ -246,110 +302,13 @@
      ?>
     <div id="wrapper">
 
-        <!-- Navigation -->
-        <nav class="navbar navbar-inverse navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.php">Cablesat</a>
-            </div>
-            <!-- /.navbar-header -->
-
-            <ul class="nav navbar-top-links navbar-right">
-                <!-- /.dropdown -->
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <?php echo "<i class='far fa-user'></i>"." ".$_SESSION['nombres']." ".$_SESSION['apellidos'] ?> <i class="fas fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="perfil.php"><i class="fas fa-user-circle"></i> Perfil</a>
-                        </li>
-                        <li><a href="config.php"><i class="fas fa-cog"></i> Configuración</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="../../php/logout.php"><i class="fas fa-sign-out-alt"></i></i> Salir</a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-user -->
-                </li>
-                <!-- /.dropdown -->
-            </ul>
-            <!-- /.navbar-top-links -->
-
-            <div class="navbar-default sidebar" role="navigation">
-                <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav" id="side-menu">
-                        <li>
-                            <a href='../index.php'><i class='fas fa-home'></i> Principal</a>
-                        </li>
-                        <?php
-                        require('../../php/contenido.php');
-                        require('../../php/modulePermissions.php');
-
-                        if (setMenu($_SESSION['permisosTotalesModulos'], ADMINISTRADOR)) {
-                            echo "<li><a href='../modulo_administrar/administrar.php'><i class='fas fa-key'></i> Administrar</a></li>";
-                        }else {
-                            echo "";
-                        }
-                        if (setMenu($_SESSION['permisosTotalesModulos'], CONTABILIDAD)) {
-                            echo "<li><a href='../modulo_contabilidad/contabilidad.php'><i class='fas fa-money-check-alt'></i> Contabilidad</a></li>";
-                        }else {
-                            echo "";
-                        }
-                        if (setMenu($_SESSION['permisosTotalesModulos'], PLANILLA)) {
-                            echo "<li><a href='../modulo_planillas/planillas.php'><i class='fas fa-file-signature'></i> Planillas</a></li>";
-                        }else {
-                            echo "";
-                        }
-                        if (setMenu($_SESSION['permisosTotalesModulos'], ACTIVOFIJO)) {
-                            echo "<li><a href='../modulo_activoFijo/activoFijo.php'><i class='fas fa-building'></i> Activo fijo</a></li>";
-                        }else {
-                            echo "";
-                        }
-                        if (setMenu($_SESSION['permisosTotalesModulos'], INVENTARIO)) {
-                            echo "<li><a href='../moduloInventario.php'><i class='fas fa-scroll'></i> Inventario</a></li>";
-                        }else {
-                            echo "";
-                        }
-                        if (setMenu($_SESSION['permisosTotalesModulos'], IVA)) {
-                            echo "<li><a href='../modulo_iva/iva.php'><i class='fas fa-file-invoice-dollar'></i> IVA</a></li>";
-                        }else {
-                            echo "";
-                        }
-                        if (setMenu($_SESSION['permisosTotalesModulos'], BANCOS)) {
-                            echo "<li><a href='../modulo_bancos/bancos.php'><i class='fas fa-university'></i> Bancos</a></li>";
-                        }else {
-                            echo "";
-                        }
-                        if (setMenu($_SESSION['permisosTotalesModulos'], CXC)) {
-                            echo "<li><a href='cxc.php'><i class='fas fa-hand-holding-usd'></i> Cuentas por cobrar</a></li>";
-                        }else {
-                            echo "";
-                        }
-                        if (setMenu($_SESSION['permisosTotalesModulos'], CXP)) {
-                            echo "<li><a href='../modulo_cxp/cxp.php'><i class='fas fa-money-bill-wave'></i> Cuentas por pagar</a></li>";
-                        }else {
-                            echo "";
-                        }
-                        ?>
-                    </ul>
-                </div>
-                <!-- /.sidebar-collapse -->
-            </div>
-            <!-- /.navbar-static-side -->
-        </nav>
-
         <!-- Page Content -->
         <div id="page-wrapper">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
-                        <br>
-                        <div class="panel panel-success">
+
+                        <div class="panel panel-danger">
                           <div class="panel-heading"><b>Orden de Reconexión</b> <span id="nombreOrden" class="label label-danger"></span></div>
                           <form id="ordenReconexion" action="" method="POST">
                           <div class="panel-body">
@@ -361,6 +320,13 @@
                                   <?php echo '<input style="display: none;" type="submit" id="guardar2" value="">'; ?>
                                   <button class="btn btn-default btn-sm" type="button" name="btn_nuevo" data-placement="bottom" title="Buscar orden" data-toggle="modal" data-target="#buscarOrden"><i class="fas fa-search"></i></button>
                                   <button class="btn btn-default btn-sm" id="imprimir" onclick="imprimirOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Imprimir orden" ><i class="fas fa-print"></i></button>
+
+                                  <button class="btn btn-danger input-sm" type="button" id="btn-reconexion" name="btn_nuevo" onclick="reactServicio()" data-toggle="tooltip" data-placement="bottom" title="Para Activar llenar fecha reconexión primero" disabled><i class="fas fa-file-alt"></i></button>
+
+
+
+
+
                                   <div class="pull-right">
 
                                       <button class="btn btn-default btn-sm" onclick="estadoCuenta();" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Estado de cuenta"><i class="far fa-file-alt"></i></button>
@@ -370,7 +336,7 @@
                               </div>
                               <div class="form-row">
                                   <div class="col-md-2">
-                                      <br>
+
                                       <?php
                                       if (isset($_GET['nOrden'])) {
                                          echo "<input id='creadoPor' class='form-control input-sm' type='hidden' name='creadoPor' value='{$creadoPor}'>";
@@ -385,31 +351,36 @@
                                       <input id="numeroReconexion" class="form-control input-sm" type="text" name="numeroReconexion" value="<?php echo $idOrdenReconex; ?>" readonly>
                                   </div>
                                   <div class="col-md-2">
-                                      <br>
-                                      <label for="fechaElaborada">Fecha de elaborada</label>
+
+                                      <label for="fechaElaborada">Fecha elaborada</label>
                                       <input id="fechaOrden" class="form-control input-sm" type="text" name="fechaOrden" value="<?php echo $fechaOrden; ?>" readonly>
                                   </div>
                                   <div class="col-md-2">
-                                      <br>
+
                                       <label for="codigoCliente">Código del cliente</label>
                                       <input id="codigoCliente" class="form-control input-sm" type="text" name="codigoCliente" value="<?php echo $codigoCliente; ?>" readonly>
                                   </div>
                                   <div class="col-md-5">
-                                      <br>
+
                                       <label for="nombreCliente">Nombre del cliente</label>
                                       <input id="nombreCliente" class="form-control input-sm" type="text" name="nombreCliente" value="<?php echo $nombreCliente; ?>" readonly>
                                   </div>
                                   <div class="col-md-1">
-                                      <br>
+
                                       <label for="diaCobro">Día c</label>
                                       <input class="form-control input-sm" type="text" name="diaCobro" value="<?php echo $diaCobro; ?>" readonly>
                                   </div>
                               </div>
                               <div class="form-row">
-                                  <div class="col-md-12">
+                                  <div class="col-md-6 col-xs-6">
                                       <label for="telefonos">Telefonos</label>
                                       <input id="telefonos" class="form-control input-sm" type="text" name="telefonos" value="<?php echo $telefonos; ?>" readonly>
                                   </div>
+                                  <div class="col-md-6 col-xs-6">
+                                      <label for="coordenadas">coordenadas</label>
+                                      <input id="coordenadas" class="form-control input-sm" type="text" name="coordenadas" value="<?php echo $coordenadas; ?>" readonly>
+                                  </div>
+                                
                               </div>
                               <div class="form-row">
                                   <div class="col-md-12">
@@ -419,7 +390,7 @@
                               </div>
                               <div class="form-row">
                                   <div id="divCable" class="col-md-12">
-                                      <h4 class="alert alert-info cable"><strong>Cable</strong></h4>
+                                      <h4 class="alert btn-danger cable">Cable</h4>
                                       <div class="row">
                                           <div class="col-md-2">
                                               <label for="fechaReconexCable">Fecha reconexión</label>
@@ -458,7 +429,7 @@
                                       </div>
                                   </div>
                                   <div class="col-md-12">
-                                      <h4 class="alert alert-info"><strong>Internet</strong></h4>
+                                      <h4 class="alert btn-danger">Internet</h4>
                                       <div class="row">
                                           <div class="col-md-2">
                                               <label for="fechaReconexInter">Fecha reconexión</label>
@@ -517,21 +488,23 @@
                                           }
                                           ?>
                                       </select>
-                                      <br>
+
                                   </div>
 
                               </div>
                               <div class="form-row">
                                   <div class="col-md-8">
                                       <label for="tecnico">Técnico</label>
-                                      <select class="form-control input-sm" name="responsable" disabled>
+                                      <select class="form-control input-sm" name="responsable" disabled required>
                                           <option value="" selected>Seleccionar</option>
                                           <?php
                                           foreach ($arrayTecnicos as $key) {
                                               if ($key['idTecnico'] == $idTecnico) {
                                                   echo "<option value=".$key['idTecnico']." selected>".strtoupper($key['nombreTecnico'])."</option>";
+                                              }else{
+                                                  echo "<option value=".$key['idTecnico'].">".strtoupper($key['nombreTecnico'])."</option>";
                                               }
-                                              echo "<option value=".$key['idTecnico'].">".strtoupper($key['nombreTecnico'])."</option>";
+
                                           }
                                           ?>
                                       </select>
@@ -600,6 +573,8 @@
 
     <!-- Metis Menu Plugin JavaScript -->
     <script src="../../vendor/metisMenu/metisMenu.min.js"></script>
+
+    <script src="../../vendor/jQuery-Mask-Plugin-master/dist/jquery.mask.min.js"></script>
 
     <!-- Custom Theme JavaScript -->
     <script src="../../dist/js/sb-admin-2.js"></script>
@@ -674,6 +649,15 @@
 
     }
     ?>
+    <script>
+        $(document).ready(function(){
+            $('#fechaReconexCable').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+            $('#fechaReconexInter').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+            $('#ultSuspCable').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+            $('#ultSuspInter').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+            //$('#fechaPrimerFacturaCable').mask("00/00/0000", {placeholder: "dd/mm/yyyy"});
+        });
+    </script>
 
 </body>
 

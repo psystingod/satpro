@@ -112,7 +112,7 @@ function editarCliente(){
     //CABLE
     document.getElementById("activoCable").value = "F";
     document.getElementById("suspendidoCable").value = "T";
-    document.getElementById("sinCable").value = "";
+    document.getElementById("sinCable").value = "S";
 
     //INTERNET
     document.getElementById("activoInter").value = "1";
@@ -151,6 +151,24 @@ function changeAction(action){
 
     }
 }
+//FUNCIONES PARA BOTONES
+function todoAtras1(codigo){
+    window.open("infoCliente.php?id="+String(codigo).padStart(5,"0"),"_self");
+}
+
+function atras1(codigo){
+    window.open("infoCliente.php?id="+String(parseInt(codigo)-1).padStart(5,"0"),"_self");
+}
+
+function adelante1(codigo){
+    window.open("infoCliente.php?id="+String(parseInt(codigo)+1).padStart(5,"0"),"_self");
+}
+
+function todoAdelante1(codigo){
+    console.log(codigo);
+    window.open("infoCliente.php?id="+String(codigo).padStart(5,"0"),"_self");
+}
+
 
 /*function imprimirOrden(){
     var nOrden = document.getElementById("numeroSuspension").value
@@ -181,4 +199,191 @@ function getCortesia(){
     }else if (document.getElementById("cortesia").checked == false) {
         document.getElementById("cortesia").value = "F";
     }
+}
+
+function setVencimientoCable(){
+    var fechaCable = document.getElementById("fechaPrimerFacturaCable").value;
+    var mesesCable = parseInt(document.getElementById("mesesContratoCable").value);
+
+    var vencimientoCable = document.getElementById("vencimientoContratoCable").value;
+    var vencimientoInter = document.getElementById("vencimientoContratoInternet").value;
+    if (vencimientoInter.length >= 10 && vencimientoCable.length < 10 ){
+        if (fechaCable.length != 10 || Number.isInteger(mesesCable) == false){
+            alert("Para calcular la fecha de vencimiento automaticamente, debes completar la fecha de primer factura y los meses de contrato");
+            //document.getElementById("fechaPrimerFacturaCable").value = '';
+        }else{
+
+            var nuevaFechaCable = fechaCable.split("/").reverse().join("-");
+
+            var date = new Date(nuevaFechaCable);
+            date.setMonth(date.getMonth() + mesesCable);
+            var dia = date.getDate();
+            var mes = ("0" + (date.getMonth() + 1)).slice(-2);
+            var ano = date.getFullYear();
+            var vencimiento = dia + "/" + mes + "/" + ano;
+            document.getElementById("vencimientoContratoCable").value = vencimiento;
+            document.getElementById("vencimientoContratoCable").style.color = "red";
+
+            document.getElementById("vencimientoContratoInternet").value = vencimiento;
+            document.getElementById("vencimientoContratoInternet").style.color = "red";
+        }
+    }
+    else {
+        var fechaCable = document.getElementById("fechaPrimerFacturaCable").value;
+        var mesesCable = parseInt(document.getElementById("mesesContratoCable").value);
+        //console.log(fechaCable.length);
+        //console.log(Number.isInteger(mesesCable));
+        if (fechaCable.length != 10 || Number.isInteger(mesesCable) == false){
+            alert("Para calcular la fecah de vencimiento automaticamente, debes completar la fecha de primer factura y los meses de contrato");
+            //document.getElementById("fechaPrimerFacturaCable").value = '';
+        }else{
+
+            var nuevaFechaCable = fechaCable.split("/").reverse().join("-");
+
+            var date = new Date(nuevaFechaCable);
+            date.setMonth(date.getMonth() + mesesCable);
+            var dia = date.getDate();
+            var mes = ("0" + (date.getMonth() + 1)).slice(-2);
+            var ano = date.getFullYear();
+            var vencimiento = dia + "/" + mes + "/" + ano;
+            document.getElementById("vencimientoContratoCable").value = vencimiento;
+            document.getElementById("vencimientoContratoCable").style.color = "red";
+        }
+    }
+
+}
+
+function setVencimientoInternet(){
+    var fechaInter = document.getElementById("fechaPrimerFacturaInternet").value;
+    var mesesInter = parseInt(document.getElementById("mesesContratoInternet").value);
+
+    var vencimientoCable = document.getElementById("vencimientoContratoCable").value;
+    var vencimientoInter = document.getElementById("vencimientoContratoInternet").value;
+    if (vencimientoCable.length >= 10 && vencimientoInter.length < 10 ){
+        if (fechaInter.length != 10 || Number.isInteger(mesesInter) == false){
+            alert("Para calcular la fecha de vencimiento automaticamente, debes completar la fecha de primer factura y los meses de contrato");
+            //document.getElementById("fechaPrimerFacturaInternet").value = '';
+        }else{
+
+            var nuevaFechaInter = fechaInter.split("/").reverse().join("-");
+
+            var date = new Date(nuevaFechaInter);
+            date.setMonth(date.getMonth() + mesesInter);
+            var dia = date.getDate();
+            var mes = ("0" + (date.getMonth() + 1)).slice(-2);
+            var ano = date.getFullYear();
+            var vencimiento = dia + "/" + mes + "/" + ano;
+            document.getElementById("vencimientoContratoCable").value = vencimiento;
+            document.getElementById("vencimientoContratoCable").style.color = "red";
+
+            document.getElementById("vencimientoContratoInternet").value = vencimiento;
+            document.getElementById("vencimientoContratoInternet").style.color = "red";
+
+
+        }
+    }
+    else {
+        if (fechaInter.length != 10 || Number.isInteger(mesesInter) == false){
+            alert("Para calcular la fecha de vencimiento automaticamente, debes completar la fecha de primer factura y los meses de contrato");
+            //document.getElementById("fechaPrimerFacturaInternet").value = '';
+        }else{
+
+            var nuevaFechaInter = fechaInter.split("/").reverse().join("-");
+
+            var date = new Date(nuevaFechaInter);
+            date.setMonth(date.getMonth() + mesesInter);
+            var dia = date.getDate();
+            var mes = ("0" + (date.getMonth() + 1)).slice(-2);
+            var ano = date.getFullYear();
+            var vencimiento = dia + "/" + mes + "/" + ano;
+            document.getElementById("vencimientoContratoInternet").value = vencimiento;
+            document.getElementById("vencimientoContratoInternet").style.color = "red";
+        }
+    }
+
+}
+
+function tipoServicioCabletv(){
+    var tipoServicio = document.getElementById("tipoServicioCable").value;
+
+    if (tipoServicio == 2) {
+        document.getElementById('caja1').required = true;
+        document.getElementById('cas1').required = true;
+        document.getElementById('sn1').required = true;
+        //document.getElementById('check1').checked = true;
+        alert("POR FAVOR ASEGURATE DE LLENAR LOS DATOS DE LA CAJA DIGITAL");
+        alert("PRESIONA EL BOTÓN DE TU DERECHA PARA DESPLEGAR LOS DATOS (EL BOTÓN AZÚL ( ͡° ͜ʖ ͡°))");
+    }else {
+        document.getElementById('caja1').required = false;
+        document.getElementById('cas1').required = false;
+        document.getElementById('sn1').required = false;
+    }
+
+}
+function selectTipoComp(){
+    var tipoComprobante = document.getElementById('tipoComprobante').value;
+    if (tipoComprobante == "1"){
+        document.getElementById("nrc").required = true;
+        var nrc = document.getElementById("nrc").value;
+        if (nrc.length < 3){
+            document.getElementById("nrc").focus();
+        }
+    }else{
+        document.getElementById("nrc").required = false;
+
+    }
+}
+/*
+function contratoI(){
+   
+    var usuariotipo = document.getElementById('usuariotipo').value;
+
+    if (usuariotipo == "administracion"){
+        document.getElementById("prueba1").disabled = true;
+    }else{
+        document.getElementById("prueba1").disabled = true;
+    }
+}
+*/
+function fechaCovidCable(){
+    var covidDesdeC = document.getElementById("covidDesdeC").value;
+    var covidHastaC = document.getElementById("covidHastaC").value;
+    console.log(covidDesdeC);
+    console.log(covidHastaC);
+    if (covidDesdeC.length > 0) {
+        document.getElementById('covidDesdeC').required = true;
+        document.getElementById('covidHastaC').required = true;
+        document.getElementById('cuotaCovidC').required = true;
+    }else if(covidHastaC.length > 0) {
+        document.getElementById('covidDesdeC').required = true;
+        document.getElementById('covidHastaC').required = true;
+        document.getElementById('cuotaCovidC').required = true;
+    }else{
+        document.getElementById('covidDesdeC').required = false;
+        document.getElementById('covidHastaC').required = false;
+        document.getElementById('cuotaCovidC').required = false;
+    }
+
+}
+
+function fechaCovidInter(){
+    var covidDesdeI = document.getElementById("covidDesdeI").value;
+    var covidHastaI = document.getElementById("covidHastaI").value;
+    //console.log(covidDesdeI);
+    //console.log(covidHastaI);
+
+    if (covidDesdeI.length > 0) {
+        document.getElementById('covidDesdeI').required = true;
+        document.getElementById('covidHastaI').required = true;
+        document.getElementById('cuotaCovidI').required = true;
+    }else if(covidHastaI.length > 0) {
+        document.getElementById('covidDesdeI').required = true;
+        document.getElementById('covidHastaI').required = true;
+        document.getElementById('cuotaCovidI').required = true;
+    }else{
+        document.getElementById('covidDesdeI').required = false;
+        document.getElementById('covidHastaI').required = false;
+        document.getElementById('cuotaCovidI').required = false;
+    }
+
 }

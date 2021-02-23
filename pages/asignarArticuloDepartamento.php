@@ -1,6 +1,6 @@
 <?php
     session_start();
-    require("../php/contenido.php");
+    //require("../php/contenido.php");
     require("../php/getInventoryPDF.php");
     require("../php/productsInfo.php");
 
@@ -97,9 +97,9 @@
                         <li>
                             <a href='index.php'><i class='fas fa-home'></i> Principal</a>
                         </li>
-                        <?php
-                  //      require('../php/contenido.php');
-                    //    require('../php/modulePermissions.php');
+                         <?php
+                        require('../php/contenido.php');
+                        require('../php/modulePermissions.php');
 
                         if (setMenu($_SESSION['permisosTotalesModulos'], ADMINISTRADOR)) {
                             echo "<li><a href='modulo_administrar/administrar.php'><i class='fas fa-key'></i> Administrar</a></li>";

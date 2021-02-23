@@ -1,11 +1,23 @@
 <?php
 require("php/facturasGeneradas.php");
-session_start();
+if(!isset($_SESSION))
+{
+    session_start([
+        'cookie_lifetime' => 86400,
+    ]);
+}
 if ($_SESSION['rol'] != "administracion") {
     header("Location:../../../php/logut.php");
 }
+
+$tipoFactura = $_POST["tipoComprobanteGen"];
+//$cobrador = $_POST["cobradorGen"];
+//$diaCobro = $_POST["diaGen"];
+$fechaGeneracion = $_POST["fechaGen"];
+$tipoServicio = $_POST["tipoServicioGen"];
+
 $fac = new FacturasGeneradas();
-$facArray = $fac->verFacturas();
+$facArray = $fac->verFacturas($tipoFactura, /*$cobrador, $diaCobro,*/ $fechaGeneracion, $tipoServicio);
 ?>
 <!DOCTYPE html>
 <html lang="es" dir="ltr">
@@ -59,8 +71,8 @@ $facArray = $fac->verFacturas();
                             echo "<tr><td>";
                             echo "<span style='font-size:13px;' class='label label-info'>".$key['numeroFactura']."</span></td><td>";
                             echo "<span style='font-size:13px;' class='label label-primary'>".$key['codigoCliente']."</span></td><td>";
-                            echo "$".$key['cuotaCable']."</td><td>";
-                            echo "$".$key['cuotaInternet']."</td><td>";
+                            echo "$".number_format($key['cuotaCable'],2)."</td><td>";
+                            echo "$".number_format($key['cuotaInternet'],2)."</td><td>";
                             echo "<span style='font-size:13px;' class='label label-success'>".$key['mesCargo']."</span></td><td>";
                             echo $key['fechaCobro']."</td><td>";
                             echo $key['fechaFactura']."</td><td>";
@@ -78,14 +90,89 @@ $facArray = $fac->verFacturas();
                             if ($key['anulada'] == 1) {
                                 echo "<a class='btn btn-danger'>Anulada</a>"."</td></tr>";
                             }else {
-                                echo "<a onclick='anularFactura({$key['idFactura']});' class='btn btn-warning'>Anular</a>"."</td></tr>";
+                                echo "<a onclick=anularFacturaModal('".$key['numeroFactura']."','".$key['codigoCliente']."','".$key['tipoServicio']."','".$key['mesCargo']."');"." data-toggle='modal' data-target='#anularFacturaf' class='btn btn-warning'>Anular factura</a>"."</td></tr>";
                             }
+                            //echo "<a onclick=eliminarFactura('".$key['numeroFactura']."','".$key['codigoCliente']."','".$key['tipoServicio']."','".$key['mesCargo']."');"." class='btn btn-danger'>Eliminar</a>"."</td></tr>";
                         }
                         ?>
                     </tbody>
                 </table>
             </div>
         </div>
+        <!-- Modal VENTAS MANUALES -->
+        <div id="anularFacturaf" class="modal fade" role="dialog">
+          <div class="modal-dialog modal-lg">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div style="background-color: #1565C0; color:white;" class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Anulación de facturas</h4>
+              </div>
+              <form id="frmAnularFactura" action="php/anularFactura.php" method="POST" target="_blank">
+              <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-8">
+                        <label for="idPunto">Punto de venta</label>
+                        <select class="form-control" type="text" id="idPunto" name="idPunto" required readonly>
+                            <option value="1" selected>CABLESAT</option>
+                        </select>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="tipoServicio">Tipo de servicio</label>
+                        <input class="form-control" type="text" id="tipoServicio" name="tipoServicio" required readonly>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <label for="prefijo">prefijo</label>
+                        <input class="form-control" type="text" id="prefijo" name="prefijo" required readonly>
+                    </div>
+                    <div class="col-md-5">
+                        <label for="nFactura">Número de factura</label>
+                        <input class="form-control" type="text" id="nFactura" name="nFactura" required readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="codigoCiente">Código de cliente</label>
+                        <input class="form-control" type="text" id="codigoCliente" name="codigoCliente" required readonly>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label for="aIva">Enviar a libro de IVA</label>
+                        <input class="form-control pull-left" type="checkbox" id="aIva" name="aIva" value="1">
+                    </div>
+                    <div class="col-md-4">
+                        <label for="mensu">Mensualidad</label>
+                        <input class="form-control" type="text" id="mensu" name="mensu" value="" required readonly>
+                    </div>
+                    <div class="col-md-4">
+                        <label for="fechaComprobante">Fecha del comprobante</label>
+                        <?php
+                        if (isset($_SESSION["fecha"])) {
+                            $fechaComprobante = $_SESSION["fecha"];
+                        }else {
+                            $fechaComprobante = "";
+                        }
+                        ?>
+                        <input class="form-control" type="text" id="fechaComprobante" name="fechaComprobante" value="<?php $fechaComprobante ?>" required>
+                    </div>
+                </div>
+              </div>
+              <div class="modal-footer">
+                  <div class="row">
+                      <div class="col-md-6">
+                          <input type="submit" class="btn btn-danger btn-md btn-block" name="submit" value="Anular factura">
+                      </div>
+                      <div class="col-md-6">
+                          <button type="button" class="btn btn-default btn-md btn-block" data-dismiss="modal">Cancelar</button>
+                      </div>
+                  </div>
+              </form>
+              </div>
+            </div>
+          </div>
+      </div><!-- Fin Modal VENTAS MANUALES -->
         <!-- jQuery -->
         <script src="../../vendor/jquery/jquery.min.js"></script>
 
@@ -105,11 +192,31 @@ $facArray = $fac->verFacturas();
         <!-- Page-Level Demo Scripts - Tables - Use for reference -->
         <script type='text/javascript'>
 
-            function anularFactura(id){
+            function anularFactura(numeroFactura, codigoCliente, tipoServicio, mesCargo){
 
                 var answer = confirm('¿Está seguro de anular esta factura?');
                 if (answer){
-                    window.location = 'php/anularFactura.php?id=' + id;
+                    //window.location = 'php/anularFactura.php?numeroFactura=' + numeroFactura+'&codigoCliente=' + codigoCliente+'&tipoServicio=' + tipoServicio+'&mesCargo=' + mesCargo;
+                    window.open('php/anularFactura.php?numeroFactura=' + numeroFactura+'&codigoCliente=' + codigoCliente+'&tipoServicio=' + tipoServicio+'&mesCargo=' + mesCargo, '_blank');
+                }
+            }
+
+            function anularFacturaModal(numeroFactura, codigoCliente, tipoServicio, mesCargo){
+                document.getElementById("tipoServicio").value=tipoServicio;
+                document.getElementById("prefijo").value=numeroFactura.substr(0,8);
+                document.getElementById("nFactura").value=numeroFactura.substr(9,15);
+                document.getElementById("codigoCliente").value=codigoCliente;
+                document.getElementById("mensu").value=mesCargo;
+            }
+        </script>
+        <script type='text/javascript'>
+
+            function eliminarFactura(numeroFactura, codigoCliente, tipoServicio, mesCargo){
+
+                var answer = confirm('¿Está seguro de ELIMINAR esta factura?');
+                if (answer){
+                    //window.location = 'php/eliminarFactura.php?numeroFactura=' + numeroFactura+'&codigoCliente=' + codigoCliente+'&tipoServicio=' + tipoServicio+'&mesCargo=' + mesCargo;
+                    window.open('php/eliminarFactura.php?numeroFactura=' + numeroFactura+'&codigoCliente=' + codigoCliente+'&tipoServicio=' + tipoServicio+'&mesCargo=' + mesCargo, '_blank');
                 }
             }
         </script>

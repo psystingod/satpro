@@ -1,5 +1,10 @@
 <?php
-    session_start();
+if(!isset($_SESSION))
+{
+    session_start([
+        'cookie_lifetime' => 86400,
+    ]);
+}
     require("../php/connection.php");
  ?>
 <!DOCTYPE html>
@@ -155,8 +160,8 @@
     $id=isset($_GET['id']) ? $_GET['id'] : die('ERROR: Registro no encontrado.');
 
     //include database connection
-      $obj = new ConectionDB();
-      $con = $obj->dbConnect;
+      $obj = new ConectionDB($_SESSION['db']);
+      $con = $obj->ConectionDB($_SESSION['db']);
       $cantidad = 0;
     // read current record's data
     try {

@@ -2,11 +2,18 @@
     const AGREGAR = 1;
     const EDITAR = 2;
     const ELIMINAR = 4;
+    const GENERCONTRATO =8;
+    const IMPCONTRATO =16;
 
     function getAccess($permisosActuales, $permisoRequerido){
         return ((intval($permisosActuales) & intval($permisoRequerido)) == 0) ? false : true;
     }
-    session_start();
+if(!isset($_SESSION))
+{
+    session_start([
+        'cookie_lifetime' => 86400,
+    ]);
+}
     require("../../php/connection.php");
     require('../../php/permissions.php');
  ?>
@@ -154,8 +161,8 @@
             $id=isset($_GET['id']) ? $_GET['id'] : die('ERROR: Registro no encontrado.');
 
             //include database connection
-        $obj = new ConectionDB();
-        $con = $obj->dbConnect;
+        $obj = new ConectionDB($_SESSION['db']);
+        $con = $obj->ConectionDB($_SESSION['db']);
 
             // read current record's data
             try {
@@ -238,7 +245,7 @@
                         $stmt0->bindParam(':rol', $rol0);
 
                         $query1 = "UPDATE tbl_permisosglobal
-                                    SET Madmin=:Madmin, Mcont=:Mcont, Mplan=:Mplan, Macti=:Macti, Minve=:Minve, Miva=:Miva, Mbanc=:Mbanc, Mcxc=:Mcxc, Mcxp=:Mcxp, Ag=:agregar, Ed=:editar, El=:eliminar, IdUsuario=:id
+                                    SET Madmin=:Madmin, Mcont=:Mcont, Mplan=:Mplan, Macti=:Macti, Minve=:Minve, Miva=:Miva, Mbanc=:Mbanc, Mcxc=:Mcxc, Mcxp=:Mcxp, Ag=:agregar, Ed=:editar, El=:eliminar, GenCont=:gencontrato, ImpCont=:impcontrato, IdUsuario=:id
                                     WHERE IdUsuario = :id";
 
                         // prepare query for excecution
@@ -342,6 +349,22 @@
                             $stmt->bindParam(':eliminar', $zero);
                         }
 
+                        if (isset($_POST['gencontrato'])) {
+                            $gencontrato=htmlspecialchars(strip_tags($_POST['gencontrato']));
+                            $stmt->bindParam(':gencontrato', $gencontrato);
+                            $dump .= "13";
+                        }else {
+                            $stmt->bindParam(':gencontrato', $zero);
+                        }
+
+                        if (isset($_POST['impcontrato'])) {
+                            $impcontrato=htmlspecialchars(strip_tags($_POST['impcontrato']));
+                            $stmt->bindParam(':impcontrato', $impcontrato);
+                            $dump .= "14";
+                        }else {
+                            $stmt->bindParam(':impcontrato', $zero);
+                        }
+
                         $stmt->bindParam(':id', $id);
 
                         // Execute the query
@@ -378,7 +401,7 @@
                         </tr>
                         <tr>
                             <th width="200px">Contraseña</th>
-                            <?php echo "<td><input class='form-control' type='text' id='nombres' name='clave' value='".htmlspecialchars($clave, ENT_QUOTES)."'></td>";?>
+                            <?php echo "<td><input class='form-control' type='password' id='nombres' name='clave' value='".htmlspecialchars($clave, ENT_QUOTES)."'></td>";?>
                         </tr>
                         <tr>
                             <th width="200px">Rol que desempeña</th>
@@ -453,7 +476,7 @@
                     <div class="col-lg-6">
                         <div class="row">
                             <div class="col-lg-12">
-                                <h3 class="page-header">Permisos <strong>globales</strong></h3>
+                                <h3 class="page-header">Permisos <strong>globales</strong> y <strong>gestión de contratos</strong></h3>
                             </div>
                             <!-- /.col-lg-12 -->
                         </div>
@@ -462,6 +485,8 @@
                             <th>AGREGAR</th>
                             <th>MODIFICAR</th>
                             <th>ELIMINAR</th>
+                            <th>GENERAR CONT.</th>
+                            <th>IMPRIMIR CONT.</th>
                             <?php
                             if (setMenu($totalPermissions, AGREGAR)) {
                                 echo "<tr><td><input type='checkbox' name='agregar' value='1' checked></td>";
@@ -474,9 +499,19 @@
                                 echo "<td><input type='checkbox' name='editar' value='2'></td>";
                             }
                             if (setMenu($totalPermissions, ELIMINAR)) {
-                                echo "<td><input type='checkbox' name='eliminar' value='4' checked></td></tr>";
+                                echo "<td><input type='checkbox' name='eliminar' value='4' checked></td>";
                             }else {
-                                echo "<td><input type='checkbox' name='eliminar' value='4'></td></tr>";
+                                echo "<td><input type='checkbox' name='eliminar' value='4'></td>";
+                            }
+                            if (setMenu($totalPermissions, GENERCONTRATO)) {
+                                echo "<td><input type='checkbox' name='gencontrato' value='8' checked></td>";
+                            }else {
+                                echo "<td><input type='checkbox' name='gencontrato' value='8'></td>";
+                            }
+                            if (setMenu($totalPermissions, IMPCONTRATO)) {
+                                echo "<td><input type='checkbox' name='impcontrato' value='16' checked></td></tr>";
+                            }else {
+                                echo "<td><input type='checkbox' name='impcontrato' value='16'></td>";
                             }
                             ?>
                         </table>

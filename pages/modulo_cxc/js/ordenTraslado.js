@@ -119,7 +119,7 @@ function editarOrden(){
     if (tipoServicio == 'C') {
         document.getElementById('btn-internet').disabled = true;
         document.getElementById('btn-cable').style.color="#4CAF50";
-        document.getElementById('tipoReconexInter').disabled=true;
+        //document.getElementById('tipoReconexInter').disabled=true;
         document.getElementById("velocidad").disabled = true;
         //document.getElementById("fechaReconexInter").readOnly = true;
         //document.getElementById("ultSuspInter").readOnly = true;
@@ -161,7 +161,7 @@ function changeAction(action){
 function imprimirOrden(){
     var nOrden = document.getElementById("numeroTraslado").value
     // Trigger the button element with a click
-    window.open("ordenTrasladoImp.php?nOrden="+nOrden, '_blank');
+    window.open("php/ordenTrasladoImp.php?nOrden="+nOrden, '_self');
 }
 
 function guardarOrden(){

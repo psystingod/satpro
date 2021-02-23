@@ -7,7 +7,11 @@
     {
         public function GuardarOrden()
         {
-            parent::__construct ();
+            if(!isset($_SESSION))
+            {
+          	  session_start();
+            }
+            parent::__construct ($_SESSION['db']);
         }
         public function guardar()
         {
@@ -24,6 +28,7 @@
                     $nombreCliente = $_POST['nombreCliente'];
                     $telefonos = $_POST['telefonos'];
                     $municipio = $_POST['municipio'];
+                    $coor = $_POST['coordenadas'];
                     $tipoActividadCable = $_POST['tipoActividadCable'];
                     $saldoCable = $_POST['saldoCable'];
                     $direccionCable = $_POST['direccionCable'];
@@ -36,13 +41,14 @@
                         $fechaTrabajo = "";
                     }
                     $hora = $_POST["hora"];
-                    $str3 = $_POST["fechaProgramacion"];
+                    /*$str3 = $_POST["fechaProgramacion"];
                     if (strlen($str3) >= 7) {
                         $date3 = DateTime::createFromFormat('d/m/Y', $str3);
                         $fechaProgramacion = $date3->format('Y-m-d');
                     }else {
                         $fechaProgramacion = "";
-                    }
+                    }*/
+                    $fechaProgramacion = $_POST["fechaProgramacion"];
                     $responsable = $_POST["responsable"];
                     $mactv = $_POST["mactv"];
                     $observaciones = $_POST["observaciones"];
@@ -50,12 +56,14 @@
                     $recepcionTv = $_POST["recepcionTv"];
                     $tecnologia = $_POST["tecnologia"];
                     $tipoServicio = $_POST["tipoServicio"];
+                    $nodo = $_POST["nodo"];
                     $creadoPor = $_POST['creadoPor'];
+                    $checksoporte = $_POST['checksoporte'];
 
                     //$Fecha = date('Y/m/d g:i');
 
-                    $query = "INSERT INTO tbl_ordenes_trabajo(codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, diaCobro, nombreCliente, telefonos, idMunicipio, actividadCable, saldoCable, direccionCable, fechaTrabajo, hora, fechaProgramacion, idTecnico, mactv, observaciones, idVendedor, tecnologia, recepcionTv, tipoServicio, creadoPor                                                                                              )
-                              VALUES(:codigoCliente, :fechaOrdenTrabajo, :tipoOrdenTrabajo, :diaCobro, :nombreCliente, :telefonos, :idMunicipio, :idActividadCable, :saldoCable, :direccionCable, :fechaTrabajo, :hora, :fechaProgramacion, :idTecnico, :mactv, :observaciones, :idVendedor, :tecnologia, :recepcionTv, :tipoServicio, :creadoPor)";
+                    $query = "INSERT INTO tbl_ordenes_trabajo(codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, diaCobro, nombreCliente, telefonos, idMunicipio, actividadCable, saldoCable, direccionCable, fechaTrabajo, hora, fechaProgramacion, idTecnico, mactv, observaciones, idVendedor, tecnologia, recepcionTv, tipoServicio, nodo, coordenadas, creadoPor, checksoporte                                                                                              )
+                              VALUES(:codigoCliente, :fechaOrdenTrabajo, :tipoOrdenTrabajo, :diaCobro, :nombreCliente, :telefonos, :idMunicipio, :idActividadCable, :saldoCable, :direccionCable, :fechaTrabajo, :hora, :fechaProgramacion, :idTecnico, :mactv, :observaciones, :idVendedor, :tecnologia, :recepcionTv, :tipoServicio, :nodo, :coordenadas, :creadoPor, :checksoporte)";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
@@ -79,7 +87,10 @@
                                 ':tecnologia' => $tecnologia,
                                 ':recepcionTv' => $recepcionTv,
                                 ':tipoServicio' => $tipoServicio,
-                                ':creadoPor' => $creadoPor
+                                ':coordenadas' => $coor,
+                                ':nodo' => $nodo,
+                                ':creadoPor' => $creadoPor,
+                                ':checksoporte' => $checksoporte
                                 ));
                     $numeroOrden = $this->dbConnect->lastInsertId();
                     header('Location: ../ordenTrabajo.php?nOrden='.$numeroOrden);
@@ -124,13 +135,14 @@
                     }
 
                     $hora = $_POST["hora"];
-                    $str3 = $_POST["fechaProgramacion"];
+                    /*$str3 = $_POST["fechaProgramacion"];
                     if (strlen($str3) >= 7) {
                         $date3 = DateTime::createFromFormat('d/m/Y', $str3);
                         $fechaProgramacion = $date3->format('Y-m-d');
                     }else {
                         $fechaProgramacion = "";
-                    }
+                    }*/
+                    $fechaProgramacion = $_POST["fechaProgramacion"];
 
                     $responsable = $_POST["responsable"];
                     $coordenadas = $_POST["coordenadas"];
@@ -140,12 +152,14 @@
                     $nodo = $_POST["nodo"];
                     $vendedor = $_POST["vendedor"];
                     $tipoServicio = $_POST["tipoServicio"];
+                    $nodo = $_POST["nodo"];
                     $creadoPor = $_POST['creadoPor'];
+                    $checksoporte = $_POST['checksoporte'];
 
                     //$Fecha = date('Y/m/d g:i');
 
-                    $query = "INSERT INTO tbl_ordenes_trabajo(codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, diaCobro, nombreCliente, telefonos, idMunicipio, actividadInter, saldoInter, direccionInter, macModem, serieModem, velocidad, rx, tx, snr, colilla, fechaTrabajo, hora, fechaProgramacion, idTecnico, coordenadas, observaciones, marcaModelo, tecnologia, nodo, idVendedor, tipoServicio, creadoPor                                                                                              )
-                              VALUES(:codigoCliente, :fechaOrdenTrabajo, :tipoOrdenTrabajo, :diaCobro, :nombreCliente, :telefonos, :idMunicipio, :idActividadInter, :saldoInter, :direccionInter, :macModem, :serieModem, :velocidad, :rx, :tx, :snr, :colilla, :fechaTrabajo, :hora, :fechaProgramacion, :idTecnico, :coordenadas, :observaciones, :marcaModelo, :tecnologia, :nodo, :idVendedor, :tipoServicio, :creadoPor)";
+                    $query = "INSERT INTO tbl_ordenes_trabajo(codigoCliente, fechaOrdenTrabajo, tipoOrdenTrabajo, diaCobro, nombreCliente, telefonos, idMunicipio, actividadInter, saldoInter, direccionInter, macModem, serieModem, velocidad, rx, tx, snr, colilla, fechaTrabajo, hora, fechaProgramacion, idTecnico, coordenadas, observaciones, marcaModelo, tecnologia, idVendedor, tipoServicio, nodo, creadoPor, checksoporte)
+                              VALUES(:codigoCliente, :fechaOrdenTrabajo, :tipoOrdenTrabajo, :diaCobro, :nombreCliente, :telefonos, :idMunicipio, :idActividadInter, :saldoInter, :direccionInter, :macModem, :serieModem, :velocidad, :rx, :tx, :snr, :colilla, :fechaTrabajo, :hora, :fechaProgramacion, :idTecnico, :coordenadas, :observaciones, :marcaModelo, :tecnologia, :idVendedor, :tipoServicio, :nodo, :creadoPor, :checksoporte)";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
@@ -177,7 +191,8 @@
                                 ':nodo' => $nodo,
                                 ':idVendedor' => $vendedor,
                                 ':tipoServicio' => $tipoServicio,
-                                ':creadoPor' => $creadoPor
+                                ':creadoPor' => $creadoPor,
+                                ':checksoporte' => $checksoporte
                                 ));
 
                         $numeroOrden = $this->dbConnect->lastInsertId();

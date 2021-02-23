@@ -169,7 +169,7 @@
                             <?php
                                 foreach ($histo as $key) {
                                     echo "<tr><td>";
-                                    echo $key["nombreEmpleado"] ." ". $key["Apellidos"] . "</td><td>";
+                                    echo $key["nombreEmpleado"] ."</td><td>";
                                     echo $key["nombreArticulo"] . "</td><td>";
                                     echo $key["cantidad"] . "</td><td>";
                                     echo $key["fechaHora"] . "</td><td>";

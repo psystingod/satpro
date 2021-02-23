@@ -5,7 +5,11 @@
     {
         public function setFacturaConfig()
         {
-            parent::__construct ();
+            if(!isset($_SESSION))
+            {
+                session_start();
+            }
+            parent::__construct ($_SESSION['db']);
         }
         public function SetConfig()
         {
@@ -17,13 +21,14 @@
 
                     $ultimaFactura = $_POST["ultimaFactura"];
                     $ultimaFiscal = $_POST["ultimaFiscal"];
+                    $ultimaPeque = $_POST["ultimaPeque"];
 
                     $rangoDesdeFactura = $_POST['rangoDesdeFactura'];
                     $rangoHastaFactura = $_POST['rangoHastaFactura'];
                     $rangoDesdeFiscal = $_POST['rangoDesdeFiscal'];
                     $rangoHastaFiscal = $_POST['rangoHastaFiscal'];
 
-                    $query = "UPDATE `tbl_facturas_config` SET `prefijoFactura` = :prefijoFactura, `prefijoFiscal` = :prefijoFiscal, `prefijoFacturaPeque` = :prefijoPeque, `ultimaFactura` = :ultimaFactura, `ultimaFiscal` = :ultimaFiscal, `rangoDesdeFactura` = :rangoDesdeFactura, `rangoHastaFactura` = :rangoHastaFactura, `rangoDesdeFiscal` = :rangoDesdeFiscal, `rangoHastaFiscal` = :rangoHastaFiscal";
+                    $query = "UPDATE `tbl_facturas_config` SET `prefijoFactura` = :prefijoFactura, `prefijoFiscal` = :prefijoFiscal, `prefijoFacturaPeque` = :prefijoPeque, `ultimaFactura` = :ultimaFactura, `ultimaFiscal` = :ultimaFiscal, `ultimaPeque` = :ultimaPeque, `rangoDesdeFactura` = :rangoDesdeFactura, `rangoHastaFactura` = :rangoHastaFactura, `rangoDesdeFiscal` = :rangoDesdeFiscal, `rangoHastaFiscal` = :rangoHastaFiscal";
                     $statement = $this->dbConnect->prepare($query);
 
                     $statement->bindValue(':prefijoFactura', $prefijoFactura, PDO::PARAM_STR);
@@ -31,6 +36,7 @@
                     $statement->bindValue(':prefijoPeque', $prefijoPeque, PDO::PARAM_STR);
                     $statement->bindValue(':ultimaFactura', $ultimaFactura, PDO::PARAM_INT);
                     $statement->bindValue(':ultimaFiscal', $ultimaFiscal, PDO::PARAM_INT);
+                    $statement->bindValue(':ultimaPeque', $ultimaPeque, PDO::PARAM_INT);
                     $statement->bindValue(':rangoDesdeFactura', $rangoDesdeFactura, PDO::PARAM_INT);
                     $statement->bindValue(':rangoHastaFactura', $rangoHastaFactura, PDO::PARAM_INT);
                     $statement->bindValue(':rangoDesdeFiscal', $rangoDesdeFiscal, PDO::PARAM_INT);

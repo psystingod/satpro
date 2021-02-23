@@ -7,7 +7,11 @@
     {
         public function EditarOrden()
         {
-            parent::__construct ();
+            if(!isset($_SESSION))
+            {
+          	  session_start();
+            }
+            parent::__construct ($_SESSION['db']);
         }
         public function editar()
         {
@@ -56,11 +60,23 @@
                     $mactv = $_POST["mactv"];
                     $observaciones = $_POST["observaciones"];
                     $tipoServicio = $_POST["tipoServicio"];
+                    $coordenadas = $_POST['coordenadas'];
                     $creadoPor = $_POST['creadoPor'];
+var_dump($_POST['servRecox']);
+                    if (isset($_POST['servRecox'])){
+                        if($_POST['servRecox'] == 1){
+                            $servRecox = $_POST['servRecox'];
+                        }else{
+                            $servRecox = 1;
+                        }
+                    }else{
+                        $servRecox = 0;
+                    }
+
 
                     //$Fecha = date('Y/m/d g:i');
                     $query = "UPDATE tbl_ordenes_reconexion SET codigoCliente=:codigoCliente, fechaOrden=:fechaOrden, tipoOrden=:tipoOrden, tipoReconexCable=:tipoReconexCable, saldoCable=:saldoCable, diaCobro=:diaCobro, nombreCliente=:nombreCliente, direccion=:direccion, telefonos=:telefonos,
-                                     colilla=:colilla, fechaReconexCable=:fechaReconexCable, ultSuspCable=:ultSuspCable, idTecnico=:idTecnico, mactv=:mactv, observaciones=:observaciones, tipoServicio=:tipoServicio, creadoPor=:creadoPor WHERE idOrdenReconex=:idOrdenReconex";
+                                     colilla=:colilla, fechaReconexCable=:fechaReconexCable, ultSuspCable=:ultSuspCable, idTecnico=:idTecnico, mactv=:mactv, observaciones=:observaciones, tipoServicio=:tipoServicio,coordenadas=:coordenadas, creadoPor=:creadoPor, servRecox=:servRecox WHERE idOrdenReconex=:idOrdenReconex";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
@@ -81,7 +97,9 @@
                                 ':colilla' => $colilla,
                                 ':observaciones' => $observaciones,
                                 ':tipoServicio' => $tipoServicio,
+                                ':coordenadas' => $coordenadas,
                                 ':creadoPor' => $creadoPor,
+                                ':servRecox' => $servRecox,
                                 ':idOrdenReconex' => $numeroOrden,
                                 ));
 
@@ -143,11 +161,24 @@
                     $serieModem = $_POST['serieModem'];
                     $macModem = $_POST['macModem'];
                     $velocidad = $_POST['velocidad'];
+                    $coordenadas = $_POST['coordenadas'];
+                    $servRecox = $_POST['servRecox'];
+
+                    if (isset($_POST['servRecox'])){
+                        if($_POST['servRecox'] == 1){
+                            $servRecox = $_POST['servRecox'];
+                        }else{
+                            $servRecox = 1;
+                        }
+                    }else{
+                        $servRecox = 0;
+                    }
+
 
                     //$Fecha = date('Y/m/d g:i');
 
                     $query = "UPDATE tbl_ordenes_reconexion SET codigoCliente=:codigoCliente, fechaOrden=:fechaOrden, tipoOrden=:tipoOrden, tipoReconexInter=:tipoReconexInter, saldoInter=:saldoInter, diaCobro=:diaCobro, nombreCliente=:nombreCliente, direccion=:direccion, telefonos=:telefonos, macModem=:macModem, serieModem=:serieModem,
-                                     velocidad=:velocidad, colilla=:colilla, fechaReconexInter=:fechaReconexInter, ultSuspInter=:ultSuspInter, idTecnico=:idTecnico, observaciones=:observaciones, tipoServicio=:tipoServicio, creadoPor=:creadoPor WHERE idOrdenReconex=:idOrdenReconex";
+                                     velocidad=:velocidad, colilla=:colilla, fechaReconexInter=:fechaReconexInter, ultSuspInter=:ultSuspInter, idTecnico=:idTecnico, observaciones=:observaciones, tipoServicio=:tipoServicio,coordenadas=:coordenadas, creadoPor=:creadoPor, servRecox=:servRecox WHERE idOrdenReconex=:idOrdenReconex";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
@@ -169,7 +200,9 @@
                                 ':colilla' => $colilla,
                                 ':observaciones' => $observaciones,
                                 ':tipoServicio' => $tipoServicio,
+                                ':coordenadas' => $coordenadas,
                                 ':creadoPor' => $creadoPor,
+                                ':servRecox' => $servRecox,
                                 ':idOrdenReconex' => $numeroOrden,
                                 ));
 

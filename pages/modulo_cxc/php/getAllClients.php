@@ -10,7 +10,11 @@
     {
         public function GetAllClients()
         {
-            parent::__construct ();
+            if(!isset($_SESSION))
+            {
+                session_start();
+            }
+            parent::__construct ($_SESSION['db']);
         }
         public function getClients()
         {
@@ -21,6 +25,34 @@
                     $statement->execute();
                     $result = $statement->fetchAll(PDO::FETCH_ASSOC);
                     return $result;
+
+            } catch (Exception $e) {
+                print "!Error¡: " . $e->getMessage() . "</br>";
+                die();
+            }
+        }
+        public function getLast()
+        {
+            try {
+                    $query = "SELECT cod_cliente FROM clientes ORDER BY cod_cliente DESC LIMIT 1";
+                    $statement = $this->dbConnect->prepare($query);
+                    $statement->execute();
+                    $result = $statement->fetch(PDO::FETCH_ASSOC);
+                    return str_pad(intval($result["cod_cliente"]), 5, "0", STR_PAD_LEFT);
+
+            } catch (Exception $e) {
+                print "!Error¡: " . $e->getMessage() . "</br>";
+                die();
+            }
+        }
+        public function getFirst()
+        {
+            try {
+                    $query = "SELECT cod_cliente FROM clientes ORDER BY cod_cliente ASC LIMIT 1";
+                    $statement = $this->dbConnect->prepare($query);
+                    $statement->execute();
+                    $result = $statement->fetch(PDO::FETCH_ASSOC);
+                    return intval($result["cod_cliente"]);
 
             } catch (Exception $e) {
                 print "!Error¡: " . $e->getMessage() . "</br>";

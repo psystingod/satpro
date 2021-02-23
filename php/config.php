@@ -1,4 +1,5 @@
 <?php
+
   define ('DB_HOST', 'localhost');
   define ('DB_USER', 'satprouser');
   define ('DB_PASSWORD', 'Xhce57K7xgsTZhKX');

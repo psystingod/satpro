@@ -62,7 +62,14 @@ function editarOrden(){
     }
     changeAction("editar");
 }
-
+function nuevoCliente(){
+    var codigoCliente = document.getElementById('codigoCliente').value;
+    if (codigoCliente =="") {
+        
+    }else{
+        alert("Para crear ficha, el cliente debe ser nuevo");
+    }
+}
 function changeAction(action){
     switch (action) {
         case "nueva":

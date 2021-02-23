@@ -2,8 +2,8 @@
 require_once('../../php/connection.php');
 require("php/getData.php");
 $data = new OrdersInfo();
-$precon = new ConectionDB();
-$con = $precon->ConectionDB();
+$precon = new ConectionDB($_SESSION['db']);
+$con = $precon->ConectionDB($_SESSION['db']);
 /**************************************************/
 if (isset($_GET['nOrden'])) {
 
@@ -99,11 +99,11 @@ if (isset($_GET['nOrden'])) {
         <link href="../../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
     </head>
-    <body style="background-color: #FAFAFA;">
+    <body style="background-color: #FAFAFA; font-size:12px;">
         <div class="row-fluid">
             <div class="col-md-12">
                 <div class="panel panel-danger">
-                  <div class="panel-heading"><h4 style="padding:0; margin:0;" class="text-center"><b>Orden de trabajo</b></h4><h5 style="padding:0; margin:0;" class="text-center"><b>Usulután centro</b></h5></div>
+                  <div class="panel-heading"><h4 style="padding:0; margin:0;" class="text-center"><b>Orden de trabajo</b></h4><h5 style="padding:0; margin:0;" class="text-center"><b><?php echo $nodo; ?></b></h5></div>
                   <div class="panel-body">
                       <?php
                       if (isset($_GET['nOrden'])) {
@@ -118,7 +118,7 @@ if (isset($_GET['nOrden'])) {
                                 </div>
                                 <div class='row'>
                                     <div class='col-md-3 col-xs-3'>
-                                        <label for='fecha'>Fecha</label>
+                                        <label for='fecha'><span style='color:red;font-size:18px;'>**</span>Fecha++++</label>
                                         <input class='form-control input-sm' type='text' name='fecha' value='{$fechaOrdenTrabajo}'>
                                     </div>
                                     <div class='col-md-2 col-xs-2'>
@@ -252,7 +252,7 @@ if (isset($_GET['nOrden'])) {
                               </div>
                               <div class='row'>
                                   <div class='col-md-3 col-xs-3'>
-                                      <label for='fecha'>Fecha</label>
+                                      <label for='fecha'>Fecha+++</label>
                                       <input class='form-control input-sm' type='text' name='fecha' value='{$fechaOrdenTrabajo}'>
                                   </div>
                                   <div class='col-md-2 col-xs-2'>
@@ -267,11 +267,11 @@ if (isset($_GET['nOrden'])) {
                               <div class='row'>
                                   <div class='col-md-12 col-xs-12'>
                                       <label for='direccion'>Dirección</label>
-                                      <input class='form-control input-sm' type='text' name='direccion' value='{$direccionCable}'>
+                                      <textarea class='form-control input-sm' type='text' name='direccion' cols='40' rows='2'>{$direccionCable}</textarea>
                                   </div>
                               </div>
                               <div class='row'>
-                                  <div class='col-md-1 col-xs-1'>
+                                  <div class='col-md-2 col-xs-2'>
                                       <label for='hora'>Hora</label>
                                       <input class='form-control input-sm' type='text' name='hora' value='{$hora}'>
                                   </div>
@@ -279,13 +279,13 @@ if (isset($_GET['nOrden'])) {
                                       <label for='telefono'>Teléfono</label>
                                       <input class='form-control input-sm' type='text' name='telefono' value='{$telefonos}'>
                                   </div>
-                                  <div class='col-md-4 col-xs-4'>
+                                  <div class='col-md-3 col-xs-3'>
                                       <label for='trabajo'>Trabajo a relizar</label>
                                       <input class='form-control input-sm' type='text' name='trabajo' value='{$idActividadCable}'>
                                   </div>
                                   <div class='col-md-4 col-xs-4'>
                                       <label for='tecnico'>Técnico</label>
-                                      <input class='form-control input-sm' type='text' name='tecnico' value='{$idTecnico}'>
+                                      <input class='form-control input-sm' type='text' name='tecnico' value='{$data->getTecnicoById($idTecnico)}'>
                                   </div>
                               </div>
                               <div class='row'>

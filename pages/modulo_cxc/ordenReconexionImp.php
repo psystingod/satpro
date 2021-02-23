@@ -1,7 +1,13 @@
 <?php
 require_once('../../php/connection.php');
-$precon = new ConectionDB();
-$con = $precon->ConectionDB();
+if(!isset($_SESSION))
+{
+    session_start([
+        'cookie_lifetime' => 86400,
+    ]);
+}
+$precon = new ConectionDB($_SESSION['db']);
+$con = $precon->ConectionDB($_SESSION['db']);
 require("php/getData.php");
 $data = new OrdersInfo();
 /**************************************************/
@@ -58,7 +64,7 @@ if (isset($_GET['nOrden'])) {
         //$nodo = $row['nodo'];
         //$tecnologia = $row['tecnologia'];
         $observaciones = $row['observaciones'];
-        //$coordenadas = $row['coordenadas'];
+        $coordenadas = $row['coordenadas'];
         //$marcaModelo = $row['marcaModelo'];
         //$idVendedor = $row['idVendedor'];
         //$recepcionTv = $row['recepcionTv'];

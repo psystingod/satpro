@@ -6,7 +6,7 @@ require("../php/connection.php");
  ?>
 <?php
 // include database connection
-$obj = new ConectionDB();
+$obj = new ConectionDB($_SESSION['db']);
 $con = $obj->dbConnect;
 $Bodega="";
 

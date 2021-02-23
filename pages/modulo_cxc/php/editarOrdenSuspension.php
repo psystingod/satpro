@@ -7,7 +7,11 @@
     {
         public function EditarOrden()
         {
-            parent::__construct ();
+            if(!isset($_SESSION))
+            {
+          	  session_start();
+            }
+            parent::__construct ($_SESSION['db']);
         }
         public function editar()
         {
@@ -30,7 +34,7 @@
                     $mactv = $_POST['mactv'];
                     $colilla = $_POST['colilla'];
                     $str2 = $_POST["fechaSuspension"];
-                    if ($str2 >= 7) {
+                    if ($str2 >= 1) {
                         $date2 = DateTime::createFromFormat('d/m/Y', $str2);
                         $fechaSuspension = $date2->format('Y-m-d');
                     }else {
@@ -39,10 +43,20 @@
                     $responsable = $_POST["responsable"];
                     $observaciones = $_POST["observaciones"];
                     $tipoServicio = $_POST["tipoServicio"];
+                    $coordenadas = $_POST["coordenadas"];
                     $creadoPor = $_POST['creadoPor'];
+                    if (isset($_POST['suspServ'])){
+                        if($_POST['suspServ'] == 1){
+                            $suspServ = $_POST['suspServ'];
+                        }else{
+                            $suspServ = 1;
+                        }
+                    }else{
+                        $suspServ = 0;
+                    }
 
                     //$Fecha = date('Y/m/d g:i');
-                    $query = "UPDATE tbl_ordenes_suspension SET codigoCliente=:codigoCliente, fechaOrden=:fechaOrden, tipoOrden=:tipoOrden, diaCobro=:diaCobro, nombreCliente=:nombreCliente, actividadCable=:idActividadCable, saldoCable=:saldoCable, direccion=:direccion, fechaSuspension=:fechaSuspension, ordenaSuspension=:ordenaSuspension, idTecnico=:idTecnico, mactv=:mactv, observaciones=:observaciones, tipoServicio=:tipoServicio, creadoPor=:creadoPor WHERE idOrdenSuspension=:idOrdenSuspension";
+                    $query = "UPDATE tbl_ordenes_suspension SET codigoCliente=:codigoCliente, fechaOrden=:fechaOrden, tipoOrden=:tipoOrden, diaCobro=:diaCobro, nombreCliente=:nombreCliente, actividadCable=:idActividadCable, saldoCable=:saldoCable, direccion=:direccion, fechaSuspension=:fechaSuspension, ordenaSuspension=:ordenaSuspension, idTecnico=:idTecnico, mactv=:mactv, observaciones=:observaciones, tipoServicio=:tipoServicio,coordenadas=:coordenadas, creadoPor=:creadoPor, servSusp=:servSusp WHERE idOrdenSuspension=:idOrdenSuspension";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
@@ -61,11 +75,27 @@
                                 ':mactv' => $mactv,
                                 ':observaciones' => $observaciones,
                                 ':tipoServicio' => $tipoServicio,
+                                ':coordenadas' => $coordenadas,
                                 ':creadoPor' => $creadoPor,
-                                ':idOrdenSuspension' => $numeroOrden
+                                ':idOrdenSuspension' => $numeroOrden,
+                                ':servSusp' => $suspServ
                                 ));
                     //$numeroOrden = $this->dbConnect->lastInsertId();
-                    header('Location: ../ordenSuspension.php?nOrden='.$numeroOrden);
+                    //header('Location: ../ordenSuspension.php?nOrden='.$numeroOrden);
+                    if ($suspServ == 1){
+                        $query = "UPDATE clientes SET servicio_suspendido=:servSusp, fecha_suspencion=:fechaSuspension WHERE cod_cliente=:codigoCliente";
+
+                        $statement = $this->dbConnect->prepare($query);
+                        $statement->execute(array(
+                            ':codigoCliente' => $codigoCliente,
+                            ':servSusp' => 'T',
+                            ':fechaSuspension' => $fechaSuspension
+                        ));
+
+                        header('Location: ../ordenSuspension.php?nOrden='.$numeroOrden);
+                    }else{
+                        header('Location: ../ordenSuspension.php?nOrden='.$numeroOrden);
+                    }
 
                 }
                 catch (Exception $e)
@@ -98,7 +128,7 @@
                     $ordenaSuspension = $_POST["ordenaSuspensionInter"];
                     $colilla = $_POST["colilla"];
                     $str2 = $_POST["fechaSuspension"];
-                    if ($str2 >= 7) {
+                    if ($str2 >= 1) {
                         $date2 = DateTime::createFromFormat('d/m/Y', $str2);
                         $fechaSuspension = $date2->format('Y-m-d');
                     }else {
@@ -107,12 +137,22 @@
                     $responsable = $_POST["responsable"];
                     $observaciones = $_POST["observaciones"];
                     $tipoServicio = $_POST["tipoServicio"];
+                    $coordenadas = $_POST["coordenadas"];
                     $creadoPor = $_POST['creadoPor'];
+                    if (isset($_POST['suspServ'])){
+                        if($_POST['suspServ'] == 1){
+                            $suspServ = $_POST['suspServ'];
+                        }else{
+                            $suspServ = 1;
+                        }
+                    }else{
+                        $suspServ = 0;
+                    }
 
                     //$Fecha = date('Y/m/d g:i');
 
                     $query = "UPDATE tbl_ordenes_suspension SET codigoCliente=:codigoCliente, fechaOrden=:fechaOrden, tipoOrden=:tipoOrden, diaCobro=:diaCobro, nombreCliente=:nombreCliente,
-                    actividadInter=:idActividadInter, tipoServicio=:tipoServicio, saldoInter=:saldoInter, ordenaSuspension=:ordenaSuspension, direccion=:direccion, fechaSuspension=:fechaSuspension, idTecnico=:idTecnico, observaciones=:observaciones, macModem=:macModem, serieModem=:serieModem, velocidad=:velocidad, colilla=:colilla, creadoPor=:creadoPor WHERE idOrdenSuspension=:idOrdenSuspension";
+                    actividadInter=:idActividadInter, tipoServicio=:tipoServicio, saldoInter=:saldoInter, ordenaSuspension=:ordenaSuspension, direccion=:direccion, fechaSuspension=:fechaSuspension, idTecnico=:idTecnico, observaciones=:observaciones, macModem=:macModem, serieModem=:serieModem, velocidad=:velocidad, colilla=:colilla,coordenadas=:coordenadas, creadoPor=:creadoPor, servSusp=:servSusp WHERE idOrdenSuspension=:idOrdenSuspension";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
@@ -134,12 +174,28 @@
                                 ':idTecnico' => $responsable,
                                 ':observaciones' => $observaciones,
                                 ':tipoServicio' => $tipoServicio,
+                                ':coordenadas' => $coordenadas,
                                 ':creadoPor' => $creadoPor,
-                                ':idOrdenSuspension' => $numeroOrden
+                                ':idOrdenSuspension' => $numeroOrden,
+                                ':servSusp' => $suspServ
                                 ));
 
                         //$numeroOrden = $this->dbConnect->lastInsertId();
+                        //header('Location: ../ordenSuspension.php?nOrden='.$numeroOrden);
+                    if ($suspServ == 1){
+                        $query = "UPDATE clientes SET estado_cliente_in = :servSusp, fecha_suspencion_in=:fechaSuspension WHERE cod_cliente=:codigoCliente";
+
+                        $statement = $this->dbConnect->prepare($query);
+                        $statement->execute(array(
+                            ':codigoCliente' => $codigoCliente,
+                            ':servSusp' => '2',
+                            ':fechaSuspension' => $fechaSuspension
+                        ));
+
                         header('Location: ../ordenSuspension.php?nOrden='.$numeroOrden);
+                    }else{
+                        header('Location: ../ordenSuspension.php?nOrden='.$numeroOrden);
+                    }
 
                 }
                 catch (Exception $e)

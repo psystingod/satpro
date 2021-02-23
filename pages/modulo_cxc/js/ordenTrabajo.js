@@ -19,6 +19,9 @@ function ordenInternet(){
             inputsCable[i].disabled = true;
         }
     }
+    document.getElementById("tipoActividadInter").required=true;
+    document.getElementById("tipoActividadCable").required=false;
+    document.getElementById("velocidad").required=true;
 
 }
 
@@ -41,13 +44,17 @@ function ordenCable(){
         document.getElementById("btn-cable").style.color="#4CAF50";
         for (var i = 0; i < inputsInternet.length; i++) {
             inputsInternet[i].disabled = true;
+            inputsInternet[i].readOnly = true;
         }
     }
+    document.getElementById("tipoActividadCable").required=true;
+    document.getElementById("tipoActividadInter").required=false;
 
 }
 
 // CHANGE FORM COMPORT
 function nuevaOrden(){
+    document.getElementById("nuevaEditar").value = 1;
     document.getElementById("btn-cable").disabled = false;
     document.getElementById("btn-internet").disabled = false;
     document.getElementById("imprimir").disabled = true;
@@ -84,6 +91,8 @@ function nuevaOrden(){
 }
 
 function editarOrden(){
+    document.getElementById("nuevaEditar").value = 2;
+    document.getElementById("nuevaOrdenId").disabled = true;
     document.getElementById("btn-cable").disabled = false;
     document.getElementById("guardar").disabled = false;
     document.getElementById("btn-internet").disabled = false;
@@ -110,7 +119,7 @@ function editarOrden(){
     document.getElementById("nombreOrden").style.display = "run-in";
     var tipoServicio = document.getElementById('tipoServicio').value;
     if (tipoServicio == 'C') {
-        document.getElementById('btn-internet').disabled = true;
+        //document.getElementById('btn-internet').disabled = true;
         document.getElementById('btn-cable').style.color="#4CAF50";
         document.getElementById('tipoActividadInter').disabled=true;
         document.getElementById('direccionInternet').readOnly=true;
@@ -119,7 +128,7 @@ function editarOrden(){
         document.getElementById('snr').readOnly=true;
         document.getElementById('tecnologia').readOnly=true;
     }else if (tipoServicio == 'I') {
-        document.getElementById('btn-cable').disabled = true;
+        //document.getElementById('btn-cable').disabled = true;
         document.getElementById('btn-internet').style.color="#039BE5";
 
         document.getElementById('tipoActividadCable').disabled=true;
@@ -133,7 +142,7 @@ function editarOrden(){
 function imprimirOrden(){
     var nOrden = document.getElementById("numeroOrden").value
     // Trigger the button element with a click
-    window.open("ordenTrabajoImp.php?nOrden="+nOrden, '_blank');
+    window.open("php/ordenTrabajoImp.php?nOrden="+nOrden, '_self');
 }
 
 function changeAction(action){
@@ -161,4 +170,22 @@ function guardarOrden(){
 function estadoCuenta(){
     var cod = document.getElementById("codigoCliente").value;
     window.open("estadoCuenta.php?codigoCliente="+cod, '_blank');
+}
+
+function changeActividad() {
+    var actividadCable = document.getElementById("tipoActividadCable").value;
+    var actividadInter = document.getElementById("tipoActividadInter").value;
+
+    if (actividadCable == 'Instalación' || actividadInter == 'Instalación'){
+        document.getElementById('vendedor').required = true;
+    }else {
+        document.getElementById('vendedor').required = false;
+        if (actividadInter == 'No tiene señal' || actividadInter == 'Mala señal' || actividadInter == 'Cambio de contraseña' || actividadInter == 'Posible fuente quemada' || actividadInter == 'Internet lento') {
+            document.getElementById("checksoporte").checked = true;
+            document.getElementById("checksoporte").value = 1;
+        }else{
+            document.getElementById("checksoporte").checked = false;
+            document.getElementById("checksoporte").value = 0;
+        }
+    }
 }

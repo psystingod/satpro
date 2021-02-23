@@ -62,7 +62,26 @@ function editarOrden(){
     }
     changeAction("editar");
 }
-
+function reactServicio(){
+     var tipoServicio = document.getElementById('tipoServicio').value;
+     var ReconexionC  = document.getElementById('fechaReconexCable').value;
+     var ReconexionI  = document.getElementById('fechaReconexInter').value;
+     if (tipoServicio == 'C') {
+        if (ReconexionC=="") {
+             document.getElementById('fechaReconexCable').required = true;
+        }else{
+            
+            changeAction("reactivar");
+        }
+     } else{
+        if (ReconexionI=="") {
+             document.getElementById('fechaReconexInter').required = true;
+        }else{
+            
+            changeAction("reactivar");
+        }
+     }
+}
 function changeAction(action){
     switch (action) {
         case "nueva":
@@ -70,6 +89,9 @@ function changeAction(action){
             break;
         case "editar":
             document.getElementById("ordenReconexion").action = "php/editarOrdenReconexion.php";
+            break;
+        case "reactivar":
+            document.getElementById("ordenReconexion").action = "php/reactivarcliente.php";
             break;
         default:
 

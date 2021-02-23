@@ -1,4 +1,14 @@
 <?php
+
+if(!isset($_SESSION))
+{
+    session_start([
+        'cookie_lifetime' => 86400,
+    ]);
+}
+    if (!isset($_SESSION["user"])) {
+        header('Location: login.php');
+    }
     require('../php/contenido.php');
     require('../php/modulePermissions.php');
     require('../php/permissions.php');
@@ -38,16 +48,15 @@
 
     <!-- Custom Fonts -->
     <link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
+    <style>
+        .nav>li>a {
+            color: #fff;
+        }
+    </style>
 </head>
 
 <body>
-    <!-- <?php
-         session_start();
-         if(!isset($_SESSION["user"])) {
-             header('Location: login.php');
-         }
-     ?> -->
+
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -59,7 +68,14 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Csat [<?php echo strtolower($_SESSION["rol"]) ?>]</a>
+                <?php
+                if ($_SESSION["db"] == "satpro") {
+                    $sucursal = "usulután";
+                }elseif ($_SESSION["db"] == "satpro_sm") {
+                    $sucursal = "san miguel";
+                }
+                ?>
+                <a style="" class="navbar-brand" href="index.html">Cablesat [<?php echo ucwords($sucursal) ?>]</a>
             </div>
             <!-- /.navbar-header -->
 

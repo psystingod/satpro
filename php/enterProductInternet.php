@@ -7,25 +7,32 @@
     {
         public function EnterProduct()
         {
-            parent::__construct ();
+            session_start();
+            parent::__construct ($_SESSION['db']);
         }
         public function enter()
         {
             try {
+                $nombreProducto = $_POST["nombreProducto"];
                 $mac = $_POST["mac"];
                 $serie = $_POST["serie"];
                 $estado = $_POST["estado"];
                 $bodega = $_POST["bodega"];
                 $marca = $_POST["marca"];
                 $modelo = $_POST["modelo"];
-                $proveedor = $_POST["proveedor"];
                 $descripcion = $_POST["descripcion"];
-                $docsis = $_POST["docsis"];
-                $nosh = $_POST["nosh"];
-                $condicion = "En bodega";
-                date_default_timezone_set('America/El_Salvador');
-                $fechaForm = $_POST["fecha"];
+                $proveedor = $_POST["proveedor"];
+                $Fabricante = $_POST["Fabricante"];
+                $Categoria = $_POST["Categoria"];
+                $Tecnologia = $_POST["Tecnologia"];
                 $Fecha = date('Y/m/d g:i');
+                $fechaForm = $_POST["fecha"];
+                $condicion = "En bodega";
+                $Garantia = $_POST["Garantia"];
+                $nFactura =$_POST["nFactura"];
+                date_default_timezone_set('America/El_Salvador');
+                
+                
                 $query = "SELECT count(*) FROM tbl_articulointernet where Mac='".$mac."' or  serie='".$serie."'";
                 $statement = $this->dbConnect->query($query);
 
@@ -36,24 +43,28 @@
                 else
                 {
 
-                    $query = "INSERT into tbl_articulointernet(Mac,Serie,Estado,IdBodega,Marca,Modelo,Descripcion,Proveedor,fecha,docsis,nosh,condicion)
-                    values (:mac,:serie,:estado,(SELECT idBodega FROM tbl_bodega where NombreBodega=:idBodega),:marca,:modelo,:descripcion,(SELECT Nombre FROM tbl_proveedor where IdProveedor = :proveedor),:fecha,:docsis,:nosh,:condicion)";
+                    $query = "INSERT into tbl_articulointernet(nombreProducto,Mac,Serie,Estado,IdBodega,Marca,Modelo,Descripcion,Proveedor,Fabricante,Categoria,Tecnologia,fecha,condicion,Garantia,nFactura)
+                    values (:nombreProducto,:mac,:serie,:estado,(SELECT idBodega FROM tbl_bodega where NombreBodega=:idBodega),:marca,:modelo,:descripcion,(SELECT Nombre FROM tbl_proveedor where IdProveedor = :proveedor),:Fabricante,:Categoria,:Tecnologia,:fecha,:condicion,:Garantia,:nFactura)";
                     // Preparación de sentencia
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
-                    ':fecha' => $fechaForm,
+                    ':nombreProducto' => $nombreProducto,
                     ':mac' => $mac,
                     ':serie' => $serie,
                     ':estado' => $estado,
+                    ':idBodega' => $bodega,
                     ':marca' => $marca,
                     ':modelo'=> $modelo,
-                    ':proveedor'=> $proveedor,
-                    ':idBodega' => $bodega,
-                    ':docsis' => $docsis,
-                    ':nosh' => $nosh,
                     ':descripcion' => $descripcion,
+                    ':proveedor'=> $proveedor,
+                    ':Fabricante'=> $Fabricante,
+                    ':Categoria' => $Categoria,
+                    ':Tecnologia' => $Tecnologia,
+                    ':fecha' => $fechaForm,
                     ':condicion' => $condicion,
-                    ));
+                    ':Garantia' => $Garantia,
+                    ':nFactura' => $nFactura
+                    ));var_dump($fechaForm);
 
                     $query2 = "SELECT IdProveedor, Nombre FROM tbl_proveedor WHERE IdProveedor = :idProv";
                     // Preparación de sentencia
@@ -89,7 +100,7 @@
                     ':nombreBodegaHistorial' => $nombreBodegaHistorial
                     ));
 
-                    header('Location: ../pages/inventarioInternet.php?status=success&bodega='.$bodega.'&proveedor='.$nombreProveedor.'&idProv='.$idProv.'&marca='.$marca.'&modelo='.$modelo.'&docsis='.$docsis.'&nosh='.$nosh.'&fecha='.$fechaForm);
+                    header('Location: ../pages/inventarioInternet.php?status=success&bodega='.$bodega.'&proveedor='.$nombreProveedor.'&idProv='.$idProv.'&marca='.$marca.'&modelo='.$modelo.'&Categoria='.$Categoria.'&Tecnologia='.$Tecnologia.'&fecha='.$fechaForm);
                    }
 
             } catch (Exception $e) {

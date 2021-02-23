@@ -21,6 +21,10 @@ function ordenInternet(){
             inputsCable[i].disabled = true;
         }
     }
+    document.getElementById("tipoActividadInternet").required=true;
+    document.getElementById("tipoActividadCable").required=false;
+    document.getElementById("ordenaSuspensionInter").required=true;
+    document.getElementById("ordenaSuspensionCable").required=false;
 
 }
 
@@ -45,6 +49,10 @@ function ordenCable(){
             inputsInternet[i].disabled = true;
         }
     }
+    document.getElementById("tipoActividadInternet").required=false;
+    document.getElementById("tipoActividadCable").required=true;
+    document.getElementById("ordenaSuspensionInter").required=false;
+    document.getElementById("ordenaSuspensionCable").required=true;
 
 }
 
@@ -154,7 +162,7 @@ function changeAction(action){
 function imprimirOrden(){
     var nOrden = document.getElementById("numeroSuspension").value
     // Trigger the button element with a click
-    window.open("ordenSuspensionImp.php?nOrden="+nOrden, '_blank');
+    window.open("php/ordenSuspensionImp.php?nOrden="+nOrden, '_self');
 }
 
 function guardarOrden(){

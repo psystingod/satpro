@@ -21,6 +21,8 @@ function ordenInternet(){
             inputsCable[i].disabled = true;
         }
     }
+    document.getElementById("tipoReconexInter").required = true;
+    document.getElementById("velocidad").required = true;
 
 }
 
@@ -45,6 +47,7 @@ function ordenCable(){
             inputsInternet[i].disabled = true;
         }
     }
+    document.getElementById("tipoReconexCable").required = true;
 
 }
 
@@ -55,6 +58,7 @@ function nuevaOrden(){
     document.getElementById("btn-internet").disabled = false;
     document.getElementById("imprimir").disabled = true;
     document.getElementById("guardar").disabled = false;
+    document.getElementById("btn-reconexion").disabled = true;
     var clearInputs = document.getElementsByClassName("input-sm");
     for (var i = 0; i < clearInputs.length; i++) {
         clearInputs[i].value = "";
@@ -92,6 +96,7 @@ function editarOrden(){
     document.getElementById("guardar").disabled = false;
     document.getElementById("btn-internet").disabled = false;
     document.getElementById("imprimir").disabled = true;
+    document.getElementById("btn-reconexion").disabled = true;
 
     var editInputs = document.getElementsByClassName("input-sm");
     for (var i = 0; i < editInputs.length; i++) {
@@ -144,6 +149,28 @@ function editarOrden(){
     }
     changeAction("editar");
 }
+function reactServicio(){
+     var tipoServicio = document.getElementById('tipoServicio').value;
+     var ReconexionC  = document.getElementById('fechaReconexCable').value;
+     var ReconexionI  = document.getElementById('fechaReconexInter').value;
+     if (tipoServicio == 'C') {
+        if (ReconexionC=="") {
+             document.getElementById('fechaReconexCable').required = true;
+              alert("Para activar el cliente, primero llene campo de fecha de reconexión de servicio de cable tv y luego intente nuevamente reactivar");
+        }else{
+            
+            changeAction("reactivar");
+        }
+     } else{
+        if (ReconexionI=="") {
+             document.getElementById('fechaReconexInter').required = true;
+              alert("Para activar el cliente, primero llene campo de fecha de reconexión de servicio de internet y luego intente nuevamente reactivar");
+        }else{
+            
+            changeAction("reactivar");
+        }
+     }
+}
 
 function changeAction(action){
     switch (action) {
@@ -153,6 +180,9 @@ function changeAction(action){
         case "editar":
             document.getElementById("ordenReconexion").action = "php/editarOrdenReconex.php";
             break;
+        case "reactivar":
+            document.getElementById("ordenReconexion").action = "php/reactivarcliente.php";
+            break;
         default:
 
     }
@@ -161,13 +191,14 @@ function changeAction(action){
 function imprimirOrden(){
     var nOrden = document.getElementById("numeroReconexion").value
     // Trigger the button element with a click
-    window.open("ordenReconexionImp.php?nOrden="+nOrden, '_blank');
+    window.open("php/ordenReconexionImp.php?nOrden="+nOrden, '_self');
 }
 
 function guardarOrden(){
     var token = document.getElementById("tipoServicio").value;
     if (token == "C" || token == "I") {
         document.getElementById('guardar2').click();
+        document.getElementById("btn-reconexion").disabled = false;
     }else {
         alert("Por favor indique si la orden es de cable o de internet");
     }

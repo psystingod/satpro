@@ -398,6 +398,16 @@
                                       </div>
                                   </div>
                                   <div class="form-row">
+                                      <div class="form-group col-md-6 col-xs-6">
+                                          <label for="factura">N° de Credito Fiscal</label>
+                                          <input type="text" class="form-control" name="nFactura" id="nFactura" placeholder="Ingresar factura de compra" title="Espacio para numero de factura">
+                                      </div>
+                                      <div class="form-group col-md-6 col-xs-6">
+                                          <label for="garantia meses">Periodo garantia (meses)</label>
+                                          <input type="number" class="form-control" name="pGarantia" id="pGarantia" placeholder="Garantia en meses" title="Ingresar solo el periodo de meses de garantia en numero" >
+                                      </div>
+                                  </div>
+                                  <div class="form-row">
                                       <div class="form-group col-md-12 col-xs-12">
                                             <label for="message-text" class="control-label">Descripción:</label>
                                             <textarea class="form-control" name="descripcion" id="descripcion" placeholder="Agregue una breve descripcion del producto"></textarea>

@@ -224,16 +224,19 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>Nombre</th>
                                 <th>Marca</th>
                                 <th>Modelo</th>
                                 <th>MAC</th>
                                 <th>Serie</th>
                                 <th>Proveedor</th>
+                                <th>Fabricante</th>
                                 <th>Estado</th>
                                 <th>Ingreso</th>
-                                <th>Docsis</th>
-                                <th>Nosh</th>
+                                <th>Categoria</th>
+                                <th>Tecnologia</th>
                                 <th>Condición</th>
+                                <th>Garantia meses</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -243,18 +246,20 @@
                                 foreach ($recordsInfoI as $key) {
                                     echo "<tr><td>";
                                     echo $key["IdArticulo"] . "</td><td>";
+                                    echo $key["nombreProducto"] . "</td><td width='75'>";
                                     echo $key["Marca"] . "</td><td width='75'>";
-                                    echo $key["Modelo"] . "</td><td>";
+                                    echo $key["Modelo"] . "</td><td width='75'>";
                                     echo $key["Mac"] . "</td><td>";
-                                    echo $key["Serie"] . "</td><td width='150'>";
+                                    echo $key["Serie"] . "</td><td>";
                                     echo $key["Proveedor"] . "</td><td>";
+                                    echo $key["Fabricante"] . "</td><td width='60'>";
                                     if($key["Estado"] == 0)
                                     {
                                       echo "<span class='alert alert-success' style='padding:5px;'><b>Bueno</b></span>"."</td><td width='100'>";
                                     }
                                     else if($key["Estado"] == 1)
                                     {
-                                      echo "<span class='alert alert-warning' style='padding:5px;'><b>Regular</b></span>"."</td><td width='100'>";
+                                      echo "<span class='alert alert-warning' style='padding:5px;'><b>Reparado</b></span>"."</td><td width='100'>";
                                     }
                                     else if($key["Estado"] == 2)
                                     {
@@ -266,8 +271,8 @@
                                     }
                                     // echo $key["Estado"] . "</td><td>";
                                     echo $key["fecha"] . "</td><td width='75'>";
-                                    echo $key["docsis"] . "</td><td width='70'>";
-                                    echo $key["nosh"] . "</td>";
+                                    echo $key["Categoria"] . "</td><td width='75'>";
+                                    echo $key["Tecnologia"] . "</td><td>";
                                     if ($key["condicion"] == 'Ya instalado') {
                                         echo "<td width='150'>"."<span class='alert alert-success' style='padding:5px;'><b><i class='fas fa-wifi'></i> ".$key["condicion"] ."</b></span>"."</td><td>";
                                     }elseif ($key["condicion"] == 'Se recuperó') {
@@ -275,6 +280,7 @@
                                     }else {
                                         echo "<td width='150'>"."<span class='well' style='padding:5px;'><b><i class='fas fa-box'></i> ".$key["condicion"] ."</b></span>"."</td><td>";
                                     }
+                                    echo $key["Garantia"] . "</td><td>";
                                     echo "<div class='btn-group pull-right'>
                                                 <button type='button' class='btn btn-default dropdown-toggle' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false'>
                                                   <span class='caret'></span>
@@ -325,6 +331,16 @@
                      <form action="../php/enterProductInternet.php" method="POST">
                       <div class="modal-body">
                                   <div class="form-row">
+                                      <div class="form-group col-md-8 col-xs-2">
+                                          <label for="Nombre Producto">Nombre de Producto:</label>
+                                          <input type="text" class="form-control" name="nombreProducto" id="" placeholder="Ingrese nombre del producto a registrar" value="<?php if(isset($_GET['nombreProducto'])) echo $_GET['nombreProducto'] ?>" required>
+                                      </div>
+                                      <div class="form-group col-md-4 col-xs-2">
+                                          <label for="Tiempo de Garantia">Garantia en meses:</label>
+                                          <input type="number" class="form-control" name="Garantia" id="" placeholder="Numero de Meses" title="Ingrese dato en meses" required>
+                                      </div>
+                                  </div>
+                                  <div class="form-row">
                                       <div class="form-group col-md-2 col-xs-2">
                                           <label for="Fecha">Fecha:</label>
                                           <input type="text" class="form-control" name="fecha" id="" placeholder="Ingreso" value="<?php if(isset($_GET['fecha'])) echo $_GET['fecha'] ?>" required>
@@ -340,21 +356,32 @@
 
                                   </div>
                                   <div class="form-row">
-                                      <div class="form-group col-md-4 col-xs-4">
+                                      <div class="form-group col-md-3 col-xs-4">
                                           <label for="mac">MAC</label>
                                           <input type="text" class="form-control" name="mac" id="mac" placeholder="MAC del producto" title="Escribe solamente letras y números" required>
                                       </div>
-                                      <div class="form-group col-md-4 col-xs-4">
+                                      <div class="form-group col-md-3 col-xs-4">
                                           <label for="serie">Serie</label>
                                           <input type="text" class="form-control" name="serie" id="serie" placeholder="Serie del producto" title="Escribe solamente letras y números" required>
                                       </div>
-                                      <div class="form-group col-md-2 col-xs-2">
-                                          <label for="docsis">Docsis</label>
-                                          <input type="text" class="form-control" name="docsis" id="docsis" placeholder="Docsis" title="Escribe solamente letras y números" value="<?php if(isset($_GET['docsis'])) echo $_GET['docsis'] ?>" required>
+                                      <div class="form-group col-md-4 col-xs-2">
+                                          <label for="docsis">Categoria</label>
+                                          <select class="form-control" name="Categoria" id="Categoria" title="Escribe solamente letras y números" required>
+                                            <option value="Cable Modem">Cable Modem</option>
+                                            <option value="Antena">Antena</option>
+                                            <option value="ONU solo internet">ONU solo internet</option>
+                                            <option value="ONU CATV">ONU CATV</option>
+                                            <option value="Enrutadores">ENRUTADORES</option>
+                                        </select>
                                       </div>
                                       <div class="form-group col-md-2 col-xs-2">
-                                          <label for="nosh">Nosh</label>
-                                          <input type="text" class="form-control" name="nosh" id="nosh" placeholder="Nosh" title="Escribe solamente letras y números" value="<?php if(isset($_GET['nosh'])) echo $_GET['nosh'] ?>" required>
+                                          <label for="nosh">Tecnologia</label>
+                                          <select class="form-control" name="Tecnologia" id="Tecnologia" title="Seleccionar la Tecnologia" required>
+                                            <option value="FTTH">FTTH</option>
+                                            <option value="Inalambrico">Inalambrico</option>
+                                            <option value="DOCSIS">DOCSIS</option>
+                                            <option value="Enrutadores">ENRUTADORES</option>
+                                        </select>
                                       </div>
                                   </div>
                                   <div class="form-row">
@@ -383,26 +410,34 @@
                                         <label for="estado">Estado</label>
                                         <select class="form-control" name="estado" id="estado" title="Escribe solamente letras y números" required>
                                             <option value="0">Bueno</option>
-                                            <option value="1">Regular</option>
+                                            <option value="1">Reparado</option>
                                             <option value="2">Quemado</option>
                                             <option value="3">Defectuoso</option>
                                         </select>
                                     </div>
                                   </div>
                                   <div class="form-row">
-                                      <div class="form-group col-md-12 col-xs-12">
+                                      <div class="form-group col-md-8 col-xs-4">
+                                          <label for="Fabricante">Fabricante</label>
+                                          <input type="text" class="form-control" name="Fabricante" id="Fabricante" placeholder="Nombre de Fabricante" title="Escribe solamente letras mayusculas" required>
+                                      </div>
+                                      <div class="form-group col-md-4 col-xs-4">
+                                          <label for="factura">N° de Credito Fiscal</label>
+                                          <input type="text" class="form-control" name="nFactura" id="nFactura" placeholder="Ingresar factura de compra" title="Espacio para numero de factura" required>
+                                      </div>
+                                  </div>
+                                  <div class="form-group col-md-12 col-xs-12">
                                             <label for="message-text" class="control-label">Descripción:</label>
                                             <textarea class="form-control" name="descripcion" id="descripcion" placeholder="Agregue una breve descripcion del producto" ></textarea>
                                       </div>
-                                  </div>
                       </div>
                       <div class="modal-footer">
-
-                        <input type="hidden" name="nombreEmpleadoHistorial" value="<?php echo $_SESSION['nombres'].' '.$_SESSION['apellidos'] ?>">
+                        <input type="hidden" name="NOMBRE" value='<?php echo $_SESSION['nombres']; ?>'>
+                        <input type="hidden" name="APELLIDO" value='<?php echo $_SESSION['apellidos']; ?>'>
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
                             <input type="submit" class="btn btn-primary" value="Registrar">
                       </div>
-                    </form>
+                           </form>
                 </div>
           </div>
     </div><!-- /Add modal -->

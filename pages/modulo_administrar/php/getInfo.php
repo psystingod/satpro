@@ -7,7 +7,11 @@
     {
         public function GetInfo()
         {
-            parent::__construct ();
+            if(!isset($_SESSION))
+            {
+                session_start();
+            }
+            parent::__construct ($_SESSION['db']);
         }
         public function getBodega()
         {
@@ -116,7 +120,7 @@
         {
             try {
 
-                  $query = "SELECT * FROM satpro.tbl_afps";
+                  $query = "SELECT * FROM tbl_afps";
                           $statement = $this->dbConnect->prepare($query);
                           $statement->execute();
                           $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -132,7 +136,7 @@
         {
             try {
 
-                  $query = "SELECT * FROM satpro.tbl_bancos";
+                  $query = "SELECT * FROM tbl_bancos";
                           $statement = $this->dbConnect->prepare($query);
                           $statement->execute();
                           $result = $statement->fetchAll(PDO::FETCH_ASSOC);
@@ -142,5 +146,6 @@
                 die();
             }
         }
+
     }
 ?>

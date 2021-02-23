@@ -12,7 +12,8 @@
     {
         public function GetInventory2()
         {
-            parent::__construct ();
+            session_start();
+            parent::__construct ($_SESSION['db']);
         }
         public function showInventoryRecords()
         {

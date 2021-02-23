@@ -3,7 +3,7 @@
     session_start();
     require("../php/connection.php");
 // include database connection
-$obj = new ConectionDB();
+$obj = $_SESSION['db'];
 $con = $obj->dbConnect;
 $Bodega="";
 try {

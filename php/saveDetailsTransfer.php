@@ -5,7 +5,8 @@
     {
         public function saveDetailsTransfer()
         {
-            parent::__construct ();
+            //parent::__construct ();
+             parent::__construct ($_SESSION['db']);
         }
         public function enter()
         {

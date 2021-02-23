@@ -7,7 +7,11 @@
     {
         public function SaveClient()
         {
-            parent::__construct ();
+            if(!isset($_SESSION))
+            {
+          	  session_start();
+            }
+            parent::__construct ($_SESSION['db']);
         }
         public function save()
         {

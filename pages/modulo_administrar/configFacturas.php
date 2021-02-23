@@ -1,5 +1,10 @@
 <?php
-    session_start();
+if(!isset($_SESSION))
+{
+    session_start([
+        'cookie_lifetime' => 86400,
+    ]);
+}
     require_once "php/getFacturaConfig.php";
     $config = new getFacturaConfig();
     $arrConfig = $config->getConfig();
@@ -211,7 +216,7 @@
                                       <td><input class="form-control" type="text" name="prefijoFiscal" value="<?php echo $prefijoFiscal ?>"></td>
                                       <td><input class="form-control" type="text" name="prefijoFacturaPeque" value="<?php echo $prefijoFacturaPeque ?>"></td>
                                       <td><input class="form-control" type="text" name="ultimaFiscal" value="<?php echo $ultimaFiscal ?>"></td>
-                                      <td><input class="form-control" type="text" name="$ultimaPeque" value="<?php echo $ultimaPeque ?>"></td>
+                                      <td><input class="form-control" type="text" name="ultimaPeque" value="<?php echo $ultimaPeque ?>"></td>
                                       <td><input class="form-control" type="text" name="rangoDesdeFiscal" value="<?php echo $rangoDesdeFiscal ?>"></td>
                                       <td><input class="form-control" type="text" name="rangoHastaFiscal" value="<?php echo $rangoHastaFiscal ?>"></td>
                                   </tr>

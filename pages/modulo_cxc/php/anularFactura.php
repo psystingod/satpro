@@ -7,53 +7,189 @@
    {
        public function AnularFactura()
        {
-           parent::__construct ();
+           if(!isset($_SESSION))
+           {
+               session_start();
+           }
+           parent::__construct ($_SESSION['db']);
        }
 
         public function anular()
        {
            try {
-               $id = $_GET['id'];
+               $puntoVenta = $_POST['idPunto'];
+               $prefijo = $_POST['prefijo'];
+               $numeroFacturaSinPre = $_POST['nFactura'];
+               $codigoCliente = $_POST['codigoCliente'];
+               $numeroFactura = $prefijo."-".$numeroFacturaSinPre;
+               $tipoServicio = $_POST['tipoServicio'];
+               $mesCargo = $_POST['mensu'];
+               $creadoPor = $_SESSION["nombres"]." ".$_SESSION["apellidos"];
+               $fechaHora = date('Y-m-d h:i:s');
 
                // SQL query para traer datos del servicio de cable de la tabla clientes
-               $query = "SELECT * FROM tbl_cargos WHERE idFactura=:id";
+               $query = "SELECT * FROM tbl_cargos WHERE numeroFactura=:numeroFactura AND codigoCliente=:codigoCliente AND tipoServicio=:tipoServicio AND mesCargo=:mesCargo";
                // Preparación de sentencia
                $statement = $this->dbConnect->prepare($query);
-               $statement->bindValue(':id', $id);
+               $statement->bindValue(':numeroFactura', $numeroFactura);
+               $statement->bindValue(':codigoCliente', $codigoCliente);
+               $statement->bindValue(':tipoServicio', $tipoServicio);
+               $statement->bindValue(':mesCargo', $mesCargo);
                $statement->execute();
+
                $result = $statement->fetch(PDO::FETCH_ASSOC);
                $mensualidad = $result['mesCargo']."*";
                $estado = $result['estado'];
                $codigoCliente = $result['codigoCliente'];
+               //var_dump($codigoCliente);
                $nFactura = $result['numeroFactura'];
-               /*if ($result['tipoServicio'] == "C") {
-                   $cuota = $result['cuotaCable'];
-                   $queryCliente = "UPDATE clientes SET saldoCable=saldoCable+:cuota WHERE cod_cliente=:codigoCliente";
+               $fechaFactura = $result['fechaFactura'];
+               $fechaFacturaIva = $_POST['fechaComprobante'];
+               $tipoComprobante = $result['tipoFactura'];
+               $nombre = $result['nombre'];
+               $direccion = $result['direccion'];
+               $exento = $result['exento'];
+               $municipio = $result['idMunicipio'];
+               $colonia = $result['idColonia'];
+               $fechaVencimiento = $result['fechaVencimiento'];
+               //var_dump(isset($_POST["aIva"]));
+               if (isset($_POST["aIva"])) {
+                   if ($_POST["aIva"] == "1") {
+                       $this->dbConnect->beginTransaction();
+                       if ($tipoServicio == "C") {
+                           $cuotaCable = $result['cuotaCable'];
+                           if ($exento == "1") {
+                               $query = "INSERT INTO tbl_ventas_anuladas (prefijo,numeroComprobante,tipoComprobante,fechaComprobante,codigoCliente,nombreCliente,municipio,fechaVencimiento,ventaExenta,totalComprobante,idPunto,creadoPor,fechaHora,tipoServicio)
+                                         VALUES (:prefijo,:numeroComprobante,:tipoComprobante,:fechaComprobante,:codigoCliente,:nombreCliente,:municipio,:fechaVencimiento,:ventaExenta,:totalComprobante,:idPunto,:creadoPor,:fechaHora,:tipoServicio)";
+
+                                 $statement = $this->dbConnect->prepare($query);
+                                 $statement->bindValue(':prefijo', $prefijo);
+                                 $statement->bindValue(':numeroComprobante', $numeroFacturaSinPre);
+                                 $statement->bindValue(':tipoComprobante', $tipoComprobante);
+                                 $statement->bindValue(':fechaComprobante', $fechaFacturaIva);
+                                 $statement->bindValue(':codigoCliente', $codigoCliente);
+                                 $statement->bindValue(':nombreCliente', $nombre);
+                                 $statement->bindValue(':municipio', $municipio);
+                                 $statement->bindValue(':fechaVencimiento', $fechaVencimiento);
+                                 $statement->bindValue(':ventaExenta', $cuotaCable);
+                                 $statement->bindValue(':totalComprobante', $cuotaCable);
+                                 $statement->bindValue(':idPunto', $puntoVenta);
+                                 $statement->bindValue(':fechaVencimiento', $fechaVencimiento);
+                                 $statement->bindValue(':creadoPor', $creadoPor);
+                                 $statement->bindValue(':fechaHora', $fechaHora);
+                                 $statement->bindValue(':tipoServicio', $tipoServicio);
+                           }else {
+                               $query = "INSERT INTO tbl_ventas_anuladas (prefijo,numeroComprobante,tipoComprobante,fechaComprobante,codigoCliente,nombreCliente,municipio,fechaVencimiento,ventaAfecta,totalComprobante,idPunto,creadoPor,fechaHora,tipoServicio)
+                                         VALUES (:prefijo,:numeroComprobante,:tipoComprobante,:fechaComprobante,:codigoCliente,:nombreCliente,:municipio,:fechaVencimiento,:ventaAfecta,:totalComprobante,:idPunto,:creadoPor,:fechaHora,:tipoServicio)";
+
+                                 $statement = $this->dbConnect->prepare($query);
+                                 $statement->bindValue(':prefijo', $prefijo);
+                                 $statement->bindValue(':numeroComprobante', $numeroFacturaSinPre);
+                                 $statement->bindValue(':tipoComprobante', $tipoComprobante);
+                                 $statement->bindValue(':fechaComprobante', $fechaFacturaIva);
+                                 $statement->bindValue(':codigoCliente', $codigoCliente);
+                                 $statement->bindValue(':nombreCliente', $nombre);
+                                 $statement->bindValue(':municipio', $municipio);
+                                 $statement->bindValue(':fechaVencimiento', $fechaVencimiento);
+                                 $statement->bindValue(':ventaAfecta', $cuotaCable);
+                                 $statement->bindValue(':totalComprobante', $cuotaCable);
+                                 $statement->bindValue(':idPunto', $puntoVenta);
+                                 $statement->bindValue(':fechaVencimiento', $fechaVencimiento);
+                                 $statement->bindValue(':creadoPor', $creadoPor);
+                                 $statement->bindValue(':fechaHora', $fechaHora);
+                                 $statement->bindValue(':tipoServicio', $tipoServicio);
+                           }
+                       }elseif ($tipoServicio == "I") {
+                           $cuotaInternet = $result['cuotaInternet'];
+                           if ($exento == "1") {
+                               $query = "INSERT INTO tbl_ventas_anuladas (prefijo,numeroComprobante,tipoComprobante,fechaComprobante,codigoCliente,nombreCliente,municipio,fechaVencimiento,ventaExenta,totalComprobante,idPunto,creadoPor,fechaHora,tipoServicio)
+                                         VALUES (:prefijo,:numeroComprobante,:tipoComprobante,:fechaComprobante,:codigoCliente,:nombreCliente,:municipio,:fechaVencimiento,:ventaExenta,:totalComprobante,:idPunto,:creadoPor,:fechaHora,:tipoServicio)";
+
+                                 $statement = $this->dbConnect->prepare($query);
+                                 $statement->bindValue(':prefijo', $prefijo);
+                                 $statement->bindValue(':numeroComprobante', $numeroFacturaSinPre);
+                                 $statement->bindValue(':tipoComprobante', $tipoComprobante);
+                                 $statement->bindValue(':fechaComprobante', $fechaFacturaIva);
+                                 $statement->bindValue(':codigoCliente', $codigoCliente);
+                                 $statement->bindValue(':nombreCliente', $nombre);
+                                 $statement->bindValue(':municipio', $municipio);
+                                 $statement->bindValue(':fechaVencimiento', $fechaVencimiento);
+                                 $statement->bindValue(':ventaExenta', $cuotaInternet);
+                                 $statement->bindValue(':totalComprobante', $cuotaInternet);
+                                 $statement->bindValue(':idPunto', $puntoVenta);
+                                 $statement->bindValue(':fechaVencimiento', $fechaVencimiento);
+                                 $statement->bindValue(':creadoPor', $creadoPor);
+                                 $statement->bindValue(':fechaHora', $fechaHora);
+                                 $statement->bindValue(':tipoServicio', $tipoServicio);
+                           }else {
+                               $query = "INSERT INTO tbl_ventas_anuladas (prefijo,numeroComprobante,tipoComprobante,fechaComprobante,codigoCliente,nombreCliente,municipio,fechaVencimiento,ventaAfecta,totalComprobante,idPunto,creadoPor,fechaHora,tipoServicio)
+                                         VALUES (:prefijo,:numeroComprobante,:tipoComprobante,:fechaComprobante,:codigoCliente,:nombreCliente,:municipio,:fechaVencimiento,:ventaAfecta,:totalComprobante,:idPunto,:creadoPor,:fechaHora,:tipoServicio)";
+
+                                 $statement = $this->dbConnect->prepare($query);
+                                 $statement->bindValue(':prefijo', $prefijo);
+                                 $statement->bindValue(':numeroComprobante', $numeroFacturaSinPre);
+                                 $statement->bindValue(':tipoComprobante', $tipoComprobante);
+                                 $statement->bindValue(':fechaComprobante', $fechaFacturaIva);
+                                 $statement->bindValue(':codigoCliente', $codigoCliente);
+                                 $statement->bindValue(':nombreCliente', $nombre);
+                                 $statement->bindValue(':municipio', $municipio);
+                                 $statement->bindValue(':fechaVencimiento', $fechaVencimiento);
+                                 $statement->bindValue(':ventaAfecta', $cuotaInternet);
+                                 $statement->bindValue(':totalComprobante', $cuotaInternet);
+                                 $statement->bindValue(':idPunto', $puntoVenta);
+                                 $statement->bindValue(':fechaVencimiento', $fechaVencimiento);
+                                 $statement->bindValue(':creadoPor', $creadoPor);
+                                 $statement->bindValue(':fechaHora', $fechaHora);
+                                 $statement->bindValue(':tipoServicio', $tipoServicio);
+                           }
+                       }
+                       $statement->execute();
+                       sleep(0.5);
+                       $this->dbConnect->commit();
+
+                       //SEPARACION DE OPERACIONES
+
+                       $this->dbConnect->beginTransaction();
+                       $query = "UPDATE tbl_cargos SET nombre='<<< Comprobante anulado >>>', cuotaCable=0.00, cuotaInternet=0.00, saldoCable=0.00, saldoInternet=0.00, cargoImpuesto=0.00, totalImpuesto=0.00, cargoIva=0.00, totalIva=0.00, anticipo=0.00, anulada=1 WHERE numeroFactura=:numeroFactura AND codigoCliente=:codigoCliente AND tipoServicio=:tipoServicio AND mesCargo=:mesCargo";
+                       //$query = "UPDATE tbl_cargos SET anulada=1, cuotaCable=0, cuotaInternet=0, saldoCable=0, saldoInternet=0, cargoImpuesto=0, totalImpuesto=0 WHERE idFactura=:id";
+                       $statement = $this->dbConnect->prepare($query);
+                       //$statement->bindValue(':mes', $mensualidad);
+                       $statement->bindValue(':numeroFactura', $numeroFactura);
+                       $statement->bindValue(':codigoCliente', $codigoCliente);
+                       $statement->bindValue(':tipoServicio', $tipoServicio);
+                       $statement->bindValue(':mesCargo', $mesCargo);
+                       $statement->execute();
+                       sleep(0.5);
+                       $this->dbConnect->commit();
+                       $_SESSION["fecha"] = $fechaFacturaIva;
+                       $this->dbConnect = null;
+                       echo '<script>window.close();</script>';
+
+                   }
                }
-               elseif ($result['tipoServicio'] == "I") {
-                   $cuota = $result['cuotaInternet'];
-                   $queryCliente = "UPDATE clientes SET saldoInt|ernet=saldoInternet+:cuota WHERE cod_cliente=:codigoCliente";
-               }*/
+               elseif(!isset($_POST["aIva"])) {
+                   $this->dbConnect->beginTransaction();
+                   $query = "UPDATE tbl_cargos SET nombre='<<< Comprobante anulado >>>', cuotaCable=0.00, cuotaInternet=0.00, saldoCable=0.00, saldoInternet=0.00, cargoImpuesto=0.00, totalImpuesto=0.00, cargoIva=0.00, totalIva=0.00, anticipo=0.00, anulada=1 WHERE numeroFactura=:numeroFactura AND codigoCliente=:codigoCliente AND tipoServicio=:tipoServicio AND mesCargo=:mesCargo";
+                   //$query = "UPDATE tbl_cargos SET anulada=1, cuotaCable=0, cuotaInternet=0, saldoCable=0, saldoInternet=0, cargoImpuesto=0, totalImpuesto=0 WHERE idFactura=:id";
+                   $statement = $this->dbConnect->prepare($query);
 
-               // SQL query para traer datos del servicio de cable de la tabla clientes
-               /*elseif ($estado == "CANCELADA"){//FALTA VER DESDE QUE FACTURA SE VA GENERAR
-                   $query = "UPDATE tbl_abonos SET anulada=1, cuotaCable=0, cuotaInternet=0, saldoCable=0, saldoInternet=0, cargoImpuesto=0, totalImpuesto=0, WHERE idAbono=:id";
-               }*/
-               // Preparación de sentencia
-               //$query = "UPDATE tbl_cargos SET anulada=1 WHERE idFactura=:id";
-               $this->dbConnect->beginTransaction();
-               $query = "UPDATE tbl_cargos SET cuotaCable=0.00, cuotaInternet=0.00, saldoCable=0.00, saldoInternet=0.00, mesCargo=:mes, cargoImpuesto=0.00, totalImpuesto=0.00, anulada=1 WHERE idFactura=:id";
-               //$query = "UPDATE tbl_cargos SET anulada=1, cuotaCable=0, cuotaInternet=0, saldoCable=0, saldoInternet=0, cargoImpuesto=0, totalImpuesto=0 WHERE idFactura=:id";
-               $statement = $this->dbConnect->prepare($query);
-               $statement->bindValue(':mes', $mensualidad);
-               $statement->bindValue(':id', $id, PDO::PARAM_INT);
-               $statement->execute();
-               sleep(0.5);
-               $this->dbConnect->commit();
+                   //$statement->bindValue(':mes', $mensualidad);
+                   $statement->bindValue(':numeroFactura', $numeroFactura);
+                   $statement->bindValue(':codigoCliente', $codigoCliente);
+                   $statement->bindValue(':tipoServicio', $tipoServicio);
+                   $statement->bindValue(':mesCargo', $mesCargo);
+                   $statement->execute();
+                   sleep(0.5);
+                   $this->dbConnect->commit();
 
-               $this->dbConnect = null;
+                   $this->dbConnect = null;
+                   echo '<script>window.close();</script>';
 
-               header('Location: ../facturacionGenerada.php');
+                   //header('Location: ../cobradores.php?fecha='.$cobrador);
+               }
+
+
+               //header('Location: ../facturacionGenerada.php');
 
            } catch (Exception $e) {
                print "!Error¡: " . $e->getMessage() . "</br>";

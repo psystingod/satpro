@@ -7,7 +7,11 @@
     {
         public function EditEmployee()
         {
-            parent::__construct ();
+            if(!isset($_SESSION))
+            {
+                session_start();
+            }
+            parent::__construct ($_SESSION['db']);
         }
         public function edit()
         {
@@ -88,7 +92,7 @@
                 $nombreRef4 = $_POST["nombreRef4"];
                 $ref4Num = $_POST["ref4Num"];
                 $state = 1;
-                
+
                 $query = "UPDATE tbl_empleados SET id_empleado=:id_empleado, nombres=:nombres, apellidos=:apellidos, nombre_isss=:nombre_isss, sexo=:sexo, municipio=:municipio, departamento=:departamento, direccion=:direccion, telefonos=:telefonos, no_documento=:dui, numero_nit=:nit, extendido_en=:extendido_en, fecha_expedicion=:fecha_expedicion, fecha_nacimiento=:fecha_nacimiento, no_licencia=:no_licencia, no_isss=:no_isss, no_nup=:no_nup, profesion_oficio=:profesion_oficio,
                         nacionalidad=:nacionalidad, estado_civil=:estadoCivil, edad=:edad, nivel_estudios=:nivel_estudios, clase=:clase, estatura=:estatura, peso=:peso, tipo_sangre=:tipo_sangre, senales_especiales=:senales_especiales, nombre_padre=:nombre_padre, nombre_madre=:nombre_madre, nombre_conyuge=:nombre_conyugue,
                         trabajo_conyuge=:trabajo_conyugue, persona_autorizada=:persona_autorizada, id_afp=:id_afp, id_banco=:id_banco, id_departamento=:id_departamento, tipo_contratacion=:tipo_contratacion, id_plaza=:id_plaza, rol=:rol, numero_cuenta=:numero_cuenta, por_afp=:por_afp, id_centro=:id_centro, cuota_seguro=:cuota_seguro, fecha_ingreso=:fecha_ingreso, fecha_contratacion=:fecha_contratacion,

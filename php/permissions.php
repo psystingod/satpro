@@ -7,21 +7,25 @@
     {
         public function Permissions()
         {
-            parent::__construct ();
+            if(!isset($_SESSION))
+            {
+                session_start();
+            }
+            parent::__construct ($_SESSION['db']);
         }
         public function getPermissions($idUser)
         {
                 // read current record's data
                 try {
                     // prepare select query
-                    $query = "SELECT Ag, Ed, El FROM tbl_permisosglobal WHERE IdUsuario = $idUser";
+                    $query = "SELECT Ag, Ed, El, GenCont, ImpCont FROM tbl_permisosglobal WHERE IdUsuario = $idUser";
                     $stmt = $this->dbConnect->prepare($query);
                     $stmt->execute();
                     $arrayPermissions = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                     $totalPermissions = 0;
                     foreach ($arrayPermissions as $permission) {
-                        $totalPermissions = intval($permission["Ag"]) + intval($permission["Ed"]) + intval($permission["El"]);
+                        $totalPermissions = intval($permission["Ag"]) + intval($permission["Ed"]) + intval($permission["El"]) + intval($permission["GenCont"]) + intval($permission["ImpCont"]) ;
                     }
 
                     $con = NULL;

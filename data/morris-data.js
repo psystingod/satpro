@@ -1,6 +1,6 @@
 $(function() {
 
-    Morris.Area({
+    /*Morris.Area({
         element: 'morris-area-chart',
         data: [{
             period: '2010 Q1',
@@ -59,22 +59,22 @@ $(function() {
         pointSize: 2,
         hideHover: 'auto',
         resize: true
-    });
+    });*/
 
     Morris.Donut({
         element: 'morris-donut-chart',
         data: [{
-            label: "Suspenciones",
-            value: 12
-        }, {
             label: "Instalaciones",
-            value: 30
+            value: enc
+        }, {
+            label: "Suspensiones",
+            value: enc3
         }, {
             label: "Renovaciones",
-            value: 20
+            value: enc2
         }],
         resize: true,
-        colors: ['#d32f2f', '#4CAF50', '#3F51B5']
+        colors: ['#4CAF50', '#d32f2f', '#3F51B5']
     });
 
     Morris.Bar({

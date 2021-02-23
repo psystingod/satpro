@@ -7,13 +7,13 @@
     {
         public function getViewA_D()
         {
-            parent::__construct ();
+            session_start();
+            parent::__construct ($_SESSION['db']);
         }
         public function ReportesFinales()
         {
             try {
-                $query = "SELECT r.IdReportead as Idreportead, r.FechaEnvio as Fecha, e.Nombres as NombreEmpleado, d.NombreDepartamento, b.NombreBodega from tbl_reportead as r inner join tbl_empleado as e on r.IdEmpleadoEnvio=e.IdEmpleado
-                inner join tbl_departamento as d on r.IdDepartamento=d.IdDepartamento inner join tbl_bodega as b on r.IdBodega=b.IdBodega where r.State=1";
+                $query = "SELECT r.IdReportead as Idreportead, r.FechaEnvio as Fecha, e.nombre as NombreEmpleado, d.NombreDepartamento, b.NombreBodega from tbl_reportead as r inner join tbl_usuario as e on r.IdEmpleadoEnvio=e.idUsuario inner join tbl_departamento as d on r.IdDepartamento=d.IdDepartamento inner join tbl_bodega as b on r.IdBodega=b.IdBodega where r.State=1";
                 // Preparación de sentencia
                 $statement = $this->dbConnect->prepare($query);
                 $statement->execute();
@@ -27,8 +27,7 @@
         public function ReportesPendientes()
         {
             try {
-                $query = "SELECT r.IdReportead as Idreportead, r.FechaEnvio as Fecha, e.Nombres as NombreEmpleado, d.NombreDepartamento, b.NombreBodega from tbl_reportead as r inner join tbl_empleado as e on r.IdEmpleadoEnvio=e.IdEmpleado
-                inner join tbl_departamento as d on r.IdDepartamento=d.IdDepartamento inner join tbl_bodega as b on r.IdBodega=b.IdBodega where r.State=0";
+                $query = "SELECT r.IdReportead as Idreportead, r.FechaEnvio as Fecha, e.nombre as NombreEmpleado, d.NombreDepartamento, b.NombreBodega from tbl_reportead as r inner join tbl_usuario as e on r.IdEmpleadoEnvio=e.idUsuario inner join tbl_departamento as d on r.IdDepartamento=d.IdDepartamento inner join tbl_bodega as b on r.IdBodega=b.IdBodega where r.State=0";
                 // Preparación de sentencia
                 $statement = $this->dbConnect->prepare($query);
                 $statement->execute();

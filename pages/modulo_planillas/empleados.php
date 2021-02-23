@@ -17,15 +17,17 @@
     $arrRoles = $data->getData('tbl_roles');
     $arrBancos = $data->getData('tbl_bancos');
     $arrGeneros = $data->getData('tbl_generos');
-    session_start();
+    if(!isset($_SESSION["user"])) {
+        header('Location: ../login.php');
+    }
 
     if (isset($_GET['idEmpleado'])) {
         $id=isset($_GET['idEmpleado']) ? $_GET['idEmpleado'] : die('ERROR: Record no encontrado.');
 
         //include database connection
         require_once '../../php/connection.php';
-        $precon = new ConectionDB();
-        $con = $precon->ConectionDB();
+        $precon = new ConectionDB($_SESSION['db']);
+        $con = $precon->ConectionDB($_SESSION['db']);
         // read current record's data
         try {
             // prepare select query

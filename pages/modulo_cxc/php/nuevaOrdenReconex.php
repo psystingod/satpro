@@ -7,7 +7,11 @@
     {
         public function GuardarOrden()
         {
-            parent::__construct ();
+            if(!isset($_SESSION))
+            {
+          	  session_start();
+            }
+            parent::__construct ($_SESSION['db']);
         }
         public function guardar()
         {
@@ -57,12 +61,13 @@
                     $mactv = $_POST["mactv"];
                     $observaciones = $_POST["observaciones"];
                     $tipoServicio = $_POST["tipoServicio"];
+                    $coordenadas = $_POST["coordenadas"];
                     $creadoPor = $_POST['creadoPor'];
 
                     //$Fecha = date('Y/m/d g:i');
 
-                    $query = "INSERT INTO tbl_ordenes_reconexion(codigoCliente, fechaOrden, tipoOrden, diaCobro, nombreCliente, telefonos, tipoReconexCable, saldoCable, fechaReconexCable, ultSuspCable, direccion, idTecnico, mactv, colilla, observaciones, tipoServicio, creadoPor)
-                              VALUES(:codigoCliente, :fechaOrden, :tipoOrden, :diaCobro, :nombreCliente, :telefonos, :tipoReconexCable, :saldoCable, :fechaReconexCable, :ultSuspCable, :direccion, :idTecnico, :mactv, :colilla, :observaciones, :tipoServicio, :creadoPor)";
+                    $query = "INSERT INTO tbl_ordenes_reconexion(codigoCliente, fechaOrden, tipoOrden, diaCobro, nombreCliente, telefonos, tipoReconexCable, saldoCable, fechaReconexCable, ultSuspCable, direccion, idTecnico, mactv, colilla, observaciones, coordenadas, tipoServicio, creadoPor)
+                              VALUES(:codigoCliente, :fechaOrden, :tipoOrden, :diaCobro, :nombreCliente, :telefonos, :tipoReconexCable, :saldoCable, :fechaReconexCable, :ultSuspCable, :direccion, :idTecnico, :mactv, :colilla, :observaciones, :coordenadas, :tipoServicio, :creadoPor)";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
@@ -77,11 +82,11 @@
                                 ':fechaReconexCable' => $fechaReconexCable,
                                 ':direccion' => $direccion,
                                 ':ultSuspCable' => $ultSuspCable,
-                                ':fechaReconexCable' => $fechaReconexCable,
                                 ':idTecnico' => $responsable,
                                 ':mactv' => $mactv,
                                 ':colilla' => $colilla,
                                 ':observaciones' => $observaciones,
+                                ':coordenadas' => $coordenadas,
                                 ':tipoServicio' => $tipoServicio,
                                 ':creadoPor' => $creadoPor
                                 ));
@@ -144,11 +149,12 @@
                     $serieModem = $_POST['serieModem'];
                     $macModem = $_POST['macModem'];
                     $velocidad = $_POST['velocidad'];
+                    $coordenadas = $_POST["coordenadas"];
 
                     //$Fecha = date('Y/m/d g:i');
 
-                    $query = "INSERT INTO tbl_ordenes_reconexion(codigoCliente, fechaOrden, tipoOrden, diaCobro, nombreCliente, telefonos, tipoReconexInter, saldoInter, fechaReconexInter, ultSuspInter, macModem, serieModem, velocidad, direccion, idTecnico, colilla, observaciones, tipoServicio, creadoPor)
-                              VALUES(:codigoCliente, :fechaOrden, :tipoOrden, :diaCobro, :nombreCliente, :telefonos, :tipoReconexInter, :saldoInter, :fechaReconexInter, :ultSuspInter, :macModem, :serieModem, :velocidad, :direccion, :idTecnico, :colilla, :observaciones, :tipoServicio, :creadoPor)";
+                    $query = "INSERT INTO tbl_ordenes_reconexion(codigoCliente, fechaOrden, tipoOrden, diaCobro, nombreCliente, telefonos, tipoReconexInter, saldoInter, fechaReconexInter, ultSuspInter, macModem, serieModem, velocidad, direccion, idTecnico, colilla, observaciones, coordenadas, tipoServicio, creadoPor)
+                              VALUES(:codigoCliente, :fechaOrden, :tipoOrden, :diaCobro, :nombreCliente, :telefonos, :tipoReconexInter, :saldoInter, :fechaReconexInter, :ultSuspInter, :macModem, :serieModem, :velocidad, :direccion, :idTecnico, :colilla, :observaciones, :coordenadas, :tipoServicio, :creadoPor)";
 
                     $statement = $this->dbConnect->prepare($query);
                     $statement->execute(array(
@@ -169,6 +175,7 @@
                                 ':idTecnico' => $responsable,
                                 ':colilla' => $colilla,
                                 ':observaciones' => $observaciones,
+                                ':coordenadas' => $coordenadas,
                                 ':tipoServicio' => $tipoServicio,
                                 ':creadoPor' => $creadoPor
                                 ));

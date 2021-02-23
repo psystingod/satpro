@@ -1,5 +1,10 @@
 <?php
-    session_start();
+if(!isset($_SESSION))
+{
+    session_start([
+        'cookie_lifetime' => 86400,
+    ]);
+}
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -13,7 +18,7 @@
     <meta name="author" content="">
 
     <title>Cablesat</title>
-<link rel="shortcut icon" href="../../images/Cablesat.png" />
+    <link rel="shortcut icon" href="../../images/Cablesat.png" />
     <!-- Bootstrap Core CSS -->
     <link href="../../vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
@@ -163,6 +168,15 @@
                            </div>
                            <br><br><br>
                        </div>
+                           <a class="" href="empresaInfo.php"><div class="col-lg-12 btn btn-default">
+                               <div class="stat-icon">
+                                   <i class="fas fa-database fa-3x"></i>
+                               </div>
+                               <div class="stat-values">
+                                   <br>
+                                   <div class="name">datos de la empresa</b></div>
+                               </div>
+                           </div></a>
                          <a class="" href="configFacturas.php"><div class="col-lg-6 btn btn-default">
                              <div class="stat-icon">
                                  <i class="fas fa-file-invoice fa-3x"></i>

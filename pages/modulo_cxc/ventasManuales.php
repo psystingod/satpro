@@ -1,6 +1,11 @@
 <?php
 
-    session_start();
+if(!isset($_SESSION))
+{
+    session_start([
+        'cookie_lifetime' => 86400,
+    ]);
+}
     require("php/getData.php");
     require("php/GetAllInfo.php");
     $dataInfo = new GetAllInfo();
@@ -22,8 +27,8 @@
 
     //include database connection
     require_once('../../php/connection.php');
-    $precon = new ConectionDB();
-    $con = $precon->ConectionDB();
+    $precon = new ConectionDB($_SESSION['db']);
+    $con = $precon->ConectionDB($_SESSION['db']);
     /**************************************************/
     if (isset($_GET['codigoCliente'])) {
 
@@ -48,7 +53,13 @@
 
             /****************** DATOS GENERALES ***********************/
             date_default_timezone_set('America/El_Salvador');
-            $fechaComprobante = date_format(date_create(date('Y-m-d')), 'd/m/Y');
+            $fechaComprobante = date("Y-m-d");
+            if (strlen($fechaComprobante) < 8) {
+                $fechaComprobante = "";
+            }else {
+                $fechaComprobante = DateTime::createFromFormat('Y-m-d', trim($fechaComprobante));
+                $fechaComprobante = $fechaComprobante->format('d/m/Y');
+            }
             $puntoVenta = "";
             $prefijo = "";
             $nComprobante = "";
@@ -131,6 +142,12 @@
             /****************** DATOS GENERALES ***********************/
             //$idOrdenTraslado = $row["idOrdenTraslado"];
             $fechaComprobante = $row["fechaComprobante"];
+            if (strlen($fechaComprobante) < 8) {
+                $fechaComprobante = "";
+            }else {
+                $fechaComprobante = DateTime::createFromFormat('Y-m-d', trim($fechaComprobante));
+                $fechaComprobante = $fechaComprobante->format('d/m/Y');
+            }
             $tipoComprobante = $row["tipoComprobante"];
             $puntoVenta = $row["idPunto"];
             $prefijo = $row["prefijo"];
@@ -152,9 +169,6 @@
             $impuesto = $row["impuesto"];
             $total = $row["totalComprobante"];
 
-            if ($codigoCliente === "00000") {
-                $codigoCliente = "SC";
-            }
             $nombreCliente = $row['nombreCliente'];
             $direccion = $row["direccionCliente"];
             $departamento = $row['departamento'];
@@ -164,7 +178,7 @@
             $creadoPor = $row['creadoPor'];
 
             /*************************CHECKBOXES*******************************/
-            $exento = $row["exento"];
+            //$exento = $row["exento"];
             $cableExtra = $row["cableExtra"];
             $decodificador = $row["decodificador"];
             $derivacion = $row["derivacion"];
@@ -208,7 +222,7 @@
         $direccion = "";
         $saldoCable = "";
         $saldoInter = "";
-        $exento = "";
+        //$exento = "";
         $cableExtra = "";
         $decodificador = "";
         $derivacion = "";
@@ -258,7 +272,74 @@
 
     <!-- Custom Fonts -->
     <link href="../../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <style media="screen">
+        .form-control {
+            color: #212121;
+            font-size: 15px;
+            font-weight: bold;
 
+        }
+        .nav>li>a {
+            color: #fff;
+        }
+        .nav>li>a:hover {
+            color: #2b2b2b;
+        }
+        .dark{
+            color: #fff;
+            background-color: #212121;
+        }
+
+        .nav-tabs.nav-justified>li>a {
+            border-bottom: 1px solid #ddd;
+            border-radius: 20px 20px 0 0;
+            background-color: #d32f2f;
+        }
+        .danger .success{
+            background-color: #F5F5F5;
+        }
+    </style>
+
+    <style media="screen">
+        .nav-pills>li.active>a, .nav-pills>li.active>a:focus, .nav-pills>li.active>a:hover {
+            color: #fff;
+            background-color: #d32f2f;
+        }
+
+        .nav-pills>li>a{
+            color: #d32f2f;
+
+        }
+
+        .btn-danger {
+            color: #fff;
+            background-color: #d32f2f;
+            border-color: #d43f3a;
+        }
+        .label-danger {
+            background-color: #d32f2f;
+        }
+
+        .panel-danger>.panel-heading {
+            color: #fff;
+            background-color: #212121;
+            border-color: #212121;
+        }
+        .panel{
+            border-color: #212121;
+        }
+        .pagination>.active>a{
+            background-color: #d32f2f;
+            border-color: #d32f2f;
+        }
+        .pagination>.active>a:hover{
+            background-color: #d32f2f;
+            border-color: #d32f2f;
+        }
+        .pagination>li>a, .pagination>li>a:hover{
+            color: #2b2b2b;
+        }
+    </style>
 </head>
 
 <body>
@@ -374,7 +455,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <br>
-                        <div class="panel panel-primary">
+                        <div class="panel panel-danger">
                           <div class="panel-heading"><b>Ventas manuales (factura pequeña)</b> <span id="nombreOrden" class="label label-danger"></span></div>
                           <form id="ventaManual" action="" method="POST">
                           <div class="panel-body">
@@ -388,7 +469,7 @@
                                   <button class="btn btn-default btn-sm" id="imprimir" onclick="imprimirOrden()" type="button" name="btn_nuevo" data-toggle="tooltip" data-placement="bottom" title="Imprimir orden" ><i class="fas fa-print"></i></button>
                                   <div class="pull-right">
                                       <label for="anular">Anular este comprobante</label>
-                                      <input type="checkbox" id="anular" name="anular" value="">
+                                      <input type="checkbox" id="anular" name="anular" value="1">
                                   </div>
                               </div>
 
@@ -449,7 +530,7 @@
                                   <div class="col-md-2">
                                       <br>
                                       <label for="fechaComprobante">Fecha comprob</label>
-                                      <input class="form-control input-sm" type="text" id="fechaComprobante" name="fechaComprobante" value="<?php date_default_timezone_set('America/El_Salvador'); echo date('Y-m-d'); ?>" readonly>
+                                      <input class="form-control input-sm" type="text" id="fechaComprobante" name="fechaComprobante" value="<?php date_default_timezone_set('America/El_Salvador'); echo $fechaComprobante; ?>" readonly>
                                   </div>
                               </div>
                               <div class="form-row">
@@ -495,7 +576,7 @@
                               <div class="form-row">
                                   <div class="col-md-12">
                                       <label for="direccion">Dirección</label>
-                                      <textarea class="form-control input-sm" name="direccion" rows="2" cols="40" readonly required><?php echo $direccion; ?></textarea>
+                                      <textarea class="form-control input-sm" name="direccion" rows="2" cols="40" readonly><?php echo $direccion; ?></textarea>
                                   </div>
                               </div>
                               <div class="form-row">
@@ -508,7 +589,7 @@
                                   </div>
                                   <div class="col-md-3">
                                       <label for="doc">NIT o DUI</label>
-                                      <input id="doc" class="form-control input-sm internet" type="text" name="doc" value="<?php echo $doc ?>" readonly required>
+                                      <input id="doc" class="form-control input-sm internet" type="text" name="doc" value="<?php echo $doc ?>" readonly>
                                   </div>
                                   <div class="col-md-4">
                                       <label for="giro">Giro</label>
@@ -620,11 +701,11 @@
                               <div class="form-row">
                                   <div class="col-md-12">
                                       <?php
-                                      if ($exento == "T") {
+                                      /*if ($exento == "T") {
                                           echo '<label>Exento</label><input class="input-sm" type="checkbox" name="exento" value="T" readonly checked>';
                                       }else {
                                           echo '<label>Exento</label><input class="input-sm" type="checkbox" name="exento" value="T" readonly>';
-                                      }
+                                      }*/
                                       if ($cableExtra == "T") {
                                           echo '<label>Cable extra</label><input class="input-sm" type="checkbox" name="cableExtra" value="T" readonly checked>';
                                       }else {

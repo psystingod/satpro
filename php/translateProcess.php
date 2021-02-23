@@ -8,7 +8,8 @@
     {
         public function TranslateProcess()
         {
-            parent::__construct ();
+            session_start();
+            parent::__construct ($_SESSION['db']);
         }
         public function getProductsTranslated()
         {

@@ -7,7 +7,11 @@
     {
         public function EditarVenta()
         {
-            parent::__construct ();
+            if(!isset($_SESSION))
+            {
+          	  session_start();
+            }
+            parent::__construct ($_SESSION['db']);
         }
         public function editar()
         {
@@ -17,6 +21,12 @@
 
                 $idVenta = $_POST["idVenta"];
                 $fechaComprobante = $_POST["fechaComprobante"];
+                if (strlen($fechaComprobante) < 8) {
+                    $fechaComprobante = "";
+                }else {
+                    $fechaComprobante = DateTime::createFromFormat('d/m/Y', trim($fechaComprobante));
+                    $fechaComprobante = $fechaComprobante->format('Y-m-d');
+                }
                 $puntoVenta = $_POST["puntoVenta"];
                 $tipoComprobante = $_POST["tipoComprobante"];
                 $prefijo = $_POST["prefijo"];
@@ -31,9 +41,9 @@
                 $doc = $_POST['doc'];
                 $giro = $_POST['giro'];
                 $formaPago = $_POST['formaPago']; //Motivo
-                $vendedor = $_POST['vendedor'];
+                $vendedor = strtoupper($_POST['vendedor']);
                 $tipoVenta = $_POST["tipoVenta"];
-                $ventaCuentaDe = $_POST["ventaCuentaDe"];
+                $ventaCuentaDe = strtoupper($_POST["ventaCuentaDe"]);
                 $montoCable = $_POST["montoCable"];
                 $montoInter = $_POST["montoInternet"];
                 $totalExento = $_POST["totalExento"];
@@ -42,11 +52,11 @@
                 $total = $_POST["total"];
                 $impuesto = $total - $totalAfecto;
 
-                if (isset($_POST["exento"])) {
+                /*if (isset($_POST["exento"])) {
                     $exento = $_POST["exento"];
                 }else {
                     $exento = null;
-                }
+                }*/
 
                 if (isset($_POST["pagoTardio"])) {
                     $pagoTardio = $_POST["pagoTardio"];
@@ -108,8 +118,8 @@
                     $reconexionTraslado = null;
                 }
 
-                if (isset($_POST["anulado"])) {
-                    $anulado = $_POST["anulado"];
+                if (isset($_POST["anular"])) {
+                    $anulado = $_POST["anular"];
                 }else {
                     $anulado = 0;
                 }

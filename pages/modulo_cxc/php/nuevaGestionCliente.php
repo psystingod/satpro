@@ -7,7 +7,11 @@
     {
         public function GuardarGestion()
         {
-            parent::__construct ();
+            if(!isset($_SESSION))
+            {
+          	  session_start();
+            }
+            parent::__construct ($_SESSION['db']);
         }
         public function guardar()
         {
@@ -20,7 +24,7 @@
                 else {
                     $fechaOrden = "";
                 }
-                $fechaPagara = $_POST["fechaPagara"];
+                $gestion = $_POST["tipogestion"];
                 $fechaSuspension = $_POST["fechaSuspension"];
                 $idGestion = $_GET["idGestion"];
                 $descripcion = $_POST["descripcion"];
@@ -28,14 +32,14 @@
                 $creadoPor = $_SESSION["user"];
 
                 $this->dbConnect->beginTransaction();
-                $query = "INSERT INTO tbl_gestion_clientes (fechaGestion,descripcion,fechaPagara,fechaSuspension,tipoServicio,creadoPor,idGestionGeneral)
-                          VALUES (:fechaGestion, :descripcion, :fechaPagara, :fechaSuspension, :tipoServicio, :creadoPor, :idGestionGeneral)";
+                $query = "INSERT INTO tbl_gestion_clientes (fechaGestion,descripcion,gestion,fechaSuspension,tipoServicio,creadoPor,idGestionGeneral)
+                          VALUES (:fechaGestion, :descripcion, :gestion, :fechaSuspension, :tipoServicio, :creadoPor, :idGestionGeneral)";
 
                 $statement = $this->dbConnect->prepare($query);
                 $statement->execute(array(
                             ':fechaGestion' => $fechaGestion,
                             ':descripcion' => $descripcion,
-                            ':fechaPagara' => $fechaPagara,
+                            ':gestion' => $gestion,
                             ':fechaSuspension' => $fechaSuspension,
                             ':tipoServicio' => $tipoServicio,
                             ':creadoPor' => $creadoPor,
